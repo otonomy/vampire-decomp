@@ -67,6 +67,8 @@ int vd_unit_load(const char *path, vd_unit_t *u)
 				n--;
 			}
 			u->blocks[open].target = vd_xstrndup(t, n);
+		} else if (open >= 0 && strncmp(l, "// PARKED:", 10) == 0) {
+			u->blocks[open].parked = 1;
 		} else if (open >= 0 && strncmp(l, "// END FUNCTION", 15) == 0) {
 			u->blocks[open].line_end = i + 1;
 			open = -1;

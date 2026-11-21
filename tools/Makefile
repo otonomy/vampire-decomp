@@ -4,7 +4,7 @@
 
 CC      ?= gcc
 CFLAGS  ?= -std=c99 -O2 -Wall -Wextra -Wno-unused-parameter
-SRCS     = main.c util.c pecoff.c symbols.c source.c check.c gate.c rules.c rename.c names.c
+SRCS     = main.c util.c pecoff.c symbols.c source.c check.c gate.c rules.c rename.c names.c rtti.c
 OUT      = ../build/vd.exe
 
 all: $(OUT)

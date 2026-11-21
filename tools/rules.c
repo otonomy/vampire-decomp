@@ -329,6 +329,7 @@ typedef struct {
 	char    *name;
 	char    *type;
 	char    *where;
+	int      row;       /* the function it belongs to, or -1 for a header */
 } extern_t;
 
 typedef struct {
@@ -578,6 +579,9 @@ static int is_placeholder(const char *id)
 
 /* --------------------------------------------------------- one block */
 
+static const char *compiled_symbol(uint32_t addr);
+static size_t      qualified_len(const char *m);
+
 typedef struct {
 	const rules_opts_t *o;
 	typetab_t          *types;
@@ -585,6 +589,7 @@ typedef struct {
 	externs_t          *externs;
 	const vd_symtab_t  *st;
 	const char         *unit_rel;
+	int                 row;
 } rules_ctx_t;
 
 typedef struct {
@@ -625,19 +630,31 @@ static void check_block(rules_ctx_t *rc, unit_state_t *us, const vd_unit_t *u, c
 	size_t       i;
 	int          ln;
 	int          saw_banner = 0;
+	int         *in_body;
 
 	memset(f, 0, sizeof(*f));
 
-	/* R1: the function compiles under a class the binary does not name */
+	/* R1: the function compiles under a class the binary does not name (a layout view) */
 	if (b->target) {
-		const vd_sym_t *s = vd_symtab_at(rc->st, b->addr);
+		const char     *cs = compiled_symbol(b->addr);
+		const vd_sym_t *names[32];
+		int             nn = vd_symtab_all_at(rc->st, b->addr, names, 32), q, same = 0;
 
-		if (!s || strcmp(s->pretty, b->target) != 0) {
-			char what[300];
+		if (cs && nn) {
+			for (q = 0; q < nn; q++) {
+				size_t l = qualified_len(names[q]->mangled);
 
-			snprintf(what, sizeof(what), "compiled as %s; the binary names it %s", b->target,
-					 s ? s->pretty : "(no symbol)");
-			note(f, F_R1, b->line_begin, what);
+				if (qualified_len(cs) == l && strncmp(cs, names[q]->mangled, l) == 0) {
+					same = 1;
+				}
+			}
+			if (!same) {
+				char what[400];
+
+				snprintf(what, sizeof(what), "compiled as %.*s; the binary names it %s", (int)qualified_len(cs), cs,
+						 names[0]->pretty);
+				note(f, F_R1, b->line_begin, what);
+			}
 		}
 	}
 
@@ -654,6 +671,56 @@ static void check_block(rules_ctx_t *rc, unit_state_t *us, const vd_unit_t *u, c
 	}
 
 	collect_byte_locals(blk, &bytelocals);
+
+	/* which lines sit inside a function body: a brace opened after ")" (or "const") is a body or a
+	   control block, one opened after struct/class/union/enum/namespace/"=" is not */
+	in_body = vd_xmalloc(sizeof(int) * (size_t)(b->line_end - b->line_begin + 2));
+	{
+		int    stack[256], depth = 0, fn = 0, cur = 0;
+		size_t q;
+
+		memset(in_body, 0, sizeof(int) * (size_t)(b->line_end - b->line_begin + 2));
+		for (q = 0; blk[q]; q++) {
+			if (blk[q] == '\n') {
+				cur++;
+				if (cur <= b->line_end - b->line_begin) {
+					in_body[cur] = fn > 0;
+				}
+				continue;
+			}
+			if (blk[q] == '{') {
+				size_t k = q;
+				int    is_fn = 0;
+
+				while (k > 0 && isspace((unsigned char)blk[k - 1])) {
+					k--;
+				}
+				if (k > 0 && blk[k - 1] == ')') {
+					is_fn = 1;
+				} else if (k >= 5 && strncmp(blk + k - 5, "const", 5) == 0) {
+					is_fn = 1;
+				} else if (k >= 4 && strncmp(blk + k - 4, "else", 4) == 0) {
+					is_fn = 1;
+				} else if (k >= 2 && strncmp(blk + k - 2, "do", 2) == 0) {
+					is_fn = 1;
+				} else if (k > 0 && (blk[k - 1] == ';' || blk[k - 1] == '{' || blk[k - 1] == '}' || blk[k - 1] == ':')) {
+					is_fn = fn > 0;      /* a nested block inherits */
+				}
+				if (depth < 256) {
+					stack[depth] = is_fn;
+				}
+				depth++;
+				if (is_fn) {
+					fn++;
+				}
+			} else if (blk[q] == '}' && depth > 0) {
+				depth--;
+				if (depth < 256 && stack[depth]) {
+					fn--;
+				}
+			}
+		}
+	}
 
 	/* line-based checks */
 	for (ln = b->line_begin; ln <= b->line_end && ln <= u->nlines; ln++) {
@@ -683,8 +750,13 @@ static void check_block(rules_ctx_t *rc, unit_state_t *us, const vd_unit_t *u, c
 		if (parse_extern(t, name, sizeof(name), type, sizeof(type))) {
 			char what[400];
 
-			snprintf(what, sizeof(what), "extern %s in the unit", name);
-			note(f, rc->o->r2_advisory ? F_R25 : F_R2, ln, what);
+			if (in_body[ln - b->line_begin]) {
+				snprintf(what, sizeof(what), "extern %s inside a function body", name);
+				note(f, F_R2, ln, what);
+			} else {
+				snprintf(what, sizeof(what), "extern %s in the unit", name);
+				note(f, rc->o->r2_advisory ? F_R25 : F_R2, ln, what);
+			}
 			if (rc->externs->count == rc->externs->cap) {
 				rc->externs->cap = rc->externs->cap ? rc->externs->cap * 2 : 4096;
 				rc->externs->items = vd_xrealloc(rc->externs->items, sizeof(extern_t) * (size_t)rc->externs->cap);
@@ -697,6 +769,7 @@ static void check_block(rules_ctx_t *rc, unit_state_t *us, const vd_unit_t *u, c
 				snprintf(where, sizeof(where), "%s:%d:0x%08x", rc->unit_rel, ln, b->addr);
 				rc->externs->items[rc->externs->count].where = vd_xstrdup(where);
 			}
+			rc->externs->items[rc->externs->count].row = rc->row;
 			rc->externs->count++;
 		}
 
@@ -933,6 +1006,7 @@ static void check_block(rules_ctx_t *rc, unit_state_t *us, const vd_unit_t *u, c
 	}
 
 	vd_strlist_free(&bytelocals);
+	free(in_body);
 	free(blk);
 }
 
@@ -941,6 +1015,7 @@ static void check_block(rules_ctx_t *rc, unit_state_t *us, const vd_unit_t *u, c
 typedef struct {
 	uint32_t addr;
 	char     status[24];
+	char    *objsym;
 } gate_row_t;
 
 static gate_row_t *g_gate;
@@ -970,13 +1045,45 @@ static void load_gate(const char *path)
 		char     st[24];
 		char    *nl = memchr(p, '\n', (size_t)(end - p));
 
+		if (nl) {
+			*nl = 0;
+		}
 		if (sscanf(p, "0x%x,%*[^,],%23[^,]", &addr, st) == 2) {
+			/* the 10th field is the compiled symbol: addr,size,status,refs,unv,bad,"unit",line,compiled,"objsym" */
+			char *q = p;
+			int   field = 0;
+
 			if (g_ngate == cap) {
 				cap = cap ? cap * 2 : 8192;
 				g_gate = vd_xrealloc(g_gate, sizeof(gate_row_t) * (size_t)cap);
 			}
 			g_gate[g_ngate].addr = addr;
 			snprintf(g_gate[g_ngate].status, sizeof(g_gate[g_ngate].status), "%s", st);
+			g_gate[g_ngate].objsym = NULL;
+			while (*q && field < 9) {
+				if (*q == '"') {
+					q++;
+					while (*q && !(q[0] == '"' && q[1] != '"')) {
+						q += q[0] == '"' ? 2 : 1;
+					}
+					if (*q) {
+						q++;
+					}
+				}
+				if (*q == ',') {
+					field++;
+				}
+				if (*q) {
+					q++;
+				}
+			}
+			if (field == 9 && *q == '"') {
+				char *e = strchr(q + 1, '"');
+
+				if (e && e > q + 1) {
+					g_gate[g_ngate].objsym = vd_xstrndup(q + 1, (size_t)(e - q - 1));
+				}
+			}
 			g_ngate++;
 		}
 		p = nl;
@@ -985,13 +1092,34 @@ static void load_gate(const char *path)
 	qsort(g_gate, (size_t)g_ngate, sizeof(gate_row_t), cmp_gate);
 }
 
-static const char *gate_status(uint32_t addr)
+static const gate_row_t *gate_row(uint32_t addr)
 {
-	gate_row_t key, *r;
+	gate_row_t key;
 
 	key.addr = addr;
-	r = bsearch(&key, g_gate, (size_t)g_ngate, sizeof(gate_row_t), cmp_gate);
+	return bsearch(&key, g_gate, (size_t)g_ngate, sizeof(gate_row_t), cmp_gate);
+}
+
+static const char *compiled_symbol(uint32_t addr)
+{
+	const gate_row_t *r = gate_row(addr);
+
+	return r ? r->objsym : NULL;
+}
+
+static const char *gate_status(uint32_t addr)
+{
+	const gate_row_t *r = gate_row(addr);
+
 	return r ? r->status : NULL;
+}
+
+/* "?f@C@@QAEXXZ" -> length of "?f@C@@", the qualified-name part of a mangled name */
+static size_t qualified_len(const char *m)
+{
+	const char *e = strstr(m, "@@");
+
+	return e ? (size_t)(e - m) + 2 : strlen(m);
 }
 
 /* ------------------------------------------------------------------ main */
@@ -1044,6 +1172,14 @@ static int cmp_extern(const void *a, const void *b)
 
 void vd_load_paths(const char *root, char *dll, size_t dlls, char *cl, size_t cls);
 
+typedef struct {
+	uint32_t   addr;
+	uint32_t   size;
+	char      *rel;
+	int        line;
+	findings_t f;
+} out_row_t;
+
 /*
 ================
 vd_rules_main
@@ -1065,6 +1201,8 @@ int vd_rules_main(int argc, char **argv)
 	long         rule_funcs[F_COUNT] = { 0 };
 	long long    b_rules_ok = 0, b_bytes_ok = 0, b_total = 0;
 	int          have_pe;
+	out_row_t   *rows = NULL;
+	int          nrows = 0, caprows = 0;
 
 	memset(&o, 0, sizeof(o));
 	strcpy(o.root, ".");
@@ -1125,6 +1263,34 @@ int vd_rules_main(int argc, char **argv)
 		c.t = &types;
 		c.where = base ? base + 1 : headers.items[i];
 		scan_types(code, &c, collect_header_type);
+		{
+			/* the externs a header declares take part in the one-type check */
+			char *line = code, *nl;
+			int   ln = 1;
+
+			for (; line && *line; line = nl ? nl + 1 : NULL, ln++) {
+				char name[256], type[512];
+
+				nl = strchr(line, '\n');
+				if (nl) {
+					*nl = 0;
+				}
+				if (parse_extern(line, name, sizeof(name), type, sizeof(type))) {
+					char where[1200];
+
+					if (externs.count == externs.cap) {
+						externs.cap = externs.cap ? externs.cap * 2 : 4096;
+						externs.items = vd_xrealloc(externs.items, sizeof(extern_t) * (size_t)externs.cap);
+					}
+					snprintf(where, sizeof(where), "%s:%d (header)", c.where, ln);
+					externs.items[externs.count].name = vd_xstrdup(name);
+					externs.items[externs.count].type = vd_xstrdup(type);
+					externs.items[externs.count].where = vd_xstrdup(where);
+					externs.items[externs.count].row = -1;
+					externs.count++;
+				}
+			}
+		}
 		free(code);
 		free(b.data);
 	}
@@ -1201,71 +1367,20 @@ int vd_rules_main(int argc, char **argv)
 		rc.unit_rel = rel;
 
 		for (b = 0; b < u.nblocks; b++) {
-			findings_t  f;
-			const char *gs = gate_status(u.blocks[b].addr);
-			int         bytes_ok = gs && (strcmp(gs, "OK") == 0 || strcmp(gs, "OK-UNVERIFIED") == 0);
-			int         nmatch = 0, r;
-			const char *status;
-			char        rules_s[64] = "", adv[128] = "", first[200] = "";
+			out_row_t *row;
 
-			check_block(&rc, &us, &u, code, line_off, line_of, &u.blocks[b], &f);
-			for (r = 0; r < F_COUNT; r++) {
-				if (f.count[r]) {
-					rule_funcs[r]++;
-				}
-				if (IS_MATCH_RULE(r) && f.count[r] && r != F_R18) {
-					nmatch++;
-					if (rules_s[0]) {
-						strcat(rules_s, " ");
-					}
-					strcat(rules_s, g_rule_names[r]);
-					if (!first[0]) {
-						snprintf(first, sizeof(first), "%s %s", g_rule_names[r], f.first[r]);
-					}
-				}
+			if (nrows == caprows) {
+				caprows = caprows ? caprows * 2 : 8192;
+				rows = vd_xrealloc(rows, sizeof(out_row_t) * (size_t)caprows);
 			}
-			for (r = F_R25; r < F_COUNT; r++) {
-				if (f.count[r]) {
-					char one[32];
-
-					snprintf(one, sizeof(one), "%s%s:%d", adv[0] ? " " : "", g_rule_names[r], f.count[r]);
-					strcat(adv, one);
-				}
-			}
-
-			n_total++;
-			b_total += u.blocks[b].size;
-			if (bytes_ok) {
-				n_bytes_ok++;
-				b_bytes_ok += u.blocks[b].size;
-			}
-			if (f.count[F_R18]) {
-				status = "VERBATIM";
-				if (bytes_ok) {
-					n_verbatim++;
-				}
-				snprintf(first, sizeof(first), "R18 %s", f.first[F_R18]);
-			} else if (!bytes_ok) {
-				status = "UNMATCHED";
-				n_unmatched++;
-			} else if (nmatch) {
-				status = "MATCH-PENDING";
-				n_pending++;
-			} else {
-				status = "MATCHED";
-				n_rules_ok++;
-				b_rules_ok += u.blocks[b].size;
-			}
-			fprintf(out, "0x%08x,0x%x,%s,%s,%s,", u.blocks[b].addr, u.blocks[b].size, gs ? gs : "-",
-					nmatch ? "fail" : "pass", status);
-			fprintf(out, "\"%s\",%d,\"%s\",%d,\"%s\",\"", rel, u.blocks[b].line_begin, rules_s, f.count[F_R7], adv);
-			for (k = 0; first[k]; k++) {
-				if (first[k] == '"') {
-					fputc('"', out);
-				}
-				fputc(first[k], out);
-			}
-			fprintf(out, "\"\n");
+			row = &rows[nrows];
+			row->addr = u.blocks[b].addr;
+			row->size = u.blocks[b].size;
+			row->rel = vd_xstrdup(rel);
+			row->line = u.blocks[b].line_begin;
+			rc.row = nrows;
+			check_block(&rc, &us, &u, code, line_off, line_of, &u.blocks[b], &row->f);
+			nrows++;
 		}
 
 		vd_strlist_free(&us.offset_macros);
@@ -1274,38 +1389,119 @@ int vd_rules_main(int argc, char **argv)
 		free(code);
 		vd_unit_free(&u);
 	}
-	fclose(out);
-
-	/* R2: one global declared with two types */
+	/* R2: one global declared with two types. Every function that declares such a global is MATCH-PENDING: the
+	   declarations must be reconciled into one, in a header */
 	if (externs.count) {
-		int j, conflicts = 0;
+		int   j, conflicts = 0;
+		FILE *cf;
 
 		qsort(externs.items, (size_t)externs.count, sizeof(extern_t), cmp_extern);
 		snprintf(path, sizeof(path), "%s.r2-conflicts.txt", o.out);
-		out = fopen(path, "w");
+		cf = fopen(path, "w");
 		for (i = 0; i < externs.count; i = j) {
-			int distinct = 1;
+			int distinct = 1, k;
 
 			for (j = i + 1; j < externs.count && strcmp(externs.items[j].name, externs.items[i].name) == 0; j++) {
 				if (strcmp(externs.items[j].type, externs.items[j - 1].type) != 0) {
 					distinct++;
 				}
 			}
-			if (distinct > 1 && out) {
-				int k;
+			if (distinct < 2) {
+				continue;
+			}
+			conflicts++;
+			if (cf) {
+				fprintf(cf, "%s:\n", externs.items[i].name);
+			}
+			for (k = i; k < j; k++) {
+				int r = externs.items[k].row;
 
-				conflicts++;
-				fprintf(out, "%s:\n", externs.items[i].name);
-				for (k = i; k < j; k++) {
-					fprintf(out, "  %-40s %s\n", externs.items[k].type, externs.items[k].where);
+				if (cf) {
+					fprintf(cf, "  %-40s %s\n", externs.items[k].type, externs.items[k].where);
+				}
+				if (r >= 0) {
+					char what[300];
+
+					snprintf(what, sizeof(what), "%s is declared with %d types", externs.items[k].name, distinct);
+					note(&rows[r].f, F_R2, rows[r].line, what);
 				}
 			}
 		}
-		if (out) {
-			fclose(out);
+		if (cf) {
+			fclose(cf);
 		}
 		printf("R2: %d globals declared with more than one type (%s)\n", conflicts, path);
 	}
+
+	for (i = 0; i < nrows; i++) {
+		out_row_t  *row = &rows[i];
+		findings_t *f = &row->f;
+		const char *gs = gate_status(row->addr);
+		int         bytes_ok = gs && (strcmp(gs, "OK") == 0 || strcmp(gs, "OK-UNVERIFIED") == 0);
+		int         nmatch = 0, r;
+		size_t      k;
+		const char *status;
+		char        rules_s[64] = "", adv[128] = "", first[200] = "";
+
+		for (r = 0; r < F_COUNT; r++) {
+			if (f->count[r]) {
+				rule_funcs[r]++;
+			}
+			if (IS_MATCH_RULE(r) && f->count[r] && r != F_R18) {
+				nmatch++;
+				if (rules_s[0]) {
+					strcat(rules_s, " ");
+				}
+				strcat(rules_s, g_rule_names[r]);
+				if (!first[0]) {
+					snprintf(first, sizeof(first), "%s %s", g_rule_names[r], f->first[r]);
+				}
+			}
+		}
+		for (r = F_R25; r < F_COUNT; r++) {
+			if (f->count[r]) {
+				char one[32];
+
+				snprintf(one, sizeof(one), "%s%s:%d", adv[0] ? " " : "", g_rule_names[r], f->count[r]);
+				strcat(adv, one);
+			}
+		}
+		n_total++;
+		b_total += row->size;
+		if (bytes_ok) {
+			n_bytes_ok++;
+			b_bytes_ok += row->size;
+		}
+		if (gs && strcmp(gs, "PARKED") == 0) {
+			status = "PARKED";
+		} else if (f->count[F_R18]) {
+			status = "VERBATIM";
+			if (bytes_ok) {
+				n_verbatim++;
+			}
+			snprintf(first, sizeof(first), "R18 %s", f->first[F_R18]);
+		} else if (!bytes_ok) {
+			status = "UNMATCHED";
+			n_unmatched++;
+		} else if (nmatch) {
+			status = "MATCH-PENDING";
+			n_pending++;
+		} else {
+			status = "MATCHED";
+			n_rules_ok++;
+			b_rules_ok += row->size;
+		}
+		fprintf(out, "0x%08x,0x%x,%s,%s,%s,", row->addr, row->size, gs ? gs : "-", nmatch ? "fail" : "pass", status);
+		fprintf(out, "\"%s\",%d,\"%s\",%d,\"%s\",\"", row->rel, row->line, rules_s, f->count[F_R7], adv);
+		for (k = 0; first[k]; k++) {
+			if (first[k] == '"') {
+				fputc('"', out);
+			}
+			fputc(first[k], out);
+		}
+		fprintf(out, "\"\n");
+	}
+	fclose(out);
 
 	printf("annotated functions:         %6ld (%lld bytes)\n", n_total, b_total);
 	printf("bytes matched:               %6ld (%lld bytes)\n", n_bytes_ok, b_bytes_ok);

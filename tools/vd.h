@@ -154,6 +154,7 @@ typedef struct {
 	char    *target;      /* TARGET: name, or NULL */
 	int      line_begin;  /* line of the FUNCTION marker, 1-based */
 	int      line_end;    /* line of the END FUNCTION marker */
+	int      parked;      /* a "// PARKED:" line inside the block */
 } vd_block_t;
 
 typedef struct {
@@ -177,7 +178,8 @@ enum {
 	VD_DIFF,            /* code bytes differ */
 	VD_SIZE,            /* compiled length differs from the annotated size */
 	VD_NOSYM,           /* the function was not found in the object */
-	VD_NOOBJ            /* the unit did not compile */
+	VD_NOOBJ,           /* the unit did not compile */
+	VD_PARKED           /* parked unfinished work ("// PARKED:"), not compared */
 };
 
 extern const char *vd_status_names[];

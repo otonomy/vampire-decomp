@@ -492,6 +492,13 @@ int vd_gate_main(int argc, char **argv)
 			int          k = base[i] + b;
 			vd_result_t *r = &res[k];
 
+			if (u->blocks[b].parked) {
+				memset(r, 0, sizeof(*r));
+				r->status = VD_PARKED;
+				snprintf(r->detail, sizeof(r->detail), "parked");
+				how[k] = '-';
+				continue;
+			}
 			if (have) {
 				long forced = -1;
 
@@ -652,8 +659,9 @@ int vd_gate_main(int argc, char **argv)
 			total += counts[s];
 			tb += bytes[s];
 		}
+		/* parked functions are counted apart, and in neither number */
 		printf("units %d: %d compile whole, %d do not\n", units.count, units_whole, units.count - units_whole);
-		for (s = 0; s <= VD_NOOBJ; s++) {
+		for (s = 0; s <= VD_PARKED; s++) {
 			printf("  %-14s %6ld functions %9lld bytes\n", vd_status_names[s], counts[s], bytes[s]);
 		}
 		matched = counts[VD_OK] + counts[VD_OK_UNVERIFIED];

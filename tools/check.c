@@ -5,7 +5,7 @@
 
 #include "vd.h"
 
-const char *vd_status_names[] = { "OK", "OK-UNVERIFIED", "REF", "DIFF", "SIZE", "NOSYM", "NOOBJ" };
+const char *vd_status_names[] = { "OK", "OK-UNVERIFIED", "REF", "DIFF", "SIZE", "NOSYM", "NOOBJ", "PARKED" };
 
 #define MAX_CANDIDATES 64
 
