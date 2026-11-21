@@ -212,6 +212,9 @@ static void scan_header(const char *text, const char *header)
 				while (isspace((unsigned char)*q) || *q == ',') {
 					q++;
 				}
+				if (*q == '{' || *q == ';' || !*q) {
+					break;     /* Allman style: the brace on the next line ends the base list */
+				}
 				while ((isalnum((unsigned char)*q) || *q == '_' || *q == ':' || *q == '<' || *q == '>' || *q == ' ') &&
 					   *q != ',' && *q != '{' && w + 1 < sizeof(word)) {
 					word[w++] = *q++;
