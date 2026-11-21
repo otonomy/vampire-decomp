@@ -130937,7 +130937,7 @@ struct EngineView49 {
 	virtual void vfunc49(int edict, const float *pos, const char *pszSample, float volume, int soundlevel, int flags, int pitch);
 };
 
-__declspec(dllimport) char *Q_strstr(const char *s, const char *search);
+__declspec(dllimport) const char *Q_stristr(const char *pStr, const char *pSearch);
 int sub_101af070(const char *pszName);
 
 struct CSoundEmitterAmbientView
@@ -130975,7 +130975,7 @@ void sub_101b1a00(CBaseEntity *pEnt, const float *pos, const char *samp, float v
 		}
 		return;
 	}
-	if (samp && (Q_strstr(samp, ".wav") || Q_strstr(samp, ".mp3"))) {
+	if (samp && (Q_stristr(samp, ".wav") || Q_stristr(samp, ".mp3"))) {
 		((EngineView49 *)engine)->vfunc49(pEnt->m_pEdict2e0, pos, samp, vol, soundlevel, flags, pitch);
 		if (duration)
 			*duration = enginesound->vfunc1(samp);
@@ -135797,7 +135797,7 @@ struct CSoundRec101bb990
 
 int *sub_1042bff0(int *pOut, const char *pszName);
 char sub_101b1dd0(const char *pszName, CSoundRec101bb990 *pRec);
-__declspec(dllimport) char *Q_strstr(const char *pszStr, const char *pszSub);
+__declspec(dllimport) const char *Q_stristr(const char *pStr, const char *pSearch);
 
 // TARGET: CUnknown101bc140::sub_101bb990
 void CUnknown101bc140::sub_101bb990(void *pFilter, CBaseEntity *pEntity, int nChannel, const char *pszSample, int nSoundLevel)
@@ -135829,7 +135829,7 @@ void CUnknown101bc140::sub_101bb990(void *pFilter, CBaseEntity *pEntity, int nCh
 			m_Recipients.AddToTail(v);
 	}
 	CSoundRec101bb990 rec;
-	if (!Q_strstr(pszSample, ".wav") && !Q_strstr(pszSample, ".mp3") && sub_101b1dd0(pszSample, &rec))
+	if (!Q_stristr(pszSample, ".wav") && !Q_stristr(pszSample, ".mp3") && sub_101b1dd0(pszSample, &rec))
 		m_flScale = rec.m_flScale;
 	else
 		m_flScale = 1.0f;
