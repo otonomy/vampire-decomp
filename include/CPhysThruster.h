@@ -1,7 +1,7 @@
 // CPhysThruster (RTTI CPhysThruster : CPhysForce, vtable 0x104454dc), "phys_thruster" (0x4a8 bytes): a force
 // along the entity's forward direction, applied at its position relative to the attached entity. The 2004 SDK's
-// dlls/phys_controller.cpp class. Its datamap's baseMap is CBaseEntity's, not CPhysForce's: the class's
-// DECLARE_CLASS named CPointEntity as the base (as CPhysTorque's does), so BaseClass::m_DataMap was CBaseEntity's.
+// dlls/phys_controller.cpp class. Its datamap's baseMap is CBaseEntity's, not CPhysForce's; guess: its
+// DECLARE_CLASS named CPointEntity as the base, as CPhysTorque's evidently does (see CPhysTorque.h).
 #pragma once
 
 #include "CPhysForce.h"
