@@ -98,100 +98,78 @@ int CNPC_VDog::vfunc461()
 // FUNCTION: 0x10374b00 size=0x1fc
 #include <math.h>
 #include "CNPC_VDog.h"
-#include "CAI_BaseNPC.h"
-#include "CDevFlagObj.h"
 
-extern CDevFlagObj *g_10924a6c;
-int sub_101cda50();
+CBaseEntity *sub_101cda50();	// the local player
+
+// The game's vector length sums the squares as x*x + (y*y + z*z) (z*z is computed first); Vector::Length() in
+// Vector.h groups them the other way.
+static inline float VectorLength2(const Vector &v)
+{
+	return FastSqrt(v.x * v.x + (v.y * v.y + v.z * v.z));
+}
 
 void CNPC_VDog::vfunc433()
 {
 	sub_102b27f0();
-	if (*(char *)((char *)this + 0x6660))
-	{
-		g_10924a6c->vfunc1();
-		sub_100041b0(0x7e);
-	}
-	if (*(int *)((char *)this + 0x6664) == 6)
+	if (m_b6660)
+		SetCondition(0x7e);
+	if (m_n6664 == 6)
 		return;
 	if (!sub_10014df8(0x6f) && !sub_10014df8(0x5a))
 	{
-		if (*(int *)((char *)this + 0xfec) != 0x6e)
-			return;
-		g_10924a6c->vfunc1();
-		sub_100041b0(0x7c);
+		if (m_Activity == 0x6e)
+			SetCondition(0x7c);
 		return;
 	}
-	int nState = *(int *)((char *)this + 0x665c);
-	if (nState != 2)
+	if (m_n665c != 2)
 	{
-		if (nState == 0)
+		if (m_n665c == 0)
 		{
-			int nSubState = *(int *)((char *)this + 0x6664);
-			if (nSubState == 5)
+			if (m_n6664 == 5)
 			{
-				*(int *)((char *)this + 0x665c) = 2;
-				g_10924a6c->vfunc1();
-				sub_100041b0(0x7d);
+				m_n665c = 2;
+				SetCondition(0x7d);
 			}
-			else if (nSubState == 4)
-				*(int *)((char *)this + 0x665c) = 1;
+			else if (m_n6664 == 4)
+				m_n665c = 1;
 		}
-		Vector vecPlayerOrigin = *(Vector *)((CAI_BaseNPC *)sub_101cda50())->vfunc220();
-		Vector vecMyOrigin = *(Vector *)((CAI_BaseNPC *)this)->vfunc220();
-		Vector vecDelta = vecPlayerOrigin - vecMyOrigin;
-		float flDist = fabs(FastSqrt(vecDelta.x * vecDelta.x + (vecDelta.y * vecDelta.y + vecDelta.z * vecDelta.z)));
-		if (*(int *)((char *)this + 0xfec) == 0x6e && flDist < *(float *)((char *)this + 0x666c))
+		Vector vecPlayerOrigin = *(Vector *)sub_101cda50()->vfunc220();
+		Vector vecMyOrigin = *(Vector *)vfunc220();
+		float flDist = fabs(VectorLength2(vecPlayerOrigin - vecMyOrigin));
+		if (m_Activity == 0x6e && flDist < m_fl666c)
 		{
-			if (*(int *)((char *)this + 0x665c) == 0)
-				*(int *)((char *)this + 0x665c) = 1;
-			if (*(int *)((char *)this + 0x665c) == 1)
-			{
-				g_10924a6c->vfunc1();
-				sub_100041b0(0x78);
-			}
+			if (m_n665c == 0)
+				m_n665c = 1;
+			if (m_n665c == 1)
+				SetCondition(0x78);
 		}
-		else if (flDist < *(float *)((char *)this + 0x6668))
-		{
-			g_10924a6c->vfunc1();
-			sub_100041b0(0x2b);
-		}
-		else if (flDist >= *(float *)((char *)this + 0x6668))
-		{
-			g_10924a6c->vfunc1();
-			sub_100041b0(0x7c);
-		}
-		*(float *)((char *)this + 0x667c) = flDist;
+		else if (flDist < m_fl6668)
+			SetCondition(0x2b);
+		else if (flDist >= m_fl6668)
+			SetCondition(0x7c);
+		m_fl667c = flDist;
 	}
 	else
-	{
-		g_10924a6c->vfunc1();
-		sub_100041b0(0x7d);
-	}
+		SetCondition(0x7d);
 }
 // END FUNCTION
 
 // FUNCTION: 0x10374d80 size=0x99
 #include "CNPC_VDog.h"
 
-#define VDOG_INT(off) (*(int *)((char *)this + (off)))
 #define VDOG_FILE "E:\\Vampire\\main\\dlls\\hl2_dll\\NPC_VDog.cpp"
 
 int CNPC_VDog::vfunc460()
 {
-	if (sub_10014df8(0x78) || sub_10014df8(0x7e)) {
+	if (sub_10014df8(0x78) || sub_10014df8(0x7e))
+	{
 		sub_10374e50();
-		return VDOG_INT(0x5cc4);
+		return m_IdealState;
 	}
-	if (sub_10014df8(0x79)) {
-		VDOG_INT(0x1b40) = 0x517;
-		VDOG_INT(0x5cc4) = 3;
-		*(const char **)((char *)this + 0x1b3c) = VDOG_FILE;
-	} else if (sub_10014df8(0x7c) && VDOG_INT(0x5cc4) == 3) {
-		VDOG_INT(0x1b40) = 0x51d;
-		VDOG_INT(0x5cc4) = 1;
-		*(const char **)((char *)this + 0x1b3c) = VDOG_FILE;
-	}
+	if (sub_10014df8(0x79))
+		SetIdealState(NPC_STATE_ALERT, VDOG_FILE, 0x517);
+	else if (sub_10014df8(0x7c) && m_IdealState == NPC_STATE_ALERT)
+		SetIdealState(NPC_STATE_IDLE, VDOG_FILE, 0x51d);
 	return sub_1000cc34();
 }
 // END FUNCTION
