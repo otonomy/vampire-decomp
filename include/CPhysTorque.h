@@ -1,112 +1,22 @@
-// CPhysTorque: physics torque entity. Declared flat (bases not recovered); only the vtable head is modelled.
+// CPhysTorque (RTTI CPhysTorque : CPhysForce, vtable 0x10445974), "phys_torque" (0x4a8 bytes): a torque about a
+// fixed axis. The 2004 SDK's dlls/phys_controller.cpp class.
 #pragma once
 
-struct datamap_t;
+#include "CPhysForce.h"
 
-#include "Vector.h"
-
-class CPhysObjSlots;
-
-class CPhysTorque
+class CPhysTorque : public CPhysForce
 {
 public:
+	// DECLARE_CLASS( CPhysTorque, CPointEntity ): Spawn's BaseClass::Spawn() is CPointEntity's (0x101c0820), not
+	// CPhysForce's, and the datamap's baseMap is CBaseEntity's
+	typedef CPointEntity BaseClass;
 
-	void sub_10014470();	// destructor body
-	// slot 241 "CPhysTorque::vfunc241": arg1 is the physics object whose slot 38 fills a 3x4 matrix, arg2 the Vector
-	// that is zeroed and gets the scaled answer, arg3 unused. Declared with the real argument order (arg2 is the
-	// Vector, not a float: the game zeroes/writes arg2 and reloads arg1 as the object).
-	void sub_100282e0(CPhysObjSlots *pPhys, Vector &linear, Vector &angular);	// SetupForces
+	virtual CBaseEntity *vfunc5(unsigned int flags);	// slot 5: the scalar deleting destructor
+	virtual datamap_t *vfunc82();	// slot 82 GetDataDescMap: &m_DataMap
+	virtual void vfunc103();	// slot 103 Spawn
+	virtual void vfunc241(IPhysicsObject *pPhys, Vector *pLinear, Vector *pAngular);	// slot 241 SetupForces: no linear part; the axis in world space (the object's slot 38 matrix) times the force
 
-	void sub_10028260();
+	static datamap_t m_DataMap;	// 0x10537098 (DECLARE_DATADESC)
 
-	char m_pad0004[0x204 - 4];
-	unsigned int m_fFlags204;
-	char m_pad0208[0x458 - 0x208];
-	float m_flScale;	// 0x458
-	char m_pad045c[0x49c - 0x45c];
-	Vector m_vecAxis;	// 0x49c
-public:
-	virtual void vfunc0();
-	virtual void vfunc1();
-	virtual void vfunc2();
-	virtual void vfunc3();
-	virtual void vfunc4();
-	virtual CPhysTorque *vfunc5(unsigned int flags);	// scalar deleting destructor
-	virtual void vfunc6();
-	virtual void vfunc7();
-	virtual void vfunc8();
-	virtual void vfunc9();
-	virtual void vfunc10();
-	virtual void vfunc11();
-	virtual void vfunc12();
-	virtual void vfunc13();
-	virtual void vfunc14();
-	virtual void vfunc15();
-	virtual void vfunc16();
-	virtual void vfunc17();
-	virtual void vfunc18();
-	virtual void vfunc19();
-	virtual void vfunc20();
-	virtual void vfunc21();
-	virtual void vfunc22();
-	virtual void vfunc23();
-	virtual void vfunc24();
-	virtual void vfunc25();
-	virtual void vfunc26();
-	virtual void vfunc27();
-	virtual void vfunc28();
-	virtual void vfunc29();
-	virtual void vfunc30();
-	virtual void vfunc31();
-	virtual void vfunc32();
-	virtual void vfunc33();
-	virtual void vfunc34();
-	virtual void vfunc35();
-	virtual void vfunc36();
-	virtual void vfunc37();
-	virtual void vfunc38();
-	virtual void vfunc39();
-	virtual void vfunc40();
-	virtual void vfunc41();
-	virtual void vfunc42();
-	virtual void vfunc43();
-	virtual void vfunc44();
-	virtual void vfunc45();
-	virtual void vfunc46();
-	virtual void vfunc47();
-	virtual void vfunc48();
-	virtual void vfunc49();
-	virtual void vfunc50();
-	virtual void vfunc51();
-	virtual void vfunc52();
-	virtual void vfunc53();
-	virtual void vfunc54();
-	virtual void vfunc55();
-	virtual void vfunc56();
-	virtual void vfunc57();
-	virtual void vfunc58();
-	virtual void vfunc59();
-	virtual void vfunc60();
-	virtual void vfunc61();
-	virtual void vfunc62();
-	virtual void vfunc63();
-	virtual void vfunc64();
-	virtual void vfunc65();
-	virtual void vfunc66();
-	virtual void vfunc67();
-	virtual void vfunc68();
-	virtual void vfunc69();
-	virtual void vfunc70();
-	virtual void vfunc71();
-	virtual void vfunc72();
-	virtual void vfunc73();
-	virtual void vfunc74();
-	virtual void vfunc75();
-	virtual void vfunc76();
-	virtual void vfunc77();
-	virtual void vfunc78();
-	virtual void vfunc79();
-	virtual void vfunc80();
-	virtual void vfunc81();
-	virtual datamap_t * vfunc82();
+	Vector m_axis;	// 0x49c: m_axis (key "axis"): a point on the axis in the map, the unit axis after Spawn
 };

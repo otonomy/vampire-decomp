@@ -2,59 +2,45 @@
 #include "vampire.h"
 
 // FUNCTION: 0x10027c20 size=0x6
-#include "datamap.h"
 #include "CPhysThruster.h"
-namespace lifted {
-extern char g_10537024;
-}
+
+//-----------------------------------------------------------------------------
+// CPhysThruster::GetDataDescMap
+//-----------------------------------------------------------------------------
 datamap_t *CPhysThruster::vfunc82()
 {
-    return (datamap_t *)&lifted::g_10537024;
+	return &m_DataMap;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10027cb0 size=0xe4
 #include "CPhysThruster.h"
-#include "CEHandleGet.h"
 
-#define SV10(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); \
-	virtual void p##5(); virtual void p##6(); virtual void p##7(); virtual void p##8(); virtual void p##9();
+extern Vector g_1070d1b0;	// vec3_origin
 
-// the entity vtable up to slot 217 (GetAbsOrigin)
-struct CEntitySlotsView
-{
-	SV10(a0) SV10(a1) SV10(a2) SV10(a3) SV10(a4) SV10(a5) SV10(a6) SV10(a7) SV10(a8) SV10(a9)
-	SV10(b0) SV10(b1) SV10(b2) SV10(b3) SV10(b4) SV10(b5) SV10(b6) SV10(b7) SV10(b8) SV10(b9)
-	SV10(c0)
-	virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14();
-	virtual void u15(); virtual void u16();
-	virtual Vector *vfunc217();
-};
-
-extern Vector g_1070d1b0;
-
+//-----------------------------------------------------------------------------
+// Purpose: OnActivate: remember where the thruster sits relative to the attached entity
+//-----------------------------------------------------------------------------
 void CPhysThruster::vfunc242()
 {
-	if (!EHandle_Get(m_hAttached))
-		return;
-	if (m_flags204 & 0x20)
+	if (m_hAttached != 0)
 	{
-		m_vecOffset = g_1070d1b0;
-		return;
+		if (m_flags204 & SF_THRUST_IGNORE_POS)
+		{
+			m_localOrigin = g_1070d1b0;
+		}
+		else
+		{
+			m_localOrigin = *(Vector *)vfunc217() - *(Vector *)m_hAttached->vfunc217();	// GetAbsOrigin (CBaseEntity.h types slot 217 as float *)
+		}
 	}
-	CEntitySlotsView *pAttached = (CEntitySlotsView *)EHandle_Get(m_hAttached);
-	Vector *pAttachedOrigin = pAttached->vfunc217();
-	m_vecOffset = *((CEntitySlotsView *)this)->vfunc217() - *pAttachedOrigin;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10027de0 size=0x18c
-#include "CBaseEntity.h"
 #include "CPhysThruster.h"
 #include "IPhysicsObject.h"
-#include "CEntityVSlots.h"
 #include "CUnknown101d1460.h"
-#include "CEHandleGet.h"
 #include "QAngle.h"
 
 struct CMatrix10027de0 : CUnknown101d1460
@@ -66,38 +52,41 @@ struct CMatrix10027de0 : CUnknown101d1460
 
 void sub_10139550(const QAngle &angles, Vector *pForward);
 
+//-----------------------------------------------------------------------------
+// Purpose: SetupForces
+//-----------------------------------------------------------------------------
 void CPhysThruster::vfunc241(IPhysicsObject *pPhys, Vector *pLinear, Vector *pAngular)
 {
 	Vector vecForce;
-	sub_10139550(*(const QAngle *)((CEntityVSlots *)this)->slot221(), &vecForce);
-	vecForce = vecForce * m_flForce;
-	if (m_flags204 & 0x10)
+	sub_10139550(*(const QAngle *)vfunc221(), &vecForce);	// AngleVectors( GetAbsAngles() ) (CBaseEntity.h types slot 221 as float *)
+	vecForce = vecForce * m_force;
+	if (m_flags204 & SF_THRUST_MASS_INDEPENDENT)
 		vecForce = vecForce * pPhys->vfunc12();
 	{
 		CMatrix10027de0 matAttached;
-		matAttached.sub_101d1530((CBaseEntity *)EHandle_Get(m_hAttached), 0);
+		matAttached.sub_101d1530(m_hAttached, 0);
 		Vector vecOffset;
-		matAttached.sub_10027fe0(&vecOffset, &m_vecOffset);
+		matAttached.sub_10027fe0(&vecOffset, &m_localOrigin);
 		{
 			Vector vecTemp;
 			matAttached.sub_10028060(&vecTemp, &vecForce);
 			vecForce = vecTemp;
 		}
 		pPhys->vfunc33(&vecForce, &vecOffset, pLinear, pAngular);
-		if (m_flags204 & 8)
+		if (m_flags204 & SF_THRUST_LOCAL_ORIENTATION)
 		{
 			Vector vecLocal;
 			matAttached.sub_100280e0(&vecLocal, pLinear);
 			*pLinear = vecLocal;
 		}
 	}
-	if (!(m_flags204 & 2))
+	if (!(m_flags204 & SF_THRUST_FORCE))
 	{
 		pLinear->x = 0;
 		pLinear->y = 0;
 		pLinear->z = 0;
 	}
-	if (!(m_flags204 & 4))
+	if (!(m_flags204 & SF_THRUST_TORQUE))
 	{
 		pAngular->x = 0;
 		pAngular->y = 0;
@@ -111,8 +100,10 @@ void CPhysThruster::vfunc241(IPhysicsObject *pPhys, Vector *pLinear, Vector *pAn
 
 void sub_100aa7b0(void *p);
 
-// TARGET: CPhysThruster::vfunc5
-CPhysThruster *CPhysThruster::vfunc5(unsigned int flags)
+//-----------------------------------------------------------------------------
+// CPhysThruster scalar deleting destructor
+//-----------------------------------------------------------------------------
+CBaseEntity *CPhysThruster::vfunc5(unsigned int flags)
 {
 	sub_10014470();
 	if (flags & 1)
