@@ -325,7 +325,7 @@ public:
 };
 
 void *sub_1013fdb0(int interpolator);
-void sub_1012f790(int index, const Vector *pVec);
+void Motion_SetKeyAngles(int index, const Vector *pVec);
 void sub_101301f0(float flFrac, int interpolator, Quaternion *pOut);
 void sub_1013b240(const Quaternion *pIn, Vector *pOut);
 
@@ -345,13 +345,13 @@ float CBaseMoveBehavior::vfunc135(float flFrameTime)
 	if (pInterp)
 	{
 		pInterp->slot2(-1, (const Vector *)((char *)m_pPreKeyFrame + 0x450));
-		sub_1012f790(-1, (const Vector *)((char *)m_pPreKeyFrame + 0x468));
+		Motion_SetKeyAngles(-1, (const Vector *)((char *)m_pPreKeyFrame + 0x468));
 		pInterp->slot2(0, (const Vector *)((char *)m_p4a0 + 0x450));
-		sub_1012f790(0, (const Vector *)((char *)m_p4a0 + 0x468));
+		Motion_SetKeyAngles(0, (const Vector *)((char *)m_p4a0 + 0x468));
 		pInterp->slot2(1, (const Vector *)((char *)m_p4a4 + 0x450));
-		sub_1012f790(1, (const Vector *)((char *)m_p4a4 + 0x468));
+		Motion_SetKeyAngles(1, (const Vector *)((char *)m_p4a4 + 0x468));
 		pInterp->slot2(2, (const Vector *)((char *)m_pPostKeyFrame + 0x450));
-		sub_1012f790(2, (const Vector *)((char *)m_pPostKeyFrame + 0x468));
+		Motion_SetKeyAngles(2, (const Vector *)((char *)m_pPostKeyFrame + 0x468));
 		pInterp->slot3(flFrac, &vecInterp);
 	}
 	else
