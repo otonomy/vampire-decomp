@@ -19,3 +19,13 @@ give.
 | function | rule | reason |
 |---|---|---|
 | (none yet) | | |
+
+## Reviewed fakematches the checker passes
+
+The rule checker's [match] rows are deliberately narrow. These functions pass them, but review found fake source; they
+are open work and should be read as `MATCH-PENDING`.
+
+| function | why |
+|---|---|
+| 0x10027c80 (CPhysThruster's DataMapInit) | models the interior address `g_10537028` of `CPhysThruster::m_DataMap` as separate storage and returns `int`; the original writes `m_DataMap.dataNumFields` / `.dataDesc` and returns `datamap_t *` |
+| 0x100281c0 (CPhysTorque's DataMapInit) | the same, for `CPhysTorque::m_DataMap` |
