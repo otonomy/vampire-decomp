@@ -27,9 +27,9 @@ baseline is [`status/functions.csv`](status/functions.csv).
 | | Functions | Code bytes |
 |---|---:|---:|
 | Annotated functions in `src/` | 18,977 | 2,946,356 |
-| **Matched under the rules** | **10,869 (57.3%)** | **856,561 (29.1%)** |
+| **Matched under the rules** | **10,878 (57.3%)** | **857,519 (29.1%)** |
 | Bytes matched (the three rows below it: matched under the rules, `MATCH-PENDING`, `VERBATIM`) | 18,947 (99.8%) | 2,915,706 (99.0%) |
-| Bytes matched, source still fake (`MATCH-PENDING`): open work | 7,954 | |
+| Bytes matched, source still fake (`MATCH-PENDING`): open work | 7,945 | |
 | Bytes matched with an inline-assembly body (`VERBATIM`, counted apart) | 124 | |
 | Not matched: the bytes match only with relocations masked, a reference is wrong (`REF`) | 30 | |
 

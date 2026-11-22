@@ -29,3 +29,4 @@ are open work and should be read as `MATCH-PENDING`.
 |---|---|
 | 0x10027c80 (CPhysThruster's DataMapInit) | models the interior address `g_10537028` of `CPhysThruster::m_DataMap` as separate storage and returns `int`; the original writes `m_DataMap.dataNumFields` / `.dataDesc` and returns `datamap_t *` |
 | 0x100281c0 (CPhysTorque's DataMapInit) | the same, for `CPhysTorque::m_DataMap` |
+| 0x10374e50 (CNPC_VDog) | calls slots 596 and 600 through a local vtable view (`CDogSlotView`), because `CNPC_VAnimal.h` declares the class on `CBaseEntity` instead of `CAI_BaseNPCTroika` (RTTI) |
