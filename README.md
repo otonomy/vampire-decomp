@@ -4,23 +4,41 @@ A matching decompilation of `vampire.dll`, the game-code DLL of *Vampire: The Ma
 (Troika Games, 2004), patch 1.2. Each function in `src/` is C++ that Microsoft Visual C++ 6.0 (`/O2 /GR`, the
 compiler and flags the game was built with) compiles to the same bytes as the original DLL.
 
-The work was done with **pcdecomp**, a matching-decompilation tool for 32-bit Windows games. pcdecomp compiles a
-function with the game's own compiler, compares it with the original byte for byte, and saves it only when the two are
-identical. The functions were written by AI agents working through pcdecomp, by hand, and by pcdecomp's own
-automatic passes (machine drafts, copies of already matched twin functions).
+The functions were first matched with **pcdecomp**, the owner's matching-decompilation tool for 32-bit Windows
+games, by AI agents working through it, by hand, and by pcdecomp's automatic passes. The repository now carries its
+own gate and rule checker in `tools/`, so anyone with the game and VC6 can check every function; see
+[AGENTS.md](AGENTS.md).
 
-## Status (2026-11-21)
+## Status
 
-### `vampire.dll`: every function matches
+Progress is counted two ways, and the first number is the headline:
+- **Matched under the rules:** the bytes match *and* the source passes every [match] code rule: no layout views,
+  offset casts, padding, `volatile` carriers, dead steering code, fake vtables or assembly bodies
+  ([AGENTS.md](AGENTS.md), "Code rules"). This is source a reader can trust.
+- **Bytes matched:** VC6 compiles the source to the original's bytes, and every reference (call, import, global,
+  string, constant) names the same target as the original. Masking relocations is not enough.
+
+Both come from the repository's own tools (`tools/`, C): `vd gate` compiles each unit with VC6 and compares every
+annotated function with the retail DLL; `vd rules` checks the source against the code rules. The per-function
+baseline is [`status/functions.csv`](status/functions.csv).
+
+### `vampire.dll`
 
 | | Functions | Code bytes |
 |---|---:|---:|
-| Game code, matched as C++ | 23,799 (99.44%) | 2,957,996 (97.00%) |
-| Game code, matched with inline assembly (counted apart) | 135 (0.56%) | 91,418 (3.00%) |
-| **Total game code** | **23,934 (100%)** | **3,049,414 (100%)** |
+| Annotated functions in `src/` | 18,977 | 2,946,356 |
+| **Matched under the rules** | **10,878 (57.3%)** | **857,519 (29.1%)** |
+| Bytes matched (the three rows below it: matched under the rules, `MATCH-PENDING`, `VERBATIM`) | 18,947 (99.8%) | 2,915,706 (99.0%) |
+| Bytes matched, source still fake (`MATCH-PENDING`): open work | 7,945 | |
+| Bytes matched with an inline-assembly body (`VERBATIM`, counted apart) | 124 | |
+| Not matched: the bytes match only with relocations masked, a reference is wrong (`REF`) | 30 | |
 
-The count leaves out 17,504 entries that are not the game's own code: 16,468 incremental-link jump stubs and 1,036
-C runtime and helper routines (143,459 bytes in all).
+Of the bytes-matched functions, 5,850 match as part of their unit compiled whole; the others match only when
+compiled on their own, because 168 of the 1,171 units do not compile as one file (their function blocks declare
+the same types and globals in conflicting ways). Making each unit one real translation unit is open work.
+
+The earlier count of 23,934 functions came from pcdecomp's own database, which also counted copies of matched twin
+functions; the repository's source holds 18,977 annotated functions.
 
 The data is in the sources as well: initialized and constant data in `src/_data/`, zero-initialized globals in
 `src/_bss/`, static initializers in `src/_init/`.
@@ -51,17 +69,20 @@ The data is in the sources as well: initialized and constant data in `src/_data/
 | `include/` | The shared headers: the game's classes, recovered from its RTTI, vtables and code |
 | `symbols.txt` | Every address with its symbol name |
 | `project.toml` | The pcdecomp project settings (compiler flags, prelude, agent settings) |
-| `docs/` | Research notes: VC6 register-allocation rules, the standalone-link work |
-| `CLAUDE.md` | The working guide the agents followed: VC6 code-generation idioms that decide a match |
+| `tools/` | `vd`, the project's tools in C: the byte gate, the code-rule checker, the RTTI hierarchy check, the renamer |
+| `status/` | The per-function baseline (`functions.csv`) and the rule-exception list |
+| `docs/` | Research notes: VC6 code generation (`vc6-codegen-notes.md`), register allocation, the standalone-link work; `names/`: names applied from debug information, with their evidence |
+| `AGENTS.md` | The project guide: tools, the byte gate, the code-rules profile, workflow (`CLAUDE.md` points to it) |
 | `phase0/` | The first experiments that tested whether matching was possible |
 | `client/` | `client.dll`, in progress: a pcdecomp project of its own with the same layout (`src/`, `include/`, `symbols.txt`, `project.toml`, `CLAUDE.md`) |
 | `LICENSE` | CC0 1.0 Universal (see [License](#license-cc0-10)) |
 
 **No game files are included.** To build or check anything you need your own legally obtained copy of the game:
 `vampire.dll` from patch 1.2 (SHA-1 `3fe64bc0d9d7eca64976adc668617ca2814e5e4a`); for `client/`, `client.dll` from
-the same patch (SHA-1 `39a2d2556f08090542f2d186320b9012a83ffb6b`). You also need Visual C++ 6.0;
-the game was built with VC6 build 9044. Set `binary`, `cl` and `vcvars` in `project.toml` (and `client/project.toml`) to the places of these
-files on your machine. pcdecomp's database (`project.db`) and its cache are not part of the repository.
+the same patch (SHA-1 `39a2d2556f08090542f2d186320b9012a83ffb6b`). You also need Visual C++ 6.0
+with the Processor Pack (the game was built with VC6 build 9044: `C2.DLL` 13.00.9044). Point the tools at both with
+`VD_DLL` and `VD_CL` (or set `binary` and `cl` in `project.toml`), build them with `make -C tools`, and run
+`build/vd.exe gate`. pcdecomp's database (`project.db`) and its cache are not part of the repository.
 
 ## Legal
 

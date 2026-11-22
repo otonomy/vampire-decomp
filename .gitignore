@@ -4,3 +4,4 @@ project.db-wal
 project.db-shm
 .pcdecomp.lock
 .pcdecomp.verify.lock
+build/

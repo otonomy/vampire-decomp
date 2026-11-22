@@ -27,8 +27,10 @@ struct CScriptView144
 	char m_b5f91;
 };
 
-extern CDevFlagObj *g_10924a6c;
-extern CDevFlagObj *g_106bbaa4;
+#include "ConVar.h"
+
+extern ConVar g_10924a68;	// the AI condition debug convar
+extern ConVar g_106bbaa0;
 
 void CAI_BaseNPC::vfunc144(int a)
 {
@@ -66,7 +68,7 @@ void CAI_BaseNPC::vfunc144(int a)
 			}
 			((CCineNPC *)((CUnknown100290c0 *)g_10566458)->sub_100290c0((unsigned int *)&p->m_hScript5d74))->sub_101a8c30();
 			IPhysicsObject *pPhys;
-			if (!g_106bbaa4->vfunc1() && g_106bbaa4->m_n2c && (pPhys = p->m_pPhysObj36c))
+			if (g_106bbaa0.GetBool() && (pPhys = p->m_pPhysObj36c))
 			{
 				Vector vecTmp;
 				Vector vecPos;
@@ -90,7 +92,8 @@ void CAI_BaseNPC::vfunc144(int a)
 	p->m_pszFile1b3c = FILE_;
 	p->m_nLine1b40 = 0x217;
 	p->m_nIdealState5cc4 = 7;
-	g_10924a6c->vfunc1();
+	if (g_10924a68.GetBool())
+		AI_CONDITION_TRACE(0x4c);
 	p->sub_10269a20(0x4c);
 	p->m_hAttacker5b7c = pInfo->m_pInflictor;
 	p->m_b5b80 = 1;
@@ -533,7 +536,7 @@ void CAI_BaseNPC::sub_10273390()
 #include "Vector.h"
 #include <string.h>
 #include <stdlib.h>
-struct animevent_t { int event; const char *options; int a; int b; CBaseEntity *pSource; };
+#include "animevent_t.h"
 struct EntV { void sub_101a8890(int a); void sub_101a7230(int a); };
 struct ObjA { void sub_102d09b0(CAI_BaseNPC *p, int a); };
 struct ObjB { void sub_102db3e0(CAI_BaseNPC *p, int a); };
@@ -564,8 +567,7 @@ void sub_10272650(int a);
 void sub_101aeb60(int edict, const char *s, float v, int a, int b, int c);
 struct FindObj { void *sub_100f7fe0(const char *s, const float *origin, float radius, void *pSearch, void *pActivator); void *sub_100f7f20(int a, const char *s, void *b, int c); };
 extern FindObj g_106eb5d8;
-struct RandV { virtual void v0(); virtual void v1(); virtual int vfunc2(int a, int b); };
-extern RandV *g_1070b244;
+#include "engineiface.h"
 __declspec(dllimport) void DevMsg(const char *fmt, ...);
 
 #define NPC_F(T, off) (*(T *)((char *)this + (off)))
@@ -588,7 +590,7 @@ void CAI_BaseNPC::vfunc259(animevent_t *pEvent)
 		self->sub_101b0c10(pEvent->options);
 		return;
 	case 0x3f1:
-		if (!g_1070b244->vfunc2(0, 2)) return;
+		if (!enginerandom->vfunc2(0, 2)) return;
 	case 0x3ed:
 		sub_101aeb60(NPC_F(int, 0x2e0), pEvent->options, 1.0f, 0x50, 0, 100);
 		return;
@@ -894,7 +896,7 @@ struct CEventKilled144 : CAI_BaseNPCUnit144
 	IPhysicsObject *VPhysicsGetObject() const { return m_pPhysObj36c; }
 	void SetIdealStateDbg(int state, const char *pszFile, int nLine) { m_pszFile1b3c = pszFile; m_nLine1b40 = nLine; m_nIdealState5cc4 = state; }
 	void SetTouchNull() { *(int *)((char *)this + 0x1ec) = 0; }
-	void SetCondition(int iCondition) { if (g_10924a68.GetBool()) {} sub_10269a20(iCondition); }
+	void SetCondition(int iCondition) { if (g_10924a68.GetBool()) AI_CONDITION_TRACE(iCondition); sub_10269a20(iCondition); }
 	void sub_10265ad0(const CDamageInfo144 &info);
 };
 
@@ -1058,7 +1060,7 @@ struct CAI_CineCleanupNPC : public CAI_BaseNPC
 	const Vector &GetLocalOrigin() { return *(Vector *)vfunc220(); }
 	void SetLocalOrigin(const Vector &v) { ((CEntityVSlots *)this)->slot62((float *)&v.x); }
 	void SetMoveType(int a, int b) { ((CEntityVSlots *)this)->slot93(a, b); }
-	void SetCondition(int iCondition) { if (g_10924a68.GetBool()) {} sub_10269a20(iCondition); }
+	void SetCondition(int iCondition) { if (g_10924a68.GetBool()) AI_CONDITION_TRACE(iCondition); sub_10269a20(iCondition); }
 };
 
 // TARGET: CAI_CineCleanupNPC::sub_1027d170

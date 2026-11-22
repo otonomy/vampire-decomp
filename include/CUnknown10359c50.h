@@ -21,8 +21,8 @@ class CUnknown10359c50
 public:
 	bool sub_1001153b(const char *a, const char *b);	// returns false on failure
 	void sub_1000a948(const char *name, int id, const char *type, const char *className);
-	bool sub_102ea130(const char *pszSymbol, int nLocalId, const char *pszIdType, const char *pszClassName);	// adds a symbol (stub 0x1000a948): errors (Msg, false) for a table that is not set up, a first local id that is not valid (sub_102ea240) or one below the base; keeps the highest local id and its global id, then stores the symbol with the global id of the local id (sub_102ea2d0)
-	bool sub_102ea240(int nLocalId);	// stub 0x10009142: whether the id is a valid first local id
+	bool sub_102ea130(const char *pszSymbol, int nLocalId, const char *pszIdType, const char *pszClassName);	// adds a symbol (stub 0x1000a948): errors (Msg, false) for a table that is not set up, a first local id that is not valid (SetLocalBase) or one below the base; keeps the highest local id and its global id, then stores the symbol with the global id of the local id (sub_102ea2d0)
+	bool SetLocalBase(int nLocalId);	// stub 0x10009142: whether the id is a valid first local id
 	int sub_102ea2d0(int nLocalId);	// stub 0x10012300: the global id of a local id
 
 	int m_nGlobalBase;	// 0x00

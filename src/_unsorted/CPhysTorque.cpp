@@ -2,50 +2,57 @@
 #include "vampire.h"
 
 // FUNCTION: 0x10028160 size=0x6
-#include "datamap.h"
 #include "CPhysTorque.h"
-namespace lifted {
-extern char g_10537098;
-}
+
+//-----------------------------------------------------------------------------
+// CPhysTorque::GetDataDescMap
+//-----------------------------------------------------------------------------
 datamap_t *CPhysTorque::vfunc82()
 {
-    return (datamap_t *)&lifted::g_10537098;
+	return &m_DataMap;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10028260 size=0x5f
 #include "CPhysTorque.h"
-#include "CPointEntity.h"
-void sub_101cf680(Vector *, float);
 
-void CPhysTorque::sub_10028260()
+void sub_101cf680(Vector *, float);	// UTIL_SnapDirectionToAxis
+
+//-----------------------------------------------------------------------------
+// Purpose: Spawn
+//-----------------------------------------------------------------------------
+void CPhysTorque::vfunc103()
 {
-	m_fFlags204 = (m_fFlags204 & ~2) | 0x14;
-	Vector *pOrigin = ((Vector *(__fastcall *)(CPhysTorque *))(*(void ***)this)[217])(this);
-	m_vecAxis -= *pOrigin;
-	VectorNormalize(m_vecAxis);
-	sub_101cf680(&m_vecAxis, 0.01f);
-	((CPointEntity *)this)->sub_101c0820();
+	// force spawnflags to agree with implementation of this class
+	m_flags204 = (m_flags204 & ~SF_THRUST_FORCE) | SF_THRUST_TORQUE | SF_THRUST_MASS_INDEPENDENT;
+
+	m_axis -= *(Vector *)vfunc217();	// GetAbsOrigin (CBaseEntity.h types slot 217 as float *)
+	VectorNormalize(m_axis);
+	sub_101cf680(&m_axis, 0.01f);
+	BaseClass::sub_101c0820();	// BaseClass::Spawn
 }
 // END FUNCTION
 
 // FUNCTION: 0x100282e0 size=0x75
 #include "CPhysTorque.h"
-#include "CPhysObjSlots.h"
+#include "IPhysicsObject.h"
 
-void sub_10138460(const Vector *pIn, const float *pMatrix, Vector *pOut);
+void sub_10138460(const Vector *pIn, const float *pMatrix, Vector *pOut);	// VectorRotate
 
-void CPhysTorque::sub_100282e0(CPhysObjSlots *pPhys, Vector &linear, Vector &angular)
+//-----------------------------------------------------------------------------
+// Purpose: SetupForces
+//-----------------------------------------------------------------------------
+void CPhysTorque::vfunc241(IPhysicsObject *pPhys, Vector *pLinear, Vector *pAngular)
 {
-	linear.Init();
+	pLinear->Init();
 
 	float matrix[12];
-	pPhys->slot38(matrix);
+	pPhys->vfunc38(matrix);
 
 	Vector axis_ws;
-	sub_10138460(&m_vecAxis, matrix, &axis_ws);
+	sub_10138460(&m_axis, matrix, &axis_ws);
 
-	angular = axis_ws * m_flScale;
+	*pAngular = axis_ws * m_force;
 }
 // END FUNCTION
 
@@ -54,8 +61,10 @@ void CPhysTorque::sub_100282e0(CPhysObjSlots *pPhys, Vector &linear, Vector &ang
 
 void sub_100aa7b0(void *p);
 
-// TARGET: CPhysTorque::vfunc5
-CPhysTorque *CPhysTorque::vfunc5(unsigned int flags)
+//-----------------------------------------------------------------------------
+// CPhysTorque scalar deleting destructor
+//-----------------------------------------------------------------------------
+CBaseEntity *CPhysTorque::vfunc5(unsigned int flags)
 {
 	sub_10014470();
 	if (flags & 1)

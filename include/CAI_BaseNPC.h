@@ -17,6 +17,22 @@ class CAI_Pathfinder;
 class CAI_BehaviorBase;
 struct CAI_NavProvider;
 
+// The NPC states (m_NPCState at +0x5cc0, m_IdealState at +0x5cc4). Troika's numbering: combat is 2 and alert 3
+// ("***Combat state with no enemy!" in state 2 falls back to 3), 4 is the scripted sequence, 7 is dead (Event_Killed).
+enum NPC_STATE
+{
+	NPC_STATE_NONE = 0,
+	NPC_STATE_IDLE = 1,
+	NPC_STATE_COMBAT = 2,
+	NPC_STATE_ALERT = 3,
+	NPC_STATE_SCRIPT = 4,
+	NPC_STATE_DEAD = 7,
+};
+
+// guess: Troika's condition debug trace. Each SetCondition asks the AI condition debug convar (g_10924a68) first;
+// the message it guards is compiled out of the release build, so only the convar test stays.
+#define AI_CONDITION_TRACE(condition)
+
 #define CAI_NPC_V(n) virtual void vfunc##n();
 #define CAI_NPC_V10(p) CAI_NPC_V(p##0) CAI_NPC_V(p##1) CAI_NPC_V(p##2) CAI_NPC_V(p##3) CAI_NPC_V(p##4) CAI_NPC_V(p##5) CAI_NPC_V(p##6) CAI_NPC_V(p##7) CAI_NPC_V(p##8) CAI_NPC_V(p##9)
 

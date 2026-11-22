@@ -3,8 +3,14 @@
 #pragma once
 
 #include "CNPC_VAnimal.h"
+#include "ConVar.h"
+#include "CAI_BaseNPC.h"	// NPC_STATE, AI_CONDITION_TRACE
 
 class CEntityVSlots;
+class CUnknown103160c0;	// the squad (CAI_Squad: "SquadNewEnemy")
+
+extern ConVar g_10924a68;	// the AI condition debug convar
+
 
 struct CVAnimalArg;	// a tail-call override's parameter
 class CNPC_VDog : public CNPC_VAnimal
@@ -48,7 +54,48 @@ public:
 	virtual int vfunc451();
 	virtual bool vfunc452();
 	char sub_10374aa0(CBaseEntity *pHint);	// slot 566 (plain member): whether the hint's type at +0x5dc is 12000 (0x2ee0)
-	char m_pad03e0[0x6694 - 0x3e0];
+
+	// The members below 0x6650 belong to the NPC bases (CBaseAnimating .. CAI_BaseNPCTroika). They are declared here
+	// because CNPC_VAnimal is declared on CBaseEntity, while the RTTI chain is CNPC_VDog : CNPC_VAnimal :
+	// CAI_BaseNPCTroika : CAI_BaseNPC : CBaseCombatCharacter; they move to those classes with the hierarchy.
+	char m_pad03e0[0xfec - 0x3e0];
+	int m_Activity;	// 0xfec: CAI_BaseNPC, the current activity
+	char m_pad0ff0[0x1b38 - 0xff0];
+	int m_n1b38;	// 0x1b38: CAI_BaseNPC, the NPC type id (sub_1027f290 names them) of the last ideal state pick; 0xd = the dog
+	const char *m_pszFile1b3c;	// 0x1b3c: CAI_BaseNPC, __FILE__ of the last ideal state change
+	int m_nLine1b40;	// 0x1b40: CAI_BaseNPC, its __LINE__
+	char m_pad1b44[0x5b80 - 0x1b44];
+	char m_b5b80;	// 0x5b80: CAI_BaseNPC, cleared when the NPC is hurt or loses its enemy
+	char m_pad5b81[0x5bb0 - 0x5b81];
+	int m_n5bb0;	// 0x5bb0: CAI_BaseNPC, the squad is ignored while this count is positive
+	char m_pad5bb4[0x5cc0 - 0x5bb4];
+	int m_NPCState;	// 0x5cc0: CAI_BaseNPC, the NPC state (1 idle, 2 alert, 3 combat, 4 scripted, 7 dead, 8 ...)
+	int m_IdealState;	// 0x5cc4: CAI_BaseNPC, the state SelectIdealState picks
+	char m_pad5cc8[0x5da4 - 0x5cc8];
+	CUnknown103160c0 *m_pSquad;	// 0x5da4: CAI_BaseNPC, the squad (0 when none)
+	char m_pad5da8[0x628c - 0x5da8];
+	EHANDLE m_h628c;	// 0x628c: CAI_BaseNPCTroika, the entity handed to slot 596 when the dog turns alert
+	char m_pad6290[0x665c - 0x6290];
+
+	// the dog's own members
+	int m_n665c;	// 0x665c: the follow state toward the player (0, 1, 2)
+	char m_b6660;	// 0x6660: set by slot 390 when the player hurts the dog
+	char m_pad6661[0x6664 - 0x6661];
+	int m_n6664;	// 0x6664
+	float m_fl6668;	// 0x6668: a distance to the player
+	float m_fl666c;	// 0x666c: a distance to the player (activity 0x6e)
+	char m_pad6670[0x6674 - 0x6670];
+	float m_fl6674;	// 0x6674: a time (slot 103: curtime + a random 0..1 s)
+	float m_fl6678;	// 0x6678: a time (curtime when the dog turns to combat)
+	float m_fl667c;	// 0x667c: the last distance to the player (slot 433)
+	float m_fl6680;	// 0x6680: m_fl667c when the dog turns to combat
+	char m_pad6684[0x6688 - 0x6684];
+	int m_n6688;	// 0x6688
+	char m_pad668c[0x6694 - 0x668c];
+
+	void SetCondition(int condition) { if (g_10924a68.GetBool()) AI_CONDITION_TRACE(condition); sub_100041b0(condition); }
+	CUnknown103160c0 *GetSquad() { return m_n5bb0 <= 0 ? m_pSquad : 0; }
+	void SetIdealState(int state, const char *pszFile, int nLine) { m_pszFile1b3c = pszFile; m_nLine1b40 = nLine; m_IdealState = state; }	// Troika stamps __FILE__ / __LINE__ with each ideal state
 public:	// tail-call overrides (the game's 5-byte jmp bodies, link audit 2026-11-18)
 	virtual bool vfunc366(int, int, int);	// slot 366 (0x10374900): a tail call of CNPC_VAnimal::vfunc366
 public:	// tail-call overrides (the game's 5-byte jmp bodies, link audit 2026-11-18)

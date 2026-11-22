@@ -58318,7 +58318,7 @@ CEntNameView *sub_10002b8a(int pPlayer);
 void sub_10014614(CEntNameView *pEnt);
 void sub_10011077(const char *pszName);
 
-void sub_100d2320(int pPlayer, const char *pszName)
+void ConsoleKillTarget(int pPlayer, const char *pszName)
 {
 	if (_strcmpi(pszName, g_106b8540) == 0)
 	{
@@ -58964,7 +58964,7 @@ struct CCmdConsoleInner { virtual void v0(); virtual char vfunc1(); char pad[0x2
 struct CCmdConsole { int pad; CCmdConsoleInner *m_p4; };
 extern CCmdGameRulesView *g_1070ba0c;
 extern CCmdConsole *g_1070af4c;
-void sub_100d2320(CBasePlayer *p, const char *s);
+void ConsoleKillTarget(CBasePlayer *p, const char *s);
 void sub_101ce290(CBasePlayer *p, unsigned char *c, float a, float b, int f);
 void sub_101ce620(CBasePlayer *p, int a, const char *s, int b, int c, int d, int e);
 const char *sub_101cf720(const char *fmt, const char *a);
@@ -58989,7 +58989,7 @@ void sub_100d3e90(CBasePlayer *pEntity)
 	if (!_strcmpi(arg0, "killtarget")) {
 		CCmdConsole *c = g_1070af4c;
 		if (!c->m_p4->vfunc1() && c->m_p4->m_n2c)
-			sub_100d2320(pEntity, engine->vfunc84(1));
+			ConsoleKillTarget(pEntity, engine->vfunc84(1));
 	} else if (!_strcmpi(arg0, "fade")) {
 		unsigned char color[4] = { 0x20, 0x3f, 0x64, 0xc8 };
 		sub_101ce290(pEntity, color, 3.0f, 3.0f, 2);
@@ -88723,7 +88723,7 @@ extern char *g_1057519c;
 
 struct Slot16 { int a, b, c, d; };
 
-bool sub_1012f790(int index, const Slot16 *pValue)
+bool Motion_SetKeyAngles(int index, const Slot16 *pValue)
 {
 	if (index > 3 || index < -3)
 		return false;
@@ -90309,7 +90309,7 @@ inline float VariantFloat(const variant_t &v)
 	return 0;
 }
 
-void CMathCounter::sub_101338c0(inputdata_t &inputdata)
+void CMathCounter::InputSetValue(inputdata_t &inputdata)
 {
 	sub_10133950(inputdata.pActivator, VariantFloat(inputdata.value));
 }
@@ -110356,7 +110356,7 @@ public:
 SendProp sub_10246af0(const char *pVarName, int offset, int sizeofVar, int nBits, int flags, int arg6, void *proxy);	// SendPropInt
 SendProp sub_10246dc0(const char *pVarName, int offset, SendTable *pTable, void *proxy);	// SendPropDataTable
 SendProp sub_10246510(const char *pVarName, int offset, int sizeofVar, int nBits, int flags, float fLowValue, float fHighValue, int varProxy);	// SendPropFloat
-SendProp sub_101ab310(const char *pVarName, int offset, int sizeofVar);	// SendPropTime
+SendProp SendPropTime(const char *pVarName, int offset, int sizeofVar);	// SendPropTime
 void sub_102464d0();
 void sub_10246300();
 void sub_10179160();
@@ -110378,8 +110378,8 @@ int sub_10179430()
 		sub_10246510("m_flFriction", 0x3f0, 4, 8, 8, 0.0f, 4.0f, (int)sub_10246300),
 		sub_10246af0("m_fFlags", 0x434, 4, 9, 1, 0, (void *)sub_10179160),
 		sub_10246af0("m_fOnTarget", 0x20a8, 1, 2, 1, 0, 0),
-		sub_101ab310("m_flTimeBase", 0x2358, 4),
-		sub_101ab310("m_flNextThink", 0x17c, 4),
+		SendPropTime("m_flTimeBase", 0x2358, 4),
+		SendPropTime("m_flNextThink", 0x17c, 4),
 		sub_10246af0("m_lifeState", 0x200, 4, 3, 1, 0, 0),
 	};
 	g_10725088.sub_1000e8fe(props + 1, 10, pTableName);
@@ -116741,7 +116741,7 @@ SendProp sub_10246700(const char *name, int offset, int size, int bits, int flag
 SendProp sub_10246510(const char *name, int offset, int size, int bits, int flags, float low, float high, void *proxy);
 SendProp sub_10246dc0(const char *name, int offset, int pTable, void *proxy);
 SendProp sub_10246ef0(int nElements, int nStride, const char *name, int proxy);
-SendProp sub_101ab310(const char *name, int offset, int size);
+SendProp SendPropTime(const char *name, int offset, int size);
 void sub_10009539();
 void sub_10006aeb();
 void sub_10003012();
@@ -116797,15 +116797,15 @@ int sub_1018a730()
 		sub_10246700("m_vecCameraTargetOverride", 0xf8, 0xc, -1, 4, 0.0f, -121121.121212f, (void *)sub_10003012),
 		sub_10246510("m_flCameraFOVOverride", 0x104, 4, 10, 0, 0.0f, 180.0f, (void *)sub_10006aeb),
 		sub_10246510("m_flCameraRollOverride", 0x108, 4, 0xc, 0, -180.0f, 180.0f, (void *)sub_10006aeb),
-		sub_101ab310("m_flCameraOverrideTimestamp", 0x10c, 4),
-		sub_101ab310("m_flCameraOverrideFadeStartTime", 0x110, 4),
+		SendPropTime("m_flCameraOverrideTimestamp", 0x10c, 4),
+		SendPropTime("m_flCameraOverrideFadeStartTime", 0x110, 4),
 		sub_10246510("m_flCameraOverrideFadeDuration", 0x114, 4, 10, 8, -10.0f, 10.0f, (void *)sub_10006aeb),
 		sub_10246700("m_vecCrossfadeFromLandmark", 0x118, 0xc, -1, 2, 0.0f, -121121.121212f, (void *)sub_10003012),
 		sub_10246700("m_vecCrossfadeToLandmark", 0x124, 0xc, -1, 2, 0.0f, -121121.121212f, (void *)sub_10003012),
 		sub_10246510("m_flCrossfadeYawDifference", 0x130, 4, 0xc, 0, -360.0f, 360.0f, (void *)sub_10006aeb),
-		sub_101ab310("m_flCrossfadeStartTime", 0x134, 4),
+		SendPropTime("m_flCrossfadeStartTime", 0x134, 4),
 		sub_10246510("m_flCrossfadeDuration", 0x138, 4, 7, 8, 0.0f, 10.0f, (void *)sub_10006aeb),
-		sub_101ab310("m_flResetCameraDampeningTime", 0x13c, 4),
+		SendPropTime("m_flResetCameraDampeningTime", 0x13c, 4),
 		sub_10246af0("m_sndRoomDSP", 0x140, 4, 8, 0, 0, 0),
 		sub_10246af0("m_sndPlayerDSP", 0x144, 4, 8, 0, 0, 0),
 		sub_10246af0("m_skybox3d.scale", 0x148, 4, 0xc, 0, 0, 0),
@@ -128580,8 +128580,8 @@ int sub_101ab2f0()
 void sub_10246300();
 int sub_10246510(int a, int b, int c, int d, int e, int f, int g, int h, void *pFunc);
 
-// TARGET: sub_101ab310
-int sub_101ab310(int a, int b, int c, int d)
+// TARGET: SendPropTime
+int SendPropTime(int a, int b, int c, int d)
 {
     sub_10246510(a, b, c, d, -1, 4, 0, 0xc7ec9090, (void *)sub_10246300);
     return a;
@@ -130937,7 +130937,7 @@ struct EngineView49 {
 	virtual void vfunc49(int edict, const float *pos, const char *pszSample, float volume, int soundlevel, int flags, int pitch);
 };
 
-__declspec(dllimport) char *Q_strstr(const char *s, const char *search);
+__declspec(dllimport) const char *Q_stristr(const char *pStr, const char *pSearch);
 int sub_101af070(const char *pszName);
 
 struct CSoundEmitterAmbientView
@@ -130975,7 +130975,7 @@ void sub_101b1a00(CBaseEntity *pEnt, const float *pos, const char *samp, float v
 		}
 		return;
 	}
-	if (samp && (Q_strstr(samp, ".wav") || Q_strstr(samp, ".mp3"))) {
+	if (samp && (Q_stristr(samp, ".wav") || Q_stristr(samp, ".mp3"))) {
 		((EngineView49 *)engine)->vfunc49(pEnt->m_pEdict2e0, pos, samp, vol, soundlevel, flags, pitch);
 		if (duration)
 			*duration = enginesound->vfunc1(samp);
@@ -135797,7 +135797,7 @@ struct CSoundRec101bb990
 
 int *sub_1042bff0(int *pOut, const char *pszName);
 char sub_101b1dd0(const char *pszName, CSoundRec101bb990 *pRec);
-__declspec(dllimport) char *Q_strstr(const char *pszStr, const char *pszSub);
+__declspec(dllimport) const char *Q_stristr(const char *pStr, const char *pSearch);
 
 // TARGET: CUnknown101bc140::sub_101bb990
 void CUnknown101bc140::sub_101bb990(void *pFilter, CBaseEntity *pEntity, int nChannel, const char *pszSample, int nSoundLevel)
@@ -135829,7 +135829,7 @@ void CUnknown101bc140::sub_101bb990(void *pFilter, CBaseEntity *pEntity, int nCh
 			m_Recipients.AddToTail(v);
 	}
 	CSoundRec101bb990 rec;
-	if (!Q_strstr(pszSample, ".wav") && !Q_strstr(pszSample, ".mp3") && sub_101b1dd0(pszSample, &rec))
+	if (!Q_stristr(pszSample, ".wav") && !Q_stristr(pszSample, ".mp3") && sub_101b1dd0(pszSample, &rec))
 		m_flScale = rec.m_flScale;
 	else
 		m_flScale = 1.0f;
@@ -240277,7 +240277,7 @@ bool CUnknown10359c50::sub_102ea130(const char *pszSymbol, int nLocalId, const c
 		g_109f3628("ERROR: Adding symbol to uninitialized table %s\n", pszClassName);
 		return false;
 	}
-	if (m_nLocalBase == 9999 && !sub_102ea240(nLocalId)) {
+	if (m_nLocalBase == 9999 && !SetLocalBase(nLocalId)) {
 		g_109f3628("ERROR: Bad %s LOCALID for %s\n", pszIdType, pszClassName);
 		return false;
 	}
@@ -240302,7 +240302,7 @@ bool CUnknown10359c50::sub_102ea130(const char *pszSymbol, int nLocalId, const c
 
 // FUNCTION: 0x102ea240 size=0x30
 #include "CUnknown10359c50.h"
-bool CUnknown10359c50::sub_102ea240(int nLocalId)
+bool CUnknown10359c50::SetLocalBase(int nLocalId)
 {
 	if (m_nLocalBase == 9999) {
 		m_nLocalBase = nLocalId;
@@ -262944,7 +262944,7 @@ public:
 };
 
 SendProp sub_10246af0(const char *name, int offset, int size, int bits, int flags, int extra, void *proxy);
-SendProp sub_101ab310(const char *name, int offset, int size);
+SendProp SendPropTime(const char *name, int offset, int size);
 extern SendTable g_10937c6c;
 extern const char *g_10619d48;
 
@@ -262953,7 +262953,7 @@ int sub_103217d0()
 {
     static SendProp g_SendProps[] = {
         sub_10246af0("should_never_see_this", 0, 4, -1, 0, 0, 0),
-        sub_101ab310("m_flNextAttack", 0x1564, 4),
+        SendPropTime("m_flNextAttack", 0x1564, 4),
         sub_10246af0("m_iDisciplineFlags", 0xeb0, 4, 0x1e, 1, 0, 0),
         sub_10246af0("m_iDisciplineFlags2", 0xeb4, 4, 0x1e, 1, 0, 0),
     };
