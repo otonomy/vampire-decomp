@@ -4,15 +4,13 @@
 
 #include "CNPC_VAnimal.h"
 #include "ConVar.h"
-#include "CAI_BaseNPC.h"	// NPC_STATE
+#include "CAI_BaseNPC.h"	// NPC_STATE, AI_CONDITION_TRACE
 
 class CEntityVSlots;
 class CUnknown103160c0;	// the squad (CAI_Squad: "SquadNewEnemy")
 
 extern ConVar g_10924a68;	// the AI condition debug convar
 
-// guess: Troika's condition debug trace; its message is compiled out of the release build, only the convar test stays
-#define VDOG_CONDITION_TRACE(condition)
 
 struct CVAnimalArg;	// a tail-call override's parameter
 class CNPC_VDog : public CNPC_VAnimal
@@ -95,7 +93,7 @@ public:
 	int m_n6688;	// 0x6688
 	char m_pad668c[0x6694 - 0x668c];
 
-	void SetCondition(int condition) { if (g_10924a68.GetBool()) VDOG_CONDITION_TRACE(condition); sub_100041b0(condition); }
+	void SetCondition(int condition) { if (g_10924a68.GetBool()) AI_CONDITION_TRACE(condition); sub_100041b0(condition); }
 	CUnknown103160c0 *GetSquad() { return m_n5bb0 <= 0 ? m_pSquad : 0; }
 	void SetIdealState(int state, const char *pszFile, int nLine) { m_pszFile1b3c = pszFile; m_nLine1b40 = nLine; m_IdealState = state; }	// Troika stamps __FILE__ / __LINE__ with each ideal state
 public:	// tail-call overrides (the game's 5-byte jmp bodies, link audit 2026-11-18)

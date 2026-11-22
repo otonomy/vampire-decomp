@@ -29,6 +29,10 @@ enum NPC_STATE
 	NPC_STATE_DEAD = 7,
 };
 
+// guess: Troika's condition debug trace. Each SetCondition asks the AI condition debug convar (g_10924a68) first;
+// the message it guards is compiled out of the release build, so only the convar test stays.
+#define AI_CONDITION_TRACE(condition)
+
 #define CAI_NPC_V(n) virtual void vfunc##n();
 #define CAI_NPC_V10(p) CAI_NPC_V(p##0) CAI_NPC_V(p##1) CAI_NPC_V(p##2) CAI_NPC_V(p##3) CAI_NPC_V(p##4) CAI_NPC_V(p##5) CAI_NPC_V(p##6) CAI_NPC_V(p##7) CAI_NPC_V(p##8) CAI_NPC_V(p##9)
 
