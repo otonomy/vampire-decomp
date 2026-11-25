@@ -8842,6 +8842,7 @@
 0x101ab870 func   ?sub_101ab870@CUnknown101ab870@@QAEHXZ CUnknown101ab870::sub_101ab870
 0x101ab880 func   ?vfunc2@Panel@vgui2@@UAEXXZ vgui2::Panel::vfunc2
 0x101abf60 func   ?vfunc102@Panel@vgui2@@UAEHXZ vgui2::Panel::vfunc102
+0x101abf70 func   ?vfunc16@Panel@vgui2@@UAEXPAXH@Z vgui2::Panel::vfunc16
 0x101ac440 func   ?vfunc44@Panel@vgui2@@UAE_NHH@Z vgui2::Panel::vfunc44
 0x101ac540 func   ?vfunc14@Panel@vgui2@@UAE_NPAVKeyValues@2@@Z vgui2::Panel::vfunc14
 0x101ac570 func   ?sub_101ac570@@YGXPAUPanelMessageMap_101ac570@@@Z sub_101ac570
