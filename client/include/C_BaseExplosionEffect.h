@@ -1,6 +1,7 @@
 // C_BaseExplosionEffect: skeleton from the game's RTTI (vtable-slot skeletons, 2026-11-22)
 // declared: its bases, the game's vtable slots it adds or fills (vtable-slot layer, 2026-11-22) (its vtable has no deleting destructor: no virtual destructor)
 #pragma once
+#include "Vector.h"
 
 class C_BaseExplosionEffect
 {
