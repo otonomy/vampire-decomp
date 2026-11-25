@@ -55,12 +55,12 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual void vfunc4();
     virtual void vfunc5();
     virtual void vfunc6();
-    virtual void vfunc7();
+    virtual void vfunc7(Vector &origin, QAngle &angles, float factor);
     virtual void vfunc8(Vector &origin, QAngle &angles, float factor);
     virtual void vfunc9(Vector &origin, QAngle &angles, float factor);
     virtual void vfunc10();
     virtual void vfunc11();
-    virtual void vfunc12();
+    virtual bool vfunc12();
     virtual void vfunc13();
     virtual void vfunc14(float flStrength);
     virtual void vfunc15();
