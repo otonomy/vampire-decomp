@@ -2949,6 +2949,7 @@
 0x10062660 func   ?vfunc107@CStealth@@UAE_NXZ CStealth::vfunc107
 0x10063580 func   ?vfunc97@CStealth@@UAEXXZ CStealth::vfunc97
 0x10063590 func   ?sub_10063590@XKey14@@QAEXD@Z XKey14::sub_10063590
+0x10063750 func   ??0CTargeted@@QAE@H@Z CTargeted::CTargeted
 0x10063960 func   ?sub_10063960@@YAHXZ sub_10063960
 0x10063970 func   ?sub_10063970@@YADXZ sub_10063970
 0x10063980 func   ??_GCTargeted@@UAEPAXI@Z ??_GCTargeted@@UAEPAXI@Z
