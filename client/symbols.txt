@@ -8504,6 +8504,7 @@
 0x1018e980 func   ?vfunc37@CViewRender@@UAEHXZ CViewRender::vfunc37
 0x1018e990 func   ?vfunc38@CViewRender@@UAEHXZ CViewRender::vfunc38
 0x1018e9a0 func   ?vfunc43@CViewRender@@UAE_NXZ CViewRender::vfunc43
+0x1018e9b0 func   ?sub_1018e9b0@CViewRender@@QAEPAV1@I@Z CViewRender::sub_1018e9b0
 0x1018f340 func   ?sub_1018f340@@YAHXZ sub_1018f340
 0x1018f350 func   ?sub_1018f350@@YAHXZ sub_1018f350
 0x1018f360 func   ?sub_1018f360@@YAHXZ sub_1018f360

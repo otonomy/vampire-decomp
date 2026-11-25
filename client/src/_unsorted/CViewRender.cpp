@@ -167,6 +167,48 @@ bool CViewRender::vfunc43()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018e9b0 size=0x204
+#include "CViewRender.h"
+extern int vt_1024f984[];
+struct MR { int d; void sub_100cd1e0(); };
+struct UV { int *m_pMemory; int m_nAlloc; int m_nGrow; int m_pad; int m_pElements; void sub_10192cb0(); void sub_100aad50(); };
+extern void (*g_101e30fc)(void *);
+#define M(off) ((MR *)((char *)this + (off)))
+#define D(off) M(off)->sub_100cd1e0();
+CViewRender *CViewRender::sub_1018e9b0(unsigned flags)
+{
+	*(int **)this = vt_1024f984;
+	UV *v = (UV *)((char *)this + 0x464);
+	v->sub_10192cb0();
+	v->sub_100aad50();
+	v->m_pElements = (int)v->m_pMemory;
+	if (v->m_nGrow != -1) {
+		if (v->m_pMemory) {
+			g_101e30fc(v->m_pMemory);
+			v->m_pMemory = 0;
+		}
+		v->m_nAlloc = 0;
+	}
+	D(0x444) D(0x440) D(0x43c) D(0x438) D(0x434) D(0x430) D(0x42c) D(0x428) D(0x424)
+	D(0x410) D(0x40c) D(0x408) D(0x404) D(0x400) D(0x3fc) D(0x3f8) D(0x3f4) D(0x3f0)
+	D(0x3ec) D(0x3e8) D(0x3e4) D(0x3e0) D(0x3dc) D(0x3d8) D(0x3d4) D(0x3d0) D(0x3cc)
+	D(0x3c8) D(0x3c4) D(0x3c0) D(0x3bc) D(0x3b8) D(0x3b4)
+	{
+		MR *arr = M(0x390);
+		M(0x3b0)->sub_100cd1e0();
+		int i = 8;
+		do {
+			i--;
+			arr[i].sub_100cd1e0();
+		} while (i);
+	}
+	D(0x38c) D(0x388)
+	if (flags & 1)
+		::operator delete(this);
+	return this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018f9b0 size=0x7e
 #include "CViewRender.h"
 #include "ScopeTrace.h"
