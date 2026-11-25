@@ -8,5 +8,8 @@ class CFireOverlay : public CGlowOverlay
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the base slots the game's vtable fills with CFireOverlay's own function
     virtual bool vfunc1();
-    char m_pad0004[0xcc - 0x4];
+    void *m_pOwner;	// 0x90
+    Vector m_BaseColors[4];	// 0x94
+    float m_flScaleLast;	// 0xc4
+    int m_nSeed;	// 0xc8
 };
