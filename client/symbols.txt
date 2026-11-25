@@ -2510,6 +2510,7 @@
 0x10045ee0 func   ??_GCTrailParticles@@UAEPAXI@Z ??_GCTrailParticles@@UAEPAXI@Z
 0x10045f00 func   ?vfunc13@CTrailParticles@@UAEXHHHHHHHH@Z CTrailParticles::vfunc13
 0x10045f40 func   ?vfunc3@CTrailParticles@@QAE_NPAUTrailParticle@@PAUParticleDraw@@AAM@Z CTrailParticles::vfunc3
+0x10047980 func   ?sub_10047980@@YAXAAVVector@@0@Z sub_10047980
 0x10048ff0 func   ?sub_10048ff0@@YAXXZ sub_10048ff0
 0x10049000 func   ?sub_10049000@CUnknown10049000@@QAEXH@Z CUnknown10049000::sub_10049000
 0x10049030 func   ??0CLightRays@@QAE@HMMMMMM@Z CLightRays::CLightRays

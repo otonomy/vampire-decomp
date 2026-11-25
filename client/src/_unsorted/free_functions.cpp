@@ -19214,6 +19214,124 @@ void * CUnknown10045eb0::sub_10045eb0(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10047980 size=0x2fc
+#include "Vector.h"
+struct IRnd_10047980 {
+	virtual void v0();
+	virtual float RandomFloat(float a, float b);
+	virtual int RandomInt(int a, int b);
+};
+extern IRnd_10047980 *g_104a5738;
+struct TP_10047980 {
+	char pad[0x18];
+	float m_flDieTime;
+	float m_flLifetime;
+	Vector m_vecVelocity;
+	float m_flLength;
+	float m_flWidth;
+	float m_flColor[4];
+};
+struct SP_10047980 {
+	char pad[0x18];
+	Vector m_vecVelocity;
+	float m_flRoll;
+	float m_flDieTime;
+	float m_flLifetime;
+	unsigned char m_uchColor[3];
+	unsigned char m_uchStartAlpha;
+	unsigned char m_uchEndAlpha;
+	unsigned char m_uchStartSize;
+	unsigned char m_uchEndSize;
+	char m_pad37;
+	float m_flRollDelta;
+};
+union MatHandle_10047980 {
+	void *p;
+	char c;
+};
+struct Emit_10047980 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12();
+	virtual void Setup(const Vector &, const Vector *, float, float, float, float, float, int);
+	void sub_10118080(const Vector &origin);
+	void *sub_101180b0(const char *name);
+	void *sub_101180c0(int size, void *mat, const Vector &offset);
+	void sub_10117fe0();
+	Emit_10047980 *sub_10045eb0(const char *name);
+};
+struct Ptr_10047980 {
+	Emit_10047980 *m_p;
+	void sub_10049000(Emit_10047980 *p);
+	Emit_10047980 *operator->() const { return m_p; }
+};
+extern void sub_10118160(Ptr_10047980 *out, const char *name);
+void *__cdecl operator new(unsigned int);
+
+// TARGET: sub_10047980
+void sub_10047980(Vector &position, Vector &normal)
+{
+	Vector offset = position + (normal * 2.0f);
+	Emit_10047980 *pNew = (Emit_10047980 *)operator new(0xf4);
+	Emit_10047980 *pCreated = pNew ? pNew->sub_10045eb0("FX_MicroExplosion 1") : 0;
+	Ptr_10047980 sparkEmitter;
+	sparkEmitter.m_p = 0;
+	sparkEmitter.sub_10049000(pCreated);
+	if (!sparkEmitter.m_p)
+		return;
+	sparkEmitter->sub_10118080(offset);
+	sparkEmitter->Setup(offset, &normal, 1.0f, 100.0f, 150.0f, 0.0f, 0.4f, 1);
+	int numSparks = g_104a5738->RandomInt(8, 16);
+	MatHandle_10047980 hMaterial;
+	hMaterial.c = (char)(int)sparkEmitter->sub_101180b0("effects/spark");
+	for (int i = 0; i < numSparks; i++)
+	{
+		TP_10047980 *pParticle = (TP_10047980 *)sparkEmitter->sub_101180c0(0x44, hMaterial.p, offset);
+		if (pParticle)
+		{
+			pParticle->m_flLifetime = 0.0f;
+			float ramp = (float)i / (float)numSparks;
+			Vector dir;
+			dir[0] = normal[0] + g_104a5738->RandomFloat(-1.0f * ramp, 1.0f * ramp);
+			dir[1] = normal[1] + g_104a5738->RandomFloat(-1.0f * ramp, 1.0f * ramp);
+			dir[2] = normal[2] + g_104a5738->RandomFloat(-1.0f * ramp, 1.0f * ramp);
+			pParticle->m_flWidth = g_104a5738->RandomFloat(5.0f, 10.0f);
+			pParticle->m_flLength = 0.2f * ((1.0f - ramp) * (1.0f - ramp) * 0.5f);
+			pParticle->m_flDieTime = 0.2f;
+			pParticle->m_vecVelocity = dir * g_104a5738->RandomFloat(100.0f * (1.5f - ramp), 150.0f * (1.5f - ramp));
+			pParticle->m_flColor[0] = 1.0f;
+			pParticle->m_flColor[1] = 1.0f;
+			pParticle->m_flColor[2] = 1.0f;
+			pParticle->m_flColor[3] = 1.0f;
+		}
+	}
+	Ptr_10047980 pSimple;
+	sub_10118160(&pSimple, "FX_MicroExplosion 2");
+	pSimple->sub_10118080(offset);
+	SP_10047980 *sParticle = (SP_10047980 *)pSimple->sub_101180c0(0x3c, pSimple->sub_101180b0("sprites/rico1"), offset);
+	if (sParticle)
+	{
+		sParticle->m_flLifetime = 0.0f;
+		sParticle->m_flDieTime = 0.3f;
+		sParticle->m_vecVelocity.Init();
+		sParticle->m_uchColor[0] = 255;
+		sParticle->m_uchColor[1] = 255;
+		sParticle->m_uchColor[2] = 255;
+		sParticle->m_uchStartAlpha = g_104a5738->RandomInt(128, 255);
+		sParticle->m_uchEndAlpha = 0;
+		sParticle->m_uchStartSize = g_104a5738->RandomInt(12, 16);
+		sParticle->m_uchEndSize = sParticle->m_uchStartSize;
+		sParticle->m_flRoll = g_104a5738->RandomInt(0, 360);
+		sParticle->m_flRollDelta = 0.0f;
+	}
+	if (pSimple.m_p)
+		pSimple.m_p->sub_10117fe0();
+	if (sparkEmitter.m_p)
+		sparkEmitter.m_p->sub_10117fe0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10048ff0 size=0x1
 void sub_10048ff0()
 {
