@@ -27,6 +27,7 @@ public:
 	int m_TotalElements;	// 0x1c
 
 	static int InvalidIndex() { return -1; }
+	void sub_10133080(int elem);
 
 	Node_t &ElementAt(int i) const { return m_pElements[i]; }
 
