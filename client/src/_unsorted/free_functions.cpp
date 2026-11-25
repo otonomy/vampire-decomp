@@ -105801,6 +105801,152 @@ void __stdcall sub_101694c0(NetEntryV *entries)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10169550 size=0x379
+extern const float g_101e34f0;
+extern "C" __declspec(dllimport) int Q_snprintf(char *pDest, int nSize, const char *pFmt, ...);
+
+struct IVar_10169550
+{
+	virtual void v0();
+	virtual bool v1();
+	char m_pad[0x24];
+	float m_flValue;
+	int m_nValue;
+};
+
+struct CVarHolder_10169550
+{
+	int m_unk0;
+	IVar_10169550 *m_pParent;
+};
+
+struct IEng_10169550
+{
+	virtual void e0();	virtual void e1();	virtual void e2();	virtual void e3();
+	virtual void e4();	virtual void e5();	virtual void e6();	virtual void e7();
+	virtual void e8();	virtual void e9();	virtual void e10();	virtual void e11();
+	virtual void e12();	virtual void e13();	virtual void e14();	virtual void e15();
+	virtual void e16();	virtual void e17();	virtual void e18();	virtual void e19();
+	virtual void e20();	virtual void e21();	virtual void e22();	virtual void e23();
+	virtual void e24();	virtual void e25();	virtual void e26();	virtual void e27();
+	virtual void e28();	virtual void e29();	virtual void e30();	virtual void e31();
+	virtual void e32();	virtual void e33();	virtual void e34();	virtual void e35();
+	virtual void e36();	virtual void e37();	virtual void e38();	virtual void e39();
+	virtual void e40();
+	virtual float Time(int a);
+};
+
+struct ISurf_10169550;
+struct ISurfVt_10169550
+{
+	void *m_pad[12];
+	void (*DrawColoredText)(ISurf_10169550 *self, int font, int x, int y, int r, int g, int b, int a, const char *text);
+};
+struct ISurf_10169550
+{
+	ISurfVt_10169550 *vt;
+};
+
+struct IGraph_10169550
+{
+	virtual int GetOutgoingSequence();
+	virtual int GetIncomingSequence();
+	virtual void g2();	virtual void g3();	virtual void g4();	virtual void g5();
+	virtual void g6();	virtual void g7();
+	virtual void GetAverageDataFlow(float *incoming, float *outgoing);
+};
+
+struct BWGraph_10169550
+{
+	unsigned short m_w[9];
+};
+
+struct CmdInfo_10169550
+{
+	int m_0;
+	int m_size;
+	int m_8;
+};
+
+extern IEng_10169550 *g_104a57d4;
+extern ISurf_10169550 *g_104a5820;
+extern IGraph_10169550 *g_104a5800;
+extern IVar_10169550 *g_105faed4;
+extern int g_105fae84;
+
+struct NGP_10169550
+{
+	char m_pad[0x98d0];
+	int m_hFont;
+	CVarHolder_10169550 *m_pUpdateRate;
+	void sub_10169550(int graphvalue, int x, int y, BWGraph_10169550 *graph, CmdInfo_10169550 *cmdinfo, int count, float avg, float *framerate, int packet_loss, int packet_choke, int packet_drift);
+};
+
+// TARGET: ?sub_10169550@NGP_10169550@@QAEXHHHPAUBWGraph_10169550@@PAUCmdInfo_10169550@@HMPAMHHH@Z
+void NGP_10169550::sub_10169550(int graphvalue, int x, int y, BWGraph_10169550 *graph, CmdInfo_10169550 *cmdinfo, int count, float avg, float *framerate, int packet_loss, int packet_choke, int packet_drift)
+{
+	char sz[256];
+	int out;
+
+	if (count > 0)
+	{
+		avg /= (float)count;
+		avg -= g_104a57d4->Time(1) * 0.5;
+		CVarHolder_10169550 *pRate = m_pUpdateRate;
+		avg -= pRate->m_pParent->v1() ? g_101e34f0 : pRate->m_pParent->m_flValue;
+		avg = (0.0 > avg) ? 0.0 : avg;
+	}
+	else
+	{
+		avg = 0.0;
+	}
+
+	*framerate = (g_104a57d4->Time(1) + *framerate) * 0.5;
+
+	y -= g_105faed4->v1() ? 0 : g_105faed4->m_nValue;
+
+	if (*framerate > 0.0)
+	{
+		Q_snprintf(sz, sizeof(sz), "%.1f fps", 1.0 / (*framerate));
+		g_104a5820->vt->DrawColoredText(g_104a5820, m_hFont, x, y, 0xe5, 0xe5, 0xb2, 255, sz);
+
+		if (avg > 1.0)
+		{
+			Q_snprintf(sz, sizeof(sz), "%i ms ", (int)avg);
+			g_104a5820->vt->DrawColoredText(g_104a5820, m_hFont, x + 75, y, 0xe5, 0xe5, 0xb2, 255, sz);
+		}
+
+		y += 15;
+
+		out = cmdinfo[(g_104a5800->GetOutgoingSequence() - 1) & 0x3ff].m_size;
+		if (!out)
+			out = g_105fae84;
+		else
+			g_105fae84 = out;
+
+		int localplayer = graph[g_104a5800->GetIncomingSequence() & 0x3ff].m_w[1];
+
+		float incoming, outgoing;
+		g_104a5800->GetAverageDataFlow(&incoming, &outgoing);
+
+		Q_snprintf(sz, sizeof(sz), "in :  %4i %.2f k/s (p%i)", graph[g_104a5800->GetIncomingSequence() & 0x3ff].m_w[7], incoming, localplayer);
+		g_104a5820->vt->DrawColoredText(g_104a5820, m_hFont, x, y, 0xe5, 0xe5, 0xb2, 255, sz);
+		y += 15;
+
+		Q_snprintf(sz, sizeof(sz), "out:  %4i %.2f k/s", out, outgoing);
+		g_104a5820->vt->DrawColoredText(g_104a5820, m_hFont, x, y, 0xe5, 0xe5, 0xb2, 255, sz);
+		y += 15;
+
+		if (graphvalue > 2)
+		{
+			Q_snprintf(sz, sizeof(sz), "loss: %i choke: %i drift: %i", (int)(packet_loss + 0.49), (int)(packet_choke + 0.49), packet_drift);
+			g_104a5820->vt->DrawColoredText(g_104a5820, m_hFont, x, y, 0xe5, 0xe5, 0xb2, 255, sz);
+			y += 15;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10169900 size=0x1a4
 #include "ConVar.h"
 
