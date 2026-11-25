@@ -1,6 +1,50 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x10196990 size=0x1ff
+#include "CViewEffects.h"
+#include "ScopeTrace.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+struct S56 { int d[14]; };
+extern float g_101e34f0;
+void sub_10109340(const Vector *v, QAngle *a);
+void sub_10108fd0(const Vector *start, float scale, const Vector *dir, Vector *dest);
+void CViewEffects::vfunc7(Vector &origin, QAngle &angles, float factor)
+{
+	ScopeTrace trace("CViewEffects::ApplyShake", g_102de300);
+	if (vfunc12()) {
+		QAngle saved = angles;
+		*(Vector *)&angles += m_vecHolyLight;
+		if (m_flHolyLightStrength > g_101e34f0) {
+			Vector v(-17.0f, -97.0f, 10.0f);
+			QAngle ang;
+			sub_10109340(&v, &ang);
+			for (int i = 0; i < 3; i++) {
+				int t = (int)((ang[i] - angles[i] + 180.0f) * 182.04445f) & 0xffff;
+				angles[i] += ((float)t * 0.005493164f - 180.0f) * m_flHolyLightStrength;
+				m_vecHolyLight[i] = angles[i] - saved[i];
+			}
+			m_flHolyLightStrength = 0.0f;
+		}
+	}
+	switch (m_unk18) {
+	case 0:
+		sub_10108fd0(&origin, factor, (Vector *)&m_unk40, &origin);
+		angles.z += factor * *(float *)&m_unk4c;
+		break;
+	case 1:
+		sub_10108fd0(&origin, factor, (Vector *)&m_unk40, &origin);
+		angles.x += factor * *(float *)&m_unk4c;
+		break;
+	default:
+		*(S56 *)&m_nState = *(S56 *)&m_unk18;
+		memset(&m_unk18, 0, sizeof(S56));
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10196b90 size=0xe7
 #include "CViewEffects.h"
 
