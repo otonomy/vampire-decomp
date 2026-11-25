@@ -89556,6 +89556,67 @@ void sub_10147780()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10147790 size=0x1fb
+extern char g_102de300[];
+int sub_1015ebd0(int);
+__declspec(dllimport) int Q_snprintf(char *pDest, int nSize, const char *pFmt, ...);
+__declspec(dllimport) void Msg(const char *pMsg, ...);
+struct PInfo {
+	const char *m_pEntity;
+	float m_flRateMin;
+	float m_flOpacityMin;
+	float m_flSizeMin;
+	const char *m_pParticleName;
+	int m_nAttachType;
+	const char *m_pAttachName;
+	int m_nBitFlags;
+	int m_nMiscFlags;
+	bool sub_100e1460();
+};
+struct PDump {
+	int m_bFirstPerson;
+	char m_pad4;
+	char m_bDiscipline;
+	char m_pad6[2];
+	PInfo m_info;
+	void sub_10147790();
+};
+void PDump::sub_10147790()
+{
+	char buf[512];
+	PInfo *p = &m_info;
+	if (!p->sub_100e1460())
+		return;
+	if (!m_bFirstPerson)
+		Q_snprintf(buf, 512, "Particle_ThirdPerson\n");
+	else
+		Q_snprintf(buf, 512, "Particle_FirstPerson\n");
+	Msg("%s", buf);
+	if (!m_bDiscipline) {
+		Q_snprintf(buf, 512, "   NON-Discipline Particle\n");
+		Msg("%s", buf);
+	}
+	Q_snprintf(buf, 512, "   Entity: %s\n", p->m_pEntity ? p->m_pEntity : g_102de300);
+	Msg("%s", buf);
+	Q_snprintf(buf, 512, "   RateMin: %03f\n", p->m_flRateMin);
+	Msg("%s", buf);
+	Q_snprintf(buf, 512, "   OpacityMin: %03f\n", p->m_flOpacityMin);
+	Msg("%s", buf);
+	Q_snprintf(buf, 512, "   SizeMin: %03f\n", p->m_flSizeMin);
+	Msg("%s", buf);
+	Q_snprintf(buf, 512, "   ParticleName: %s\n", p->m_pParticleName ? p->m_pParticleName : g_102de300);
+	Msg("%s", buf);
+	Q_snprintf(buf, 512, "   AttachType: %s\n", sub_1015ebd0(p->m_nAttachType));
+	Msg("%s", buf);
+	Q_snprintf(buf, 512, "   AttachName: %s\n", p->m_pAttachName ? p->m_pAttachName : g_102de300);
+	Msg("%s", buf);
+	Q_snprintf(buf, 512, "   BitFlags: %d\n", p->m_nBitFlags);
+	Msg("%s", buf);
+	Q_snprintf(buf, 512, "   MiscFlags: %d\n", p->m_nMiscFlags);
+	Msg("%s", buf);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10147990 size=0x17
 struct CUnknown101472e0 { int a, b, c, d; CUnknown101472e0 *sub_101472e0(); };
 CUnknown101472e0 *CUnknown101472e0::sub_101472e0()
