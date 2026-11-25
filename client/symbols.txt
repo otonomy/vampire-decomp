@@ -8620,6 +8620,7 @@
 0x1019c260 func   ?sub_1019c260@@YAXPBD@Z sub_1019c260
 0x1019c970 func   ?sub_1019c970@CViewRender@@QAEXXZ CViewRender::sub_1019c970
 0x1019cca0 func   ?sub_1019cca0@@YAMXZ sub_1019cca0
+0x1019cd90 func   ?sub_1019cd90@@YAMXZ sub_1019cd90
 0x1019ce80 func   ?sub_1019ce80@@YA_NXZ sub_1019ce80
 0x1019d2e0 func   ?sub_1019d2e0@@YAMXZ sub_1019d2e0
 0x1019d3d0 func   ?sub_1019d3d0@@YAMXZ sub_1019d3d0
