@@ -72,5 +72,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the slots CViewRender adds to its base's vtable: 44-45, vfuncK at slot K
     virtual void vfunc44();
     virtual float vfunc45();
+    CViewRender *sub_1018e9b0(unsigned flags);
     void sub_1019aed0(bool, int);	// provisional, like sub_1019af80 (transplant)
 };
