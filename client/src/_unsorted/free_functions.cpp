@@ -79998,6 +79998,33 @@ int CUnknown101b9140::sub_10132db0(int elem, int num, const CUnknown101b9140Elem
 }
 // END FUNCTION
 
+// FUNCTION: 0x10133080 size=0x1f6
+#include "CUtlRBTree232.h"
+// TARGET: CUtlRBTree232::sub_10133080
+void CUtlRBTree232::sub_10133080(int elem)
+{
+	CUtlRBTree232At<0x105e5a20> *tree = (CUtlRBTree232At<0x105e5a20> *)this;
+	int left = sub_10131a70(elem).m_Left;
+	int r = sub_10131a70(left).m_Right;
+	m_pElements[elem].m_Links.m_Left = r;
+	if (sub_10131a70(left).m_Right != -1)
+		m_pElements[sub_10131a70(left).m_Right].m_Links.m_Parent = elem;
+	if (left != -1)
+		m_pElements[left].m_Links.m_Parent = tree->Links(elem).m_Parent;
+	if (elem != m_Root) {
+		if (tree->Links(sub_10131a70(elem).m_Parent).m_Right == elem)
+			m_pElements[tree->Links(elem).m_Parent].m_Links.m_Right = left;
+		else
+			m_pElements[tree->Links(elem).m_Parent].m_Links.m_Left = left;
+	} else {
+		m_Root = left;
+	}
+	m_pElements[left].m_Links.m_Right = elem;
+	if (elem != -1)
+		m_pElements[elem].m_Links.m_Parent = left;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10133280 size=0xf
 struct CUnknown10133280 { void * sub_10133280(int); };
 void * CUnknown10133280::sub_10133280(int a0)
