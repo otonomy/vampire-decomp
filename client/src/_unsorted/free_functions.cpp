@@ -62535,6 +62535,53 @@ void sub_100f9b20(DXTColorBGR888 *pOutputImage, DXTColBlock *pColorBlock, int wi
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f9c40 size=0x1f8
+struct Pix565 {
+	unsigned short b : 5;
+	unsigned short g : 6;
+	unsigned short r : 5;
+};
+
+// TARGET: sub_100f9c40
+void sub_100f9c40(Pix565 *dst, const unsigned char *src, int width, const unsigned char *c0, const unsigned char *c1, const unsigned char *c2, const unsigned char *c3)
+{
+	unsigned int masks[4] = { 3, 0xc, 0x30, 0xc0 };
+	unsigned int shifts[4] = { 0, 2, 4, 6 };
+	int pitch = width * 2 - 8;
+	const unsigned char *pSrc = src + 4;
+	for (int y = 4; y > 0; y--) {
+		for (int x = 0; x < 4; x++) {
+			unsigned int idx = (*pSrc & masks[x]) >> shifts[x];
+			switch (idx) {
+			case 0:
+				dst->r = c0[2] >> 3;
+				dst->g = c0[1] >> 2;
+				dst->b = c0[0] >> 3;
+				break;
+			case 1:
+				dst->r = c1[2] >> 3;
+				dst->g = c1[1] >> 2;
+				dst->b = c1[0] >> 3;
+				break;
+			case 2:
+				dst->r = c2[2] >> 3;
+				dst->g = c2[1] >> 2;
+				dst->b = c2[0] >> 3;
+				break;
+			case 3:
+				dst->r = c3[2] >> 3;
+				dst->g = c3[1] >> 2;
+				dst->b = c3[0] >> 3;
+				break;
+			}
+			dst++;
+		}
+		pSrc++;
+		dst = (Pix565 *)((char *)dst + pitch);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fbd70 size=0xe
 namespace lifted {
 extern int g_1027ba58;
