@@ -7410,6 +7410,7 @@
 0x10154f60 func   ?sub_10154f60@CVSoundFileFolder_t@@QAEXHHH@Z CVSoundFileFolder_t::sub_10154f60
 0x10155070 func   ?sub_10155070@CUnknown101f3d80@@QAEXHH@Z CUnknown101f3d80::sub_10155070
 0x101550d0 func   ?sub_101550d0@CUnknown101f3d80@@QAEXHH@Z CUnknown101f3d80::sub_101550d0
+0x10155170 func   ?sub_10155170@FolderView@@QAEXXZ FolderView::sub_10155170
 0x10155380 func   ?sub_10155380@CUnknown10155380@@QAEPAXXZ CUnknown10155380::sub_10155380
 0x101553a0 func   ??1CUnknown101f4120@@QAE@XZ CUnknown101f4120::~CUnknown101f4120
 0x101553c0 func   ?sub_101553c0@CUnknown101553c0@@QAEHXZ CUnknown101553c0::sub_101553c0

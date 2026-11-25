@@ -97318,6 +97318,44 @@ void CUnknown101f3d80::sub_101550d0(int a, int b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10155170 size=0x203
+#include "CUnknown101f4c80.h"
+extern "C" int __cdecl sprintf(char *, const char *, ...);
+__declspec(dllimport) void DevMsg(int, const char *, ...);
+struct SegObj { char pad[8]; CUnknown101f4c80Table *m_pTable; int sub_101554f0(); void sub_101556d0(int, int *, int *); };
+struct FolderView {
+	char pad0[4]; SegObj *m_pSeg; char pad8[8]; CUnknown101f4c80Str m_name; char *m_pFlags; char pad18[4]; int m_nSub; FolderView **m_pSub;
+	void sub_10155170();
+};
+// TARGET: FolderView::sub_10155170
+void FolderView::sub_10155170()
+{
+	char buf[128];
+	sprintf(buf, "[Folder: %s]:\n", m_name.Get());
+	DevMsg(0, buf);
+	if (m_pSeg) {
+		int n = m_pSeg->sub_101554f0();
+		for (int i = 0; i < n; i++) {
+			if (m_pFlags[i]) {
+				int sub, id;
+				m_pSeg->sub_101556d0(i, &id, &sub);
+				if (sub == 0) {
+					sprintf(buf, "\t\t   (%d): %s\n", i, m_pSeg->m_pTable->Find(id)->m_folder.Get());
+				} else {
+					sprintf(buf, "\t\t   (%d): %s_%d\n", i, m_pSeg->m_pTable->Find(id)->m_folder.Get(), sub);
+				}
+				DevMsg(0, buf);
+			}
+		}
+		for (int j = 0; j < m_nSub; j++) {
+			sprintf(buf, " (Folder %d):\n", j);
+			DevMsg(0, buf);
+			m_pSub[j]->sub_10155170();
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10155380 size=0x16
 namespace lifted {
 struct C10154ae0 { int sub_10154ae0(); };
