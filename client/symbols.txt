@@ -2888,6 +2888,7 @@
 0x1005f2c0 func   ??1CMoneyBar@@UAE@XZ CMoneyBar::~CMoneyBar
 0x1005f2f0 func   ?vfunc107@CMoneyBar@@UAE_NXZ CMoneyBar::vfunc107
 0x1005f320 func   ?vfunc112@CMoneyBar@@UAEXXZ CMoneyBar::vfunc112
+0x1005f340 func   ?vfunc98@CMoneyBar@@UAEXXZ CMoneyBar::vfunc98
 0x1005f540 func   ?vfunc97@CMoneyBar@@UAEXXZ CMoneyBar::vfunc97
 0x1005f550 func   ?sub_1005f550@CUnkFadeF@@QAEX_N@Z CUnkFadeF::sub_1005f550
 0x1005f590 func   ?sub_1005f590@@YGXHHPAH@Z sub_1005f590
