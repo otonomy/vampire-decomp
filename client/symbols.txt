@@ -9091,6 +9091,7 @@
 0x101b5100 func   ?vfunc113@EditablePanel@vgui2@@UAEHHH@Z vgui2::EditablePanel::vfunc113
 0x101b5170 func   ?vfunc115@EditablePanel@vgui2@@UAEHHH@Z vgui2::EditablePanel::vfunc115
 0x101b51a0 func   ?vfunc114@EditablePanel@vgui2@@UAEXPBDPADH0@Z vgui2::EditablePanel::vfunc114
+0x101b5230 func   ?sub_101b5230@EditablePanel@vgui2@@QAEPAVPanel@2@PAV32@PBD@Z vgui2::EditablePanel::sub_101b5230
 0x101b5650 func   ?vfunc102@EditablePanel@vgui2@@UAEHXZ vgui2::EditablePanel::vfunc102
 0x101b5660 func   ?sub_101b5660@CUnknown101b5660@@QAEHXZ CUnknown101b5660::sub_101b5660
 0x101b5670 func   ??0KeyValues@vgui2@@QAE@PBD@Z vgui2::KeyValues::KeyValues
