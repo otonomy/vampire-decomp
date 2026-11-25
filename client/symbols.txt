@@ -8624,6 +8624,7 @@
 0x1019d8f0 func   ?sub_1019d8f0@CViewRender@@QAEXPBD@Z CViewRender::sub_1019d8f0
 0x1019e1f0 func   ?vfunc6@CViewRender@@UAEPAXH@Z CViewRender::vfunc6
 0x1019e2a0 func   ?sub_1019e2a0@@YAHABVVector@@AAV1@@Z sub_1019e2a0
+0x1019f140 func   ?sub_1019f140@CViewRender@@QAE_NH@Z CViewRender::sub_1019f140
 0x1019f940 func   ?sub_1019f940@CViewRender_1019f940@@QAE_NPAX@Z CViewRender_1019f940::sub_1019f940
 0x101a0e90 func   ?sub_101a0e90@CUtlVector4@@QAEXH@Z CUtlVector4::sub_101a0e90
 0x101a0f20 func   ?sub_101a0f20@UtlVec8@@QAEXHH@Z UtlVec8::sub_101a0f20

@@ -116563,6 +116563,64 @@ int sub_1019e2a0(const Vector &point, Vector &screen)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019f140 size=0x1ff
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "CVStatList_t.h"
+struct IEngA { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual bool vfunc10(); };
+struct ICvar { virtual void v0(); virtual bool vfunc1(); char pad[0x24]; float m28; };
+struct IClockV { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40(); virtual float vfunc41(int); };
+struct StatSetView {
+	char pad[0x1178]; int m_n; CVStatList_t **m_p;
+	CVStatList_t *Find(int type)
+	{
+		for (int i = 0; i < m_n; i++) {
+			if (m_p[i]->m_field10 == type)
+				return m_p[i];
+		}
+		static CVStatList_t s_default(-1);
+		return &s_default;
+	}
+};
+extern IEngA *g_104a57f0;
+extern ICvar *g_106190ac;
+extern ICvar *g_10618f8c;
+extern StatSetView *g_104a0d50;
+extern IClockV *g_104a57d4;
+void sub_10198640();
+// TARGET: CViewRender::sub_1019f140
+bool CViewRender::sub_1019f140(int arg)
+{
+	ScopeTrace trace("CViewRender::DrawNoiseOverlay", g_102de300, g_102de300);
+	if (g_104a57f0->vfunc10() && !g_106190ac->vfunc1() && g_106190ac->m28 > 0.0f && g_104a0d50)
+	{
+		if (g_104a0d50->Find(3)->sub_1015dbd0(1) <= 0)
+		{
+			sub_10198640();
+			float scale;
+			if (g_106190ac->vfunc1())
+				scale = 0;
+			else
+				scale = g_106190ac->m28;
+			double v = 1.0 - g_104a57d4->vfunc41(1) / scale;
+			if (v > 0.99)
+				v = 0.99;
+			else if (v < 0.1)
+				v = 0.1;
+			float fv = v;
+			float v2;
+			if (g_10618f8c->vfunc1())
+				v2 = 0;
+			else
+				v2 = g_10618f8c->m28;
+			sub_1019e530(arg, *(int *)((char *)this + 0x410), fv, v2, 0, 255, 255, 255);
+			return true;
+		}
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019f940 size=0xee
 #include "ScopeTrace.h"
 #include "CViewRender.h"
