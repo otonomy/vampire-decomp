@@ -109470,6 +109470,41 @@ void sub_10179840()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10179c40 size=0x1fd
+#include "CharEditEquipPanel.h"
+#include "vgui2__Panel.h"
+struct S24 { char pad[0x24]; void sub_101786a0(); };
+extern S24 g_105fb458[11];
+#define P(off) (*(vgui2::Panel **)((char *)this + (off)))
+#define DEL(off) if (P(off)) delete P(off); P(off) = 0;
+void CharEditEquipPanel::sub_10179c40()
+{
+	DEL(0x84)
+	DEL(0x7c)
+	DEL(0x80)
+	DEL(0xd8)
+	DEL(0xdc)
+	DEL(0x94)
+	DEL(0x98)
+	DEL(0x9c)
+	DEL(0xa0)
+	DEL(0xa8)
+	DEL(0xac)
+	DEL(0xb0)
+	DEL(0xb4)
+	DEL(0xb8)
+	DEL(0xbc)
+	DEL(0xc0)
+	DEL(0xc4)
+	DEL(0xc8)
+	DEL(0xcc)
+	DEL(0xd0)
+	DEL(0xd4)
+	for (int i = 0; i < 11; i++)
+		g_105fb458[i].sub_101786a0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017a5c0 size=0x70
 #include <stdio.h>
 #include <string.h>
