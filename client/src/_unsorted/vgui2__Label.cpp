@@ -603,6 +603,77 @@ void vgui2::Label::vfunc105(vgui2::Panel *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b3090 size=0x1f9
+#include "vgui2__Label.h"
+extern "C" int strcmp(const char *, const char *);
+#pragma intrinsic(strcmp)
+extern "C" unsigned int strlen(const char *);
+#pragma intrinsic(strlen)
+
+struct KVV {
+	virtual void p0(); virtual void p1(); virtual void p2(); virtual void p3(); virtual void p4();
+	virtual void p5(); virtual void p6(); virtual void p7(); virtual void p8();
+	virtual int GetInt(const char *, int);
+	virtual void p10();
+	virtual const char *GetString(const char *, const char *);
+};
+
+// TARGET: vgui2::Label::vfunc75
+void vgui2::Label::vfunc75(int data)
+{
+	KVV *kv = (KVV *)data;
+	Panel::vfunc75(data);
+	const char *labelText = kv->GetString("labelText", 0);
+	if (labelText)
+		vfunc108(labelText);
+	const char *alignmentString = kv->GetString("textAlignment", "");
+	int align = -1;
+	if (!strcmp(alignmentString, "north-west")) {
+		align = 0;
+	} else if (!strcmp(alignmentString, "north")) {
+		align = 1;
+	} else if (!strcmp(alignmentString, "north-east")) {
+		align = 2;
+	} else if (!strcmp(alignmentString, "west")) {
+		align = 3;
+	} else if (!strcmp(alignmentString, "center")) {
+		align = 4;
+	} else if (!strcmp(alignmentString, "east")) {
+		align = 5;
+	} else if (!strcmp(alignmentString, "south-west")) {
+		align = 6;
+	} else if (!strcmp(alignmentString, "south")) {
+		align = 7;
+	} else if (!strcmp(alignmentString, "south-east")) {
+		align = 8;
+	}
+	if (align != -1)
+		vfunc111(align);
+	const char *associateName = kv->GetString("associate", "");
+	if (associateName[0] != 0) {
+		char *p = new char[strlen(associateName) + 1];
+		*(char **)((char *)this + 0xa8) = p;
+		const char *s = associateName;
+		char *d = p;
+		char c;
+		do {
+			c = *s;
+			s++;
+			*d = c;
+			d++;
+		} while (c);
+	}
+	if (kv->GetInt("dulltext", 0) == 1) {
+		vfunc117(1);
+	} else if (kv->GetInt("brighttext", 0) == 1) {
+		vfunc117(2);
+	} else {
+		vfunc117(0);
+	}
+	vfunc57(1, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b3290 size=0x23
 #include "vgui2__Label.h"
 namespace lifted {
