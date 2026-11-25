@@ -9171,6 +9171,7 @@
 0x101b71a0 func   ?vfunc152@PropertyDialog@vgui2@@UAEHXZ vgui2::PropertyDialog::vfunc152
 0x101b71b0 func   ?vfunc153@PropertyDialog@vgui2@@UAEHHHM@Z vgui2::PropertyDialog::vfunc153
 0x101b71d0 func   ?vfunc154@PropertyDialog@vgui2@@UAEHH@Z vgui2::PropertyDialog::vfunc154
+0x101b71e0 func   ??0Frame@vgui2@@QAE@PAVPanel@1@PBD_N@Z vgui2::Frame::Frame
 0x101b78e0 func   ?sub_101b78e0@@YIXPAUGP@@HHH@Z sub_101b78e0
 0x101b79f0 func   ?sub_101b79f0@GP@@QAEXH@Z GP::sub_101b79f0
 0x101b8150 func   ?vfunc74@FrameButton@vgui2@@UAEHH@Z vgui2::FrameButton::vfunc74
