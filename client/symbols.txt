@@ -2142,6 +2142,7 @@
 0x10037d20 func   ??_GC_TEShatterSurface@@UAEPAXI@Z ??_GC_TEShatterSurface@@UAEPAXI@Z
 0x10037d40 func   ??1C_TEShatterSurface@@UAE@XZ C_TEShatterSurface::~C_TEShatterSurface
 0x10037d40 func   ?sub_10037d40@CUnknown10037d40@@QAEHXZ CUnknown10037d40::sub_10037d40
+0x10037d60 func   ?sub_10037d60@Net_10037d60@@QAEXH@Z Net_10037d60::sub_10037d60
 0x10038210 func   ?vfunc9@C_TEShatterSurface@@UAEHXZ C_TEShatterSurface::vfunc9
 0x10038220 func   ?vfunc8@C_TEShatterSurface@@UAEHXZ C_TEShatterSurface::vfunc8
 0x10038230 func   ?sub_10038230@@YAHXZ sub_10038230

@@ -15454,6 +15454,171 @@ int CUnknown10037d40::sub_10037d40()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10037d60 size=0x4a9
+#include "Vector.h"
+extern "C" int rand(void);
+extern const float g_101e34f0;
+extern void sub_10115600(void *out, const char *name);
+extern void sub_101090a0(const Vector *ang, Vector *fwd, Vector *right, Vector *up);
+
+struct Collision_10037d60
+{
+	virtual void v0();
+	virtual void v1();
+	virtual void v2();
+	virtual void v3();
+	virtual void Setup(const Vector *origin, const Vector *moveDir, float noise, float minSpeed, float maxSpeed, float gravity, float damping);
+};
+
+struct Emitter_10037d60
+{
+	char m_pad[0x78];
+	Collision_10037d60 m_Coll;
+	void sub_10118080(const Vector *origin);
+	unsigned char sub_101180b0(const char *name);
+	void *sub_101180c0(int size, unsigned char mat, const Vector *pos);
+	void sub_10117fe0();
+};
+
+struct Particle_10037d60
+{
+	char m_pad18[0x18];
+	unsigned char m_Front[3];
+	unsigned char m_Back[3];
+	unsigned char m_uchSize;
+	char m_pad1f;
+	Vector m_vAngles;
+	float m_flAngSpeed;
+	float m_flDieTime;
+	float m_flLifetime;
+	Vector m_vecVelocity;
+};
+
+struct IRandom_10037d60
+{
+	virtual void v0();
+	virtual float RandomFloat(float lo, float hi);
+	virtual int RandomInt(int lo, int hi);
+};
+extern IRandom_10037d60 *g_104a5738;
+
+static inline Vector RandomVector_10037d60(float lo, float hi)
+{
+	Vector r;
+	r.x = rand() * 0.0015259255f - 25.0f;
+	r.y = rand() * 0.0015259255f - 25.0f;
+	r.z = rand() * 0.0015259255f - 25.0f;
+	return r;
+}
+
+struct Net_10037d60
+{
+	char m_pad[0xc];
+	Vector m_vecOrigin;
+	Vector m_vecAngles;
+	Vector m_vecForce;
+	Vector m_vecForcePos;
+	float m_flWidth;
+	float m_flHeight;
+	float m_flShardSize;
+	int m_pad48;
+	int m_nSurfaceType;
+	unsigned char m_uchFrontColor[3];
+	unsigned char m_uchBackColor[3];
+	void sub_10037d60(int updateType);
+};
+
+// TARGET: ?sub_10037d60@Net_10037d60@@QAEXH@Z
+void Net_10037d60::sub_10037d60(int updateType)
+{
+	Emitter_10037d60 *pGlassEmitter;
+	sub_10115600(&pGlassEmitter, "C_TEShatterSurface 1");
+	pGlassEmitter->sub_10118080(&m_vecOrigin);
+
+	unsigned char hMaterial1;
+	unsigned char hMaterial2;
+	if (m_nSurfaceType == 0)
+	{
+		hMaterial1 = pGlassEmitter->sub_101180b0("effects/fleck_glass1");
+		hMaterial2 = pGlassEmitter->sub_101180b0("effects/fleck_glass2");
+	}
+	else
+	{
+		hMaterial1 = pGlassEmitter->sub_101180b0("effects/fleck_tile1");
+		hMaterial2 = pGlassEmitter->sub_101180b0("effects/fleck_tile2");
+	}
+
+	int nNumWide = (int)(m_flWidth / m_flShardSize);
+	int nNumHigh = (int)(m_flHeight / m_flShardSize);
+
+	Vector vWidthStep, vHeightStep;
+	sub_101090a0(&m_vecAngles, 0, &vWidthStep, &vHeightStep);
+	vWidthStep *= m_flShardSize;
+	vHeightStep *= m_flShardSize;
+
+	Vector vCurPos = m_vecOrigin;
+	vCurPos.x += 0.5 * m_flShardSize;
+	vCurPos.z += 0.5 * m_flShardSize;
+
+	float flMinSpeed = 9999999999.0f;
+	float flMaxSpeed = 0;
+
+	for (int width = 0; width < nNumWide; width++)
+	{
+		for (int height = 0; height < nNumHigh; height++)
+		{
+			Particle_10037d60 *pParticle;
+			if (g_104a5738->RandomInt(0, 1))
+				pParticle = (Particle_10037d60 *)pGlassEmitter->sub_101180c0(0x44, hMaterial1, &vCurPos);
+			else
+				pParticle = (Particle_10037d60 *)pGlassEmitter->sub_101180c0(0x44, hMaterial2, &vCurPos);
+
+			Vector vForceVel = Vector(0, 0, 0);
+			if (g_104a5738->RandomInt(0, 3) != 0)
+			{
+				float flForceDistSqr = (vCurPos - m_vecForcePos).LengthSqr();
+				vForceVel = m_vecForce;
+				if (flForceDistSqr > g_101e34f0)
+					vForceVel *= (40.0f / flForceDistSqr);
+			}
+
+			if (pParticle)
+			{
+				pParticle->m_flLifetime = 0;
+				pParticle->m_flDieTime = g_104a5738->RandomFloat(1.0f, 10.0f);
+				pParticle->m_vecVelocity = vForceVel;
+				pParticle->m_vecVelocity += RandomVector_10037d60(-25, 25);
+				pParticle->m_uchSize = (unsigned char)(m_flShardSize + g_104a5738->RandomFloat(-0.5 * m_flShardSize, 0.5 * m_flShardSize));
+				pParticle->m_vAngles = m_vecAngles;
+				pParticle->m_flAngSpeed = g_104a5738->RandomFloat(-400, 400);
+				pParticle->m_Front[0] = m_uchFrontColor[0];
+				pParticle->m_Front[1] = m_uchFrontColor[1];
+				pParticle->m_Front[2] = m_uchFrontColor[2];
+				pParticle->m_Back[0] = m_uchBackColor[0];
+				pParticle->m_Back[1] = m_uchBackColor[1];
+				pParticle->m_Back[2] = m_uchBackColor[2];
+			}
+
+			float flForceSpeed = vForceVel.Length();
+			if (flForceSpeed > flMaxSpeed)
+				flMaxSpeed = flForceSpeed;
+			if (flForceSpeed < flMinSpeed)
+				flMinSpeed = flForceSpeed;
+
+			vCurPos += vHeightStep;
+		}
+		vCurPos -= nNumHigh * vHeightStep;
+		vCurPos += vWidthStep;
+	}
+
+	Vector vMoveDir = m_vecForce;
+	VectorNormalize(vMoveDir);
+	pGlassEmitter->m_Coll.Setup(&m_vecOrigin, &vMoveDir, 0.3f, flMinSpeed, flMaxSpeed, 500.0f, 0.3f);
+	if (pGlassEmitter)
+		pGlassEmitter->sub_10117fe0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10038230 size=0x6
 namespace lifted {
 extern char g_102edf98;
