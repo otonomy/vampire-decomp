@@ -74,7 +74,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc112();
 	// the slots C_BaseAnimating adds to its base's vtable: 120-142, vfuncK at slot K
 	virtual void vfunc120(float *, float);
-	virtual void vfunc121();
+	virtual float vfunc121(int, int, float *poseParameter, float cycle, float);
 	virtual float vfunc122();
 	virtual void vfunc123(const Vector *pos, const Quaternion *q, const matrix3x4_t &cameraTransform, const struct StudioBoneMask *pBoneComputed);	// BuildTransformations
 	virtual void vfunc124(int, int);
@@ -83,7 +83,9 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc127(const Vector &origin, const QAngle &angles, int event, const char *options);
 	virtual void vfunc128();
 	virtual float vfunc129(int, float, float, float);
-	virtual void vfunc130();
+	virtual void vfunc130(const struct CBitVecWords *boneMask, Vector *pos, Quaternion *q);
+	void sub_10091110(const struct CBitVecWords *boneMask, float cycle, float *poseParameter, Vector *pos, Quaternion *q);
+	void sub_10096b30(Quaternion *q1, Vector *pos1, int sequence, const Quaternion *q2, const Vector *pos2, float s, const struct CBitVecWords *boneMask);
 	virtual void vfunc131(int, int, int, int, int, int);
 	virtual void vfunc132(bool);
 	virtual int vfunc133();

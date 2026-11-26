@@ -11,5 +11,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual int vfunc16();
     virtual int vfunc17();
     virtual int vfunc70();
-    virtual void vfunc130();
+    virtual void vfunc130(const struct CBitVecWords *boneMask, Vector *pos, Quaternion *q);
 };
