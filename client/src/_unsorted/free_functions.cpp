@@ -114228,6 +114228,131 @@ void sub_101895f0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10189600 size=0x28d
+#include "QuestLogPanel.h"
+#include "QuestJournal.h"
+#include "C_BasePlayer.h"
+
+extern "C" int sprintf(char *, const char *, ...);
+extern "C" void qsort(void *, unsigned int, unsigned int, int (*)(const void *, const void *));
+
+extern QuestJournal g_105f99e0;
+struct QuestRecY { int m_0; int m_4; int m_area; int m_c; int m_iCur; int m_states[20]; };
+struct QuestCompletion { int m_0; int m_4; int m_type; };
+int sub_10189890(const void *a, const void *b);
+struct QuestPlayerView { char pad[0x15ec]; int m_iArea; char pad15f0[0x16dc - 0x15f0]; int m_iNewArea; };
+struct QuestText
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+	virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+	virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40(); virtual void v41();
+	virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47();
+	virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53();
+	virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65();
+	virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69(); virtual void v70(); virtual void v71();
+	virtual void v72(); virtual void v73(); virtual void v74(); virtual void v75(); virtual void v76(); virtual void v77();
+	virtual void v78(); virtual void v79(); virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83();
+	virtual void v84(); virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89();
+	virtual void v90(); virtual void v91(); virtual void v92(); virtual void v93(); virtual void v94(); virtual void v95();
+	virtual void v96(); virtual void v97(); virtual void v98(); virtual void v99(); virtual void v100();
+	virtual void GotoTextStart();	// 101
+	virtual void v102(); virtual void v103(); virtual void v104(); virtual void v105(); virtual void v106();
+	virtual void SetText(const char *text);	// 107
+};
+struct QuestLogView
+{
+	char pad0[0x9c];
+	QuestText *m_pActive;	// 0x9c
+	char pada0[0xb0 - 0xa0];
+	QuestText *m_pCompleted;	// 0xb0
+	char padb4[0xc4 - 0xb4];
+	QuestText *m_pOther;	// 0xc4
+	char padc8[0xcc - 0xc8];
+	char m_szActive[0x4000];	// 0xcc
+	char m_szCompleted[0x4000];	// 0x40cc
+	char m_szOther[0x4000];	// 0x80cc
+	int m_nActive;	// 0xc0cc
+	int m_nCompleted;	// 0xc0d0
+	int m_nOther;	// 0xc0d4
+	bool m_bDirty;	// 0xc0d8
+};
+
+void QuestLogPanel::sub_10189600()
+{
+	QuestLogView *self = (QuestLogView *)this;
+	QuestPlayerView *pPlayer = (QuestPlayerView *)g_pLocalPlayer;
+	if (pPlayer && pPlayer->m_iNewArea)
+	{
+		if (pPlayer->m_iNewArea != 0xffff)
+			pPlayer->m_iArea = pPlayer->m_iNewArea - 1;
+		self->m_bDirty = true;
+		pPlayer->m_iNewArea = 0;
+		char buf[32];
+		sprintf(buf, "QB%d", pPlayer->m_iArea + 1);
+		vfunc78((int)buf);
+		return;
+	}
+	if (!self->m_bDirty)
+		return;
+	self->m_nActive = 0;
+	self->m_nCompleted = 0;
+	self->m_nOther = 0;
+	self->m_szCompleted[0] = 0;
+	self->m_szActive[0] = 0;
+	self->m_szOther[0] = 0;
+	QuestRecY *active[512];
+	QuestRecY *completed[512];
+	QuestRecY *other[512];
+	int nActive = 0, nCompleted = 0, nOther = 0;
+	int i;
+	for (i = 0; i < g_105f99e0.m_field[8]; i++)
+	{
+		QuestRecY *q = (QuestRecY *)g_105f99e0.sub_10162f00(i);
+		if (pPlayer && q->m_area != pPlayer->m_iArea)
+			continue;
+		if (q->m_iCur < 0 || q->m_states[q->m_iCur] < 0)
+			continue;
+		int type = ((QuestCompletion *)g_105f99e0.sub_10163180(q->m_states[q->m_iCur]))->m_type;
+		if (type == 1)
+			active[nActive++] = q;
+		else if (type == 2)
+			completed[nCompleted++] = q;
+		else
+			other[nOther++] = q;
+	}
+	if (nCompleted > 0)
+	{
+		qsort(completed, nCompleted, 4, sub_10189890);
+		for (i = 0; i < nCompleted; i++)
+			sub_101898c0(completed[i], self->m_szCompleted, &self->m_nCompleted);
+	}
+	if (nActive > 0)
+	{
+		qsort(active, nActive, 4, sub_10189890);
+		for (i = 0; i < nActive; i++)
+			sub_101898c0(active[i], self->m_szActive, &self->m_nActive);
+	}
+	if (nOther > 0)
+	{
+		qsort(other, nOther, 4, sub_10189890);
+		for (i = 0; i < nOther; i++)
+			sub_101898c0(other[i], self->m_szOther, &self->m_nOther);
+	}
+	self->m_pCompleted->SetText(self->m_szCompleted);
+	self->m_pActive->SetText(self->m_szActive);
+	self->m_pOther->SetText(self->m_szOther);
+	self->m_pCompleted->GotoTextStart();
+	self->m_pActive->GotoTextStart();
+	self->m_pOther->GotoTextStart();
+	self->m_bDirty = false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10189890 size=0x22
 struct S10189890 { int pad[3]; int m_n; };
 int sub_10189890(S10189890 **a, S10189890 **b)
