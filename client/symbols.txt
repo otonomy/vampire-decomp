@@ -1797,6 +1797,7 @@
 0x10025130 func   ?_C_ItemKShrekHubFourKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKShrekHubFourKey_CreateObject
 0x100251f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKShrekHubFourKey@@@Z ClientClassInit
 0x10025280 func   ?vfunc17@C_ItemKKikiKey@@UAEHXZ C_ItemKKikiKey::vfunc17
+0x100252c0 func   ?sub_100252c0@@YAHXZ sub_100252c0
 0x10025310 func   ??_GC_ItemKKikiKey@@UAEPAXI@Z ??_GC_ItemKKikiKey@@UAEPAXI@Z
 0x10025330 func   ?vfunc16@C_ItemKKikiKey@@UAEHXZ C_ItemKKikiKey::vfunc16
 0x10025340 func   ?vfunc15@C_ItemKKikiKey@@UAEHXZ C_ItemKKikiKey::vfunc15
