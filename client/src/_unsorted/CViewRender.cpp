@@ -209,6 +209,99 @@ CViewRender *CViewRender::sub_1018e9b0(unsigned flags)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018f630 size=0x37e
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+struct BeamsV { virtual void v0(); };
+struct TempV { virtual void v0(); };
+struct CvarV { virtual void v0(); virtual void v1(); virtual void *FindVar(const char *); };
+struct EngV2 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49(void *); };
+struct MH { int m_p; void sub_100cd1f0(const char *); };
+extern CvarV *g_104a57e0;
+extern BeamsV *g_102d5050;
+extern TempV *g_1028073c;
+extern char *g_102d4290[8];
+extern EngV2 *g_104a57d4;
+
+struct CVRView
+{
+	void *vptr;
+	char m_pad04[0x288];
+	int m_n28c; int m_n290; int m_n294; int m_n298; int m_n29c; int m_a2a0[6];
+	char m_pad2b8[0xc4];
+	void *m_pViewSize; void *m_pDrawEntities; void *m_pDrawBrushModels;
+	MH m_mat388; MH m_mat38c; MH m_mats390[8]; int m_n3b0;
+	MH m_m3b4; MH m_m3b8; MH m_m3bc; MH m_m3c0; MH m_m3c4; MH m_m3c8; MH m_m3cc; MH m_m3d0; MH m_m3d4; MH m_m3d8; MH m_m3dc; MH m_m3e0; MH m_m3e4; MH m_m3e8; MH m_m3ec; MH m_m3f0; MH m_m3f4; MH m_m3f8; MH m_m3fc; MH m_m400; MH m_m404; MH m_m408; MH m_m40c; MH m_m410;
+	float m_f414; int m_n418; int m_n41c; int m_n420;
+	MH m_m424; MH m_m428; MH m_m42c; MH m_m430; MH m_m434; MH m_m438; MH m_m43c; MH m_m440; MH m_m444;
+	char m_b448; char m_b449; char m_b44a; float m_f44c; int m_n450; int m_n454; int m_a458[17]; char m_b49c;
+};
+
+// TARGET: CViewRender::vfunc0
+void CViewRender::vfunc0()
+{
+	CVRView *s = (CVRView *)this;
+	ScopeTrace trace("CViewRender::Init", g_102de300);
+	s->m_pViewSize = g_104a57e0->FindVar("viewsize");
+	s->m_pDrawEntities = g_104a57e0->FindVar("r_drawentities");
+	s->m_pDrawBrushModels = g_104a57e0->FindVar("r_drawbrushmodels");
+	s->m_n28c = 0;
+	s->m_n290 = 0;
+	s->m_n294 = 0;
+	s->m_n298 = 0;
+	memset(s->m_a2a0, 0, sizeof(s->m_a2a0));
+	g_102d5050->v0();
+	g_1028073c->v0();
+	s->m_mat388.sub_100cd1f0("debug/debugtranslucentsinglecolor");
+	s->m_mat38c.sub_100cd1f0("engine/modulatesinglecolor");
+	for (int i = 0; i < 8; i++)
+		if (g_102d4290[i] && g_102d4290[i][0])
+			s->m_mats390[i].sub_100cd1f0(g_102d4290[i]);
+	s->m_m3b4.sub_100cd1f0("engine/depthonly");
+	s->m_m3b8.sub_100cd1f0("engine/depthset");
+	s->m_m3bc.sub_100cd1f0("highlights/Fortitude_character");
+	s->m_m3c0.sub_100cd1f0("highlights/Fortitude_Hit_character");
+	s->m_m3c4.sub_100cd1f0("highlights/Bloodshield_character");
+	s->m_m3c8.sub_100cd1f0("highlights/Bloodshield_Hit_character");
+	s->m_m3cc.sub_100cd1f0("models/character/fortitudeskin");
+	s->m_m3d0.sub_100cd1f0("models/hands/FortMHandTop");
+	s->m_m3d4.sub_100cd1f0("models/hands/FortMHandBottom");
+	s->m_m3d8.sub_100cd1f0("models/hands/FortMHandTop");
+	s->m_m3dc.sub_100cd1f0("models/hands/FortMHandBottom");
+	s->m_m3e0.sub_100cd1f0("effects/burnpeel");
+	s->m_m3e4.sub_100cd1f0("engine/vertexcoloradditive");
+	s->m_m3e8.sub_100cd1f0("engine/vertexcolorblend");
+	s->m_m3ec.sub_100cd1f0("engine/occlusionquery");
+	s->m_m3f0.sub_100cd1f0("effects/desaturatespotlightmodel");
+	s->m_m3f4.sub_100cd1f0("effects/desaturatespotlightmodelblend");
+	s->m_m3f8.sub_100cd1f0("effects/desaturatespotlightmodeladditive");
+	s->m_m3fc.sub_100cd1f0("effects/desaturatespotlightmodelalphatest");
+	s->m_m400.sub_100cd1f0("effects/colorspotlightmodel");
+	s->m_m404.sub_100cd1f0("effects/colorspotlightmodelblend");
+	s->m_m408.sub_100cd1f0("effects/colorspotlightmodeladditive");
+	s->m_m40c.sub_100cd1f0("effects/colorspotlightmodelalphatest");
+	s->m_m410.sub_100cd1f0("effects/lightblur_plus_noise");
+	s->m_f414 = -1000.0f;
+	s->m_m428.sub_100cd1f0("effects/motion_blur");
+	s->m_m42c.sub_100cd1f0("effects/insight_blur");
+	s->m_m424.sub_100cd1f0("effects/crossfade");
+	s->m_m430.sub_100cd1f0("effects/redvision");
+	s->m_m434.sub_100cd1f0("effects/Obfuscate_overlay");
+	s->m_m438.sub_100cd1f0("highlights/Obfuscate_character");
+	s->m_m43c.sub_100cd1f0("highlights/bloodmelt");
+	s->m_m440.sub_100cd1f0("effects/Bloodshield_overlay");
+	s->m_m444.sub_100cd1f0("effects/meleetrail");
+	s->m_b448 = 0;
+	s->m_b449 = 0;
+	s->m_b44a = 0;
+	s->m_f44c = 1.0f;
+	s->m_b49c = 0;
+	g_104a57d4->v49(s->m_a458);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018f9b0 size=0x7e
 #include "CViewRender.h"
 #include "ScopeTrace.h"
