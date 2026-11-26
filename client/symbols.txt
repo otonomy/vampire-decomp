@@ -2635,6 +2635,7 @@
 0x1004de50 func   ?vfunc107@CCredits@@UAE_NXZ CCredits::vfunc107
 0x1004de80 func   ?vfunc112@CCredits@@UAEXXZ CCredits::vfunc112
 0x1004dea0 func   ?vfunc113@CCredits@@UAEXXZ CCredits::vfunc113
+0x1004df00 func   ?vfunc98@CCredits@@UAEXXZ CCredits::vfunc98
 0x1004e1f0 func   ?vfunc97@CCredits@@UAEXXZ CCredits::vfunc97
 0x1004e200 func   ?sub_1004e200@CUnknown1004e200@@QAEDD@Z CUnknown1004e200::sub_1004e200
 0x1004e210 func   ?sub_1004e210@CUnknown1004e210@@QAEDXZ CUnknown1004e210::sub_1004e210
