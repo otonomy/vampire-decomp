@@ -869,6 +869,7 @@
 0x10012f30 func   ?_C_OccultPresence_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_OccultPresence_CreateObject
 0x10012ff0 func   ?ClientClassInit@@YAHPAUignored@DT_OccultPresence@@@Z ClientClassInit
 0x10013080 func   ?vfunc17@C_OccultObfuscate@@UAEHXZ C_OccultObfuscate::vfunc17
+0x100130c0 func   ?sub_100130c0@@YAHXZ sub_100130c0
 0x10013110 func   ??_GC_OccultObfuscate@@UAEPAXI@Z ??_GC_OccultObfuscate@@UAEPAXI@Z
 0x10013130 func   ?vfunc16@C_OccultObfuscate@@UAEHXZ C_OccultObfuscate::vfunc16
 0x10013140 func   ?vfunc15@C_OccultObfuscate@@UAEHXZ C_OccultObfuscate::vfunc15
