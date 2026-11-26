@@ -61976,6 +61976,70 @@ bool CUtlRBTree148::sub_100cf230(unsigned short i) const
 }
 // END FUNCTION
 
+// FUNCTION: 0x100cf4e0 size=0x531
+#include "CUtlRBTree148.h"
+
+// CUtlRBTree::InsertRebalance (tier1 utlrbtree.h), 0x94-byte nodes
+void CUtlRBTree148::sub_100cf4e0(unsigned short elem)
+{
+	while (elem != m_Root && Color(Parent(elem)) == 0)
+	{
+		unsigned short parent = Parent(elem);
+		unsigned short grandparent = Parent(parent);
+
+		if (LeftChild(Parent(parent)) == parent)
+		{
+			unsigned short uncle = RightChild(grandparent);
+			if (Color(uncle) == 0)
+			{
+				SetColor(parent, 1);
+				SetColor(uncle, 1);
+				SetColor(grandparent, 0);
+				elem = grandparent;
+			}
+			else
+			{
+				if (RightChild(Parent(elem)) == elem)
+				{
+					elem = parent;
+					RotLeft(elem);
+					parent = Parent(elem);
+					grandparent = Parent(parent);
+				}
+				SetColor(parent, 1);
+				SetColor(grandparent, 0);
+				RotRight(grandparent);
+			}
+		}
+		else
+		{
+			unsigned short uncle = LeftChild(grandparent);
+			if (Color(uncle) == 0)
+			{
+				SetColor(parent, 1);
+				SetColor(uncle, 1);
+				SetColor(grandparent, 0);
+				elem = grandparent;
+			}
+			else
+			{
+				if (LeftChild(Parent(elem)) == elem)
+				{
+					elem = parent;
+					RotRight(elem);
+					parent = Parent(elem);
+					grandparent = Parent(parent);
+				}
+				SetColor(parent, 1);
+				SetColor(grandparent, 0);
+				sub_100cfa20(grandparent);
+			}
+		}
+	}
+	SetColor(m_Root, 1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100cfa20 size=0x1d1
 #include "CClassMap.h"
 
