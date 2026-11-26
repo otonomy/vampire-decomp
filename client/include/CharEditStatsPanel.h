@@ -30,6 +30,7 @@ public:
 	char m_pad2dc[0x434 - 0x2dc];
 	bool m_bAutoLevel;
 	void sub_10181ba0();
+	void sub_10181400(const char *pszName);	// shows the stat named pszName: category title / lines, the stat's title and help texts, selects its button
 	void sub_10181bf0();
 	void *sub_101808d0(const char *, int *);
 	virtual ~CharEditStatsPanel();
