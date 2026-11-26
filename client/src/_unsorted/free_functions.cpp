@@ -59829,6 +59829,163 @@ float CGameMovement::sub_100e7870()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100e7a20 size=0x302
+#include "CGameMovement.h"
+#include "ConVar.h"
+
+#pragma intrinsic(sqrt)
+extern "C" double sqrt(double);
+
+struct CView { char sub_100e7850(); };
+struct CUnknown100a2450 { int sub_100a2450(); };
+
+struct MoveTypeIface_100e7a20
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual int GetMoveType();
+};
+
+struct Player_100e7a20
+{
+	char pad00[0xc];
+	MoveTypeIface_100e7a20 m_mt;	// 0x0c
+	char pad10[0x148 - 0x10];
+	Vector m_vecViewOffset;	// 0x148
+	int GetMoveType() { return m_mt.GetMoveType(); }
+	int GetFlags() { return ((CUnknown100a2450 *)this)->sub_100a2450(); }
+};
+
+struct Mv_100e7a20
+{
+	char pad00[0x24];
+	unsigned int m_nFlags;	// 0x24
+	int m_n28;
+	float m_flForwardMove;	// 0x2c
+	float m_flSideMove;	// 0x30
+	float m_flUpMove;	// 0x34
+	float m_flMaxSpeed;	// 0x38
+	float m_flClientMaxSpeed;	// 0x3c
+	Vector m_vecVelocity;	// 0x40
+	char pad4c[0x58 - 0x4c];
+	QAngle m_vecAngles;	// 0x58
+	QAngle m_vecOldAngles;	// 0x64
+};
+
+struct Surface_100e7a20 { char pad[0x68]; float maxSpeedFactor; };
+
+extern char g_102bb1a8;
+extern ConVar g_104dfd28;
+extern ConVar g_104df860;
+
+#define MV ((Mv_100e7a20 *)m_pPlayer)
+#define PLAYER ((Player_100e7a20 *)m_pMove)
+#define fmin_(a, b) ((a) < (b) ? (a) : (b))
+
+void CGameMovement::sub_100e7a20()
+{
+	QAngle v_angle;
+
+	if (PLAYER->GetMoveType() != 2 && PLAYER->GetMoveType() != 9)
+	{
+		float spd;
+		float maxspeed;
+
+		spd = (MV->m_flForwardMove * MV->m_flForwardMove) +
+			  (MV->m_flSideMove * MV->m_flSideMove) +
+			  (MV->m_flUpMove * MV->m_flUpMove);
+
+		maxspeed = MV->m_flClientMaxSpeed;
+		if (maxspeed != 0.0)
+		{
+			MV->m_flMaxSpeed = fmin_(maxspeed, MV->m_flMaxSpeed);
+		}
+
+		float flSpeedFactor = 1.0f;
+		if (m_pSurface9c)
+		{
+			flSpeedFactor = ((Surface_100e7a20 *)m_pSurface9c)->maxSpeedFactor;
+		}
+
+		float flConstraintSpeedFactor = sub_100e7870();
+		if (flConstraintSpeedFactor < flSpeedFactor)
+			flSpeedFactor = flConstraintSpeedFactor;
+
+		MV->m_flMaxSpeed *= flSpeedFactor;
+
+		if (g_102bb1a8)
+		{
+			if ((spd != 0.0) && (spd > MV->m_flMaxSpeed * MV->m_flMaxSpeed))
+			{
+				float fRatio = MV->m_flMaxSpeed / sqrt(spd);
+				MV->m_flForwardMove *= fRatio;
+				MV->m_flSideMove *= fRatio;
+				MV->m_flUpMove *= fRatio;
+			}
+		}
+		else
+		{
+			spd = sqrt(spd);
+			if ((spd != 0.0) && (spd > MV->m_flMaxSpeed))
+			{
+				float fRatio = MV->m_flMaxSpeed / spd;
+				MV->m_flForwardMove *= fRatio;
+				MV->m_flSideMove *= fRatio;
+				MV->m_flUpMove *= fRatio;
+			}
+		}
+	}
+
+	if (!m_bDc && (MV->m_nFlags & 0x20000) && !(MV->m_nFlags & 4))
+	{
+		float f = vfunc23();
+		MV->m_flForwardMove *= f;
+		MV->m_flSideMove *= f;
+		MV->m_flUpMove *= f;
+		m_bDc = 1;
+	}
+
+	if ((PLAYER->GetFlags() & 0x20) || (PLAYER->GetFlags() & 8) || ((CView *)this)->sub_100e7850())
+	{
+		MV->m_flForwardMove = 0;
+		MV->m_flSideMove = 0;
+		MV->m_flUpMove = 0;
+	}
+
+	vfunc7();
+
+	if (!((CView *)this)->sub_100e7850())
+	{
+		v_angle = MV->m_vecAngles;
+
+		if (PLAYER->GetMoveType() != 2 && PLAYER->GetMoveType() != 9)
+		{
+			MV->m_vecAngles[2] = vfunc6(v_angle, MV->m_vecVelocity, g_104dfd28.GetFloat(), g_104df860.GetFloat());
+		}
+		else
+		{
+			MV->m_vecAngles[2] = 0.0;
+		}
+		MV->m_vecAngles[0] = v_angle[0];
+		MV->m_vecAngles[1] = v_angle[1];
+	}
+	else
+	{
+		MV->m_vecAngles = MV->m_vecOldAngles;
+	}
+
+	if (((CView *)this)->sub_100e7850())
+	{
+		PLAYER->m_vecViewOffset.Init(0.0f, 0.0f, 14.0f);
+	}
+
+	if (MV->m_vecAngles[1] > 180.0f)
+	{
+		MV->m_vecAngles[1] -= 360.0f;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100e7e90 size=0x2e
 struct CUnknown100e7e90 { void sub_100e7e90(); };
 void CUnknown100e7e90::sub_100e7e90()
