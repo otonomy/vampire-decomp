@@ -10038,6 +10038,32 @@ template <> int ClientClassInit<DT_ItemGWatchNormal::ignored>(DT_ItemGWatchNorma
 }
 // END FUNCTION
 
+// FUNCTION: 0x10018ac0 size=0x45
+namespace lifted {
+extern char g_10208594;
+extern char g_102085a8;
+extern char g_102085e4;
+extern char g_1020861c;
+extern char g_10208674;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10018ac0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10208674;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020861c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_102085e4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_102085a8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10208594;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10018b50 size=0x6
 namespace lifted {
 extern char g_102e157c;

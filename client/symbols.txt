@@ -1157,6 +1157,7 @@
 0x10018930 func   ?_C_ItemGWatchNormal_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGWatchNormal_CreateObject
 0x100189f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGWatchNormal@@@Z ClientClassInit
 0x10018a80 func   ?vfunc17@C_ItemGWatchFancy@@UAEHXZ C_ItemGWatchFancy::vfunc17
+0x10018ac0 func   ?sub_10018ac0@@YAHXZ sub_10018ac0
 0x10018b10 func   ??_GC_ItemGWatchFancy@@UAEPAXI@Z ??_GC_ItemGWatchFancy@@UAEPAXI@Z
 0x10018b30 func   ?vfunc16@C_ItemGWatchFancy@@UAEHXZ C_ItemGWatchFancy::vfunc16
 0x10018b40 func   ?vfunc15@C_ItemGWatchFancy@@UAEHXZ C_ItemGWatchFancy::vfunc15
