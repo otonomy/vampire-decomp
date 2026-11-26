@@ -276,6 +276,9 @@ of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call th
 - **Particles** hold their emitters in `CSmartPtr<T>` (`CSmartPtr.h`; AddRef/Release are sub_10117fd0/sub_10117fe0):
   a null check before AddRef and a Release on every exit is the smart pointer, not hand code.
 - **Engine interfaces**: see "Engine interfaces" (engineclient.h); never a view of your own.
+- **The local player** (0x104a0d50, read directly by 267 functions) is the 2004 SDK's `g_pLocalPlayer`:
+  `#include "C_BasePlayer.h"` and write `C_BasePlayer::GetLocalPlayer()` (inline, the same load); never declare
+  `g_104a0d50` yourself. Cast for a member the header does not declare yet, or give C_BasePlayer.h the member.
 - **Two functions in one row.** When the game's bytes end with `ret` / padding and go on with a second function
   (another `ret N`, its own callers), the import merged two rows; note "merged row: second function at 0x..." and
   move on (`pcdecomp split` cuts it), do not write both into one source.
