@@ -5691,6 +5691,7 @@
 0x10105fb0 func   ?sub_10105fb0@@YAXAAHHHHPAUkbutton_t@@_N@Z sub_10105fb0
 0x10106240 func   ?ActivateMouse@CInput@@UAEXXZ CInput::ActivateMouse
 0x10106240 func   ?vfunc16@CInput@@UAEXXZ CInput::vfunc16
+0x10106290 func   ?DeactivateMouse@CInput@@UAEXXZ CInput::DeactivateMouse
 0x10106290 func   ?vfunc17@CInput@@UAEXXZ CInput::vfunc17
 0x101062d0 func   ?vfunc18@CInput@@UAE_NXZ CInput::vfunc18
 0x101062e0 func   ?sub_101062e0@CUnknown101062e0@@QAEHXZ CUnknown101062e0::sub_101062e0
