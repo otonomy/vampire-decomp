@@ -2289,6 +2289,7 @@
 0x10035cf0 func   ??1C_TEDecal@@UAE@XZ C_TEDecal::~C_TEDecal
 0x10035cf0 func   ?sub_10035cf0@CUnknown10035cf0@@QAEHXZ CUnknown10035cf0::sub_10035cf0
 0x10035d10 func   ?vfunc13@C_TEDecal@@UAEXXZ C_TEDecal::vfunc13
+0x10035d30 func   ?sub_10035d30@@YAXPAXMPBVVector@@1HHHH@Z sub_10035d30
 0x10035e70 func   ?vfunc9@C_TEDecal@@UAEHXZ C_TEDecal::vfunc9
 0x10035e80 func   ?vfunc8@C_TEDecal@@UAEHXZ C_TEDecal::vfunc8
 0x10035e90 func   ?sub_10035e90@@YAHXZ sub_10035e90

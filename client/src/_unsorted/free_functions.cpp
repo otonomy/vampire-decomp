@@ -20873,6 +20873,26 @@ int CUnknown10035cf0::sub_10035cf0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10035d30 size=0xa0
+#include "engineclient.h"
+#include "C_BaseEntity.h"
+#include "CClientEntityList.h"
+#include "CGameTrace.h"
+
+void sub_10035d30(void *filter, float delay, const Vector *pos, const Vector *start, int entity, int hitbox, int index, int a7)
+{
+	CGameTrace tr;
+	if (entity == 0 && hitbox != 0)
+	{
+		staticpropmgr->vfunc5(*start, *pos, hitbox - 1, effects->Draw_DecalIndex(index), false, tr, a7);
+		return;
+	}
+	C_BaseEntity *ent = cl_entitylist->sub_100d0cf0(entity);
+	if (ent)
+		ent->sub_100a1d60(*start, *pos, *pos, hitbox, effects->Draw_DecalIndex(index), false, tr, a7);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10035e90 size=0x6
 namespace lifted {
 extern char g_102ed298;
