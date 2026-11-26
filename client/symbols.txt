@@ -5698,6 +5698,7 @@
 0x10101f70 func   ?sub_10101f70@@YAHXZ sub_10101f70
 0x10101f80 func   ?sub_10101f80@@YAHXZ sub_10101f80
 0x10101f90 func   ?sub_10101f90@@YAHXZ sub_10101f90
+0x10101fa0 func   ?sub_10101fa0@@YAHXZ sub_10101fa0
 0x101022c0 func   ?sub_101022c0@@YAXXZ sub_101022c0
 0x101024e0 func   ?sub_101024e0@@YAHXZ sub_101024e0
 0x101024f0 func   ?sub_101024f0@@YAHXZ sub_101024f0
