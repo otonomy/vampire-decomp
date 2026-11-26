@@ -138161,6 +138161,17 @@ void VMatrix::sub_101a16c0(const VMatrix &vm, VMatrix &out) const
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a1920 size=0x2d
+#include "VMatrix.h"
+
+VMatrix VMatrix::sub_101a1920(const VMatrix &vm) const
+{
+	VMatrix ret;
+	sub_101a16c0(vm, ret);
+	return ret;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a1950 size=0x11
 namespace lifted {
 int sub_101a1970(int, int);
