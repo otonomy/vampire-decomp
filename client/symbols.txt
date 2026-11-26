@@ -293,6 +293,7 @@
 0x10007b30 func   ?_C_BaseBludgeonWeapon_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_BaseBludgeonWeapon_CreateObject
 0x10007bf0 func   ?ClientClassInit@@YAHPAUignored@DT_BaseBludgeonWeapon@@@Z ClientClassInit
 0x10007c80 func   ?vfunc17@C_WeaponMelee@@UAEHXZ C_WeaponMelee::vfunc17
+0x10007cc0 func   ?sub_10007cc0@@YAHXZ sub_10007cc0
 0x10007d10 func   ??_GC_WeaponMelee@@UAEPAXI@Z ??_GC_WeaponMelee@@UAEPAXI@Z
 0x10007d30 func   ?vfunc16@C_WeaponMelee@@UAEHXZ C_WeaponMelee::vfunc16
 0x10007d40 func   ?vfunc15@C_WeaponMelee@@UAEHXZ C_WeaponMelee::vfunc15
