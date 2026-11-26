@@ -15257,6 +15257,98 @@ int CUnknown10037330::sub_10037330()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10037350 size=0x29f
+#include "Vector.h"
+extern "C" double cos(double);
+extern "C" double sin(double);
+extern "C" double fabs(double);
+struct IRnd_F {
+	virtual void v0();
+	virtual float RandomFloat(float a, float b);
+	virtual int RandomInt(int a, int b);
+};
+extern IRnd_F *g_104a5738;
+struct SP_F {
+	char pad[0x18];
+	Vector m_vecVelocity;
+	float m_flRoll;
+	float m_flDieTime;
+	float m_flLifetime;
+	unsigned char m_uchColor[3];
+	unsigned char m_uchStartAlpha;
+	unsigned char m_uchEndAlpha;
+	unsigned char m_uchStartSize;
+	unsigned char m_uchEndSize;
+	char pad37;
+	float m_flRollDelta;
+};
+struct Emit_F {
+	void sub_10118080(const Vector &origin);
+	unsigned char sub_101180b0(const char *name);
+	SP_F *sub_101180c0(int size, unsigned char mat, const Vector &offset);
+	void sub_10117fe0();
+};
+struct Ptr_F {
+	Emit_F *m_p;
+	Emit_F *operator->() const { return m_p; }
+	~Ptr_F() { if (m_p) m_p->sub_10117fe0(); }
+};
+extern void sub_10118160(Ptr_F *out, const char *name);
+struct Fog_10037350 {
+	char m_pad[0xc];
+	Vector m_vecOrigin;
+	Vector m_vecVelocity;
+	void sub_10037350(int updateType);
+};
+// TARGET: ?sub_10037350@Fog_10037350@@QAEXH@Z
+void Fog_10037350::sub_10037350(int updateType)
+{
+	Ptr_F dustEmitter;
+	sub_10118160(&dustEmitter, "C_TEFogRipple");
+	if (!dustEmitter.m_p)
+		return;
+	if (m_vecVelocity.Length() > 60.0f)
+	{
+		VectorNormalize(m_vecVelocity);
+		m_vecVelocity *= 60.0f;
+	}
+	dustEmitter->sub_10118080(m_vecOrigin);
+	unsigned char hMaterial = dustEmitter->sub_101180b0("particle/particle_fog");
+	float flStepSize = 6.2831855f / 15;
+	float flCurAng = g_104a5738->RandomFloat(0, 6.2831855f);
+	for (int i = 0; i < 15; i++)
+	{
+		Vector vDir;
+		vDir[0] = (float)cos(flCurAng);
+		vDir[1] = (float)sin(flCurAng);
+		vDir[2] = 0;
+		flCurAng += flStepSize;
+		Vector vVelNorm = m_vecVelocity;
+		VectorNormalize(vVelNorm);
+		float flDot = 1 - fabs(DotProduct(vDir, vVelNorm));
+		if (flDot > 0.05)
+		{
+			SP_F *pParticle = dustEmitter->sub_101180c0(0x3c, hMaterial, m_vecOrigin);
+			if (pParticle == 0)
+				return;
+			pParticle->m_flLifetime = 0.0f;
+			pParticle->m_flDieTime = g_104a5738->RandomFloat(2, 4);
+			pParticle->m_uchStartSize = (unsigned char)g_104a5738->RandomFloat(1, 3);
+			pParticle->m_uchEndSize = (unsigned char)g_104a5738->RandomFloat(15, 30);
+			pParticle->m_vecVelocity = (vDir * g_104a5738->RandomFloat(25, 35)) + m_vecVelocity;
+			pParticle->m_vecVelocity[2] = -10;
+			pParticle->m_uchStartAlpha = (unsigned char)(25 + (75 * flDot));
+			pParticle->m_uchEndAlpha = 0;
+			pParticle->m_flRoll = g_104a5738->RandomFloat(0, 360);
+			pParticle->m_flRollDelta = g_104a5738->RandomFloat(-5, 5);
+			pParticle->m_uchColor[0] = 255.0f;
+			pParticle->m_uchColor[1] = 255.0f;
+			pParticle->m_uchColor[2] = 255.0f;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10037610 size=0x6
 namespace lifted {
 extern char g_102edc24;

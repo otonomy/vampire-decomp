@@ -2121,6 +2121,7 @@
 0x10037310 func   ??_GC_TEFogRipple@@UAEPAXI@Z ??_GC_TEFogRipple@@UAEPAXI@Z
 0x10037330 func   ??1C_TEFogRipple@@UAE@XZ C_TEFogRipple::~C_TEFogRipple
 0x10037330 func   ?sub_10037330@CUnknown10037330@@QAEHXZ CUnknown10037330::sub_10037330
+0x10037350 func   ?sub_10037350@Fog_10037350@@QAEXH@Z Fog_10037350::sub_10037350
 0x100375f0 func   ?vfunc9@C_TEFogRipple@@UAEHXZ C_TEFogRipple::vfunc9
 0x10037600 func   ?vfunc8@C_TEFogRipple@@UAEHXZ C_TEFogRipple::vfunc8
 0x10037610 func   ?sub_10037610@@YAHXZ sub_10037610
