@@ -19483,6 +19483,87 @@ void * CUnknown10045eb0::sub_10045eb0(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100468f0 size=0x257
+#include "Vector.h"
+struct IRnd_100468f0 {
+	virtual void v0();
+	virtual float RandomFloat(float a, float b);
+	virtual int RandomInt(int a, int b);
+};
+extern IRnd_100468f0 *g_104a5738;
+struct TP_100468f0 {
+	char pad[0x18];
+	float m_flDieTime;
+	float m_flLifetime;
+	Vector m_vecVelocity;
+	float m_flLength;
+	float m_flWidth;
+	float m_flColor[4];
+};
+union MatHandle_100468f0 {
+	void *p;
+	char c;
+};
+struct Emit_100468f0 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12();
+	virtual void Setup(const Vector &, const Vector *, float, float, float, float, float, int);
+	void sub_10118080(const Vector &origin);
+	void *sub_101180b0(const char *name);
+	void *sub_101180c0(int size, void *mat, const Vector &offset);
+	void sub_10117fe0();
+	Emit_100468f0 *sub_10045eb0(const char *name);
+};
+struct Ptr_100468f0 {
+	Emit_100468f0 *m_p;
+	Ptr_100468f0() { m_p = 0; }
+	~Ptr_100468f0() { if (m_p) m_p->sub_10117fe0(); }
+	void sub_10049000(Emit_100468f0 *p);
+	Emit_100468f0 *operator->() const { return m_p; }
+};
+void *__cdecl operator new(unsigned int);
+
+// TARGET: sub_100468f0
+void sub_100468f0(Vector &position, Vector &normal)
+{
+	Vector offset = position + (normal * 1.0f);
+	Emit_100468f0 *pNew = (Emit_100468f0 *)operator new(0xf4);
+	Emit_100468f0 *pCreated = pNew ? pNew->sub_10045eb0("FX_MetalScrape 1") : 0;
+	Ptr_100468f0 sparkEmitter;
+	sparkEmitter.sub_10049000(pCreated);
+	if (!sparkEmitter.m_p)
+		return;
+	sparkEmitter->sub_10118080(offset);
+	sparkEmitter->Setup(offset, &normal, 0.3f, 128.0f, 512.0f, 800.0f, 0.4f, 1);
+	int numSparks = g_104a5738->RandomInt(4, 8);
+	MatHandle_100468f0 hMaterial;
+	hMaterial.c = (char)(int)sparkEmitter->sub_101180b0("effects/spark");
+	Vector dir;
+	float length = 0.06f;
+	for (int i = 0; i < numSparks; i++)
+	{
+		TP_100468f0 *pParticle = (TP_100468f0 *)sparkEmitter->sub_101180c0(0x44, hMaterial.p, offset);
+		if (pParticle == 0)
+			return;
+		pParticle->m_flLifetime = 0.0f;
+		float spreadOfs = g_104a5738->RandomFloat(0.0f, 2.0f);
+		dir[0] = normal[0] + g_104a5738->RandomFloat(-(0.3f * spreadOfs), (0.3f * spreadOfs));
+		dir[1] = normal[1] + g_104a5738->RandomFloat(-(0.3f * spreadOfs), (0.3f * spreadOfs));
+		dir[2] = normal[2] + g_104a5738->RandomFloat(-(0.3f * spreadOfs), (0.3f * spreadOfs));
+		pParticle->m_flWidth = g_104a5738->RandomFloat(2.0f, 5.0f);
+		pParticle->m_flLength = g_104a5738->RandomFloat(length * 0.25f, length);
+		pParticle->m_flDieTime = g_104a5738->RandomFloat(2.0f, 2.0f);
+		pParticle->m_vecVelocity = dir * g_104a5738->RandomFloat((128.0f * (2.0f - spreadOfs)), (512.0f * (2.0f - spreadOfs)));
+		pParticle->m_flColor[0] = 1.0f;
+		pParticle->m_flColor[1] = 1.0f;
+		pParticle->m_flColor[2] = 1.0f;
+		pParticle->m_flColor[3] = 1.0f;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10047980 size=0x2fc
 #include "Vector.h"
 struct IRnd_10047980 {
