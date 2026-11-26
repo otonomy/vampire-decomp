@@ -3630,6 +3630,7 @@
 0x10099870 func   ?sub_10099870@CView@@QAEHXZ CView::sub_10099870
 0x10099880 func   ?sub_10099880@CObfEntity@@QAEMXZ CObfEntity::sub_10099880
 0x10099bd0 func   ?sub_10099bd0@XHOwner@@QAEPAXXZ XHOwner::sub_10099bd0
+0x10099c00 func   ?vfunc127@C_BaseCombatCharacter@@UAEXABVVector@@ABVQAngle@@HPBD@Z C_BaseCombatCharacter::vfunc127
 0x1009a2b0 func   ?sub_1009a2b0@@YIXPAX0H0@Z sub_1009a2b0
 0x1009b210 func   ?sub_1009b210@@YAHXZ sub_1009b210
 0x1009b2a0 func   ?sub_1009b2a0@CUnknown1009b2a0@@QAEHH@Z CUnknown1009b2a0::sub_1009b2a0
