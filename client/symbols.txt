@@ -4088,6 +4088,7 @@
 0x100abfc0 func   ?vfunc120@C_BaseViewModel@@UAEXHH@Z C_BaseViewModel::vfunc120
 0x100abff0 func   ?sub_100abff0@@YAPAXPAUObj100abff0@@@Z sub_100abff0
 0x100ac060 func   ?sub_100ac060@@YAHXZ sub_100ac060
+0x100ac070 func   ?GetLocalPlayer@C_BasePlayer@@SAPAV1@XZ C_BasePlayer::GetLocalPlayer
 0x100ac070 func   ?sub_100ac070@@YAHXZ sub_100ac070
 0x100ac080 func   ?sub_100ac080@UtlMem@@QAEXH@Z UtlMem::sub_100ac080
 0x100ac740 func   ?sub_100ac740@CUnknown100ac740@@QAEHXZ CUnknown100ac740::sub_100ac740
