@@ -4864,6 +4864,7 @@
 0x100c6c10 func   ??1C_BaseTerminal@@UAE@XZ C_BaseTerminal::~C_BaseTerminal
 0x100c6cc0 func   ?sub_100c6cc0@NV_100c6cc0@@QAEXH@Z NV_100c6cc0::sub_100c6cc0
 0x100c6d50 func   ?sub_100c6d50@C_BaseTerminal@@QAEXH@Z C_BaseTerminal::sub_100c6d50
+0x100c7090 func   ?vfunc25@C_BaseTerminal@@UAE_NH@Z C_BaseTerminal::vfunc25
 0x100c7550 func   ?sub_100c7550@C_BaseTerminal@@QAEXXZ C_BaseTerminal::sub_100c7550
 0x100c75b0 func   ?sub_100c75b0@C_BaseTerminal@@QAEXXZ C_BaseTerminal::sub_100c75b0
 0x100c7620 func   ?vfunc29@C_BaseTerminal@@UAEXD@Z C_BaseTerminal::vfunc29
