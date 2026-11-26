@@ -8356,6 +8356,7 @@
 0x10181b80 func   ?sub_10181b80@CUnknown10181b80@@QAEHD@Z CUnknown10181b80::sub_10181b80
 0x10181ba0 func   ?sub_10181ba0@CharEditStatsPanel@@QAEXXZ CharEditStatsPanel::sub_10181ba0
 0x10181bf0 func   ?sub_10181bf0@CharEditStatsPanel@@QAEXXZ CharEditStatsPanel::sub_10181bf0
+0x10181cc0 func   ?sub_10181cc0@CharEditStatsPanel@@QAEXXZ CharEditStatsPanel::sub_10181cc0
 0x101820f0 func   ?sub_101820f0@CUnknown101820f0@@QAEHH@Z CUnknown101820f0::sub_101820f0
 0x10182230 func   ?sub_10182230@CharEditStats_10182230@@QAEXHH@Z CharEditStats_10182230::sub_10182230
 0x10182330 func   ?vfunc123@CharEditStatsPanel@@UAEXXZ CharEditStatsPanel::vfunc123

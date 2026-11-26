@@ -113251,6 +113251,109 @@ void CharEditStatsPanel::sub_10181bf0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10181cc0 size=0x2b9
+#include "CharEditStatsPanel.h"
+#include "vgui2__Label.h"
+#include "C_BasePlayer.h"
+#include "CUnknown1014ada0.h"
+#include <stdio.h>
+
+extern int g_102d1708;
+extern int g_105fb600[16];
+extern int g_105e8138;
+extern CUnknown1014ada0 **g_105e813c;
+bool sub_101746b0();
+void sub_10179840();
+bool sub_101713e0();
+
+struct StatRowGroupL
+{
+	void sub_10180840(bool bActive);
+	void sub_101806e0();
+};
+
+struct StatLabelL
+{
+	void sub_1017d3a0(bool bChanged);
+};
+
+inline CUnknown1014ada0 *FindFeatL(int id)
+{
+	for (int i = 0; i < g_105e8138; i++)
+	{
+		if (g_105e813c[i]->m_unk00 == id)
+			return g_105e813c[i];
+	}
+	static CUnknown1014ada0 s_default(-1);
+	return &s_default;
+}
+
+void CharEditStatsPanel::sub_10181cc0()
+{
+	if (!sub_101746b0())
+		return;
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return;
+
+	if (g_102d1708 != pPlayer->sub_1008ebb0())
+	{
+		sub_1017f640();
+		sub_1017dc20();
+		sub_10179840();
+		g_102d1708 = pPlayer->sub_1008ebb0();
+	}
+
+	((StatRowGroupL *)((char *)this + 0xc0))->sub_101806e0();
+	((StatRowGroupL *)((char *)this + 0x10c))->sub_101806e0();
+	if (pPlayer->sub_1008eb70())
+	{
+		((StatRowGroupL *)((char *)this + 0x158))->sub_10180840(true);
+		((StatRowGroupL *)((char *)this + 0x1a4))->sub_10180840(false);
+		((StatRowGroupL *)((char *)this + 0x158))->sub_101806e0();
+	}
+	else
+	{
+		((StatRowGroupL *)((char *)this + 0x158))->sub_10180840(false);
+		((StatRowGroupL *)((char *)this + 0x1a4))->sub_10180840(true);
+		((StatRowGroupL *)((char *)this + 0x1a4))->sub_101806e0();
+	}
+
+	char szPoints[32];
+	char buf[64];
+	for (int i = 0; i < 16; i++)
+	{
+		CUnknown1014ada0 *pFeat = FindFeatL(g_105fb600[i]);
+		int bonus = pFeat->sub_1014b590(pPlayer);
+		int value = pFeat->sub_1014b3b0(pPlayer);
+		int base = pFeat->sub_1014b200(pPlayer);
+		if (bonus == 0)
+			sprintf(buf, "%s ~ %d", pFeat->m_unk14 ? (const char *)pFeat->m_unk14 : "", value);
+		else
+			sprintf(buf, "%s ~ %d (+%d)", pFeat->m_unk14 ? (const char *)pFeat->m_unk14 : "", value, bonus);
+		vgui2::Label *pLabel = m_pFeatLabels[i];
+		pLabel->vfunc108(buf);
+		if (base != value || bonus != 0)
+			((StatLabelL *)pLabel)->sub_1017d3a0(true);
+		else
+			((StatLabelL *)pLabel)->sub_1017d3a0(false);
+	}
+
+	if (sub_101713e0())
+	{
+		((vgui2::Label *)m_p2c4)->vfunc108("0");
+	}
+	else
+	{
+		sprintf(szPoints, "%d", pPlayer->m_StatListManager.Find(0)->sub_1015dbd0(0x22));
+		((vgui2::Label *)m_p2c4)->vfunc108(szPoints);
+	}
+	sub_10181f80();
+	vfunc101();
+	sub_1017f610();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101820f0 size=0xd
 struct CUnknown101820f0 { int sub_101820f0(int); };
 int CUnknown101820f0::sub_101820f0(int a0)
