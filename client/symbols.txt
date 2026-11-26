@@ -2062,6 +2062,7 @@
 0x1002c540 func   ?GetDataTableBasePtr@C_BaseTempEntity@@UAEPAXXZ C_BaseTempEntity::GetDataTableBasePtr
 0x1002c540 func   ?sub_1002c540@CUnknown1002c540@@QAEPADXZ CUnknown1002c540::sub_1002c540
 0x1002c740 func   ??0C_Hairball@@QAE@XZ C_Hairball::C_Hairball
+0x1002ca90 func   ?ClientThink@C_Hairball@@UAEXXZ C_Hairball::ClientThink
 0x1002d430 func   ?sub_1002d430@CUtlMemory12@@QAEPAU1@HH@Z CUtlMemory12::sub_1002d430
 0x1002d470 func   ?sub_1002d470@UtlMem@@QAEXXZ UtlMem::sub_1002d470
 0x1002d570 func   ?sub_1002d570@CUtlVector12_1002d570@@QAEHHHPBVVector@@@Z CUtlVector12_1002d570::sub_1002d570
