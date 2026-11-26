@@ -2174,6 +2174,7 @@
 0x10038a60 func   ?sub_10038a60@@YAXXZ sub_10038a60
 0x10038c40 func   ?vfunc18@C_TEGunshotDecal@@UAEXPAUCGameTrace@@@Z C_TEGunshotDecal::vfunc18
 0x10038f20 func   ?sub_10038f20@C_TEGunshotDecal@@QAE_NXZ C_TEGunshotDecal::sub_10038f20
+0x10039080 func   ??4Vector@@QAEAAV0@ABV0@@Z ??4Vector@@QAEAAV0@ABV0@@Z
 0x10039080 func   ?sub_10039080@Vector@@QAEAAV1@ABV1@@Z Vector::sub_10039080
 0x100390a0 func   ?vfunc0@CRagdollBulletEnumerator@@UAEHPAVCBaseEntity@@@Z CRagdollBulletEnumerator::vfunc0
 0x10039190 func   ?PostDataUpdate@C_TEGunshotDecal@@UAEXH@Z C_TEGunshotDecal::PostDataUpdate
