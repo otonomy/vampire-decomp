@@ -22,6 +22,7 @@ public:
     void vfunc23();
 public:
     int vfunc10(int, int, int);
+    void vfunc13(void *a1, int leaf, int a3, void *info);
     void vfunc12(int, int *, int *, int);
     void vfunc8(int, int, unsigned int *, unsigned int *);
     void vfunc7(int, unsigned int *, unsigned int *);
