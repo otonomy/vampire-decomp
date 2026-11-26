@@ -126471,6 +126471,110 @@ void CUnknown10187230::sub_10187230()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10187400 size=0x452
+#include "VMapScreenUI.h"
+#include "CHUDSprite.h"
+#include "StatOwner2.h"
+#include "vgui2__Button.h"
+
+extern "C" int sprintf(char *, const char *, ...);
+int sub_100cd0f0();
+int sub_100cd100();
+int sub_1018c870(const char *);
+extern char g_102de300[];
+
+struct MapButtonDef { int n0, n1, n2, n3, n4, n5; };
+extern MapButtonDef g_102d24b0[12];
+extern MapButtonDef g_102d25d0[12];
+extern const char *g_102d26fc[12];
+extern const char *g_102d272c[12];
+extern const char *g_102d275c[12];
+extern const char *g_102d278c[12];
+
+struct ISchemeView
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual int GetFont(int);
+};
+
+class CUnknown10186fa0
+{
+public:
+	void *sub_10186fa0(int parent, int name, int text);
+	char m_pad0[0xb8];
+	int m_nB8;
+	int m_nBC;
+	int m_nC0;
+	int m_nC4;
+	CHUDSprite *m_pC8;
+	CHUDSprite *m_pCC;
+	int m_nD0;
+};
+
+class Button_101b3630
+{
+public:
+	void *sub_101b3630(int parent, const char *name, const char *text);
+	char m_pad0[0xf0];
+};
+
+#define SCALEX(v) ((int)((v) * (sub_100cd100() * (1.0 / 1024))))
+#define SCALEY(v) ((int)((v) * (sub_100cd0f0() * (1.0 / 768))))
+
+void VMapScreenUI::sub_10187400()
+{
+	ISchemeView *pScheme = (ISchemeView *)sub_101ac830();
+	m_bkg.sub_101a9950(0, 0, SCALEX(1024.0), SCALEY(1024.0));
+	m_bkg.m_pMapBack = new CHUDSprite("interface/WorldMap/MapBack", 0, 0, 0x400, 0x300, 0x400, 0x400);
+	const MapButtonDef *defs = m_b180 ? g_102d24b0 : g_102d25d0;
+	for (int i = 0; i < 12; i++)
+	{
+		if (!(m_n184 & (1 << i)))
+		{
+			m_bkg.m_pButtons[i] = 0;
+			continue;
+		}
+		char name[64];
+		sprintf(name, "mapbut%d", i);
+		void *mem = vgui2::Panel::operator new(0xd4);
+		vgui2::Label *btn = mem ? (vgui2::Label *)((CUnknown10186fa0 *)mem)->sub_10186fa0((int)(vgui2::Panel *)this, (int)name, (int)name) : 0;
+		m_bkg.m_pButtons[i] = btn;
+		btn->sub_101a9950(SCALEX(defs[i].n4), SCALEY(defs[i].n5), SCALEX(defs[i].n2), SCALEY(defs[i].n3));
+		((CUnknown10186fa0 *)btn)->m_nB8 = SCALEX(defs[i].n2);
+		((CUnknown10186fa0 *)btn)->m_nBC = SCALEY(defs[i].n3);
+		btn->vfunc21(1);
+		btn->vfunc108(g_102de300);
+		btn->vfunc63(0);
+		btn->vfunc62(0);
+		CHUDSprite *a, *b;
+		if (m_b180)
+		{
+			a = new CHUDSprite(g_102d26fc[i], 0, 0, defs[i].n2, defs[i].n3, defs[i].n0, defs[i].n1);
+			b = new CHUDSprite(g_102d272c[i], 0, 0, defs[i].n2, defs[i].n3, defs[i].n0, defs[i].n1);
+		}
+		else
+		{
+			a = new CHUDSprite(g_102d275c[i], 0, 0, defs[i].n2, defs[i].n3, defs[i].n0, defs[i].n1);
+			b = new CHUDSprite(g_102d278c[i], 0, 0, defs[i].n2, defs[i].n3, defs[i].n0, defs[i].n1);
+		}
+		((CUnknown10186fa0 *)btn)->m_pC8 = a;
+		((CUnknown10186fa0 *)btn)->m_pCC = b;
+		((CUnknown10186fa0 *)btn)->m_nD0 = i;
+	}
+	void *mem = vgui2::Panel::operator new(0xf0);
+	vgui2::Button *pExit = mem ? (vgui2::Button *)((Button_101b3630 *)mem)->sub_101b3630((int)(vgui2::Panel *)this, "ExitButton", "ExitButton") : 0;
+	m_bkg.m_pExit = pExit;
+	pExit->vfunc111(4);
+	pExit->vfunc108(g_105f93c0.sub_1015f2f0("UIBarterStrs")->sub_1015ecd0(6));
+	pExit->sub_101a9950(SCALEX(889.0), SCALEY(736.0), SCALEX(90.0), SCALEY(24.0));
+	pExit->vfunc41((int)(vgui2::Panel *)this);
+	pExit->vfunc118(pScheme->GetFont(sub_1018c870("Copperplate")));
+	pExit->vfunc162((int)"ExitClicked");
+	pExit->vfunc63(1);
+	vfunc57(1, 1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10187860 size=0x52
 #include "VMapScreenUI.h"
 #include "vgui2__Panel.h"
