@@ -63567,6 +63567,22 @@ int sub_100cd5f0(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100cd610 size=0x142
+#include "Vector.h"
+
+int sub_100dfc60(int, int, int, int, int, int, int);
+
+void sub_100cd610(float scale, int duration, Vector origin, Vector forward, Vector right, Vector up)
+{
+	forward = origin + forward * scale;
+	right = origin - right * scale;
+	up = origin + up * scale;
+	sub_100dfc60((int)&origin, (int)&forward, 255, 0, 0, 1, duration);
+	sub_100dfc60((int)&origin, (int)&right, 0, 255, 0, 1, duration);
+	sub_100dfc60((int)&origin, (int)&up, 0, 0, 255, 1, duration);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100cd760 size=0x93
 #include "Vector.h"
 #include "QAngle.h"
