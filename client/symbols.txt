@@ -5318,6 +5318,7 @@
 0x100ec3a0 func   ?sub_100ec3a0@CGameMovement@@QAEHABVVector@@@Z CGameMovement::sub_100ec3a0
 0x100ec660 func   ?sub_100ec660@CGameMovement@@QAEXPAVC_BaseEntity@@@Z CGameMovement::sub_100ec660
 0x100ecfb0 func   ?sub_100ecfb0@@YGMMM@Z sub_100ecfb0
+0x100ed4d0 func   ?sub_100ed4d0@CGameMovement@@QAEXXZ CGameMovement::sub_100ed4d0
 0x100ed950 func   ?vfunc25@CGameMovement@@UAEXXZ CGameMovement::vfunc25
 0x100edcf0 func   ?sub_100edcf0@@YAPBDH@Z sub_100edcf0
 0x100ee720 func   ?sub_100ee720@CGameMovement@@QAEMXZ CGameMovement::sub_100ee720

@@ -59890,6 +59890,78 @@ float __stdcall sub_100ecfb0(float a, float b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ed4d0 size=0x24e
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "CVProfile.h"
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "CUnknown100290c0.h"
+
+extern CVProfile *g_101e3138;
+extern CUnknown100290c0 *g_102b8e98;
+void sub_100e7380(int, int, int, int, int);
+
+class CUnknown100a2410
+{
+public:
+	int sub_100a2410(int);
+};
+
+struct CUnduckSub { virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual unsigned int g7(); };
+
+struct CUnduckMove
+{
+	char m_pad0000[0xc];
+	CUnduckSub m_sub;
+	char m_pad0010[0x148 - 0x10];
+	Vector m_vecViewOffset;	// 0x148
+	char m_pad0154[0x16f8 - 0x154];
+	char m_b16f8;
+	char m_bDucked;	// 0x16f9
+	char m_bDucking;	// 0x16fa
+	char m_pad16fb;
+	float m_flDucktime;	// 0x16fc
+};
+
+#define PLAYER ((CMovePlayerView *)m_pPlayer)
+#define MOVE ((CUnduckMove *)m_pMove)
+
+inline void TracePlayerBBox(CGameMovement *gm, const Vector &start, const Vector &end, unsigned int fMask, int collisionGroup, CGameTrace &pm)
+{
+	g_101e3138->EnterScope("CGameMovement::TracePlayerBBox", 0, "Unaccounted", false);
+	Ray_t ray;
+	ray.sub_100e91e0(start, end, gm->sub_100e6ef0(), (float *)gm->sub_100e6f20(), (char)((((CUnduckMove *)gm->m_pMove)->m_sub.g7() >> 6) & 1), 0);
+	sub_100e7380((int)&ray, fMask, g_102b8e98->sub_1007aca0(&((CMovePlayerView *)gm->m_pPlayer)->m_hRef), collisionGroup, (int)&pm);
+	g_101e3138->ExitScope();
+}
+
+void CGameMovement::sub_100ed4d0()
+{
+	Vector newOrigin;
+	CGameTrace trace;
+	VectorCopy(PLAYER->m_vecOrigin, newOrigin);
+	if (((CMoveDataView *)m_pMove)->g104() != 0) {
+		for (int i = 0; i < 3; i++)
+			newOrigin[i] += m_vecDuckHullMin[i] - m_vecHullMin[i];
+	} else {
+		Vector hullSizeNormal = m_vecHullMax - m_vecHullMin;
+		Vector hullSizeCrouch = m_vecDuckHullMax - m_vecDuckHullMin;
+		Vector viewDelta = -0.5f * (hullSizeNormal - hullSizeCrouch);
+		TracePlayerBBox(this, newOrigin + viewDelta, newOrigin + viewDelta, 0x201400b, 6, trace);
+		if (!trace.m_startsolid)
+			VectorAdd(newOrigin, viewDelta, newOrigin);
+	}
+	MOVE->m_bDucked = 0;
+	((CUnknown100a2410 *)m_pMove)->sub_100a2410(2);
+	MOVE->m_bDucking = 0;
+	MOVE->m_vecViewOffset = *(Vector *)slot4(0, MOVE->m_b16f8);
+	MOVE->m_flDucktime = 0;
+	VectorCopy(newOrigin, PLAYER->m_vecOrigin);
+	vfunc22();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100edcf0 size=0x8c
 const char *sub_100edcf0(int state)
 {
