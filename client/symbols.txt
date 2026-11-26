@@ -1349,6 +1349,7 @@
 0x1001c530 func   ?_C_ItemGBadluckTalisman_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGBadluckTalisman_CreateObject
 0x1001c5f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGBadluckTalisman@@@Z ClientClassInit
 0x1001c680 func   ?vfunc17@C_ItemGWarrens4Passkey@@UAEHXZ C_ItemGWarrens4Passkey::vfunc17
+0x1001c6c0 func   ?sub_1001c6c0@@YAHXZ sub_1001c6c0
 0x1001c710 func   ??_GC_ItemGWarrens4Passkey@@UAEPAXI@Z ??_GC_ItemGWarrens4Passkey@@UAEPAXI@Z
 0x1001c730 func   ?vfunc16@C_ItemGWarrens4Passkey@@UAEHXZ C_ItemGWarrens4Passkey::vfunc16
 0x1001c740 func   ?vfunc15@C_ItemGWarrens4Passkey@@UAEHXZ C_ItemGWarrens4Passkey::vfunc15

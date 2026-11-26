@@ -11766,6 +11766,32 @@ template <> int ClientClassInit<DT_ItemGBadluckTalisman::ignored>(DT_ItemGBadluc
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001c6c0 size=0x45
+namespace lifted {
+extern char g_1020f914;
+extern char g_1020f928;
+extern char g_1020f964;
+extern char g_1020f99c;
+extern char g_1020f9f4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001c6c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1020f9f4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020f99c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1020f964;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1020f928;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1020f914;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001c750 size=0x6
 namespace lifted {
 extern char g_102e3fd0;
