@@ -421,6 +421,7 @@
 0x1000a330 func   ?_C_WeaponMelee_Claws_Protean5_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_Claws_Protean5_CreateObject
 0x1000a3f0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_Claws_Protean5@@@Z ClientClassInit
 0x1000a480 func   ?vfunc17@C_WeaponMelee_TzimisceMelee@@UAEHXZ C_WeaponMelee_TzimisceMelee::vfunc17
+0x1000a4c0 func   ?sub_1000a4c0@@YAHXZ sub_1000a4c0
 0x1000a510 func   ??_GC_WeaponMelee_TzimisceMelee@@UAEPAXI@Z ??_GC_WeaponMelee_TzimisceMelee@@UAEPAXI@Z
 0x1000a530 func   ?vfunc16@C_WeaponMelee_TzimisceMelee@@UAEHXZ C_WeaponMelee_TzimisceMelee::vfunc16
 0x1000a540 func   ?vfunc15@C_WeaponMelee_TzimisceMelee@@UAEHXZ C_WeaponMelee_TzimisceMelee::vfunc15
