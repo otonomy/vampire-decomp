@@ -371,6 +371,86 @@ int CInput::vfunc45()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10100ba0 size=0x21d
+#include "CInput.h"
+#include "ConVar.h"
+extern "C" int strcmp(const char *, const char *);
+#pragma intrinsic(strcmp)
+__declspec(dllimport) void Msg(const char *, ...);
+extern ConVar g_104d2bc0;
+extern ConVar g_104d2860;
+extern ConVar g_104d2a10;
+extern ConVar g_104d29c8;
+extern ConVar g_104d2980;
+extern ConVar g_104d28a8;
+extern ConVar g_104d2938;
+extern ConVar g_104d28f0;
+extern unsigned long g_104d2ce4, g_104d2ce8, g_104d2cec, g_104d2cf0, g_104d2cf4, g_104d2cf8;
+
+#define GS2(cv) (cv.m_pParent->vfunc1() ? "" : (cv.m_nFlags & 0x1000) ? "FCVAR_NEVER_AS_STRING" : cv.m_pParent->m_pszString ? cv.m_pParent->m_pszString : "")
+
+unsigned long *CInput::RawValuePointer(int axis)
+{
+	switch (axis)
+	{
+	default:
+	case 0: return &g_104d2ce4;
+	case 1: return &g_104d2ce8;
+	case 2: return &g_104d2cec;
+	case 3: return &g_104d2cf0;
+	case 4: return &g_104d2cf4;
+	case 5: return &g_104d2cf8;
+	}
+}
+
+// TARGET: CInput::Joystick_Advanced
+void CInput::Joystick_Advanced()
+{
+	int i;
+	unsigned long dwTemp;
+	for (i = 0; i < 6; i++)
+	{
+		m_rgAxes[i].AxisMap = 0;
+		m_rgAxes[i].ControlMap = 0;
+		m_rgAxes[i].pdwRawValue = RawValuePointer(i);
+	}
+	if (g_104d2bc0.GetInt() == 0)
+	{
+		m_rgAxes[0].AxisMap = 4;
+		m_rgAxes[1].AxisMap = 1;
+	}
+	else
+	{
+		if (strcmp(GS2(g_104d2860), "joystick") != 0)
+			Msg("\n%s configured\n\n", GS2(g_104d2860));
+		dwTemp = (unsigned long)g_104d2a10.GetInt();
+		m_rgAxes[0].AxisMap = dwTemp & 0xf;
+		m_rgAxes[0].ControlMap = dwTemp & 0x10;
+		dwTemp = (unsigned long)g_104d29c8.GetInt();
+		m_rgAxes[1].AxisMap = dwTemp & 0xf;
+		m_rgAxes[1].ControlMap = dwTemp & 0x10;
+		dwTemp = (unsigned long)g_104d2980.GetInt();
+		m_rgAxes[2].AxisMap = dwTemp & 0xf;
+		m_rgAxes[2].ControlMap = dwTemp & 0x10;
+		dwTemp = (unsigned long)g_104d28a8.GetInt();
+		m_rgAxes[3].AxisMap = dwTemp & 0xf;
+		m_rgAxes[3].ControlMap = dwTemp & 0x10;
+		dwTemp = (unsigned long)g_104d2938.GetInt();
+		m_rgAxes[4].AxisMap = dwTemp & 0xf;
+		m_rgAxes[4].ControlMap = dwTemp & 0x10;
+		dwTemp = (unsigned long)g_104d28f0.GetInt();
+		m_rgAxes[5].AxisMap = dwTemp & 0xf;
+		m_rgAxes[5].ControlMap = dwTemp & 0x10;
+	}
+	m_nJoystickFlags = 0x4c0;
+	for (i = 0; i < 6; i++)
+	{
+		if (m_rgAxes[i].AxisMap != 0)
+			m_nJoystickFlags |= m_rgAxes[i].m_unk00;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10101cd0 size=0x34
 #include "CInput.h"
 #include <string.h>
