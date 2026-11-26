@@ -8561,6 +8561,7 @@
 0x10191670 func   ?vfunc15@CViewRender@@UAEXABVVector@@@Z CViewRender::vfunc15
 0x10191700 func   ?vfunc16@CViewRender@@UAEXXZ CViewRender::vfunc16
 0x10191940 func   ?CopyViewModelInfoToEntities@CViewRender@@QAEXXZ CViewRender::CopyViewModelInfoToEntities
+0x10192550 func   ?sub_10192550@CViewRender_10192550@@QAEXPBUXViewSetup@@H@Z CViewRender_10192550::sub_10192550
 0x10192780 func   ?vfunc40@CViewRender@@UAE_NPAVVector@@0PAM@Z CViewRender::vfunc40
 0x10192850 func   ?sub_10192850@V2850@@QAEHXZ V2850::sub_10192850
 0x10192870 func   ?vfunc45@CViewRender@@UAEMXZ CViewRender::vfunc45

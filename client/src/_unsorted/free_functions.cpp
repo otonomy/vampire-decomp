@@ -115696,6 +115696,87 @@ void sub_10190f30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10192550 size=0x229
+#include "ScopeTrace.h"
+#include "Vector.h"
+
+struct XViewSetup { float f[14]; Vector origin; float g[4]; float yaw; float h[15]; };
+struct XCrossInfo { Vector a; Vector b; float c; };
+struct XEng {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38();
+	virtual float Time(int);
+};
+struct XMat {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54();
+	virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(int); virtual void v62(int, int); virtual void v63(); virtual void v64();
+	virtual void v65(int);
+};
+struct XPlayer {
+	char pad[0x1774];
+	XCrossInfo m1774;
+	float m1790, m1794;
+};
+struct CViewRender_10192550 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(const XViewSetup *, int, int);
+	char pad[0x474];
+	bool m_b478;
+	XCrossInfo m_cross;
+	float m_f498;
+	void sub_10192550(const XViewSetup *, int);
+};
+extern XEng *g_104a57d4;
+extern XMat *g_104a57ec;
+extern XPlayer *g_104a0d50;
+void sub_10109e90(Vector *, float, Vector *);
+int sub_10198380();
+
+void CViewRender_10192550::sub_10192550(const XViewSetup *view, int arg)
+{
+	ScopeTrace trace("CViewRender::SetupCrossfadeView", g_102de300);
+	XPlayer *p = g_104a0d50;
+	if (p && p->m1794 > 0.0f) {
+		float t = 1.0 - (g_104a57d4->Time(0) - p->m1790) / p->m1794;
+		m_f498 = t;
+		if (t <= 0.0f)
+			return;
+		if (t > 1.0f)
+			m_f498 = 1.0f;
+		m_cross = p->m1774;
+		XViewSetup v = *view;
+		v.origin -= m_cross.b;
+		sub_10109e90(&v.origin, -m_cross.c, &v.origin);
+		v.origin += m_cross.a;
+		v.yaw -= m_cross.c;
+		m_b478 = true;
+		v5(&v, arg, 0);
+		m_b478 = false;
+		g_104a57ec->v65(0);
+		int r = sub_10198380();
+		g_104a57ec->v61(r);
+		g_104a57ec->v62(r, 0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10192bf0 size=0xb2
 struct MatVarView
 {
