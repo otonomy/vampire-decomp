@@ -57,4 +57,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_100c82e0();
 	void *sub_100c7720();
 	void sub_100c8210(int n);
+	void sub_100c77f0(class ITexture *pTexture, class IVTFTexture *pVTFTexture, struct Rect_t *pRect);	// ITextureRegenerator::RegenerateTextureBits-like: draws the text grid (m_rgData) into a 512x512 texture with a CPixelWriter
 };
