@@ -114920,6 +114920,96 @@ int sub_10184500()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10184860 size=0x335
+#include "VItemInfoUI.h"
+#include "CStudiomodelPanel.h"
+#include "C_BasePlayer.h"
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+extern char g_102de300[];
+
+#define XRES(x) ((x) * ((float)sub_100cd100() / 1024.0))
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+
+struct Color
+{
+	unsigned int rgba;
+	Color() {}
+};
+
+struct ISchemeView
+{
+	virtual void vfunc0();
+	virtual void *GetImage(const char *name, bool hardwareFiltered);
+	virtual void vfunc2();
+	virtual void vfunc3();
+	virtual int GetFont(const char *fontName);
+	virtual void vfunc5();
+	virtual Color GetColor(const char *colorName);
+};
+
+#define V10(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); \
+	virtual void p##5(); virtual void p##6(); virtual void p##7(); virtual void p##8(); virtual void p##9();
+
+// the image label's slot 123 called with two arguments (Label.h declares three)
+struct ImageLabelView
+{
+	V10(a) V10(b) V10(c) V10(d) V10(e) V10(f) V10(g) V10(h) V10(i) V10(j) V10(k) V10(l)
+	virtual void s120(); virtual void s121(); virtual void s122();
+	virtual void SetImage(int index, void *image);
+};
+
+// VItemInfoUI's scheme setup. Its matched caller VItemInfoUI::sub_10186890 declares it in its own source as a
+// free function taking this (mov ecx, this; jmp), so a VItemInfoUI member of this name would break that caller;
+// written as a member of a class built on VItemInfoUI until both are rewritten together.
+struct VItemInfoUIScheme : public VItemInfoUI
+{
+	void sub_10184860();
+};
+
+#define m_Image (*(vgui2::Label *)((char *)this + 0x188))
+#define m_Text (*(vgui2::TextEntry *)((char *)this + 0x240))
+#define m_Label368 (*(vgui2::Label *)((char *)this + 0x368))
+#define m_pModel (*(CStudiomodelPanel **)((char *)this + 0x184))
+#define m_hFont424 (*(int *)((char *)this + 0x424))
+#define m_hFont428 (*(int *)((char *)this + 0x428))
+
+void VItemInfoUIScheme::sub_10184860()
+{
+	ISchemeView *pScheme = (ISchemeView *)sub_101ac830();
+
+	m_Image.sub_101a9950(0, 0, (int)XRES(470), (int)YRES(650));
+	((ImageLabelView *)&m_Image)->SetImage(0, pScheme->GetImage("hud/InfoWindow", false));
+
+	m_hFont424 = pScheme->GetFont(sub_1018c870("PercolatorMedium"));
+	m_hFont428 = pScheme->GetFont(sub_1018c870("Dominican"));
+
+	m_Text.vfunc132(m_hFont428);
+	m_Text.vfunc107(g_102de300);
+	m_Text.vfunc62(0);
+	m_Text.vfunc51(pScheme->GetColor("TitleText").rgba);
+	m_Text.sub_101a9950((int)((XRES(470) - XRES(370)) * 0.5), (int)(YRES(650) - YRES(363) - YRES(36)), (int)XRES(370), (int)YRES(363));
+	m_Text.vfunc138(1);
+	m_Text.vfunc140(0);
+	m_Text.vfunc134(0);
+	m_Text.vfunc139(1);
+
+	m_Label368.vfunc21(0);
+
+	CStudiomodelPanel *pModel = (CStudiomodelPanel *)vgui2::Panel::operator new(0x78);
+	m_pModel = pModel ? (CStudiomodelPanel *)pModel->sub_1018b1f0((vgui2::Panel *)this, "Model") : 0;
+	m_pModel->sub_101a9950((int)XRES(36), (int)YRES(58), (int)(XRES(470) - XRES(36) * 2), (int)YRES(185));
+
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (pPlayer)
+		sub_10184bc0((int)pPlayer->vfunc167(), 0, 0);
+
+	vfunc57(1, 1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10184ba0 size=0x20
 namespace lifted {
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual int f20(int); };

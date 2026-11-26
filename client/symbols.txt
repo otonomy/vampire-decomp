@@ -8412,6 +8412,7 @@
 0x10184500 func   ?sub_10184500@@YAHXZ sub_10184500
 0x101847f0 func   ??_GVItemInfoUI@@UAEPAXI@Z ??_GVItemInfoUI@@UAEPAXI@Z
 0x10184810 func   ??1VItemInfoUI@@UAE@XZ VItemInfoUI::~VItemInfoUI
+0x10184860 func   ?sub_10184860@VItemInfoUIScheme@@QAEXXZ VItemInfoUIScheme::sub_10184860
 0x10184ba0 func   ?sub_10184ba0@CUnknown10184ba0@@QAEXXZ CUnknown10184ba0::sub_10184ba0
 0x10186450 func   ?sub_10186450@VItemInfoUI@@QAEXH@Z VItemInfoUI::sub_10186450
 0x101867f0 func   ?sub_101867f0@@YIXPAUS_101867f0@@HH@Z sub_101867f0
