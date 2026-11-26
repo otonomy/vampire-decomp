@@ -933,6 +933,7 @@
 0x10014330 func   ?_C_OccultPassiveDurations_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_OccultPassiveDurations_CreateObject
 0x100143f0 func   ?ClientClassInit@@YAHPAUignored@DT_OccultPassiveDurations@@@Z ClientClassInit
 0x10014480 func   ?vfunc17@C_OccultHealRate@@UAEHXZ C_OccultHealRate::vfunc17
+0x100144c0 func   ?sub_100144c0@@YAHXZ sub_100144c0
 0x10014510 func   ??_GC_OccultHealRate@@UAEPAXI@Z ??_GC_OccultHealRate@@UAEPAXI@Z
 0x10014530 func   ?vfunc16@C_OccultHealRate@@UAEHXZ C_OccultHealRate::vfunc16
 0x10014540 func   ?vfunc15@C_OccultHealRate@@UAEHXZ C_OccultHealRate::vfunc15
