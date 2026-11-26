@@ -501,6 +501,7 @@
 0x1000bc30 func   ?_C_WeaponMelee_GargoyleFist_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_GargoyleFist_CreateObject
 0x1000bcf0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_GargoyleFist@@@Z ClientClassInit
 0x1000bd80 func   ?vfunc17@C_WeaponMelee_HengeyokaiFist@@UAEHXZ C_WeaponMelee_HengeyokaiFist::vfunc17
+0x1000bdc0 func   ?sub_1000bdc0@@YAHXZ sub_1000bdc0
 0x1000be10 func   ??_GC_WeaponMelee_HengeyokaiFist@@UAEPAXI@Z ??_GC_WeaponMelee_HengeyokaiFist@@UAEPAXI@Z
 0x1000be30 func   ?vfunc16@C_WeaponMelee_HengeyokaiFist@@UAEHXZ C_WeaponMelee_HengeyokaiFist::vfunc16
 0x1000be40 func   ?vfunc15@C_WeaponMelee_HengeyokaiFist@@UAEHXZ C_WeaponMelee_HengeyokaiFist::vfunc15
