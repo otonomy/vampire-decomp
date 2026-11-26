@@ -8404,6 +8404,7 @@
 0x10164690 func   ?sub_10164690@CUnknown10164690@@QAEHH@Z CUnknown10164690::sub_10164690
 0x101646a0 func   ?sub_101646a0@CUnknown101646a0@@QAEHXZ CUnknown101646a0::sub_101646a0
 0x101646b0 func   ?sub_101646b0@CUnknown101646b0@@QAEHHH@Z CUnknown101646b0::sub_101646b0
+0x101646d0 func   ?sub_101646d0@BitmapImage@@QAEXHHHHMM@Z BitmapImage::sub_101646d0
 0x10164900 func   ?sub_10164900@BitmapView@@QAEXPAUSrcImage@@HH@Z BitmapView::sub_10164900
 0x10164960 func   ?vfunc0@BitmapImage@@UAEHXZ BitmapImage::vfunc0
 0x10164980 func   ?sub_10164980@CUnknown10164980@@QAEHH@Z CUnknown10164980::sub_10164980

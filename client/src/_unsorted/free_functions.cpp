@@ -124734,6 +124734,96 @@ int CUnknown101646b0::sub_101646b0(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101646d0 size=0x22d
+#include "BitmapImage.h"
+#include <math.h>
+#pragma intrinsic(sin, cos)
+
+struct Vector2D_101646d0
+{
+	float x, y;
+	Vector2D_101646d0() {}
+	Vector2D_101646d0(float X, float Y) { x = X; y = Y; }
+	void Init(float ix, float iy) { x = ix; y = iy; }
+};
+inline void Vector2DMA_101646d0(const Vector2D_101646d0 &start, float s, const Vector2D_101646d0 &dir, Vector2D_101646d0 &result)
+{
+	result.x = start.x + s * dir.x;
+	result.y = start.y + s * dir.y;
+}
+struct Vertex_101646d0
+{
+	Vector2D_101646d0 m_Position;
+	Vector2D_101646d0 m_TexCoord;
+};
+struct SurfaceView_101646d0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10();
+	virtual void DrawSetColor(int r, int g, int b, int a);
+	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30();
+	virtual void DrawSetTexture(int id);
+	virtual void v32();
+	virtual void DrawTexturedRect(int x0, int y0, int x1, int y1);
+	virtual void DrawTexturedSubRect(int x0, int y0, int x1, int y1, int a, int b, int c, int d);
+	virtual void v35();
+	virtual void DrawTexturedPolygon(int n, Vertex_101646d0 *p);
+};
+int sub_101ac8d0();
+#define surface() ((SurfaceView_101646d0 *)sub_101ac8d0())
+
+void BitmapImage::sub_101646d0(int x, int y, int wide, int tall, float yaw, float flAlphaModulate)
+{
+	surface()->DrawSetTexture(m_hTexture);
+
+	int r, g, b, a;
+	r = m_clr.r;
+	g = m_clr.g;
+	b = m_clr.b;
+	a = m_clr.a;
+	a *= flAlphaModulate;
+	surface()->DrawSetColor(r, g, b, a);
+
+	if (yaw == 0)
+	{
+		if (!m_b38)
+		{
+			surface()->DrawTexturedRect(x, y, x + wide, y + tall);
+		}
+		else
+		{
+			surface()->DrawTexturedSubRect(x, y, x + wide, y + tall, m_unk3c, m_unk40, m_unk44, m_unk48);
+		}
+	}
+	else
+	{
+		Vertex_101646d0 verts[4];
+		Vector2D_101646d0 center(x + (wide * 0.5f), y + (tall * 0.5f));
+
+		float yawRadians = -yaw * 3.14159265358979323846 / 180.0f;
+		Vector2D_101646d0 axis[2];
+		axis[0].x = cos(yawRadians);
+		axis[0].y = sin(yawRadians);
+		axis[1].x = -axis[0].y;
+		axis[1].y = axis[0].x;
+
+		verts[0].m_TexCoord.Init(0, 0);
+		Vector2DMA_101646d0(center, -0.5f * wide, axis[0], verts[0].m_Position);
+		Vector2DMA_101646d0(verts[0].m_Position, -0.5f * tall, axis[1], verts[0].m_Position);
+
+		verts[1].m_TexCoord.Init(1, 0);
+		Vector2DMA_101646d0(verts[0].m_Position, wide, axis[0], verts[1].m_Position);
+
+		verts[2].m_TexCoord.Init(1, 1);
+		Vector2DMA_101646d0(verts[1].m_Position, tall, axis[1], verts[2].m_Position);
+
+		verts[3].m_TexCoord.Init(0, 1);
+		Vector2DMA_101646d0(verts[0].m_Position, tall, axis[1], verts[3].m_Position);
+
+		surface()->DrawTexturedPolygon(4, verts);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10164900 size=0x53
 // TARGET: BitmapView::sub_10164900
 struct SrcImage
