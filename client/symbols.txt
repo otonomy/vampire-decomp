@@ -3975,6 +3975,7 @@
 0x100a39c0 func   ?Release@C_BaseNetworkable@@UAEXXZ C_BaseNetworkable::Release
 0x100a39d0 func   ?NotifyShouldTransmit@C_BaseNetworkable@@UAEXH@Z C_BaseNetworkable::NotifyShouldTransmit
 0x100a3a00 func   ?PreDataUpdate@C_BaseNetworkable@@UAEXH@Z C_BaseNetworkable::PreDataUpdate
+0x100a3a30 func   ?sub_100a3a30@@YGXH@Z sub_100a3a30
 0x100a3a40 func   ?OnPreDataChanged@C_BaseNetworkable@@UAEXH@Z C_BaseNetworkable::OnPreDataChanged
 0x100a3a40 func   ?sub_100a3a40@@YGXH@Z sub_100a3a40
 0x100a3a50 func   ?OnDataChanged@C_BaseNetworkable@@UAEXH@Z C_BaseNetworkable::OnDataChanged
