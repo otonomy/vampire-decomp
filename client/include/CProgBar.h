@@ -7,6 +7,7 @@
 class CProgBar : public CManagedHudElement
 {
 public:
+	CProgBar(int a);
 	virtual ~CProgBar();
 	void sub_1005fcb0();
 	bool sub_1005fcf0();

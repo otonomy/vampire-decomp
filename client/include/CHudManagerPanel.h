@@ -3,6 +3,7 @@
 // the destructor is slot 8 of its vtable; the virtual functions before it are not declared yet
 #pragma once
 #include "IHudManagerPanel.h"
+namespace vgui2 { class Panel; }
 
 struct HudChildNode
 {
@@ -28,7 +29,7 @@ public:
 	int m_nCount;
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the slots CHudManagerPanel adds to its base's vtable: 0-38, vfuncK at slot K
-	virtual void vfunc0();
+	virtual void vfunc0(vgui2::Panel *parent);
 	virtual void vfunc1();
 	virtual bool vfunc2(int);
 	virtual int vfunc3();
