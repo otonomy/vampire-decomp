@@ -517,6 +517,7 @@
 0x1000c130 func   ?_C_WeaponMelee_ManBatClaw_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_ManBatClaw_CreateObject
 0x1000c1f0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_ManBatClaw@@@Z ClientClassInit
 0x1000c280 func   ?vfunc17@C_WeaponMelee_MingXiaoMelee@@UAEHXZ C_WeaponMelee_MingXiaoMelee::vfunc17
+0x1000c2c0 func   ?sub_1000c2c0@@YAHXZ sub_1000c2c0
 0x1000c310 func   ??_GC_WeaponMelee_MingXiaoMelee@@UAEPAXI@Z ??_GC_WeaponMelee_MingXiaoMelee@@UAEPAXI@Z
 0x1000c330 func   ?vfunc16@C_WeaponMelee_MingXiaoMelee@@UAEHXZ C_WeaponMelee_MingXiaoMelee::vfunc16
 0x1000c340 func   ?vfunc15@C_WeaponMelee_MingXiaoMelee@@UAEHXZ C_WeaponMelee_MingXiaoMelee::vfunc15
