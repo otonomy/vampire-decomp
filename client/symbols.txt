@@ -1701,6 +1701,7 @@
 0x10023330 func   ?_C_ItemKMuseumStorageKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKMuseumStorageKey_CreateObject
 0x100233f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKMuseumStorageKey@@@Z ClientClassInit
 0x10023480 func   ?vfunc17@C_ItemKNetcafeOfficeKey@@UAEHXZ C_ItemKNetcafeOfficeKey::vfunc17
+0x100234c0 func   ?sub_100234c0@@YAHXZ sub_100234c0
 0x10023510 func   ??_GC_ItemKNetcafeOfficeKey@@UAEPAXI@Z ??_GC_ItemKNetcafeOfficeKey@@UAEPAXI@Z
 0x10023530 func   ?vfunc16@C_ItemKNetcafeOfficeKey@@UAEHXZ C_ItemKNetcafeOfficeKey::vfunc16
 0x10023540 func   ?vfunc15@C_ItemKNetcafeOfficeKey@@UAEHXZ C_ItemKNetcafeOfficeKey::vfunc15
