@@ -86345,6 +86345,18 @@ int sub_10115ef0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10115f00 size=0x60
+#include "CBounds10115f00.h"
+
+void CBounds10115f00::sub_10115f00(Vector *pMins, Vector *pMaxs)
+{
+	Vector origin;
+	m_pOwner->GetOrigin(&origin);
+	*pMins = m_vecMins - origin;
+	*pMaxs = m_vecMaxs - origin;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10115f60 size=0x2d
 struct CUnknown10115f60 { int sub_10115f60(int, int); };
 int CUnknown10115f60::sub_10115f60(int a0, int a1)

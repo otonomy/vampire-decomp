@@ -6491,6 +6491,7 @@
 0x10115e10 func   ??1CParticleEffectBinding@@QAE@XZ CParticleEffectBinding::~CParticleEffectBinding
 0x10115ea0 func   ?sub_10115ea0@COwner10115@@QAEPAUSVal10115@@XZ COwner10115::sub_10115ea0
 0x10115ef0 func   ?sub_10115ef0@@YAHXZ sub_10115ef0
+0x10115f00 func   ?sub_10115f00@CBounds10115f00@@QAEXPAVVector@@0@Z CBounds10115f00::sub_10115f00
 0x10115f60 func   ?sub_10115f60@CUnknown10115f60@@QAEHHH@Z CUnknown10115f60::sub_10115f60
 0x10115f90 func   ?sub_10115f90@@YADXZ sub_10115f90
 0x10115fa0 func   ?sub_10115fa0@@YADXZ sub_10115fa0
