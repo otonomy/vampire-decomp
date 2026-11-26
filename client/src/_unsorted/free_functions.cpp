@@ -117403,6 +117403,104 @@ void sub_1017a7e0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017a7f0 size=0x39b
+#include "CharEditEquipPanel.h"
+#include "vgui2__Label.h"
+#include "C_BasePlayer.h"
+#include "CUnknown101ed170.h"
+#include "CVStatList_t.h"
+#include <stdio.h>
+
+struct SchemeView
+{
+	virtual void a0();
+	virtual void *vfunc1(const char *pszName);
+};
+
+struct Color
+{
+	Color(int r, int g, int b, int a) { _color[0] = (unsigned char)r; _color[1] = (unsigned char)g; _color[2] = (unsigned char)b; _color[3] = (unsigned char)a; }
+	unsigned char _color[4];
+};
+
+struct RecordList_105e85f4
+{
+	int m_nAlloc;
+	int m_nCount;
+	CUnknown101ed170 **m_pItems;
+	int Count() const { return m_nCount; }
+	CUnknown101ed170 *Element(int i) const { return m_pItems[i]; }
+};
+extern RecordList_105e85f4 g_105e85f4;
+extern int g_105fb5e4;
+extern int g_105fb5ec;
+extern int g_105fb5f0;
+
+const char *sub_1017b090(int id, int index);
+
+static inline CUnknown101ed170 *FindRecord(int id)
+{
+	for (int i = 0; i < g_105e85f4.Count(); i++)
+	{
+		if (g_105e85f4.Element(i)->m_id == id)
+			return g_105e85f4.Element(i);
+	}
+	static CUnknown101ed170 s_default(-1);
+	return &s_default;
+}
+
+#define F(type, off) (*(type *)((char *)this + (off)))
+
+void CharEditEquipPanel::sub_1017a7f0()
+{
+	static int s_nLastClan = -1;
+	char buf[32];
+
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return;
+
+	SchemeView *pScheme = (SchemeView *)((vgui2::Panel *)this)->sub_101ac830();
+	if (s_nLastClan != pPlayer->sub_1008ebb0())
+	{
+		sub_10179c40();
+		sub_10178a50();
+		s_nLastClan = pPlayer->sub_1008ebb0();
+	}
+
+	CVStatListSet *pSet = (CVStatListSet *)((char *)pPlayer + 0x1164);
+	sprintf(buf, "%d", pSet->Find(0)->sub_1015dbd0(0x22));
+	F(vgui2::Label *, 0x9c)->vfunc108(buf);
+	sprintf(buf, "%d xp", g_105fb5e4);
+	F(vgui2::Label *, 0xd4)->vfunc108(buf);
+	if (g_105fb5e4 > pSet->Find(0)->sub_1015dbd0(0x22))
+		F(vgui2::Label *, 0xd4)->vfunc51(*(int *)&Color(255, 255, 255, 255));
+	else
+		F(vgui2::Label *, 0xd4)->vfunc51(*(int *)&Color(255, 255, 255, 255));
+
+	if (g_105e85f4.Count() > 0)
+	{
+		if (FindRecord(g_105fb5f0)->m_n1c > g_105fb5ec + 1)
+		{
+			int nNext = ((int *)FindRecord(g_105fb5f0)->m_p24)[g_105fb5ec + 1];
+			sprintf(buf, "%d xp", nNext - ((int *)FindRecord(g_105fb5f0)->m_p24)[g_105fb5ec]);
+		}
+		else
+			sprintf(buf, "-- xp");
+	}
+	else
+		sprintf(buf, "-- xp");
+	F(vgui2::Label *, 0xc0)->vfunc108(buf);
+
+	sprintf(buf, "%s: %d", "Rating", g_105fb5ec);
+	F(vgui2::Label *, 0xb8)->vfunc108(buf);
+
+	F(vgui2::Label *, 0xb4)->vfunc123(0, (int)pScheme->vfunc1(sub_1017b090(g_105fb5f0, g_105fb5ec)), 0);
+	((vgui2::Panel *)this)->vfunc101();
+	sub_10179850();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017ac30 size=0x1
 void sub_1017ac30()
 {

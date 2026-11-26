@@ -8434,6 +8434,7 @@
 0x1017a7c0 func   ?sub_1017a7c0@@YGXH@Z sub_1017a7c0
 0x1017a7d0 func   ?vfunc119@CharEditEquipPanel@@UAEXXZ CharEditEquipPanel::vfunc119
 0x1017a7e0 func   ?sub_1017a7e0@@YAXXZ sub_1017a7e0
+0x1017a7f0 func   ?sub_1017a7f0@CharEditEquipPanel@@QAEXXZ CharEditEquipPanel::sub_1017a7f0
 0x1017ab90 func   ?vfunc123@CharEditEquipPanel@@UAEXXZ CharEditEquipPanel::vfunc123
 0x1017abc0 func   ?vfunc21@CharEditEquipPanel@@UAEHH@Z CharEditEquipPanel::vfunc21
 0x1017ac00 func   ?vfunc3@CharEditEquipPanel@@UAEXXZ CharEditEquipPanel::vfunc3
