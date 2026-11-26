@@ -114347,6 +114347,23 @@ void CUnknown101f1e20::sub_101539e0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10153b60 size=0x36
+#include "IKeyValues.h"
+
+// emitter: IKeyValues is abstract; a derived class's constructor makes VC6 emit IKeyValues' vtable and its ??_G
+struct KVEmit_10153b60 : public IKeyValues
+{
+	void vfunc0() {}
+	void vfunc1() {}
+};
+
+// TARGET: ??_GIKeyValues@@UAEPAXI@Z
+IKeyCacheable *pcd_emit_10153b60()
+{
+	return new KVEmit_10153b60;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10153ba0 size=0x2d
 #include "VKeyValues.h"
 char *sub_101546c0(const char *pszSrc);
