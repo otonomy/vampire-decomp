@@ -33337,6 +33337,117 @@ void CMeshBuilder::sub_10081820(const float *v)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10081850 size=0x33d
+#include "CMeshBuilder.h"
+
+extern void (__fastcall *g_102be4ec)(Vector &v);	// pfVectorNormalizeFast
+const Vector &sub_10198d30();	// CurrentViewOrigin
+void sub_10108fd0(const float *start, float scale, const float *direction, float *dest);	// VectorMA
+
+struct VStore
+{
+	void sub_100817f0(const float *v);	// TangentS3fv
+};
+
+inline unsigned char FastFToC(float c)
+{
+	volatile float dc;
+	dc = c * 255.0f + (float)(1 << 23);
+	return *(unsigned char *)&dc;
+}
+
+inline void IncrementFloatPointer(int &pBufferPointer, int vertexSize)
+{
+	pBufferPointer = (int)((unsigned char *)pBufferPointer + vertexSize);
+}
+
+struct CBeamSegDraw : public CMeshBuilder
+{
+	int m_unkc4[(0xd8 - 0xc4) / 4];
+	Vector m_vPos;	// 0xd8: m_Seg
+	Vector m_vColor;	// 0xe4
+	float m_flTexCoord;	// 0xf0
+	float m_flWidth;	// 0xf4
+	float m_flAlpha;	// 0xf8
+
+	void sub_10081850(const Vector &vNormal);
+
+	void Position3fv(const float *v)
+	{
+		float *pDst = (float *)m_a8;
+		*pDst++ = *v++;
+		*pDst++ = *v++;
+		*pDst = *v;
+	}
+	void Color4f(float r, float g, float b, float a)
+	{
+		int col = (FastFToC(b)) | (FastFToC(g) << 8) | (FastFToC(r) << 16) | (FastFToC(a) << 24);
+		*(int *)m_pCurrColor = col;
+	}
+	void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = (float *)(stage ? m_b4 : m_b0);
+		*pDst++ = s;
+		*pDst = t;
+	}
+	void TangentS3fv(const float *v)
+	{
+		float *pDst = (float *)((unsigned char *)m_unk40[11] + m_i98 * m_unk28);
+		*pDst++ = *v++;
+		*pDst++ = *v++;
+		*pDst = *v;
+	}
+	void TangentT3fv(const float *v)
+	{
+		float *pDst = (float *)((unsigned char *)m_p70 + m_i98 * m_i2c);
+		*pDst++ = *v++;
+		*pDst++ = *v++;
+		*pDst = *v;
+	}
+	void AdvanceVertex()
+	{
+		if (++m_i98 > m_n90)
+			m_n90 = m_i98;
+		IncrementFloatPointer(m_a8, m_i0);
+		IncrementFloatPointer(m_ac, m_ic);
+		IncrementFloatPointer(m_b0, m_i18);
+		IncrementFloatPointer(m_b4, m_i1c);
+		IncrementFloatPointer(m_b8, m_i20);
+		IncrementFloatPointer(m_bc, m_i24);
+		m_c0 += m_i10;
+	}
+};
+
+// CBeamSegDraw::SpecifySeg(vecCameraPos = CurrentViewOrigin(), vNormal)
+void CBeamSegDraw::sub_10081850(const Vector &vNormal)
+{
+	Vector vDirToBeam, vTangentY;
+	VectorSubtract(m_vPos, sub_10198d30(), vDirToBeam);
+	CrossProduct(vDirToBeam, vNormal, vTangentY);
+	(*g_102be4ec)(vTangentY);
+
+	Vector vPoint1, vPoint2;
+	sub_10108fd0(&m_vPos.x, m_flWidth * 0.5f, &vNormal.x, &vPoint1.x);
+	sub_10108fd0(&m_vPos.x, -m_flWidth * 0.5f, &vNormal.x, &vPoint2.x);
+
+	Position3fv(&vPoint1.x);
+	Color4f(m_vColor.x, m_vColor.y, m_vColor.z, m_flAlpha);
+	TexCoord2f(0, 0, m_flTexCoord);
+	TexCoord2f(1, 0, m_flTexCoord);
+	TangentS3fv(&vNormal.x);
+	TangentT3fv(&vTangentY.x);
+	AdvanceVertex();
+
+	Position3fv(&vPoint2.x);
+	Color4f(m_vColor.x, m_vColor.y, m_vColor.z, m_flAlpha);
+	TexCoord2f(0, 1, m_flTexCoord);
+	TexCoord2f(1, 1, m_flTexCoord);
+	((VStore *)this)->sub_100817f0(&vNormal.x);
+	sub_10081820(&vTangentY.x);
+	sub_10005230();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10081cd0 size=0x97
 #include "engineclient.h"
 #include "CSpriteHandle.h"
