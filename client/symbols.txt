@@ -9402,6 +9402,7 @@
 0x101b9e80 func   ?vfunc30@TextImage@vgui2@@UAEXH@Z vgui2::TextImage::vfunc30
 0x101b9ec0 func   ?vfunc31@TextImage@vgui2@@UAEHXZ vgui2::TextImage::vfunc31
 0x101b9ed0 func   ?vfunc9@TextImage@vgui2@@UAEHHH@Z vgui2::TextImage::vfunc9
+0x101b9ef0 func   ?vfunc0@TextImage@vgui2@@UAEHXZ vgui2::TextImage::vfunc0
 0x101ba700 func   ?vfunc33@TextImage@vgui2@@UAEXPAH0H@Z vgui2::TextImage::vfunc33
 0x101ba7f0 func   ?vfunc32@TextImage@vgui2@@UAEHHH@Z vgui2::TextImage::vfunc32
 0x101ba940 func   ?vfunc0@CheckImage@@UAEHXZ CheckImage::vfunc0
