@@ -5122,6 +5122,7 @@
 0x100d0710 func   ?vfunc2@CClientEffectPrecacheSystem@@UAEXXZ CClientEffectPrecacheSystem::vfunc2
 0x100d0750 func   ?vfunc4@CClientEffectPrecacheSystem@@UAEXXZ CClientEffectPrecacheSystem::vfunc4
 0x100d0760 func   ?vfunc5@CClientEffectPrecacheSystem@@UAEXXZ CClientEffectPrecacheSystem::vfunc5
+0x100d0790 func   ?vfunc1@CClientEffectPrecacheSystem@@UAEXXZ CClientEffectPrecacheSystem::vfunc1
 0x100d0890 func   ?vfunc0@CClientEffectPrecacheSystem@@UAE_NXZ CClientEffectPrecacheSystem::vfunc0
 0x100d08a0 func   ?vfunc3@CClientEffectPrecacheSystem@@UAEXXZ CClientEffectPrecacheSystem::vfunc3
 0x100d08b0 func   ?sub_100d08b0@@YGXH@Z sub_100d08b0
