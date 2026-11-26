@@ -117311,6 +117311,27 @@ int CUnknown101f9b70::sub_10158060(int index)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101580c0 size=0x60
+#include "CUnknown101f6c50.h"
+#include "CVModInfo_t.h"
+#include "CVTraitEffectGroup_t.h"
+#include "CUnknown101f0e50.h"
+extern CUnknown101f0e50 g_105f8b98;
+struct CTraitIdListZ {
+    int m_count;
+    int m_ids[1];
+    int sub_101580c0(int a, int b, int c);
+};
+// TARGET: CTraitIdListZ::sub_101580c0
+int CTraitIdListZ::sub_101580c0(int a, int b, int c)
+{
+    CVModInfo_t info(a, b, c);
+    for (int i = 0; i < m_count; i++)
+        g_105f8b98.sub_10157c20(m_ids[i])->sub_101570b0((CTraitStatBlock *)&info);
+    return info.sub_10156770();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101581e0 size=0x63
 #include "CUnknown101f6c50.h"
 #include "CVModInfo_t.h"
