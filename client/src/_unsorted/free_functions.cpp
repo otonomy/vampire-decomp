@@ -76604,6 +76604,200 @@ int CInput::sub_10100f10()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10100f80 size=0x740
+#include "CInput.h"
+#include "CUserCmd.h"
+#include "ConVar.h"
+#include "engineclient.h"
+#include <math.h>
+#include <stdlib.h>
+
+struct IViewRender_10100f80
+{
+	virtual void vfunc0();
+	virtual void vfunc1();
+	virtual void vfunc2();
+	virtual void vfunc3();
+	virtual void vfunc4();
+	virtual void vfunc5();
+	virtual void vfunc6();
+	virtual void vfunc7();
+	virtual void vfunc8();
+	virtual void StopPitchDrift();
+};
+extern IViewRender_10100f80 *g_102d43d8;
+
+extern ConVar g_104d2e58;	// in_joystick
+extern ConVar g_104d2a58;	// joy_wwhack2
+extern ConVar g_104d2bc0;	// joy_advanced
+extern ConVar g_104d2d10;	// joy_pitchthreshold
+extern ConVar g_104d3e58;	// m_pitch
+extern ConVar g_104d2d58;	// joy_pitchsensitivity
+extern ConVar g_104d3d50;	// cl_pitchspeed
+extern ConVar g_104d31f0;	// lookspring
+extern ConVar g_104d2b78;	// joy_forwardthreshold
+extern ConVar g_104d2c08;	// joy_forwardsensitivity
+extern ConVar g_104d3088;	// cl_forwardspeed
+extern ConVar g_104d2c98;	// joy_sidethreshold
+extern ConVar g_104d2ae8;	// joy_sidesensitivity
+extern ConVar g_104d39b0;	// cl_sidespeed
+extern ConVar g_104d33e0;	// lookstrafe
+extern ConVar g_104d2c50;	// joy_yawthreshold
+extern ConVar g_104d2b30;	// joy_yawsensitivity
+extern ConVar g_104d3268;	// cl_yawspeed
+extern ConVar g_104d3040;	// cl_pitchdown
+extern ConVar g_104d3518;	// cl_pitchup
+extern int g_104d3944;	// in_jlook.state
+extern int g_104d3978;	// in_strafe.state
+
+void CInput::sub_10100f80(float frametime, CUserCmd *cmd)
+{
+	float speed;
+	float aspeed;
+	float fAxisValue;
+	float fTemp;
+	int i;
+	QAngle viewangles;
+
+	engine->GetViewAngles(viewangles);
+
+	if (m_unk2c[1] != 1)
+	{
+		Joystick_Advanced();
+		m_unk2c[1] = 1;
+	}
+
+	if (!m_unk2c[0] || !g_104d2e58.GetInt())
+		return;
+
+	if (sub_10100f10() != 1)
+		return;
+
+	speed = 1.0f;
+	aspeed = speed * frametime;
+
+	for (i = 0; i < 6; i++)
+	{
+		fAxisValue = (float)*m_rgAxes[i].pdwRawValue;
+		fAxisValue -= 32768.0;
+
+		if (g_104d2a58.GetInt() != 0)
+		{
+			if (m_rgAxes[i].AxisMap == 4)
+			{
+				fTemp = 300.0 * pow(abs((int)fAxisValue) / 800.0, 1.3);
+				if (fTemp > 14000.0)
+					fTemp = 14000.0f;
+				fAxisValue = (fAxisValue > 0.0) ? fTemp : -fTemp;
+			}
+		}
+
+		fAxisValue /= 32768.0;
+
+		switch (m_rgAxes[i].AxisMap)
+		{
+		case 1:
+			if ((g_104d2bc0.GetInt() == 0) && (g_104d3944 & 1))
+			{
+				if (fabs(fAxisValue) > g_104d2d10.GetFloat())
+				{
+					if (g_104d3e58.GetFloat() < 0.0)
+					{
+						viewangles[0] -= (fAxisValue * g_104d2d58.GetFloat()) * g_104d3d50.GetFloat() * aspeed;
+					}
+					else
+					{
+						viewangles[0] += (fAxisValue * g_104d2d58.GetFloat()) * g_104d3d50.GetFloat() * aspeed;
+					}
+					g_102d43d8->StopPitchDrift();
+				}
+				else
+				{
+					if (g_104d31f0.GetFloat() == 0.0)
+					{
+						g_102d43d8->StopPitchDrift();
+					}
+				}
+			}
+			else
+			{
+				if (fabs(fAxisValue) > g_104d2b78.GetFloat())
+				{
+					cmd->forwardmove += (fAxisValue * g_104d2c08.GetFloat()) * speed * g_104d3088.GetFloat();
+				}
+			}
+			break;
+
+		case 3:
+			if (fabs(fAxisValue) > g_104d2c98.GetFloat())
+			{
+				cmd->sidemove += (fAxisValue * g_104d2ae8.GetFloat()) * speed * g_104d39b0.GetFloat();
+			}
+			break;
+
+		case 4:
+			if ((g_104d3978 & 1) || (g_104d33e0.GetFloat() && (g_104d3944 & 1)))
+			{
+				if (fabs(fAxisValue) > g_104d2c98.GetFloat())
+				{
+					cmd->sidemove -= (fAxisValue * g_104d2ae8.GetFloat()) * speed * g_104d39b0.GetFloat();
+				}
+			}
+			else
+			{
+				if (fabs(fAxisValue) > g_104d2c50.GetFloat())
+				{
+					if (m_rgAxes[i].ControlMap == 0)
+					{
+						viewangles[1] += (fAxisValue * g_104d2b30.GetFloat()) * g_104d3268.GetFloat() * aspeed;
+					}
+					else
+					{
+						viewangles[1] += (fAxisValue * g_104d2b30.GetFloat()) * speed * 180.0;
+					}
+				}
+			}
+			break;
+
+		case 2:
+			if (g_104d3944 & 1)
+			{
+				if (fabs(fAxisValue) > g_104d2d10.GetFloat())
+				{
+					if (m_rgAxes[i].ControlMap == 0)
+					{
+						viewangles[0] += (fAxisValue * g_104d2d58.GetFloat()) * g_104d3d50.GetFloat() * aspeed;
+					}
+					else
+					{
+						viewangles[0] += (fAxisValue * g_104d2d58.GetFloat()) * speed * 180.0;
+					}
+					g_102d43d8->StopPitchDrift();
+				}
+				else
+				{
+					if (g_104d31f0.GetFloat() == 0.0)
+					{
+						g_102d43d8->StopPitchDrift();
+					}
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	if (viewangles[0] > g_104d3040.GetFloat())
+		viewangles[0] = g_104d3040.GetFloat() * speed;
+	if (viewangles[0] < -g_104d3518.GetFloat())
+		viewangles[0] = -g_104d3518.GetFloat();
+
+	engine->SetViewAngles(viewangles);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10101b20 size=0x47
 #include "engineclient.h"
 #include "CInput.h"

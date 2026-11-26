@@ -5961,6 +5961,7 @@
 0x10100ba0 func   ?Joystick_Advanced@CInput@@UAEXXZ CInput::Joystick_Advanced
 0x10100dc0 func   ?ControllerCommands@CInput@@UAEXXZ CInput::ControllerCommands
 0x10100f10 func   ?sub_10100f10@CInput@@QAEHXZ CInput::sub_10100f10
+0x10100f80 func   ?sub_10100f80@CInput@@QAEXMPAVCUserCmd@@@Z CInput::sub_10100f80
 0x10101b20 func   ?sub_10101b20@@YAXXZ sub_10101b20
 0x10101b70 func   ?sub_10101b70@@YAXXZ sub_10101b70
 0x10101b80 func   ?sub_10101b80@@YADXZ sub_10101b80
