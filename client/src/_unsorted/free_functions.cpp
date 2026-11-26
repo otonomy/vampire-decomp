@@ -77494,6 +77494,22 @@ void sub_101094e0(const QAngle &angles, matrix3x4_t &matrix)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10109620 size=0x40
+#include "Vector.h"
+
+void sub_10109660(Vector *pVec, int arg);
+
+// TARGET: sub_10109620
+void sub_10109620(const Vector *pVec, int arg)
+{
+    Vector tmp;
+    tmp.x = pVec->y * 57.29578f;
+    tmp.y = pVec->z * 57.29578f;
+    tmp.z = pVec->x * 57.29578f;
+    sub_10109660(&tmp, arg);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101097a0 size=0x62
 void sub_10109660(int, int);
 void sub_101080e0(int, int, float *);
