@@ -20113,6 +20113,18 @@ int CUnknown10033f50::sub_10033f50()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10033f90 size=0x1a
+extern "C" __declspec(dllimport) void DevMsg(int level, const char *pszFormat, ...);
+namespace lifted {
+extern char g_1027df08;
+}
+struct CUnknown10033f90 { void sub_10033f90(int); };
+void CUnknown10033f90::sub_10033f90(int a0)
+{
+    DevMsg(1, (const char *)((int)&lifted::g_1027df08), *(int *)((char *)this + 0xcc));
+}
+// END FUNCTION
+
 // FUNCTION: 0x10033fd0 size=0x6
 namespace lifted {
 extern char g_102ec36c;

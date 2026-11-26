@@ -2210,6 +2210,7 @@
 0x10033f30 func   ??_GC_TEBeamSpline@@UAEPAXI@Z ??_GC_TEBeamSpline@@UAEPAXI@Z
 0x10033f50 func   ??1C_TEBeamSpline@@UAE@XZ C_TEBeamSpline::~C_TEBeamSpline
 0x10033f50 func   ?sub_10033f50@CUnknown10033f50@@QAEHXZ CUnknown10033f50::sub_10033f50
+0x10033f90 func   ?sub_10033f90@CUnknown10033f90@@QAEXH@Z CUnknown10033f90::sub_10033f90
 0x10033fb0 func   ?vfunc9@C_TEBeamSpline@@UAEHXZ C_TEBeamSpline::vfunc9
 0x10033fc0 func   ?vfunc8@C_TEBeamSpline@@UAEHXZ C_TEBeamSpline::vfunc8
 0x10033fd0 func   ?sub_10033fd0@@YAHXZ sub_10033fd0
