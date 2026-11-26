@@ -1053,6 +1053,7 @@
 0x100168b0 func   ?_C_WeaponThrown_Chang_Energy_Ball_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponThrown_Chang_Energy_Ball_CreateObject
 0x10016970 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponThrown_Chang_Energy_Ball@@@Z ClientClassInit
 0x10016a00 func   ?vfunc17@C_WeaponThrown_Chang_Ghost@@UAEHXZ C_WeaponThrown_Chang_Ghost::vfunc17
+0x10016a40 func   ?sub_10016a40@@YAHXZ sub_10016a40
 0x10016a90 func   ??_GC_WeaponThrown_Chang_Ghost@@UAEPAXI@Z ??_GC_WeaponThrown_Chang_Ghost@@UAEPAXI@Z
 0x10016ab0 func   ?vfunc16@C_WeaponThrown_Chang_Ghost@@UAEHXZ C_WeaponThrown_Chang_Ghost::vfunc16
 0x10016ac0 func   ?vfunc15@C_WeaponThrown_Chang_Ghost@@UAEHXZ C_WeaponThrown_Chang_Ghost::vfunc15
