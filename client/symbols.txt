@@ -10266,6 +10266,7 @@
 0x101e3188 data   ?Q_strncpy@@YAXPADPBDH@Z Q_strncpy
 0x101e3188 data   __imp_?Q_strncpy@@YAPADPADPBDH@Z _imp_?Q_strncpy
 0x101e3188 data   __imp_?Q_strncpy@@YAXPADPBDH@Z _imp_?Q_strncpy
+0x101e318c data   __imp_?Q_trimspace@@YAXPAD0H@Z _imp_?Q_trimspace
 0x101e318c data   __imp_?Q_trimspace@@YAXPBDPADH@Z _imp_?Q_trimspace
 0x101e3190 data   ?Q_snprintf@@YAHPADHPBDZZ Q_snprintf
 0x101e3190 data   Q_snprintf Q_snprintf
