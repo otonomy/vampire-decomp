@@ -6,8 +6,8 @@ class IClassMap
 {
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the slots IClassMap adds to its base's vtable: 0-3, vfuncK at slot K
-    virtual void vfunc0();
-    virtual void vfunc1();
+    virtual void vfunc0(const char *mapname, const char *classname, int size, void *(*factory)(void));	// Add
+    virtual const char *vfunc1(const char *classname);	// Lookup
     virtual void vfunc2();
     virtual int vfunc3(const char *classname);
 };
