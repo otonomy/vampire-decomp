@@ -54212,6 +54212,117 @@ bool sub_100ce3d0(const unsigned short *a, const unsigned short *b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ce560 size=0x388
+#include "CClassMap.h"
+
+class CClassMapRBTree
+{
+public:
+	struct Links_t
+	{
+		unsigned short m_Left;
+		unsigned short m_Right;
+		unsigned short m_Parent;
+		unsigned short m_Tag;
+	};
+
+	void *m_LessFunc;
+	ClassMapEntry *m_pElements;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+	unsigned short m_Root;
+	unsigned short m_NumElements;
+	unsigned short m_FirstFree;
+	unsigned short m_TotalElements;
+
+	static unsigned short InvalidIndex() { return 0xffff; }
+
+	ClassMapEntry *sub_100ce920(unsigned short i);
+	void sub_100ce980(unsigned short elem);
+
+	const Links_t &Links(unsigned short i) const
+	{
+		static Links_t s_Sentinel = { InvalidIndex(), InvalidIndex(), InvalidIndex(), 1 };
+		return i != InvalidIndex() ? *(Links_t *)&m_pElements[i] : s_Sentinel;
+	}
+
+	unsigned short LeftChild(unsigned short i) { return sub_100ce920(i)->m_iLeft; }
+	unsigned short RightChild(unsigned short i) { return sub_100ce920(i)->m_iRight; }
+	unsigned short Parent(unsigned short i) { return sub_100ce920(i)->m_iParent; }
+	unsigned short Color(unsigned short i) { return sub_100ce920(i)->m_iHeight; }
+	void SetLeftChild(unsigned short i, unsigned short v) { m_pElements[i].m_iLeft = v; }
+	void SetRightChild(unsigned short i, unsigned short v) { m_pElements[i].m_iRight = v; }
+	void SetParent(unsigned short i, unsigned short v) { m_pElements[i].m_iParent = v; }
+	void SetColor(unsigned short i, unsigned short v) { m_pElements[i].m_iHeight = v; }
+	bool IsRoot(unsigned short i) { return i == m_Root; }
+	bool IsLeftChild(unsigned short i) { return LeftChild(Parent(i)) == i; }
+
+	void sub_100ce560(unsigned short elem);
+};
+
+void CClassMapRBTree::sub_100ce560(unsigned short elem)
+{
+	if (elem != InvalidIndex())
+	{
+		unsigned short x, y;
+
+		if ((LeftChild(elem) == InvalidIndex()) || (RightChild(elem) == InvalidIndex()))
+		{
+			y = elem;
+		}
+		else
+		{
+			y = RightChild(elem);
+			while (LeftChild(y) != InvalidIndex())
+				y = LeftChild(y);
+		}
+
+		if (LeftChild(y) != InvalidIndex())
+			x = LeftChild(y);
+		else
+			x = RightChild(y);
+
+		if (x != InvalidIndex())
+			SetParent(x, Parent(y));
+		if (!IsRoot(y))
+		{
+			if (IsLeftChild(y))
+				SetLeftChild(Parent(y), x);
+			else
+				SetRightChild(Parent(y), x);
+		}
+		else
+			m_Root = x;
+
+		int ycolor = Color(y);
+		if (y != elem)
+		{
+			SetParent(y, Parent(elem));
+			SetRightChild(y, RightChild(elem));
+			SetLeftChild(y, LeftChild(elem));
+
+			if (!IsRoot(elem))
+				if (IsLeftChild(elem))
+					SetLeftChild(Parent(elem), y);
+				else
+					SetRightChild(Parent(elem), y);
+			else
+				m_Root = y;
+
+			if (Links(y).m_Left != InvalidIndex())
+				SetParent(Links(y).m_Left, y);
+			if (Links(y).m_Right != InvalidIndex())
+				SetParent(Links(y).m_Right, y);
+
+			SetColor(y, Links(elem).m_Tag);
+		}
+
+		if ((x != InvalidIndex()) && (ycolor == 1))
+			sub_100ce980(x);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ce920 size=0x5b
 #include "CClassMap.h"
 
