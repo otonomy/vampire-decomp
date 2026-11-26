@@ -33511,6 +33511,13 @@ void * CUnknown1007f4a0::sub_1007f4a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007f5e0 size=0x5
+char __stdcall sub_1007f5e0(int a0, int a1, int a2)
+{
+    return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007f6e0 size=0x3
 char sub_1007f6e0()
 {
