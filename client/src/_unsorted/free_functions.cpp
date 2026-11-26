@@ -22722,6 +22722,50 @@ char CUnknown1005e010::sub_1005e010()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1005e1a0 size=0x214
+#include "CHudUseIcon.h"
+
+struct IScheme_1005e1a0
+{
+	virtual int v0();
+	virtual int v1();
+	virtual int v2();
+	virtual int v3();
+	virtual int GetFont(const char *);
+};
+
+struct PanelHelper_1005e1a0
+{
+	IScheme_1005e1a0 *sub_101ac830();
+};
+
+extern const char *sub_1018c870(const char *);
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+
+#define XRES(x) ((int)((x) * ((float)sub_100cd100() / 1024.0)))
+#define YRES(y) ((int)((y) * ((float)sub_100cd0f0() / 768.0)))
+
+void CHudUseIcon::sub_1005e1a0()
+{
+	IScheme_1005e1a0 *pScheme = ((PanelHelper_1005e1a0 *)this)->sub_101ac830();
+	m_unk20c = pScheme->GetFont(sub_1018c870("PercolatorSmall"));
+	m_unk1a0 = XRES(100);
+	m_unk19c = XRES(100);
+	m_unk194 = (sub_100cd100() - m_unk19c) / 2;
+	m_unk198 = sub_100cd0f0() * 5 / 6;
+	m_unk210 = (int)((double)((sub_100cd100() - m_unk19c) / 2) - (sub_100cd100() / 1024.0) * 11.0);
+	m_unk214 = (int)((double)(sub_100cd0f0() * 5 / 6) - (sub_100cd100() / 1024.0) * 10.0);
+	m_unk1b8 = (int)(m_unk19c * 1.25f);
+	m_unk1bc = (int)(m_unk1a0 * 0.5f);
+	double w12 = (sub_100cd100() / 1024.0) * 12.0;
+	m_unk1b0 = (int)((double)((sub_100cd100() - m_unk1b8) / 2) + w12);
+	m_unk1b4 = (m_unk1a0 - m_unk1bc) / 2 + m_unk198;
+	m_unk184 = XRES(128);
+	m_unk188 = YRES(128);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1005e3c0 size=0xa
 struct CUnknown1005e3c0 { char sub_1005e3c0(char); };
 char CUnknown1005e3c0::sub_1005e3c0(char a0)

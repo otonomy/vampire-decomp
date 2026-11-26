@@ -2863,6 +2863,7 @@
 0x1005e020 func   ??0CHudUseIcon@@QAE@H@Z CHudUseIcon::CHudUseIcon
 0x1005e100 func   ??_GCHudUseIcon@@UAEPAXI@Z ??_GCHudUseIcon@@UAEPAXI@Z
 0x1005e120 func   ??1CHudUseIcon@@UAE@XZ CHudUseIcon::~CHudUseIcon
+0x1005e1a0 func   ?sub_1005e1a0@CHudUseIcon@@QAEXXZ CHudUseIcon::sub_1005e1a0
 0x1005e3c0 func   ?sub_1005e3c0@CUnknown1005e3c0@@QAEDD@Z CUnknown1005e3c0::sub_1005e3c0
 0x1005e3d0 func   ?vfunc107@CHudUseIcon@@UAE_NXZ CHudUseIcon::vfunc107
 0x1005e400 func   ?sub_1005e400@CHudUseIcon@@QAEPBDH@Z CHudUseIcon::sub_1005e400
