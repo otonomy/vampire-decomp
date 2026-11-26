@@ -581,6 +581,7 @@
 0x1000d530 func   ?_C_WeaponRanged_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponRanged_CreateObject
 0x1000d5f0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponRanged@@@Z ClientClassInit
 0x1000d680 func   ?vfunc17@C_WeaponRanged_Pistol_Anaconda@@UAEHXZ C_WeaponRanged_Pistol_Anaconda::vfunc17
+0x1000d6c0 func   ?sub_1000d6c0@@YAHXZ sub_1000d6c0
 0x1000d710 func   ??_GC_WeaponRanged_Pistol_Anaconda@@UAEPAXI@Z ??_GC_WeaponRanged_Pistol_Anaconda@@UAEPAXI@Z
 0x1000d730 func   ?vfunc16@C_WeaponRanged_Pistol_Anaconda@@UAEHXZ C_WeaponRanged_Pistol_Anaconda::vfunc16
 0x1000d740 func   ?vfunc15@C_WeaponRanged_Pistol_Anaconda@@UAEHXZ C_WeaponRanged_Pistol_Anaconda::vfunc15
