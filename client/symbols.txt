@@ -1693,6 +1693,7 @@
 0x100230b0 func   ?_C_ItemKMuseumStoreroomKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKMuseumStoreroomKey_CreateObject
 0x10023170 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKMuseumStoreroomKey@@@Z ClientClassInit
 0x10023200 func   ?vfunc17@C_ItemKMuseumStorageKey@@UAEHXZ C_ItemKMuseumStorageKey::vfunc17
+0x10023240 func   ?sub_10023240@@YAHXZ sub_10023240
 0x10023290 func   ??_GC_ItemKMuseumStorageKey@@UAEPAXI@Z ??_GC_ItemKMuseumStorageKey@@UAEPAXI@Z
 0x100232b0 func   ?vfunc16@C_ItemKMuseumStorageKey@@UAEHXZ C_ItemKMuseumStorageKey::vfunc16
 0x100232c0 func   ?vfunc15@C_ItemKMuseumStorageKey@@UAEHXZ C_ItemKMuseumStorageKey::vfunc15
