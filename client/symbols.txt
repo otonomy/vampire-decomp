@@ -3619,6 +3619,7 @@
 0x10080e10 func   ?sub_10080e10@@YGXHH@Z sub_10080e10
 0x10080e20 func   ?sub_10080e20@CUnknown10080e20@@QAEHH@Z CUnknown10080e20::sub_10080e20
 0x10080e40 func   ?vfunc121@C_Beam@@UAEHXZ C_Beam::vfunc121
+0x10080e50 func   ?vfunc113@C_Beam@@UAE_N_NPAVC_BaseEntity@@@Z C_Beam::vfunc113
 0x10080eb0 func   ?sub_10080eb0@CUnknown10080eb0@@QAEHHH@Z CUnknown10080eb0::sub_10080eb0
 0x10080ff0 func   ?sub_10080ff0@@YADXZ sub_10080ff0
 0x10081000 func   ?vfunc37@C_Beam@@UAEXXZ C_Beam::vfunc37
