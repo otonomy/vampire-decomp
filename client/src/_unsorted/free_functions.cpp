@@ -47984,6 +47984,104 @@ void C_FireSmoke::sub_100b5d00()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b6010 size=0x3ba
+#include "C_FireSmoke.h"
+#include "engineclient.h"
+
+float sub_10117b00(float minVal, float maxVal);	// Helper_RandomFloat
+
+#define FS_MIN(a, b) ((a) < (b) ? (a) : (b))
+
+#define FSV(n) virtual void v##n();
+struct FireSmokeEntityView_100b6010
+{
+	FSV(0) FSV(1) FSV(2) FSV(3) FSV(4) FSV(5) FSV(6) FSV(7) FSV(8)
+	virtual const Vector &GetAbsOrigin();	// slot 9
+};
+
+struct SmokeEmitter_100b6010	// the lit smoke emitter behind m_pSmokeEmitter
+{
+	FSV(0) FSV(1) FSV(2) FSV(3) FSV(4) FSV(5) FSV(6) FSV(7) FSV(8) FSV(9) FSV(10) FSV(11) FSV(12) FSV(13)
+	virtual void vfunc14(Vector origin, Vector color, float radius);	// slot 14: the dynamic light
+};
+
+struct FireParticle_100b6010
+{
+	char m_pad00[0x18];
+	Vector m_vecVelocity;	// 0x18
+	float m_flRoll;	// 0x24
+	float m_flDieTime;	// 0x28
+	float m_flLifetime;	// 0x2c
+	unsigned char m_uchColor[3];	// 0x30
+	unsigned char m_uchStartAlpha;	// 0x33
+	unsigned char m_uchEndAlpha;	// 0x34
+	unsigned char m_uchStartSize;	// 0x35
+	unsigned char m_uchEndSize;	// 0x36
+	char m_pad37;
+	float m_flRollDelta;	// 0x38
+};
+
+struct SmokeParticle_100b6010
+{
+	char m_pad00[0x18];
+	Vector m_vecVelocity;	// 0x18
+	unsigned char m_uchColor[4];	// 0x24
+	float m_flLifetime;	// 0x28
+	float m_flDieTime;	// 0x2c
+	unsigned char m_uchStartSize;	// 0x30
+	unsigned char m_uchEndSize;	// 0x31
+};
+
+void C_FireSmoke::sub_100b6010()
+{
+	float flScale = m_flScaleRegister * 32.0f;
+	Vector offset;
+	offset.x = sub_10117b00(-flScale, flScale);
+	offset.y = sub_10117b00(-flScale, flScale);
+	offset.z = sub_10117b00(flScale * -0.25f, flScale * 0.25f);
+	offset.z += flScale;
+
+	FireParticle_100b6010 *pParticle = (FireParticle_100b6010 *)m_pEmberEmitter->sub_101180c0(0x3c, m_pEmberEmitter->sub_101180b0("particle/fire"), offset + ((FireSmokeEntityView_100b6010 *)this)->GetAbsOrigin());
+	if (pParticle)
+	{
+		pParticle->m_flLifetime = 0.0f;
+		pParticle->m_flDieTime = 2.0f;
+		pParticle->m_flRoll = 0.0f;
+		pParticle->m_flRollDelta = 0.0f;
+
+		float flBright = sub_10117b00(0.5f, 2.0f);
+		pParticle->m_uchColor[0] = (unsigned char)FS_MIN(255.0f, sub_10117b00(185.0f, 190.0f) * flBright);
+		pParticle->m_uchColor[1] = (unsigned char)FS_MIN(255.0f, sub_10117b00(140.0f, 165.0f) * flBright);
+		pParticle->m_uchColor[2] = (unsigned char)FS_MIN(255.0f, flBright * 65.0f);
+		pParticle->m_uchStartAlpha = 255;
+		pParticle->m_uchEndAlpha = 0;
+		pParticle->m_uchStartSize = 1;
+		pParticle->m_uchEndSize = 0;
+
+		pParticle->m_vecVelocity = Vector(sub_10117b00(-16.0f, 16.0f), sub_10117b00(-16.0f, 16.0f), sub_10117b00(92.0f, 128.0f));
+	}
+
+	offset.z += 32.0f;
+	Vector color(1.0f, 0.5f, 0.2f);
+	((SmokeEmitter_100b6010 *)m_pSmokeEmitter.operator->())->vfunc14(((FireSmokeEntityView_100b6010 *)this)->GetAbsOrigin(), color, 2500.0f);
+
+	SmokeParticle_100b6010 *pSmokeParticle = (SmokeParticle_100b6010 *)m_pSmokeEmitter->sub_101180c0(0x34, m_pSmokeEmitter->sub_101180b0("particle/SmokeStack"), offset + ((FireSmokeEntityView_100b6010 *)this)->GetAbsOrigin());
+	if (pSmokeParticle)
+	{
+		pSmokeParticle->m_flLifetime = 0.0f;
+		pSmokeParticle->m_flDieTime = m_fl448 * 2.0f;
+		pSmokeParticle->m_vecVelocity = Vector(enginerandom->RandomFloat(-16.0f, 16.0f), enginerandom->RandomFloat(-16.0f, 16.0f), enginerandom->RandomFloat(76.0f, 92.0f));
+		int nGray = enginerandom->RandomInt(8, 32);
+		pSmokeParticle->m_uchColor[0] = nGray;
+		pSmokeParticle->m_uchColor[1] = nGray;
+		pSmokeParticle->m_uchColor[2] = nGray;
+		pSmokeParticle->m_uchColor[3] = enginerandom->RandomInt(64, 200);
+		pSmokeParticle->m_uchStartSize = (unsigned char)enginerandom->RandomFloat(12.0f, 16.0f);
+		pSmokeParticle->m_uchEndSize = (unsigned char)(pSmokeParticle->m_uchStartSize * 4.0f);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b63f0 size=0x6
 namespace lifted {
 extern char g_104a1f4c;
