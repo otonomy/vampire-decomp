@@ -1229,6 +1229,7 @@
 0x10019fb0 func   ?_C_ItemGLarryBriefcase_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGLarryBriefcase_CreateObject
 0x1001a070 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGLarryBriefcase@@@Z ClientClassInit
 0x1001a100 func   ?vfunc17@C_ItemGHorrorTape_1@@UAEHXZ C_ItemGHorrorTape_1::vfunc17
+0x1001a140 func   ?sub_1001a140@@YAHXZ sub_1001a140
 0x1001a190 func   ??_GC_ItemGHorrorTape_1@@UAEPAXI@Z ??_GC_ItemGHorrorTape_1@@UAEPAXI@Z
 0x1001a1b0 func   ?vfunc16@C_ItemGHorrorTape_1@@UAEHXZ C_ItemGHorrorTape_1::vfunc16
 0x1001a1c0 func   ?vfunc15@C_ItemGHorrorTape_1@@UAEHXZ C_ItemGHorrorTape_1::vfunc15
