@@ -69,6 +69,85 @@ int vgui2::TextEntry::vfunc137(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101ad120 size=0x23f
+#include "vgui2__TextEntry.h"
+
+extern "C" size_t strlen(const char *);
+#pragma intrinsic(strlen)
+extern "C" void *memset(void *, int, size_t);
+#pragma intrinsic(memset)
+extern "C" __declspec(noreturn) void exit(int);
+
+template <class T>
+struct Dar_101ad120
+{
+	int _count;
+	int _capacity;
+	T *_data;
+
+	void ensureCapacity(int wanted)
+	{
+		if (wanted <= _capacity)
+			return;
+		int newCapacity = _capacity;
+		if (newCapacity == 0)
+			newCapacity = 1;
+		while (newCapacity < wanted)
+			newCapacity *= 2;
+		T *newData = new T[newCapacity];
+		if (!newData)
+			exit(0);
+		memset(newData, 0, sizeof(T) * newCapacity);
+		_capacity = newCapacity;
+		for (int i = 0; i < _count; i++)
+			newData[i] = _data[i];
+		delete _data;
+		_data = newData;
+	}
+	void addElement(T e)
+	{
+		ensureCapacity(_count + 1);
+		_data[_count] = e;
+		_count++;
+	}
+	void removeAll() { _count = 0; }
+};
+
+struct TEFields_101ad120
+{
+	char m_pad00[0x58];
+	Dar_101ad120<char> m_TextStream;	// 0x58
+	Dar_101ad120<int> m_LineBreaks;	// 0x64
+	char m_pad70[0xb0 - 0x70];
+	bool _dataChanged;	// 0xb0
+	char m_padb1[0x114 - 0xb1];
+	int _currentStartLine;	// 0x114
+};
+
+void vgui2::TextEntry::vfunc107(const char *text)
+{
+	TEFields_101ad120 *self = (TEFields_101ad120 *)this;
+	int len = strlen(text);
+	self->m_TextStream.removeAll();
+	if (text)
+	{
+		self->m_TextStream.ensureCapacity(len);
+		for (int i = 0; i < len; i++)
+		{
+			self->m_TextStream.addElement(text[i]);
+			vfunc156(text[i], i);
+		}
+	}
+	vfunc118();
+	vfunc124();
+	self->_dataChanged = false;
+	self->_currentStartLine = 0;
+	self->m_LineBreaks.removeAll();
+	self->m_LineBreaks.addElement(999999);
+	vfunc57(0, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ad500 size=0x24
 struct IFont { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); };
 IFont *sub_101ac8e0();
