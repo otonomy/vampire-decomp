@@ -128,7 +128,7 @@ public:
 	virtual void vfunc102();
 	virtual int vfunc103(const char *);	// slot 103; seen as GetParticleIndex 1
 	virtual void vfunc104();
-	virtual void vfunc105();
+	virtual void *vfunc105(int);	// slot 105: a model for a model index (C_EnvParticle)
 	virtual const char *vfunc106();	// slot 106
 	virtual void vfunc107();
 	virtual void vfunc108();
