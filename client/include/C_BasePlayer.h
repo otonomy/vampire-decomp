@@ -14,6 +14,7 @@ public:
 	virtual ~C_BasePlayer();
 	int sub_100a2450();
 	int sub_100a93e0();
+	int sub_100a96a0(int iStat);
 	char *sub_100a9af0(int);
 	void sub_100a9c90();
 	bool sub_100a54c0(int, int);
