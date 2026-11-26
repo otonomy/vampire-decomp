@@ -374,8 +374,8 @@ int CInput::vfunc45()
 // FUNCTION: 0x10101cd0 size=0x34
 #include "CInput.h"
 #include <string.h>
-// TARGET: CInput::vfunc11
-int CInput::vfunc11(const char *name)
+// TARGET: CInput::FindKey
+int CInput::FindKey(const char *name)
 {
 	for (CInputKey *p = m_pKeys; p; p = p->next) {
 		if (!_strcmpi(name, p->name))
@@ -403,7 +403,7 @@ struct IGlobal_105f99d8 {
 	virtual int v16(int a, int b, int c);
 };
 extern IGlobal_105f99d8 *g_105f99d8;
-int CInput::vfunc10(int a, int b, int c)
+int CInput::KeyEvent(int a, int b, int c)
 {
 	if (g_105f99d8)
 		return g_105f99d8->v16(a, b, c);
@@ -413,7 +413,7 @@ int CInput::vfunc10(int a, int b, int c)
 
 // FUNCTION: 0x10103310 size=0x3
 #include "CInput.h"
-void CInput::vfunc8(int a0)
+void CInput::MakeWeaponSelection(int a0)
 {
 }
 // END FUNCTION
@@ -422,11 +422,11 @@ void CInput::vfunc8(int a0)
 #include "CInput.h"
 #include "CUserCmd.h"
 void sub_1013bb00(int, char *, CUserCmd *);
-// TARGET: CInput::vfunc5
-void CInput::vfunc5(int a, int b, int c)
+// TARGET: CInput::EncodeUserCmdToBuffer
+void CInput::EncodeUserCmdToBuffer(int a, int b, int c)
 {
     CUserCmd cmd;
-    char *p = vfunc7(c);
+    char *p = GetUsercmd(c);
     sub_1013bb00(a, p, &cmd);
 }
 // END FUNCTION
@@ -435,11 +435,11 @@ void CInput::vfunc5(int a, int b, int c)
 #include "CInput.h"
 #include "CUserCmd.h"
 void sub_1013c230(int, char *, CUserCmd *);
-// TARGET: CInput::vfunc6
-void CInput::vfunc6(int a, int b, int c)
+// TARGET: CInput::DecodeUserCmdFromBuffer
+void CInput::DecodeUserCmdFromBuffer(int a, int b, int c)
 {
     CUserCmd cmd;
-    char *p = vfunc7(c);
+    char *p = GetUsercmd(c);
     sub_1013c230(a, p, &cmd);
 }
 // END FUNCTION
@@ -449,22 +449,22 @@ void CInput::vfunc6(int a, int b, int c)
 #include "CUserCmd.h"
 void sub_10103c60(void *buf, CUserCmd *to, CUserCmd *from, bool isnew);
 
-void CInput::vfunc4(void *buf, int from, int to, bool isnew)
+void CInput::WriteUsercmdDeltaToBuffer(void *buf, int from, int to, bool isnew)
 {
     CUserCmd nullcmd;
     CUserCmd *f;
     if (from == -1)
         f = &nullcmd;
     else
-        f = (CUserCmd *)vfunc7(from);
-    CUserCmd *t = (CUserCmd *)vfunc7(to);
+        f = (CUserCmd *)GetUsercmd(from);
+    CUserCmd *t = (CUserCmd *)GetUsercmd(to);
     sub_10103c60(buf, t, f, isnew);
 }
 // END FUNCTION
 
 // FUNCTION: 0x10104440 size=0x15
 #include "CInput.h"
-char *CInput::vfunc7(int i)
+char *CInput::GetUsercmd(int i)
 {
 	return *(char **)((char *)this + 0x1c0) + i * 96;
 }
@@ -513,7 +513,7 @@ char sub_10101b80()
 }
 
 // TARGET: ?vfunc2@CInput@@UAEHH@Z
-int CInput::vfunc2(int bResetState)
+int CInput::GetButtonBits(int bResetState)
 {
 	int bits = 0;
 
@@ -574,8 +574,8 @@ int CInput::vfunc55(int a0)
 #include "CInput.h"
 struct XG2 { virtual void v0(); virtual char v1(); char u[0x2c - 4]; int m_i2c; };
 extern XG2 *g_104d31f4;
-// TARGET: CInput::vfunc20
-float CInput::vfunc20()
+// TARGET: CInput::GetLookSpring
+float CInput::GetLookSpring()
 {
 	int p;
 	if (g_104d31f4->v1())
@@ -650,8 +650,8 @@ struct CInputFields_10105d50
 	void sub_101003b0();
 };
 
-// TARGET: CInput::vfunc0
-void CInput::vfunc0()
+// TARGET: CInput::Init_All
+void CInput::Init_All()
 {
 	CInputFields_10105d50 *f = (CInputFields_10105d50 *)this;
 	f->m_pCommands = new CUserCmd[64];
@@ -692,7 +692,7 @@ namespace lifted {
 struct C10101df0 { int sub_10101df0(); };
 struct V { virtual int f0(int); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual int f17(); };
 }
-void CInput::vfunc1()
+void CInput::Shutdown_All()
 {
     ((lifted::V *)this)->f17();
     int t0 = ((lifted::C10101df0 *)this)->sub_10101df0();
@@ -715,7 +715,7 @@ void CInput::vfunc54()
 #include "CInput.h"
 extern int (__stdcall *g_101e30e4)(int, int, void *, int);
 // TARGET: ?vfunc16@CInput@@UAEXXZ
-void CInput::vfunc16()
+void CInput::ActivateMouse()
 {
 	char *p = (char *)this;
 	if (*(int *)(p + 0x28) != 1 && *(int *)(p + 0x20) != 0) {
@@ -732,7 +732,7 @@ void CInput::vfunc16()
 // FUNCTION: 0x10106290 size=0x3f
 #include "CInput.h"
 extern void (__stdcall *g_101e30e4)(int, int, void *, int);
-void CInput::vfunc17()
+void CInput::DeactivateMouse()
 {
 	if (m_unk28 && m_unk20) {
 		if (m_unk5c)
@@ -780,7 +780,7 @@ struct Gv_101067d0 {
 };
 extern Gv_101067d0 *g_104d400c;
 
-void CInput::vfunc14()
+void CInput::AccumulateMouse()
 {
 	int x, y;
 	if (!g_104d400c->v1() && g_104d400c->m_n2c && !m_unkec && !m_unk24 && m_unk28) {
@@ -811,7 +811,7 @@ bool CInput::vfunc24() { if (m_unk24) return true; return false; }
 extern int sub_100cd100();
 extern int sub_100cd0f0();
 
-void CInput::vfunc22(int *a1, int *a2, int *a3, int *a4)
+void CInput::GetFullscreenMousePos(int *a1, int *a2, int *a3, int *a4)
 {
 	if (!m_unk24)
 		return;
@@ -850,8 +850,8 @@ struct CInputCallView_10106ac0
 	int sub_10106880(int x, int y);
 };
 
-// TARGET: CInput::vfunc23
-void CInput::vfunc23(int a1, int a2)
+// TARGET: CInput::SetFullscreenMousePos
+void CInput::SetFullscreenMousePos(int a1, int a2)
 {
 	((CInputCallView_10106ac0 *)this)->sub_10106880(
 		a1 - sub_100cd100() / 2 + engine->vfunc46(),
@@ -861,7 +861,7 @@ void CInput::vfunc23(int a1, int a2)
 
 // FUNCTION: 0x10106b20 size=0x13
 #include "CInput.h"
-void CInput::vfunc19()
+void CInput::ClearStates()
 {
 	if ( m_unk28 != 0 )
 	{

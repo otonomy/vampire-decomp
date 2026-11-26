@@ -41,7 +41,7 @@ void CHLClient::vfunc1()
 	sub_10106bb0();
 	g_105f99d8->v4();
 	g_105f99d8->v2();
-	input->vfunc1();
+	input->Shutdown_All();
 	sub_1002c400();
 	sub_1004a9c0();
 	g_102d43d8->v2();
@@ -91,7 +91,7 @@ struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void
 }
 int CHLClient::vfunc8(float a0)
 {
-    input->vfunc12();
+    input->ControllerCommands();
     return ((lifted::V *)lifted::g_105f99d8)->f8(a0);
 }
 // END FUNCTION
@@ -165,7 +165,7 @@ struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void
 }
 void CHLClient::IN_ActivateMouse()
 {
-    input->vfunc16();
+    input->ActivateMouse();
     ((lifted::V *)lifted::g_102ccd98)->f4(1);
 }
 // END FUNCTION
@@ -179,7 +179,7 @@ struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void
 }
 void CHLClient::IN_DeactivateMouse()
 {
-    input->vfunc17();
+    input->DeactivateMouse();
     ((lifted::V *)lifted::g_102ccd98)->f4(0);
 }
 // END FUNCTION
@@ -198,7 +198,7 @@ bool CHLClient::vfunc44()
 #include "CHLClient.h"
 void CHLClient::IN_MouseEvent(int mstate, bool down)
 {
-	input->vfunc15(mstate, down);
+	input->MouseEvent(mstate, down);
 }
 // END FUNCTION
 
@@ -207,7 +207,7 @@ void CHLClient::IN_MouseEvent(int mstate, bool down)
 #include "CHLClient.h"
 void CHLClient::IN_Accumulate()
 {
-	input->vfunc14();
+	input->AccumulateMouse();
 }
 // END FUNCTION
 
@@ -216,7 +216,7 @@ void CHLClient::IN_Accumulate()
 #include "CHLClient.h"
 void CHLClient::IN_ClearStates()
 {
-	input->vfunc19();
+	input->ClearStates();
 }
 // END FUNCTION
 
@@ -225,7 +225,7 @@ void CHLClient::IN_ClearStates()
 #include "CHLClient.h"
 struct kbutton_s *CHLClient::IN_FindKey(const char *name)
 {
-	return (struct kbutton_s *)input->vfunc11(name);
+	return (struct kbutton_s *)input->FindKey(name);
 }
 // END FUNCTION
 
@@ -234,7 +234,7 @@ struct kbutton_s *CHLClient::IN_FindKey(const char *name)
 #include "CHLClient.h"
 int CHLClient::IN_KeyEvent(int eventcode, int keynum, const char *pszCurrentBinding)
 {
-	return input->vfunc10(eventcode, keynum, (int)pszCurrentBinding);
+	return input->KeyEvent(eventcode, keynum, (int)pszCurrentBinding);
 }
 // END FUNCTION
 
@@ -262,7 +262,7 @@ void CHLClient::CreateMove(int a0, int a1, float a2, float a3, int a4, float a5)
 	((EngV *)g_104a5808)->vfunc16(0xac, 0);
 	sub_1009db70(1);
 	sub_100923c0(1, 0);
-	input->vfunc3(a0, a1, a2, a3, a4, a5);
+	input->CreateMove(a0, a1, a2, a3, a4, a5);
 	sub_100923c0(0, 0);
 	((EngV *)g_104a5808)->vfunc16(0xac, 1);
 	sub_1009db70(0);
@@ -274,7 +274,7 @@ void CHLClient::CreateMove(int a0, int a1, float a2, float a3, int a4, float a5)
 #include "CHLClient.h"
 void CHLClient::WriteUsercmdDeltaToBuffer(bf_write *buf, int from, int to, bool isnewcommand)
 {
-	input->vfunc4(buf, from, to, isnewcommand);
+	input->WriteUsercmdDeltaToBuffer(buf, from, to, isnewcommand);
 }
 // END FUNCTION
 

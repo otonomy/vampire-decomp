@@ -42,30 +42,30 @@ public:
     char sub_100ff0a0(struct CUnkPlayer *);
     // vtable-slot layer (2026-11-22), from the game's vtables
     // the slots CInput adds to its base's vtable: 0-56, vfuncK at slot K
-    virtual void vfunc0();
-    virtual void vfunc1();
-    virtual int vfunc2(int bResetState);	// GetButtonBits
-    virtual void vfunc3(int sequence_number, int totalslots, float tick_frametime, float input_sample_frametime, int active, float packet_loss);	// SDK IInput::CreateMove, CHLClient::CreateMove forwards it
-    virtual void vfunc4(void *buf, int from, int to, bool isnewcommand);	// SDK IInput::WriteUsercmdDeltaToBuffer
-    virtual void vfunc5(int, int, int);
-    virtual void vfunc6(int, int, int);
-    virtual char *vfunc7(int i);
-    virtual void vfunc8(int);
-    virtual float vfunc9(struct kbutton_t *);
-    virtual int vfunc10(int, int, int);
-    virtual int vfunc11(const char *name);
-    virtual void vfunc12();
-    virtual void vfunc13();
-    virtual void vfunc14();
-    virtual void vfunc15(int mstate, bool down);	// SDK IInput::MouseEvent, CHLClient::IN_MouseEvent forwards it
-    virtual void vfunc16();
-    virtual void vfunc17();
+    virtual void Init_All();	// slot 0
+    virtual void Shutdown_All();	// slot 1
+    virtual int GetButtonBits(int bResetState);	// slot 2
+    virtual void CreateMove(int sequence_number, int totalslots, float tick_frametime, float input_sample_frametime, int active, float packet_loss);	// slot 3; SDK IInput::CreateMove, CHLClient::CreateMove forwards it
+    virtual void WriteUsercmdDeltaToBuffer(void *buf, int from, int to, bool isnewcommand);	// slot 4; SDK IInput::WriteUsercmdDeltaToBuffer
+    virtual void EncodeUserCmdToBuffer(int, int, int);	// slot 5
+    virtual void DecodeUserCmdFromBuffer(int, int, int);	// slot 6
+    virtual char *GetUsercmd(int i);	// slot 7
+    virtual void MakeWeaponSelection(int);	// slot 8
+    virtual float KeyState(struct kbutton_t *);	// slot 9
+    virtual int KeyEvent(int, int, int);	// slot 10
+    virtual int FindKey(const char *name);	// slot 11
+    virtual void ControllerCommands();	// slot 12
+    virtual void Joystick_Advanced();	// slot 13
+    virtual void AccumulateMouse();	// slot 14
+    virtual void MouseEvent(int mstate, bool down);	// slot 15; SDK IInput::MouseEvent, CHLClient::IN_MouseEvent forwards it
+    virtual void ActivateMouse();	// slot 16
+    virtual void DeactivateMouse();	// slot 17
     virtual bool vfunc18();
-    virtual void vfunc19();
-    virtual float vfunc20();
+    virtual void ClearStates();	// slot 19
+    virtual float GetLookSpring();	// slot 20
     virtual void vfunc21(char);
-    virtual void vfunc22(int *, int *, int *, int *);
-    virtual void vfunc23(int, int);
+    virtual void GetFullscreenMousePos(int *, int *, int *, int *);	// slot 22
+    virtual void SetFullscreenMousePos(int, int);	// slot 23
     virtual bool vfunc24();
     virtual void vfunc25();
     virtual bool vfunc26();

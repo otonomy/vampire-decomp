@@ -62242,7 +62242,7 @@ void CHud::sub_100f12b0(bool b)
 {
 	if (!b)
 		return;
-	m_unk18 = input->vfunc2(0);
+	m_unk18 = input->GetButtonBits(0);
 	g_104cfe38.sub_100f28d0();
 	float f;
 	if (C_BasePlayer::GetLocalPlayer())
@@ -65527,7 +65527,7 @@ void sub_10101b20()
 #include "CInput.h"
 void sub_10101b70()
 {
-    input->vfunc13();
+    input->Joystick_Advanced();
 }
 // END FUNCTION
 
@@ -65559,7 +65559,7 @@ extern "C" char *strcpy(char *, const char *);
 // TARGET: ?sub_10101d10@CInput@@QAEXPBDH@Z
 void CInput::sub_10101d10(const char *name, int value)
 {
-	if (!vfunc11(name)) {
+	if (!FindKey(name)) {
 		CInputKey *k = new CInputKey;
 		strcpy(k->name, name);
 		k->value = value;
@@ -65766,8 +65766,8 @@ void CInput::sub_101025f0(float speed, Vector &viewangles)
     if (!(g_104d3970.state & 1))
     {
         float &yaw = viewangles.y;
-        yaw -= speed * (g_104d326c->IsX() ? 0.0f : g_104d326c->m28) * vfunc9(&g_104d3748);
-        yaw += speed * (g_104d326c->IsX() ? 0.0f : g_104d326c->m28) * vfunc9(&g_104d3714);
+        yaw -= speed * (g_104d326c->IsX() ? 0.0f : g_104d326c->m28) * KeyState(&g_104d3748);
+        yaw += speed * (g_104d326c->IsX() ? 0.0f : g_104d326c->m28) * KeyState(&g_104d3714);
         viewangles.y = anglemod(viewangles.y);
     }
 }
@@ -66311,7 +66311,7 @@ void CInput::sub_101068a0(int arg)
 	if ( m_unkec ) goto end;
 	if ( m_unk24 ) goto end;
 	if ( g_104cfe64 ) goto end;
-	vfunc14();
+	AccumulateMouse();
 	self->sub_101063f0(&L.vc, &L.v8);
 	self->sub_10106410(L.vc, L.v8, &g_104d3e50, &g_104d3f74, &L.v4, &L.v0);
 	self->sub_101064b0(&L.v4, &L.v0);
