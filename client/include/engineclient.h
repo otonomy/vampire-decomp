@@ -265,7 +265,7 @@ public:
 	virtual int vfunc3();	// slot 3
 	virtual int vfunc4();	// slot 4
 	virtual int vfunc5();	// slot 5
-	virtual int vfunc6();	// slot 6
+	virtual void vfunc6(float);	// slot 6: SetBlend (DrawSpriteModel's render->SetBlend(1.0))
 	virtual int vfunc7();	// slot 7
 	virtual int vfunc8();	// slot 8
 	virtual int vfunc9();	// slot 9
