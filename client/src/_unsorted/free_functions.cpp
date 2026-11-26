@@ -69526,6 +69526,31 @@ bool sub_10110f90(const unsigned short *a, const unsigned short *b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10110fb0 size=0x236
+#include "CUtlRBTree20.h"
+// TARGET: CUtlRBTree20::sub_10110fb0
+unsigned short CUtlRBTree20::sub_10110fb0(unsigned short i)
+{
+	const CUtlRBTree20At<0x104dff24> *t = (const CUtlRBTree20At<0x104dff24> *)this;
+	if (t->Links(i).m_Right != InvalidIndex())
+	{
+		i = t->Links(i).m_Right;
+		while (t->Links(i).m_Left != InvalidIndex())
+			i = t->Links(i).m_Left;
+		return i;
+	}
+	unsigned short parent = t->Links(i).m_Parent;
+	while (t->Links(sub_10112840(i).m_Parent).m_Right == i)
+	{
+		i = parent;
+		if (i == InvalidIndex())
+			break;
+		parent = t->Links(i).m_Parent;
+	}
+	return parent;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101111f0 size=0x13
 bool sub_101111f0(const unsigned short *a, const unsigned short *b)
 {
