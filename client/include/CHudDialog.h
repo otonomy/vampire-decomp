@@ -31,7 +31,21 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_10054670(int n);
 	void sub_10054f70(int type, const char *text);
 	void sub_10054860();
-	char m_pad0008[0x122c - 0x174];	// starts at 0x174 (the bases end there)
+	char m_pad0008[0x1a4 - 0x174];	// starts at 0x174 (the bases end there)
+	float m_flAlpha;	// 0x1a4: the dialog alpha ComputeAlpha clamps to 0..g_10285ad0
+	float m_flAlpha1a8;	// 0x1a8
+	float m_flAlpha1ac;	// 0x1ac
+	bool m_b1b0;
+	bool m_b1b1;
+	bool m_b1b2;
+	bool m_b1b3;
+	bool m_b1b4;
+	bool m_b1b5;
+	bool m_b1b6;
+	bool m_b1b7;
+	float m_flLastTime;	// 0x1b8: engine time of the last ComputeAlpha
+	char m_pad01bc[0x122c - 0x1bc];
+	void sub_10053200();	// "CHudDialog::ComputeAlpha"
 	char m_szItems[4][0x800];	// 0x122c
 	char m_pad322c[0x324c - 0x322c];
 	char m_szText[0x800];	// 0x324c
