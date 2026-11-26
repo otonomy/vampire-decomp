@@ -5672,6 +5672,7 @@
 0x10105d50 func   ?Init_All@CInput@@UAEXXZ CInput::Init_All
 0x10105d50 func   ?vfunc0@CInput@@UAEXXZ CInput::vfunc0
 0x10105e90 func   ?vfunc0@CUserCmd@@QAEPAXD@Z CUserCmd::vfunc0
+0x10105ef0 func   ?Shutdown_All@CInput@@UAEXXZ CInput::Shutdown_All
 0x10105ef0 func   ?vfunc1@CInput@@UAEXXZ CInput::vfunc1
 0x10105f20 func   ?vfunc54@CInput@@UAEXXZ CInput::vfunc54
 0x10105f30 func   ?sub_10105f30@@YAXPAHHHHPAUFlagsView@@D@Z sub_10105f30
