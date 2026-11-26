@@ -1181,6 +1181,7 @@
 0x100190b0 func   ?_C_ItemGLillyDiary_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGLillyDiary_CreateObject
 0x10019170 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGLillyDiary@@@Z ClientClassInit
 0x10019200 func   ?vfunc17@C_ItemGLillyPurse@@UAEHXZ C_ItemGLillyPurse::vfunc17
+0x10019240 func   ?sub_10019240@@YAHXZ sub_10019240
 0x10019290 func   ??_GC_ItemGLillyPurse@@UAEPAXI@Z ??_GC_ItemGLillyPurse@@UAEPAXI@Z
 0x100192b0 func   ?vfunc16@C_ItemGLillyPurse@@UAEHXZ C_ItemGLillyPurse::vfunc16
 0x100192c0 func   ?vfunc15@C_ItemGLillyPurse@@UAEHXZ C_ItemGLillyPurse::vfunc15
