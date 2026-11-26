@@ -18,7 +18,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc101();
 	virtual int vfunc102();
 	// the slots TreeView adds to its base's vtable: 107-122, vfuncK at slot K
-	virtual void vfunc107();
+	virtual int vfunc107(void *data, int parentItemIndex);	// AddItem
 	virtual int vfunc108();
 	virtual void vfunc109();
 	virtual int vfunc110();
