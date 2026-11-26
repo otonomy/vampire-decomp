@@ -2508,6 +2508,7 @@
 0x1003dfa0 func   ??1CTEParticleRenderer@@UAE@XZ CTEParticleRenderer::~CTEParticleRenderer
 0x1003dfa0 func   ?sub_1003dfa0@CUnknown1003dfa0@@QAEHXZ CUnknown1003dfa0::sub_1003dfa0
 0x1003dfb0 func   ?sub_1003dfb0@@YA?AV?$CSmartPtr@VCUnknown1003df50@@@@HPAUVector@@@Z sub_1003dfb0
+0x1003e060 func   ?vfunc3@CTEParticleRenderer@@QAE_NPAUStandardParticle_t@@PAUParticleDraw@@AAM@Z CTEParticleRenderer::vfunc3
 0x1003e770 func   ??0C_TEPlayerDecal@@QAE@XZ C_TEPlayerDecal::C_TEPlayerDecal
 0x1003e7a0 func   ??_GC_TEPlayerDecal@@UAEPAXI@Z ??_GC_TEPlayerDecal@@UAEPAXI@Z
 0x1003e7c0 func   ??1C_TEPlayerDecal@@UAE@XZ C_TEPlayerDecal::~C_TEPlayerDecal
