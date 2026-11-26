@@ -1149,6 +1149,7 @@
 0x100186b0 func   ?_C_ItemGRingSilver_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGRingSilver_CreateObject
 0x10018770 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGRingSilver@@@Z ClientClassInit
 0x10018800 func   ?vfunc17@C_ItemGWatchNormal@@UAEHXZ C_ItemGWatchNormal::vfunc17
+0x10018840 func   ?sub_10018840@@YAHXZ sub_10018840
 0x10018890 func   ??_GC_ItemGWatchNormal@@UAEPAXI@Z ??_GC_ItemGWatchNormal@@UAEPAXI@Z
 0x100188b0 func   ?vfunc16@C_ItemGWatchNormal@@UAEHXZ C_ItemGWatchNormal::vfunc16
 0x100188c0 func   ?vfunc15@C_ItemGWatchNormal@@UAEHXZ C_ItemGWatchNormal::vfunc15

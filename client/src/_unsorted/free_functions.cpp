@@ -9966,6 +9966,32 @@ template <> int ClientClassInit<DT_ItemGRingSilver::ignored>(DT_ItemGRingSilver:
 }
 // END FUNCTION
 
+// FUNCTION: 0x10018840 size=0x45
+namespace lifted {
+extern char g_102080c4;
+extern char g_102080d8;
+extern char g_10208114;
+extern char g_1020814c;
+extern char g_102081a4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10018840()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_102081a4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020814c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10208114;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_102080d8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_102080c4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100188d0 size=0x6
 namespace lifted {
 extern char g_102e1320;
