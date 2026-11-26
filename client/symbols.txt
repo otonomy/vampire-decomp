@@ -3899,6 +3899,7 @@
 0x100978e0 func   ?sub_100978e0@@YIXPAUAnimOverlayNetView@@HH@Z sub_100978e0
 0x10097950 func   ?vfunc17@C_BaseAnimatingOverlay@@UAEHXZ C_BaseAnimatingOverlay::vfunc17
 0x10097960 func   ?vfunc70@C_BaseAnimatingOverlay@@UAEHXZ C_BaseAnimatingOverlay::vfunc70
+0x100979b0 func   ?vfunc130@C_BaseAnimatingOverlay@@UAEXPBUCBitVecWords@@PAVVector@@PAVQuaternion@@@Z C_BaseAnimatingOverlay::vfunc130
 0x10097df0 func   ??0C_BaseCombatCharacter@@QAE@XZ C_BaseCombatCharacter::C_BaseCombatCharacter
 0x10097ec0 func   ??_GC_BaseCombatCharacter@@UAEPAXI@Z ??_GC_BaseCombatCharacter@@UAEPAXI@Z
 0x10097ee0 func   ??1C_BaseCombatCharacter@@UAE@XZ C_BaseCombatCharacter::~C_BaseCombatCharacter
