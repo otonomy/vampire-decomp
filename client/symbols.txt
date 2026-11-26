@@ -9632,6 +9632,7 @@
 0x101ac920 func   ?sub_101ac920@@YAHXZ sub_101ac920
 0x101ac930 func   ?sub_101ac930@@YAHXZ sub_101ac930
 0x101aca60 func   ?sub_101aca60@@YAHPAXPAP6AH0H@ZH@Z sub_101aca60
+0x101acaa0 func   ??0TextEntry@vgui2@@QAE@PAVPanel@1@PBD@Z vgui2::TextEntry::TextEntry
 0x101acd90 func   ??_GTextEntry@vgui2@@UAEPAXI@Z ??_GTextEntry@vgui2@@UAEPAXI@Z
 0x101acdb0 func   ??1TextEntry@vgui2@@UAE@XZ vgui2::TextEntry::~TextEntry
 0x101ace00 func   ?sub_101ace00@TEV@@QAEXPAUIScheme@@@Z TEV::sub_101ace00
