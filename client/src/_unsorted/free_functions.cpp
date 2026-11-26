@@ -10470,6 +10470,32 @@ template <> int ClientClassInit<DT_ItemGDriversLicenseGimble::ignored>(DT_ItemGD
 }
 // END FUNCTION
 
+// FUNCTION: 0x100199c0 size=0x45
+namespace lifted {
+extern char g_1020a274;
+extern char g_1020a288;
+extern char g_1020a2c4;
+extern char g_1020a2fc;
+extern char g_1020a354;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100199c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1020a354;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020a2fc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1020a2c4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1020a288;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1020a274;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10019a50 size=0x6
 namespace lifted {
 extern char g_102e3b1c;

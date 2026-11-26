@@ -1205,6 +1205,7 @@
 0x10019830 func   ?_C_ItemGDriversLicenseGimble_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGDriversLicenseGimble_CreateObject
 0x100198f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGDriversLicenseGimble@@@Z ClientClassInit
 0x10019980 func   ?vfunc17@C_ItemGWerewolfBlood@@UAEHXZ C_ItemGWerewolfBlood::vfunc17
+0x100199c0 func   ?sub_100199c0@@YAHXZ sub_100199c0
 0x10019a10 func   ??_GC_ItemGWerewolfBlood@@UAEPAXI@Z ??_GC_ItemGWerewolfBlood@@UAEPAXI@Z
 0x10019a30 func   ?vfunc16@C_ItemGWerewolfBlood@@UAEHXZ C_ItemGWerewolfBlood::vfunc16
 0x10019a40 func   ?vfunc15@C_ItemGWerewolfBlood@@UAEHXZ C_ItemGWerewolfBlood::vfunc15
