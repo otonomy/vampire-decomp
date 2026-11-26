@@ -1405,6 +1405,7 @@
 0x1001d6b0 func   ?_C_ItemGHattersScreenplay_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGHattersScreenplay_CreateObject
 0x1001d770 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGHattersScreenplay@@@Z ClientClassInit
 0x1001d800 func   ?vfunc17@C_ItemGStake@@UAEHXZ C_ItemGStake::vfunc17
+0x1001d840 func   ?sub_1001d840@@YAHXZ sub_1001d840
 0x1001d890 func   ??_GC_ItemGStake@@UAEPAXI@Z ??_GC_ItemGStake@@UAEPAXI@Z
 0x1001d8b0 func   ?vfunc16@C_ItemGStake@@UAEHXZ C_ItemGStake::vfunc16
 0x1001d8c0 func   ?vfunc15@C_ItemGStake@@UAEHXZ C_ItemGStake::vfunc15
