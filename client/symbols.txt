@@ -6965,6 +6965,7 @@
 0x101397f0 func   ?sub_101397f0@CUtlRBTree16@@QBEABULinks_t@1@G@Z CUtlRBTree16::sub_101397f0
 0x10139850 func   ?sub_10139850@CUtlRBTree16@@QBE_NG@Z CUtlRBTree16::sub_10139850
 0x10139cb0 func   ?sub_10139cb0@@YAHXZ sub_10139cb0
+0x10139cd0 func   ?sub_10139cd0@@YAXHHH@Z sub_10139cd0
 0x10139d00 func   ?sub_10139d00@CUnknown10139d00@@QAEPAXH@Z CUnknown10139d00::sub_10139d00
 0x10139d20 func   ??_GCHudTextMessage@@UAEPAXI@Z ??_GCHudTextMessage@@UAEPAXI@Z
 0x10139d40 func   ?vfunc1@CHudTextMessage@@UAEXXZ CHudTextMessage::vfunc1

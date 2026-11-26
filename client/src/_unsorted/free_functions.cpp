@@ -88911,6 +88911,22 @@ int sub_10139cb0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10139cd0 size=0x2a
+namespace lifted {
+extern char g_102864a0;
+extern char g_104cfe38;
+struct C100f0ed0 { int sub_100f0ed0(int); };
+struct C10139f10 { int sub_10139f10(int, int, int); };
+}
+void sub_10139cd0(int a0, int a1, int a2)
+{
+    int t0 = ((lifted::C100f0ed0 *)((int)&lifted::g_104cfe38))->sub_100f0ed0((int)&lifted::g_102864a0);
+    if (t0 != 0) {
+        ((lifted::C10139f10 *)t0)->sub_10139f10(a0, a1, a2);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x10139d00 size=0x19
 namespace lifted {
 extern char g_10247bc0;
