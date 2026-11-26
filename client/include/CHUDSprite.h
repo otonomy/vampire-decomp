@@ -20,6 +20,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_1005d280(int x, int y, int w, int h);
 	void sub_1005a510(int x, int y, int w, int h, unsigned int tint);	// "CHUDSprite::drawAlphaColorTint": tint is 0x00RRGGBB
 	void sub_1005c430(int, int, int, int, int, int);
+	void sub_1005b420(int x, int y, int w, int h, int r, int g, int b, int a, float flAngle);	// draws rotated by flAngle (radians)
 	int m_unk04;
 	int m_unk08;
 	int m_unk0c;
