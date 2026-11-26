@@ -21,4 +21,6 @@ public:
 	void sub_100c9680(Vector &v1, Vector &v2, Vector &v3);
 	void sub_100c9820();
 	virtual int vfunc64(int, int, int);
+	bool IsVisibleToTeam(int nTeam);	// 0x100c9320: always true here
+	bool sub_100c9740(const struct Ray_t &ray, float *u, float *v, float *t);	// IntersectWithRay-like (ray, &u, &v, &t)
 };
