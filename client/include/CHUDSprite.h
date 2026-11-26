@@ -27,4 +27,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_unk14;
 	int m_unk18;
 	int m_unk1c;
+	void sub_1005bad0(int x, int y, int w, int h);	// provisional, like sub_1005d280 (transplant)
 };
