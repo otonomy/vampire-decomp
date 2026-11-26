@@ -290,6 +290,10 @@ of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call th
 - **The string tables** (0x105f93c0) are one `StatOwner2` object, the list of VStringTable records (StatOwner2.h,
   no real name known): `g_105f93c0.sub_1015f2f0("MiscStrs")->sub_1015ecd0(i)` by name, `.sub_1015f270(id)` by id;
   include StatOwner2.h instead of declaring it with a view type of your own.
+- **The input object** (0x1027ba58) is the SDK's `input` (`static CHLInput g_Input; IInput *input = &g_Input;`),
+  declared `extern CInput *input;` in CInput.h because the slots are declared on CInput: call `input->vfuncN()`,
+  never `g_1027ba58` through a view. Some CInput slot signatures are still guesses (vfunc3 is the SDK's 6-argument
+  CreateMove); when yours disagrees with the game's call, note it rather than adding a second view.
 - **Two functions in one row.** When the game's bytes end with `ret` / padding and go on with a second function
   (another `ret N`, its own callers), the import merged two rows; note "merged row: second function at 0x..." and
   move on (`pcdecomp split` cuts it), do not write both into one source.
