@@ -13,6 +13,7 @@ int CHLClient::vfunc41(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x100cb990 size=0x88
+#include "CInput.h"
 #include "CHLClient.h"
 struct SaveMgrV1 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(int a); };
 struct ObjA1 { virtual void v0(); virtual void v1(); };
@@ -21,7 +22,6 @@ struct ObjC1 { virtual void v0(); virtual void v1(); virtual void v2(); };
 extern SaveMgrV1 *g_102c37a0;
 extern ObjA1 *g_102bc800;
 extern ObjB1 *g_105f99d8;
-extern ObjA1 *g_1027ba58;
 extern ObjC1 *g_102d43d8;
 extern int g_104a5820;
 int sub_1012b820();
@@ -41,7 +41,7 @@ void CHLClient::vfunc1()
 	sub_10106bb0();
 	g_105f99d8->v4();
 	g_105f99d8->v2();
-	g_1027ba58->v1();
+	input->vfunc1();
 	sub_1002c400();
 	sub_1004a9c0();
 	g_102d43d8->v2();
@@ -83,15 +83,15 @@ int CHLClient::vfunc7(int a0, int a1)
 // END FUNCTION
 
 // FUNCTION: 0x100cba60 size=0x1e
+#include "CInput.h"
 #include "CHLClient.h"
 namespace lifted {
-extern int g_1027ba58;
 extern int g_105f99d8;
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual int f8(float); virtual void u9(); virtual void u10(); virtual void u11(); virtual int f12(); };
 }
 int CHLClient::vfunc8(float a0)
 {
-    ((lifted::V *)lifted::g_1027ba58)->f12();
+    input->vfunc12();
     return ((lifted::V *)lifted::g_105f99d8)->f8(a0);
 }
 // END FUNCTION
@@ -157,29 +157,29 @@ void CHLClient::vfunc12(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x100cbb10 size=0x19
+#include "CInput.h"
 #include "CHLClient.h"
 namespace lifted {
-extern int g_1027ba58;
 extern int g_102ccd98;
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual int f4(int); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual int f16(); };
 }
 int CHLClient::vfunc13()
 {
-    ((lifted::V *)lifted::g_1027ba58)->f16();
+    input->vfunc16();
     return ((lifted::V *)lifted::g_102ccd98)->f4(1);
 }
 // END FUNCTION
 
 // FUNCTION: 0x100cbb30 size=0x19
+#include "CInput.h"
 #include "CHLClient.h"
 namespace lifted {
-extern int g_1027ba58;
 extern int g_102ccd98;
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual int f4(int); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual int f17(); };
 }
 int CHLClient::vfunc14()
 {
-    ((lifted::V *)lifted::g_1027ba58)->f17();
+    input->vfunc17();
     return ((lifted::V *)lifted::g_102ccd98)->f4(0);
 }
 // END FUNCTION

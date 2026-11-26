@@ -40234,7 +40234,6 @@ struct CUnkIface { virtual bool vf0(); virtual bool vf1(); char pad[0x28]; int m
 struct CUnkLocal1007b160 { char pad[0x2440]; int m_state; };
 extern CUnkIface *g_1049d914;
 extern CUnkIface *g_1049d994;
-extern CInput *g_1027ba58;
 CUnkLocal1007b160 *sub_1007b160();
 void sub_1009c250()
 {
@@ -40242,16 +40241,16 @@ void sub_1009c250()
     if (st && !g_1049d914->vf1() && g_1049d914->m_i2c)
     {
         if (st == 8)
-            g_1027ba58->vfunc35();
+            input->vfunc35();
         else if (st == 0x10)
-            g_1027ba58->vfunc37();
+            input->vfunc37();
         else
         {
             int v = g_1049d994->vf1() ? 0 : g_1049d994->m_i2c;
             if (st & v)
-                g_1027ba58->vfunc35();
+                input->vfunc35();
             else
-                g_1027ba58->vfunc34();
+                input->vfunc34();
         }
     }
 }
@@ -43369,31 +43368,15 @@ bool C_BasePlayer::sub_100a54c0(int a, int b)
 // END FUNCTION
 
 // FUNCTION: 0x100a5910 size=0x1c
+#include "CInput.h"
 #include "C_BasePlayer.h"
-struct G5910 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
- virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
- virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual int v29(); };
 struct V5910;
-extern G5910 *g_1027ba58;
 struct V5910 { bool sub_100a5910(); };
-bool V5910::sub_100a5910() { if (((V5910 *)C_BasePlayer::GetLocalPlayer()) != this) return true; return g_1027ba58->v29() ? true : false; }
+bool V5910::sub_100a5910() { if (((V5910 *)C_BasePlayer::GetLocalPlayer()) != this) return true; return input->vfunc29() ? true : false; }
 // END FUNCTION
 
 // FUNCTION: 0x100a5930 size=0x47
-struct IFace53 {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
-	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
-	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
-	virtual void v50(); virtual void v51(); virtual void v52();
-	virtual float v53(); };
-extern IFace53 *g_1027ba58;
+#include "CInput.h"
 struct RView100a5930 {
 	bool sub_100a5930();
 	bool sub_100a99d0();
@@ -43403,7 +43386,7 @@ struct RView100a5930 {
 bool RView100a5930::sub_100a5930()
 {
 	if (((RView100a5930 *)((char *)this - 4))->sub_100a99d0()) {
-		float v = g_1027ba58->v53();
+		float v = input->vfunc53();
 		if (v > 0.01 && v < 1.0)
 			return true;
 	}
@@ -43897,6 +43880,7 @@ usehandle:
 // END FUNCTION
 
 // FUNCTION: 0x100a7a50 size=0x5c
+#include "CInput.h"
 #include "C_BasePlayer.h"
 
 struct ICN8V {
@@ -43921,17 +43905,7 @@ struct ObjV {
 	bool sub_100a99d0();		// 0x100a99d0
 };
 
-struct GV {
-	virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4();
-	virtual void d5(); virtual void d6(); virtual void d7(); virtual void d8(); virtual void d9();
-	virtual void d10(); virtual void d11(); virtual void d12(); virtual void d13(); virtual void d14();
-	virtual void d15(); virtual void d16(); virtual void d17(); virtual void d18(); virtual void d19();
-	virtual void d20(); virtual void d21(); virtual void d22(); virtual void d23(); virtual void d24();
-	virtual void d25(); virtual void d26(); virtual void d27(); virtual void d28();
-	virtual int v29();			// slot 29 (+0x74)
-};
 
-extern GV *g_1027ba58;
 
 // TARGET: sub_100a7a50
 bool __fastcall sub_100a7a50(void *self)
@@ -43944,7 +43918,7 @@ bool __fastcall sub_100a7a50(void *self)
 	void *vm = base->sub_100a7890();
 	if (vm)
 		return ((VMV *)vm)->sub_10001990(base);
-	if (((ObjV *)base)->sub_100a99d0() && g_1027ba58->v29() == 0)
+	if (((ObjV *)base)->sub_100a99d0() && input->vfunc29() == 0)
 		return false;
 	return true;
 }
@@ -45265,15 +45239,11 @@ int EV::sub_100aef10(int, int)
 // END FUNCTION
 
 // FUNCTION: 0x100aef40 size=0xad
+#include "CInput.h"
 #include "ehandle.h"
 struct Obj_100a99d0 { bool sub_100a99d0(); };
 struct CEnt100 { char pad[0x3f8]; Obj_100a99d0 *m_p3f8; void *m_p3fc; void *m_p400; };
 struct ISub { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual int v8(); };
-struct IGlobal { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
- virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
- virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
- virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual int v29(); };
-extern IGlobal *g_1027ba58;
 struct CObj100aef40 {
     int m_unk0; int m_unk4; ISub m_sub; char pad[0x184 - 0xc]; CBaseHandle m_hEnt;
     bool sub_100aef40();
@@ -45287,7 +45257,7 @@ bool CObj100aef40::sub_100aef40()
         if (e->m_p400)
             return false;
         if (e->m_p3f8 && e->m_p3f8->sub_100a99d0())
-            return g_1027ba58->v29() != 0;
+            return input->vfunc29() != 0;
     }
     return true;
 }
@@ -61217,13 +61187,10 @@ CHudSub *CHud::sub_100f1200(const char *pName, int *pWide, int *pTall)
 // END FUNCTION
 
 // FUNCTION: 0x100f12b0 size=0x7f
+#include "CInput.h"
 #include "C_BasePlayer.h"
 #include "CHud.h"
 
-struct V2I {
-	virtual void d0(); virtual void d1();
-	virtual int vfc2(int);		// slot 2 (+8)
-};
 struct G105V {
 	virtual void d0();
 	virtual bool vfc1();		// slot 1 (+4)
@@ -61248,7 +61215,6 @@ struct EngV {
 	virtual void vfc77(float) {}	// slot 77 (+0x134)
 };
 
-extern V2I *g_1027ba58;
 extern G105V *g_105f9994;
 extern EngV *g_104a57d4;
 extern CHud g_104cfe38;
@@ -61259,7 +61225,7 @@ void CHud::sub_100f12b0(bool b)
 {
 	if (!b)
 		return;
-	m_unk18 = g_1027ba58->vfc2(0);
+	m_unk18 = input->vfunc2(0);
 	g_104cfe38.sub_100f28d0();
 	float f;
 	if (C_BasePlayer::GetLocalPlayer())
@@ -64076,24 +64042,18 @@ void sub_100fab40(BGRA4444_t *pDst, const unsigned char *pBlock, int nPitch)
 // END FUNCTION
 
 // FUNCTION: 0x100fbd70 size=0xe
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual int f34(); };
-}
+#include "CInput.h"
 int sub_100fbd70()
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f34();
+    return input->vfunc34();
 }
 // END FUNCTION
 
 // FUNCTION: 0x100fbd80 size=0xe
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual int f35(); };
-}
+#include "CInput.h"
 int sub_100fbd80()
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f35();
+    return input->vfunc35();
 }
 // END FUNCTION
 
@@ -64109,13 +64069,10 @@ int sub_100fbd90()
 // END FUNCTION
 
 // FUNCTION: 0x100fbda0 size=0xe
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual void u44(); virtual void u45(); virtual void u46(); virtual int f47(); };
-}
+#include "CInput.h"
 int sub_100fbda0()
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f47();
+    return input->vfunc47();
 }
 // END FUNCTION
 
@@ -64131,13 +64088,10 @@ int sub_100fbdb0()
 // END FUNCTION
 
 // FUNCTION: 0x100fbdc0 size=0xe
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual int f42(); };
-}
+#include "CInput.h"
 int sub_100fbdc0()
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f42();
+    return input->vfunc42();
 }
 // END FUNCTION
 
@@ -64153,13 +64107,10 @@ int sub_100fbdd0()
 // END FUNCTION
 
 // FUNCTION: 0x100fbde0 size=0xe
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual int f44(); };
-}
+#include "CInput.h"
 int sub_100fbde0()
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f44();
+    return input->vfunc44();
 }
 // END FUNCTION
 
@@ -64536,19 +64487,8 @@ int CInput::sub_10100f10()
 // END FUNCTION
 
 // FUNCTION: 0x10101b20 size=0x47
+#include "CInput.h"
 struct QA { float x, y, z; };
-struct IG45 {
-    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-    virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-    virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-    virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-    virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-    virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-    virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
-    virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-    virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
-    virtual int v45();
-};
 struct IEng49 {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
     virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
@@ -64563,12 +64503,11 @@ struct IEng49 {
     virtual void GetViewAngles(QA &);
     virtual void SetViewAngles(QA &);
 };
-extern IG45 *g_1027ba58;
 extern IEng49 *g_104a57d4;
 void sub_10101b20()
 {
     QA ang;
-    if (!g_1027ba58->v45()) {
+    if (!input->vfunc45()) {
         g_104a57d4->GetViewAngles(ang);
         ang.x = 0;
         g_104a57d4->SetViewAngles(ang);
@@ -109292,6 +109231,7 @@ int CUnknown1016eea0::sub_1016eea0(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x1016f380 size=0x1e
+#include "CInput.h"
 struct SubObj_1016f380
 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
@@ -109302,14 +109242,6 @@ struct SubObj_1016f380
 	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47();
 	virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(int);
 };
-struct IGlobal_1027ba58
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25();
-};
-extern IGlobal_1027ba58 *g_1027ba58;
 void sub_10186d30();
 struct Panel_1016f380
 {
@@ -109321,7 +109253,7 @@ struct Panel_1016f380
 void Panel_1016f380::sub_1016f380()
 {
 	m_sub.v54(1);
-	g_1027ba58->v25();
+	input->vfunc25();
 	sub_10186d30();
 }
 // END FUNCTION
@@ -111232,6 +111164,7 @@ char sub_10174d40()
 // END FUNCTION
 
 // FUNCTION: 0x10174d50 size=0x19
+#include "CInput.h"
 struct SubObj_10174d50
 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
@@ -111242,14 +111175,6 @@ struct SubObj_10174d50
 	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47();
 	virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(int);
 };
-struct IGlobal_1027ba58
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25();
-};
-extern IGlobal_1027ba58 *g_1027ba58;
 struct Panel_10174d50
 {
 	int m_unk0, m_unk4, m_unk8, m_unkc;
@@ -111260,7 +111185,7 @@ struct Panel_10174d50
 void Panel_10174d50::sub_10174d50()
 {
 	m_sub.v54(1);
-	g_1027ba58->v25();
+	input->vfunc25();
 }
 // END FUNCTION
 
@@ -114361,6 +114286,7 @@ void __fastcall sub_10186a90(S_10186a90 *self)
 // END FUNCTION
 
 // FUNCTION: 0x10186ab0 size=0x19
+#include "CInput.h"
 struct SubObj_10186ab0
 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
@@ -114371,14 +114297,6 @@ struct SubObj_10186ab0
 	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47();
 	virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(int);
 };
-struct IGlobal_1027ba58
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25();
-};
-extern IGlobal_1027ba58 *g_1027ba58;
 struct Panel_10186ab0
 {
 	int m_unk0, m_unk4, m_unk8, m_unkc;
@@ -114389,7 +114307,7 @@ struct Panel_10186ab0
 void Panel_10186ab0::sub_10186ab0()
 {
 	m_sub.v54(1);
-	g_1027ba58->v25();
+	input->vfunc25();
 }
 // END FUNCTION
 
@@ -114784,6 +114702,7 @@ char CUnknown10187c10::sub_10187c10()
 // END FUNCTION
 
 // FUNCTION: 0x10187c20 size=0x19
+#include "CInput.h"
 struct SubObj_10187c20
 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
@@ -114794,14 +114713,6 @@ struct SubObj_10187c20
 	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47();
 	virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(int);
 };
-struct IGlobal_1027ba58
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25();
-};
-extern IGlobal_1027ba58 *g_1027ba58;
 struct Panel_10187c20
 {
 	int m_unk0, m_unk4, m_unk8, m_unkc;
@@ -114812,7 +114723,7 @@ struct Panel_10187c20
 void Panel_10187c20::sub_10187c20()
 {
 	m_sub.v54(1);
-	g_1027ba58->v25();
+	input->vfunc25();
 }
 // END FUNCTION
 
@@ -116188,6 +116099,7 @@ void sub_1018c710()
 // END FUNCTION
 
 // FUNCTION: 0x1018c770 size=0x95
+#include "CInput.h"
 struct SubV_1018c770 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
 	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
@@ -116214,23 +116126,8 @@ struct CvarIfV_1018c770 {
 	virtual void v0(); virtual void v1();
 	virtual CVarV_1018c770 *FindVar(const char *name);
 };
-struct FloatV_1018c770 {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
-	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
-	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
-	virtual void v50(); virtual void v51();
-	virtual float vfunc52();
-};
 extern ObjV_1018c770 *sub_10170f60();
 extern CvarIfV_1018c770 *g_104a57e0;
-extern FloatV_1018c770 *g_1027ba58;
 
 bool sub_1018c770()
 {
@@ -116240,7 +116137,7 @@ bool sub_1018c770()
 	CVarV_1018c770 *cv = s_pHide;
 	if (cv && !cv->m_pParent->vfunc1() && cv->m_pParent->m_n2c)
 		return true;
-	if (g_1027ba58->vfunc52() > 0.0f)
+	if (input->vfunc52() > 0.0f)
 		return true;
 	return false;
 }
@@ -117174,29 +117071,19 @@ void CViewRender::sub_10190390()
 // END FUNCTION
 
 // FUNCTION: 0x101907a0 size=0xaa
+#include "CInput.h"
 #include "Vector.h"
 #include "QAngle.h"
 
 extern "C" double fabs(double);
 #pragma intrinsic(fabs)
 
-struct IEngineLike_101907a0
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28();
-	virtual int vfunc29();
-};
 
-extern IEngineLike_101907a0 *g_1027ba58;
 extern void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
 
 float __stdcall sub_101907a0(const QAngle &angles, const Vector &velocity, float rollangle, float rollspeed)
 {
-	if (g_1027ba58->vfunc29())
+	if (input->vfunc29())
 		return 0.0f;
 
 	float sign;
@@ -117219,16 +117106,15 @@ float __stdcall sub_101907a0(const QAngle &angles, const Vector &velocity, float
 // END FUNCTION
 
 // FUNCTION: 0x10190850 size=0xae
+#include "CInput.h"
 #include "C_BasePlayer.h"
 #include "CViewRender.h"
 #include "C_BaseEntity.h"
 #include "QAngle.h"
 #include "Vector.h"
 struct VarV { virtual void v0(); virtual bool v1(); int p[9]; float m28; };
-struct GV { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual bool v26(); };
 extern VarV *g_105fc5b4;
 extern VarV *g_105fc554;
-extern GV *g_1027ba58;
 void CViewRender::sub_10190850()
 {
 	C_BaseEntity *pPlayer = ((C_BaseEntity *)C_BasePlayer::GetLocalPlayer());
@@ -117242,7 +117128,7 @@ void CViewRender::sub_10190850()
 	else
 		f2 = g_105fc554->m28;
 	float r = sub_101907a0(pPlayer->GetAbsAngles(), *(Vector *)((char *)pPlayer + 0xa8), f2, f1);
-	if (g_1027ba58->v26())
+	if (input->vfunc26())
 		r = 0;
 	*(float *)((char *)this + 0x68) += r;
 }

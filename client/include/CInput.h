@@ -100,3 +100,7 @@ public:
     virtual int vfunc55(int);
     virtual int vfunc56();
 };
+
+// the client's input object (SDK cl_dll/hl2_dll/hl_in_main.cpp: static CHLInput g_Input; IInput *input = &g_Input):
+// input->vfuncN(); declared as CInput * since the slots are declared here
+extern CInput *input;
