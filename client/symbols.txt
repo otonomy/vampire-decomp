@@ -10250,6 +10250,7 @@
 0x101e3118 data   __imp_?DevMsg@@YAXHPBDZZ _imp_?DevMsg
 0x101e311c data   ?DevMsg@@YAXPBDZZ DevMsg
 0x101e312c data   __imp_?vtune@@YAX_N@Z _imp_?vtune
+0x101e3134 data   _imp_?EnterScope@CVProfile@@QAEXPBDH0_N@Z imp_?EnterScope
 0x101e3140 data   ?DevWarning@@YAXPBDZZ DevWarning
 0x101e3188 data   ?Q_strncpy@@YAPADPADPBDH@Z Q_strncpy
 0x101e3188 data   ?Q_strncpy@@YAXPADPBDH@Z Q_strncpy
