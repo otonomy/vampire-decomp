@@ -5679,6 +5679,7 @@
 0x10104460 func   ?vfunc2@CInput@@UAEHH@Z CInput::vfunc2
 0x101046f0 func   ?sub_101046f0@@YAXPAHHHPAUS104@@D@Z sub_101046f0
 0x10104730 func   ?vfunc55@CInput@@UAEHH@Z CInput::vfunc55
+0x10104750 func   ?GetLookSpring@CInput@@UAEMXZ CInput::GetLookSpring
 0x10104750 func   ?vfunc20@CInput@@UAEMXZ CInput::vfunc20
 0x10104790 func   ?vfunc26@CInput@@UAE_NXZ CInput::vfunc26
 0x10105d50 func   ?Init_All@CInput@@UAEXXZ CInput::Init_All
