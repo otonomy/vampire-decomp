@@ -8165,6 +8165,7 @@
 0x1015f7e0 func   ?sub_1015f7e0@@YAHHPAUIObj102038e0@@H@Z sub_1015f7e0
 0x1015f810 func   ?sub_1015f810@@YAHHH@Z sub_1015f810
 0x1015f830 func   ?sub_1015f830@@YA?AUstring_t@@PAUCObj10203950@@H@Z sub_1015f830
+0x1015f860 func   ?sub_1015f860@@YAHXZ sub_1015f860
 0x1015fa10 func   ?sub_1015fa10@@YAXXZ sub_1015fa10
 0x1015fa50 func   ?sub_1015fa50@@YAXPBD0@Z sub_1015fa50
 0x1015fb10 func   ?sub_1015fb10@@YAPADPBD@Z sub_1015fb10

@@ -117370,6 +117370,123 @@ string_t sub_1015f830(CObj10203950 *pObj, int arg)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015f860 size=0x1ae
+namespace lifted {
+extern char g_105e74e8;
+extern char g_105e74fc;
+extern char g_105e7910;
+extern char g_105e792c;
+extern char g_105e80d0;
+extern char g_105e8120;
+extern char g_105e8544;
+extern char g_105e8558;
+extern char g_105e8574;
+extern char g_105e8590;
+extern char g_105e85ac;
+extern char g_105e85c8;
+extern char g_105e85e4;
+extern char g_105e8600;
+extern char g_105e861c;
+extern char g_105e88b0;
+extern char g_105e8a58;
+extern char g_105f8b98;
+extern char g_105f8c60;
+extern char g_105f90b8;
+extern char g_105f91c8;
+extern char g_105f9220;
+extern char g_105f93c0;
+extern int g_105f9824;
+extern char g_105f9970;
+extern char g_105f99e0;
+extern char g_105faa18;
+int sub_10055f50();
+struct C1013fc80 { int sub_1013fc80(); };
+struct C1013fdc0 { int sub_1013fdc0(); };
+struct C10140a70 { int sub_10140a70(); };
+struct C10140b40 { int sub_10140b40(); };
+struct C10144dc0 { int sub_10144dc0(); };
+struct C10145e10 { int sub_10145e10(); };
+struct C101499f0 { int sub_101499f0(); };
+struct C10149ac0 { int sub_10149ac0(); };
+struct C1014b870 { int sub_1014b870(); };
+struct C1014bab0 { int sub_1014bab0(); };
+struct C1014e360 { int sub_1014e360(); };
+struct C1014e4d0 { int sub_1014e4d0(); };
+struct C1014ef90 { int sub_1014ef90(); };
+struct C1014f480 { int sub_1014f480(); };
+struct C1014f990 { int sub_1014f990(); };
+struct C1014ff70 { int sub_1014ff70(); };
+struct C10150440 { int sub_10150440(); };
+struct C101508f0 { int sub_101508f0(); };
+struct C10150ff0 { int sub_10150ff0(); };
+struct C10151320 { int sub_10151320(); };
+struct C101526a0 { int sub_101526a0(); };
+struct C101532e0 { int sub_101532e0(); };
+struct C10153500 { int sub_10153500(); };
+int sub_10156560();
+struct C10157850 { int sub_10157850(); };
+struct C10157a20 { int sub_10157a20(); };
+struct C1015c4b0 { int sub_1015c4b0(); };
+struct C1015c720 { int sub_1015c720(); };
+int sub_1015e630();
+struct C1015eea0 { int sub_1015eea0(); };
+int sub_1015fa10();
+struct C10161fd0 { int sub_10161fd0(); };
+struct C10162650 { int sub_10162650(); };
+struct C10163350 { int sub_10163350(); };
+}
+int sub_1015f860()
+{
+    if (lifted::g_105f9824 != 0) {
+        lifted::g_105f9824 = 0;
+    }
+    ((lifted::C1015eea0 *)((int)&lifted::g_105f93c0))->sub_1015eea0();
+    lifted::sub_1015fa10();
+    lifted::sub_10156560();
+    ((lifted::C1015c4b0 *)((int)&lifted::g_105f9220))->sub_1015c4b0();
+    ((lifted::C1015c4b0 *)((int)&lifted::g_105f90b8))->sub_1015c4b0();
+    ((lifted::C1015c4b0 *)((int)&lifted::g_105f8c60))->sub_1015c4b0();
+    ((lifted::C1015c4b0 *)((int)&lifted::g_105f91c8))->sub_1015c4b0();
+    ((lifted::C1014b870 *)((int)&lifted::g_105e8120))->sub_1014b870();
+    ((lifted::C1013fc80 *)((int)&lifted::g_105e74fc))->sub_1013fc80();
+    ((lifted::C10144dc0 *)((int)&lifted::g_105e7910))->sub_10144dc0();
+    ((lifted::C101532e0 *)((int)&lifted::g_105e8a58))->sub_101532e0();
+    ((lifted::C10157850 *)((int)&lifted::g_105f8b98))->sub_10157850();
+    ((lifted::C1014e360 *)((int)&lifted::g_105e8544))->sub_1014e360();
+    ((lifted::C10145e10 *)((int)&lifted::g_105e792c))->sub_10145e10();
+    ((lifted::C1014ef90 *)((int)&lifted::g_105e8574))->sub_1014ef90();
+    ((lifted::C1014f480 *)((int)&lifted::g_105e85c8))->sub_1014f480();
+    ((lifted::C1014f990 *)((int)&lifted::g_105e8558))->sub_1014f990();
+    ((lifted::C1014ff70 *)((int)&lifted::g_105e8590))->sub_1014ff70();
+    ((lifted::C10150440 *)((int)&lifted::g_105e8600))->sub_10150440();
+    ((lifted::C101508f0 *)((int)&lifted::g_105e85ac))->sub_101508f0();
+    ((lifted::C10150ff0 *)((int)&lifted::g_105e85e4))->sub_10150ff0();
+    ((lifted::C10151320 *)((int)&lifted::g_105e861c))->sub_10151320();
+    ((lifted::C101499f0 *)((int)&lifted::g_105e80d0))->sub_101499f0();
+    ((lifted::C101526a0 *)((int)&lifted::g_105e88b0))->sub_101526a0();
+    ((lifted::C10161fd0 *)((int)&lifted::g_105f9970))->sub_10161fd0();
+    ((lifted::C10162650 *)((int)&lifted::g_105f99e0))->sub_10162650();
+    ((lifted::C10163350 *)((int)&lifted::g_105faa18))->sub_10163350();
+    ((lifted::C1015c720 *)((int)&lifted::g_105f9220))->sub_1015c720();
+    ((lifted::C1015c720 *)((int)&lifted::g_105f90b8))->sub_1015c720();
+    ((lifted::C1015c720 *)((int)&lifted::g_105f8c60))->sub_1015c720();
+    ((lifted::C1015c720 *)((int)&lifted::g_105f91c8))->sub_1015c720();
+    ((lifted::C10140a70 *)((int)&lifted::g_105e74e8))->sub_10140a70();
+    ((lifted::C1014bab0 *)((int)&lifted::g_105e8120))->sub_1014bab0();
+    ((lifted::C1013fdc0 *)((int)&lifted::g_105e74fc))->sub_1013fdc0();
+    ((lifted::C10157a20 *)((int)&lifted::g_105f8b98))->sub_10157a20();
+    ((lifted::C1013fdc0 *)((int)&lifted::g_105e74fc))->sub_1013fdc0();
+    ((lifted::C10153500 *)((int)&lifted::g_105e8a58))->sub_10153500();
+    ((lifted::C1014e4d0 *)((int)&lifted::g_105e8544))->sub_1014e4d0();
+    ((lifted::C10149ac0 *)((int)&lifted::g_105e80d0))->sub_10149ac0();
+    ((lifted::C10140b40 *)((int)&lifted::g_105e74e8))->sub_10140b40();
+    lifted::sub_10055f50();
+    int t0 = lifted::sub_1015e630();
+    lifted::g_105f9824 = 1;
+    return t0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015fa10 size=0x31
 // TARGET: sub_1015fa10
 void __cdecl sub_1015fa50(const char *a, const char *b);
