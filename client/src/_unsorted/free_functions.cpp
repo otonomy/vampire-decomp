@@ -94004,6 +94004,34 @@ void CKeyValuesX::sub_10128100(const char *pszFile, IKeyValuesFileView *pFileSys
 }
 // END FUNCTION
 
+// FUNCTION: 0x10128180 size=0xb0
+#include "CKeyValuesX.h"
+#include "CUtlBuffer.h"
+
+void sub_1013cee0(CUtlBuffer *pBuf, const char *pFmt, ...);
+void sub_10128230(CUtlBuffer *pBuf, int nIndent);
+
+void CKeyValuesX::sub_10128180(CUtlBuffer *pBuf, int nIndent)
+{
+	sub_10128230(pBuf, nIndent);
+	sub_1013cee0(pBuf, "\"%s\"\n", sub_10127c70());
+	sub_10128230(pBuf, nIndent);
+	sub_1013cee0(pBuf, "{\n");
+	for (CKeyValuesX *p = m_pSub; p; p = p->m_pPeer)
+	{
+		if (p->m_pSub)
+			p->sub_10128180(pBuf, nIndent + 1);
+		else if (p->m_sValue && p->m_sValue[0])
+		{
+			sub_10128230(pBuf, nIndent + 1);
+			sub_1013cee0(pBuf, "\"%s\"\t\t\"%s\"\n", p->sub_10127c70(), p->m_sValue);
+		}
+	}
+	sub_10128230(pBuf, nIndent);
+	sub_1013cee0(pBuf, "}\n");
+}
+// END FUNCTION
+
 // FUNCTION: 0x10128230 size=0x22
 #include "CUtlBuffer.h"
 
