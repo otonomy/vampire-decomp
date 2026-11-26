@@ -20,4 +20,17 @@ public:
 	HairVec36 m_Vec420;
 	HairVec12 m_Vec434;
 	HairVec12 m_Vec448;
+	int m_unk45c;	// 0x45c: the physics helper the simulation calls back
+	int m_unk460;
+	int m_unk464;
+	struct HairPhysics { int m_a[7]; void sub_1012c770(void *pNodes, int nNodes, void *pHelper, float dt, float damping); } m_Physics;	// 0x468: CSimplePhysics-like (Simulate)
+	float m_flNextBurst;	// 0x484
+	Vector m_vecBurstVel;	// 0x488
+	float m_flSwayPeriod;	// 0x494
+	float m_flSwayTime;	// 0x498
+	float m_flSwayX;	// 0x49c
+	float m_flSwayY;	// 0x4a0
+	bool m_bResetNodes;	// 0x4a4
+
+	virtual void ClientThink();	// IClientThinkable slot 0
 };
