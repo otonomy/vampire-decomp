@@ -111,6 +111,10 @@ public:
 		// "CGameMovement::WaterJump": the water jump time at +0x2314 of the object at +8 is capped at 10000, counted down by frame time * 1000 and ends (cleared, flag 4 removed) when it runs out or the object at +8 has no value at +0x3e0; while it runs the velocity x / y (+0x40 / +0x44 of the object at +4) are set from the object at +8 (+0x2318 / +0x231c)
 	int sub_100ec3a0(const Vector &point);	// "CGameMovement::GetPointContentsCached": with the global movement optimisation flag at 0x10572420 set, asks the engine trace object (global 0x1070b254, slot 0) for the contents of the point only when nothing is cached or the point moved more than 1 unit from the cached one, and returns the cached value; without the flag always asks
 	bool sub_100ec450();	// "CGameMovement::CheckWater"
+	void sub_100e8660();	// WaterMove (called by vfunc12)
+	void sub_100e8f10();	// Friction (called by vfunc12)
+	void sub_100ecb40();	// CheckFalling (called by vfunc12)
+	float sub_100ee750();	// the view-offset blend duration (vfunc12 divides the time left by it)
 		// "CGameMovement::AirAccelerate": unless the object at +8 is dead (+0x2068) or in a water jump (+0x2314), adds up to min(frametime * surface friction (+0xa0) * wishspeed * accel, min(wishspeed, 30.0f) - velocity . wishdir) along wishdir to the velocity (+0x40 of the object at +4) and to the wish velocity (+0x80)
 		// "CGameMovement::TracePlayerBBox"-like (profiled as such): traces the player hull from the player's origin (+0x70) by vecOffset, moves the player's origin to where the trace ended, tells the global at 0x1071a278 (slot 2) about a partial hit that did not start solid (with the player's velocity at +0x40), and returns the trace
 		// stub 0x1000991c: the hull maxs for the player's stance (ducked / observer / standing)
