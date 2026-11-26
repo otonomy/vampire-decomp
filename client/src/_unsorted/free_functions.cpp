@@ -102285,6 +102285,21 @@ template <> int ClientClassInit<DT_VampireProjectile::ignored>(DT_VampireProject
 }
 // END FUNCTION
 
+// FUNCTION: 0x10151f70 size=0x1b
+namespace lifted {
+int sub_100a1eb0(int);
+struct C10151fc0 { int sub_10151fc0(); };
+}
+int sub_10151f70()
+{
+    int t0 = lifted::sub_100a1eb0(0x800);
+    if (t0 != 0) {
+        return ((lifted::C10151fc0 *)t0)->sub_10151fc0();
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101520b0 size=0x8
 struct CUnknown101520b0 { char pad[0x48]; int m; bool sub_101520b0(); };
 bool CUnknown101520b0::sub_101520b0() { if (m == 5) return true; return false; }

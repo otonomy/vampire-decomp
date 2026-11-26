@@ -7567,6 +7567,7 @@
 0x10151d20 func   ?sub_10151d20@@YAHXZ sub_10151d20
 0x10151d80 func   ?_C_VampireProjectile_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_VampireProjectile_CreateObject
 0x10151e20 func   ?ClientClassInit@@YAHPAUignored@DT_VampireProjectile@@@Z ClientClassInit
+0x10151f70 func   ?sub_10151f70@@YAHXZ sub_10151f70
 0x10151fc0 func   ??0C_VampireProjectile@@QAE@XZ C_VampireProjectile::C_VampireProjectile
 0x10152010 func   ??_GC_VampireProjectile@@UAEPAXI@Z ??_GC_VampireProjectile@@UAEPAXI@Z
 0x10152030 func   ??1C_VampireProjectile@@UAE@XZ C_VampireProjectile::~C_VampireProjectile
