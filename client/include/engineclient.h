@@ -312,6 +312,12 @@ public:
 extern IVRenderView *g_104a57e4;
 
 // debugoverlay = g_104a57e8, asked for as "VDebugOverlay002"
+// slot 8 as sub_100dfd20 forwards it (eight dwords), the same slot as IVDebugOverlay::vfunc8 below
+struct IVDebugOverlaySlot8Ints
+{
+	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7();
+	virtual void __cdecl vfunc8(int, int, int, int, int, int, int, int);
+};
 class IVDebugOverlay
 {
 public:
@@ -323,7 +329,8 @@ public:
 	virtual void vfunc5(const Vector &, const Vector &, int, int, int, int, int);	// slot 5; seen as AddLineOverlay 1
 	virtual int __cdecl vfunc6(int, int, int, int);	// slot 6
 	virtual int __cdecl vfunc7(int, int, int);	// slot 7
-	virtual void __cdecl vfunc8(int, int, int, int, int, int, int, int);	// slot 8
+	virtual void __cdecl vfunc8(int, float, int, int, int, int, int, const char *, ...);	// slot 8: a text overlay (C_BaseFlex::RunFlexRules: 0, (float)line, 0, r, g, b, a, fmt, ...)
+	void vfunc8(int a, int b, int c, int d, int e, int f, int g, int h) { ((IVDebugOverlaySlot8Ints *)this)->vfunc8(a, b, c, d, e, f, g, h); }	// the all-dword form sub_100dfd20 forwards
 	virtual void vfunc9();
 	virtual void vfunc10();
 	virtual int vfunc11();	// slot 11
