@@ -61822,7 +61822,6 @@ void CUnknown100f2d00::sub_100f2d00(int a0, int a1, int a2, int a3, int a4, int 
 
 // FUNCTION: 0x100f34f0 size=0xa8
 #include "CHud.h"
-extern CHud g_104cfe38;
 extern int sub_100ccdc0(void *);
 extern void sub_100ccd10(int, int, void *, int, int, int);
 // TARGET: sub_100f34f0
@@ -61830,13 +61829,13 @@ void __stdcall sub_100f34f0(int x, int y, int count, int a4, int a5, int a6, boo
 {
 	void *tex[2];
 	if (bSmall)
-		tex[0] = g_104cfe38.sub_100f11d0("number_burn1s");
+		tex[0] = gHUD.GetIcon("number_burn1s");
 	else
-		tex[0] = g_104cfe38.sub_100f11d0("number_burn1");
+		tex[0] = gHUD.GetIcon("number_burn1");
 	if (bSmall)
-		tex[1] = g_104cfe38.sub_100f11d0("number_burn2s");
+		tex[1] = gHUD.GetIcon("number_burn2s");
 	else
-		tex[1] = g_104cfe38.sub_100f11d0("number_burn2");
+		tex[1] = gHUD.GetIcon("number_burn2");
 	int w = sub_100ccdc0(tex[0]);
 	for (int i = 0; i < count; i++, x += w)
 	{
@@ -64888,13 +64887,12 @@ struct FlagsView
     int m_flags8;
 };
 
-extern CHud g_104cfe38;
 
 void sub_10105f30(int *pMask, int a2, int a3, int a4, FlagsView *pFlags, char bClear)
 {
     if (pFlags->m_flags8 & 3)
     {
-        CHudElement *pElem = g_104cfe38.sub_100f0ed0("CHudWeaponSelection");
+        CHudElement *pElem = gHUD.FindElement("CHudWeaponSelection");
         if (pElem && !*(char *)((char *)pElem + 0x1c))
             *pMask |= a2;
     }
@@ -64915,7 +64913,6 @@ void sub_10105f30(int *pMask, int a2, int a3, int a4, FlagsView *pFlags, char bC
 
 // FUNCTION: 0x10105fb0 size=0x9b
 #include "CHud.h"
-extern CHud g_104cfe38;
 char sub_10186d50();
 void sub_10186d60(int);
 struct kbutton_t { int down[2]; int state; };
@@ -64924,7 +64921,7 @@ void sub_10105fb0(int &bits, int in_button, int in_button2, int in_ignore, kbutt
 {
 	if (button->state & 3)
 	{
-		char *p = (char *)g_104cfe38.sub_100f0ed0("CHudWeaponSelection");
+		char *p = (char *)gHUD.FindElement("CHudWeaponSelection");
 		if (p && !p[0x1c])
 			bits |= in_button;
 	}
@@ -89450,7 +89447,6 @@ struct VUnk3100 { void sub_10173100(); };
 struct VUnk4f90 { void sub_10174f90(); };
 extern CUnit101d5e00 g_105e74fc;
 extern VUnk416a0 g_105e7780;
-extern CHud g_104cfe38;
 extern void (*g_101e3118)(int, const char *, ...);
 VUnk3100 *sub_10170f60();
 // TARGET: sub_10144b50
@@ -89464,7 +89460,7 @@ void __stdcall sub_10144b50(int clan)
 	VUnk3100 *p = sub_10170f60();
 	if (p)
 		p->sub_10173100();
-	VUnk4f90 *e = (VUnk4f90 *)g_104cfe38.sub_100f0ed0("VCharWizardUI");
+	VUnk4f90 *e = (VUnk4f90 *)gHUD.FindElement("VCharWizardUI");
 	if (e)
 		e->sub_10174f90();
 }
@@ -109613,13 +109609,12 @@ void sub_10170c20()
 #include "CHud.h"
 #include "VBarterUI.h"
 
-extern CHud g_104cfe38;
 
 void sub_10170c30(int nArg)
 {
-	if ( g_104cfe38.sub_100f0ed0("VBarterUI") )
+	if ( gHUD.FindElement("VBarterUI") )
 	{
-		((VBarterUI *)g_104cfe38.sub_100f0ed0("VBarterUI"))->sub_101703e0(nArg);
+		((VBarterUI *)gHUD.FindElement("VBarterUI"))->sub_101703e0(nArg);
 	}
 }
 // END FUNCTION
@@ -110157,7 +110152,6 @@ struct DERView
     void sub_10174ef0();
 };
 
-extern CHud g_104cfe38;
 
 int sub_1017f0f0(int);
 bool sub_10174ed0();
@@ -110179,7 +110173,7 @@ void vgui2::Panel::sub_10173270()
     P8d0V *p = sub_101ac8d0();
     p->a44(((V0View *)this)->f0(0));
     if ( sub_10174ed0() )
-        ((DERView *)g_104cfe38.sub_100f0ed0("VCharWizardUI"))->sub_10174ef0();
+        ((DERView *)gHUD.FindElement("VCharWizardUI"))->sub_10174ef0();
 }
 // END FUNCTION
 
@@ -111098,12 +111092,11 @@ int CUnknown10174d70::sub_10174d70()
 // FUNCTION: 0x10174d90 size=0x25
 #include "CHud.h"
 extern char g_105fb1fe;
-extern CHud g_104cfe38;
 struct CScorePanelTemp { void sub_10174c80(int a); };
 void sub_10174d90(int a)
 {
 	if (g_105fb1fe)
-		((CScorePanelTemp *)g_104cfe38.sub_100f0ed0("VCharWizardUI"))->sub_10174c80(a);
+		((CScorePanelTemp *)gHUD.FindElement("VCharWizardUI"))->sub_10174c80(a);
 }
 // END FUNCTION
 
@@ -111143,7 +111136,6 @@ void sub_10174e30()
 
 // FUNCTION: 0x10174ea0 size=0x2d
 #include "CHud.h"
-extern CHud g_104cfe38;
 struct VA {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
 	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
@@ -111154,7 +111146,7 @@ void sub_10174e30();
 void sub_10174d90(const char *name);
 void sub_10174ea0()
 {
-	VCharWizView *p = (VCharWizView *)g_104cfe38.sub_100f0ed0("VCharWizardUI");
+	VCharWizView *p = (VCharWizView *)gHUD.FindElement("VCharWizardUI");
 	if (p->m_Panel.v22())
 		sub_10174e30();
 	else
@@ -111178,7 +111170,6 @@ int sub_10174ed0()
 // FUNCTION: 0x10174ef0 size=0x9d
 #include "CHud.h"
 #include "vgui2__Frame.h"
-extern CHud g_104cfe38;
 struct PRE { virtual void z(); int a, b, c; };
 struct P0 { virtual int v0(int); };
 struct SM { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(int); };
@@ -111192,7 +111183,7 @@ void DER::sub_10174ef0()
 	char *p;
 	if (sub_101746b0())
 	{
-		p = (char *)g_104cfe38.sub_100f0ed0("CharEditPanel");
+		p = (char *)gHUD.FindElement("CharEditPanel");
 		if (p)
 			p += 0x10;
 	}
@@ -111414,13 +111405,12 @@ void CBasePanel::sub_10175da0(const char *name)
 struct WizV { int sub_10175f40(int a); };
 struct CUnkPanelX { int sub_10175f00(int a); };
 extern char g_105fb201;
-extern CHud g_104cfe38;
 int __stdcall sub_10175e10(int a, int b, int c)
 {
     if (!engine->vfunc6() && g_105fb201 && a) {
         int i = b - 0x31;
         if (i >= 0 && i < 4) {
-            CHudElement *e = g_104cfe38.sub_100f0ed0("VCharWizardUI");
+            CHudElement *e = gHUD.FindElement("VCharWizardUI");
             if (e) {
                 if (!((CUnkPanelX *)e)->sub_10175f00(((WizV *)e)->sub_10175f40(i)))
                     return 0;
@@ -111435,13 +111425,12 @@ int __stdcall sub_10175e10(int a, int b, int c)
 #include "CHud.h"
 extern char g_105fb1fe;
 extern char g_105fb200;
-extern CHud g_104cfe38;
 struct CScorePanelTemp { void sub_10174c80(const char *a); };
 void sub_10175e80()
 {
 	if (g_105fb1fe) {
 		g_105fb200 = 1;
-		((CScorePanelTemp *)g_104cfe38.sub_100f0ed0("VCharWizardUI"))->sub_10174c80("Trait_Male_vs_Female");
+		((CScorePanelTemp *)gHUD.FindElement("VCharWizardUI"))->sub_10174c80("Trait_Male_vs_Female");
 	}
 }
 // END FUNCTION
@@ -111531,12 +111520,11 @@ struct WizV { int sub_10175f40(int a); };
 struct CUnkPanelX { int sub_10175f00(int a); };
 extern char g_105fb201;
 extern char g_105fb1fe;
-extern CHud g_104cfe38;
 void sub_10175ff0()
 {
     if (g_105fb201 && g_105fb1fe && engine->vfunc63() == 2) {
         int i = atoi(engine->Cmd_Argv(1)) - 1;
-        CHudElement *e = g_104cfe38.sub_100f0ed0("VCharWizardUI");
+        CHudElement *e = gHUD.FindElement("VCharWizardUI");
         if (e)
             ((CUnkPanelX *)e)->sub_10175f00(((WizV *)e)->sub_10175f40(i));
     }
@@ -113906,18 +113894,17 @@ int sub_10183b60()
 #include "VHotkeysUI.h"
 
 extern char g_105fb760;
-extern CHud g_104cfe38;
 
 // TARGET: sub_10184360
 void sub_10184360()
 {
 	if ( g_105fb760 )
 	{
-		VHotkeysUI *ui = (VHotkeysUI *)g_104cfe38.sub_100f0ed0("VHotkeysUI");
+		VHotkeysUI *ui = (VHotkeysUI *)gHUD.FindElement("VHotkeysUI");
 		if ( (unsigned char)ui->vfunc22() )
-			((VHotkeysUI *)g_104cfe38.sub_100f0ed0("VHotkeysUI"))->sub_10183aa0();
+			((VHotkeysUI *)gHUD.FindElement("VHotkeysUI"))->sub_10183aa0();
 		else
-			((VHotkeysUI *)g_104cfe38.sub_100f0ed0("VHotkeysUI"))->sub_10183a20();
+			((VHotkeysUI *)gHUD.FindElement("VHotkeysUI"))->sub_10183a20();
 	}
 }
 // END FUNCTION
@@ -114081,14 +114068,13 @@ void sub_10186810(int a0)
 
 // FUNCTION: 0x10186830 size=0x21
 #include "CHud.h"
-extern CHud g_104cfe38;
 struct ItemInfo_10186830 {
 	char pad[0x180];
 	unsigned char m_b180;
 };
 int sub_10186830()
 {
-	ItemInfo_10186830 *p = (ItemInfo_10186830 *)g_104cfe38.sub_100f0ed0("VItemInfoUI");
+	ItemInfo_10186830 *p = (ItemInfo_10186830 *)gHUD.FindElement("VItemInfoUI");
 	if (p)
 		return p->m_b180;
 	return 0;
@@ -114293,12 +114279,11 @@ struct VItemSub {
 	virtual void v20(); virtual void v21(); virtual bool v22();
 };
 struct VItemElem { int m0; int m4; int m8; int mc; VItemSub sub; };
-extern CHud g_104cfe38;
 void sub_10186c40();
 void sub_10186bd0();
 void sub_10186cb0()
 {
-	VItemElem *p = (VItemElem *)g_104cfe38.sub_100f0ed0("VItemInfoUI");
+	VItemElem *p = (VItemElem *)gHUD.FindElement("VItemInfoUI");
 	if (p->sub.v22())
 		sub_10186c40();
 	else
@@ -114334,13 +114319,12 @@ void sub_10186d00(int a)
 // FUNCTION: 0x10186d70 size=0x2e
 #include "CHud.h"
 #include "VItemInfoUI.h"
-extern CHud g_104cfe38;
 extern int g_105fb7e8;
 extern char g_105fb7e4;
 void sub_10186d70(int n)
 {
 	if (g_105fb7e8 == n)
-		((VItemInfoUI *)g_104cfe38.sub_100f0ed0("VItemInfoUI"))->sub_10184bc0(g_105fb7e8, g_105fb7e4, 1);
+		((VItemInfoUI *)gHUD.FindElement("VItemInfoUI"))->sub_10184bc0(g_105fb7e8, g_105fb7e4, 1);
 }
 // END FUNCTION
 
@@ -114484,14 +114468,13 @@ void sub_10187920(int a0)
 
 // FUNCTION: 0x10187950 size=0x21
 #include "CHud.h"
-extern CHud g_104cfe38;
 struct ItemInfo_10187950 {
 	char pad[0x180];
 	unsigned char m_b180;
 };
 int sub_10187950()
 {
-	ItemInfo_10187950 *p = (ItemInfo_10187950 *)g_104cfe38.sub_100f0ed0("VMapScreenUI");
+	ItemInfo_10187950 *p = (ItemInfo_10187950 *)gHUD.FindElement("VMapScreenUI");
 	if (p)
 		return p->m_b180;
 	return 0;
@@ -114714,7 +114697,6 @@ void __stdcall sub_10187d90(int a0)
 
 extern "C" int __cdecl atoi(const char *p);
 extern unsigned char g_105fb874;
-extern CHud g_104cfe38;
 
 
 
@@ -114723,8 +114705,8 @@ void sub_10187da0()
 	if ( !g_105fb874 )
 		return;
 	int n = atoi(engine->Cmd_Argv(1));
-	((VMapScreenUI *)g_104cfe38.sub_100f0ed0("VMapScreenUI"))->sub_101878c0(0, n);
-	((VMapScreenUI *)g_104cfe38.sub_100f0ed0("VMapScreenUI"))->sub_10187b20();
+	((VMapScreenUI *)gHUD.FindElement("VMapScreenUI"))->sub_101878c0(0, n);
+	((VMapScreenUI *)gHUD.FindElement("VMapScreenUI"))->sub_10187b20();
 }
 // END FUNCTION
 
@@ -114736,7 +114718,6 @@ void sub_10187da0()
 
 extern "C" int __cdecl atoi(const char *p);
 extern unsigned char g_105fb874;
-extern CHud g_104cfe38;
 
 
 
@@ -114745,8 +114726,8 @@ void sub_10187e00()
 	if ( !g_105fb874 )
 		return;
 	int n = atoi(engine->Cmd_Argv(1));
-	((VMapScreenUI *)g_104cfe38.sub_100f0ed0("VMapScreenUI"))->sub_101878c0(1, n);
-	((VMapScreenUI *)g_104cfe38.sub_100f0ed0("VMapScreenUI"))->sub_10187b20();
+	((VMapScreenUI *)gHUD.FindElement("VMapScreenUI"))->sub_101878c0(1, n);
+	((VMapScreenUI *)gHUD.FindElement("VMapScreenUI"))->sub_10187b20();
 }
 // END FUNCTION
 
@@ -114775,13 +114756,12 @@ struct VMapSub {
 	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual bool v22();
 };
 struct VMapElem { int m_unk[4]; VMapSub m_sub; };
-extern CHud g_104cfe38;
 void sub_10187f00();
 void sub_10187da0();
 // TARGET: sub_10187f70
 void sub_10187f70()
 {
-	VMapElem *e = (VMapElem *)g_104cfe38.sub_100f0ed0("VMapScreenUI");
+	VMapElem *e = (VMapElem *)gHUD.FindElement("VMapScreenUI");
 	if (e->m_sub.v22())
 		sub_10187f00();
 	else
@@ -122143,21 +122123,19 @@ void CUtlRBTreeBig::sub_101a7290(unsigned short elem)
 
 // FUNCTION: 0x101a7510 size=0x17
 #include "CHud.h"
-extern CHud g_104cfe38;
 void sub_101a7b40(CHudElement *);
 void sub_101a7510()
 {
-	sub_101a7b40(g_104cfe38.sub_100f0ed0("CHudWeaponSelection"));
+	sub_101a7b40(gHUD.FindElement("CHudWeaponSelection"));
 }
 // END FUNCTION
 
 // FUNCTION: 0x101a7530 size=0x17
 #include "CHud.h"
-extern CHud g_104cfe38;
 void sub_101a7b70(CHudElement *);
 void sub_101a7530()
 {
-	sub_101a7b70(g_104cfe38.sub_100f0ed0("CHudWeaponSelection"));
+	sub_101a7b70(gHUD.FindElement("CHudWeaponSelection"));
 }
 // END FUNCTION
 

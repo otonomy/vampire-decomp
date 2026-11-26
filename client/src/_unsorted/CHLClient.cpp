@@ -376,7 +376,6 @@ extern Occd98 *g_102ccd98;
 extern O9850 *g_102b9850;
 extern O43d8 *g_102d43d8;
 extern OEng *g_104a57d4;
-extern CHud g_104cfe38;
 extern ConVar g_104e1708;
 extern void sub_1002c400();
 extern void sub_100f4190(int);
@@ -396,7 +395,7 @@ void CHLClient::vfunc2(int a)
 	sub_100f4190(a);
 	sub_100e2fa0();
 	g_104e1708.sub_100dfa90(g_104a57d4->v51() > 1);
-	g_104cfe38.sub_100f08d0();
+	gHUD.sub_100f08d0();
 	sub_10057650();
 	g_104a57d4->v0();
 	g_104a5808->s16(0xac, 1);
@@ -591,7 +590,6 @@ struct VProfPanel
 };
 
 extern int g_102b8498;
-extern CHud g_104cfe38;
 
 void sub_100cc570();
 void sub_100cc620();
@@ -625,7 +623,7 @@ void CHLClient::vfunc32(int n)
         sub_100cc650();
         break;
     case 0:
-        ((VProfPanel *)g_104cfe38.sub_100f0ed0("CVProfPanel"))->sub_1018dfc0();
+        ((VProfPanel *)gHUD.FindElement("CVProfPanel"))->sub_1018dfc0();
         break;
     case 4:
         break;

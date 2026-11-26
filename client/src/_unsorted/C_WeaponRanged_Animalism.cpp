@@ -78,12 +78,11 @@ void C_WeaponRanged_Animalism::vfunc167()
 #include "C_WeaponRanged_Animalism.h"
 #include "CHud.h"
 struct HudElV { char pad[0x1c]; char m1c; };
-extern CHud g_104cfe38;
 // TARGET: ?vfunc246@C_WeaponRanged_Animalism@@UAEHHHH@Z
 int C_WeaponRanged_Animalism::vfunc246(int a, int b, int c)
 {
 	if (a == 0 && b == 0x98967f) {
-		HudElV *e = (HudElV *)g_104cfe38.sub_100f0ed0("CHudWeaponSelection");
+		HudElV *e = (HudElV *)gHUD.FindElement("CHudWeaponSelection");
 		if (!e->m1c) {
 			engine->vfunc27("lastinv", 1);
 			return 0;

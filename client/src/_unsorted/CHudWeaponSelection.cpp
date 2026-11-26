@@ -57,7 +57,6 @@ void CHudWeaponSelection::vfunc7()
 #include "CHudWeaponSelection.h"
 #include "CHud.h"
 
-extern CHud g_104cfe38;
 extern const char g_102af2e8[];
 int sub_100ccdc0(void *);
 int sub_100ccde0(void *);
@@ -72,11 +71,11 @@ extern int g_10678cf0;
 
 void CHudWeaponSelection::vfunc2()
 {
-	m_pBucket1 = g_104cfe38.sub_100f11d0("bucket1");
-	m_pSelection = g_104cfe38.sub_100f11d0("selection");
+	m_pBucket1 = gHUD.GetIcon("bucket1");
+	m_pSelection = gHUD.GetIcon("selection");
 	g_10678d98 = sub_100ccdc0(m_pBucket1);
 	g_10678dd0 = sub_100ccde0(m_pBucket1);
-	CHudRes100f0180 *pRes = (CHudRes100f0180 *)g_104cfe38.sub_100f0ed0(g_102af2e8);
+	CHudRes100f0180 *pRes = (CHudRes100f0180 *)gHUD.FindElement(g_102af2e8);
 	pRes->sub_100f0180(g_10678dd0);
 	g_10678dd4.sub_101a8ca0();
 	if (sub_100cd100() >= 640)
