@@ -11910,6 +11910,32 @@ template <> int ClientClassInit<DT_ItemGWirelessCamera1::ignored>(DT_ItemGWirele
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001cbc0 size=0x45
+namespace lifted {
+extern char g_102102b4;
+extern char g_102102c8;
+extern char g_10210304;
+extern char g_1021033c;
+extern char g_10210394;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001cbc0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10210394;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1021033c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10210304;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_102102c8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_102102b4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001cc50 size=0x6
 namespace lifted {
 extern char g_102e0350;

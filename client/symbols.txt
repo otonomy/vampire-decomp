@@ -1365,6 +1365,7 @@
 0x1001ca30 func   ?_C_ItemGWirelessCamera1_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGWirelessCamera1_CreateObject
 0x1001caf0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGWirelessCamera1@@@Z ClientClassInit
 0x1001cb80 func   ?vfunc17@C_ItemGWirelessCamera2@@UAEHXZ C_ItemGWirelessCamera2::vfunc17
+0x1001cbc0 func   ?sub_1001cbc0@@YAHXZ sub_1001cbc0
 0x1001cc10 func   ??_GC_ItemGWirelessCamera2@@UAEPAXI@Z ??_GC_ItemGWirelessCamera2@@UAEPAXI@Z
 0x1001cc30 func   ?vfunc16@C_ItemGWirelessCamera2@@UAEHXZ C_ItemGWirelessCamera2::vfunc16
 0x1001cc40 func   ?vfunc15@C_ItemGWirelessCamera2@@UAEHXZ C_ItemGWirelessCamera2::vfunc15
