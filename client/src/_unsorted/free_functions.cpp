@@ -40826,6 +40826,246 @@ void sub_100845e0(int noise_divisions, float *prgNoise, const char *spritemodel,
 }
 // END FUNCTION
 
+// FUNCTION: 0x10084ae0 size=0x511
+#include "CSpriteHandle.h"
+#include "Vector.h"
+#include "engineclient.h"
+
+extern "C" double fmod(double, double);
+#pragma intrinsic(fmod)
+
+#define M_PI 3.14159265358979323846
+
+CSpriteHandle *sub_10081cd0(const char *spritemodel, int frame, int rendermode);	// Draw_SetSpriteTexture
+
+inline void SinCos( float radians, float *sine, float *cosine )
+{
+	_asm
+	{
+		fld		DWORD PTR [radians]
+		fsincos
+
+		mov edx, DWORD PTR [cosine]
+		mov eax, DWORD PTR [sine]
+
+		fstp DWORD PTR [edx]
+		fstp DWORD PTR [eax]
+	}
+}
+
+struct MeshDesc_local
+{
+	int m_VertexSize_Position;
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;
+	int m_VertexSize_Color;
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];
+	int m_VertexSize_TangentS;
+	int m_VertexSize_TangentT;
+	int m_VertexSize_TangentSxT;
+	int m_VertexSize_UserData;
+	int m_ActualVertexSize;
+	int m_FirstVertex;
+	int m_NumBoneWeights;
+	float *m_pPosition;
+	float *m_pBoneWeight;
+	unsigned char *m_pBoneMatrixIndex;
+	float *m_pNormal;
+	unsigned char *m_pColor;
+	unsigned char *m_pSpecular;
+	float *m_pTexCoord[4];
+	float *m_pTangentS;
+	float *m_pTangentT;
+	float *m_pTangentSxT;
+	float *m_pUserData;
+	unsigned short *m_pIndices;
+};
+
+struct IMesh
+{
+	virtual void LockMesh(int numVerts, int numIndices, MeshDesc_local &desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+inline unsigned char FastFToC(float c)
+{
+	volatile float dc;
+	dc = c * 255.0f + (float)(1 << 23);
+	return *(unsigned char *)&dc;
+}
+
+class MeshBuilderLocal : private MeshDesc_local
+{
+public:
+	inline MeshBuilderLocal()
+		: m_pMesh(0), m_NumIndices(0), m_NumVertices(0),
+		  m_CurrentVertex(0), m_CurrentIndex(0), m_MaxVertices(0),
+		  m_MaxIndices(0), m_GenerateIndices(false)
+	{
+	}
+
+	inline void Begin(IMesh *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_NumIndices = 0; m_NumVertices = 0;
+		m_GenerateIndices = true;
+		m_Type = type;
+		if ((type == 7) || (type == 6))
+			m_pMesh->SetPrimitiveType(2);
+		else if ((type == 4) || (type == 5))
+			m_pMesh->SetPrimitiveType(1);
+		else
+			m_pMesh->SetPrimitiveType(type);
+		m_pMesh->LockMesh(m_MaxVertices, m_MaxIndices, *this);
+		sub_100422e0();
+	}
+
+	void sub_100421f0(int type, int numPrimitives);
+	void sub_100422e0();
+	void sub_10041c90(bool spewData = false, bool bDraw = false);
+
+	inline void IncrementFloatPointer(float *&pBufferPointer, int vertexSize)
+	{
+		pBufferPointer = reinterpret_cast<float *>(reinterpret_cast<unsigned char *>(pBufferPointer) + vertexSize);
+	}
+
+	inline void Position3fv(const float *v)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = *v++;
+		*pDst++ = *v++;
+		*pDst = *v;
+	}
+
+	inline void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+
+	inline void Color3f(float r, float g, float b)
+	{
+		int col = (FastFToC(b)) | (FastFToC(g) << 8) | (FastFToC(r) << 16) | 0xFF000000;
+		*(int *)m_pCurrColor = col;
+	}
+
+	inline void Color3fv(const float *rgb)
+	{
+		int col = (FastFToC(rgb[2])) | (FastFToC(rgb[1]) << 8) | (FastFToC(rgb[0]) << 16) | 0xFF000000;
+		*(int *)m_pCurrColor = col;
+	}
+
+	inline void AdvanceVertex()
+	{
+		if (++m_CurrentVertex > m_NumVertices)
+			m_NumVertices = m_CurrentVertex;
+		IncrementFloatPointer(m_pCurrPosition, m_VertexSize_Position);
+		IncrementFloatPointer(m_pCurrNormal, m_VertexSize_Normal);
+		IncrementFloatPointer(m_pCurrTexCoord[0], m_VertexSize_TexCoord[0]);
+		IncrementFloatPointer(m_pCurrTexCoord[1], m_VertexSize_TexCoord[1]);
+		IncrementFloatPointer(m_pCurrTexCoord[2], m_VertexSize_TexCoord[2]);
+		IncrementFloatPointer(m_pCurrTexCoord[3], m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+
+private:
+	IMesh *m_pMesh;
+	bool m_bModify;
+	int m_MaxVertices;
+	int m_MaxIndices;
+	int m_NumVertices;
+	int m_NumIndices;
+	mutable int m_CurrentVertex;
+	mutable int m_CurrentIndex;
+	int m_Type;
+	bool m_GenerateIndices;
+	mutable float *m_pCurrPosition;
+	mutable float *m_pCurrNormal;
+	mutable float *m_pCurrTexCoord[4];
+	mutable unsigned char *m_pCurrColor;
+};
+
+// DrawCylinder (2004 SDK cl_dll/beamdraw.cpp)
+void sub_10084ae0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode,
+	const Vector &source, const Vector &delta, float width, float scale, float freq, float speed, int segments, float *color)
+{
+	int i;
+	float div, length, fraction, vLast, vStep;
+	CSpriteHandle *pSprite;
+	Vector point;
+
+	pSprite = sub_10081cd0(spritemodel, frame, rendermode);
+	if (!pSprite)
+		return;
+
+	if (segments < 2)
+		return;
+
+	if (segments > noise_divisions)
+		segments = noise_divisions;
+
+	length = VectorLength(delta) * 0.01;
+	if (length < 0.5)
+		length = 0.5;
+	div = 1.0 / (segments - 1);
+
+	vStep = length * div;
+
+	vLast = fmod(freq * speed, 1);
+
+	IMesh *pMesh = (IMesh *)materials->GetDynamicMesh(true, 0, 0, 0);
+	MeshBuilderLocal meshBuilder;
+	meshBuilder.Begin(pMesh, 3, (segments - 1) * 2);
+
+	float radius = delta.z;
+	for (i = 0; i < segments; i++)
+	{
+		float s, c;
+		fraction = i * div;
+		SinCos(fraction * 2 * M_PI, &s, &c);
+
+		point[0] = s * radius * freq + source[0];
+		point[1] = c * radius * freq + source[1];
+		point[2] = source[2] + width;
+
+		meshBuilder.Color3f(0.0f, 0.0f, 0.0f);
+		meshBuilder.TexCoord2f(0, 1.0f, vLast);
+		meshBuilder.Position3fv(point.Base());
+		meshBuilder.AdvanceVertex();
+
+		point[0] = (radius + width) * s * freq + source[0];
+		point[1] = (radius + width) * c * freq + source[1];
+		point[2] = source[2] - width;
+
+		meshBuilder.Color3fv(color);
+		meshBuilder.TexCoord2f(0, 0.0f, vLast);
+		meshBuilder.Position3fv(point.Base());
+		meshBuilder.AdvanceVertex();
+
+		vLast += vStep;
+	}
+
+	meshBuilder.sub_10041c90();
+	pMesh->Draw();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10086500 size=0x3
 struct CUnknown10086500 { void * sub_10086500(); };
 void * CUnknown10086500::sub_10086500()
