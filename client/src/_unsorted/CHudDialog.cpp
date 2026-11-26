@@ -132,6 +132,58 @@ bool CHudDialog::vfunc107()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100534d0 size=0x294
+#include "CHudDialog.h"
+#include "CHUDSprite.h"
+#include "engineclient.h"
+#include "ScopeTrace.h"
+
+extern int g_10285ad4;
+int sub_101ac8d0();
+
+struct ISurface_100534d0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10();
+	virtual void DrawSetColor(int r, int g, int b, int a);
+	virtual void DrawFilledRect(int x0, int y0, int x1, int y1);
+};
+
+void CHudDialog::vfunc98()
+{
+	ScopeTrace st("CHudDialog::Paint", g_102de300);
+	if (g_10285ad4 == engine->vfunc44())
+		return;
+	g_10285ad4 = engine->vfunc44();
+	sub_10053200();
+	if (!vfunc107())
+		return;
+	if (m_flAlpha != 0.0f || m_flAlpha1a8 != 0.0f || m_flAlpha1ac != 0.0f)
+	{
+		int x, y;
+		sub_101a98c0(&x, &y);
+		int x0 = x - 1;
+		int x1 = x + m_n194 + 1;
+		int y0 = y - 1;
+		int y1 = y + m_n198 + 1;
+		((ISurface_100534d0 *)sub_101ac8d0())->DrawSetColor(0, 0, 0, (int)m_flAlpha);
+		((ISurface_100534d0 *)sub_101ac8d0())->DrawFilledRect(0, 0, m_n194, m_n198);
+		for (int i = 0; i < 2; i++)
+			for (int j = 0; j < 2; j++)
+				m_pCorners[i][j]->sub_10059b70(x - 1 + (m_n194 - 62) * j, y - 1 + (m_n198 - 62) * i, 64, 64, (int)m_flAlpha);
+		m_pEdges[0][0]->sub_10059b70(x0 + 64, y0, m_n194 - 126, 8, (int)m_flAlpha);
+		m_pEdges[0][1]->sub_10059b70(x1 - 8, y0 + 64, 8, m_n198 - 126, (int)m_flAlpha);
+		m_pEdges[1][1]->sub_10059b70(x0 + 64, y1 - 8, m_n194 - 126, 8, (int)m_flAlpha);
+		m_pEdges[1][0]->sub_10059b70(x0, y0 + 64, 8, m_n198 - 126, (int)m_flAlpha);
+		sub_10053b50(true);
+		sub_10053770(true);
+		sub_100530f0();
+		m_b190 = false;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10054440 size=0x1
 #include "CHudDialog.h"
 void CHudDialog::vfunc97()

@@ -2938,6 +2938,7 @@
 0x10052f00 func   ??1CHudDialog@@UAE@XZ CHudDialog::~CHudDialog
 0x10053080 func   ?vfunc107@CHudDialog@@UAE_NXZ CHudDialog::vfunc107
 0x10053200 func   ?sub_10053200@CHudDialog@@QAEXXZ CHudDialog::sub_10053200
+0x100534d0 func   ?vfunc98@CHudDialog@@UAEXXZ CHudDialog::vfunc98
 0x10053c70 func   ?sub_10053c70@CHudDialog@@QAEX_NHPBDHHPAH@Z CHudDialog::sub_10053c70
 0x10053f10 func   ?sub_10053f10@CHudDialog@@QAEHHH@Z CHudDialog::sub_10053f10
 0x10053ff0 func   ?sub_10053ff0@CHudDialog@@QAEX_NPBDHHPAH@Z CHudDialog::sub_10053ff0
