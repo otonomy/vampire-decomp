@@ -33715,6 +33715,23 @@ int CUnknown10080e20::sub_10080e20(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10080eb0 size=0x29
+namespace lifted {
+extern int g_102d5050;
+struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual int f5(int); };
+}
+struct CUnknown10080eb0 { int sub_10080eb0(int, int); };
+int CUnknown10080eb0::sub_10080eb0(int a0, int a1)
+{
+    if ((*(char *)((char *)this + 0xdc)) != 0) {
+        if (((*(char *)((char *)this + 0x180)) & 1) == 0) {
+            ((lifted::V *)lifted::g_102d5050)->f5((int)this + -4);
+        }
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10080ff0 size=0x3
 char sub_10080ff0()
 {
