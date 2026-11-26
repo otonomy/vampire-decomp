@@ -25,6 +25,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int sub_10117920(Vector *p, float t);
 
 	void sub_101177a0();
+	void sub_101177f0();	// IncrementFrameCode
+	void sub_10117890();	// SimulateUndrawnEffects
 	void sub_101176b0(CParticleEffectBinding *p);
 
 	int m_unk04;

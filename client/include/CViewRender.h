@@ -18,6 +18,7 @@ public:
     void sub_1019d8f0(const char *view);
     void sub_1019a950(int, void *, void *, int, int);
 	void sub_1019add0(int, int, int);
+	void sub_1019add0(bool, int, int);	// ViewDrawScene's call: the game passes the bool drawSkybox unwidened, as to sub_1019ac50
 	void sub_1019ab90(bool, int, int, int);
     void sub_10191710();
     void sub_10190390();
@@ -80,4 +81,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     CViewRender *sub_1018e9b0(unsigned flags);
     CViewRender *sub_10198a90();	// the constructor ("CViewRender::CViewRender" scope trace), written as a plain member
     void sub_1019aed0(bool, int);	// provisional, like sub_1019af80 (transplant)
+    void sub_1019b370(bool drawSkybox, const struct CViewSetup &view, bool bSetupViewModel, bool bDrawViewModel);	// "CViewRender::ViewDrawScene" (keeps materials slot 34's answer at +0x454 and gives it back through slot 33)
+    void sub_1019b030(float flFeed, const struct CViewSetup &view);
+    void sub_1019d590();
+    void sub_10199910(void *pInfo, void *pRenderList, bool, bool);
+    void sub_10199cc0(void *pInfo, void *pRenderList, bool, bool, bool);
+    void sub_10199ed0(const struct CViewSetup &view, void *pInfo, void *pRenderList, bool, bool, bool);
 };

@@ -276,7 +276,7 @@ public:
 	virtual void vfunc14(const Vector &, float);	// slot 14; seen as GetSetup 1; shapes differ
 	virtual int vfunc15();	// slot 15
 	virtual int vfunc16();	// slot 16
-	virtual int vfunc17();	// slot 17
+	virtual int vfunc17(void *pWaterInfo, bool *pbWater, const Vector &origin);	// slot 17: the water under the view (CViewRender::ViewDrawScene)
 	virtual int vfunc18();	// slot 18
 	virtual int vfunc19();	// slot 19
 	virtual int vfunc20();	// slot 20
@@ -288,8 +288,8 @@ public:
 	virtual int vfunc26();	// slot 26
 	virtual int vfunc27();	// slot 27
 	virtual void vfunc28(int, int, const Vector &);	// slot 28; seen as ViewSetupVis 1; shapes differ
-	virtual int vfunc29();	// slot 29
-	virtual int vfunc30();	// slot 30
+	virtual int vfunc29(const void *pView, void *p);	// slot 29: (view setup, CViewRender + 0x22c)
+	virtual int vfunc30(const void *pView);	// slot 30: the view setup
 	virtual int vfunc31();	// slot 31
 	virtual void vfunc32(unsigned char *, void *);	// slot 32; shapes differ
 	virtual void vfunc33(float, float, float);	// slot 33: SetProjectionMatrix(fov, zNear, zFar) (CViewRender::DrawViewModels)
@@ -366,8 +366,8 @@ public:
 	virtual void vfunc30();
 	virtual void vfunc31();
 	virtual void vfunc32();
-	virtual void vfunc33();
-	virtual void vfunc34();
+	virtual void vfunc33(int);	// slot 33: takes back what slot 34 gave (CViewRender::ViewDrawScene)
+	virtual int vfunc34();	// slot 34
 	virtual void vfunc35();
 	virtual void vfunc36(int *, int *);	// slot 36
 	virtual void vfunc37();
@@ -470,6 +470,12 @@ public:
 	virtual void vfunc134();
 	virtual void vfunc135();
 	virtual void vfunc136(void *);	// slot 136
+	virtual void vfunc137();
+	virtual void vfunc138();
+	virtual void vfunc139();
+	virtual void vfunc140();
+	virtual void vfunc141();
+	virtual void vfunc142();	// slot 142: the last call of CViewRender::ViewDrawScene
 };
 extern IMaterialSystem *g_104a57ec;
 
