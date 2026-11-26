@@ -133156,6 +133156,63 @@ void sub_10194d30(float *table, int n)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10195520 size=0x248
+#include <math.h>
+#include "CViewRenderBeams.h"
+#include "Vector.h"
+#include "QAngle.h"
+
+void sub_10082fd0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode,
+	const Vector &source, const Vector &delta, float startWidth, float endWidth, float scale, float freq, float speed,
+	int segments, int flags, float *color, float fadeLength, const Vector *pViewOrigin);	// DrawSegs
+void sub_10109010(const QAngle &angles, Vector *forward);	// AngleVectors
+const QAngle &sub_10198d40();	// CurrentViewAngles
+const Vector &sub_10198d30();	// CurrentViewOrigin
+extern Vector g_104d4970;
+
+#define NOISE_DIVISIONS 128
+
+void CViewRenderBeams::sub_10195520(Beam_t *pbeam, int frame, int rendermode, float *color, const char *spritemodel, int unused)
+{
+	Vector color2;
+	VectorCopy(*(Vector *)color, color2);
+
+	Vector beamDir = pbeam->attachment[1] - pbeam->attachment[0];
+	VectorNormalize(beamDir);
+	Vector vecForward;
+	sub_10109010(sub_10198d40(), &vecForward);
+	float flDot = DotProduct(beamDir, vecForward);
+
+	if (flDot > 0)
+		return;
+
+	float flFade = pow(flDot, 10.0);
+
+	Vector localDir = sub_10198d30() - pbeam->attachment[0];
+	flDot = DotProduct(localDir, beamDir);
+	Vector vecProjection = flDot * beamDir;
+	float flDistance = (localDir - vecProjection).Length();
+
+	if (flDistance > 30)
+	{
+		flDistance = 1 - ((flDistance - 30) / 64);
+		if (flDistance <= 0)
+			flFade = 0;
+		else
+			flFade *= pow(flDistance, 3.0);
+	}
+
+	if (flFade < (1.0f / 255.0f))
+		return;
+
+	VectorScale(color2, flFade, color2);
+
+	sub_10082fd0(NOISE_DIVISIONS, pbeam->rgNoise, spritemodel, frame, rendermode, pbeam->attachment[0], pbeam->delta,
+		pbeam->width, pbeam->endWidth, pbeam->amplitude, pbeam->freq, pbeam->speed, pbeam->segments, pbeam->flags,
+		color2.Base(), pbeam->fadeLength, &g_104d4970);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10195770 size=0x71
 void sub_100837c0(int, float *, void *, float, int, float *, float *, float, float, float, float, float, float, int, float *, float);
 
