@@ -145433,6 +145433,96 @@ int CUnknown101b7140::sub_101b7140()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b7e50 size=0x21d
+#include "vgui2__Panel.h"
+
+struct IPanel_101b7e50
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void GetSize(int vpanel, int &w, int &h);	// 5
+	virtual void v6(); virtual void v7(); virtual void v8();
+	virtual void GetPos(int vpanel, int &x, int &y);	// 9
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13();
+	virtual bool IsVisible(int vpanel);	// 14
+	virtual void v15();
+	virtual int GetChildCount(int vpanel);	// 16
+	virtual int GetChild(int vpanel, int i);	// 17
+	virtual void v18(); virtual void v19(); virtual void v20();
+	virtual bool IsPopup(int vpanel);	// 21
+};
+
+struct Frame_101b7e50
+{
+	char m_pad[0x58];
+	vgui2::Panel *m_pFrame;	// 0x58
+
+	bool getOutsideSnapPosition(int boundX, int boundY, int boundWide, int boundTall, int &snapToX, int &snapToY)
+	{
+		int right = boundWide + boundX;
+		int bottom = boundTall + boundY;
+		int wide, tall;
+		bool snapped = false;
+		m_pFrame->sub_101a9920(&wide, &tall);
+		bool overlapY = (snapToY > boundY && snapToY < bottom) || (snapToY + tall > boundY && snapToY + tall < bottom) || (snapToY < boundY && snapToY + tall > bottom);
+		bool overlapX = (snapToX > boundX && snapToX < right) || (snapToX + wide > boundX && snapToX + wide < right) || (snapToX < boundX && snapToX + wide > right);
+		if (overlapY || overlapX)
+		{
+			if (snapToX <= right + 10 && snapToX >= right - 10)
+			{
+				if (overlapY)
+				{
+					snapToX = right;
+					snapped = true;
+				}
+			}
+			else if (snapToX + wide >= boundX - 10 && snapToX + wide <= boundX + 10 && overlapY)
+			{
+				snapToX = boundX - wide;
+				snapped = true;
+			}
+			if (snapToY <= bottom + 10 && snapToY >= bottom - 10)
+			{
+				if (overlapX)
+				{
+					snapToY = bottom;
+					return true;
+				}
+			}
+			else if (snapToY + tall <= boundY + 10 && snapToY + tall >= boundY - 10 && overlapX)
+			{
+				snapToY = boundY - tall;
+				return true;
+			}
+			return snapped;
+		}
+		return false;
+	}
+
+	void sub_101b7e50(int vpanel, int &x, int &y);
+};
+
+extern IPanel_101b7e50 *sub_101ac900();
+
+void Frame_101b7e50::sub_101b7e50(int vpanel, int &x, int &y)
+{
+	int bx, by, bw, bh;
+	if (vpanel == m_pFrame->vfunc0())
+		return;
+	if (sub_101ac900()->IsVisible(vpanel) && sub_101ac900()->IsPopup(vpanel))
+	{
+		sub_101ac900()->GetPos(vpanel, bx, by);
+		sub_101ac900()->GetSize(vpanel, bw, bh);
+		if (getOutsideSnapPosition(bx, by, bw, bh, x, y))
+			return;
+	}
+	for (int i = 0; i < sub_101ac900()->GetChildCount(vpanel); i++)
+	{
+		int child = sub_101ac900()->GetChild(vpanel, i);
+		sub_101b7e50(child, x, y);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b9560 size=0x13
 struct CUnknown101b9560 { int sub_101b9560(char); };
 int CUnknown101b9560::sub_101b9560(char a0)
