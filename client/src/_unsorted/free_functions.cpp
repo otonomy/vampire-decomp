@@ -5026,6 +5026,32 @@ template <> int ClientClassInit<DT_WeaponRanged_Rifle_Crossbow::ignored>(DT_Weap
 }
 // END FUNCTION
 
+// FUNCTION: 0x1000dbc0 size=0x45
+namespace lifted {
+extern char g_101f34b4;
+extern char g_101f34c8;
+extern char g_101f3504;
+extern char g_101f353c;
+extern char g_101f3594;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1000dbc0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101f3594;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101f353c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101f3504;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101f34c8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101f34b4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1000dc50 size=0x6
 namespace lifted {
 extern char g_102e0dc4;
