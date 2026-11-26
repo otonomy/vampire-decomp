@@ -27,6 +27,137 @@ CTempEnts::~CTempEnts()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1003b850 size=0x264
+#include "CTempEnts.h"
+#include "Vector.h"
+
+struct model_t;
+
+struct IVModelInfo_1003b850
+{
+	virtual void v0();
+	virtual void v1();
+	virtual const model_t *GetModel(int modelIndex);
+	virtual void v3();
+	virtual void v4();
+	virtual int GetModelFrameCount(const model_t *model);
+};
+
+struct IUniformRandomStream_1003b850
+{
+	virtual void SetSeed(int iSeed);
+	virtual float RandomFloat(float flMinVal, float flMaxVal);
+	virtual int RandomInt(int iMinVal, int iMaxVal);
+};
+
+struct IVEngineClient_1003b850
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
+	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
+	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+	virtual void v36(); virtual void v37(); virtual void v38();
+	virtual float Time(int);
+};
+
+struct LocalTempEnt_1003b850
+{
+	char pad_0[0x48];
+	int m_nRenderMode;      // 0x48
+	int m_nRenderFX;        // 0x4c
+	unsigned char m_r, m_g, m_b, m_a;    // 0x50
+	char pad_54[0x758];
+	int flags;              // 0x7ac
+	float die;              // 0x7b0
+	char pad_7b4[4];
+	float x;                // 0x7b8
+	float y;                // 0x7bc
+	char pad_7c0[0x30];
+	float m_flSpriteScale;  // 0x7f0
+	char pad_7f4[0x08];
+	float m_flFrame;        // 0x7fc
+	float vel[3];           // 0x800
+
+	void sub_1003a840(float x, float y, float z);
+};
+
+struct CTempEnts_Helper_1003b850
+{
+	LocalTempEnt_1003b850 *sub_1003cdd0(const Vector &org, const model_t *pModel);
+};
+
+extern IVModelInfo_1003b850 *g_104a57f8;
+extern IUniformRandomStream_1003b850 *g_104a5738;
+extern IVEngineClient_1003b850 *g_104a57d4;
+
+inline void SinCos( float radians, float *sine, float *cosine )
+{
+	_asm
+	{
+		fld		DWORD PTR [radians]
+		fsincos
+
+		mov edx, DWORD PTR [cosine]
+		mov eax, DWORD PTR [sine]
+
+		fstp DWORD PTR [edx]
+		fstp DWORD PTR [eax]
+	}
+}
+
+// TARGET: CTempEnts::vfunc8
+void CTempEnts::vfunc8(const Vector &mins, const Vector &maxs, float height, int modelIndex, int count, float speed)
+{
+	LocalTempEnt_1003b850 *pTemp;
+	const model_t *model;
+	int i, frameCount;
+	float sine, cosine, zspeed;
+	Vector origin;
+
+	if (!modelIndex)
+		return;
+
+	model = g_104a57f8->GetModel(modelIndex);
+	if (!model)
+		return;
+
+	frameCount = g_104a57f8->GetModelFrameCount(model);
+
+	for (i = 0; i < count; i++)
+	{
+		origin[0] = g_104a5738->RandomInt(mins[0], maxs[0]);
+		origin[1] = g_104a5738->RandomInt(mins[1], maxs[1]);
+		origin[2] = g_104a5738->RandomInt(mins[2], maxs[2]);
+		pTemp = ((CTempEnts_Helper_1003b850 *)this)->sub_1003cdd0(origin, model);
+		if (!pTemp)
+			return;
+
+		pTemp->flags |= 1;
+
+		pTemp->x = origin[0];
+		pTemp->y = origin[1];
+		SinCos(g_104a5738->RandomInt(-3, 3), &sine, &cosine);
+
+		zspeed = g_104a5738->RandomInt(80, 140);
+		pTemp->sub_1003a840(speed * cosine, speed * sine, zspeed);
+		pTemp->die = g_104a57d4->Time(0) + ((height - (origin[2] - mins[2])) / zspeed) - 0.1;
+		pTemp->m_flFrame = g_104a5738->RandomInt(0, frameCount - 1);
+
+		pTemp->m_flSpriteScale = 1.0 / g_104a5738->RandomFloat(4, 16);
+		pTemp->m_nRenderMode = 4;
+		pTemp->m_b = 255;
+		pTemp->m_g = 255;
+		pTemp->m_r = 255;
+		pTemp->m_a = 192;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1003c3e0 size=0x1e3
 #include "CTempEnts.h"
 #define D1(n) virtual void n(){}
