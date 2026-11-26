@@ -3595,6 +3595,7 @@
 0x100966e0 func   ?sub_100966e0@C_BaseAnimating@@QAEXXZ C_BaseAnimating::sub_100966e0
 0x10096720 func   ?vfunc112@C_BaseAnimating@@UAEXXZ C_BaseAnimating::vfunc112
 0x100967e0 func   ?sub_100967e0@@YI_NPAUAnimView@@HH@Z sub_100967e0
+0x100968a0 func   ?sub_100968a0@C_BaseAnimating@@QAEXPAVVector@@PAVQuaternion@@HMPBMPBUCBitVecWords@@@Z C_BaseAnimating::sub_100968a0
 0x10096c30 func   ?sub_10096c30@C_BaseAnimating@@QAEXXZ C_BaseAnimating::sub_10096c30
 0x10096c80 func   ?sub_10096c80@Mem60@@QAEPAU1@HH@Z Mem60::sub_10096c80
 0x10096cd0 func   ?sub_10096cd0@CUtlMemory76@@QAEPAU1@HH@Z CUtlMemory76::sub_10096cd0

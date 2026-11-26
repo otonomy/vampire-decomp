@@ -39060,6 +39060,120 @@ bool __fastcall sub_100967e0(AnimView *p, int, int index)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100968a0 size=0x26e
+#include "C_BaseAnimating.h"
+#include "vector.h"
+#include "Quaternion.h"
+#include "CUnknown100c81b0.h"
+#include "utlvector.h"
+
+struct mstudiomodelgroup_100968a0
+{
+	char m_pad00[8];
+	int seqindex;	// 0x08
+	int numseq;	// 0x0c
+	char m_pad10[0x74 - 0x10];
+};
+
+struct studiohdr_100968a0
+{
+	char m_pad000[0x110];
+	int numlocalseq;	// 0x110
+	char m_pad114[0x194 - 0x114];
+	int numincludemodels;	// 0x194
+	int includemodelindex;	// 0x198
+	mstudiomodelgroup_100968a0 *pModelGroup(int i) { return (mstudiomodelgroup_100968a0 *)((char *)this + includemodelindex) + i; }
+	int GetNumSeq()
+	{
+		if (numincludemodels)
+			return pModelGroup(numincludemodels - 1)->seqindex + pModelGroup(numincludemodels - 1)->numseq;
+		return numlocalseq;
+	}
+};
+
+struct BoneMap_100968a0
+{
+	int m_nSrc;	// 0x00
+	int m_nDst;	// 0x04
+	bool m_bTransform;	// 0x08
+	float m_matrix[3][4];	// 0x0c
+};
+
+struct BoneMapView_100968a0
+{
+	char m_pad000[0x4d0];
+	CUtlVector<BoneMap_100968a0> m_BoneMaps[2];	// 0x4d0
+};
+
+struct BoneBits_100968a0 : public CUnknown100c81b0
+{
+	unsigned int m_more[10];
+};
+
+void sub_100896c0(studiohdr_100968a0 *pStudioHdr, Vector *pos, Quaternion *q);
+void sub_10089c40(studiohdr_100968a0 *pStudioHdr, Vector *pos, Quaternion *q, int sequence, float cycle, const float *poseParameter, const CBitVecWords *boneMask);
+void sub_10107f80(const Vector *in, const float (*matrix)[4], Vector *out);
+
+struct StaticPos_100968a0
+{
+	Vector v[350];
+	~StaticPos_100968a0() {}
+};
+struct StaticQ_100968a0
+{
+	Quaternion q[350];
+	~StaticQ_100968a0() {}
+};
+
+// TARGET: C_BaseAnimating::sub_100968a0
+void C_BaseAnimating::sub_100968a0(Vector *pos, Quaternion *q, int sequence, float cycle, const float *poseParameter, const CBitVecWords *boneMask)
+{
+	studiohdr_100968a0 *pStudioHdr = (studiohdr_100968a0 *)sub_1008f900(-1);
+	if (sequence < 0)
+	{
+		if (pStudioHdr)
+			sub_100896c0(pStudioHdr, pos, q);
+		return;
+	}
+	int numseq = pStudioHdr ? pStudioHdr->GetNumSeq() : 0;
+	if (sequence < numseq)
+	{
+		sub_10089c40(pStudioHdr, pos, q, sequence, cycle, poseParameter, boneMask);
+		return;
+	}
+	if (pStudioHdr)
+		sub_100896c0(pStudioHdr, pos, q);
+
+	for (int i = 0; i < 2; i++)
+	{
+		studiohdr_100968a0 *pHdr = (studiohdr_100968a0 *)sub_1008f900(i);
+		if (!pHdr)
+			continue;
+		sequence -= numseq;
+		numseq = pHdr->GetNumSeq();
+		if (sequence < numseq)
+		{
+			static StaticPos_100968a0 pos2;
+			static StaticQ_100968a0 q2;
+			BoneMapView_100968a0 *pView = (BoneMapView_100968a0 *)this;
+			BoneBits_100968a0 mask;
+			mask.sub_1008e420(boneMask, pView->m_BoneMaps[i].Count(), (const CBoneRecord *)pView->m_BoneMaps[i].Base(), (const CStudioBoneCount *)pHdr);
+			sub_10089c40(pHdr, pos2.v, q2.q, sequence, cycle, poseParameter, (const CBitVecWords *)&mask);
+			for (int j = 0; j < pView->m_BoneMaps[i].Count(); j++)
+			{
+				BoneMap_100968a0 &m = pView->m_BoneMaps[i][j];
+				if (m.m_bTransform)
+					sub_10107f80(&pos2.v[m.m_nSrc], m.m_matrix, &pos[m.m_nDst]);
+				else
+					pos[m.m_nDst] = pos2.v[m.m_nSrc];
+				q[m.m_nDst] = q2.q[m.m_nSrc];
+			}
+			return;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10096c30 size=0x4c
 #include "C_BaseAnimating.h"
 
