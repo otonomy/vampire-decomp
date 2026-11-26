@@ -52587,6 +52587,13 @@ template <> int ClientClassInit<DT_VGuiScreen::ignored>(DT_VGuiScreen::ignored *
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c9100 size=0x3
+char sub_100c9100()
+{
+    return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c9160 size=0x29
 namespace lifted {
 int __stdcall sub_100a0240(int);

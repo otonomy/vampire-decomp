@@ -4662,6 +4662,7 @@
 0x100c8e90 func   ?_C_VGuiScreen_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_VGuiScreen_CreateObject
 0x100c8f30 func   ?ClientClassInit@@YAHPAUignored@DT_VGuiScreen@@@Z ClientClassInit
 0x100c9060 func   ??0C_VGuiScreen@@QAE@XZ C_VGuiScreen::C_VGuiScreen
+0x100c9100 func   ?sub_100c9100@@YADXZ sub_100c9100
 0x100c9110 func   ??_GC_VGuiScreen@@UAEPAXI@Z ??_GC_VGuiScreen@@UAEPAXI@Z
 0x100c9160 func   ?sub_100c9160@CUnknown100c9160@@QAEHH@Z CUnknown100c9160::sub_100c9160
 0x100c9220 func   ?vfunc64@C_VGuiScreen@@UAEHHHH@Z C_VGuiScreen::vfunc64
