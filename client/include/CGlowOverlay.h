@@ -21,7 +21,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual ~CGlowOverlay();
 	virtual bool vfunc1();
 	virtual void vfunc2(float flDot, CGlowSprite *pSprite, float *pflHorzSize, float *pflVertSize, Vector *pColor);
-	virtual void vfunc3();
+	virtual void vfunc3(const Vector &vToGlow, float flHorzSize, float flVertSize, Vector &vBasePt, Vector &vUp, Vector &vRight);	// CalcBasis
 	virtual void vfunc4();
 	void sub_100efd40();
 	void sub_100eee60(const Vector &vToGlow);	// UpdateGlowObstruction
