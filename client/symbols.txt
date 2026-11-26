@@ -829,6 +829,7 @@
 0x100122b0 func   ?_C_ResearchBook_LG_STEALTH_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ResearchBook_LG_STEALTH_CreateObject
 0x10012370 func   ?ClientClassInit@@YAHPAUignored@DT_ResearchBook_LG_STEALTH@@@Z ClientClassInit
 0x10012400 func   ?vfunc17@C_ResearchBook_LG_FIREARMS@@UAEHXZ C_ResearchBook_LG_FIREARMS::vfunc17
+0x10012440 func   ?sub_10012440@@YAHXZ sub_10012440
 0x10012490 func   ??_GC_ResearchBook_LG_FIREARMS@@UAEPAXI@Z ??_GC_ResearchBook_LG_FIREARMS@@UAEPAXI@Z
 0x100124b0 func   ?vfunc16@C_ResearchBook_LG_FIREARMS@@UAEHXZ C_ResearchBook_LG_FIREARMS::vfunc16
 0x100124c0 func   ?vfunc15@C_ResearchBook_LG_FIREARMS@@UAEHXZ C_ResearchBook_LG_FIREARMS::vfunc15
