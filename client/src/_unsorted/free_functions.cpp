@@ -19383,6 +19383,116 @@ struct CIdxView100445d0 { int *m_pData; int *sub_100445d0(int i); };
 int *CIdxView100445d0::sub_100445d0(int i) { return &m_pData[i]; }
 // END FUNCTION
 
+// FUNCTION: 0x10044870 size=0x2f8
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "engineclient.h"
+#include "Vector.h"
+#include "QAngle.h"
+#include "ConVar.h"
+
+extern "C" int rand(void);
+extern void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
+
+struct SP_10044870
+{
+	char pad[0x18];
+	Vector m_vecVelocity;	// 0x18
+	float m_flRoll;	// 0x24
+	float m_flDieTime;	// 0x28
+	float m_flLifetime;	// 0x2c
+	unsigned char m_uchColor[3];	// 0x30
+	unsigned char m_uchStartAlpha;	// 0x33
+	unsigned char m_uchEndAlpha;	// 0x34
+	unsigned char m_uchStartSize;	// 0x35
+	unsigned char m_uchEndSize;	// 0x36
+	char pad37;
+	float m_flRollDelta;	// 0x38
+};
+struct Emit_10044870
+{
+	void sub_10118080(const Vector &origin);
+	void *sub_101180b0(const char *name);
+	SP_10044870 *sub_101180c0(int size, void *mat, const Vector &offset);
+	void sub_10117fe0();
+};
+struct Ptr_10044870
+{
+	Emit_10044870 *m_p;
+	Emit_10044870 *operator->() const { return m_p; }
+	~Ptr_10044870() { if (m_p) m_p->sub_10117fe0(); }
+};
+extern void sub_10118160(Ptr_10044870 *out, const char *name);
+
+struct DLight_10044870
+{
+	int flags;
+	Vector origin;	// 0x04
+	float radius;	// 0x10
+	unsigned char r, g, b;	// 0x14
+	signed char exponent;	// 0x17
+	float die;	// 0x18
+	float decay;	// 0x1c
+};
+
+extern ConVar g_103ecd10;
+extern ConVar g_105fb298;
+
+static inline void RandomVector_10044870(Vector &r)
+{
+	r.x = rand() * 3.051851e-5f - 0.5f;
+	r.y = rand() * 3.051851e-5f - 0.5f;
+	r.z = rand() * 3.051851e-5f - 0.5f;
+}
+
+void sub_10044870(const Vector &origin, const QAngle &angles, float scale, int entityIndex)
+{
+	Ptr_10044870 pSimple;
+	sub_10118160(&pSimple, "MuzzleFlash");
+	pSimple->sub_10118080(origin);
+
+	Vector forward;
+	sub_101090a0(angles, &forward, 0, 0);
+
+	scale = enginerandom->RandomFloat(scale - 0.25f, scale + 0.25f);
+	if (scale < 0.5f)
+		scale = 0.5f;
+	else if (scale > 8.0f)
+		scale = 8.0f;
+
+	{ int i = 0; while (i < 1) { SP_10044870 *pParticle = pSimple->sub_101180c0(0x3c, pSimple->sub_101180b0("particle/particle_smokegrenade"), origin);
+		if (!(pParticle == 0)) { int alpha = enginerandom->RandomInt(32, 84);
+		int color = enginerandom->RandomInt(64, 164);
+		pParticle->m_flLifetime = 0.0f;
+		pParticle->m_flDieTime = enginerandom->RandomFloat(0.5f, 1.0f);
+
+		RandomVector_10044870(pParticle->m_vecVelocity);
+		pParticle->m_vecVelocity += forward;
+		VectorNormalize(pParticle->m_vecVelocity);
+		pParticle->m_vecVelocity *= enginerandom->RandomFloat(16.0f, 32.0f);
+		pcd_stage(pParticle)->m_vecVelocity.z += enginerandom->RandomFloat(4.0f, 16.0f);
+
+		*(pParticle->m_uchColor + 0) = color;
+		pParticle->m_uchColor[1] = color;
+		pParticle->m_uchColor[2] = color;
+		pParticle->m_uchStartAlpha = alpha;
+		pParticle->m_uchEndAlpha = 0;
+		pParticle->m_uchStartSize = enginerandom->RandomInt(4, 8) * scale;
+		pParticle->m_uchEndSize = 2 * pParticle->m_uchStartSize;
+		pParticle->m_flRoll = enginerandom->RandomInt(0, 360);
+		pParticle->m_flRollDelta = enginerandom->RandomFloat(-4.0f, 4.0f); } else return; ++i; } }
+
+	if (!(g_103ecd10.GetInt() && g_105fb298.GetInt())) return; else { DLight_10044870 *el = (DLight_10044870 *)effects->CL_AllocDlight(0x40000000 + entityIndex);
+		el->origin = origin;
+		el->r = 255;
+		el->g = 192;
+		el->b = 64;
+		el->exponent = 10;
+		el->radius = 100.0f;
+		el->decay = 2000.0f;
+		el->die = 0.05f + engine->Time(0); }
+}
+// END FUNCTION
+
 // FUNCTION: 0x10044b70 size=0x296
 #include "engineclient.h"
 #include "Vector.h"
