@@ -553,10 +553,10 @@ public:
 	virtual int vfunc1();	// slot 1; seen as GetIncomingSequence 1
 	virtual int vfunc2();	// slot 2
 	virtual int vfunc3();	// slot 3
-	virtual int vfunc4();	// slot 4
-	virtual int vfunc5();	// slot 5
-	virtual int vfunc6();	// slot 6
-	virtual int vfunc7();	// slot 7
+	virtual bool vfunc4(int);	// slot 4: IsFrameValid(frame)
+	virtual float vfunc5(int);	// slot 5: GetFrameReceivedTime(frame)
+	virtual float vfunc6(int);	// slot 6: GetFrameLatency(frame)
+	virtual int vfunc7(int, const char *);	// slot 7: GetFrameBytes(frame, fieldName)
 	virtual void vfunc8(float *, float *);	// slot 8; seen as GetAverageDataFlow 1; shapes differ
 	virtual float vfunc9(int);	// slot 9
 	virtual char vfunc10(int);	// slot 10
