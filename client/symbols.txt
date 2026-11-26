@@ -1189,6 +1189,7 @@
 0x10019330 func   ?_C_ItemGLillyPurse_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGLillyPurse_CreateObject
 0x100193f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGLillyPurse@@@Z ClientClassInit
 0x10019480 func   ?vfunc17@C_ItemGBailbondReceipt@@UAEHXZ C_ItemGBailbondReceipt::vfunc17
+0x100194c0 func   ?sub_100194c0@@YAHXZ sub_100194c0
 0x10019510 func   ??_GC_ItemGBailbondReceipt@@UAEPAXI@Z ??_GC_ItemGBailbondReceipt@@UAEPAXI@Z
 0x10019530 func   ?vfunc16@C_ItemGBailbondReceipt@@UAEHXZ C_ItemGBailbondReceipt::vfunc16
 0x10019540 func   ?vfunc15@C_ItemGBailbondReceipt@@UAEHXZ C_ItemGBailbondReceipt::vfunc15
