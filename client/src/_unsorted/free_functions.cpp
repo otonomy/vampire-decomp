@@ -2794,6 +2794,32 @@ template <> int ClientClassInit<DT_WeaponMelee_Katana::ignored>(DT_WeaponMelee_K
 }
 // END FUNCTION
 
+// FUNCTION: 0x10008e40 size=0x45
+namespace lifted {
+extern char g_101e9f84;
+extern char g_101e9f98;
+extern char g_101e9fd4;
+extern char g_101ea00c;
+extern char g_101ea064;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10008e40()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101ea064;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101ea00c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101e9fd4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101e9f98;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101e9f84;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10008ed0 size=0x6
 namespace lifted {
 extern char g_102e1f9c;
