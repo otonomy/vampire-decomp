@@ -5082,6 +5082,7 @@
 0x100cd1f0 func   ?Init@CMaterialReference@@QAEXPBD@Z CMaterialReference::Init
 0x100cd1f0 func   ?sub_100cd1f0@MH@@QAEXH@Z MH::sub_100cd1f0
 0x100cd220 func   ?sub_100cd220@Holder_100cd220@@QAEXPAUIThing_100cd220@@@Z Holder_100cd220::sub_100cd220
+0x100cd240 func   ?Init@CMaterialReference@@QAEXAAV1@@Z CMaterialReference::Init
 0x100cd240 func   ?sub_100cd240@Holder_100cd240@@QAEXPBU1@@Z Holder_100cd240::sub_100cd240
 0x100cd260 func   ?sub_100cd260@CUnknown100cd260@@QAEXXZ CUnknown100cd260::sub_100cd260
 0x100cd290 func   ?sub_100cd290@CUnknown100cd290@@QAEPAXXZ CUnknown100cd290::sub_100cd290
