@@ -1013,6 +1013,7 @@
 0x10015c30 func   ?_C_WeaponIArmor_Hvy_Leather_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponIArmor_Hvy_Leather_CreateObject
 0x10015cf0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponIArmor_Hvy_Leather@@@Z ClientClassInit
 0x10015d80 func   ?vfunc17@C_WeaponIArmor_Body_Armor@@UAEHXZ C_WeaponIArmor_Body_Armor::vfunc17
+0x10015dc0 func   ?sub_10015dc0@@YAHXZ sub_10015dc0
 0x10015e10 func   ??_GC_WeaponIArmor_Body_Armor@@UAEPAXI@Z ??_GC_WeaponIArmor_Body_Armor@@UAEPAXI@Z
 0x10015e30 func   ?vfunc16@C_WeaponIArmor_Body_Armor@@UAEHXZ C_WeaponIArmor_Body_Armor::vfunc16
 0x10015e40 func   ?vfunc15@C_WeaponIArmor_Body_Armor@@UAEHXZ C_WeaponIArmor_Body_Armor::vfunc15
