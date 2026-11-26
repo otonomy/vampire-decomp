@@ -27,6 +27,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual void vfunc15();
     virtual void vfunc16();
     virtual void vfunc17(int, int, int, int, int, int);
-    virtual void vfunc18();
+    virtual void vfunc18(class C_LocalTempEntity *pTemp, float damp);	// PlaySound: the bounce sound of a temp entity
     virtual void vfunc19(const Vector &, const QAngle &, const QAngle &, int, const Vector &);
 };
