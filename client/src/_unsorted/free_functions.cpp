@@ -63580,6 +63580,25 @@ void sub_100cd760(int a0, int a1, Vector v, QAngle ang)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100cd830 size=0x5e
+extern "C" unsigned int __cdecl strlen(const char *);
+#pragma intrinsic(strlen)
+void sub_100cdb40(unsigned long *pCRC);
+void sub_100cdb50(unsigned long *pCRC);
+void sub_100cdb90(unsigned long *pCRC, const void *pBuffer, int len);
+
+unsigned long sub_100cd830(int nA, const char *psz, int nB)
+{
+	unsigned long crc;
+	sub_100cdb40(&crc);
+	sub_100cdb90(&crc, &nA, 4);
+	sub_100cdb90(&crc, psz, strlen(psz));
+	sub_100cdb90(&crc, &nB, 4);
+	sub_100cdb50(&crc);
+	return crc;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100cd9a0 size=0x39
 #include "C_BaseEntity.h"
 #include "IClientNetworkable.h"
