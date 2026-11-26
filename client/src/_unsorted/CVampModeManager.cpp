@@ -42,7 +42,7 @@ void CVampModeManager::vfunc1(char a0, int a1)
         int t0 = lifted::sub_100429f0();
         if (lifted::g_105f99d8 != t0) {
             ((lifted::V *)lifted::g_105f99d8)->f4();
-            input->vfunc17();
+            input->DeactivateMouse();
             lifted::g_105f99d8 = lifted::sub_100429f0();
             ((lifted::V *)lifted::g_105f99d8)->f3(); return;
         }
@@ -52,7 +52,7 @@ void CVampModeManager::vfunc1(char a0, int a1)
     if (lifted::g_105f99d8 != t1) {
         ((lifted::V *)lifted::g_105f99d8)->f4();
         lifted::g_105f99d8 = lifted::sub_10029490();
-        input->vfunc16();
+        input->ActivateMouse();
         ((lifted::V *)lifted::g_105f99d8)->f3();
     }
 }

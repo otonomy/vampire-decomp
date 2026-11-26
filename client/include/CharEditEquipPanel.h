@@ -10,6 +10,8 @@ public:
 	virtual ~CharEditEquipPanel();
 	void sub_10179850();
 	void sub_10179c40();
+	void sub_10178a50();
+	void sub_1017a7f0();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with CharEditEquipPanel's own function
 	virtual void vfunc3();

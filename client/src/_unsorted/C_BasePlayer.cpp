@@ -225,6 +225,123 @@ void C_BasePlayer::vfunc154(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a6e60 size=0x400
+#include "C_BasePlayer.h"
+#include "engineclient.h"
+#include "ConVar.h"
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "CTraceFilterSimple.h"
+#include "Vector.h"
+
+struct dlight_t
+{
+	int flags;
+	Vector origin;
+	float radius;
+	unsigned char r, g, b;
+	signed char exponent;
+	float die;
+	float decay;
+	float minlight;
+	int key;
+	int style;
+	Vector m_Direction;
+	float m_InnerAngle;
+	float m_OuterAngle;
+};
+
+const Vector &sub_10198d50();
+void sub_101659b0(const Vector &start, const Vector &end, int r, int g, int b, bool noDepthTest, float duration);
+extern ConVar g_103edd98;
+
+struct EyePosView
+{
+	virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4();
+	virtual void a5(); virtual void a6(); virtual void a7(); virtual void a8();
+	virtual const Vector &vfunc9();
+};
+
+static inline void UTIL_TraceLine(const Vector &vecAbsStart, const Vector &vecAbsEnd, unsigned int mask, const void *ignore, int collisionGroup, CGameTrace *ptr)
+{
+	Ray_t ray;
+	ray.Init(vecAbsStart, vecAbsEnd);
+	CTraceFilterSimple traceFilter;
+	traceFilter.sub_1004b5c0(ignore, collisionGroup);
+	enginetrace->vfunc4((int)&ray, mask, &traceFilter, (int)ptr);
+	if (g_103edd98.GetBool())
+		sub_101659b0(*(Vector *)ptr->m_startpos, *(Vector *)ptr->m_endpos, 255, 0, 0, true, -1.0f);
+}
+
+#define F(type, off) (*(type *)((char *)this + (off)))
+#define m_pFlashlight F(dlight_t *, 0x19f8)
+#define m_pFlashlightTarget F(dlight_t *, 0x19fc)
+#define m_index F(int, 0x44)
+
+void C_BasePlayer::vfunc156()
+{
+	if (sub_1009f140(8))
+	{
+		if (!m_pFlashlight || m_pFlashlight->key != m_index)
+		{
+			m_pFlashlight = (dlight_t *)effects->CL_AllocDlight(m_index);
+			m_pFlashlight->flags = 1;
+			m_pFlashlight->radius = 1000;
+			m_pFlashlight->m_InnerAngle = 6;
+			m_pFlashlight->m_OuterAngle = 10;
+			m_pFlashlight->r = m_pFlashlight->g = m_pFlashlight->b = 255;
+			m_pFlashlight->exponent = 7;
+			m_pFlashlight->die = engine->Time(0) + 0.2f;
+		}
+
+		if (!m_pFlashlightTarget || m_pFlashlightTarget->key != -m_index)
+		{
+			m_pFlashlightTarget = (dlight_t *)effects->CL_AllocDlight(-m_index);
+			m_pFlashlightTarget->flags = 2;
+			m_pFlashlightTarget->radius = 80;
+		}
+
+		VectorCopy(((EyePosView *)this)->vfunc9(), m_pFlashlight->origin);
+		m_pFlashlight->origin.z += F(float, 0x150);
+		VectorCopy(sub_10198d50(), m_pFlashlightTarget->m_Direction);
+		VectorCopy(sub_10198d50(), m_pFlashlight->m_Direction);
+
+		CGameTrace tr;
+		UTIL_TraceLine(m_pFlashlight->origin, m_pFlashlight->origin + sub_10198d50() * 1000.0f, 0x2000b, 0, 0, &tr);
+
+		VectorCopy(*(Vector *)tr.m_endpos, m_pFlashlightTarget->origin);
+
+		float falloff = tr.m_fraction * 1000;
+		if (falloff < 500)
+			falloff = 1.0f;
+		else
+			falloff = 500.0 / falloff;
+
+		m_pFlashlightTarget->radius = 80;
+		m_pFlashlightTarget->r = m_pFlashlightTarget->g = m_pFlashlightTarget->b = falloff * falloff * 255;
+		m_pFlashlightTarget->exponent = 0;
+
+		m_pFlashlight->die = engine->Time(0) + 0.2f;
+		m_pFlashlightTarget->die = engine->Time(0) + 0.2f;
+
+		render->vfunc2(m_pFlashlightTarget);
+	}
+	else
+	{
+		if (m_pFlashlight && m_pFlashlight->key == m_index)
+		{
+			m_pFlashlight->die = engine->Time(0);
+			m_pFlashlight = 0;
+		}
+		if (m_pFlashlightTarget && m_pFlashlightTarget->key == -m_index)
+		{
+			m_pFlashlightTarget->die = engine->Time(0);
+			m_pFlashlightTarget = 0;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a7640 size=0x60
 #include "C_BasePlayer.h"
 #include "Vector.h"

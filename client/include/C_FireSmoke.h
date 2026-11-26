@@ -22,7 +22,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 
 	void sub_100b55b0();
 	void sub_100b5d00();
-	void sub_100b56c0();	// "Start": the child flames (render mode, random yaw, model, frame, scale, brightness) and the fire overlay when flag 8 is set
+	void sub_100b56c0();
+	void sub_100b6010();	// spawns one fire particle (ember emitter) and one smoke particle (smoke emitter), lighting the smoke emitter at the origin	// "Start": the child flames (render mode, random yaw, model, frame, scale, brightness) and the fire overlay when flag 8 is set
 	char m_pad0014[0x410 - 0x14];
 	float m_flStartScale;
 	float m_flScale;
@@ -34,7 +35,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	float m_flScaleEnd;
 	float m_flScaleTimeStart;
 	float m_flScaleTimeEnd;
-	char m_pad438[0x44c - 0x438];
+	char m_pad438[0x448 - 0x438];
+	float m_fl448;	// 0x448: the smoke particles live twice this long
 	bool m_bClipTested;
 	char m_pad44d[3];
 	CSmartPtr<CParticleEffect> m_pEmberEmitter;

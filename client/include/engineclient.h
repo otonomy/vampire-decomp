@@ -261,7 +261,7 @@ class IVRenderView
 public:
 	virtual void vfunc0(C_BaseEntity *, const void *, const Vector &, const QAngle &, int);	// slot 0; seen as DrawBrushModel 1; shapes differ
 	virtual int vfunc1();	// slot 1
-	virtual int vfunc2();	// slot 2
+	virtual void vfunc2(void *pLight);	// slot 2: TouchLight(dlight_t *)
 	virtual int vfunc3();	// slot 3
 	virtual int vfunc4();	// slot 4
 	virtual int vfunc5();	// slot 5
@@ -341,7 +341,7 @@ public:
 	virtual void vfunc5();
 	virtual void vfunc6();
 	virtual void vfunc7();
-	virtual void vfunc8();
+	virtual void *vfunc8(const char *, int *);
 	virtual void vfunc9();
 	virtual void vfunc10();
 	virtual void *vfunc11(const char *, bool *, bool);	// slot 11; seen as FindVar 1
@@ -403,11 +403,11 @@ public:
 	virtual void vfunc67();
 	virtual void vfunc68();
 	virtual void vfunc69();
-	virtual void vfunc70();
-	virtual void vfunc71();
-	virtual void vfunc72();
+	virtual void vfunc70(int);	// slot 70: MatrixMode
+	virtual void vfunc71();	// slot 71: PushMatrix
+	virtual void vfunc72();	// slot 72: PopMatrix
 	virtual void vfunc73();
-	virtual void vfunc74();
+	virtual void vfunc74(const VMatrix &);	// slot 74: LoadMatrix
 	virtual void vfunc75();
 	virtual void vfunc76();
 	virtual void vfunc77();
@@ -553,10 +553,10 @@ public:
 	virtual int vfunc1();	// slot 1; seen as GetIncomingSequence 1
 	virtual int vfunc2();	// slot 2
 	virtual int vfunc3();	// slot 3
-	virtual int vfunc4();	// slot 4
-	virtual int vfunc5();	// slot 5
-	virtual int vfunc6();	// slot 6
-	virtual int vfunc7();	// slot 7
+	virtual bool vfunc4(int);	// slot 4: IsFrameValid(frame)
+	virtual float vfunc5(int);	// slot 5: GetFrameReceivedTime(frame)
+	virtual float vfunc6(int);	// slot 6: GetFrameLatency(frame)
+	virtual int vfunc7(int, const char *);	// slot 7: GetFrameBytes(frame, fieldName)
 	virtual void vfunc8(float *, float *);	// slot 8; seen as GetAverageDataFlow 1; shapes differ
 	virtual float vfunc9(int);	// slot 9
 	virtual char vfunc10(int);	// slot 10
@@ -628,8 +628,8 @@ public:
 	virtual void vfunc19();
 	virtual char *vfunc20(char *, int, int);	// slot 20; seen as ReadLine 1
 	virtual int vfunc21(void *, const char *, ...);	// slot 21; seen as FPrintf 1
-	virtual int FindFirst(const char *, int *);	// slot 22; shapes differ
-	virtual int FindNext(int);	// slot 23; shapes differ
+	virtual const char *FindFirst(const char *, int *);	// slot 22; shapes differ
+	virtual const char *FindNext(int);	// slot 23; shapes differ
 	virtual void vfunc24();
 	virtual void FindClose(int);	// slot 25
 };
@@ -727,7 +727,7 @@ public:
 	virtual void vfunc11();
 	virtual void __cdecl vfunc12(int, int, int, ...);	// slot 12; seen as Draw 1; DrawColoredText(font, x, y, r, g, b, a, fmt, ...)
 	virtual void vfunc13();
-	virtual void vfunc14();
+	virtual void vfunc14(int, int, int *, const char *, ...);	// slot 14: text size with a wrap width (CCredits)
 	virtual int vfunc15(int, const char *, ...);	// slot 15; seen as DrawTextLen 1
 };
 extern IMatSystemSurface *g_104a5820;

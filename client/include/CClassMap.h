@@ -38,8 +38,8 @@ public:
     ClassMapEntry *sub_100ce920(unsigned short i);
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the base slots the game's vtable fills with CClassMap's own function
-    virtual void vfunc0();
-    virtual void vfunc1();
+    virtual void vfunc0(const char *mapname, const char *classname, int size, void *(*factory)(void));	// Add: DevMsg, replaces an entry of another map name, inserts the class entry
+    virtual const char *vfunc1(const char *classname);	// Lookup
     virtual void *vfunc2(const char *classname);
     virtual int vfunc3(const char *classname);
 };

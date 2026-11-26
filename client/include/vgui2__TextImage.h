@@ -11,6 +11,7 @@ class TextImage : public vgui2::Image
 public:
 	TextImage(const char *text, unsigned long scheme);
 	virtual ~TextImage();
+	void sub_101ba270(unsigned short *buf, int n);
 	char *m_pText;
 	short m_unk20;
 	short m_unk22;

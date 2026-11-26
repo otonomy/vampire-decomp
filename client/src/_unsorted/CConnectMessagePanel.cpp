@@ -2,6 +2,7 @@
 #include "client.h"
 
 // FUNCTION: 0x10165170 size=0xc5
+#include "engineclient.h"
 #include "CConnectMessagePanel.h"
 
 int sub_100cd0f0();
@@ -13,13 +14,6 @@ struct PanelV21
 	void sub_101a99f0(int);
 };
 
-struct ICvarFind
-{
-	virtual void v0();
-	virtual void v1();
-	virtual int FindVar(const char *name);
-};
-extern ICvarFind *g_104a57e0;
 
 struct IVGui
 {
@@ -50,9 +44,9 @@ CConnectMessagePanel::CConnectMessagePanel(vgui2::Panel *parent)
 	vfunc51(*(int *)&col);
 	vfunc63(0);
 
-	*(int *)((char *)this + 0x5c) = g_104a57e0->FindVar("scr_connectmsg");
-	*(int *)((char *)this + 0x60) = g_104a57e0->FindVar("scr_connectmsg1");
-	*(int *)((char *)this + 0x64) = g_104a57e0->FindVar("scr_connectmsg2");
+	*(int *)((char *)this + 0x5c) = ((int)cvar->FindVar("scr_connectmsg"));
+	*(int *)((char *)this + 0x60) = ((int)cvar->FindVar("scr_connectmsg1"));
+	*(int *)((char *)this + 0x64) = ((int)cvar->FindVar("scr_connectmsg2"));
 
 	int vp = *(int *)((char *)this + 4);
 	((IVGui *)(void *)sub_101ac8f0())->AddTickSignal(vp, 200);

@@ -83,7 +83,7 @@ rule: the jump-stub table, the padding, `.idata`, the exports, `.reloc` and the 
 
 | Part | State |
 |---|---|
-| `client.dll` (client game code) | In progress in [`client/`](client/): 14,079 of 16,036 functions (87.8%), 862,481 of 1,690,709 code bytes (51.0%) as of 2026-11-26 |
+| `client.dll` (client game code) | In progress in [`client/`](client/): 14,484 of 16,423 functions (88.2%), 927,974 of 1,706,780 code bytes (54.4%) as of 2026-11-26 |
 | `GameUI.dll`, `vampire_python21.dll` | Not started |
 | Engine and its modules (`engine.dll`, `launcher.dll`, `materialsystem.dll`, `studiorender.dll`, `shaderapidx9.dll`, `stdshader_*.dll`, `vgui2.dll`, `vguimatsurface.dll`, `vphysics.dll`, `vstdlib.dll`, `tier0.dll`, `filesystem_stdio.dll`, `vaudio_miles.dll`, `voice_miles.dll`), `Vampire.exe` | Not started |
 | Third-party libraries (Miles, Bink, zlib, Microsoft runtime) | Out of scope |

@@ -17,6 +17,8 @@ public:
 	void sub_100be040(const Vector &origin);
 	void sub_100bdf90(void *pPlayer);
 	bool sub_100be140();
+	void sub_100bded0(int iPlayer);
+	void sub_100be0d0();
 	bool m_bReliable;
 	bool m_bInitMessage;
 	CUtlVector<int> m_Recipients;
@@ -38,6 +40,9 @@ public:
 
 class CSingleUserRecipientFilter : public C_RecipientFilter
 {
+public:
+	CSingleUserRecipientFilter() {}
+	CSingleUserRecipientFilter(int iPlayer) { sub_100bded0(iPlayer); }
 };
 
 class CPASFilter : public C_RecipientFilter

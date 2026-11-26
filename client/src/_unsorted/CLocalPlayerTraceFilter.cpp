@@ -21,3 +21,11 @@ bool CLocalPlayerTraceFilter::vfunc0(void *p, int mask)
 	return true;
 }
 // END FUNCTION
+
+// FUNCTION: 0x100c2260 size=0x3
+#include "CLocalPlayerTraceFilter.h"
+int CLocalPlayerTraceFilter::vfunc1()
+{
+    return 0;
+}
+// END FUNCTION

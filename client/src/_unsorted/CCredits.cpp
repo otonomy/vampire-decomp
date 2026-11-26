@@ -88,6 +88,131 @@ void CCredits::vfunc113()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004df00 size=0x2e1
+#include "CCredits.h"
+#include "engineclient.h"
+
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+void sub_1004e420(const char *str, int *a, int *b, int *c, int *d);
+int sub_100cd0f0();
+char *sub_1018c870(const char *);
+
+struct CreditsSpeed_103eddfc
+{
+    virtual void vfunc0();
+    virtual bool vfunc1();
+    char m_pad4[0x24];
+    float m_flSpeed;
+};
+extern CreditsSpeed_103eddfc *g_103eddfc;
+
+struct ScreenFade_t
+{
+    unsigned short duration;
+    unsigned short holdTime;
+    short fadeFlags;
+    unsigned char r, g, b, a;
+};
+
+struct ViewEffects_102d5238
+{
+    virtual void vfunc0();
+    virtual void vfunc1();
+    virtual void vfunc2();
+    virtual void vfunc3();
+    virtual void vfunc4(int, int, ScreenFade_t *);
+};
+extern ViewEffects_102d5238 *g_102d5238;
+
+struct SchemeView_Credits
+{
+    virtual void vfunc0();
+    virtual void vfunc1();
+    virtual void vfunc2();
+    virtual void vfunc3();
+    virtual int vfunc4(const char *);
+};
+
+struct HudElemView_Credits
+{
+    virtual void vfunc0();
+    virtual void vfunc1();
+    virtual void vfunc2();
+    virtual void vfunc3();
+    virtual void vfunc4();
+    virtual void vfunc5(int);
+};
+
+static inline float CreditsScale()
+{
+    return sub_100cd0f0() * (1.0 / 768.0);
+}
+
+void CCredits::vfunc98()
+{
+    int y = 0;
+    float speed = CreditsScale() * (g_103eddfc->vfunc1() ? 0 : g_103eddfc->m_flSpeed);
+    float elapsed = engine->Time(0) - m_flStartTime;
+    int start = (int)(elapsed * speed - m_unk180);
+    int end = start + m_unk180;
+    int tall = 0;
+    if (m_size == 0)
+        return;
+    int i;
+    for (i = 0; i < m_size; i++)
+    {
+        const char *str = ((const char **)m_pMem)[i];
+        if (!str)
+            continue;
+        if (str[0] == '@')
+        {
+            m_unk184 = ((SchemeView_Credits *)m_unk178)->vfunc4(sub_1018c870(str + 1));
+        }
+        else if (str[0] == '$')
+        {
+            sub_1004e420(str + 1, &m_unk1a4, &m_unk1a8, &m_unk1ac, &m_unk1b0);
+        }
+        else if (str[0] == '%')
+        {
+            sub_1004e420(str + 1, &m_unk1b4, &m_unk1b8, &m_unk1bc, &m_unk1c0);
+        }
+        else
+        {
+            int wide = g_pMatSystemSurface->vfunc15(m_unk184, str);
+            g_pMatSystemSurface->vfunc14(m_unk184, wide + 10, &tall, str);
+            if (y + tall >= start)
+            {
+                if (m_unk1c0)
+                    g_pMatSystemSurface->vfunc12(m_unk184, (m_unk17c - wide) / 2 + 2, y - start + 2,
+                        m_unk1b4, m_unk1b8, m_unk1bc, m_unk1c0, str);
+                g_pMatSystemSurface->vfunc12(m_unk184, (m_unk17c - wide) / 2, y - start,
+                    m_unk1a4, m_unk1a8, m_unk1ac, m_unk1b0, str);
+            }
+            y += tall;
+            if (y > end)
+                break;
+        }
+    }
+    if (y - start < -tall && i >= m_size)
+    {
+        ((HudElemView_Credits *)((char *)this + 0x170))->vfunc5(0);
+        ScreenFade_t fade;
+        memset(&fade, 0, sizeof(fade));
+        fade.duration = 0xa00;
+        fade.holdTime = 0x200;
+        fade.r = 0;
+        fade.g = 0;
+        fade.b = 0;
+        fade.a = 0xff;
+        fade.fadeFlags = 0x52;
+        g_102d5238->vfunc4(0, 0, &fade);
+        vfunc115();
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004e1f0 size=0x1
 #include "CCredits.h"
 void CCredits::vfunc97()

@@ -23,7 +23,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual bool vfunc14();
     virtual int vfunc15();
     // the slots CPrediction adds to its base's vtable: 16-19, vfuncK at slot K
-    virtual void vfunc16();
+    virtual void vfunc16(class C_BasePlayer *player, struct CUserCmdView *ucmd, void *pHelper, struct CMoveDataView *move);
     virtual void vfunc17();
     virtual void vfunc18();
     virtual void vfunc19(const class Vector &origin, const class QAngle &angles, const class Vector &viewofs);

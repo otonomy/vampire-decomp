@@ -2,16 +2,10 @@
 #include "client.h"
 
 // FUNCTION: 0x101685e0 size=0x43
+#include "engineclient.h"
 #include "CMessageChars.h"
 #include "CMessageCharsPanel.h"
 
-struct ICvarFind
-{
-	virtual void v0();
-	virtual void v1();
-	virtual int FindVar(const char *name);
-};
-extern ICvarFind *g_104a57e0;
 
 void *sub_101ac650(unsigned int size);
 
@@ -22,7 +16,7 @@ struct MsgPanel
 
 int CMessageChars::vfunc0(int parent)
 {
-	*(int *)((char *)this + 8) = g_104a57e0->FindVar("con_color");
+	*(int *)((char *)this + 8) = ((int)cvar->FindVar("con_color"));
 
 	MsgPanel *p = (MsgPanel *)sub_101ac650(0x107064);
 	MsgPanel *r;

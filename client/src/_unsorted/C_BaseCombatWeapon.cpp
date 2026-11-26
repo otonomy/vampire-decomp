@@ -1064,6 +1064,91 @@ float C_BaseCombatWeapon::vfunc205()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007c2a0 size=0x3a2
+#include "C_BaseCombatWeapon.h"
+#include "C_RecipientFilter.h"
+#include "engineclient.h"
+
+struct WeaponSoundData
+{
+    char m_szName[0x80];
+    int m_nPitch;          // 0x80
+    int m_nPitchMin;       // 0x84
+    int m_nPitchMax;       // 0x88
+    float m_flVolume;      // 0x8c
+    bool m_bLocal;         // 0x90
+};
+
+struct WeaponOwnerView
+{
+    char pad[0x3f8];
+    int m_n3f8;
+};
+
+void C_BaseCombatWeapon::vfunc206(int sound_type, int channel, float flVolume, int iPitch, float flAttenuation, int iFlagsOverride)
+{
+    if (vfunc222(sound_type) <= 0)
+        return;
+
+    float attn;
+    int iFlags;
+    int idx = enginerandom->RandomInt(0, vfunc222(sound_type) - 1);
+    attn = 0.27f;
+    iFlags = 0;
+    WeaponSoundData *snd = (WeaponSoundData *)sub_1007ba10(sound_type, idx);
+
+    float volume;
+    if (flVolume == 0.0f)
+    {
+        volume = 1.0f;
+        if (snd->m_flVolume != 0.0f)
+            volume = snd->m_flVolume;
+    }
+    else
+        volume = flVolume;
+    if (iPitch == 0)
+    {
+        iPitch = 100;
+        if (snd->m_nPitch)
+            iPitch = snd->m_nPitch;
+        if (snd->m_nPitchMin && snd->m_nPitchMax)
+            iPitch = enginerandom->RandomInt(snd->m_nPitchMin, snd->m_nPitchMax);
+    }
+    if (flAttenuation != 0.0f)
+        attn = flAttenuation;
+    if (iFlagsOverride)
+        iFlags = iFlagsOverride;
+
+    if (snd->m_bLocal)
+    {
+        if (!sub_1007bab0())
+            return;
+        if (!((WeaponOwnerView *)sub_1007bab0())->m_n3f8)
+            return;
+        enginesound->vfunc0(snd->m_szName, 0);
+        WeaponOwnerView *owner = (WeaponOwnerView *)sub_1007bab0();
+        CSingleUserRecipientFilter filter(owner ? owner->m_n3f8 : 0);
+        if (vfunc168())
+            filter.sub_100be0d0();
+        enginesound->EmitSound(filter, ((C_BaseEntity *)sub_1007bab0())->entindex(), 6, snd->m_szName, volume, *(int *)&attn, 0, iPitch, 0, 0, 1, 0);
+    }
+    else if (sub_1007bab0())
+    {
+        CPASAttenuationFilter filter(((C_BaseEntity *)sub_1007bab0())->GetAbsOrigin());
+        if (vfunc168())
+            filter.sub_100be0d0();
+        enginesound->EmitSound(filter, ((C_BaseEntity *)sub_1007bab0())->entindex(), channel, snd->m_szName, volume, *(int *)&attn, iFlags, iPitch, 0, 0, 1, 0);
+    }
+    else
+    {
+        CPASAttenuationFilter filter(GetAbsOrigin());
+        if (vfunc168())
+            filter.sub_100be0d0();
+        enginesound->EmitSound(filter, entindex(), channel, snd->m_szName, volume, *(int *)&attn, iFlags, iPitch, 0, 0, 1, 0);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007c8f0 size=0xb
 #include "C_BaseCombatWeapon.h"
 namespace lifted {
@@ -1374,6 +1459,126 @@ int C_BaseCombatWeapon::vfunc235(int a0)
         ((lifted::V *)this)->f237(a0);
     }
     return ((lifted::V *)this)->f238(a0);
+}
+// END FUNCTION
+
+// FUNCTION: 0x1009b9e0 size=0x342
+#include "C_BaseCombatWeapon.h"
+#include "C_BasePlayer.h"
+#include "CHud.h"
+#include "CInput.h"
+
+struct wrect_t
+{
+	int left, right, top, bottom;
+};
+
+struct CHudTextureView	// the icon gHUD.GetIcon returns
+{
+	char m_pad00[0x80];
+	int textureId;	// 0x80
+	int m_unk84;
+	wrect_t rc;	// 0x88
+};
+
+struct CrosshairWpnInfo	// the weapon file info GetWpnData (sub_1007b160) returns
+{
+	char m_pad00000[0x50374];
+	bool m_b50374;	// 0x50374
+	char m_pad50375[0x5ebd8 - 0x50375];
+	CHudTextureView *m_pCrosshair;	// 0x5ebd8
+	CHudTextureView *m_pZoomedCrosshair;	// 0x5ebdc
+	int m_n5ebe0;	// 0x5ebe0
+};
+
+struct ICrosshairDrawer	// g_102bc800
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+	virtual void DrawCrosshair(int textureId, wrect_t rc, int r, int g, int b);	// slot 18
+};
+
+struct G105V	// g_105f9994
+{
+	virtual void v0();
+	virtual bool v1();
+	int m_pad04[(0x2c - 4) / 4];
+	int m_n2c;	// 0x2c
+};
+
+struct HV100a
+{
+	int sub_100a6b90();
+};
+
+extern ICrosshairDrawer *g_102bc800;
+extern G105V *g_105f9994;
+extern wrect_t g_1049d954;
+extern bool g_103eeddc;
+void sub_10064d50(CHudTextureView *pCrosshair, CHudTextureView *pZoomed, int n);
+void sub_10064df0(C_BaseCombatWeapon *pWeapon);
+void sub_10065050(int n);
+bool sub_1004f830();
+
+#define WPNDATA ((CrosshairWpnInfo *)sub_1007b160())
+
+void C_BaseCombatWeapon::vfunc237(int)
+{
+	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
+	if (!player)
+		return;
+
+	if ((char)((HV100a *)player)->sub_100a6b90())
+	{
+		CHudTextureView *pArrow = (CHudTextureView *)gHUD.GetIcon("arrow");
+		g_102bc800->DrawCrosshair(pArrow->textureId, pArrow->rc, 0xff, 0xd0, 0x50);
+		return;
+	}
+
+	if (input->vfunc29())
+	{
+		sub_10064d50(0, 0, 0);
+		g_102bc800->DrawCrosshair(0, g_1049d954, 0xff, 0xff, 0xff);
+		return;
+	}
+
+	if (WPNDATA->m_pCrosshair && !WPNDATA->m_pCrosshair->textureId)
+		sub_10064d50(WPNDATA->m_pCrosshair, WPNDATA->m_pZoomedCrosshair, WPNDATA->m_n5ebe0);
+	else if (!WPNDATA->m_b50374)
+		sub_10064d50(0, 0, 0);
+	else
+		sub_10064df0(this);
+
+	if (sub_1004f830())
+		return;
+
+	if (*(int *)((char *)player + 0x1690) < (g_105f9994->v1() ? 0 : g_105f9994->m_n2c))
+		return;
+
+	if (*((bool *)player + 0x16a8))
+	{
+		if (g_103eeddc && WPNDATA->m_pZoomedCrosshair)
+		{
+			sub_10064d50(WPNDATA->m_pZoomedCrosshair, 0, 0);
+			g_102bc800->DrawCrosshair(WPNDATA->m_pZoomedCrosshair->textureId, WPNDATA->m_pZoomedCrosshair->rc, 0xff, 0xd0, 0x50);
+			sub_10065050(2);
+			return;
+		}
+		if (WPNDATA->m_pCrosshair)
+		{
+			sub_10064d50(WPNDATA->m_pCrosshair, 0, 0);
+			g_102bc800->DrawCrosshair(WPNDATA->m_pCrosshair->textureId, WPNDATA->m_pCrosshair->rc, 0xff, 0xd0, 0x50);
+			return;
+		}
+		if (!WPNDATA->m_b50374)
+			sub_10064d50(0, 0, 0);
+	}
+	else
+	{
+		sub_10064d50(0, 0, 0);
+	}
+	g_102bc800->DrawCrosshair(0, g_1049d954, 0xff, 0xff, 0xff);
 }
 // END FUNCTION
 

@@ -97,7 +97,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc203();
 	virtual int vfunc204();
 	virtual float vfunc205();
-	virtual void vfunc206();
+	virtual void vfunc206(int sound_type, int channel, float flVolume, int iPitch, float flAttenuation, int iFlagsOverride);
 	virtual void vfunc207();
 	virtual bool vfunc208();
 	virtual bool vfunc209();
@@ -128,7 +128,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual bool vfunc234(C_BaseAnimating *pViewModel, const Vector &origin, const QAngle &angles, int event, const char *options);
 	virtual int vfunc235(int);
 	virtual void vfunc236(int);
-	virtual void vfunc237();
+	virtual void vfunc237(int);	// draws the crosshair
 	virtual void vfunc238(int);
 	virtual void vfunc239();
 	virtual bool vfunc240();

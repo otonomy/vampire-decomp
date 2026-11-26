@@ -44,8 +44,16 @@ public:
 		// same as sub_100483f0 (another instance)
 		// same as sub_100483f0 (another instance)
 		// same as sub_100483f0 (another instance)
+	void sub_10112390(unsigned short i, unsigned short parent, bool isLeft);	// "CUtlRBTree::LinkToParent" with InsertRebalance inlined
+	void sub_101141e0(unsigned short i);	// "CUtlRBTree::RotateLeft" of that instance
+	void sub_101143a0(unsigned short i);	// "CUtlRBTree::RotateRight" of that instance
 	unsigned short sub_10112270();	// "CUtlRBTree::NewNode": takes the free list head or grows the node memory (first allocation 2 elements)
 	unsigned short sub_10139340();
+	void sub_10111ee0(unsigned short elem);
+	void sub_10139460(unsigned short i, unsigned short parent, bool isLeft);	// "CUtlRBTree::LinkToParent" with InsertRebalance inlined, of the instance whose links are 0x101397f0
+	void sub_10139910(unsigned short elem);	// "CUtlRBTree::RotateLeft" of that instance
+	void sub_10139ad0(unsigned short elem);	// "CUtlRBTree::RotateRight" of that instance	// "CUtlRBTree::Unlink" of the instance whose sentinel is 0x104dff2c
+	void sub_101131f0(unsigned short elem);	// "CUtlRBTree::RemoveRebalance" of that instance
 		// same as sub_1024a310 (another instance)
 		// address of the left child index of node i (stub 0x10012189), called by the lookup at 0x10312580
 		// "CUtlRBTree::RemoveNode" (stub 0x10008e04): unlinks node i and rebalances

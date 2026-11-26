@@ -9,9 +9,11 @@ class C_TestTraceline : public C_BaseEntity
 public:
 	C_TestTraceline();
 	virtual ~C_TestTraceline();
+	void sub_100417c0(Vector &center, unsigned char *pColor);	// DrawCube: a 10 unit cube around center as six polygons of pColor
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with C_TestTraceline's own function
 	virtual int vfunc15();
 	virtual int vfunc16();
+	virtual int DrawModel(int flags, int a1);	// IClientRenderable slot 9
 	char m_pad0014[0x418 - 0x14];
 };

@@ -28,7 +28,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc4(const void *, int, int, int, int, int, float, float);
 	virtual void vfunc5();
 	virtual int vfunc6(int, int, int, int, char, int, int, int, int);
-	virtual void vfunc7();
+	virtual void vfunc7(const Vector &pos, const Vector &size, const Vector &dir, float randRange, float life, int count, int modelIndex, char flags);	// BreakModel
 	virtual void vfunc8(const Vector &mins, const Vector &maxs, float height, int modelIndex, int count, float speed);	// Bubbles
 	virtual void vfunc9();
 	virtual void vfunc10(C_LocalTempEntity *, int, int);

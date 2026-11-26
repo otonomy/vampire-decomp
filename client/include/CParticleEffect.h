@@ -13,6 +13,8 @@ public:
 	int sub_10117fc0();
 	void vfunc5(int);
 	void sub_10117fe0();
+	void *sub_101180b0(const char *pMaterialName);	// GetPMaterial
+	void *sub_101180c0(int size, void *pMaterial, const class Vector &pos);	// AddParticle
 	int m_unk04;
 	int m_unk08;
 	int m_unk0c;

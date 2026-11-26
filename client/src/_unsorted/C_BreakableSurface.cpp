@@ -20,6 +20,104 @@ int C_BreakableSurface::vfunc15()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b7100 size=0x350
+#include "C_BreakableSurface.h"
+
+int sub_10114660(int, int);
+int sub_10114690();
+
+#define LEGAL(p, x, y) ((x) < (p)->m_nWidth && (y) < (p)->m_nHeight && (x) >= 0 && (y) >= 0)
+
+inline void SetPanelSolid(C_BreakableSurface *p, int x, int y, bool b)
+{
+	if (LEGAL(p, x, y))
+	{
+		if (b)
+			p->m_nPanelFlags[x * 16 + y] |= 1;
+		else
+			p->m_nPanelFlags[x * 16 + y] &= ~1;
+	}
+}
+
+inline void SetPanelStale(C_BreakableSurface *p, int x, int y, bool b)
+{
+	if (LEGAL(p, x, y))
+	{
+		if (b)
+			p->m_nPanelFlags[x * 16 + y] |= 2;
+		else
+			p->m_nPanelFlags[x * 16 + y] &= ~2;
+	}
+}
+
+inline void SetPanelStale2(C_BreakableSurface *p, int x, int y, bool b)
+{
+	if (p->sub_100b7450(x, y))
+	{
+		if (b)
+			p->m_nPanelFlags[x * 16 + y] |= 2;
+		else
+			p->m_nPanelFlags[x * 16 + y] &= ~2;
+	}
+}
+
+inline bool IsPanelStale(C_BreakableSurface *p, int x, int y)
+{
+	return (((unsigned int)p->m_nPanelFlags[x * 16 + y] >> 1) & 1) != 0;
+}
+
+void C_BreakableSurface::ReceiveMessage(int classID, bf_read &msg)
+{
+	sub_10114660((int)&msg, classID);
+	char nCommand = sub_10114690();
+	if (nCommand == 2)
+	{
+		m_nWidth = sub_10114690();
+		m_nHeight = sub_10114690();
+	}
+	else if (nCommand == 1)
+	{
+		int x, y;
+		for (x = 0; x < m_nWidth; x++)
+		{
+			for (y = 0; y < m_nHeight; y++)
+				SetPanelSolid(this, x, y, false);
+		}
+		for (x = 0; x < m_nWidth; x++)
+		{
+			for (y = 0; y < m_nHeight; y++)
+				sub_100b8130(x, y);
+		}
+	}
+	else if (nCommand == 0)
+	{
+		int x = sub_10114690();
+		int y = sub_10114690();
+		SetPanelSolid(this, x, y, false);
+		SetPanelStale(this, x, y, true);
+		SetPanelStale(this, x, y + 1, true);
+		SetPanelStale(this, x, y - 1, true);
+		SetPanelStale(this, x - 1, y, true);
+		SetPanelStale(this, x + 1, y, true);
+		SetPanelStale(this, x + 1, y + 1, true);
+		SetPanelStale2(this, x - 1, y + 1, true);
+		SetPanelStale2(this, x + 1, y - 1, true);
+		sub_100b7490(x - 1, y - 1, true);
+	}
+	else if (nCommand == 3)
+	{
+		for (int x = 0; x < m_nWidth; x++)
+		{
+			for (int y = 0; y < m_nHeight; y++)
+			{
+				if (IsPanelStale(this, x, y))
+					sub_100b8130(x, y);
+			}
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b7760 size=0x1e
 #include "C_BreakableSurface.h"
 
