@@ -525,6 +525,7 @@
 0x1000c3b0 func   ?_C_WeaponMelee_MingXiaoMelee_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_MingXiaoMelee_CreateObject
 0x1000c470 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_MingXiaoMelee@@@Z ClientClassInit
 0x1000c500 func   ?vfunc17@C_WeaponMelee_MingXiaoTentacle@@UAEHXZ C_WeaponMelee_MingXiaoTentacle::vfunc17
+0x1000c540 func   ?sub_1000c540@@YAHXZ sub_1000c540
 0x1000c590 func   ??_GC_WeaponMelee_MingXiaoTentacle@@UAEPAXI@Z ??_GC_WeaponMelee_MingXiaoTentacle@@UAEPAXI@Z
 0x1000c5b0 func   ?vfunc16@C_WeaponMelee_MingXiaoTentacle@@UAEHXZ C_WeaponMelee_MingXiaoTentacle::vfunc16
 0x1000c5c0 func   ?vfunc15@C_WeaponMelee_MingXiaoTentacle@@UAEHXZ C_WeaponMelee_MingXiaoTentacle::vfunc15
