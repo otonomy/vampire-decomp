@@ -63345,6 +63345,48 @@ int sub_100f7720()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f7730 size=0x264
+void sub_100f7730(unsigned char *pSrc, unsigned char *pDst, int srcWidth, int srcHeight, int dstWidth, int dstHeight)
+{
+	int x, y, c;
+	if (srcWidth == 1 && dstWidth == 1)
+	{
+		for (y = 0; y < dstHeight; y++)
+			for (c = 0; c < 4; c++)
+				pDst[y * 4 + c] = (pSrc[y * 8 + c] + pSrc[y * 8 + c + 4]) >> 2;
+		return;
+	}
+	if (srcHeight == 1 && dstHeight == 1)
+	{
+		for (x = 0; x < dstWidth; x++)
+			for (c = 0; c < 4; c++)
+				pDst[x * 4 + c] = (pSrc[x * 8 + c] + pSrc[x * 8 + c + 4]) >> 2;
+		return;
+	}
+	if (dstHeight == (srcHeight >> 1) && dstWidth == (srcWidth >> 1))
+	{
+		for (y = 0; y < dstHeight; y++)
+			for (x = 0; x < dstWidth; x++)
+				for (c = 0; c < 4; c++)
+					pDst[(y * dstWidth + x) * 4 + c] = (pSrc[((y * 2 + 1) * srcWidth + x * 2) * 4 + c] + pSrc[((y * 2 + 1) * srcWidth + x * 2) * 4 + c + 4] + pSrc[(y * 2 * srcWidth + x * 2) * 4 + c + 4] + pSrc[(y * 2 * srcWidth + x * 2) * 4 + c]) >> 2;
+		return;
+	}
+
+	float xScale = (float)srcWidth / dstWidth;
+	float yScale = (float)srcHeight / dstHeight;
+	for (y = 0; y < dstHeight; y++)
+	{
+		for (x = 0; x < dstWidth; x++)
+		{
+			int sy = (int)(y * yScale);
+			int sx = (int)(x * xScale);
+			for (c = 0; c < 4; c++)
+				pDst[(y * dstWidth + x) * 4 + c] = (pSrc[(sy * srcWidth + sx) * 4 + c] + pSrc[(sy * srcWidth + sx) * 4 + c + 4] + pSrc[((sy + 1) * srcWidth + sx) * 4 + c + 4] + pSrc[((sy + 1) * srcWidth + sx) * 4 + c]) >> 2;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100f79a0 size=0x1
 void sub_100f79a0()
 {
