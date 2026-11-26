@@ -5,14 +5,19 @@
 class CUnknown101ed170
 {
 public:
-	char pad0[0x10];
+	int m_id;
+	int m_n04;
+	int m_n08;
+	int m_n0c;
 	char *m_p10;
 	char *m_p14;
 	char *m_p18;
-	char pad1c[4];
+	int m_n1c;
 	char *m_p20;
 	char *m_p24;
 	char *m_p28;
 
 	void sub_10150bc0();
+	CUnknown101ed170(int id);	// 0x10150b90
+	~CUnknown101ed170();	// 0x10150bc0
 };
