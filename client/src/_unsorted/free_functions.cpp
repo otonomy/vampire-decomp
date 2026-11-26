@@ -71938,6 +71938,86 @@ int sub_10111ac0(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10111ee0 size=0x366
+#include "CUtlRBTree16.h"
+
+typedef CUtlRBTree16At<0x104dff2c> CPanelMetaTree;
+
+static inline unsigned short LeftChild(CUtlRBTree16 *t, unsigned short i) { return t->sub_10113190(i).m_Left; }
+static inline unsigned short RightChild(CUtlRBTree16 *t, unsigned short i) { return t->sub_10113190(i).m_Right; }
+static inline unsigned short Parent(CUtlRBTree16 *t, unsigned short i) { return t->sub_10113190(i).m_Parent; }
+static inline int Color(CUtlRBTree16 *t, unsigned short i) { return t->sub_10113190(i).m_Tag; }
+static inline bool IsLeftChild(CUtlRBTree16 *t, unsigned short i) { return LeftChild(t, Parent(t, i)) == i; }
+static inline void SetParent(CUtlRBTree16 *t, unsigned short i, unsigned short v) { t->m_pElements[i].m_Links.m_Parent = v; }
+static inline void SetLeftChild(CUtlRBTree16 *t, unsigned short i, unsigned short v) { t->m_pElements[i].m_Links.m_Left = v; }
+static inline void SetRightChild(CUtlRBTree16 *t, unsigned short i, unsigned short v) { t->m_pElements[i].m_Links.m_Right = v; }
+static inline void SetColor(CUtlRBTree16 *t, unsigned short i, int v) { t->m_pElements[i].m_Links.m_Tag = (unsigned short)v; }
+
+void CUtlRBTree16::sub_10111ee0(unsigned short elem)
+{
+	if (elem != InvalidIndex())
+	{
+		unsigned short x, y;
+
+		if (LeftChild(this, elem) == InvalidIndex() || RightChild(this, elem) == InvalidIndex())
+		{
+			y = elem;
+		}
+		else
+		{
+			y = RightChild(this, elem);
+			while (LeftChild(this, y) != InvalidIndex())
+				y = LeftChild(this, y);
+		}
+
+		if (LeftChild(this, y) != InvalidIndex())
+			x = LeftChild(this, y);
+		else
+			x = RightChild(this, y);
+
+		if (x != InvalidIndex())
+			SetParent(this, x, Parent(this, y));
+		if (y != m_Root)
+		{
+			if (IsLeftChild(this, y))
+				SetLeftChild(this, Parent(this, y), x);
+			else
+				SetRightChild(this, Parent(this, y), x);
+		}
+		else
+			m_Root = x;
+
+		int ycolor = Color(this, y);
+		if (y != elem)
+		{
+			SetParent(this, y, Parent(this, elem));
+			SetRightChild(this, y, RightChild(this, elem));
+			SetLeftChild(this, y, LeftChild(this, elem));
+
+			if (elem != m_Root)
+			{
+				if (IsLeftChild(this, elem))
+					SetLeftChild(this, Parent(this, elem), y);
+				else
+					SetRightChild(this, Parent(this, elem), y);
+			}
+			else
+				m_Root = y;
+
+			const CPanelMetaTree *tree = (const CPanelMetaTree *)this;
+			if (tree->Links(y).m_Left != InvalidIndex())
+				SetParent(this, tree->Links(y).m_Left, y);
+			if (tree->Links(y).m_Right != InvalidIndex())
+				SetParent(this, tree->Links(y).m_Right, y);
+			SetColor(this, y, tree->Links(elem).m_Tag);
+		}
+
+		if (x != InvalidIndex() && ycolor == 1)
+			sub_101131f0(x);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10112250 size=0x19
 struct E101b6b60 { unsigned short a; unsigned short pad; int b; };
 
