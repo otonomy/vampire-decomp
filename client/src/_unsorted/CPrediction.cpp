@@ -29,6 +29,160 @@ void CPrediction::vfunc2()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10121ea0 size=0x399
+#include "Vector.h"
+#include "QAngle.h"
+#include "CPrediction.h"
+#include "C_BasePlayer.h"
+#include "CGlobalVarsBase.h"
+#include "CVStatList_t.h"
+#include "ehandle.h"
+
+struct CMoveDataView
+{
+    bool m_bFirstRunOfFunctions;    // 0x00
+    int m_nPlayerHandle;            // 0x04
+    int m_nImpulseCommand;          // 0x08
+    QAngle m_vecViewAngles;         // 0x0c
+    int m_unk18, m_unk1c, m_unk20;
+    int m_nButtons;                 // 0x24
+    int m_unk28;
+    float m_flForwardMove;          // 0x2c
+    float m_flSideMove;             // 0x30
+    float m_flUpMove;               // 0x34
+    int m_unk38;
+    int m_unk3c;
+    Vector m_vecVelocity;           // 0x40
+    int m_unk4c, m_unk50, m_unk54;
+    QAngle m_vecAngles;             // 0x58
+    QAngle m_vecOldAngles;          // 0x64
+    QAngle m_vecAbsAngles;          // 0x70
+    int m_unk7c[(0xa4 - 0x7c) / 4];
+    int m_unka4;
+    int m_unka8;
+    float m_flac;
+    int m_unkb0;
+    float m_flb4;
+    int m_unkb8, m_unkbc;
+    int m_unkc0;
+    int m_unkc4;
+    int m_unkc8, m_unkcc;
+    bool m_bd0;
+};
+
+struct CUserCmdView
+{
+    int m_unk00[5];
+    QAngle viewangles;      // 0x14
+    float forwardmove;      // 0x20
+    float sidemove;         // 0x24
+    float upmove;           // 0x28
+    int m_unk2c;
+    int buttons;            // 0x30
+    int m_unk34;
+    unsigned char impulse;  // 0x38
+};
+
+class CUnknown1009f760 { public: char *sub_1009f760(); };
+class CUnknown1014d030 { public: float sub_1014d030(); };
+class CUnknown1014d040 { public: float sub_1014d040(); };
+extern CUnknown1014d030 g_105e8120;
+
+class IClientVehicleView
+{
+public:
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+    virtual void SetupMove(C_BasePlayer *player, CUserCmdView *ucmd, void *pHelper, CMoveDataView *move);
+};
+
+bool sub_1008c770(void *pStudioHdr, int iSequence, float flCycleFrom, float flCycleTo, const float *poseParameter, Vector &deltaPos, QAngle &deltaAngles);
+
+#define P(T, off) (*(T *)((char *)player + (off)))
+
+void CPrediction::vfunc16(C_BasePlayer *player, CUserCmdView *ucmd, void *pHelper, CMoveDataView *move)
+{
+    move->m_bFirstRunOfFunctions = vfunc14();
+    move->m_nPlayerHandle = P(int, 0xe4);
+    move->m_nPlayerHandle = P(int, 0xe4);
+    player->sub_1009fa70();
+    move->m_vecVelocity = P(Vector, 0xb4);
+    move->m_vecAbsAngles = *(QAngle *)((CUnknown1009f760 *)player)->sub_1009f760();
+    move->m_vecOldAngles = move->m_vecAngles;
+    move->m_unk28 = P(int, 0x1708);
+    move->m_unk3c = P(int, 0x18cc);
+    move->m_vecAngles = ucmd->viewangles;
+    move->m_vecViewAngles = ucmd->viewangles;
+    move->m_nImpulseCommand = ucmd->impulse;
+    move->m_nButtons = ucmd->buttons;
+    if (!P(char, 0x160d))
+    {
+        move->m_nButtons = ucmd->buttons;
+    }
+    else
+    {
+        move->m_nButtons = ucmd->buttons & ~0x801;
+        P(int, 0x18c4) &= ~0x801;
+    }
+    move->m_unka8 = 0;
+    move->m_unka4 = 0;
+
+    CVStatList_t *stats = ((CVStatListSet *)((char *)player + 0x1164))->Find(0);
+    move->m_flac = (float)(stats->sub_1015dbd0(2) * 10 - 10);
+    P(float, 0x160) = g_105e8120.sub_1014d030();
+    move->m_unkc0 = P(int, 0x1644);
+    move->m_flb4 = ((CUnknown1014d040 *)&g_105e8120)->sub_1014d040();
+    move->m_unkb0 = 0;
+    move->m_unkc4 = P(int, 0x1078);
+    move->m_bd0 = false;
+
+    if ((player->sub_100a2450() & 0x40) || P(char, 0x160d))
+    {
+        move->m_flForwardMove = 0;
+        move->m_flSideMove = 0;
+        move->m_flUpMove = 0;
+    }
+    else if (P(unsigned char, 0x16f4) & 0x80)
+    {
+        move->m_flForwardMove = 0;
+        move->m_flSideMove = 0;
+        move->m_flUpMove = 0;
+        void *hdr = (void *)player->sub_1008f900(-1);
+        if (hdr && P(int, 0x63c) >= 0)
+        {
+            float rate = player->vfunc138(P(int, 0x63c));
+            float flPrev = (P(float, 0x19f0) - P(float, 0x70)) * rate + P(float, 0x648);
+            float flCur = rate * gpGlobals->frametime + flPrev;
+            if (flPrev < 0.0f)
+                flPrev = 0.0f;
+            if (flCur > 1.0f)
+                flCur = 1.0f;
+            Vector deltaPos(0, 0, 0);
+            QAngle deltaAngles(0, 0, 0);
+            if (flPrev < flCur)
+            {
+                if (sub_1008c770(hdr, P(int, 0x63c), flPrev, flCur, (float *)((char *)player + 0x5d4), deltaPos, deltaAngles))
+                {
+                    move->m_flForwardMove = deltaPos.x / gpGlobals->frametime;
+                    move->m_flSideMove = deltaPos.y / gpGlobals->frametime;
+                    move->m_flUpMove = deltaPos.z / gpGlobals->frametime;
+                    move->m_bd0 = true;
+                }
+            }
+        }
+    }
+    else
+    {
+        move->m_flForwardMove = ucmd->forwardmove;
+        move->m_flSideMove = ucmd->sidemove;
+        move->m_flUpMove = ucmd->upmove;
+    }
+
+    C_BaseEntity *pVehicle = (C_BaseEntity *)P(CBaseHandle, 0x19c4).Get();
+    if (pVehicle)
+        ((IClientVehicleView *)pVehicle->vfunc63())->SetupMove(player, ucmd, pHelper, move);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101225f0 size=0x250
 template <class T> __forceinline T pcd_stage(T x) { return x; }
 #include "CPrediction.h"
