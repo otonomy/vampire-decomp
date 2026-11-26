@@ -75272,6 +75272,100 @@ void C_BaseEntity::sub_1011d190(float frametime)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011d250 size=0x33b
+#include "C_BaseEntity.h"
+#include "CGameTrace.h"
+#include "CGlobalVarsBase.h"
+#include "ScopeTrace.h"
+#include "CUnknown100353c0.h"
+#include "Vector.h"
+#include "QAngle.h"
+
+extern Vector g_104d4970;
+extern QAngle g_104d5190;
+
+struct CTossEntView
+{
+	char m_pad0000[0xa8];
+	Vector m_vecVelocity;	// 0xa8
+	char m_pad00b4[0xc0 - 0xb4];
+	QAngle m_vecAngVelocity;	// 0xc0
+	char m_pad00cc[0x154 - 0xcc];
+	Vector m_vecBaseVelocity;	// 0x154
+};
+
+class CUnknown100a2410
+{
+public:
+	void sub_100a2410(int);
+};
+
+#define TOSS ((CTossEntView *)this)
+
+inline void TossCopyTrace(CGameTrace &dst, const CGameTrace &src)
+{
+	((CUnknown100353c0 *)&dst)->sub_100eb150((const CUnknown100353c0 *)&src);
+	dst.m_fractionleftsolid = src.m_fractionleftsolid;
+	dst.m_surfaceName = src.m_surfaceName;
+	*(int *)&dst.m_surfaceProps = *(const int *)&src.m_surfaceProps;
+	dst.m_hitgroup = src.m_hitgroup;
+	dst.m_physicsbone = src.m_physicsbone;
+	dst.m_pEnt = src.m_pEnt;
+	dst.m_hitbox = src.m_hitbox;
+}
+
+void C_BaseEntity::sub_1011d250()
+{
+	ScopeTrace st("CBaseEntity::PhysicsToss", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	CGameTrace trace;
+	Vector move;
+
+	sub_1011c5c0();
+
+	if (!sub_100a29b0(0))
+		return;
+
+	if (TOSS->m_vecVelocity.z > 0.0f || !vfunc104() || (vfunc104()->sub_100a2450() & 0x8002080))
+		((CUnknown100a2410 *)this)->sub_100a2410(1);
+
+	if (sub_100a2450() & 1) {
+		if (TOSS->m_vecVelocity == g_104d4970) {
+			TOSS->m_vecAngVelocity = g_104d5190;
+			if (TOSS->m_vecBaseVelocity == g_104d4970)
+				return;
+		}
+	}
+
+	sub_1011c7f0();
+
+	if (GetSolid() == 6 && !(sub_100a2450() & 0x400)) {
+		sub_1011c9a0(move);
+	} else {
+		VectorAdd(TOSS->m_vecBaseVelocity, TOSS->m_vecVelocity, TOSS->m_vecVelocity);
+		VectorScale(TOSS->m_vecVelocity, gpGlobals->frametime, move);
+		TOSS->m_vecVelocity -= TOSS->m_vecBaseVelocity;
+		sub_1011c7f0();
+	}
+
+	sub_1011d190(gpGlobals->frametime);
+
+	TossCopyTrace(trace, vfunc105(move));
+
+	sub_1011c7f0();
+
+	if (trace.m_allsolid) {
+		TOSS->m_vecVelocity = g_104d4970;
+		TOSS->m_vecAngVelocity = g_104d5190;
+		return;
+	}
+
+	if (trace.m_fraction != 1.0f)
+		sub_1011cbd0(trace, move);
+
+	sub_1011cf40();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011d590 size=0x1
 void sub_1011d590()
 {
