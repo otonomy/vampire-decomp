@@ -828,6 +828,101 @@ bool C_BaseEntity::vfunc71()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a08f0 size=0x2b8
+#include "C_BaseEntity.h"
+#include "ConVar.h"
+#include "QAngle.h"
+#include "engineclient.h"
+
+struct InterpEntry_100a08f0
+{
+	float time;
+	Vector origin;
+	QAngle angles;
+};
+
+struct C_BaseEntityInterpView
+{
+	bool sub_100a2ba0();
+	void sub_100a1ef0(float t, InterpEntry_100a08f0 **pPrev, InterpEntry_100a08f0 **pNext);
+};
+
+extern ConVar g_1049e1a8;
+extern int g_104e16fc;
+extern int g_104e16f4;
+extern Vector g_104d4970;
+
+void sub_10108fd0(const Vector &start, float scale, const Vector &direction, Vector &dest);
+void sub_100ccf50(const QAngle &start, const QAngle &end, QAngle &output, float frac);
+
+bool C_BaseEntity::vfunc73()
+{
+	if (sub_100a2600())
+		return true;
+	if (((C_BaseEntityInterpView *)this)->sub_100a2ba0())
+		return true;
+
+	sub_100a2030((char *)this + 0x2b4);
+	sub_100a2100(*(QAngle *)((char *)this + 0x2c0));
+
+	if (!g_1049e1a8.GetInt())
+		return true;
+	if (!*(int *)((char *)this + 0x40))
+		return true;
+	IClientCollideable *pCollide = (IClientCollideable *)((char *)this + 0xc);
+	if (pCollide->GetSolid() == 11)
+		return true;
+	if (pCollide->GetSolid() == 12)
+		return true;
+	if (engine->GetMaxClients() == 1)
+		return true;
+	if (g_104e16fc && g_104e16f4 == *(int *)((char *)this + 0x44))
+		return true;
+
+	float t = engine->Time(0) - render->vfunc42();
+	InterpEntry_100a08f0 *a, *b;
+	((C_BaseEntityInterpView *)this)->sub_100a1ef0(t, &a, &b);
+	if (!a || !b)
+		return true;
+
+	float tb = b->time;
+	float ta = a->time;
+	float dt = t - tb;
+	if (dt < 0)
+	{
+		sub_100a2030(&b->origin);
+		sub_100a2100(b->angles);
+		return true;
+	}
+	if (tb == 0)
+		return true;
+	if (b->origin == g_104d4970 && a->origin != g_104d4970)
+	{
+		sub_100a2030(&a->origin);
+		sub_100a2100(a->angles);
+		return true;
+	}
+	if (ta == tb)
+		return true;
+
+	Vector delta;
+	VectorSubtract(a->origin, b->origin, delta);
+	float frac = dt / (ta - tb);
+	if (frac < 0.0)
+		return true;
+	if (frac > 1.0)
+		frac = 1.0f;
+
+	Vector newOrigin;
+	sub_10108fd0(b->origin, frac, delta, newOrigin);
+	sub_100a2030(&newOrigin);
+	QAngle newAngles;
+	sub_100ccf50(b->angles, a->angles, newAngles, frac);
+	sub_100a2100(newAngles);
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a0bb0 size=0xb
 #include "C_BaseEntity.h"
 namespace lifted {
