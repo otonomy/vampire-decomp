@@ -11,6 +11,107 @@ CHudManagerPanel *pcd_emit_100586e0() { return new CHudManagerPanel; }
 // TARGET: ??_GCHudManagerPanel@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x100587b0 size=0x602
+#include "CHudManagerPanel.h"
+#include "CHudManager.h"
+#include "engineclient.h"
+#include "CSignUI.h"
+#include "CHudTimerUI.h"
+#include "CHudInfo.h"
+#include "CHudInfoBar.h"
+#include "CProgBar.h"
+#include "CHudDialog.h"
+#include "CDiscipline.h"
+#include "CBloodBar.h"
+#include "CHealthAnkh.h"
+#include "CFeedBar.h"
+#include "CBossHealthBar.h"
+#include "CFrenzyBar.h"
+#include "CHudUseIcon.h"
+#include "CStealth.h"
+#include "CAmmoCounter.h"
+#include "CPhysicsHand.h"
+#include "CTargeted.h"
+#include "CItemInfo.h"
+#include "CMoneyBar.h"
+#include "CHudAreaIcon.h"
+#include "CCredits.h"
+
+struct CUnknown10057710 { int sub_10057710(int); };
+
+typedef int (*HudHook_t)(const char *, int, void *);
+int sub_10058090(int, int, int);
+int sub_100580b0(int, int, int);
+int sub_100580f0(int, int, int);
+int sub_100580d0(int, int, int);
+int sub_10058290(int, int, int);
+int sub_10058110(int, int, int);
+int sub_10058130(int, int, int);
+int sub_10058150(int, int, int);
+int sub_10058170(int, int, int);
+int sub_10058190(int, int, int);
+int sub_100581b0(int, int, int);
+int sub_100581d0(int, int, int);
+int sub_100581f0(int, int, int);
+int sub_10058210(int, int, int);
+int sub_10058230(int, int, int);
+int sub_10058250(int, int, int);
+int sub_10058270(int, int, int);
+int sub_100582b0(int, int, int);
+int sub_100582d0(int, int, int);
+int sub_100582f0(int, int, int);
+
+#define ADD(x) ((CUnknown10057710 *)m_pChild)->sub_10057710((int)(IManagedHudElement *)(x))
+
+void CHudManagerPanel::vfunc0(vgui2::Panel *parent)
+{
+	engine->vfunc29("SignUI", (HudHook_t)sub_10058090);
+	engine->vfunc29("HUDTimer", (HudHook_t)sub_100580b0);
+	engine->vfunc29("InfoCtrl", (HudHook_t)sub_100580f0);
+	engine->vfunc29("InfoBarCtrl", (HudHook_t)sub_100580d0);
+	engine->vfunc29("ProgBar", (HudHook_t)sub_10058290);
+	engine->vfunc29("DialogCtrl", (HudHook_t)sub_10058110);
+	engine->vfunc29("DiscCtrl", (HudHook_t)sub_10058130);
+	engine->vfunc29("BloodCtrl", (HudHook_t)sub_10058150);
+	engine->vfunc29("FaithCtrl", (HudHook_t)sub_10058170);
+	engine->vfunc29("Health", (HudHook_t)sub_10058190);
+	engine->vfunc29("AgrDmg", (HudHook_t)sub_100581b0);
+	engine->vfunc29("Damage", (HudHook_t)sub_100581d0);
+	engine->vfunc29("FeedBar", (HudHook_t)sub_100581f0);
+	engine->vfunc29("BossHP", (HudHook_t)sub_10058210);
+	engine->vfunc29("FrenzyBar", (HudHook_t)sub_10058230);
+	engine->vfunc29("TraitFX", (HudHook_t)sub_10058250);
+	engine->vfunc29("Discipline", (HudHook_t)sub_10058270);
+	engine->vfunc29("RangedAcc", (HudHook_t)sub_100582b0);
+	engine->vfunc29("ForceCam", (HudHook_t)sub_100582d0);
+	engine->vfunc29("Credits", (HudHook_t)sub_100582f0);
+
+	m_pChild = (HudChild_t *)new CHudManager(parent);
+	ADD(new CDiscipline((int)m_pChild));
+	ADD(new CBloodBar((int)m_pChild));
+	ADD(new CFeedBar((int)m_pChild));
+	ADD(new CBossHealthBar((int)m_pChild));
+	ADD(new CFrenzyBar((int)m_pChild));
+	ADD(new CHudDialog((int)m_pChild));
+	ADD(new CHealthAnkh((int)m_pChild));
+	ADD(new CHudUseIcon((int)m_pChild));
+	ADD(new CHudInfo((int)m_pChild));
+	ADD(new CStealth((int)m_pChild));
+	ADD(new CProgBar((int)m_pChild));
+	ADD(new CAmmoCounter((int)m_pChild));
+	ADD(new CPhysicsHand((int)m_pChild));
+	ADD(new CTargeted((int)m_pChild));
+	ADD(new CItemInfo((int)m_pChild));
+	ADD(new CMoneyBar((int)m_pChild));
+	ADD(new CHudTimerUI((int)m_pChild));
+	ADD(new CHudInfoBar((int)m_pChild));
+	ADD(new CSignUI((int)m_pChild));
+	ADD(new CHudAreaIcon((int)m_pChild));
+	ADD(new CCredits((int)m_pChild));
+	m_nCount = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10058dc0 size=0xf
 #include "CHudManagerPanel.h"
 namespace lifted {
