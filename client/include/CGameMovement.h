@@ -63,6 +63,7 @@ public:
 	float *sub_100e6ef0();
 	void sub_100ec660(C_BaseEntity *pNew);
 	void sub_100e85b0();
+	void sub_100e7a20();	// "CGameMovement::CheckParameters"
 	float sub_100e7870();	// the constraint speed factor: 1.0f unless the origin lies outside the inner constraint sphere and the wish velocity points away from its center
 		// "CGameMovement::CheckVelocity" (this in ecx, no args): skipped for move types 2 / 9; clamps the player's move speed (m_flMaxSpeed +0x38, client max +0x3c), scales the forward / side / up moves (+0x2c/+0x30/+0x34) by speed/|move| when they exceed it, applies the surface factor; the view-punch block (m_fFlags24 & 0x20000, not bit 2, once per m_bDc +0xdc) saves +0x58/+0x5c/+0x60, calls slot 6(QAngle, Vector +0x40, two tuning floats) and scales the moves; zeroes the moves for flags 0x20 / 8 or when the moved entity is dead; then the view offset: restores the saved vector, else (* (this+8))->slot94 checks 2/9 and slot 6 builds the eye offset with the global objects 0x109eee54 / 0x109ef31c, and the pitch at +0x5c is corrected by -360.0f when above 180.0f
 	Vector m_vecView;	// 0x5c
