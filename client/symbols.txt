@@ -325,6 +325,7 @@
 0x10008530 func   ?_C_WeaponMelee_Claws_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_Claws_CreateObject
 0x100085f0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_Claws@@@Z ClientClassInit
 0x10008680 func   ?vfunc17@C_WeaponMelee_Fists@@UAEHXZ C_WeaponMelee_Fists::vfunc17
+0x100086c0 func   ?sub_100086c0@@YAHXZ sub_100086c0
 0x10008710 func   ??_GC_WeaponMelee_Fists@@UAEPAXI@Z ??_GC_WeaponMelee_Fists@@UAEPAXI@Z
 0x10008730 func   ?vfunc16@C_WeaponMelee_Fists@@UAEHXZ C_WeaponMelee_Fists::vfunc16
 0x10008740 func   ?vfunc15@C_WeaponMelee_Fists@@UAEHXZ C_WeaponMelee_Fists::vfunc15
