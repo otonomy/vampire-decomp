@@ -12,8 +12,8 @@ public:
 	char m_pad0014[0x410 - 0x14];
 	int m_nPixelWidth;	// 0x410
 	int m_nPixelHeight;	// 0x414
-	int m_unk418;
-	int m_unk41c;
+	float m_flWidth;	// 0x418: the screen's world width
+	float m_flHeight;	// 0x41c: its world height
 	int m_unk420;
 	int m_unk424;
 	int m_nButtonPressed;	// 0x428
@@ -32,6 +32,7 @@ public:
 	void sub_100c9270(int);
 	void sub_100c9680(Vector &v1, Vector &v2, Vector &v3);
 	void sub_100c9820();
+	void sub_100c9860();	// draws the screen's quad (m_flWidth x m_flHeight) with the panel material (m_b) at m_matrix
 	virtual int vfunc64(int, int, int);
 	bool IsVisibleToTeam(int nTeam);	// 0x100c9320: always true here
 	bool sub_100c9740(const struct Ray_t &ray, float *u, float *v, float *t);	// IntersectWithRay-like (ray, &u, &v, &t)

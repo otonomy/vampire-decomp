@@ -403,11 +403,11 @@ public:
 	virtual void vfunc67();
 	virtual void vfunc68();
 	virtual void vfunc69();
-	virtual void vfunc70();
-	virtual void vfunc71();
-	virtual void vfunc72();
+	virtual void vfunc70(int);	// slot 70: MatrixMode
+	virtual void vfunc71();	// slot 71: PushMatrix
+	virtual void vfunc72();	// slot 72: PopMatrix
 	virtual void vfunc73();
-	virtual void vfunc74();
+	virtual void vfunc74(const VMatrix &);	// slot 74: LoadMatrix
 	virtual void vfunc75();
 	virtual void vfunc76();
 	virtual void vfunc77();
