@@ -11838,6 +11838,32 @@ template <> int ClientClassInit<DT_ItemGWarrens4Passkey::ignored>(DT_ItemGWarren
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001c940 size=0x45
+namespace lifted {
+extern char g_1020fde4;
+extern char g_1020fdf8;
+extern char g_1020fe34;
+extern char g_1020fe6c;
+extern char g_1020fec4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001c940()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1020fec4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020fe6c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1020fe34;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1020fdf8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1020fde4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001c9d0 size=0x6
 namespace lifted {
 extern char g_102e464c;
