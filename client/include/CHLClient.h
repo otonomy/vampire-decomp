@@ -10,7 +10,7 @@ class CHLClient : public IBaseClientDLL
 {
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the slots CHLClient adds to its base's vtable: 0-44, vfuncK at slot K
-    virtual void vfunc0();
+    virtual int vfunc0(void *(*appSystemFactory)(const char *, int *), void *(*physicsFactory)(const char *, int *), class CGlobalVarsBase *pGlobals);
     virtual void vfunc1();
     virtual void vfunc2(int a);
     virtual void vfunc3();

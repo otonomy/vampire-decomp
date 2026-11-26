@@ -341,7 +341,7 @@ public:
 	virtual void vfunc5();
 	virtual void vfunc6();
 	virtual void vfunc7();
-	virtual void vfunc8();
+	virtual void *vfunc8(const char *, int *);
 	virtual void vfunc9();
 	virtual void vfunc10();
 	virtual void *vfunc11(const char *, bool *, bool);	// slot 11; seen as FindVar 1
