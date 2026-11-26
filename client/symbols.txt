@@ -1813,6 +1813,7 @@
 0x10025630 func   ?_C_ItemKSarcophagusKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKSarcophagusKey_CreateObject
 0x100256f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKSarcophagusKey@@@Z ClientClassInit
 0x10025780 func   ?vfunc17@C_ItemKOHFrontKey@@UAEHXZ C_ItemKOHFrontKey::vfunc17
+0x100257c0 func   ?sub_100257c0@@YAHXZ sub_100257c0
 0x10025810 func   ??_GC_ItemKOHFrontKey@@UAEPAXI@Z ??_GC_ItemKOHFrontKey@@UAEPAXI@Z
 0x10025830 func   ?vfunc16@C_ItemKOHFrontKey@@UAEHXZ C_ItemKOHFrontKey::vfunc16
 0x10025840 func   ?vfunc15@C_ItemKOHFrontKey@@UAEHXZ C_ItemKOHFrontKey::vfunc15
