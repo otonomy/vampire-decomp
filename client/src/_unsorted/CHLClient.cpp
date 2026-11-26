@@ -257,9 +257,9 @@ int CHLClient::vfunc19()
 // END FUNCTION
 
 // FUNCTION: 0x100cbbc0 size=0x77
+#include "CInput.h"
 #include "CHLClient.h"
 
-extern void *g_1027ba58;
 extern void *g_104a5808;
 
 void sub_1009db70(int);
@@ -274,20 +274,13 @@ struct EngV
 	virtual void vfunc16(int, int);
 };
 
-struct ModeV
-{
-	virtual void m0();
-	virtual void m1();
-	virtual void m2();
-	virtual void vfunc3(int, int, int, int, int, int);
-};
 
 void CHLClient::vfunc20(int a0, int a1, int a2, int a3, int a4, int a5)
 {
 	((EngV *)g_104a5808)->vfunc16(0xac, 0);
 	sub_1009db70(1);
 	sub_100923c0(1, 0);
-	((ModeV *)g_1027ba58)->vfunc3(a0, a1, a2, a3, a4, a5);
+	input->vfunc3(a0, a1, a2, a3, a4, a5);
 	sub_100923c0(0, 0);
 	((EngV *)g_104a5808)->vfunc16(0xac, 1);
 	sub_1009db70(0);

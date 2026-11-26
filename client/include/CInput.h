@@ -45,7 +45,7 @@ public:
     virtual void vfunc0();
     virtual void vfunc1();
     virtual int vfunc2(int bResetState);	// GetButtonBits
-    virtual void vfunc3();
+    virtual void vfunc3(int a0, int a1, int a2, int a3, int a4, int a5);	// SDK IInput::CreateMove (frame times and packet loss are floats there); CHLClient::vfunc20 forwards six dwords
     virtual void vfunc4(void *, int, int, int);
     virtual void vfunc5(int, int, int);
     virtual void vfunc6(int, int, int);
@@ -69,7 +69,7 @@ public:
     virtual bool vfunc24();
     virtual void vfunc25();
     virtual bool vfunc26();
-    virtual void vfunc27();
+    virtual float vfunc27();	// CViewRender::sub_10190390 takes fabs() of it
     virtual void vfunc28();
     virtual int vfunc29();
     virtual float vfunc30();
