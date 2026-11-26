@@ -130229,6 +130229,18 @@ void sub_10198460()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101985e0 size=0x60
+#include "ScopeTrace.h"
+
+extern int g_10619908;
+
+void sub_101985e0()
+{
+	ScopeTrace scope("::ScreenDelayTextureRestoreFunc", g_102de300);
+	g_10619908 = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101987e0 size=0xa4
 #include "engineclient.h"
 #include "ScopeTrace.h"
