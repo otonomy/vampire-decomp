@@ -110,6 +110,111 @@ int vgui2::PropertySheet::vfunc120()
 int vgui2::PropertySheet::vfunc15(int x) { vgui2::Panel *p = *(vgui2::Panel **)((char *)this + 0x70); if (p) return p->vfunc15(x); }
 // END FUNCTION
 
+// FUNCTION: 0x101c8ab0 size=0x245
+#include "vgui2__PropertySheet.h"
+#define VV(n) virtual void n();
+#define V5(p) VV(p##0) VV(p##1) VV(p##2) VV(p##3) VV(p##4)
+#define V10(p) V5(p##a) V5(p##b)
+struct SChild
+{
+	V5(a) VV(a5)
+	virtual void vfunc6();
+	V10(b) VV(c0) VV(c1) VV(c2) VV(c3)
+	virtual void SetVisible(int b);
+	V10(d) V10(e) V5(f) VV(g0) VV(g1)
+	virtual void vfunc49();
+	V10(h) VV(i0) VV(i1) VV(i2)
+	virtual void vfunc63(bool b);
+	V10(j) V10(k) V10(l) V10(m) V5(n) VV(o0) VV(o1)
+	virtual void vfunc111(int n);
+	V5(p) VV(q0)
+	virtual void vfunc118(int n);
+	void sub_101a9950(int x, int y, int w, int h);
+};
+struct SSurface
+{
+	V10(a) V10(b) V10(c) V5(d) VV(e0) VV(e1) VV(e2) VV(e3)
+	virtual void GetScreenSize(int *w, int *h);
+};
+struct SColorB { VV(a0) VV(a1) VV(a2) VV(a3) virtual int vfunc4(const char *psz); };
+struct SColorA { VV(a0) VV(a1) VV(a2) VV(a3) virtual SColorB *vfunc4(int a); };
+struct SPS
+{
+	V10(a) V10(b) V10(c) V10(d) V10(e) V10(f) V10(g) V10(h) V10(i) V10(j) V10(k) V10(l) V5(m) VV(n0) VV(n1)
+	virtual void vfunc127(int a);
+	char pad[0x64 - 0x4];
+	int m_nPanels;
+	char pad2[4];
+	SChild **m_ppPanels;
+	SChild *m_pPage;
+	SChild *m_pActive;
+	int m_nTabWide;
+	char pad3[4];
+	int m_nGap;
+	int m_nFont;
+	char m_szScheme[0x20];
+	bool m_bFlag;
+	void sub_101a9980(int *x, int *y, int *w, int *h);
+	int sub_101aa220();
+};
+extern SSurface *sub_101ac8d0();
+extern SColorA *sub_101ac8c0();
+#define PANEL(i) ((i) >= 0 && (i) < ps->m_nPanels ? ps->m_ppPanels[i] : (SChild *)0)
+// TARGET: vgui2::PropertySheet::vfunc101
+void vgui2::PropertySheet::vfunc101()
+{
+	SPS *ps = (SPS *)this;
+	Panel::vfunc101();
+	if (!ps->m_pPage)
+		ps->vfunc127(0);
+	int sw, sh;
+	sub_101ac8d0()->GetScreenSize(&sw, &sh);
+	int x, y, wide, tall;
+	ps->sub_101a9980(&x, &y, &wide, &tall);
+	if (ps->m_pPage) {
+		double s = sh * 0.0013020833333333333;
+		double v = s * 28.0 + ps->m_nGap;
+		ps->m_pPage->sub_101a9950(0, (int)v, wide, (int)(tall - v));
+	}
+	int n = ps->m_nPanels;
+	int xpos = 0;
+	int color;
+	if (ps->m_szScheme[0])
+		color = sub_101ac8c0()->vfunc4(ps->sub_101aa220())->vfunc4(ps->m_szScheme);
+	else
+		color = -1;
+	for (int i = 0; i < n; i++) {
+		SChild *c = PANEL(i);
+		c->vfunc111(ps->m_nFont);
+		if (color != -1) {
+			c = PANEL(i);
+			c->vfunc118(color);
+		}
+		c = PANEL(i);
+		c->vfunc63(ps->m_bFlag);
+		if (PANEL(i) == ps->m_pActive) {
+			double s = sh * 0.0013020833333333333;
+			ps->m_pActive->sub_101a9950(xpos, (int)(s * 2.0 + ps->m_nGap), ps->m_nTabWide, (int)(s * 27.0));
+		} else {
+			c = PANEL(i);
+			double s = sh * 0.0013020833333333333;
+			c->sub_101a9950(xpos, (int)(s * 4.0 + ps->m_nGap), ps->m_nTabWide, (int)(s * 25.0));
+		}
+		c = PANEL(i);
+		c->SetVisible(1);
+		xpos += ps->m_nTabWide + 1;
+	}
+	if (ps->m_pPage) {
+		ps->m_pPage->vfunc49();
+		ps->m_pPage->vfunc6();
+	}
+	if (ps->m_pActive) {
+		ps->m_pActive->vfunc49();
+		ps->m_pActive->vfunc6();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c8d00 size=0x3e
 #include "vgui2__PropertySheet.h"
 struct VecView
