@@ -77574,6 +77574,69 @@ float sub_100fdb50(const Vector *start, const Vector *dir, float dist, CGameTrac
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fdd80 size=0x217
+#include "Vector.h"
+#include "CGameTrace.h"
+
+struct F3 { float x, y, z; };
+struct CamV
+{
+	char m_pad[0x118];
+	F3 m_v118;
+	F3 m_v124;
+	int m_i130;
+	float m_f134;
+	float GetBlend() const { return m_f134; }
+};
+
+extern F3 g_102bcf50[3];
+void sub_10109010(const Vector *ang, Vector *fwd);
+float sub_100fdb50(const Vector *start, const Vector &dir, float dist, CGameTrace *tr);
+float sub_100fdb30(float t);
+
+#define clamp_100fdd80(val, min, max) (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)))
+
+// TARGET: sub_100fdd80
+void __fastcall sub_100fdd80(CamV *self, int edx, const Vector *start, float a2, float a3, float thr, bool flag)
+{
+	int i;
+	int bestIdx = -1;
+	float best = -1.0f;
+	for (i = 0; i < 3; i++)
+	{
+		Vector ang(g_102bcf50[i].x, a2 + g_102bcf50[i].y, 0.0f);
+		Vector fwd;
+		sub_10109010(&ang, &fwd);
+		float scaled = a3 * g_102bcf50[i].z;
+		CGameTrace tr;
+		float frac = sub_100fdb50(start, -fwd, scaled, &tr) / scaled;
+		if (frac > best)
+		{
+			best = frac;
+			bestIdx = i;
+		}
+	}
+	if (!(best < thr) || flag)
+	{
+		if (flag)
+		{
+			self->m_v118 = g_102bcf50[bestIdx];
+			self->m_v124 = g_102bcf50[bestIdx];
+			self->m_f134 = 1.0f;
+		}
+		else
+		{
+			float u = sub_100fdb30(clamp_100fdd80(self->GetBlend(), 0.0f, 1.0f));
+			self->m_v118.x = self->m_v118.x + (self->m_v124.x - self->m_v118.x) * u;
+			self->m_v118.y = self->m_v118.y + (self->m_v124.y - self->m_v118.y) * u;
+			self->m_v118.z = self->m_v118.z + (self->m_v124.z - self->m_v118.z) * u;
+			self->m_v124 = g_102bcf50[bestIdx];
+			self->m_f134 = 0.0f;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ff030 size=0x68
 #include "Vector.h"
 
