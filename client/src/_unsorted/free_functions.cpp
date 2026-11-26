@@ -137193,6 +137193,181 @@ void CViewRender_1019b030::sub_1019b030(float intensity, const CViewSetup_1019b0
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019b370 size=0x538
+#include "CViewRender.h"
+#include "CViewSetup.h"
+#include "ScopeTrace.h"
+#include "ConVar.h"
+#include "CInput.h"
+#include "CParticleMgr.h"
+#include "engineclient.h"
+
+struct ProfClockV
+{
+	virtual double vfunc0();
+};
+
+struct ProfNodeV
+{
+	int m_unk00[4];
+	int m_n10;	// 0x10
+	char m_pad14[0x100 - 0x14];
+	double m_fl100;	// 0x100
+	char m_pad108[0x1d8 - 0x108];
+	double m_fl1d8;	// 0x1d8
+	char m_pad1e0[0x308 - 0x1e0];
+	ProfClockV *m_pClock;	// 0x308
+};
+
+struct IGameSysV13
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12();
+	virtual void vfunc13(int, int);
+};
+
+struct IEffectsV3
+{
+	virtual void v0(); virtual void v1(); virtual void v2();
+	virtual void vfunc3(double);
+};
+
+struct RenderListV
+{
+	char m_entries[0x48000];
+	int m_nCounts[6];	// 0x48000
+};
+
+ProfNodeV *sub_100ad7a0();
+void sub_10198da0(const Vector &origin, const QAngle &angles);
+void sub_1019b8b0(int, int);
+void sub_1019c260(const char *);
+void sub_1019bc10();
+void sub_100efe80();
+void sub_10198e60();
+
+extern CParticleMgr g_104e0768;
+extern IGameSysV13 *g_102b9470;
+extern IEffectsV3 *g_102b9850;
+extern ConVar g_106192a8;
+extern ConVar g_106196f0;
+extern ConVar g_10619380;
+extern ConVar g_10618b90;
+extern ConVar g_10618d88;
+
+void CViewRender::sub_1019b370(bool drawSkybox, const CViewSetup &view, bool bSetupViewModel, bool bDrawViewModel)
+{
+	ScopeTrace st("CViewRender::ViewDrawScene", g_102de300);
+
+	sub_10198da0(view.origin, view.angles);
+
+	int &nSaved = *(int *)((char *)this + 0x454);
+	nSaved = materials->vfunc34();
+
+	CViewSetup viewCopy = view;
+	g_104e0768.sub_101177f0();
+
+	ProfNodeV *pNode = sub_100ad7a0();
+	if (pNode->m_pClock)
+		pNode->m_fl1d8 = pNode->m_pClock->vfunc0();
+
+	render->vfunc28(0, 1, view.origin);
+	render->vfunc29(&viewCopy, (char *)this + 0x22c);
+
+	int waterInfo[1];
+	bool bWater;
+	render->vfunc17(waterInfo, &bWater, view.origin);
+
+	pNode = sub_100ad7a0();
+	if (pNode->m_pClock)
+		pNode->m_fl100 += pNode->m_pClock->vfunc0() - pNode->m_fl1d8;
+
+	static ConVar mat_waterdebug("mat_waterdebug", "0", 0);
+	static ConVar feedvision("feedvision", "0", 0);
+
+	float flFeed = feedvision.GetFloat();
+	flFeed = input->vfunc50() + flFeed * 0.1;
+	if (flFeed < 1.0f) {
+		if (waterInfo[0] != -1 && g_106192a8.GetInt()) {
+			ProfNodeV *pCount = sub_100ad7a0();
+			pCount->m_n10++;
+			if (g_pMaterialSystemHardwareConfig->vfunc10()) {
+				CViewSetup waterView = view;
+				waterView.clearDepth = true;
+				if (mat_waterdebug.GetInt()) {
+					sub_1019ab90(drawSkybox, (int)&view, mat_waterdebug.GetInt(), waterInfo[0]);
+				} else if (!bWater) {
+					sub_1019ac50(drawSkybox, (int)&waterView, waterInfo[0]);
+				} else {
+					sub_1019add0(drawSkybox, (int)&waterView, waterInfo[0]);
+				}
+			} else {
+				sub_1019af80(drawSkybox, (int)&view);
+			}
+		} else {
+			sub_1019aed0(drawSkybox, (int)&view);
+		}
+		materials->vfunc33(nSaved);
+	}
+
+	if (flFeed > 0.0f)
+		sub_1019b030(flFeed, view);
+
+	sub_1019d590();
+	render->vfunc3();
+	engine->vfunc76();
+	render->vfunc26();
+	materials->vfunc65(0);
+
+	if (g_106196f0.GetInt()) {
+		render->vfunc30(&view);
+		sub_1019b8b0(0, 0);
+	}
+	if (g_10619380.GetInt()) {
+		render->vfunc30(&view);
+		g_102b9470->vfunc13(view.width, view.height);
+	}
+	const char *pszName;
+	if (g_10618b90.m_pParent->vfunc1()) {
+		pszName = g_102de300;
+	} else if (g_10618b90.m_nFlags & 0x1000) {
+		pszName = "FCVAR_NEVER_AS_STRING";
+	} else {
+		pszName = g_10618b90.m_pParent->m_pszString;
+		if (!pszName)
+			pszName = g_102de300;
+	}
+	if (pszName[0]) {
+		render->vfunc30(&view);
+		sub_1019c260(pszName);
+	}
+	if (g_10618d88.GetInt()) {
+		render->vfunc30(&view);
+		sub_1019bc10();
+	}
+
+	g_102b9850->vfunc3(engine->vfunc41(0));
+
+	int info[4];
+	RenderListV renderList;
+	sub_10199910(info, &renderList, true, true);
+	if (renderList.m_nCounts[1] || renderList.m_nCounts[2]) {
+		viewCopy.clearColor = false;
+		viewCopy.clearDepth = true;
+		render->vfunc29(&viewCopy, (char *)this + 0x22c);
+		sub_10199cc0(info, &renderList, true, true, true);
+		sub_10199ed0(view, info, &renderList, true, true, true);
+	}
+
+	sub_100efe80();
+	g_104e0768.sub_10117890();
+	sub_10198e60();
+	materials->vfunc142();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019b8b0 size=0x356
 struct IMaterial
 {

@@ -9286,6 +9286,7 @@
 0x1019aed0 func   ?sub_1019aed0@CViewRender@@QAEX_NH@Z CViewRender::sub_1019aed0
 0x1019af80 func   ?sub_1019af80@CViewRender@@QAEX_NH@Z CViewRender::sub_1019af80
 0x1019b030 func   ?sub_1019b030@CViewRender_1019b030@@QAEXMABUCViewSetup_1019b030@@@Z CViewRender_1019b030::sub_1019b030
+0x1019b370 func   ?sub_1019b370@CViewRender@@QAEX_NABUCViewSetup@@00@Z CViewRender::sub_1019b370
 0x1019b8b0 func   ?sub_1019b8b0@@YAXMM@Z sub_1019b8b0
 0x1019bc10 func   ?sub_1019bc10@@YAXXZ sub_1019bc10
 0x1019c230 func   ?sub_1019c230@CUnk102a9640@@QAEMXZ CUnk102a9640::sub_1019c230
