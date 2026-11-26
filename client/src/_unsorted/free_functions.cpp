@@ -84115,6 +84115,99 @@ int CUnknown101316b0::sub_101316b0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101316c0 size=0x3a5
+#include "CUtlRBTree232.h"
+
+// CUtlRBTree::LinkToParent with InsertRebalance (and the left branch's RotateLeft, its IsLeftChild too) inlined,
+// written on the 232-byte-node view: Links() is the out-of-line sub_10131a70, RotateLeft sub_10132e80,
+// RotateRight sub_10133080.
+inline CUtlRBTree232::Links_t &RB232Links(CUtlRBTree232 *t, int i)
+{
+	return *(CUtlRBTree232::Links_t *)(i * sizeof(CUtlRBTree232::Node_t) + (char *)t->m_pElements);
+}
+inline int RB232Parent(CUtlRBTree232 *t, int i) { return t->sub_10131a70(i).m_Parent; }
+inline int RB232Left(CUtlRBTree232 *t, int i) { return t->sub_10131a70(i).m_Left; }
+inline int RB232Right(CUtlRBTree232 *t, int i) { return t->sub_10131a70(i).m_Right; }
+inline void RB232SetColor(CUtlRBTree232 *t, int i, int c) { RB232Links(t, i).m_Tag = c; }
+
+void CUtlRBTree232::sub_101316c0(int i, int parent, bool isLeft)
+{
+	Links_t &elem = RB232Links(this, i);
+	elem.m_Parent = parent;
+	elem.m_Left = elem.m_Right = InvalidIndex();
+	elem.m_Tag = 0;
+
+	if (parent != InvalidIndex()) {
+		if (isLeft)
+			RB232Links(this, parent).m_Left = i;
+		else
+			RB232Links(this, parent).m_Right = i;
+	} else {
+		m_Root = i;
+	}
+
+	int e = i;
+	while (e != m_Root && sub_10131a70(RB232Parent(this, e)).m_Tag == 0) {
+		int p = RB232Parent(this, e);
+		int gp = RB232Parent(this, p);
+
+		if (RB232Left(this, RB232Parent(this, p)) == p) {
+			int uncle = RB232Right(this, gp);
+			if (sub_10131a70(uncle).m_Tag == 0) {
+				RB232SetColor(this, p, 1);
+				RB232SetColor(this, uncle, 1);
+				RB232SetColor(this, gp, 0);
+				e = gp;
+			} else {
+				if (RB232Right(this, RB232Parent(this, e)) == e) {
+					e = p;
+					int rightchild = RB232Right(this, e);
+					RB232Links(this, e).m_Right = RB232Left(this, rightchild);
+					if (RB232Left(this, rightchild) != InvalidIndex())
+						RB232Links(this, RB232Left(this, rightchild)).m_Parent = e;
+					if (rightchild != InvalidIndex())
+						RB232Links(this, rightchild).m_Parent = RB232Parent(this, e);
+					if (e != m_Root) {
+						if (RB232Left(this, RB232Parent(this, e)) == e)
+							RB232Links(this, RB232Parent(this, e)).m_Left = rightchild;
+						else
+							RB232Links(this, RB232Parent(this, e)).m_Right = rightchild;
+					} else
+						m_Root = rightchild;
+					RB232Links(this, rightchild).m_Left = e;
+					if (e != InvalidIndex())
+						RB232Links(this, e).m_Parent = rightchild;
+					p = RB232Parent(this, e);
+					gp = RB232Parent(this, p);
+				}
+				RB232SetColor(this, p, 1);
+				RB232SetColor(this, gp, 0);
+				sub_10133080(gp);
+			}
+		} else {
+			int uncle = RB232Left(this, gp);
+			if (sub_10131a70(uncle).m_Tag == 0) {
+				RB232SetColor(this, p, 1);
+				RB232SetColor(this, uncle, 1);
+				RB232SetColor(this, gp, 0);
+				e = gp;
+			} else {
+				if (RB232Left(this, RB232Parent(this, e)) == e) {
+					e = p;
+					sub_10133080(p);
+					p = RB232Parent(this, e);
+					gp = RB232Parent(this, p);
+				}
+				RB232SetColor(this, p, 1);
+				RB232SetColor(this, gp, 0);
+				sub_10132e80(gp);
+			}
+		}
+	}
+	RB232SetColor(this, m_Root, 1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10131a70 size=0x58
 #include "CUtlRBTree232.h"
 
