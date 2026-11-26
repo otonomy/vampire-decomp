@@ -5267,6 +5267,7 @@
 0x100d44d0 func   ?vfunc25@ClientModeShared@@UAEXXZ ClientModeShared::vfunc25
 0x100d4510 func   ?vfunc33@ClientModeShared@@UAEHH@Z ClientModeShared::vfunc33
 0x100d4550 func   ?vfunc34@ClientModeShared@@UAEHXZ ClientModeShared::vfunc34
+0x100d48a0 func   ?sub_100d48a0@Class_100d48a0@@QAEXH@Z Class_100d48a0::sub_100d48a0
 0x100d4e90 func   ?sub_100d4e90@TexAlloc_100d4e90@@QAEGHH@Z TexAlloc_100d4e90::sub_100d4e90
 0x100d5010 func   ?sub_100d5010@MV@@QAEXG@Z MV::sub_100d5010
 0x100d5050 func   ?sub_100d5050@TexAlloc_100d5050@@QAE_NG@Z TexAlloc_100d5050::sub_100d5050

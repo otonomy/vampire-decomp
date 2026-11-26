@@ -65890,6 +65890,134 @@ void CUnknown100d3f70::sub_100d3f70()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d48a0 size=0x21c
+#include "CMem16_t.h"
+
+struct BlockElem_100d48a0	// 12 bytes
+{
+	unsigned short m_nIndex;	// 0x00
+	unsigned short m_nSub;	// 0x02
+	unsigned short m_nOwner;	// 0x04
+	unsigned short m_pad06;
+	int m_n08;	// 0x08
+};
+
+struct BlockListElem_100d48a0	// 16 bytes
+{
+	BlockElem_100d48a0 m_Element;
+	unsigned short m_Previous;	// 0x0c
+	unsigned short m_Next;	// 0x0e
+};
+
+struct BlockList_100d48a0	// 10 bytes
+{
+	unsigned short m_Head;
+	unsigned short m_Tail;
+	unsigned short m_Count;
+	unsigned short m_pad6[2];
+};
+
+struct Pool_100d8740	// a CUtlMultiList<BlockElem, unsigned short>
+{
+	CMem16_t m_Memory;	// 0x00
+	BlockList_100d48a0 *m_List;	// 0x0c
+	int m_n10[6];	// 0x10
+	unsigned short *m_pElementList;	// 0x28
+	unsigned short m_FirstFree;	// 0x2c
+	unsigned short m_ElementCount;	// 0x2e
+	unsigned short m_TotalElements;	// 0x30
+	BlockListElem_100d48a0 *m_pElements;	// 0x34
+
+	bool sub_100d8740(unsigned short elem);	// IsInList
+
+	BlockListElem_100d48a0 &InternalElement(int i) { return ((BlockListElem_100d48a0 *)m_Memory.m_pMemory)[i]; }
+	BlockElem_100d48a0 &operator[](int i) { return ((BlockListElem_100d48a0 *)m_Memory.m_pMemory)[i].m_Element; }
+
+	unsigned short Alloc()
+	{
+		unsigned short elem;
+		if (m_FirstFree == 0xffff)
+		{
+			if (m_TotalElements == m_Memory.m_nAllocationCount)
+			{
+				m_Memory.sub_100d87c0(1);
+				m_pElements = (BlockListElem_100d48a0 *)m_Memory.m_pMemory;
+			}
+			elem = m_TotalElements;
+			++m_TotalElements;
+		}
+		else
+		{
+			elem = m_FirstFree;
+			m_FirstFree = InternalElement(m_FirstFree).m_Next;
+		}
+		InternalElement(elem).m_Next = InternalElement(elem).m_Previous = elem;
+		++m_ElementCount;
+		return elem;
+	}
+
+	void Unlink(unsigned short list, unsigned short elem)
+	{
+		if (sub_100d8740(elem))
+		{
+			BlockListElem_100d48a0 &e = InternalElement(elem);
+			if (e.m_Previous != 0xffff)
+				InternalElement(e.m_Previous).m_Next = e.m_Next;
+			else
+				m_List[list].m_Head = e.m_Next;
+			if (e.m_Next != 0xffff)
+				InternalElement(e.m_Next).m_Previous = e.m_Previous;
+			else
+				m_List[list].m_Tail = e.m_Previous;
+			e.m_Previous = e.m_Next = elem;
+			--m_List[list].m_Count;
+			if (m_pElementList)
+				m_pElementList[elem] = 0xffff;
+		}
+	}
+
+	void LinkToHead(unsigned short list, unsigned short elem)
+	{
+		Unlink(list, elem);
+		BlockListElem_100d48a0 &e = InternalElement(elem);
+		e.m_Previous = 0xffff;
+		e.m_Next = m_List[list].m_Head;
+		m_List[list].m_Head = elem;
+		if (e.m_Next == 0xffff)
+			m_List[list].m_Tail = elem;
+		else
+			InternalElement(e.m_Next).m_Previous = elem;
+		++m_List[list].m_Count;
+		if (m_pElementList)
+			m_pElementList[elem] = list;
+	}
+};
+
+struct Class_100d48a0
+{
+	char m_pad00[0x20];
+	Pool_100d8740 m_Blocks;	// 0x20
+	unsigned short m_nList[9];	// 0x58
+	unsigned short m_nShift[8];	// 0x6a
+	void sub_100d48a0(int j);
+};
+
+void Class_100d48a0::sub_100d48a0(int j)
+{
+	int s = m_nShift[j];
+	int n = 0x100 / (1 << s);
+	for (int i = n * n - 1; i >= 0; i--)
+	{
+		unsigned short h = m_Blocks.Alloc();
+		m_Blocks[h].m_nIndex = j;
+		m_Blocks[h].m_nSub = i;
+		m_Blocks[h].m_nOwner = 0xffff;
+		m_Blocks[h].m_n08 = 0;
+		m_Blocks.LinkToHead(m_nList[s], h);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d4e90 size=0xac
 #include "CUtlLinkedList10.h"
 
