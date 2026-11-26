@@ -75402,6 +75402,20 @@ CSmartPtr<CUnknown101187e0> sub_10118820(int pDebugName)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101189b0 size=0x19
+namespace lifted {
+extern char g_102359d0;
+int __stdcall sub_10118100(int);
+}
+struct CUnknown101189b0 { void * sub_101189b0(int); };
+void * CUnknown101189b0::sub_101189b0(int a0)
+{
+    int t0 = lifted::sub_10118100(a0);
+    *(int *)this = (int)&lifted::g_102359d0;
+    return this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101189f0 size=0x53
 #include <stddef.h>
 

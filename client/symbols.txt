@@ -6205,6 +6205,7 @@
 0x10118800 func   ??_GCEmberEffect@@UAEPAXI@Z ??_GCEmberEffect@@UAEPAXI@Z
 0x10118820 func   ?sub_10118820@@YA?AV?$CSmartPtr@VCUnknown101187e0@@@@H@Z sub_10118820
 0x10118870 func   ?sub_10118870@CEmberEffect@@AAEXPAUEmberParticle_10118870@@M@Z CEmberEffect::sub_10118870
+0x101189b0 func   ?sub_101189b0@CUnknown101189b0@@QAEPAXH@Z CUnknown101189b0::sub_101189b0
 0x101189d0 func   ??_GCFireSmokeEffect@@UAEPAXI@Z ??_GCFireSmokeEffect@@UAEPAXI@Z
 0x101189f0 func   ?sub_101189f0@@YA?AV?$CSmartPtr@VCUnknown101189b0@@@@H@Z sub_101189f0
 0x10118a50 func   ?vfunc8@CFireSmokeEffect@@UAEMPAUFireSmokeParticle_10118a50@@M@Z CFireSmokeEffect::vfunc8
