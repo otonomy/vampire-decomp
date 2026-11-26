@@ -98742,6 +98742,89 @@ void sub_10139ec0(char *s)
 char *sub_10139ef0(char *s) { char *p = s; if (*p) { do { if (*p == 13) *p = 10; } while (*++p); } return s; }
 // END FUNCTION
 
+// FUNCTION: 0x10139f10 size=0x214
+#include "CHudChat.h"
+#include <string.h>
+#pragma intrinsic(strcpy)
+
+extern "C" __declspec(dllimport) int Q_snprintf(char *pDest, int maxLen, const char *pFormat, ...);
+extern "C" __declspec(dllimport) void Msg(const char *pMsg, ...);
+
+int sub_10114660(int, int);	// BEGIN_READ
+int sub_10114690();			// READ_BYTE
+char *sub_101146e0();		// READ_STRING
+void sub_10139ec0(char *str);	// StripEndNewlineFromString
+char *sub_10139ef0(char *str);	// ConvertCRtoNL
+void sub_100f1fb0(CHudChat *self, const char *fmt, ...);
+
+struct ICenterPrint_10139f10
+{
+	virtual void vfunc0();
+	virtual void Print(const char *fmt, ...);
+};
+extern ICenterPrint_10139f10 *g_102cdad8;	// internalCenterPrint
+
+struct CHudTextMessage_10139f10
+{
+	int m_unk00;
+	int m_unk04;
+	int m_unk08;
+	int m_unk0c;
+	CHudChat *m_pChat;	// 0x10
+
+	char *sub_10139e70(const char *msg, int *msg_dest);	// LookupString
+	void sub_10139f10(const char *pszName, int iSize, void *pbuf);	// MsgFunc_TextMsg
+};
+
+void CHudTextMessage_10139f10::sub_10139f10(const char *pszName, int iSize, void *pbuf)
+{
+	sub_10114660((int)pbuf, iSize);
+
+	int msg_dest = sub_10114690();
+
+	static char szBuf[6][512];
+	char *msg_text = sub_10139e70(sub_101146e0(), &msg_dest);
+	msg_text = strcpy(szBuf[0], msg_text);
+
+	char *sstr1 = sub_10139e70(sub_101146e0(), 0);
+	sstr1 = strcpy(szBuf[1], sstr1);
+	sub_10139ec0(sstr1);
+	char *sstr2 = sub_10139e70(sub_101146e0(), 0);
+	sstr2 = strcpy(szBuf[2], sstr2);
+	sub_10139ec0(sstr2);
+	char *sstr3 = sub_10139e70(sub_101146e0(), 0);
+	sstr3 = strcpy(szBuf[3], sstr3);
+	sub_10139ec0(sstr3);
+	char *sstr4 = sub_10139e70(sub_101146e0(), 0);
+	sstr4 = strcpy(szBuf[4], sstr4);
+	sub_10139ec0(sstr4);
+
+	switch (msg_dest)
+	{
+	case 4:
+		Q_snprintf(szBuf[5], sizeof(szBuf[5]), msg_text, sstr1, sstr2, sstr3, sstr4);
+		g_102cdad8->Print(sub_10139ef0(szBuf[5]));
+		break;
+
+	case 1:
+		szBuf[5][0] = 1;
+		Q_snprintf(szBuf[5] + 1, sizeof(szBuf[5]) - 1, msg_text, sstr1, sstr2, sstr3, sstr4);
+		Msg(sub_10139ef0(szBuf[5]));
+		break;
+
+	case 3:
+		Q_snprintf(szBuf[5], sizeof(szBuf[5]), msg_text, sstr1, sstr2, sstr3, sstr4);
+		sub_100f1fb0(m_pChat, "%s", sub_10139ef0(szBuf[5]));
+		break;
+
+	case 2:
+		Q_snprintf(szBuf[5], sizeof(szBuf[5]), msg_text, sstr1, sstr2, sstr3, sstr4);
+		Msg(sub_10139ef0(szBuf[5]));
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013a130 size=0x32
 namespace lifted {
 extern char g_1028653c;
