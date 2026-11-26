@@ -516,7 +516,7 @@ public:
 	virtual void vfunc4(void *, int, Vector *, Vector *);	// slot 4
 	virtual int GetModelFrameCount(const void *);	// slot 5
 	virtual int GetModelType(const void *);	// slot 6; shapes differ
-	virtual CSpriteHandle *vfunc7(const char *);	// slot 7; seen as GetSprite 1
+	virtual CSpriteHandle *vfunc7(const void *);	// slot 7; seen as GetSprite 1 (GetModelExtraData: a sprite model's CEngineSprite)
 	virtual bool IsTranslucent(const void *);	// slot 8
 	virtual bool vfunc9(int);	// slot 9; seen as IsTranslucent 1
 	virtual bool vfunc10(const void *);	// slot 10; seen as IsModelTwoPass 1

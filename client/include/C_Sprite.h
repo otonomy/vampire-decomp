@@ -14,6 +14,7 @@ class C_Sprite : public C_BaseEntity, public C_SpriteMembers14, public C_SpriteR
 public:
 	__forceinline C_Sprite() {}
 	void sub_10136310(const char *name, int a);
+	virtual void GetRenderBounds(Vector &vecMins, Vector &vecMaxs);	// IClientRenderable slot 18
 	virtual int vfunc16();
 	virtual int vfunc17();
 	float vfunc121();
