@@ -2535,6 +2535,7 @@
 0x1004a240 func   ?GrowVector@?$CUtlVector@ULightRay_t@@V?$CUtlMemory@ULightRay_t@@@@@@QAEXH@Z CUtlVector<LightRay_t,CUtlMemory<LightRay_t> >::GrowVector
 0x1004a2e0 func   ?ShiftElementsRight@?$CUtlVector@ULightRay_t@@V?$CUtlMemory@ULightRay_t@@@@@@QAEXHH@Z CUtlVector<LightRay_t,CUtlMemory<LightRay_t> >::ShiftElementsRight
 0x1004a330 func   ?sub_1004a330@@YAXPAUS44_1004a330@@PBU1@@Z sub_1004a330
+0x1004a350 func   ?Grow@?$CUtlMemory@ULightRay_t@@@@QAEXH@Z CUtlMemory<LightRay_t>::Grow
 0x1004a3c0 func   ?vfunc0@CTextureTransformProxy@@UAE_NPAX0@Z CTextureTransformProxy::vfunc0
 0x1004a630 func   ?sub_1004a630@@YAHXZ sub_1004a630
 0x1004a660 func   ?vfunc2@CResultProxy@@UAEXXZ CResultProxy::vfunc2
