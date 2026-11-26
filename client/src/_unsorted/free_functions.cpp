@@ -127941,6 +127941,22 @@ void CUtlRBTreeBig::sub_101a7290(unsigned short elem)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a74d0 size=0x20
+namespace lifted {
+extern char g_10272378;
+struct C101a7640 { int sub_101a7640(int); };
+int sub_101d270e(int, int);
+}
+int sub_101a74d0()
+{
+    int t0 = lifted::sub_101d270e(1, 0x24);
+    if (t0 != 0) {
+        return ((lifted::C101a7640 *)t0)->sub_101a7640((int)&lifted::g_10272378);
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a7510 size=0x17
 #include "CHud.h"
 void sub_101a7b40(CHudElement *);
