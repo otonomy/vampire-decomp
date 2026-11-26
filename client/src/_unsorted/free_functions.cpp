@@ -123913,6 +123913,79 @@ void CUnknown101c47b0::sub_101c47b0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c4810 size=0x20f
+#include "vgui2__BuildModeDialog.h"
+#define F(T,o) (*(T*)((char*)this + o))
+#define V10(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7(); virtual void n##8(); virtual void n##9();
+struct TextCtl { V10(a) V10(b) V10(c) V10(d) V10(e) V10(f) V10(g) V10(h) V10(i) V10(j) virtual void l0(); virtual void l1(); virtual void l2(); virtual void l3(); virtual void l4(); virtual void l5(); virtual void l6(); virtual void l7(); virtual void GetText(int, char *, int); };
+struct BtnCtl { V10(a) V10(b) V10(c) V10(d) virtual void p0(); virtual void p1(); virtual void p2(); virtual void p3(); virtual void p4(); virtual void p5(); virtual void SetEnabled(bool); };
+struct KV { V10(a) virtual void b0(); virtual void b1(); virtual void b2(); virtual void b3();
+	virtual void SetString(const char *, const char *);
+	virtual void SetInt(const char *, int);
+	KV *sub_101b5670(const char *);
+};
+struct CurPanel { V10(a) virtual void b0(); virtual void b1(); virtual void b2(); virtual void b3(); virtual void b4(); virtual void b5(); virtual void b6(); virtual void b7(); virtual const char *GetName();
+	V10(c) V10(d) V10(e) V10(f) V10(g) virtual void h0(); virtual void h1(); virtual void h2(); virtual void h3(); virtual void h4(); virtual void h5();
+	virtual void ApplySettings(KV *);
+	bool sub_101aab50();
+};
+struct Ent { int m_0; TextCtl *m_Edit; int m_8; char m_szName[0x40]; int m_iType; };
+struct EntList { Ent *m_p; int a; int b; int m_Size; };
+struct PLst { EntList m_PanelList; };
+struct BG { void sub_101c2b20(); CurPanel *sub_101c2900(char *); };
+struct MsgBox { V10(a) V10(b) V10(c) V10(d) V10(e) V10(f) V10(g) V10(h) V10(i) V10(j) V10(k) V10(l) V10(m) V10(n) virtual void o0(); virtual void o1(); virtual void o2(); virtual void o3(); virtual void o4(); virtual void DoModal();
+	MsgBox *sub_101c6780(const char *, const char *, int); };
+struct DlgView { V10(a) V10(b) V10(c) V10(d) V10(e) V10(f) V10(g) V10(h) V10(i) V10(j) V10(k) V10(l) V10(m) V10(n) virtual void o0(); virtual void o1(); virtual void o2(); virtual void o3(); virtual void o4(); virtual void o5(); virtual void UpdateControlData(CurPanel *); };
+extern "C" int sprintf(char *, const char *, ...);
+extern "C" int atoi(const char *);
+void *sub_101b6840(int);
+
+namespace vgui2 {
+bool BuildModeDialog::sub_101c4810()
+{
+	char fieldName[256];
+	if (!F(CurPanel *, 0xe4)->sub_101aab50()) {
+		((DlgView *)this)->UpdateControlData(F(CurPanel *, 0xe4));
+		return true;
+	}
+	F(BG *, 0x120)->sub_101c2b20();
+	F(PLst *, 0xe8)->m_PanelList.m_p[0].m_Edit->GetText(0, fieldName, 255);
+	CurPanel *panel = F(BG *, 0x120)->sub_101c2900(fieldName);
+	if (panel && panel != F(CurPanel *, 0xe4)) {
+		char messageString[255];
+		sprintf(messageString, "Fieldname is not unique: %s\nRename it and try again.", fieldName);
+		MsgBox *errorBox = (MsgBox *)Panel::operator new(0xf0);
+		errorBox = errorBox ? errorBox->sub_101c6780("Cannot Apply", messageString, 0) : 0;
+		F(MsgBox *, 0x124) = errorBox;
+		errorBox->DoModal();
+		((DlgView *)this)->UpdateControlData(F(CurPanel *, 0xe4));
+		F(BtnCtl *, 0xf4)->SetEnabled(false);
+		return false;
+	}
+	KV *dat = (KV *)sub_101b6840(0x1c);
+	dat = dat ? dat->sub_101b5670(F(CurPanel *, 0xe4)->GetName()) : 0;
+	for (int i = 0; i < F(PLst *, 0xe8)->m_PanelList.m_Size; i++) {
+		const char *name = F(PLst *, 0xe8)->m_PanelList.m_p[i].m_szName;
+		char buf[256];
+		F(PLst *, 0xe8)->m_PanelList.m_p[i].m_Edit->GetText(0, buf, 255);
+		switch (F(PLst *, 0xe8)->m_PanelList.m_p[i].m_iType) {
+		case 4:
+		case 5:
+			dat->SetInt(name, atoi(buf));
+			break;
+		default:
+			dat->SetString(name, buf);
+			break;
+		}
+	}
+	F(CurPanel *, 0xe4)->ApplySettings(dat);
+	F(BtnCtl *, 0xf4)->SetEnabled(false);
+	F(BtnCtl *, 0xf0)->SetEnabled(true);
+	return true;
+}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c4a80 size=0x54
 namespace lifted {
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual int f21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual void u44(); virtual void u45(); virtual int f46(int); virtual void u47(); virtual void u48(); virtual void u49(); virtual void u50(); virtual void u51(); virtual void u52(); virtual void u53(); virtual void u54(); virtual void u55(); virtual void u56(); virtual void u57(); virtual void u58(); virtual void u59(); virtual void u60(); virtual void u61(); virtual void u62(); virtual void u63(); virtual void u64(); virtual void u65(); virtual void u66(); virtual void u67(); virtual void u68(); virtual void u69(); virtual void u70(); virtual void u71(); virtual void u72(); virtual void u73(); virtual void u74(); virtual int f75(int); virtual void u76(); virtual void u77(); virtual void u78(); virtual void u79(); virtual void u80(); virtual void u81(); virtual void u82(); virtual void u83(); virtual void u84(); virtual void u85(); virtual void u86(); virtual void u87(); virtual void u88(); virtual void u89(); virtual void u90(); virtual void u91(); virtual void u92(); virtual void u93(); virtual void u94(); virtual void u95(); virtual void u96(); virtual void u97(); virtual void u98(); virtual void u99(); virtual void u100(); virtual void u101(); virtual void u102(); virtual void u103(); virtual void u104(); virtual void u105(); virtual void u106(); virtual void u107(); virtual void u108(); virtual void u109(); virtual void u110(); virtual void u111(); virtual void u112(); virtual void u113(); virtual void u114(); virtual void u115(); virtual void u116(); virtual void u117(); virtual void u118(); virtual void u119(); virtual void u120(); virtual void u121(); virtual void u122(); virtual void u123(); virtual void u124(); virtual void u125(); virtual void u126(); virtual void u127(); virtual void u128(); virtual void u129(); virtual void u130(); virtual void u131(); virtual void u132(); virtual void u133(); virtual void u134(); virtual void u135(); virtual void u136(); virtual void u137(); virtual void u138(); virtual void u139(); virtual void u140(); virtual void u141(); virtual void u142(); virtual void u143(); virtual void u144(); virtual void u145(); virtual int f146(int); };
