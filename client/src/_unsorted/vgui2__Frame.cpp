@@ -1,6 +1,214 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101b71e0 size=0x6f2
+#include "vgui2__Frame.h"
+#include "vgui2__FrameSystemButton.h"
+
+using namespace vgui2;
+
+#define F(T, off) (*(T *)((char *)this + (off)))
+#define FP(T, p, off) (*(T *)((char *)(p) + (off)))
+
+extern void *vt_10251594;	// GripPanel
+extern void *vt_102513dc;	// CaptionGripPanel
+extern void *vt_1025113c;	// FrameButton
+extern void *vt_10250e84;	// FrameSystemButton
+extern void *vt_1025174c;	// Frame
+extern char g_1027a804[];
+extern char g_1027a844[];
+extern char g_1027d2bc[];
+extern char g_102de300[];
+
+struct Color_101b71e0
+{
+	unsigned char c[4];
+	void SetColor(int r, int g, int b, int a) { c[0] = (unsigned char)r; c[1] = (unsigned char)g; c[2] = (unsigned char)b; c[3] = (unsigned char)a; }
+};
+
+struct Button_101b3630 { void sub_101b3630(Panel *parent, const char *name, const char *text); };
+struct CUnknown10062280 { void sub_10062280(int r, int g, int b, int a); };
+struct CUnknown101b5670 { void *sub_101b5670(const char *name); };
+struct CUnknown101c9560 { void sub_101c9560(Panel *parent, const char *name, const char *text); };
+struct Frame_101b92d0 { int sub_101b92d0(); };
+struct FrameButton_101b8090 { Button *sub_101b8090(Panel *parent, const char *name, const char *text); };
+struct FocusNavV { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void SetFocusTopLevel(bool); };
+struct SurfaceV
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58();
+	virtual bool SupportsFeature59();
+};
+void *sub_101b6840(unsigned int size);
+SurfaceV *sub_101ac8d0();
+
+static __forceinline void InitGrip(Panel *p, Frame *frame, int xdir, int ydir)
+{
+	*(void **)p = &vt_10251594;
+	FP(Frame *, p, 0x58) = frame;
+	FP(bool, p, 0x64) = false;
+	FP(int, p, 0x5c) = xdir;
+	FP(int, p, 0x60) = ydir;
+	p->Panel::vfunc64(0);
+	p->Panel::vfunc63(0);
+	p->Panel::vfunc62(0);
+}
+
+static __forceinline Panel *NewGrip(Frame *frame, const char *name, int xdir, int ydir)
+{
+	Panel *p = (Panel *)Panel::operator new(0x80);
+	if (p)
+	{
+		new (p) Panel(frame, name);
+		InitGrip(p, frame, xdir, ydir);
+	}
+	else
+		p = 0;
+	return p;
+}
+
+static __forceinline Panel *NewCaption(Frame *frame, const char *name)
+{
+	void *mem = Panel::operator new(0x80);
+	Panel *cap;
+	if (mem)
+	{
+		new (mem) Panel(frame, name);
+		InitGrip((Panel *)mem, frame, 0, 0);
+		*(void **)mem = &vt_102513dc;
+		cap = (Panel *)mem;
+	}
+	else
+		cap = 0;
+	return cap;
+}
+
+static __forceinline void *NewKeyValues(const char *name)
+{
+	void *mem = sub_101b6840(0x1c);
+	void *kv;
+	if (mem)
+		kv = ((CUnknown101b5670 *)mem)->sub_101b5670(name);
+	else
+		kv = 0;
+	return kv;
+}
+
+static __forceinline Button *NewFrameButton(Frame *frame, const char *name, const char *text, bool inlineColor)
+{
+	void *mem = Panel::operator new(0x110);
+	Button *b;
+	if (mem)
+	{
+		((Button_101b3630 *)mem)->sub_101b3630(frame, name, text);
+		((CUnknown10062280 *)((char *)mem + 0xfc))->sub_10062280(0, 0, 0, 0);
+		((CUnknown10062280 *)((char *)mem + 0x100))->sub_10062280(0, 0, 0, 0);
+		((CUnknown10062280 *)((char *)mem + 0x104))->sub_10062280(0, 0, 0, 0);
+		if (inlineColor)
+			((Color_101b71e0 *)((char *)mem + 0x108))->SetColor(0, 0, 0, 0);
+		else
+			((CUnknown10062280 *)((char *)mem + 0x108))->sub_10062280(0, 0, 0, 0);
+		*(void **)mem = &vt_1025113c;
+		((Button *)mem)->Button::sub_101a98f0(0x12, 0x12);
+		FP(int, mem, 0xf0) = 0;
+		FP(int, mem, 0xf4) = 0;
+		FP(int, mem, 0xf8) = 0;
+		FP(bool, mem, 0x10c) = true;
+		((Button *)mem)->Label::vfunc111(0);
+		((Button *)mem)->Label::vfunc112(2, 1);
+		b = (Button *)mem;
+	}
+	else
+		b = 0;
+	return b;
+}
+
+Frame::Frame(Panel *parent, const char *name, bool bPrimary) : EditablePanel(parent, name)
+{
+	((Color_101b71e0 *)((char *)this + 0x78))->SetColor(0, 0, 0, 0);
+	((Color_101b71e0 *)((char *)this + 0x7c))->SetColor(0, 0, 0, 0);
+	((Color_101b71e0 *)((char *)this + 0x80))->SetColor(0, 0, 0, 0);
+	((Color_101b71e0 *)((char *)this + 0x84))->SetColor(0, 0, 0, 0);
+	*(void **)this = &vt_1025174c;
+	F(bool, 0xd0) = true;
+	F(bool, 0xd1) = false;
+	F(int, 0xd4) = 5;
+	F(int, 0xd8) = 0x1d;
+	F(int, 0xdc) = 0;
+	F(int, 0xe0) = 0;
+	F(int, 0x88) = 0;
+	F(bool, 0x8d) = true;
+	F(bool, 0x8c) = true;
+	F(bool, 0x8e) = false;
+	F(bool, 0xc8) = false;
+	vfunc118((int)"Untitled", 1);
+	vfunc66(vfunc109());
+	sub_101aaaf0(0x80, 0x42);
+	F(int, 0xcc) = 0;
+	((FocusNavV *)vfunc116())->SetFocusTopLevel(true);
+
+	F(Panel *, 0x90) = NewGrip(this, "TopGrip", 0, -1);
+	F(Panel *, 0x94) = NewGrip(this, "BottomGrip", 0, 1);
+	F(Panel *, 0x98) = NewGrip(this, "LeftGrip", -1, 0);
+	F(Panel *, 0x9c) = NewGrip(this, "RightGrip", 1, 0);
+	F(Panel *, 0xa0) = NewGrip(this, "TopLeftGrip", -1, -1);
+	F(Panel *, 0xa4) = NewGrip(this, "TopRightGrip", 1, -1);
+	F(Panel *, 0xa8) = NewGrip(this, "BottomLeftGrip", -1, 1);
+	F(Panel *, 0xac) = NewGrip(this, "BottomRightGrip", 1, 1);
+	F(Panel *, 0xb0) = NewCaption(this, "Caption");
+	F(Panel *, 0xb0)->vfunc54(2);
+
+	F(Button *, 0xb4) = NewFrameButton(this, "Minimize", g_1027a804, true);
+	F(Button *, 0xb4)->vfunc41((int)this);
+	F(Button *, 0xb4)->vfunc161((int)NewKeyValues("Minimize"));
+
+	F(Button *, 0xb8) = NewFrameButton(this, "Maximize", g_1027a844, false);
+	vfunc127(0);
+
+	void *mem = Panel::operator new(0x110);
+	Button *close;
+	if (mem)
+		close = ((FrameButton_101b8090 *)mem)->sub_101b8090(this, "Close", g_1027d2bc);
+	else
+		close = 0;
+	F(Button *, 0xbc) = close;
+	F(Button *, 0xbc)->vfunc41((int)this);
+	F(Button *, 0xbc)->vfunc161((int)NewKeyValues("Close"));
+
+	FrameSystemButton *mb = (FrameSystemButton *)Panel::operator new(0x110);
+	if (mb)
+	{
+		((CUnknown101c9560 *)mb)->sub_101c9560(this, 0, g_102de300);
+		((CUnknown10062280 *)((char *)mb + 0x104))->sub_10062280(0, 0, 0, 0);
+		((CUnknown10062280 *)((char *)mb + 0x108))->sub_10062280(0, 0, 0, 0);
+		*(void **)mb = &vt_10250e84;
+		FP(int, mb, 0xfc) = 0;
+		FP(int, mb, 0x100) = 0;
+		mb->FrameSystemButton::vfunc46(0);
+		mb->Button::vfunc148(1, 1);
+	}
+	else
+		mb = 0;
+	F(FrameSystemButton *, 0xc0) = mb;
+	F(FrameSystemButton *, 0xc0)->vfunc168(((Frame_101b92d0 *)this)->sub_101b92d0());
+
+	if (!sub_101ac8d0()->SupportsFeature59())
+	{
+		vfunc126(0);
+		vfunc127(0);
+	}
+	vfunc144();
+	int wide, tall;
+	sub_101a9920(&wide, &tall);
+	vfunc21(0);
+	vfunc28(bPrimary);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b85b0 size=0x1e
 #include "vgui2__Frame.h"
 
