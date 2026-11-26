@@ -5598,6 +5598,7 @@
 0x100e6f70 func   ?vfunc15@CGameMovement@@UAEDPAXM@Z CGameMovement::vfunc15
 0x100e6fc0 func   ?vfunc16@CGameMovement@@QAEXPAXMD@Z CGameMovement::vfunc16
 0x100e7380 func   ?sub_100e7380@@YAXHHHHH@Z sub_100e7380
+0x100e73c0 func   ?sub_100e73c0@CGameMovement@@QAEXXZ CGameMovement::sub_100e73c0
 0x100e7850 func   ?sub_100e7850@CView@@QAEDXZ CView::sub_100e7850
 0x100e7860 func   ?vfunc23@CGameMovement@@UAEMXZ CGameMovement::vfunc23
 0x100e7870 func   ?sub_100e7870@CGameMovement@@QAEMXZ CGameMovement::sub_100e7870

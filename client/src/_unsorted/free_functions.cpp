@@ -67714,6 +67714,179 @@ void sub_100e7380(int a1, int a2, int a3, int a4, int a5)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100e73c0 size=0x483
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "ConVar.h"
+#include "engineclient.h"
+
+struct CUnknown100a2450
+{
+	int sub_100a2450();
+};
+
+struct CStepMoveTypeView
+{
+	virtual void m0(); virtual void m1(); virtual void m2(); virtual void m3();
+	virtual void m4(); virtual void m5(); virtual void m6(); virtual void m7();
+	virtual int GetMoveType();
+};
+
+struct CStepPlayerData
+{
+	void *m_vtable;
+	char m_pad0004[0xc - 4];
+	CStepMoveTypeView m_MoveType;	// 0x0c
+	char m_pad0010[0x90 - 0x10];
+	int m_nWaterLevel;	// 0x90
+	char m_pad0094[0x1994 - 0x94];
+	float m_flStepSoundTime;	// 0x1994
+};
+
+struct CPhysSysView
+{
+	virtual void m0(); virtual void m1(); virtual void m2(); virtual void m3();
+	virtual void m4(); virtual void m5(); virtual void m6(); virtual void m7();
+	virtual void m8();
+	virtual EngineGlobals::IPhysicsSurfaceProps *GetSurfaceProps();
+};
+
+extern ConVar *g_104dfaa4;
+extern CPhysSysView *g_104df784;
+extern ConVar *g_104cf7cc;
+extern int g_104cfd48;
+
+#define player ((CStepPlayerData *)m_pMove)
+#define mv ((CMovePlayerView *)m_pPlayer)
+#define PLAYERFLAGS() (((CUnknown100a2450 *)m_pMove)->sub_100a2450())
+#define GROUND() (((CMoveDataView *)m_pMove)->g104())
+
+void CGameMovement::sub_100e73c0()
+{
+	float speed;
+	float velwalk, velrun, flduck;
+	int fLadder, fWalking;
+	float fvol;
+
+	if (player->m_flStepSoundTime > 0)
+		return;
+	if (PLAYERFLAGS() & 0x60)
+		return;
+	if (player->m_MoveType.GetMoveType() == 9)
+		return;
+	if (g_104dfaa4->vfunc1() || g_104dfaa4->m_fValue == 0)
+		return;
+
+	EngineGlobals::IPhysicsSurfaceProps *props = g_104df784->GetSurfaceProps();
+	void *psurface = m_pSurface9c;
+
+	speed = VectorLength(mv->m_vecVelocity);
+
+	fLadder = (player->m_MoveType.GetMoveType() == 10);
+
+	if ((PLAYERFLAGS() & 2) || fLadder || player->m_nWaterLevel)
+	{
+		velwalk = 60;
+		velrun = 80;
+		flduck = 100;
+	}
+	else
+	{
+		velwalk = 120;
+		velrun = 220;
+		flduck = 0;
+	}
+
+	if (!fLadder && !GROUND() && !player->m_nWaterLevel)
+		return;
+
+	if (!(mv->m_vecVelocity.Length2D() > 0.0))
+		return;
+
+	if (!(speed >= velwalk) && player->m_flStepSoundTime != 0)
+		return;
+
+	fWalking = speed < velrun;
+
+	sub_100e6f20();
+	sub_100e6ef0();
+
+	if (fLadder)
+	{
+		psurface = props->vfunc5(props->vfunc3("ladder"));
+		fvol = 0.35f;
+		player->m_flStepSoundTime = 350;
+	}
+	else if (player->m_nWaterLevel > 1)
+	{
+		if (g_104cfd48 == 0)
+		{
+			g_104cfd48 = 1;
+			return;
+		}
+		if (g_104cfd48++ == 3)
+			g_104cfd48 = 0;
+		psurface = props->vfunc5(props->vfunc3("wade"));
+		fvol = 1.0f;
+		player->m_flStepSoundTime = 600;
+	}
+	else if (player->m_nWaterLevel == 1)
+	{
+		psurface = props->vfunc5(props->vfunc3("water"));
+		fvol = 1.0f;
+		player->m_flStepSoundTime = fWalking ? 400 : 300;
+	}
+	else
+	{
+		player->m_flStepSoundTime = fWalking ? 400 : 300;
+		if (mv->m_vecVelocity.Length2D() <= 100.0f)
+			player->m_flStepSoundTime = 800;
+		switch ((char)m_bA4)
+		{
+		default:
+			fvol = fWalking ? 0.2 : 0.5;
+			break;
+		case 'M':
+			fvol = fWalking ? 0.2 : 0.5;
+			break;
+		case 'D':
+			fvol = fWalking ? 0.25 : 0.55;
+			break;
+		case 'V':
+			fvol = fWalking ? 0.4 : 0.7;
+			break;
+		case 'G':
+			fvol = fWalking ? 0.2 : 0.5;
+			break;
+		case 'T':
+			fvol = fWalking ? 0.2 : 0.5;
+			break;
+		case 'S':
+			fvol = fWalking ? 0.2 : 0.5;
+			break;
+		}
+	}
+
+	player->m_flStepSoundTime += flduck;
+
+	if (PLAYERFLAGS() & 2)
+		fvol *= 0.35;
+
+	fvol *= g_104cf7cc->vfunc1() ? 0.0f : g_104cf7cc->m_fValue;
+	if (fvol > 1.0)
+		fvol = 1.0f;
+
+	if (!fLadder && !player->m_nWaterLevel && GROUND())
+	{
+		if (!(mv->m_fFlags24 & 0x79a) && mv->m_vecVelocity.Length2D() <= velwalk)
+			return;
+		slot16(psurface, fvol, 0);
+		return;
+	}
+	slot16(psurface, fvol, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100e7850 size=0xf
 struct SP { char pad[0x1990]; int m1990; };
 struct CView { int m0; int m4; SP *m8; char sub_100e7850(); };
