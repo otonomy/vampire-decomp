@@ -1,6 +1,109 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x10196530 size=0x460
+#include "CViewEffects.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include <math.h>
+#include <string.h>
+
+#ifndef max
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#endif
+
+void CViewEffects::vfunc6()
+{
+	ScopeTrace trace("CViewEffects::CalcShake", g_102de300, g_102de300);
+	float fraction, freq;
+	int i;
+
+	if (m_nState == 2)
+	{
+		if (!(m_flWaveTime <= 0.0f || m_flWaveAmplitude <= 0.0f || m_flWaveDuration <= 0.0f || m_flWaveFrequency <= 0.0f))
+		{
+			float phase = max(0.01, engine->Time(0) - m_flWaveTime) / m_flWaveDuration;
+			m_vecShakeOffset.x = 0;
+			m_vecShakeOffset.y = 0;
+			m_vecShakeOffset.z = sin(phase) * m_flWaveAmplitude;
+			m_flShakeAngle = cos(phase) * m_flWaveFrequency;
+		}
+		else
+		{
+			memset(&m_nState, 0, 0x38);
+		}
+	}
+
+	switch (m_Shake.type)
+	{
+	case 0:
+		if (m_Shake.time == 0.0f)
+			return;
+		if (engine->Time(0) > m_Shake.time || m_Shake.duration <= 0.0f || m_Shake.amplitude <= 0.0f || m_Shake.frequency <= 0.0f)
+		{
+			memset(&m_Shake, 0, sizeof(m_Shake));
+			return;
+		}
+		{
+			float frametime = engine->vfunc41(0);
+			if (engine->Time(0) > m_Shake.nextShake)
+			{
+				m_Shake.nextShake = engine->Time(0) + 1.0f / m_Shake.frequency;
+				for (i = 0; i < 3; i++)
+					m_Shake.offset[i] = enginerandom->RandomFloat(-m_Shake.amplitude, m_Shake.amplitude);
+				m_Shake.angle = enginerandom->RandomFloat(-m_Shake.amplitude * 0.25, m_Shake.amplitude * 0.25);
+			}
+			fraction = (m_Shake.time - engine->Time(0)) / m_Shake.duration;
+			if (fraction)
+				freq = m_Shake.frequency / fraction;
+			else
+				freq = 0;
+			fraction *= fraction;
+			fraction = fraction * sin(engine->Time(0) * freq);
+			for (i = 0; i < 3; i++)
+				m_Shake.appliedOffset[i] = m_Shake.offset[i] * fraction;
+			m_Shake.appliedAngle = m_Shake.angle * fraction;
+			m_Shake.amplitude -= (frametime / (m_Shake.frequency * m_Shake.duration)) * m_Shake.amplitude;
+		}
+		break;
+	case 1:
+		if (m_Shake.time == 0.0f)
+			return;
+		if (engine->Time(0) > m_Shake.time || m_Shake.duration <= 0.0f || m_Shake.amplitude <= 0.0f || m_Shake.frequency <= 0.0f)
+		{
+			memset(&m_Shake, 0, sizeof(m_Shake));
+			return;
+		}
+		{
+			float frametime = engine->vfunc41(0);
+			if (engine->Time(0) > m_Shake.nextShake)
+			{
+				m_Shake.nextShake = engine->Time(0) + 1.0f / m_Shake.frequency;
+				for (i = 0; i < 3; i++)
+					m_Shake.offset[i] = 0;
+				m_Shake.angle = enginerandom->RandomFloat(-m_Shake.amplitude * 0.25, m_Shake.amplitude * 0.25);
+			}
+			fraction = (m_Shake.time - engine->Time(0)) / m_Shake.duration;
+			if (fraction)
+				freq = m_Shake.frequency / fraction;
+			else
+				freq = 0;
+			fraction *= fraction;
+			fraction = fraction * sin(engine->Time(0) * freq);
+			for (i = 0; i < 3; i++)
+				m_Shake.appliedOffset[i] = m_Shake.offset[i] * fraction;
+			m_Shake.appliedAngle = m_Shake.angle * fraction;
+			m_Shake.amplitude -= (frametime / (m_Shake.frequency * m_Shake.duration)) * m_Shake.amplitude;
+		}
+		break;
+	default:
+		memcpy(&m_nState, &m_Shake, sizeof(m_Shake));
+		memset(&m_Shake, 0, sizeof(m_Shake));
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10196990 size=0x1ff
 #include "CViewEffects.h"
 #include "ScopeTrace.h"
