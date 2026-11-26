@@ -4708,6 +4708,7 @@
 0x100cbb30 func   ?IN_DeactivateMouse@CHLClient@@UAEXXZ CHLClient::IN_DeactivateMouse
 0x100cbb30 func   ?vfunc14@CHLClient@@UAEHXZ CHLClient::vfunc14
 0x100cbb50 func   ?vfunc44@CHLClient@@UAEHXZ CHLClient::vfunc44
+0x100cbb60 func   ?IN_MouseEvent@CHLClient@@UAEXH_N@Z CHLClient::IN_MouseEvent
 0x100cbb60 func   ?vfunc15@CHLClient@@UAEHHM@Z CHLClient::vfunc15
 0x100cbb80 func   ?vfunc16@CHLClient@@UAEHXZ CHLClient::vfunc16
 0x100cbb90 func   ?vfunc17@CHLClient@@UAEHXZ CHLClient::vfunc17
