@@ -6754,6 +6754,7 @@
 0x10136660 func   ?vfunc121@C_Sprite@@QAEMXZ C_Sprite::vfunc121
 0x101366f0 func   ?vfunc122@C_Sprite@@UAEHXZ C_Sprite::vfunc122
 0x101367e0 func   ?sub_101367e0@ThingV@@QAEXXZ ThingV::sub_101367e0
+0x10136970 func   ?GetRenderBounds@C_Sprite@@UAEXAAVVector@@0@Z C_Sprite::GetRenderBounds
 0x10136c50 func   ?sub_10136c50@@YIXPAUVtblObj@@HPAVVector@@1@Z sub_10136c50
 0x10136cb0 func   ?sub_10136cb0@@YAXHHHH@Z sub_10136cb0
 0x10136d70 func   ?sub_10136d70@@YAHXZ sub_10136d70
