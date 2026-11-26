@@ -110585,6 +110585,139 @@ void CNetGraphPanel::sub_10168eb0(vrect_10168eb0 vrect, cmdinfo_10168eb0 *cmdinf
 }
 // END FUNCTION
 
+// FUNCTION: 0x10169140 size=0x37f
+#include "CNetGraphPanel.h"
+#include "engineclient.h"
+#include "ConVar.h"
+#include <math.h>
+
+#define TIMINGS 1024
+#define LERP_HEIGHT 24
+#define NUM_LATENCY_SAMPLES 8
+
+struct packet_latency_t
+{
+	int latency;
+	int choked;
+};
+
+struct netbandwidthgraph_t
+{
+	unsigned short client;
+	unsigned short players;
+	unsigned short entities;
+	unsigned short tempentities;
+	unsigned short sound;
+	unsigned short event;
+	unsigned short usr;
+	unsigned short msgbytes;
+	unsigned short voicebytes;
+};
+
+extern ConVar g_105faed0;
+#define net_graphheight g_105faed0
+
+#ifndef min
+#define min(a, b) (((a) < (b)) ? (a) : (b))
+#endif
+
+void CNetGraphPanel::sub_10169140(packet_latency_t *packet_latency, netbandwidthgraph_t *graph,
+	int *choke_count, int *loss_count, int *biggest_message,
+	float *latency, int *latency_count,
+	float *avg_message, float *f95thpercentile)
+{
+	int i;
+	int frm;
+	float frame_received_time;
+	float frame_latency;
+
+	*choke_count = 0;
+	*loss_count = 0;
+	*biggest_message = 0;
+	*latency = 0.0;
+	*latency_count = 0;
+	*avg_message = 0.0f;
+	*f95thpercentile = 0.0f;
+
+	int msg_count = 0;
+
+	for (i = netgraph->vfunc1() - netgraph->vfunc2() + 1; i <= netgraph->vfunc1(); i++)
+	{
+		frm = i;
+
+		frame_received_time = netgraph->vfunc5(frm);
+
+		if (!netgraph->vfunc4(frm))
+		{
+			packet_latency[frm & (TIMINGS - 1)].latency = 9998;
+		}
+		else if (frame_received_time == -1)
+		{
+			packet_latency[frm & (TIMINGS - 1)].latency = 9999;
+			(*loss_count)++;
+		}
+		else if (frame_received_time == -3)
+		{
+			packet_latency[frm & (TIMINGS - 1)].latency = 9997;
+		}
+		else
+		{
+			frame_latency = min(1.0, netgraph->vfunc6(frm));
+
+			packet_latency[frm & (TIMINGS - 1)].latency = ((frame_latency + 0.1) / 1.1) * (net_graphheight.GetFloat() - LERP_HEIGHT - 2);
+
+			if (i > (netgraph->vfunc1() - NUM_LATENCY_SAMPLES))
+			{
+				*latency += 1000.0 * netgraph->vfunc6(frm);
+				(*latency_count)++;
+			}
+		}
+
+		graph[frm & (TIMINGS - 1)].client = netgraph->vfunc7(frm, "client");
+		graph[frm & (TIMINGS - 1)].players = netgraph->vfunc7(frm, "players");
+		graph[frm & (TIMINGS - 1)].entities = netgraph->vfunc7(frm, "entities");
+		graph[frm & (TIMINGS - 1)].tempentities = netgraph->vfunc7(frm, "tempentities");
+		graph[frm & (TIMINGS - 1)].sound = netgraph->vfunc7(frm, "sounds");
+		graph[frm & (TIMINGS - 1)].event = netgraph->vfunc7(frm, "events");
+		graph[frm & (TIMINGS - 1)].usr = netgraph->vfunc7(frm, "usermessages");
+		graph[frm & (TIMINGS - 1)].voicebytes = netgraph->vfunc7(frm, "voice");
+		graph[frm & (TIMINGS - 1)].msgbytes = netgraph->vfunc7(frm, "total");
+
+		if (graph[frm & (TIMINGS - 1)].msgbytes > *biggest_message)
+		{
+			*biggest_message = graph[frm & (TIMINGS - 1)].msgbytes;
+		}
+
+		*avg_message += (float)(graph[frm & (TIMINGS - 1)].msgbytes);
+		msg_count++;
+	}
+
+	if (*biggest_message > 1000)
+	{
+		*biggest_message = 1000;
+	}
+
+	if (msg_count >= 1)
+	{
+		*avg_message /= msg_count;
+
+		int deviationsquared = 0;
+
+		for (i = netgraph->vfunc1() - netgraph->vfunc2() + 1; i <= netgraph->vfunc1(); i++)
+		{
+			frm = i;
+			int bytes = graph[frm & (TIMINGS - 1)].msgbytes;
+			deviationsquared += (bytes * bytes);
+		}
+
+		float var = (float)(deviationsquared) / (float)(msg_count - 1);
+		float stddev = sqrt(var);
+
+		*f95thpercentile = *avg_message + 2.0f * stddev;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101694c0 size=0x81
 #include "engineclient.h"
 struct NetEntryV {
