@@ -1717,6 +1717,7 @@
 0x10023830 func   ?_C_ItemKEDaneKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKEDaneKey_CreateObject
 0x100238f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKEDaneKey@@@Z ClientClassInit
 0x10023980 func   ?vfunc17@C_ItemKEmpireMafiaKey@@UAEHXZ C_ItemKEmpireMafiaKey::vfunc17
+0x100239c0 func   ?sub_100239c0@@YAHXZ sub_100239c0
 0x10023a10 func   ??_GC_ItemKEmpireMafiaKey@@UAEPAXI@Z ??_GC_ItemKEmpireMafiaKey@@UAEPAXI@Z
 0x10023a30 func   ?vfunc16@C_ItemKEmpireMafiaKey@@UAEHXZ C_ItemKEmpireMafiaKey::vfunc16
 0x10023a40 func   ?vfunc15@C_ItemKEmpireMafiaKey@@UAEHXZ C_ItemKEmpireMafiaKey::vfunc15
