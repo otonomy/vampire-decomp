@@ -1681,6 +1681,7 @@
 0x10026cb0 func   ?_C_ItemKAshCellKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKAshCellKey_CreateObject
 0x10026d70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKAshCellKey@@@Z ClientClassInit
 0x10026e00 func   ?vfunc17@C_WeaponMelee_Torch@@UAEHXZ C_WeaponMelee_Torch::vfunc17
+0x10026e40 func   ?sub_10026e40@@YAHXZ sub_10026e40
 0x10026e60 func   ?vfunc16@C_WeaponMelee_Torch@@UAEHXZ C_WeaponMelee_Torch::vfunc16
 0x10026e70 func   ?vfunc15@C_WeaponMelee_Torch@@UAEHXZ C_WeaponMelee_Torch::vfunc15
 0x10026e80 func   ?sub_10026e80@@YAHXZ sub_10026e80

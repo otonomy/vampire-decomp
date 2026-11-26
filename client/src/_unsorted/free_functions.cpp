@@ -11286,6 +11286,21 @@ template <> int ClientClassInit<DT_ItemKAshCellKey::ignored>(DT_ItemKAshCellKey:
 }
 // END FUNCTION
 
+// FUNCTION: 0x10026e40 size=0x1b
+namespace lifted {
+struct C10027020 { int sub_10027020(); };
+int sub_100a1eb0(int);
+}
+int sub_10026e40()
+{
+    int t0 = lifted::sub_100a1eb0(0x988);
+    if (t0 != 0) {
+        return ((lifted::C10027020 *)t0)->sub_10027020();
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10026e80 size=0x6
 namespace lifted {
 extern char g_102e580c;
