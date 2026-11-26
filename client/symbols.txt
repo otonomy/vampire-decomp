@@ -4284,6 +4284,7 @@
 0x100bb6a0 func   ??0C_Func_LOD@@QAE@XZ C_Func_LOD::C_Func_LOD
 0x100bb6a0 func   ?sub_100bb6a0@CUnknown100bb6a0@@QAEPAXXZ CUnknown100bb6a0::sub_100bb6a0
 0x100bb6f0 func   ??_GC_Func_LOD@@UAEPAXI@Z ??_GC_Func_LOD@@UAEPAXI@Z
+0x100bb710 func   ?LODTest@C_Func_LOD@@UAE_NXZ C_Func_LOD::LODTest
 0x100bb980 func   ?vfunc16@C_FuncMonitor@@UAEHXZ C_FuncMonitor::vfunc16
 0x100bb990 func   ?vfunc15@C_FuncMonitor@@UAEHXZ C_FuncMonitor::vfunc15
 0x100bb9a0 func   ?sub_100bb9a0@@YAHXZ sub_100bb9a0
