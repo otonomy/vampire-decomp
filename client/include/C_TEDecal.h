@@ -15,11 +15,13 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc9();
 	virtual void vfunc13();
 	C_TEDecal();
+	virtual void PostDataUpdate(int updateType);	// IClientNetworkable slot 7: TE_Decal with a broadcast filter
 	Vector m_vecOrigin;
 	Vector m_vecStart;
 	int m_unk28;
 	int m_unk2c;
 	int m_unk30;
-	int m_unk34;
+	bool m_b34;	// TE_Decal's last argument
+	char m_c35; char m_c36; char m_c37;
 	int m_unk38;
 };
