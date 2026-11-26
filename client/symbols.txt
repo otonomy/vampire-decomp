@@ -1325,6 +1325,7 @@
 0x1001bdb0 func   ?_C_ItemGBrotherhoodFlyer_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGBrotherhoodFlyer_CreateObject
 0x1001be70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGBrotherhoodFlyer@@@Z ClientClassInit
 0x1001bf00 func   ?vfunc17@C_ItemGMilligansBuisnesscard@@UAEHXZ C_ItemGMilligansBuisnesscard::vfunc17
+0x1001bf40 func   ?sub_1001bf40@@YAHXZ sub_1001bf40
 0x1001bf90 func   ??_GC_ItemGMilligansBuisnesscard@@UAEPAXI@Z ??_GC_ItemGMilligansBuisnesscard@@UAEPAXI@Z
 0x1001bfb0 func   ?vfunc16@C_ItemGMilligansBuisnesscard@@UAEHXZ C_ItemGMilligansBuisnesscard::vfunc16
 0x1001bfc0 func   ?vfunc15@C_ItemGMilligansBuisnesscard@@UAEHXZ C_ItemGMilligansBuisnesscard::vfunc15
