@@ -71941,6 +71941,108 @@ int CGameMovement::sub_100ebb50(Vector &in, Vector &normal, Vector &out, float o
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ebcb0 size=0x223
+#include "Vector.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+extern Vector g_104cf810[54];
+extern int g_102bb1ac;
+
+// TARGET: sub_100ebcb0
+void sub_100ebcb0()
+{
+	float x, y, z;
+	int idx;
+	int i;
+	float zi[3];
+	if (!g_102bb1ac)
+		return;
+	memset(g_104cf810, 0, sizeof(g_104cf810));
+	g_102bb1ac = 0;
+	idx = 0;
+	x = y = 0;
+	for (z = -0.125f; z <= 0.125; z += 0.125)
+	{
+		g_104cf810[idx][0] = x;
+		g_104cf810[idx][1] = y;
+		g_104cf810[idx][2] = z;
+		idx++;
+	}
+	x = z = 0;
+	for (y = -0.125f; y <= 0.125; y += 0.125)
+	{
+		g_104cf810[idx][0] = x;
+		g_104cf810[idx][1] = y;
+		g_104cf810[idx][2] = z;
+		idx++;
+	}
+	y = z = 0;
+	for (x = -0.125f; x <= 0.125; x += 0.125)
+	{
+		g_104cf810[idx][0] = x;
+		g_104cf810[idx][1] = y;
+		g_104cf810[idx][2] = z;
+		idx++;
+	}
+	for (x = -0.125f; x <= 0.125; x += 0.25)
+	{
+		for (y = -0.125f; y <= 0.125; y += 0.25)
+		{
+			for (z = -0.125f; z <= 0.125; z += 0.25)
+			{
+				g_104cf810[idx][0] = x;
+				g_104cf810[idx][1] = y;
+				g_104cf810[idx][2] = z;
+				idx++;
+			}
+		}
+	}
+	x = y = 0;
+	zi[0] = 0.0f;
+	zi[1] = 1.0f;
+	zi[2] = 6.0f;
+	for (i = 0; i < 3; i++)
+	{
+		z = zi[i];
+		g_104cf810[idx][0] = x;
+		g_104cf810[idx][1] = y;
+		g_104cf810[idx][2] = z;
+		idx++;
+	}
+	x = z = 0;
+	for (y = -2.0f; y <= 2.0f; y += 2.0)
+	{
+		g_104cf810[idx][0] = x;
+		g_104cf810[idx][1] = y;
+		g_104cf810[idx][2] = z;
+		idx++;
+	}
+	y = z = 0;
+	for (x = -2.0f; x <= 2.0f; x += 2.0f)
+	{
+		g_104cf810[idx][0] = x;
+		g_104cf810[idx][1] = y;
+		g_104cf810[idx][2] = z;
+		idx++;
+	}
+	for (i = 0; i < 3; i++)
+	{
+		z = zi[i];
+		for (x = -2.0f; x <= 2.0f; x += 2.0f)
+		{
+			for (y = -2.0f; y <= 2.0f; y += 2.0)
+			{
+				g_104cf810[idx][0] = x;
+				g_104cf810[idx][1] = y;
+				g_104cf810[idx][2] = z;
+				idx++;
+			}
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ebee0 size=0x4c
 #include "Vector.h"
 extern int g_104cfab8[][2];
