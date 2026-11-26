@@ -23842,6 +23842,14 @@ void CItemInfo::sub_1005eef0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1005f080 size=0x4
+struct CUnknown1005f080 { char sub_1005f080(); };
+char CUnknown1005f080::sub_1005f080()
+{
+    return *(char *)((char *)this + 0x1c);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1005f150 size=0xa
 struct CUnknown1005f150 { int sub_1005f150(int); };
 int CUnknown1005f150::sub_1005f150(int a0)
