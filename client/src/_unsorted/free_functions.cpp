@@ -91471,6 +91471,78 @@ void CUnk101ddf80::sub_10148330()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10148350 size=0x253
+#include "CUnknown101dff00.h"
+#include "string_t.h"
+
+struct SRange
+{
+	int m_nMin;
+	int m_nMax;
+	void sub_10148040(const char *psz);
+};
+
+__declspec(dllimport) void DevMsg(const char *pMsg, ...);
+string_t sub_1015f830(CUnknown101dc5a0Keys *pKV, const char *pszKey);
+int sub_1007a690(const char *pszName);
+int sub_100681e0(const char *pszName);
+
+bool CUnknown101df000::sub_10148350(CUnknown101dc5a0Keys *pKV, const char *pszName)
+{
+	if (pszName && *pszName)
+		pKV = pKV->vfunc2(pszName);
+	if (pKV)
+	{
+		m_bInUse = true;
+		((SRange *)&m_n14)->sub_10148040(pKV->vfunc13("Blood_Suck", ""));
+		m_bClearCopyProp = pKV->vfunc12("Clear_Copy_Prop", false);
+		((SRange *)&m_n04)->sub_10148040(pKV->vfunc13("Dmg_Health", ""));
+		((SRange *)&m_n0c)->sub_10148040(pKV->vfunc13("Dmg_Health_Src", ""));
+		m_bGibOnDeath = pKV->vfunc12("GibOnDeath", false);
+		m_bAddToComfort = pKV->vfunc12("AddToComfort", false);
+		((SRange *)&m_n20)->sub_10148040(pKV->vfunc13("Heal_Blood", ""));
+		((SRange *)&m_n28)->sub_10148040(pKV->vfunc13("Health_Buffer", ""));
+		m_nHealthBufferBlockPercent = pKV->vfunc10("Health_Buffer_Block_Percent", m_nHealthBufferBlockPercent);
+		pKV->vfunc13("MiscFlag", "");
+		pKV->vfunc13("AI_NPCFlag", "");
+
+		const char *pszSchedule = sub_1015f830(pKV, "AI_Schedule").pszValue;
+		if (pszSchedule)
+			m_iszSchedule.pszValue = pszSchedule;
+		const char *pszExpression = sub_1015f830(pKV, "Expression").pszValue;
+		if (pszExpression)
+			m_iszExpression.pszValue = pszExpression;
+
+		m_nFlinch = pKV->vfunc10("Flinch", m_nFlinch);
+		m_nKnockback = pKV->vfunc10("Knockback", m_nKnockback);
+
+		const char *pszAnim = pKV->vfunc13("Player_Anim", "");
+		if (*pszAnim)
+		{
+			m_nPlayerAnim = sub_1007a690(pszAnim);
+			if (m_nPlayerAnim == -1)
+				DevMsg("ERROR: Discipline: HitInfo Player_Anim failed to match: %s!\n", pszAnim);
+		}
+
+		const char *pszGesture = pKV->vfunc13("Gesture_Anim", "");
+		if (*pszGesture)
+		{
+			m_nGestureAnim = sub_100681e0(pszGesture);
+			m_flGestureDuration = pKV->vfunc11("Gesture_Duration", 0.0f);
+			if (m_flGestureDuration <= 0.0)
+				DevMsg("ERROR: Discipline: Gesture duration is bad: %f!\n", m_flGestureDuration);
+		}
+
+		m_casting.sub_10148150((CUnknown101ddc30Kv *)pKV->vfunc2("Trigger_Casting"));
+		m_effectInstant.sub_10147be0(pKV, "Effect_Tgt_Instant");
+		m_effectHit.sub_10147be0(pKV, "Effect_Tgt_Hit");
+		m_sounds.sub_101475e0(pKV);
+		return true;
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101485b0 size=0x1de
 #include "CUnknown101dff00.h"
 #include "CUnknown101dddb0.h"
