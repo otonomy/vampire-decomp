@@ -901,6 +901,7 @@
 0x10013930 func   ?_C_OccultExperience_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_OccultExperience_CreateObject
 0x100139f0 func   ?ClientClassInit@@YAHPAUignored@DT_OccultExperience@@@Z ClientClassInit
 0x10013a80 func   ?vfunc17@C_OccultBloodBuff@@UAEHXZ C_OccultBloodBuff::vfunc17
+0x10013ac0 func   ?sub_10013ac0@@YAHXZ sub_10013ac0
 0x10013b10 func   ??_GC_OccultBloodBuff@@UAEPAXI@Z ??_GC_OccultBloodBuff@@UAEPAXI@Z
 0x10013b30 func   ?vfunc16@C_OccultBloodBuff@@UAEHXZ C_OccultBloodBuff::vfunc16
 0x10013b40 func   ?vfunc15@C_OccultBloodBuff@@UAEHXZ C_OccultBloodBuff::vfunc15
