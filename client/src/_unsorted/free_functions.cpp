@@ -13710,6 +13710,32 @@ template <> int ClientClassInit<DT_ItemGVVPhoto::ignored>(DT_ItemGVVPhoto::ignor
 }
 // END FUNCTION
 
+// FUNCTION: 0x10020a40 size=0x45
+namespace lifted {
+extern char g_10217b04;
+extern char g_10217b18;
+extern char g_10217b54;
+extern char g_10217b8c;
+extern char g_10217be4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10020a40()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10217be4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10217b8c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10217b54;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10217b18;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10217b04;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10020ad0 size=0x6
 namespace lifted {
 extern char g_102e45e4;

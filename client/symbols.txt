@@ -1565,6 +1565,7 @@
 0x100208b0 func   ?_C_ItemGVVPhoto_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGVVPhoto_CreateObject
 0x10020970 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGVVPhoto@@@Z ClientClassInit
 0x10020a00 func   ?vfunc17@C_ItemGSewerBook1@@UAEHXZ C_ItemGSewerBook1::vfunc17
+0x10020a40 func   ?sub_10020a40@@YAHXZ sub_10020a40
 0x10020a90 func   ??_GC_ItemGSewerBook1@@UAEPAXI@Z ??_GC_ItemGSewerBook1@@UAEPAXI@Z
 0x10020ab0 func   ?vfunc16@C_ItemGSewerBook1@@UAEHXZ C_ItemGSewerBook1::vfunc16
 0x10020ac0 func   ?vfunc15@C_ItemGSewerBook1@@UAEHXZ C_ItemGSewerBook1::vfunc15
