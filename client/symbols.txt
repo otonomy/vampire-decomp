@@ -4832,6 +4832,7 @@
 0x100c3880 func   ??0C_BaseFlex@@QAE@XZ C_BaseFlex::C_BaseFlex
 0x100c38f0 func   ??_GC_BaseFlex@@UAEPAXI@Z ??_GC_BaseFlex@@UAEPAXI@Z
 0x100c3910 func   ??1C_BaseFlex@@UAE@XZ C_BaseFlex::~C_BaseFlex
+0x100c3cd0 func   ?vfunc144@C_BaseFlex@@UAEXPAM@Z C_BaseFlex::vfunc144
 0x100c4110 func   ?vfunc145@C_BaseFlex@@UAEXXZ C_BaseFlex::vfunc145
 0x100c4200 func   ?vfunc143@C_BaseFlex@@UAEHXZ C_BaseFlex::vfunc143
 0x100c4210 func   ?sub_100c4210@@YIXPAUAnimHolder@@HPBDPADH@Z sub_100c4210
