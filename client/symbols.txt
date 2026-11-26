@@ -1765,6 +1765,7 @@
 0x10024730 func   ?_C_ItemKTutorialChopshopStairsKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKTutorialChopshopStairsKey_CreateObject
 0x100247f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKTutorialChopshopStairsKey@@@Z ClientClassInit
 0x10024880 func   ?vfunc17@C_ItemKTawniApartmentKey@@UAEHXZ C_ItemKTawniApartmentKey::vfunc17
+0x100248c0 func   ?sub_100248c0@@YAHXZ sub_100248c0
 0x10024910 func   ??_GC_ItemKTawniApartmentKey@@UAEPAXI@Z ??_GC_ItemKTawniApartmentKey@@UAEPAXI@Z
 0x10024930 func   ?vfunc16@C_ItemKTawniApartmentKey@@UAEHXZ C_ItemKTawniApartmentKey::vfunc16
 0x10024940 func   ?vfunc15@C_ItemKTawniApartmentKey@@UAEHXZ C_ItemKTawniApartmentKey::vfunc15
