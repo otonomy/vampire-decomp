@@ -8248,6 +8248,7 @@
 0x1016abe0 func   ?vfunc4@CTextMessage@@UAEXPAH0H@Z CTextMessage::vfunc4
 0x1016ac10 func   ?vfunc5@CTextMessage@@UAEHHH@Z CTextMessage::vfunc5
 0x1016ac50 func   ?vfunc7@CTextMessage@@UAEXXZ CTextMessage::vfunc7
+0x1016ac80 func   ?sub_1016ac80@@YAHXZ sub_1016ac80
 0x1016acb0 func   ?sub_1016acb0@@YAHXZ sub_1016acb0
 0x1016acd0 func   ?sub_1016acd0@@YAHXZ sub_1016acd0
 0x1016ae10 func   ?sub_1016ae10@CUnknown1016ae10@@QAEPAXHHH@Z CUnknown1016ae10::sub_1016ae10
