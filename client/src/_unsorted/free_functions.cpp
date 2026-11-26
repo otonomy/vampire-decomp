@@ -51369,6 +51369,64 @@ void *HList::sub_100c9d50(int i)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c9d90 size=0x27b
+#include "Ray_t.h"
+#include "C_VGuiScreen.h"
+#include "CVGuiScreenEnumerator.h"
+
+extern void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
+extern void sub_10108fd0(const Vector &start, float scale, const Vector &direction, Vector &dest);
+
+struct ISpatialPartition_v
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12();
+	virtual void EnumerateElementsInSphere(int listMask, const Vector &origin, float radius, bool coarseTest, void *pIterator, int n);
+};
+extern ISpatialPartition_v *g_104a5808;
+
+struct CUnknown100c9d40 { int sub_100c9d40(); };
+struct HList { void *sub_100c9d50(int i); };
+struct CVGuiScreen_100c9790 { bool sub_100c9790(const Vector &v); };
+struct CUnknown100c9300 { bool sub_100c9300(); };
+
+C_VGuiScreen *sub_100c9d90(const Vector &viewPosition, const QAngle &viewAngle, int nTeam)
+{
+	Vector lookDir;
+	sub_101090a0(viewAngle, &lookDir, 0, 0);
+	Vector lookEnd;
+	sub_10108fd0(viewPosition, 80.0f, lookDir, lookEnd);
+	Ray_t lookRay;
+	lookRay.Init(viewPosition, lookEnd);
+	CVGuiScreenEnumerator localScreens;
+	g_104a5808->EnumerateElementsInSphere(0x80, viewPosition, 80.0f, false, &localScreens, 0);
+	float flBestDist = 2.0f;
+	C_VGuiScreen *pBestScreen = 0;
+	for (int i = ((CUnknown100c9d40 *)&localScreens)->sub_100c9d40(); --i >= 0; )
+	{
+		C_VGuiScreen *pScreen = (C_VGuiScreen *)((HList *)&localScreens)->sub_100c9d50(i);
+		if (((CVGuiScreen_100c9790 *)pScreen)->sub_100c9790(viewPosition))
+			continue;
+		if (!((CUnknown100c9300 *)pScreen)->sub_100c9300())
+			continue;
+		if (!pScreen->IsVisibleToTeam(nTeam))
+			continue;
+		float u, v, t;
+		if (!pScreen->sub_100c9740(lookRay, &u, &v, &t))
+			continue;
+		if ((u < 0) || (v < 0) || (u > 1) || (v > 1))
+			continue;
+		if (t < flBestDist)
+		{
+			flBestDist = t;
+			pBestScreen = pScreen;
+		}
+	}
+	return pBestScreen;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ca010 size=0xe
 namespace lifted {
 struct C100c9330 { int sub_100c9330(); };
