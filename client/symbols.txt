@@ -1277,6 +1277,7 @@
 0x1001aeb0 func   ?_C_ItemGPishaFetish_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGPishaFetish_CreateObject
 0x1001af70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGPishaFetish@@@Z ClientClassInit
 0x1001b000 func   ?vfunc17@C_ItemGEDanePrintReport@@UAEHXZ C_ItemGEDanePrintReport::vfunc17
+0x1001b040 func   ?sub_1001b040@@YAHXZ sub_1001b040
 0x1001b090 func   ??_GC_ItemGEDanePrintReport@@UAEPAXI@Z ??_GC_ItemGEDanePrintReport@@UAEPAXI@Z
 0x1001b0b0 func   ?vfunc16@C_ItemGEDanePrintReport@@UAEHXZ C_ItemGEDanePrintReport::vfunc16
 0x1001b0c0 func   ?vfunc15@C_ItemGEDanePrintReport@@UAEHXZ C_ItemGEDanePrintReport::vfunc15
