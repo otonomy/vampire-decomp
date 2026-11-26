@@ -4954,6 +4954,32 @@ template <> int ClientClassInit<DT_WeaponRanged_Pistol_Anaconda::ignored>(DT_Wea
 }
 // END FUNCTION
 
+// FUNCTION: 0x1000d940 size=0x45
+namespace lifted {
+extern char g_101f2fe4;
+extern char g_101f2ff8;
+extern char g_101f3034;
+extern char g_101f306c;
+extern char g_101f30c4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1000d940()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101f30c4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101f306c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101f3034;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101f2ff8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101f2fe4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1000d9d0 size=0x6
 namespace lifted {
 extern char g_102e50cc;
