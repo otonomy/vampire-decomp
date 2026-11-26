@@ -67056,6 +67056,16 @@ void sub_10101ea0(kbutton_t *b, bool bDown)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101022c0 size=0xb
+namespace lifted {
+extern int g_104d3e40;
+}
+void sub_101022c0()
+{
+    lifted::g_104d3e40 = 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101024e0 size=0xa
 namespace lifted {
 int sub_10102130();
