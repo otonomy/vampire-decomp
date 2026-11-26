@@ -836,6 +836,57 @@ void CTempEnts::vfunc10(C_LocalTempEntity *pEnt, int n, int flags)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1003d440 size=0x19e
+#include "CTempEnts.h"
+namespace lifted {
+extern char g_102809d4;
+extern char g_102809f8;
+extern char g_10280a1c;
+extern char g_10280a40;
+extern char g_10280a6c;
+extern char g_10280a98;
+extern char g_10280ac4;
+extern char g_10280ae8;
+extern char g_10280b0c;
+extern char g_10280b30;
+extern char g_10280b58;
+extern char g_10280b88;
+extern char g_10280bb0;
+extern char g_10280bd8;
+extern char g_10280c04;
+extern char g_10280c2c;
+extern char g_10280c50;
+extern char g_10280c6c;
+extern char g_10280c84;
+extern int g_104a57d4;
+extern int g_104a5818;
+struct V { virtual int f0(int, int); virtual void u1(); virtual void u2(); virtual int f3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual int f36(int); };
+}
+void CTempEnts::vfunc0()
+{
+    ((lifted::V *)lifted::g_104a5818)->f0((int)&lifted::g_10280a98, 0);
+    ((lifted::V *)lifted::g_104a5818)->f0((int)&lifted::g_10280a6c, 0);
+    ((lifted::V *)lifted::g_104a5818)->f0((int)&lifted::g_10280a40, 0);
+    ((lifted::V *)lifted::g_104a5818)->f0((int)&lifted::g_10280b0c, 0);
+    ((lifted::V *)lifted::g_104a5818)->f0((int)&lifted::g_10280ae8, 0);
+    ((lifted::V *)lifted::g_104a5818)->f0((int)&lifted::g_10280ac4, 0);
+    ((lifted::V *)lifted::g_104a5818)->f0((int)&lifted::g_10280a1c, 0);
+    ((lifted::V *)lifted::g_104a5818)->f0((int)&lifted::g_102809f8, 0);
+    ((lifted::V *)lifted::g_104a5818)->f0((int)&lifted::g_102809d4, 0);
+    *(int *)((char *)this + 0xfbf50) = ((lifted::V *)lifted::g_104a57d4)->f36((int)&lifted::g_10280c84);
+    *(int *)((char *)this + 0xfbf54) = ((lifted::V *)lifted::g_104a57d4)->f36((int)&lifted::g_10280c6c);
+    *(int *)((char *)this + 0xfbf58) = ((lifted::V *)lifted::g_104a57d4)->f36((int)&lifted::g_10280c50);
+    *(int *)((char *)this + 0xfbf78) = ((lifted::V *)lifted::g_104a57d4)->f36((int)&lifted::g_10280c2c);
+    *(int *)((char *)this + 0xfbf7c) = ((lifted::V *)lifted::g_104a57d4)->f36((int)&lifted::g_10280c04);
+    *(int *)((char *)this + 0xfbf80) = ((lifted::V *)lifted::g_104a57d4)->f36((int)&lifted::g_10280bd8);
+    *(int *)((char *)this + 0xfbf84) = ((lifted::V *)lifted::g_104a57d4)->f36((int)&lifted::g_10280bb0);
+    *(int *)((char *)this + 0xfbf88) = ((lifted::V *)lifted::g_104a57d4)->f36((int)&lifted::g_10280b88);
+    *(int *)((char *)this + 0xfbf8c) = ((lifted::V *)lifted::g_104a57d4)->f36((int)&lifted::g_10280b58);
+    *(int *)((char *)this + 0xfbf90) = ((lifted::V *)lifted::g_104a57d4)->f36((int)&lifted::g_10280b30);
+    ((lifted::V *)this)->f3();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1003d5e0 size=0x23
 #include "CTempEnts.h"
 // TARGET: ?vfunc1@CTempEnts@@UAEXXZ

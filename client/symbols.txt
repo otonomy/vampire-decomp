@@ -2476,6 +2476,7 @@
 0x1003cee0 func   ?sub_1003cee0@Mgr_1003cee0@@QAE_NXZ Mgr_1003cee0::sub_1003cee0
 0x1003cf20 func   ?sub_1003cf20@CTempEnts@@QAEPAXPBX0@Z CTempEnts::sub_1003cf20
 0x1003d260 func   ?sub_1003d260@@YGHPAUTEnt@@@Z sub_1003d260
+0x1003d440 func   ?vfunc0@CTempEnts@@UAEXXZ CTempEnts::vfunc0
 0x1003d5e0 func   ?vfunc1@CTempEnts@@UAEXXZ CTempEnts::vfunc1
 0x1003d610 func   ?vfunc22@CTempEnts@@UAEHHHH@Z CTempEnts::vfunc22
 0x1003d740 func   ?vfunc24@CTempEnts@@UAEHHHH@Z CTempEnts::vfunc24
