@@ -786,7 +786,7 @@ public:
 	virtual void vfunc0();
 	virtual void vfunc1();
 	virtual void vfunc2();
-	virtual void vfunc3();
+	virtual int vfunc3(const char *);	// slot 3: GetSurfaceIndex
 	virtual void vfunc4();
 	virtual void *vfunc5(int);	// slot 5; seen as GetSurfaceData 1
 	virtual const char *vfunc6(unsigned short);	// slot 6: GetString
