@@ -137035,6 +137035,92 @@ void CViewRender_101997e0::sub_101997e0(WorldListInfo_t &info, CRenderList &rend
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019a950 size=0x22b
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include "ConVar.h"
+
+struct CViewSetupDH
+{
+    int context;	// 0x00
+    int m_n4; int m_n8; int m_nC; int m_n10;
+    bool clearColor;	// 0x14
+    bool clearDepth;	// 0x15
+    bool m_b16; bool m_b17;
+    int m_n18; int m_n1c; int m_n20; int m_n24; int m_n28; int m_n2c; int m_n30; int m_n34;
+    Vector origin;	// 0x38
+    Vector m_vUnreflectedOrigin;	// 0x44
+    Vector angles;	// 0x50
+    float zNear;	// 0x5c
+    float zFar;	// 0x60
+    int m_n64; int m_n68; int m_n6c; int m_n70; int m_n74; int m_n78; int m_n7c;
+    int m_n80; int m_n84; int m_n88; int m_n8c; int m_n90;
+};
+struct WorldListInfoDH;
+struct RenderListDH;
+int sub_10198260();
+
+class CViewRenderDH : public CViewRender
+{
+public:
+    void sub_1019a7d0(CViewSetupDH *view, float waterHeight, int flags);
+    void sub_10199910(WorldListInfoDH *info, RenderListDH *list, bool bClear, int a);
+    void sub_10199b40(WorldListInfoDH *info, RenderListDH *list, int flags);
+    void sub_10199cc0(WorldListInfoDH *info, RenderListDH *list, bool a, bool b, int c);
+    void sub_10199ed0(const CViewSetupDH &view, WorldListInfoDH *info, RenderListDH *list, bool a, bool b, int c);
+    void sub_1019a950(const CViewSetupDH &view, WorldListInfoDH *info, RenderListDH *renderList, float waterHeight, int flags);
+};
+
+// TARGET: CViewRenderDH::sub_1019a950
+void CViewRenderDH::sub_1019a950(const CViewSetupDH &view, WorldListInfoDH *info, RenderListDH *renderList, float waterHeight, int flags)
+{
+    ScopeTrace st("CViewRender::DrawHelper", g_102de300);
+    bool bClearDepth = (flags & 0x100) != 0;
+    if (bClearDepth)
+    {
+        CViewSetupDH tmpView = view;
+        sub_1019a7d0(&tmpView, waterHeight, flags);
+        render->vfunc29(&tmpView, (char *)this + 0x22c);
+    }
+
+    if (flags & 0x400)
+        sub_10199910(info, renderList, bClearDepth, 0);
+
+    engine->vfunc76();
+
+    static ConVar mat_clipz("mat_clipz", "1", 0);
+
+    if ((flags & 4) && mat_clipz.GetBool())
+    {
+        if (flags & 8)
+            materials->vfunc92(1);
+        else
+            materials->vfunc92(2);
+    }
+    else
+    {
+        materials->vfunc92(0);
+    }
+
+    if (!bClearDepth)
+        flags &= ~0x800;
+
+    bool renderUnderWater = (flags & 0x10) != 0;
+    bool renderAboveWater = (flags & 0x20) != 0;
+
+    int pSave = materials->vfunc63(0);
+    materials->vfunc62(sub_10198260(), 0);
+
+    sub_10199b40(info, renderList, flags);
+    sub_10199cc0(info, renderList, renderUnderWater, renderAboveWater, 0);
+    sub_10199ed0(view, info, renderList, renderUnderWater, renderAboveWater, 0);
+
+    materials->vfunc92(0);
+    materials->vfunc62(pSave, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019ab90 size=0xbd
 #include "engineclient.h"
 #include "CViewRender.h"
