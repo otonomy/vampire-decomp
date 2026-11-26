@@ -477,6 +477,7 @@
 0x1000b4b0 func   ?_C_WeaponMelee_Tzimisce2Claw_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_Tzimisce2Claw_CreateObject
 0x1000b570 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_Tzimisce2Claw@@@Z ClientClassInit
 0x1000b600 func   ?vfunc17@C_WeaponRanged_Tzimisce2Head@@UAEHXZ C_WeaponRanged_Tzimisce2Head::vfunc17
+0x1000b640 func   ?sub_1000b640@@YAHXZ sub_1000b640
 0x1000b690 func   ??_GC_WeaponRanged_Tzimisce2Head@@UAEPAXI@Z ??_GC_WeaponRanged_Tzimisce2Head@@UAEPAXI@Z
 0x1000b6b0 func   ?vfunc16@C_WeaponRanged_Tzimisce2Head@@UAEHXZ C_WeaponRanged_Tzimisce2Head::vfunc16
 0x1000b6c0 func   ?vfunc15@C_WeaponRanged_Tzimisce2Head@@UAEHXZ C_WeaponRanged_Tzimisce2Head::vfunc15
