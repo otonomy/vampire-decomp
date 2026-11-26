@@ -22,7 +22,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_10063a70();
 	void sub_10063d40();
 	int m_unk174; int m_n178; int m_n17c; int m_n180; int m_n184;
-	char m_pad0188[0x1a8 - 0x188];
+	int m_n188; int m_n18c; int m_n190; int m_n194; int m_n198; int m_n19c; int m_n1a0; int m_pad1a4;
 	int m_nFont1a8; int m_nFont1ac; int m_nFont1b0;
 	struct CTgtObj *m_p1b4; struct CTgtObj *m_p1b8; struct CTgtObj *m_p1bc; struct CTgtObj *m_p1c0; struct CTgtObj *m_p1c4; struct CTgtObj *m_p1c8; struct CTgtObj *m_p1cc;
 	int m_n1d0; int m_pad1d4; int m_n1d8; int m_n1dc;
