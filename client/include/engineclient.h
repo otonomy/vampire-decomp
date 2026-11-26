@@ -122,7 +122,7 @@ public:
 	virtual int vfunc96();	// slot 96; seen as GetDXSupportLevel 1
 	virtual void vfunc97();
 	virtual void vfunc98();
-	virtual void vfunc99();
+	virtual void vfunc99(Vector &origin, QAngle &angles);	// slot 99: (view origin, view angles) (CViewRender::SetUpView)
 	virtual void vfunc100();
 	virtual void vfunc101();
 	virtual void vfunc102();
@@ -297,9 +297,9 @@ public:
 	virtual bool vfunc35();	// slot 35; shapes differ
 	virtual int vfunc36();	// slot 36
 	virtual int vfunc37();	// slot 37
-	virtual int vfunc38();	// slot 38
+	virtual bool vfunc38();	// slot 38
 	virtual int vfunc39();	// slot 39
-	virtual void vfunc40();
+	virtual float vfunc40();	// slot 40: the view fov (CViewRender::SetUpView)
 	virtual unsigned char **vfunc41();	// slot 41: where the area bits pointer lives (C_BasePlayer::OnDataChanged stores the player's +0x166c)
 	virtual double vfunc42();	// slot 42
 	virtual void vfunc43(int, int);	// slot 43; shapes differ

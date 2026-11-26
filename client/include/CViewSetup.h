@@ -26,14 +26,12 @@ struct CViewSetup
 	float m_flTanHalfFov;	// 0x30: tan(fov / 2)
 	float m_flTanHalfFovViewmodel;	// 0x34
 	Vector origin;	// 0x38
-	int m_unk44;	// 0x44
-	int m_unk48;	// 0x48
-	int m_unk4c;	// 0x4c
+	Vector m_vUnreflectedOrigin;	// 0x44: a copy of origin made at the end of SetUpView
 	QAngle angles;	// 0x50
-	int m_unk5c;	// 0x5c
-	int m_unk60;	// 0x60
-	int m_unk64;	// 0x64
-	int m_unk68;	// 0x68
+	float zNear;	// 0x5c
+	float zFar;	// 0x60
+	float zNearViewmodel;	// 0x64
+	float zFarViewmodel;	// 0x68
 	Vector m_vForward;	// 0x6c
 	Vector m_vRight;	// 0x78
 	Vector m_vUp;	// 0x84
