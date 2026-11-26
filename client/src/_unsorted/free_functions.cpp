@@ -13206,6 +13206,32 @@ template <> int ClientClassInit<DT_ItemGGarysFilm::ignored>(DT_ItemGGarysFilm::i
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001f8c0 size=0x45
+namespace lifted {
+extern char g_10215954;
+extern char g_10215968;
+extern char g_102159a4;
+extern char g_102159dc;
+extern char g_10215a34;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001f8c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10215a34;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_102159dc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_102159a4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10215968;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10215954;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001f950 size=0x6
 namespace lifted {
 extern char g_102e2eb4;

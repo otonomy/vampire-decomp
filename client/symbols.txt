@@ -1509,6 +1509,7 @@
 0x1001f730 func   ?_C_ItemGGarysFilm_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGGarysFilm_CreateObject
 0x1001f7f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGGarysFilm@@@Z ClientClassInit
 0x1001f880 func   ?vfunc17@C_ItemGGarysPhoto@@UAEHXZ C_ItemGGarysPhoto::vfunc17
+0x1001f8c0 func   ?sub_1001f8c0@@YAHXZ sub_1001f8c0
 0x1001f910 func   ??_GC_ItemGGarysPhoto@@UAEPAXI@Z ??_GC_ItemGGarysPhoto@@UAEPAXI@Z
 0x1001f930 func   ?vfunc16@C_ItemGGarysPhoto@@UAEHXZ C_ItemGGarysPhoto::vfunc16
 0x1001f940 func   ?vfunc15@C_ItemGGarysPhoto@@UAEHXZ C_ItemGGarysPhoto::vfunc15
