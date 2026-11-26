@@ -4720,6 +4720,7 @@
 0x100cbbb0 func   ?vfunc19@CHLClient@@UAEHXZ CHLClient::vfunc19
 0x100cbbc0 func   ?CreateMove@CHLClient@@UAEXHHMMHM@Z CHLClient::CreateMove
 0x100cbbc0 func   ?vfunc20@CHLClient@@UAEXHHHHHH@Z CHLClient::vfunc20
+0x100cbc40 func   ?WriteUsercmdDeltaToBuffer@CHLClient@@UAEXPAVbf_write@@HH_N@Z CHLClient::WriteUsercmdDeltaToBuffer
 0x100cbc40 func   ?vfunc21@CHLClient@@UAEHHHHM@Z CHLClient::vfunc21
 0x100cbc60 func   ?sub_100cbc60@@YGXH@Z sub_100cbc60
 0x100cbce0 func   ?vfunc25@CHLClient@@UAEHH@Z CHLClient::vfunc25
