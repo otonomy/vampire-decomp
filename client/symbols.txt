@@ -4525,6 +4525,7 @@
 0x100c1ee0 func   ?sub_100c1ee0@CUnknown101a59f0@@QAEXH@Z CUnknown101a59f0::sub_100c1ee0
 0x100c1f50 func   ?sub_100c1f50@CMem8b_t@@QAEXH@Z CMem8b_t::sub_100c1f50
 0x100c2210 func   ?vfunc0@CLocalPlayerTraceFilter@@UAE_NPAXH@Z CLocalPlayerTraceFilter::vfunc0
+0x100c2260 func   ?vfunc1@CLocalPlayerTraceFilter@@UAEHXZ CLocalPlayerTraceFilter::vfunc1
 0x100c2450 func   ??0CSpriteRendererSub@@QAE@XZ CSpriteRendererSub::CSpriteRendererSub
 0x100c2450 func   ??0C_SpriteRenderer@@QAE@XZ C_SpriteRenderer::C_SpriteRenderer
 0x100c2450 func   ?sub_100c2450@CUnknown100c2450@@QAEPAXXZ CUnknown100c2450::sub_100c2450
