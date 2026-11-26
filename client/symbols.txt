@@ -1581,6 +1581,7 @@
 0x10020db0 func   ?_C_ItemKGalleryNoirKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKGalleryNoirKey_CreateObject
 0x10020e70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKGalleryNoirKey@@@Z ClientClassInit
 0x10020f00 func   ?vfunc17@C_ItemKLillyKey@@UAEHXZ C_ItemKLillyKey::vfunc17
+0x10020f40 func   ?sub_10020f40@@YAHXZ sub_10020f40
 0x10020f90 func   ??_GC_ItemKLillyKey@@UAEPAXI@Z ??_GC_ItemKLillyKey@@UAEPAXI@Z
 0x10020fb0 func   ?vfunc16@C_ItemKLillyKey@@UAEHXZ C_ItemKLillyKey::vfunc16
 0x10020fc0 func   ?vfunc15@C_ItemKLillyKey@@UAEHXZ C_ItemKLillyKey::vfunc15
