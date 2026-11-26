@@ -54473,6 +54473,232 @@ int CUnknown100af140::sub_100af140(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100af150 size=0x5c0
+#include "C_EnvParticle.h"
+#include "ehandle.h"
+#include "engineclient.h"
+
+extern QAngle g_104d5190;
+extern Vector g_104d4970;
+
+struct IParticleSys_100af150
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12();
+	virtual void *Create(void *pModel, const Vector &origin, const QAngle &angles, void *pfn1, void *pfn2, C_EnvParticle *pOwner);	// 13
+	virtual void Destroy(void *p);	// 14
+	virtual bool Update(void *p, float t, C_EnvParticle *pOwner, Vector *pA, Vector *pB);	// 15
+};
+extern IParticleSys_100af150 *g_104a581c;
+
+struct ILeafSys_100af150
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10();
+	virtual void RenderableChanged(unsigned short h, int flags);	// 11
+};
+extern ILeafSys_100af150 *g_102b9060;
+
+struct Bounds_100af150
+{
+	void sub_100433c0(const Vector *pMins, const Vector *pMaxs);
+};
+
+struct EnvParticleData_100af150
+{
+	char m_pad0[0x74];
+	int m_iEFlags;	// 0x74
+	char m_pad78[0xe8 - 0x78];
+	unsigned short m_hRenderHandle;	// 0xe8
+	char m_padea[0x188 - 0xea];
+	CBaseHandle m_hParent;	// 0x188
+	int m_unk18c;
+	Bounds_100af150 m_Bounds;	// 0x190
+	char m_pad191[0x410 - 0x191];
+	int m_nParticleIndex;	// 0x410
+	void *m_pModel;	// 0x414
+	int m_bActive;	// 0x418
+	float m_flStart;	// 0x41c
+	int m_nType;	// 0x420
+	int m_unk424;
+	float m_flCur;	// 0x428
+	char m_pad42c[0x450 - 0x42c];
+	float m_flTarget;	// 0x450
+	float m_flSpeed;	// 0x454
+	float m_flRate;	// 0x458
+	char m_pad45c[0x468 - 0x45c];
+	float m_flLastStart;	// 0x468
+	void *m_pEffect;	// 0x46c
+	char *m_pBones;	// 0x470
+	int m_unk474;
+	int m_unk478;
+	int m_nBones;	// 0x47c
+};
+
+float sub_100cd9e0(float a, float b, float t, float speed);
+void sub_10107eb0(const void *pMatrix, QAngle &angles);
+void sub_100b1330(); void sub_100b15c0(); void sub_100b1aa0(); void sub_100b13d0(); void sub_100b14c0();
+void sub_100b1b40(); void sub_100b1230(); void sub_100b25e0(); void sub_100b2740(); void sub_100b28d0();
+void sub_100b2950(); void sub_100b1f80(); void sub_100b1fd0(); void sub_100b2210(); void sub_100b2460();
+void sub_100b33d0(); void sub_100b16e0(); void sub_100b19a0();
+
+void C_EnvParticle::sub_100af150()
+{
+	EnvParticleData_100af150 *d = (EnvParticleData_100af150 *)this;
+	bool bCreated = false;
+
+	if (GetSolid() == 11 && !d->m_hParent.Get() && d->m_pEffect)
+	{
+		sub_1009fc60(0, 0);
+		d->m_bActive = 0;
+		PostDataUpdate(1);
+		return;
+	}
+
+	switch (d->m_nType)
+	{
+	case 8:
+		sub_100b0460();
+		break;
+	case 9:
+	case 15:
+		vfunc121();
+		break;
+	case 10:
+	case 11:
+		sub_100b02c0();
+		break;
+	case 18:
+		sub_100af810();
+		break;
+	default:
+		if (d->m_hParent.Get() && GetSolid() == 11 && d->m_nType > 0)
+			vfunc120();
+		break;
+	}
+
+	if (d->m_flCur != d->m_flTarget)
+	{
+		if (d->m_flSpeed > 0)
+		{
+			float t = engine->vfunc41(0);
+			d->m_flCur = sub_100cd9e0(d->m_flCur, d->m_flTarget, t, d->m_flRate);
+		}
+		else
+			d->m_flCur = d->m_flTarget;
+	}
+
+	if (d->m_bActive && !d->m_pEffect && d->m_flStart != d->m_flLastStart)
+	{
+		d->m_flLastStart = d->m_flStart;
+		void *pModel;
+		if (!d->m_nParticleIndex)
+			pModel = d->m_pModel;
+		else
+			pModel = engine->vfunc105(d->m_nParticleIndex);
+		if (pModel)
+		{
+			QAngle angles = g_104d5190;
+			void *pfnA;
+			void *pfnB;
+			switch (d->m_nType)
+			{
+			case 1:
+			case 4:
+				pfnA = (void *)sub_100b1330; pfnB = (void *)sub_100b15c0;
+				break;
+			case 2:
+				pfnA = (void *)sub_100b1330; pfnB = (void *)sub_100b1aa0;
+				break;
+			case 6:
+				pfnA = (void *)sub_100b13d0; pfnB = (void *)sub_100b1aa0;
+				if (d->m_nBones > 0)
+					sub_10107eb0(d->m_pBones + 0x34, angles);
+				break;
+			case 17:
+				pfnA = (void *)sub_100b14c0; pfnB = (void *)sub_100b14c0;
+				if (d->m_nBones > 0)
+					sub_10107eb0(d->m_pBones + 0x34, angles);
+				break;
+			case 3:
+				pfnA = (void *)sub_100b1330; pfnB = (void *)sub_100b1b40;
+				break;
+			case 5:
+				pfnA = (void *)sub_100b1230; pfnB = (void *)sub_100b25e0;
+				break;
+			case 7:
+				pfnA = (void *)sub_100b1230; pfnB = (void *)sub_100b2740;
+				break;
+			case 14:
+				pfnA = (void *)sub_100b1230; pfnB = (void *)sub_100b28d0;
+				break;
+			case 16:
+				pfnA = (void *)sub_100b1230; pfnB = (void *)sub_100b2950;
+				break;
+			case 8:
+				pfnA = (void *)sub_100b1f80; pfnB = (void *)sub_100b1f80;
+				break;
+			case 9:
+				pfnA = (void *)sub_100b1fd0; pfnB = (void *)sub_100b1fd0;
+				break;
+			case 10:
+			case 11:
+				pfnA = (void *)sub_100b2210; pfnB = (void *)sub_100b2210;
+				break;
+			case 12:
+			case 13:
+				pfnA = (void *)sub_100b2460; pfnB = (void *)sub_100b2460;
+				break;
+			case 15:
+				pfnA = (void *)sub_100b33d0; pfnB = (void *)sub_100b33d0;
+				break;
+			case 18:
+				pfnA = (void *)sub_100b1230; pfnB = (void *)sub_100b16e0;
+				break;
+			default:
+				pfnA = (void *)sub_100b1230; pfnB = (void *)sub_100b19a0;
+				angles = GetRenderAngles();
+				break;
+			}
+			d->m_pEffect = g_104a581c->Create(pModel, GetRenderOrigin(), angles, pfnA, pfnB, this);
+			bCreated = true;
+		}
+	}
+
+	if (d->m_pEffect)
+	{
+		Vector vA, vB;
+		if (g_104a581c->Update(d->m_pEffect, bCreated ? 0.0 : engine->vfunc41(0), this, &vA, &vB))
+		{
+			g_104a581c->Destroy(d->m_pEffect);
+			d->m_pEffect = 0;
+			d->m_Bounds.sub_100433c0(&g_104d4970, &g_104d4970);
+		}
+		else
+		{
+			Vector vMaxs = vB - GetRenderOrigin();
+			Vector vMins = vA - GetRenderOrigin();
+			d->m_Bounds.sub_100433c0(&vMins, &vMaxs);
+		}
+		if (d->m_hRenderHandle != 0xffff)
+			g_102b9060->RenderableChanged(d->m_hRenderHandle, 2);
+	}
+
+	if ((d->m_iEFlags & 0x400) && d->m_hParent.Get() && GetSolid() == 11)
+	{
+		EnvParticleData_100af150 *pParent = (EnvParticleData_100af150 *)d->m_hParent.Get();
+		if (pParent)
+		{
+			C_BaseEntity *pOther = *(C_BaseEntity **)((char *)pParent + 0x404);
+			if (pOther && pOther->vfunc71())
+				((EnvParticleData_100af150 *)pOther)->m_iEFlags |= 0x400;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b1230 size=0xfc
 #include "Vector.h"
 #include "ehandle.h"
