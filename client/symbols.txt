@@ -3367,6 +3367,7 @@
 0x1007fbb0 func   ?vfunc17@C_BaseViewModel@@UAEHXZ C_BaseViewModel::vfunc17
 0x1007fbc0 func   ?sub_1007fbc0@@YA_NPAVC_BaseEntity@@@Z sub_1007fbc0
 0x1007fc70 func   ?sub_1007fc70@@YAXPAUSSrc_1007fc70@@PAUSDst_1007fc70@@@Z sub_1007fc70
+0x1007fcc0 func   ?sub_1007fcc0@@YAHXZ sub_1007fcc0
 0x1007fce0 func   ?vfunc16@C_Beam@@UAEHXZ C_Beam::vfunc16
 0x1007fcf0 func   ?vfunc15@C_Beam@@UAEHXZ C_Beam::vfunc15
 0x1007fd00 func   ?sub_1007fd00@@YAHXZ sub_1007fd00

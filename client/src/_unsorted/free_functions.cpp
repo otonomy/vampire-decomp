@@ -33800,6 +33800,21 @@ void sub_1007fc70(SSrc_1007fc70 *src, SDst_1007fc70 *dst)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007fcc0 size=0x1b
+namespace lifted {
+struct C10080220 { int sub_10080220(); };
+int sub_100a1eb0(int);
+}
+int sub_1007fcc0()
+{
+    int t0 = lifted::sub_100a1eb0(0x4b8);
+    if (t0 != 0) {
+        return ((lifted::C10080220 *)t0)->sub_10080220();
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007fd00 size=0x6
 namespace lifted {
 extern char g_10487084;
