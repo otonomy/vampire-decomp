@@ -273,6 +273,9 @@ of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call th
   name string and store two vtables (the class and its IManagedHudElement part).
 - **VtMB scope traces.** A push of a function-name string and a counter increment at the top is `ScopeTrace st("Class::
   Method", name)` (`ScopeTrace.h`, 2- and 3-argument forms); the counter decrement at every exit is its destructor.
+  The stack and counter are tier0's `g_ScopeTraceStack[]` / `g_ScopeTraceStackDepth` (import slots 0x101e3124 /
+  0x101e3128, declared `extern "C" __declspec(dllimport)` in ScopeTrace.h; records are {name, entity, extra}).
+  A function that writes the records by hand uses those names, never `g_101e3124` / `g_101e3128` or a view of its own.
 - **Particles** hold their emitters in `CSmartPtr<T>` (`CSmartPtr.h`; AddRef/Release are sub_10117fd0/sub_10117fe0):
   a null check before AddRef and a Release on every exit is the smart pointer, not hand code.
 - **Engine interfaces**: see "Engine interfaces" (engineclient.h); never a view of your own.
