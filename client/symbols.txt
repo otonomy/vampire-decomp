@@ -6817,6 +6817,7 @@
 0x10138700 func   ?sub_10138700@CUtlMemory12@@QAEXH@Z CUtlMemory12::sub_10138700
 0x10138770 func   ?IsLeftChild@?$CUtlRBTree@PBDG@@QBE_NG@Z CUtlRBTree<char const *,unsigned short>::IsLeftChild
 0x10138770 func   ?sub_10138770@CUtlRBTree12@@QBE_NG@Z CUtlRBTree12::sub_10138770
+0x101389f0 func   ?RotateRight@?$CUtlRBTree@PBDG@@QAEXG@Z CUtlRBTree<char const *,unsigned short>::RotateRight
 0x10138bb0 func   ?sub_10138bb0@@YAXXZ sub_10138bb0
 0x10138bc0 func   ?sub_10138bc0@CView@@QAEHXZ CView::sub_10138bc0
 0x10138bd0 func   ?sub_10138bd0@SymMap@@QAEGIH@Z SymMap::sub_10138bd0
