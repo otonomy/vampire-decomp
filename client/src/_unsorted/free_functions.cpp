@@ -138523,6 +138523,128 @@ void sub_1019d590()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019d600 size=0x2e4
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+struct CViewSetupSky
+{
+    int m_n0; int m_n4; int m_n8; int m_nC; int m_n10;
+    bool clearColor;	// 0x14
+    bool clearDepth;	// 0x15
+    bool m_b16; bool m_b17;
+    int m_n18; int m_n1c; int m_n20; int m_n24; int m_n28; int m_n2c; int m_n30; int m_n34;
+    Vector origin;	// 0x38
+    Vector m_vUnreflectedOrigin;	// 0x44
+    QAngle angles;	// 0x50
+    float zNear;	// 0x5c
+    float zFar;	// 0x60
+    int m_n64; int m_n68; int m_n6c; int m_n70; int m_n74; int m_n78; int m_n7c;
+    int m_n80; int m_n84; int m_n88; int m_n8c; int m_n90;
+};
+
+struct SkyConVarView {
+    virtual void v0(); virtual bool vfunc1();
+    int m_n4; int m_n8; int m_nC; int m_n10; int m_n14; int m_n18; int m_n1c; int m_n20; int m_n24; int m_n28; int m_nValue;
+};
+extern SkyConVarView *g_10618b4c;
+inline int Sky3dGetInt()
+{
+    if (g_10618b4c->vfunc1())
+        return 0;
+    return g_10618b4c->m_nValue;
+}
+struct ViewEffectsView {
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+    virtual void vfunc9(Vector *pOrigin, QAngle *pAngles, float flScale);
+};
+extern ViewEffectsView *g_102d5238;
+
+struct WorldListInfoView { int m_n0; int m_n4; int m_n8; int m_nC; };
+struct RenderListView { int m_data[0x48018 / 4]; };
+
+void sub_10198da0(const Vector &origin, const QAngle &angles);
+void sub_100f4230();
+void sub_10198e60();
+
+class CViewRenderSky : public CViewRender
+{
+public:
+    void sub_1019cf60();
+    void sub_10199910(WorldListInfoView *info, RenderListView *list, int a, int b);
+    void sub_10199b40(WorldListInfoView *info, RenderListView *list, int flags);
+    void sub_10199cc0(WorldListInfoView *info, RenderListView *list, int a, int b, int c);
+    void sub_10199ed0(CViewSetupSky *view, WorldListInfoView *info, RenderListView *list, int a, int b, int c);
+    void sub_1019d590();
+    bool sub_1019d600(const CViewSetupSky &view);
+};
+
+// TARGET: CViewRenderSky::sub_1019d600
+bool CViewRenderSky::sub_1019d600(const CViewSetupSky &view)
+{
+    ScopeTrace st("CViewRender::Draw3dSkyboxworld", g_102de300);
+    if (!Sky3dGetInt())
+        return false;
+
+    C_BasePlayer *pbp = C_BasePlayer::GetLocalPlayer();
+    if (!pbp)
+        return false;
+    if (*(int *)((char *)pbp + 0x17b4) == 255)
+        return false;
+
+    *((bool *)this + 0x49c) = true;
+    unsigned char **areabits = render->vfunc41();
+    unsigned char *savebits;
+    unsigned char tmpbits[32];
+    savebits = *areabits;
+    memset(tmpbits, 0, sizeof(tmpbits));
+    int area = *(int *)((char *)pbp + 0x17b4);
+    tmpbits[area >> 3] |= 1 << (area & 7);
+    *areabits = tmpbits;
+
+    CViewSetupSky skyView = view;
+    skyView.zNear = view.zNear / *(int *)((char *)pbp + 0x17a4);
+    skyView.zFar = view.zFar / *(int *)((char *)pbp + 0x17a4);
+    skyView.clearDepth = true;
+    skyView.clearColor = view.clearColor;
+    g_102d5238->vfunc9(&skyView.origin, &skyView.angles, 1.0f);
+
+    int scale = *(int *)((char *)pbp + 0x17a4);
+    if (scale > 0)
+    {
+        float s = 1.0f / scale;
+        skyView.origin.x *= s;
+        skyView.origin.y *= s;
+        skyView.origin.z *= s;
+    }
+    sub_1019cf60();
+    Vector &skyOrigin = *(Vector *)((char *)pbp + 0x17a8);
+    VectorAdd(skyView.origin, skyOrigin, skyView.origin);
+    skyView.m_vUnreflectedOrigin = skyView.origin;
+
+    render->vfunc28(0, 1, skyOrigin);
+    render->vfunc29(&skyView, (char *)this + 0x22c);
+    sub_10198da0(skyView.origin, skyView.angles);
+    sub_100f4230();
+
+    WorldListInfoView info;
+    RenderListView renderList;
+    sub_10199910(&info, &renderList, 1, 0);
+    sub_10199b40(&info, &renderList, 0x870);
+    sub_10199cc0(&info, &renderList, 1, 1, 0);
+    sub_10199ed0(&skyView, &info, &renderList, 1, 1, 0);
+    sub_1019d590();
+    *areabits = savebits;
+    sub_10198e60();
+    *((bool *)this + 0x49c) = false;
+    return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019d8f0 size=0x96
 #include "CViewRender.h"
 #include "ScopeTrace.h"
