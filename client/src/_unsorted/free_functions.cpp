@@ -121911,6 +121911,17 @@ void __stdcall sub_10195770(BeamSegView *pbeam, int frame, int rendermode, float
 }
 // END FUNCTION
 
+// FUNCTION: 0x10196380 size=0x1a
+namespace lifted {
+extern char g_10618750;
+struct C10196e50 { int sub_10196e50(int, int, int); };
+}
+int sub_10196380(int a0, int a1, int a2)
+{
+    return ((lifted::C10196e50 *)((int)&lifted::g_10618750))->sub_10196e50(a0, a1, a2);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101963a0 size=0x1a
 namespace lifted {
 extern char g_10618750;
