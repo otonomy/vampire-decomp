@@ -8886,6 +8886,32 @@ template <> int ClientClassInit<DT_WeaponIThrown::ignored>(DT_WeaponIThrown::ign
 }
 // END FUNCTION
 
+// FUNCTION: 0x100162c0 size=0x45
+namespace lifted {
+extern char g_10203894;
+extern char g_102038a8;
+extern char g_102038e4;
+extern char g_1020391c;
+extern char g_10203974;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100162c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10203974;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020391c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_102038e4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_102038a8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10203894;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10016350 size=0x6
 namespace lifted {
 extern char g_102e4d10;

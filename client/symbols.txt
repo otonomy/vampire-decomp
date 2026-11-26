@@ -1029,6 +1029,7 @@
 0x10016130 func   ?_C_WeaponIThrown_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponIThrown_CreateObject
 0x100161f0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponIThrown@@@Z ClientClassInit
 0x10016280 func   ?vfunc17@C_WeaponIThrownGrenade@@UAEHXZ C_WeaponIThrownGrenade::vfunc17
+0x100162c0 func   ?sub_100162c0@@YAHXZ sub_100162c0
 0x10016310 func   ??_GC_WeaponIThrownGrenade@@UAEPAXI@Z ??_GC_WeaponIThrownGrenade@@UAEPAXI@Z
 0x10016330 func   ?vfunc16@C_WeaponIThrownGrenade@@UAEHXZ C_WeaponIThrownGrenade::vfunc16
 0x10016340 func   ?vfunc15@C_WeaponIThrownGrenade@@UAEHXZ C_WeaponIThrownGrenade::vfunc15
