@@ -8088,6 +8088,7 @@
 0x10157d70 func   ?sub_10157d70@IntList10157d70@@QAEXHH@Z IntList10157d70::sub_10157d70
 0x10158060 func   ?sub_10158060@CUnknown101f9b70@@QAEHH@Z CUnknown101f9b70::sub_10158060
 0x101580c0 func   ?sub_101580c0@CTraitIdListZ@@QAEHHHH@Z CTraitIdListZ::sub_101580c0
+0x10158120 func   ?sub_10158120@CVTraitEffectList_t@@QAEHHHH@Z CVTraitEffectList_t::sub_10158120
 0x101581e0 func   ?sub_101581e0@CTraitIdListX@@QAEHHHH@Z CTraitIdListX::sub_101581e0
 0x10158250 func   ?sub_10158250@CTraitIdListY@@QAEHHHH@Z CTraitIdListY::sub_10158250
 0x101586f0 func   ??0CVDmg_t@@QAE@XZ CVDmg_t::CVDmg_t
