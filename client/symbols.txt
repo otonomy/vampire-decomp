@@ -9258,6 +9258,7 @@
 0x101b4740 func   ??1EditablePanel@vgui2@@UAE@XZ vgui2::EditablePanel::~EditablePanel
 0x101b4780 func   ?vfunc10@EditablePanel@vgui2@@UAEXH@Z vgui2::EditablePanel::vfunc10
 0x101b4930 func   ?sub_101b4930@CEditablePanel_101b4930@@QAEXH@Z CEditablePanel_101b4930::sub_101b4930
+0x101b49a0 func   ?sub_101b49a0@@YAXPAURectNode_101b49a0@@HHHH@Z sub_101b49a0
 0x101b4d60 func   ?vfunc108@EditablePanel@vgui2@@UAEHXZ vgui2::EditablePanel::vfunc108
 0x101b4d70 func   ?vfunc107@EditablePanel@vgui2@@UAEXXZ vgui2::EditablePanel::vfunc107
 0x101b4e70 func   ?vfunc109@EditablePanel@vgui2@@UAEHXZ vgui2::EditablePanel::vfunc109

@@ -127348,6 +127348,163 @@ int CUnknown101b4650::sub_101b4650()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b49a0 size=0x3a5
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+struct RectNode_101b49a0
+{
+    short x;
+    short y;
+    short w;
+    short h;
+    char type;
+    char full;
+    short split;
+    RectNode_101b49a0 *left;
+    RectNode_101b49a0 *right;
+};
+
+extern int g_10679c00;
+extern RectNode_101b49a0 g_10679c08[];
+
+static inline RectNode_101b49a0 *NewNode_101b49a0()
+{
+    RectNode_101b49a0 *p = &g_10679c08[g_10679c00++];
+    return p;
+}
+
+void sub_101b49a0(RectNode_101b49a0 *n, int x, int y, int w, int h)
+{
+    if (x < n->x)
+    {
+        w += x - n->x;
+        if (w < 1)
+            return;
+        x = n->x;
+    }
+    if (y < n->y)
+    {
+        h += y - n->y;
+        if (h < 1)
+            return;
+        y = n->y;
+    }
+    if (x + w > n->x + n->w)
+    {
+        w = n->x + n->w - x;
+        if (w < 1)
+            return;
+    }
+    if (y + h > n->y + n->h)
+    {
+        h = n->y + n->h - y;
+        if (h < 1)
+            return;
+    }
+    if (n->type == 1)
+    {
+        if (x < n->split)
+            sub_101b49a0(n->left, x, y, w, h);
+        else if (x + w > n->split)
+            sub_101b49a0(n->right, x, y, w, h);
+        return;
+    }
+    if (n->type == 2)
+    {
+        if (y < n->split)
+            sub_101b49a0(n->left, x, y, w, h);
+        else if (y + h > n->split)
+            sub_101b49a0(n->right, x, y, w, h);
+        return;
+    }
+    if (x > n->x)
+    {
+        n->type = 1;
+        n->split = x;
+        RectNode_101b49a0 *a = NewNode_101b49a0();
+        RectNode_101b49a0 *b = NewNode_101b49a0();
+        memset(a, 0, sizeof(*a));
+        memset(b, 0, sizeof(*b));
+        n->left = a;
+        n->right = b;
+        a->x = n->x;
+        a->y = n->y;
+        a->w = n->split - n->x;
+        a->h = n->h;
+        b->x = n->split;
+        b->y = n->y;
+        b->w = n->w - a->w;
+        b->h = n->h;
+        sub_101b49a0(n->right, x, y, w, h);
+    }
+    else if (y > n->y)
+    {
+        n->type = 2;
+        n->split = y;
+        RectNode_101b49a0 *a = NewNode_101b49a0();
+        RectNode_101b49a0 *b = NewNode_101b49a0();
+        memset(a, 0, sizeof(*a));
+        memset(b, 0, sizeof(*b));
+        n->left = a;
+        n->right = b;
+        a->x = n->x;
+        a->y = n->y;
+        a->w = n->w;
+        a->h = y - n->y;
+        b->x = n->x;
+        b->y = n->split;
+        b->w = n->w;
+        b->h = n->h - b->y + n->y;
+        sub_101b49a0(n->right, x, y, w, h);
+    }
+    else if (x + w < n->x + n->w)
+    {
+        n->type = 1;
+        n->split = x + w;
+        RectNode_101b49a0 *a = NewNode_101b49a0();
+        RectNode_101b49a0 *b = NewNode_101b49a0();
+        memset(a, 0, sizeof(*a));
+        memset(b, 0, sizeof(*b));
+        n->left = a;
+        n->right = b;
+        a->x = n->x;
+        a->y = n->y;
+        a->w = n->split - n->x;
+        a->h = n->h;
+        b->x = n->split;
+        b->y = n->y;
+        b->w = n->w - a->w;
+        b->h = n->h;
+        sub_101b49a0(n->left, x, y, w, h);
+    }
+    else if (y + h < n->y + n->h)
+    {
+        n->type = 2;
+        n->split = y + h;
+        RectNode_101b49a0 *a = NewNode_101b49a0();
+        RectNode_101b49a0 *b = NewNode_101b49a0();
+        memset(a, 0, sizeof(*a));
+        memset(b, 0, sizeof(*b));
+        n->left = a;
+        n->right = b;
+        a->x = n->x;
+        a->y = n->y;
+        a->w = n->w;
+        a->h = n->split - n->y;
+        b->x = n->x;
+        b->y = n->split;
+        b->w = n->w;
+        b->h = n->h - a->h;
+        sub_101b49a0(n->left, x, y, w, h);
+    }
+    else
+    {
+        n->full = 1;
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b5660 size=0x8
 namespace lifted {
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual void u44(); virtual void u45(); virtual void u46(); virtual void u47(); virtual void u48(); virtual void u49(); virtual void u50(); virtual void u51(); virtual void u52(); virtual void u53(); virtual void u54(); virtual void u55(); virtual void u56(); virtual void u57(); virtual void u58(); virtual void u59(); virtual void u60(); virtual void u61(); virtual void u62(); virtual void u63(); virtual void u64(); virtual void u65(); virtual void u66(); virtual void u67(); virtual void u68(); virtual void u69(); virtual void u70(); virtual void u71(); virtual void u72(); virtual void u73(); virtual void u74(); virtual void u75(); virtual void u76(); virtual void u77(); virtual void u78(); virtual void u79(); virtual void u80(); virtual void u81(); virtual void u82(); virtual void u83(); virtual void u84(); virtual void u85(); virtual void u86(); virtual void u87(); virtual void u88(); virtual void u89(); virtual void u90(); virtual void u91(); virtual void u92(); virtual void u93(); virtual void u94(); virtual void u95(); virtual void u96(); virtual void u97(); virtual void u98(); virtual void u99(); virtual void u100(); virtual void u101(); virtual void u102(); virtual void u103(); virtual void u104(); virtual void u105(); virtual void u106(); virtual void u107(); virtual void u108(); virtual void u109(); virtual void u110(); virtual void u111(); virtual void u112(); virtual void u113(); virtual void u114(); virtual void u115(); virtual void u116(); virtual int f117(); };
