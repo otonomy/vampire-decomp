@@ -93,6 +93,7 @@
 0x10002ee0 func   ?ClientClassInit@@YAHPAUignored@DT_HL2Local@@@Z ClientClassInit
 0x10002f60 func   ?sub_10002f60@CUnknown10002f60@@QAEPAXXZ CUnknown10002f60::sub_10002f60
 0x10002f70 func   ?vfunc17@C_ItemPhysicsHand@@UAEHXZ C_ItemPhysicsHand::vfunc17
+0x10002fb0 func   ?sub_10002fb0@@YAHXZ sub_10002fb0
 0x10003000 func   ?vfunc143@C_BaseCombatWeapon@@UAEXXZ C_BaseCombatWeapon::vfunc143
 0x10003010 func   ?vfunc144@C_BaseCombatWeapon@@UAEXXZ C_BaseCombatWeapon::vfunc144
 0x10003020 func   ?vfunc151@C_BaseCombatWeapon@@UAEMXZ C_BaseCombatWeapon::vfunc151
