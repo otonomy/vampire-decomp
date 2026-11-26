@@ -96086,6 +96086,99 @@ int CSoundEmitterSystemBase::sub_1012f9e0(const char *pszScript)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012fa30 size=0x2f9
+#include "CSoundEmitterSystemBase.h"
+#include "Tier1.h"
+struct Sym_12 { unsigned short m_Id; Sym_12() {} };
+struct SymTab_12 { Sym_12 sub_1013d520(const char *name); };
+struct Tree_12 { int sub_10130c50(void *tmp); };
+struct EltCopy_12 { void sub_10130970(void *entry); };
+struct Tmp_12 { unsigned short m_sym; char pad2[0xd8 - 2]; void sub_101308d0(); };
+struct TmpDtor_12 { void sub_1012f530(); };
+struct ParamCtor_12 { void sub_101332a0(); };
+struct VecDtor_12 { void sub_10130ba0(); void sub_10130fd0(); };
+struct SubDtor_12 { void sub_10130800(); };
+struct Entry_12
+{
+	char m_bRemoved;
+	char m_bPrecache;
+	short m_pad2;
+	int m_nScript;
+	CSoundParamsFull m_params;
+};
+// TARGET: CSoundEmitterSystemBase::sub_1012fa30
+bool CSoundEmitterSystemBase::sub_1012fa30(const char *soundname, const char *scriptfile, const CSoundParamsFull &params)
+{
+	int idx = sub_1012e3f0(soundname);
+	int i = sub_1012f9e0(scriptfile);
+	if (i == -1)
+	{
+		g_101e3140("CSoundEmitterSystemBase::AddSound( '%s', '%s', ... ), script file not list in manifest '%s'\n", soundname, scriptfile, "scripts/game_sounds_manifest.txt");
+		return false;
+	}
+	unsigned k;
+	if (sub_1012e510(idx))
+	{
+		Entry_12 *e = (Entry_12 *)((char *)m_i54 + 0x14 + idx * 0xe8);
+		e->m_bRemoved = false;
+		e->m_nScript = i;
+		e->m_bPrecache = ((char *)m_i9c)[i * 0x82 + 1];
+		CSoundParamsFull &d = e->m_params;
+		d.m_channel = params.m_channel;
+		d.m_f04 = params.m_f04;
+		d.m_f08 = params.m_f08;
+		d.m_f0c = params.m_f0c;
+		d.m_f10 = params.m_f10;
+		d.m_f14 = params.m_f14;
+		d.m_f18 = params.m_f18;
+		d.m_b1c = params.m_b1c;
+		d.m_b1d = params.m_b1d;
+		d.m_waves.sub_10130b30((const SElem8 *)params.m_waves.m_pMemory, params.m_waves.m_Size);
+		d.m_sub.sub_10130860(params.m_sub);
+		d.m_b48 = params.m_b48;
+		for (k = 0; k < 32; k++) d.m_s49[k] = params.m_s49[k];
+		for (k = 0; k < 32; k++) d.m_s69[k] = params.m_s69[k];
+		for (k = 0; k < 32; k++) d.m_s89[k] = params.m_s89[k];
+		for (k = 0; k < 32; k++) d.m_sa9[k] = params.m_sa9[k];
+		((char *)m_i9c)[i * 0x82] = 1;
+		return true;
+	}
+	Entry_12 entry;
+	((ParamCtor_12 *)&entry.m_params)->sub_101332a0();
+	entry.m_bRemoved = false;
+	entry.m_nScript = i;
+	entry.m_bPrecache = ((char *)m_i9c)[i * 0x82 + 1];
+	entry.m_params.m_channel = params.m_channel;
+	entry.m_params.m_f04 = params.m_f04;
+	entry.m_params.m_f08 = params.m_f08;
+	entry.m_params.m_f0c = params.m_f0c;
+	entry.m_params.m_f10 = params.m_f10;
+	entry.m_params.m_f14 = params.m_f14;
+	entry.m_params.m_f18 = params.m_f18;
+	entry.m_params.m_b1c = params.m_b1c;
+	entry.m_params.m_b1d = params.m_b1d;
+	entry.m_params.m_waves.sub_10130b30((const SElem8 *)params.m_waves.m_pMemory, params.m_waves.m_Size);
+	entry.m_params.m_sub.sub_10130860(params.m_sub);
+	entry.m_params.m_b48 = params.m_b48;
+	memcpy(entry.m_params.m_s49, params.m_s49, 32);
+	memcpy(entry.m_params.m_s69, params.m_s69, 32);
+	memcpy(entry.m_params.m_s89, params.m_s89, 32);
+	memcpy(entry.m_params.m_sa9, params.m_sa9, 32);
+	char *tree = (char *)this + 0x50;
+	Tmp_12 tmp;
+	tmp.sub_101308d0();
+	tmp.m_sym = ((SymTab_12 *)(tree + 0x20))->sub_1013d520(soundname).m_Id;
+	int n = ((Tree_12 *)tree)->sub_10130c50(&tmp);
+	((EltCopy_12 *)(*(char **)(tree + 4) + n * 0xe8 + 0x14))->sub_10130970(&entry);
+	((TmpDtor_12 *)((char *)&tmp + 0xc))->sub_1012f530();
+	((char *)m_i9c)[i * 0x82] = 1;
+	((VecDtor_12 *)&entry.m_params.m_sub)->sub_10130ba0();
+	((VecDtor_12 *)&entry.m_params.m_sub)->sub_10130fd0();
+	((SubDtor_12 *)&entry.m_params.m_waves)->sub_10130800();
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012fd30 size=0x70
 #include "CSoundEmitterSystemBase.h"
 

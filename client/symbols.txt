@@ -7106,6 +7106,7 @@
 0x1012f970 func   ?sub_1012f970@CUnknown1012f970@@QAEPBDH@Z CUnknown1012f970::sub_1012f970
 0x1012f9c0 func   ?sub_1012f9c0@CUnk101b4c90@@QAEXPAG@Z CUnk101b4c90::sub_1012f9c0
 0x1012f9e0 func   ?sub_1012f9e0@CSoundEmitterSystemBase@@QAEHPBD@Z CSoundEmitterSystemBase::sub_1012f9e0
+0x1012fa30 func   ?sub_1012fa30@CSoundEmitterSystemBase@@QAE_NPBD0ABUCSoundParamsFull@@@Z CSoundEmitterSystemBase::sub_1012fa30
 0x1012fd30 func   ?sub_1012fd30@CSoundEmitterSystemBase@@QAEXPBD@Z CSoundEmitterSystemBase::sub_1012fd30
 0x1012fda0 func   ?sub_1012fda0@CSoundEmitterSystemBase@@QAEXPBD0@Z CSoundEmitterSystemBase::sub_1012fda0
 0x1012fe60 func   ?sub_1012fe60@CUnknown1012fe60@@QAEHXZ CUnknown1012fe60::sub_1012fe60
