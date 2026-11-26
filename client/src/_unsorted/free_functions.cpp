@@ -11406,6 +11406,32 @@ template <> int ClientClassInit<DT_ItemGGiovanniInvitationMaria::ignored>(DT_Ite
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001ba40 size=0x45
+namespace lifted {
+extern char g_1020e104;
+extern char g_1020e118;
+extern char g_1020e154;
+extern char g_1020e18c;
+extern char g_1020e1e4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001ba40()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1020e1e4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020e18c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1020e154;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1020e118;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1020e104;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001bad0 size=0x6
 namespace lifted {
 extern char g_102e55fc;

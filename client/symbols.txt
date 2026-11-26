@@ -1309,6 +1309,7 @@
 0x1001b8b0 func   ?_C_ItemGGiovanniInvitationMaria_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGGiovanniInvitationMaria_CreateObject
 0x1001b970 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGGiovanniInvitationMaria@@@Z ClientClassInit
 0x1001ba00 func   ?vfunc17@C_ItemGGuyMagazine@@UAEHXZ C_ItemGGuyMagazine::vfunc17
+0x1001ba40 func   ?sub_1001ba40@@YAHXZ sub_1001ba40
 0x1001ba90 func   ??_GC_ItemGGuyMagazine@@UAEPAXI@Z ??_GC_ItemGGuyMagazine@@UAEPAXI@Z
 0x1001bab0 func   ?vfunc16@C_ItemGGuyMagazine@@UAEHXZ C_ItemGGuyMagazine::vfunc16
 0x1001bac0 func   ?vfunc15@C_ItemGGuyMagazine@@UAEHXZ C_ItemGGuyMagazine::vfunc15
