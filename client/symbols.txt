@@ -837,6 +837,7 @@
 0x10012530 func   ?_C_ResearchBook_LG_FIREARMS_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ResearchBook_LG_FIREARMS_CreateObject
 0x100125f0 func   ?ClientClassInit@@YAHPAUignored@DT_ResearchBook_LG_FIREARMS@@@Z ClientClassInit
 0x10012680 func   ?vfunc17@C_OccultHacking@@UAEHXZ C_OccultHacking::vfunc17
+0x100126c0 func   ?sub_100126c0@@YAHXZ sub_100126c0
 0x10012710 func   ??_GC_OccultHacking@@UAEPAXI@Z ??_GC_OccultHacking@@UAEPAXI@Z
 0x10012730 func   ?vfunc16@C_OccultHacking@@UAEHXZ C_OccultHacking::vfunc16
 0x10012740 func   ?vfunc15@C_OccultHacking@@UAEHXZ C_OccultHacking::vfunc15
