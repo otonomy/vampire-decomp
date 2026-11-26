@@ -126197,6 +126197,171 @@ void * CUnknown10178030::sub_10178030()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10178060 size=0x63d
+#include "vgui2__Label.h"
+#include <stdio.h>
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+extern char g_102de300[];
+extern int g_105fb5e8;
+
+struct Color_10178060
+{
+	unsigned int rgba;
+	Color_10178060() {}
+};
+
+struct IScheme_10178060
+{
+	virtual void v0() = 0;
+	virtual int GetImage(const char *imageName) = 0;	// slot 1
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual int GetFont(const char *fontName) = 0;	// slot 4
+	virtual void v5() = 0;
+	virtual Color_10178060 GetColor(const char *colorName) = 0;	// slot 6
+};
+
+struct LabelColorView_10178060
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void SetBgColor(Color_10178060 c);	// slot 50
+	virtual void SetFgColor(Color_10178060 c);	// slot 51
+};
+
+struct ButtonView_10178060 : public vgui2::Label
+{
+	virtual void vfunc138(); virtual void vfunc139(); virtual void vfunc140(); virtual void vfunc141();
+	virtual void vfunc142(); virtual void vfunc143(); virtual void vfunc144(); virtual void vfunc145();
+	virtual void vfunc146(); virtual void vfunc147(); virtual void vfunc148(); virtual void vfunc149();
+	virtual void vfunc150(); virtual void vfunc151(); virtual void vfunc152(); virtual void vfunc153();
+	virtual void vfunc154(); virtual void vfunc155(); virtual void vfunc156(); virtual void vfunc157();
+	virtual void vfunc158(); virtual void vfunc159(); virtual void vfunc160(); virtual void vfunc161();
+	virtual void vfunc162(const char *command);
+};
+
+void sub_10177f10(vgui2::Panel *parent, ButtonView_10178060 **out, const char *name, int x, int y, int w, int h);
+
+struct CEquipItem_10178790
+{
+	vgui2::Panel *m_pParent;
+	vgui2::Label *m_pBkg;
+	vgui2::Label *m_pItem;
+	vgui2::Label *m_pXp;
+	vgui2::Label *m_pTrgF;
+	vgui2::Label *m_pTrgI;
+	ButtonView_10178060 *m_pTrgB;
+	int m_nCost;
+	bool m_bSelected;
+
+	void sub_10178060(vgui2::Panel *parent, int x, int y);
+};
+
+inline vgui2::Label *NewLabel_10178060(vgui2::Panel *parent, const char *name)
+{
+	void *mem = vgui2::Panel::operator new(0xb8);
+	return mem ? new (mem) vgui2::Label(parent, name, name) : 0;
+}
+
+void CEquipItem_10178790::sub_10178060(vgui2::Panel *parent, int x, int y)
+{
+	char buf[32];
+	vgui2::Label *label;
+
+	m_pParent = parent;
+	IScheme_10178060 *scheme = (IScheme_10178060 *)parent->sub_101ac830();
+
+	sprintf(buf, "veqBkg%d", g_105fb5e8);
+	label = NewLabel_10178060(parent, buf);
+	m_pBkg = label;
+	label->vfunc108(g_102de300);
+	label->vfunc63(0);
+	label->vfunc62(0);
+	label->sub_101a9950(
+		(int)(x * (sub_100cd100() / 1024.0)),
+		(int)(y * (sub_100cd0f0() / 768.0)),
+		(int)(204 * (sub_100cd100() / 1024.0)),
+		(int)(102 * (sub_100cd0f0() / 768.0)));
+	label->vfunc123(0, scheme->GetImage("hud/itemframe"), 0);
+
+	sprintf(buf, "veqItm%d", g_105fb5e8);
+	label = NewLabel_10178060(parent, buf);
+	m_pItem = label;
+	label->vfunc108(g_102de300);
+	label->vfunc63(0);
+	label->vfunc62(0);
+	label->sub_101a9950(
+		(int)(x * (sub_100cd100() / 1024.0)),
+		(int)(y * (sub_100cd0f0() / 768.0)),
+		(int)(204 * (sub_100cd100() / 1024.0)),
+		(int)(102 * (sub_100cd0f0() / 768.0)));
+
+	int font = scheme->GetFont(sub_1018c870("PercolatorSmall"));
+
+	sprintf(buf, "veqXp%d", g_105fb5e8);
+	label = NewLabel_10178060(parent, buf);
+	m_pXp = label;
+	label->vfunc108(g_102de300);
+	label->vfunc118(font);
+	label->vfunc63(0);
+	label->vfunc62(0);
+	((LabelColorView_10178060 *)label)->SetFgColor(scheme->GetColor("TitleText"));
+	((LabelColorView_10178060 *)label)->SetBgColor(scheme->GetColor("GhostControlBG"));
+	label->vfunc111(5);
+	label->sub_101a9950(
+		(int)((x + 77) * (sub_100cd100() / 1024.0)),
+		(int)((y + 73) * (sub_100cd0f0() / 768.0)),
+		(int)(77 * (sub_100cd100() / 1024.0)),
+		(int)(24 * (sub_100cd0f0() / 768.0)));
+
+	sprintf(buf, "veqTrgF%d", g_105fb5e8);
+	label = NewLabel_10178060(parent, buf);
+	m_pTrgF = label;
+	label->vfunc108(g_102de300);
+	label->vfunc63(0);
+	label->vfunc62(0);
+	label->sub_101a9950(
+		(int)((x + 15) * (sub_100cd100() / 1024.0)),
+		(int)((y + 102) * (sub_100cd0f0() / 768.0)),
+		(int)(128 * (sub_100cd100() / 1024.0)),
+		(int)(32 * (sub_100cd0f0() / 768.0)));
+	label->vfunc123(0, scheme->GetImage("interface/charactermaintenance/cm_EquipButFrame"), 0);
+
+	sprintf(buf, "veqTrgI%d", g_105fb5e8);
+	label = NewLabel_10178060(parent, buf);
+	m_pTrgI = label;
+	label->vfunc108(g_102de300);
+	label->vfunc63(0);
+	label->vfunc62(0);
+	label->sub_101a9950(
+		(int)((x + 61) * (sub_100cd100() / 1024.0)),
+		(int)((y + 100) * (sub_100cd0f0() / 768.0)),
+		(int)(32 * (sub_100cd100() / 1024.0)),
+		(int)(32 * (sub_100cd0f0() / 768.0)));
+	if (m_bSelected)
+		m_pTrgI->vfunc123(0, scheme->GetImage("interface/charactermaintenance/cm_EquipBubble"), 0);
+
+	sprintf(buf, "veqTrgB%d", g_105fb5e8);
+	sub_10177f10(parent, &m_pTrgB, buf, x + 61, y + 100, 32, 32);
+	m_pTrgB->vfunc108(g_102de300);
+	m_pTrgB->vfunc162(buf);
+	m_pTrgB->vfunc62(0);
+
+	g_105fb5e8++;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101786a0 size=0x73
 namespace lifted {
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual int f20(int); };
