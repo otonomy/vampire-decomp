@@ -136649,6 +136649,166 @@ char VView380::sub_10198e70()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10198fa0 size=0x51e
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include "C_BaseViewModel.h"
+#include "C_EnvParticle.h"
+#include "C_BasePlayer.h"
+#include "ehandle.h"
+#define memcpy memmove
+#include "utlvector.h"
+#undef memcpy
+
+struct ParticleMgrView {
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6();
+    virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13();
+    virtual void v14(); virtual void v15(); virtual void v16();
+    virtual void vfunc17(int);
+    virtual void vfunc18(void *, const Vector &);
+    virtual void vfunc19(int);
+    virtual void vfunc20();
+};
+extern ParticleMgrView *g_104a581c;
+extern int g_10619920;
+extern char g_104d4970[];
+
+struct V5910 { bool sub_100a5910(); };
+struct VMView { void sub_10096060(int n, float f, float g); };
+C_BaseViewModel *sub_100ab1e0(int i);
+struct EnvParticleVecOps
+{
+    void sub_101a0e90(int num);	// GrowVector
+    void sub_101a0f20(int elem, int num);	// ShiftElementsRight
+};
+void sub_101a0f60(C_EnvParticle **pMemory, C_EnvParticle *const &src);	// CopyConstruct
+
+struct CViewSetupView {
+    char pad[0x2c];
+    float fovViewmodel;	// 0x2c
+    char pad2[0x64 - 0x30];
+    float zNearViewmodel;	// 0x64
+    float zFarViewmodel;	// 0x68
+};
+
+class CViewRenderDV : public CViewRender
+{
+public:
+    bool sub_10198ea0(bool drawViewmodel, void *rec);
+    void sub_10198fa0(const CViewSetupView &view, bool drawViewmodel);
+};
+
+// TARGET: CViewRenderDV::sub_10198fa0
+void CViewRenderDV::sub_10198fa0(const CViewSetupView &view, bool drawViewmodel)
+{
+    ScopeTrace st("CViewRender::DrawViewModel", g_102de300);
+    if (g_10619920 == engine->vfunc44())
+        return;
+    g_10619920 = engine->vfunc44();
+
+    materials->vfunc70(1);
+    materials->vfunc71();
+    render->vfunc33(view.fovViewmodel, view.zNearViewmodel, view.zFarViewmodel);
+    materials->vfunc55(0.0f, 0.3f);
+
+    C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+    int i;
+    for (i = 0; i < 2; i++)
+    {
+        char *rec = (char *)vfunc6(i);
+        if (!rec)
+            continue;
+        if (!sub_10198ea0(drawViewmodel, rec))
+            continue;
+        C_BaseViewModel *vm = sub_100ab1e0(i);
+        if (!vm)
+            continue;
+        vm->sub_100a2030(rec + 8);
+        vm->sub_100a2100(*(QAngle *)(rec + 0x14));
+        *(int *)((char *)vm + 0x56c) = 0;
+        *(int *)((char *)vm + 0x570) = 0;
+        C_BasePlayer *pLocal = C_BasePlayer::GetLocalPlayer();
+        if (pLocal)
+        {
+            *(int *)((char *)vm + 0x56c) = *(int *)((char *)pLocal + 0x56c);
+            *(int *)((char *)vm + 0x570) = *(int *)((char *)pLocal + 0x570);
+        }
+        Vector mins, maxs;
+        vm->GetRenderBoundsWorldspace(mins, maxs);
+        if (vm->DrawModel(1, (int)&mins) && pPlayer)
+        {
+            int n = *(int *)((char *)pPlayer + 0x1074);
+            if (n)
+            {
+                float f = (n * 0.002 + 0.006) / (n + 2);
+                ((VMView *)vm)->sub_10096060(n + 2, f, f * 5.0f);
+            }
+        }
+    }
+
+    bool bLocal = ((V5910 *)pPlayer)->sub_100a5910();
+    CUtlVector<C_EnvParticle *> opaque;
+    CUtlVector<C_EnvParticle *> translucent;
+    for (i = 0; i < 2; i++)
+    {
+        C_BaseViewModel *vm = sub_100ab1e0(i);
+        if (!vm)
+            continue;
+        for (int j = 0; j < vm->m_size; )
+        {
+            C_EnvParticle *pEnt = ((C_EnvParticle **)vm->m_pMem)[j];
+            if (!pEnt)
+            {
+                ((CUtlVector<C_EnvParticle *> *)&vm->m_pMem)->FastRemove(j);
+                continue;
+            }
+            j++;
+            if (((CBaseHandle *)((char *)pEnt + 0x188))->Get() != vm)
+                continue;
+            pEnt->sub_100af150();
+            if (pEnt->sub_100af0b0())
+            {
+                if (!bLocal || *((char *)pEnt + 0x4b8))
+                {
+                    int e = opaque.m_Size;
+                    ((EnvParticleVecOps *)&opaque)->sub_101a0e90(1);
+                    ((EnvParticleVecOps *)&opaque)->sub_101a0f20(e, 1);
+                    CopyConstruct(&opaque.Element(e), pEnt);
+                }
+            }
+            else
+            {
+                int e = translucent.m_Size;
+                ((EnvParticleVecOps *)&translucent)->sub_101a0e90(1);
+                translucent.ShiftElementsRight(e);
+                sub_101a0f60(&translucent.Element(e), pEnt);
+            }
+        }
+    }
+
+    for (i = 0; i < opaque.Count(); i++)
+    {
+        int h = *(int *)((char *)opaque[i] + 0x46c);
+        if (h)
+            g_104a581c->vfunc17(h);
+    }
+
+    materials->vfunc70(0);
+    materials->vfunc71();
+    materials->vfunc81();
+    materials->vfunc86(-90.0f, 1.0f, 0.0f, 0.0f);
+    materials->vfunc86(90.0f, 0.0f, 0.0f, 1.0f);
+    g_104a581c->vfunc18(g_104d4970, Vector(1.0f, 0.0f, 0.0f));
+    g_104a581c->vfunc19(0);
+    g_104a581c->vfunc20();
+    materials->vfunc72();
+    materials->vfunc55(0.0f, 1.0f);
+    materials->vfunc70(1);
+    materials->vfunc72();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101997e0 size=0x129
 #include <string.h>
 #include "ScopeTrace.h"
