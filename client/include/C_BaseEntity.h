@@ -67,6 +67,9 @@ public:
 	void sub_1009f2e0(int a, int b);
 	void sub_1011a950();
 	void sub_1011cf40();
+	void sub_1011cbd0(CGameTrace &trace, Vector &move);
+	int sub_1011cac0(Vector &in, const Vector &normal, Vector &out, float overbounce);
+	void sub_100a23f0(int flag);
 	virtual ICollideable *GetClientCollideable();	// IClientUnknown slot 2
 	virtual IClientNetworkable *GetClientNetworkable();	// IClientUnknown slot 3
 	virtual IClientRenderable *GetClientRenderable();	// IClientUnknown slot 4
