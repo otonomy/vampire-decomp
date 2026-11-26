@@ -41056,6 +41056,23 @@ int sub_1009b210()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009b270 size=0x2a
+namespace lifted {
+int __stdcall sub_1009fff0(int);
+}
+struct CUnknown1009b270 { int sub_1009b270(int); };
+int CUnknown1009b270::sub_1009b270(int a0)
+{
+    int t0 = lifted::sub_1009fff0(a0);
+    if (a0 == 2) {
+        if ((*(int *)((char *)this + 0x92c)) == a0) {
+            *(int *)((char *)this + 0x92c) = 1;
+        }
+    }
+    return t0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009b2a0 size=0x1d
 namespace lifted {
 int __stdcall sub_10094860(int);
