@@ -56296,6 +56296,59 @@ SOut1023f3d0 *sub_100da050(const SVec3 *pA, const SVec3 *pB, SOut1023f3d0 *pOut)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100da0b0 size=0x2b7
+#include "Vector.h"
+#include "Ray_t.h"
+
+#define clamp(val, min, max) (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)))
+
+inline unsigned long &FloatBits(vec_t &f) { return *reinterpret_cast<unsigned long *>(&f); }
+inline vec_t BitsToFloat(unsigned long i) { return *reinterpret_cast<vec_t *>(&i); }
+inline vec_t FloatMakePositive(vec_t f) { return BitsToFloat(FloatBits(f) & 0x7FFFFFFF); }
+
+float sub_100da370(const Ray_t &ray);
+
+float sub_100da0b0(const Ray_t &ray, const Vector &v1, const Vector &v2, const Vector &v3, bool oneSided)
+{
+	Vector edge1, edge2, org;
+	VectorSubtract(v2, v1, edge1);
+	VectorSubtract(v3, v1, edge2);
+
+	if (oneSided)
+	{
+		Vector normal;
+		CrossProduct(edge1, edge2, normal);
+		if (DotProduct(normal, *(const Vector *)ray.m_Delta) >= 0.0f)
+			return -1.0f;
+	}
+
+	Vector dirCrossEdge2, orgCrossEdge1;
+	CrossProduct(*(const Vector *)ray.m_Delta, edge2, dirCrossEdge2);
+
+	float denom = DotProduct(dirCrossEdge2, edge1);
+	if (FloatMakePositive(denom) < 1e-6)
+		return -1.0f;
+	denom = 1.0f / denom;
+
+	VectorSubtract(*(const Vector *)ray.m_Start, v1, org);
+	float u = DotProduct(dirCrossEdge2, org) * denom;
+	if ((u < 0.0f) || (u > 1.0f))
+		return -1.0f;
+
+	CrossProduct(org, edge1, orgCrossEdge1);
+	float v = DotProduct(orgCrossEdge1, *(const Vector *)ray.m_Delta) * denom;
+	if ((v < 0.0f) || (v + u > 1.0f))
+		return -1.0f;
+
+	float boxt = sub_100da370(ray);
+	float t = DotProduct(orgCrossEdge1, edge2) * denom;
+	if ((t < -boxt) || (t > 1.0f + boxt))
+		return -1.0f;
+
+	return clamp(t, 0, 1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100da5c0 size=0x189
 #include "Vector.h"
 int sub_100da5c0(const Vector &p0, const Vector &p1, const Vector &p2, const float *plane, float *out)
