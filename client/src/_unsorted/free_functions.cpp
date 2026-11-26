@@ -43843,6 +43843,33 @@ int C_BasePlayer::sub_100a93e0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a96a0 size=0x267
+#include "C_BasePlayer.h"
+
+int C_BasePlayer::sub_100a96a0(int iStat)
+{
+	int idx = 0;
+	if (m_StatListManager.Find(2)->sub_1015dbd0(2) >= 0 && m_StatListManager.Find(2)->sub_1015dbd0(2) < 15) {
+		idx = 1;
+		if (iStat == 2)
+			return 0;
+	}
+	for (int i = 0; i < 17; i++) {
+		if (i == 2)
+			continue;
+		if (m_StatListManager.Find(2)->sub_1015dbd0(i) >= 0 && m_StatListManager.Find(2)->sub_1015dbd0(i) < 15) {
+			if (i == iStat) {
+				if (m_StatListManager.Find(2)->sub_1015dbd0(i) > 0)
+					return idx;
+				return -1;
+			}
+			idx++;
+		}
+	}
+	return -1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a9910 size=0x5
 char __stdcall sub_100a9910(int a0)
 {

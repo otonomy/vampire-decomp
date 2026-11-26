@@ -4021,6 +4021,7 @@
 0x100a8f90 func   ?sub_100a8f90@CUnknown100a8dc0@@QAEXPAVC_BasePlayer@@@Z CUnknown100a8dc0::sub_100a8f90
 0x100a8fd0 func   ?sub_100a8fd0@CUnknown100a8dc0@@QAEXPAVC_BasePlayer@@@Z CUnknown100a8dc0::sub_100a8fd0
 0x100a93e0 func   ?sub_100a93e0@C_BasePlayer@@QAEHXZ C_BasePlayer::sub_100a93e0
+0x100a96a0 func   ?sub_100a96a0@C_BasePlayer@@QAEHH@Z C_BasePlayer::sub_100a96a0
 0x100a9910 func   ?sub_100a9910@@YGDH@Z sub_100a9910
 0x100a9920 func   ?vfunc194@C_BasePlayer@@UAEPAVC_BaseEntity@@PBD@Z C_BasePlayer::vfunc194
 0x100a99b0 func   ?vfunc86@C_BasePlayer@@UAEHXZ C_BasePlayer::vfunc86
