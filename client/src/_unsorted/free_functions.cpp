@@ -4522,6 +4522,32 @@ template <> int ClientClassInit<DT_WeaponMelee_ZombieFists::ignored>(DT_WeaponMe
 }
 // END FUNCTION
 
+// FUNCTION: 0x1000ca40 size=0x45
+namespace lifted {
+extern char g_101f1304;
+extern char g_101f1318;
+extern char g_101f1354;
+extern char g_101f138c;
+extern char g_101f13e4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1000ca40()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101f13e4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101f138c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101f1354;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101f1318;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101f1304;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1000cad0 size=0x6
 namespace lifted {
 extern char g_102e4000;
