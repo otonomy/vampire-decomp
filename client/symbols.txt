@@ -9303,6 +9303,7 @@
 0x1019d590 func   ?sub_1019d590@@YAXXZ sub_1019d590
 0x1019d600 func   ?sub_1019d600@CViewRenderSky@@QAE_NABUCViewSetupSky@@@Z CViewRenderSky::sub_1019d600
 0x1019d8f0 func   ?sub_1019d8f0@CViewRender@@QAEXPBD@Z CViewRender::sub_1019d8f0
+0x1019dbd0 func   ?sub_1019dbd0@CViewRenderRV@@QAEXABUCViewSetupRV@@_N1@Z CViewRenderRV::sub_1019dbd0
 0x1019e1f0 func   ?vfunc6@CViewRender@@UAEPAXH@Z CViewRender::vfunc6
 0x1019e2a0 func   ?sub_1019e2a0@@YAHABVVector@@AAV1@@Z sub_1019e2a0
 0x1019f140 func   ?sub_1019f140@CViewRender@@QAE_NH@Z CViewRender::sub_1019f140
