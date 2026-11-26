@@ -75456,6 +75456,121 @@ void sub_10126a70(Holder *h)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10126d00 size=0x2f4
+#include "matrix3x4_t.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+__declspec(dllimport) void Msg(const char *, ...);
+
+struct Vec3 { float x, y, z; };
+extern Vec3 g_104d4970;
+extern Vec3 g_104d5190;
+int sub_1008cdc0(void *hdr, const char *name);
+void sub_10089660(void *hdr, int a, int b, matrix3x4_t *out);
+void sub_10108510(matrix3x4_t *m, int col, Vec3 *out);
+void sub_10109420(matrix3x4_t *m);
+void sub_10120660(void *a, void *b);
+
+struct RgPhysObj { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+	virtual void SetPositionMatrix(const matrix3x4_t &m, bool teleport); };
+struct RgParser { virtual void v0(); virtual const char *GetCurrentBlockName(); virtual bool Finished(); virtual void ParseSolid(void *solid, void *iface);
+	virtual void v4(); virtual void ParseRagdollConstraint(void *c, void *iface); virtual void v6(); virtual void v7(); virtual void v8(); virtual void SkipBlock(); };
+struct RgCollision { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25();
+	virtual RgParser *VPhysicsKeyParserCreate(const char *kv); virtual void VPhysicsKeyParserDestroy(RgParser *p); };
+struct RgEnv { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6();
+	virtual RgPhysObj *CreatePolyObject(void *collide, int surface, const Vec3 &origin, const Vec3 &angles, void *params);
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void *CreateRagdollConstraint(RgPhysObj *ref, RgPhysObj *att, void *group, void *c);
+	virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18();
+	virtual void *CreateConstraintGroup(); };
+struct RgSurf { virtual void v0(); virtual void v1(); virtual void v2(); virtual int GetSurfaceIndex(const char *name); };
+
+struct RgElement { Vec3 originParentSpace; RgPhysObj *pObject; void *pConstraint; int parentIndex; };
+struct RgRagdoll { int listCount; void *pGroup; RgElement list[30]; int boneIndex[30]; };
+struct RgSolids { int solidCount; void **solids; const char *pKeyValues; };
+struct RgStudioHdr { int a, b, c; char name[64]; };
+struct RgParams { void *pGameData; RgSolids *pCollide; RgStudioHdr *pStudioHdr; int p3; int p4; int p5; int p6; int p7; int p8; int p9; int p10; int p11; matrix3x4_t *pCurrentBones; int p13; int p14; int p15; float jointFrictionScale; };
+struct RgObjParams { Vec3 *massCenterOverride; float mass, inertia, damping, rotdamping, rotInertiaLimit; const char *pName; void *pGameData; float volume, dragCoefficient; bool enableCollisions; int unk2c; };
+struct RgSolid { int index; char name[512]; char parent[512]; char surfaceprop[512]; Vec3 massCenterOverride; RgObjParams params; };
+struct RgAxis { float minRotation, maxRotation, angularVelocity, torque; };
+struct RgConstraint { matrix3x4_t constraintToReference; matrix3x4_t constraintToAttached; int parentIndex; int childIndex; RgAxis axes[3]; bool onlyAngularLimits; };
+
+// TARGET: sub_10126d00
+void sub_10126d00(RgCollision *pPhysCollision, RgEnv *pPhysEnv, RgSurf *pSurfaceDatabase, RgRagdoll &ragdoll, const RgParams &params)
+{
+	ragdoll.listCount = 0;
+	ragdoll.pGroup = 0;
+	memset(ragdoll.list, 0, sizeof(ragdoll.list));
+	if (!params.pCollide || params.pCollide->solidCount > 30)
+		return;
+
+	RgParser *pParse = pPhysCollision->VPhysicsKeyParserCreate(params.pCollide->pKeyValues);
+	ragdoll.pGroup = pPhysEnv->CreateConstraintGroup();
+	while (!pParse->Finished())
+	{
+		const char *pBlock = pParse->GetCurrentBlockName();
+		if (!_strcmpi(pBlock, "solid"))
+		{
+			RgSolid solid;
+			pParse->ParseSolid(&solid, 0);
+			if (solid.index >= 0 && solid.index < params.pCollide->solidCount)
+			{
+				int boneIndex = sub_1008cdc0(params.pStudioHdr, solid.name);
+				ragdoll.boneIndex[ragdoll.listCount] = boneIndex;
+				if (boneIndex >= 0)
+				{
+					solid.params.rotInertiaLimit = 0.5f;
+					solid.params.pGameData = params.pGameData;
+					int surfaceData = pSurfaceDatabase->GetSurfaceIndex(solid.surfaceprop);
+					if (surfaceData < 0)
+						surfaceData = pSurfaceDatabase->GetSurfaceIndex("default");
+					solid.params.pName = params.pStudioHdr->name;
+					ragdoll.list[ragdoll.listCount].pObject = pPhysEnv->CreatePolyObject(params.pCollide->solids[solid.index], surfaceData, g_104d4970, g_104d5190, &solid.params);
+					ragdoll.list[ragdoll.listCount].pObject->SetPositionMatrix(params.pCurrentBones[boneIndex], true);
+					ragdoll.list[ragdoll.listCount].parentIndex = -1;
+					ragdoll.listCount++;
+				}
+				else
+				{
+					Msg("CRagdollProp::CreateObjects:  Couldn't Lookup Bone %s\n", solid.name);
+				}
+			}
+		}
+		else if (!_strcmpi(pBlock, "ragdollconstraint"))
+		{
+			RgConstraint constraint;
+			pParse->ParseRagdollConstraint(&constraint, 0);
+			if (constraint.childIndex >= 0 && constraint.parentIndex >= 0)
+			{
+				RgElement &childElement = ragdoll.list[constraint.childIndex];
+				childElement.parentIndex = constraint.parentIndex;
+				if (params.jointFrictionScale > 0)
+				{
+					for (int k = 0; k < 3; k++)
+						constraint.axes[k].torque *= params.jointFrictionScale;
+				}
+				sub_10089660(params.pStudioHdr, ragdoll.boneIndex[constraint.childIndex], ragdoll.boneIndex[constraint.parentIndex], &constraint.constraintToAttached);
+				sub_10108510(&constraint.constraintToAttached, 3, &childElement.originParentSpace);
+				sub_10109420(&constraint.constraintToReference);
+				sub_10120660(ragdoll.list[constraint.parentIndex].pObject, childElement.pObject);
+				childElement.pConstraint = pPhysEnv->CreateRagdollConstraint(childElement.pObject, ragdoll.list[constraint.parentIndex].pObject, ragdoll.pGroup, &constraint);
+			}
+		}
+		else
+		{
+			pParse->SkipBlock();
+		}
+	}
+	pPhysCollision->VPhysicsKeyParserDestroy(pParse);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10127000 size=0xdf
 struct V3 { float x, y, z; };
 
