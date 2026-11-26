@@ -56064,6 +56064,102 @@ void sub_100d9ba0(const Vector &start, const Vector &end, int iTracerType)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d9da0 size=0x2ab
+#include "Vector.h"
+#include "CVProfile.h"
+#include "engineclient.h"
+
+extern CVProfile *g_101e3138;
+extern "C" __declspec(dllimport) void vtune(bool);
+
+void sub_100d95a0(const Vector &start, const Vector &direction, float velocity, float length, float clipLength, float scale, float lifetime, const char *shader);
+void sub_100d9ba0(Vector &start, Vector &end, int iTracerType);
+
+struct CCycleCountL
+{
+	unsigned __int64 m_Int64;
+	CCycleCountL() { m_Int64 = 0; }
+	void Sample()
+	{
+		unsigned long *pSample = (unsigned long *)&m_Int64;
+		__asm
+		{
+			mov ecx, pSample
+			rdtsc
+			mov [ecx], eax
+			mov [ecx+4], edx
+		}
+	}
+};
+
+inline void PopGroupL(CVProfile *p)
+{
+	p->m_nDepth--;
+	if (p->m_Stack[p->m_nDepth] != p->m_Stack[p->m_nDepth + 1] && p->m_bEnabled && p->m_Stack[p->m_nDepth + 1] == p->m_nCurBudget)
+		vtune(false);
+}
+
+inline void EnterL(const char *pszName, int detailLevel, const char *pBudgetGroupName)
+{
+	CVProfile *p = g_101e3138;
+	if (p->m_nPause != 0 || !p->m_fAtRoot)
+	{
+		if (pszName != *(const char **)p->m_pCurNode)
+			p->m_pCurNode = p->m_pCurNode->GetSubNode(pszName, detailLevel, pBudgetGroupName);
+		p->m_pCurNode->EnterScope();
+		p->m_fAtRoot = false;
+	}
+}
+
+inline void ExitL(bool bInline)
+{
+	CVProfile *p = g_101e3138;
+	if (!p->m_fAtRoot || p->m_nPause != 0)
+	{
+		CVProfNode *n = p->m_pCurNode;
+		if (--n->m_nRecursions == 0 && n->m_nCurFrameCalls != 0)
+		{
+			CCycleCountL cnt;
+			cnt.Sample();
+			n->m_CurFrameTime.v = cnt.m_Int64 - n->m_CurFrameTime.v;
+			n->m_TotalTime += n->m_CurFrameTime;
+			if (bInline)
+				PopGroupL(g_101e3138);
+			else
+				g_101e3138->PopGroup();
+		}
+		if (n->m_nRecursions == 0)
+			p->m_pCurNode = p->m_pCurNode->m_pParent;
+		p->m_fAtRoot = (p->m_pCurNode == p->m_pRoot);
+	}
+}
+
+void sub_100d9da0(Vector &start, Vector &end, int velocity, bool makeWhiz)
+{
+	EnterL("FX_Tracer", 0, "Particle/Effect Rendering");
+	float dist;
+	Vector dir;
+
+	VectorSubtract(end, start, dir);
+	dist = VectorNormalize(dir);
+
+	if (dist < 256)
+	{
+		ExitL(false);
+		return;
+	}
+
+	float length = enginerandom->RandomFloat(64.0f, 128.0f);
+	float life = (dist + length) / velocity;
+
+	sub_100d95a0(start, dir, velocity, length, dist, enginerandom->RandomFloat(0.75f, 0.9f), life, "effects/spark");
+
+	if (makeWhiz)
+		sub_100d9ba0(start, end, 1);
+	ExitL(true);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100da050 size=0x5a
 struct SVec3
 {
