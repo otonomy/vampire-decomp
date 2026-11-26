@@ -9666,6 +9666,7 @@
 0x101b0ec0 func   ?vfunc130@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc130
 0x101b0f90 func   ?vfunc131@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc131
 0x101b1050 func   ?vfunc164@TextEntry@vgui2@@UAE_NHHHH@Z vgui2::TextEntry::vfunc164
+0x101b10e0 func   ?vfunc172@TextEntry@vgui2@@UAEHPAH@Z vgui2::TextEntry::vfunc172
 0x101b1390 func   ?vfunc157@TextEntry@vgui2@@UAEHXZ vgui2::TextEntry::vfunc157
 0x101b13e0 func   ?vfunc132@TextEntry@vgui2@@UAEHH@Z vgui2::TextEntry::vfunc132
 0x101b1410 func   ?vfunc168@TextEntry@vgui2@@UAEHXZ vgui2::TextEntry::vfunc168
