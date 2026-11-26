@@ -49301,6 +49301,59 @@ int sub_100c0c90(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c1310 size=0x209
+#include "CKeyValuesX.h"
+extern "C" __declspec(dllimport) int __cdecl Q_strcasecmp(const char *, const char *);
+struct interval_x { float start; float range; };
+interval_x sub_10107010(const char *pString);
+float sub_101070a0(const interval_x &interval);
+struct SubSoundscapeParamsX { int pad0; float m_flVolume; int m_nStart; int m_nOverride; int m_nDefault; };
+struct SndscapeX
+{
+	char pad[0x1c];
+	char m_Positions[12 * 32];
+	int unk[1];
+	void sub_100c1310(CKeyValuesX *pKey, const SubSoundscapeParamsX &params);
+	void sub_100c18e0(const char *pName, float volume, int pitch);
+	void sub_100c1900(const char *pName, int a, float volume, float atten, int pitch, void *pOrigin);
+};
+
+void SndscapeX::sub_100c1310(CKeyValuesX *pPlayLooping, const SubSoundscapeParamsX &params)
+{
+	float volume = 0;
+	float attenuation = 0.8f;
+	const char *pSoundName = 0;
+	int pitch = 100;
+	int positionIndex = -1;
+	CKeyValuesX *pKey = pPlayLooping->sub_101283a0();
+	while (pKey)
+	{
+		if (!Q_strcasecmp(pKey->sub_10127c70(), "volume"))
+			volume = sub_101070a0(sub_10107010(pKey->sub_10128590(0, ""))) * params.m_flVolume;
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "pitch"))
+			pitch = (int)sub_101070a0(sub_10107010(pKey->sub_10128590(0, "")));
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "wave"))
+			pSoundName = pKey->sub_10128590(0, "");
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "position"))
+			positionIndex = pKey->sub_101284c0(0, 0) + params.m_nStart;
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "attenuation"))
+			attenuation = sub_101070a0(sub_10107010(pKey->sub_10128590(0, "")));
+		pKey = pKey->sub_101283b0();
+	}
+	if (positionIndex < 0)
+		positionIndex = params.m_nDefault;
+	else if (params.m_nOverride >= 0)
+		positionIndex = params.m_nOverride;
+	if (volume != 0 && pSoundName)
+	{
+		if (positionIndex < 0)
+			sub_100c18e0(pSoundName, volume, pitch);
+		else if (positionIndex <= 31 && (*(int *)((char *)this + 0x50) & (1 << positionIndex)))
+			sub_100c1900(pSoundName, 0, volume, attenuation, pitch, (char *)this + 0x1c + positionIndex * 12);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c18e0 size=0x20
 namespace lifted {
 extern char g_104d4970;
