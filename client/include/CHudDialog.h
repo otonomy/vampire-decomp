@@ -68,6 +68,9 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	CHUDSprite *m_pEdges[2][2];	// 0xa18: hud/DialogFrmEdgs
 	char m_pad0a28[0x122c - 0xa28];
 	void sub_10053200();	// "CHudDialog::ComputeAlpha"
+	void sub_10053b50(bool);
+	void sub_10053770(bool);
+	void sub_100530f0();
 	char m_szItems[4][0x800];	// 0x122c
 	char m_pad322c[0x324c - 0x322c];
 	char m_szText[0x800];	// 0x324c
