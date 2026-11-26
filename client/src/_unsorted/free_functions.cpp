@@ -7546,6 +7546,32 @@ template <> int ClientClassInit<DT_OccultObfuscate::ignored>(DT_OccultObfuscate:
 }
 // END FUNCTION
 
+// FUNCTION: 0x10013340 size=0x45
+namespace lifted {
+extern char g_101fdd24;
+extern char g_101fdd38;
+extern char g_101fdd74;
+extern char g_101fddac;
+extern char g_101fde04;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10013340()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101fde04;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101fddac;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101fdd74;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101fdd38;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101fdd24;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100133d0 size=0x6
 namespace lifted {
 extern char g_102e0588;
