@@ -9,5 +9,5 @@ public:
 	void Init(const char *pMaterialName);	// 0x100cd1f0
 	void Init(CMaterialReference &ref);	// 0x100cd240
 	void sub_100cd1e0();	// jmp 0x100cd260 (Shutdown)
-	void *m_pMaterial;
+	int m_unk0;	// IMaterial *
 };
