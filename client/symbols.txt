@@ -1253,6 +1253,7 @@
 0x1001a730 func   ?_C_ItemGOHDiary_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGOHDiary_CreateObject
 0x1001a7f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGOHDiary@@@Z ClientClassInit
 0x1001a880 func   ?vfunc17@C_ItemGBachJournal@@UAEHXZ C_ItemGBachJournal::vfunc17
+0x1001a8c0 func   ?sub_1001a8c0@@YAHXZ sub_1001a8c0
 0x1001a910 func   ??_GC_ItemGBachJournal@@UAEPAXI@Z ??_GC_ItemGBachJournal@@UAEPAXI@Z
 0x1001a930 func   ?vfunc16@C_ItemGBachJournal@@UAEHXZ C_ItemGBachJournal::vfunc16
 0x1001a940 func   ?vfunc15@C_ItemGBachJournal@@UAEHXZ C_ItemGBachJournal::vfunc15

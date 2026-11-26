@@ -10902,6 +10902,32 @@ template <> int ClientClassInit<DT_ItemGOHDiary::ignored>(DT_ItemGOHDiary::ignor
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001a8c0 size=0x45
+namespace lifted {
+extern char g_1020bf54;
+extern char g_1020bf68;
+extern char g_1020bfa4;
+extern char g_1020bfdc;
+extern char g_1020c034;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001a8c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1020c034;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020bfdc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1020bfa4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1020bf68;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1020bf54;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001a950 size=0x6
 namespace lifted {
 extern char g_102e4c60;
