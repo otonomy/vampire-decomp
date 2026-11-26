@@ -74740,6 +74740,23 @@ void sub_100f7080(const unsigned char *pSrc, unsigned short *pDst, int nPixels)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f7140 size=0x5e
+void sub_100f7140(const unsigned char *pSrc, unsigned short *pDst, int nPixels)
+{
+	unsigned short *pOut = pDst;
+	const unsigned char *pEnd = pSrc + nPixels * 4;
+	while (pSrc < pEnd) {
+		unsigned short a = pSrc[3];
+		unsigned short r = pSrc[0];
+		unsigned short g = pSrc[1];
+		unsigned char b = pSrc[2];
+		*pOut = (unsigned short)((((((a & 0xFFF0) << 4) | (r & 0xFFF0)) << 4) | (b >> 4)) | (g & 0xFFF0));
+		pSrc += 4;
+		pOut++;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100f71a0 size=0x2a
 void sub_100f71a0(unsigned char *src, unsigned char *dst, int n)
 {
