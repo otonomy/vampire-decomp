@@ -1837,6 +1837,7 @@
 0x10025db0 func   ?_C_ItemKChineseTheatreKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKChineseTheatreKey_CreateObject
 0x10025e70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKChineseTheatreKey@@@Z ClientClassInit
 0x10025f00 func   ?vfunc17@C_ItemKHitmanLuKey@@UAEHXZ C_ItemKHitmanLuKey::vfunc17
+0x10025f40 func   ?sub_10025f40@@YAHXZ sub_10025f40
 0x10025f90 func   ??_GC_ItemKHitmanLuKey@@UAEPAXI@Z ??_GC_ItemKHitmanLuKey@@UAEPAXI@Z
 0x10025fb0 func   ?vfunc16@C_ItemKHitmanLuKey@@UAEHXZ C_ItemKHitmanLuKey::vfunc16
 0x10025fc0 func   ?vfunc15@C_ItemKHitmanLuKey@@UAEHXZ C_ItemKHitmanLuKey::vfunc15
