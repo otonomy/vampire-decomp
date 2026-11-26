@@ -24,6 +24,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     void sub_100c07b0(int iPoint, Vector &vPos, QAngle &angles);
     bool sub_100c0700(int iPt, Vector &vPos);
     bool sub_100bf790(bool &bApplyWind);	// DetectRestingState
+    void sub_100bf360(float dt);	// the rope simulation step (stand-in CFx100bf360::sub_100bf360)
+    bool sub_100c04d0();
+    void sub_100c03b0();
+    virtual void ClientThink();	// IClientThinkable slot 0 (0x100bf3f0)
     // the base slots the game's vtable fills with C_RopeKeyframe's own function
     virtual int vfunc15();
     virtual int vfunc16();
@@ -57,7 +61,9 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     Vector m_vForce;
     float m_flCurWindTime;
     float m_flWindDuration;
-    int m_pad0704;
+    float m_flTimeToNextGust;	// 0x704
     Vector m_vWindDir;
-    char m_pad0714[0x728 - 0x714];
+    char m_pad0714[0x720 - 0x714];
+    int m_nLastFrame;	// 0x720: engine slot 44 frame count of the last think
+    int m_unk724;
 };
