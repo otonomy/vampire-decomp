@@ -23484,6 +23484,38 @@ char sub_10063970()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10063a70 size=0x20b
+#include "CTargeted.h"
+int sub_100cd100();
+int sub_100cd0f0();
+extern int g_10288070[5];
+extern int g_10288084[5];
+extern int g_103eef08[5];
+extern int g_103eef1c[5];
+extern int g_103eef64;
+
+void CTargeted::sub_10063a70()
+{
+	m_n180 = (int)(256 * (sub_100cd100() / 1024.0));
+	m_n184 = (int)(64 * (sub_100cd0f0() / 768.0));
+	m_n178 = (int)(13 * (sub_100cd100() / 1024.0));
+	m_n17c = (int)(sub_100cd0f0() - 95 * (sub_100cd0f0() / 768.0));
+	m_n188 = (int)(9 * (sub_100cd100() / 640.0));
+	m_n18c = (int)(11 * (sub_100cd0f0() / 480.0));
+	for (int i = 0; i < 5; i++)
+	{
+		g_103eef08[i] = (g_10288070[i] * 10000 / 256 * m_n180) / 10000;
+		g_103eef1c[i] = (g_10288084[i] * 10000 / 128 * m_n184) / 10000;
+	}
+	m_n190 = (int)(178 * (sub_100cd100() / 1024.0));
+	m_n194 = (int)(44 * (sub_100cd0f0() / 768.0));
+	m_n198 = (int)(0.0 * (sub_100cd100() / 1024.0));
+	m_n19c = 256;
+	m_n1a0 = 64;
+	g_103eef64 = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100648c0 size=0x99
 #include "CHUDSprite.h"
 int sub_100cd100();

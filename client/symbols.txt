@@ -2955,6 +2955,7 @@
 0x10063970 func   ?sub_10063970@@YADXZ sub_10063970
 0x10063980 func   ??_GCTargeted@@UAEPAXI@Z ??_GCTargeted@@UAEPAXI@Z
 0x100639a0 func   ??1CTargeted@@UAE@XZ CTargeted::~CTargeted
+0x10063a70 func   ?sub_10063a70@CTargeted@@QAEXXZ CTargeted::sub_10063a70
 0x100648c0 func   ?sub_100648c0@@YGXPAVCHUDSprite@@@Z sub_100648c0
 0x10064960 func   ?sub_10064960@@YGXPAVCHUDSprite@@H@Z sub_10064960
 0x10064a00 func   ?sub_10064a00@@YGXPAVCHUDSprite@@HHHH@Z sub_10064a00
