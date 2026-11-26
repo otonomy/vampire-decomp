@@ -28,7 +28,9 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc1();
 	virtual void vfunc2();
 	virtual void vfunc3();
-	virtual void vfunc4();
+	virtual void vfunc4(Beam_t *pbeam);	// DrawBeam
+	void sub_10194e20(const char *sprite, Beam_t *pbeam, int frame, int rendermode, float frametime, float *color);	// DrawBeamFollow
+	void sub_10195770(Beam_t *pbeam, int frame, int rendermode, float *color, const char *sprite);	// DrawTesla
 	virtual void vfunc5();
 	virtual void vfunc6(IHandleEntity *);
 	virtual void vfunc7();
