@@ -2160,6 +2160,32 @@ template <> int ClientClassInit<DT_MachineGun::ignored>(DT_MachineGun::ignored *
 }
 // END FUNCTION
 
+// FUNCTION: 0x100077c0 size=0x45
+namespace lifted {
+extern char g_101e7434;
+extern char g_101e7448;
+extern char g_101e7484;
+extern char g_101e74bc;
+extern char g_101e7514;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100077c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101e7514;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101e74bc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101e7484;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101e7448;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101e7434;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10007850 size=0x6
 namespace lifted {
 extern char g_102e1780;

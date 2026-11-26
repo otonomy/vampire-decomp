@@ -277,6 +277,7 @@
 0x10007630 func   ?_C_MachineGun_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_MachineGun_CreateObject
 0x100076f0 func   ?ClientClassInit@@YAHPAUignored@DT_MachineGun@@@Z ClientClassInit
 0x10007780 func   ?vfunc17@C_SelectFireMachineGun@@UAEHXZ C_SelectFireMachineGun::vfunc17
+0x100077c0 func   ?sub_100077c0@@YAHXZ sub_100077c0
 0x10007810 func   ??_GC_SelectFireMachineGun@@UAEPAXI@Z ??_GC_SelectFireMachineGun@@UAEPAXI@Z
 0x10007830 func   ?vfunc16@C_SelectFireMachineGun@@UAEHXZ C_SelectFireMachineGun::vfunc16
 0x10007840 func   ?vfunc15@C_SelectFireMachineGun@@UAEHXZ C_SelectFireMachineGun::vfunc15
