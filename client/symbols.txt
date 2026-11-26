@@ -1669,6 +1669,7 @@
 0x10022930 func   ?_C_ItemKLuckyStarMurderKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKLuckyStarMurderKey_CreateObject
 0x100229f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKLuckyStarMurderKey@@@Z ClientClassInit
 0x10022a80 func   ?vfunc17@C_ItemKLeopoldIntKey@@UAEHXZ C_ItemKLeopoldIntKey::vfunc17
+0x10022ac0 func   ?sub_10022ac0@@YAHXZ sub_10022ac0
 0x10022b10 func   ??_GC_ItemKLeopoldIntKey@@UAEPAXI@Z ??_GC_ItemKLeopoldIntKey@@UAEPAXI@Z
 0x10022b30 func   ?vfunc16@C_ItemKLeopoldIntKey@@UAEHXZ C_ItemKLeopoldIntKey::vfunc16
 0x10022b40 func   ?vfunc15@C_ItemKLeopoldIntKey@@UAEHXZ C_ItemKLeopoldIntKey::vfunc15
