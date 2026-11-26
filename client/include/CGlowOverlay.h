@@ -24,6 +24,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc3();
 	virtual void vfunc4();
 	void sub_100efd40();
+	void sub_100eee60(const Vector &vToGlow);	// UpdateGlowObstruction
 	Vector m_vPos;
 	bool m_bDirectional;
 	Vector m_vDirection;
