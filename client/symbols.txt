@@ -437,6 +437,7 @@
 0x1000a830 func   ?_C_WeaponMelee_WerewolfAttacks_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_WerewolfAttacks_CreateObject
 0x1000a8f0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_WerewolfAttacks@@@Z ClientClassInit
 0x1000a980 func   ?vfunc17@C_WeaponMelee_SabbatLeaderAttack@@UAEHXZ C_WeaponMelee_SabbatLeaderAttack::vfunc17
+0x1000a9c0 func   ?sub_1000a9c0@@YAHXZ sub_1000a9c0
 0x1000aa10 func   ??_GC_WeaponMelee_SabbatLeaderAttack@@UAEPAXI@Z ??_GC_WeaponMelee_SabbatLeaderAttack@@UAEPAXI@Z
 0x1000aa30 func   ?vfunc16@C_WeaponMelee_SabbatLeaderAttack@@UAEHXZ C_WeaponMelee_SabbatLeaderAttack::vfunc16
 0x1000aa40 func   ?vfunc15@C_WeaponMelee_SabbatLeaderAttack@@UAEHXZ C_WeaponMelee_SabbatLeaderAttack::vfunc15
