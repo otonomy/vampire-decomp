@@ -1413,6 +1413,7 @@
 0x1001d930 func   ?_C_ItemGStake_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGStake_CreateObject
 0x1001d9f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGStake@@@Z ClientClassInit
 0x1001da80 func   ?vfunc17@C_ItemGWarrClipboard@@UAEHXZ C_ItemGWarrClipboard::vfunc17
+0x1001dac0 func   ?sub_1001dac0@@YAHXZ sub_1001dac0
 0x1001db10 func   ??_GC_ItemGWarrClipboard@@UAEPAXI@Z ??_GC_ItemGWarrClipboard@@UAEPAXI@Z
 0x1001db30 func   ?vfunc16@C_ItemGWarrClipboard@@UAEHXZ C_ItemGWarrClipboard::vfunc16
 0x1001db40 func   ?vfunc15@C_ItemGWarrClipboard@@UAEHXZ C_ItemGWarrClipboard::vfunc15
