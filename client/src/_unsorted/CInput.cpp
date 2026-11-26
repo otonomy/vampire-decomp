@@ -470,6 +470,94 @@ char *CInput::vfunc7(int i)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10104460 size=0x287
+#include "CInput.h"
+
+struct kbutton_t
+{
+	int down[2];
+	int state;
+};
+
+extern int g_104d3e38;	// s_ClearInputState
+extern kbutton_t g_104d2e4c;
+extern kbutton_t g_104d3234;
+extern kbutton_t g_104d38b8;
+extern kbutton_t g_104d3590;
+extern kbutton_t g_104d3af0;
+extern kbutton_t g_104d2fa4;
+extern kbutton_t g_104d3714;
+extern kbutton_t g_104d3748;
+extern kbutton_t g_104d38a0;
+extern kbutton_t g_104d39a4;
+extern kbutton_t g_104d3584;
+extern kbutton_t g_104d3c5c;
+extern kbutton_t g_104d3754;
+extern kbutton_t g_104d2f3c;
+extern kbutton_t g_104d2da0;
+extern kbutton_t g_104d2e40;
+extern kbutton_t g_104d36e0;
+extern kbutton_t g_104d33d0;
+extern int g_104d3e40;	// in_cancel
+extern int g_104cfe64;
+extern unsigned int g_104cfe50;	// gHUD.m_iKeyBits
+extern char g_104d3e48;
+
+void sub_101046f0(int *bits, int in_button, int in_ignore, kbutton_t *button, bool reset);
+void sub_10105fb0(int *bits, int in_button, int in_button2, int in_ignore, kbutton_t *button, bool reset);
+void sub_10105f30(int *bits, int in_button, int in_button2, int in_ignore, kbutton_t *button, bool reset);
+
+char sub_10101b80()
+{
+	return g_104d3e48;
+}
+
+// TARGET: ?vfunc2@CInput@@UAEHH@Z
+int CInput::vfunc2(int bResetState)
+{
+	int bits = 0;
+
+	sub_101046f0(&bits, 0x20000, g_104d3e38, &g_104d2e4c, bResetState != 0);
+	sub_101046f0(&bits, 4, g_104d3e38, &g_104d3234, bResetState != 0);
+	sub_101046f0(&bits, 2, g_104d3e38, &g_104d38b8, bResetState != 0);
+	sub_10105fb0(&bits, 8, 0, g_104d3e38, &g_104d3590, bResetState != 0);
+	sub_10105fb0(&bits, 0x10, 0, g_104d3e38, &g_104d3af0, bResetState != 0);
+	sub_101046f0(&bits, 0x20, g_104d3e38, &g_104d2fa4, bResetState != 0);
+	sub_101046f0(&bits, 0x80, g_104d3e38, &g_104d3714, bResetState != 0);
+	sub_101046f0(&bits, 0x100, g_104d3e38, &g_104d3748, bResetState != 0);
+	sub_101046f0(&bits, 0x200, g_104d3e38, &g_104d38a0, bResetState != 0);
+	sub_101046f0(&bits, 0x400, g_104d3e38, &g_104d39a4, bResetState != 0);
+	sub_101046f0(&bits, 0x2000, g_104d3e38, &g_104d3584, bResetState != 0);
+	sub_101046f0(&bits, 0x4000, g_104d3e38, &g_104d3c5c, bResetState != 0);
+	sub_101046f0(&bits, 0x10000, g_104d3e38, &g_104d3754, bResetState != 0);
+	sub_10105f30(&bits, 1, 0x800000, g_104d3e38, &g_104d2f3c, bResetState != 0);
+	sub_10105f30(&bits, 0x800, 0x1000000, g_104d3e38, &g_104d2da0, bResetState != 0);
+	sub_10105f30(&bits, 0x400000, 0, g_104d3e38, &g_104d2e40, bResetState != 0);
+	sub_10105f30(&bits, 0x8000000, g_104d3e38, g_104d3e38, &g_104d36e0, bResetState != 0);
+
+	if (g_104d2fa4.state & 4)
+	{
+		bits |= 0x2000000;
+		g_104d2fa4.state &= ~4;
+	}
+	if (g_104d33d0.state & 3)
+		bits |= 0x4000000;
+	if (g_104d3e40)
+		bits |= 0x40;
+	if (sub_10101b80() || g_104cfe64)
+		bits |= 0x10000;
+	if (g_104cfe50 & 0x80000)
+		bits |= 0x80000;
+	if (g_104cfe50 & 0x100000)
+		bits |= 0x100000;
+
+	bits &= ~g_104d3e38;
+	if (bResetState)
+		g_104d3e38 = 0;
+	return bits;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10104730 size=0x15
 #include "CInput.h"
 namespace lifted {

@@ -5623,6 +5623,7 @@
 0x10104380 func   ?sub_10104380@CUnknown10104380@@QAEPAXH@Z CUnknown10104380::sub_10104380
 0x101043d0 func   ?sub_101043d0@bf_write@@QAEXH@Z bf_write::sub_101043d0
 0x10104440 func   ?vfunc7@CInput@@UAEPADH@Z CInput::vfunc7
+0x10104460 func   ?vfunc2@CInput@@UAEHH@Z CInput::vfunc2
 0x101046f0 func   ?sub_101046f0@@YAXPAHHHPAUS104@@D@Z sub_101046f0
 0x10104730 func   ?vfunc55@CInput@@UAEHH@Z CInput::vfunc55
 0x10104750 func   ?vfunc20@CInput@@UAEMXZ CInput::vfunc20
