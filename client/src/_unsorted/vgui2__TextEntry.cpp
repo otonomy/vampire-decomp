@@ -1,6 +1,89 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101acaa0 size=0x2eb
+#include "vgui2__TextEntry.h"
+extern "C" void *memset(void *, int, unsigned int);
+extern "C" __declspec(noreturn) void exit(int);
+#pragma intrinsic(memset)
+
+struct IScheme_v { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual int GetFont(const char *name); };
+struct ISchemeManager_v { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual IScheme_v *GetIScheme(int scheme); };
+ISchemeManager_v *sub_101ac8c0();
+struct VTE { void sub_101ad500(); };
+
+struct DarInt
+{
+	int m_count, m_capacity; int *m_data;
+	void AddToTail(int v)
+	{
+		int n = m_count + 1;
+		if (n > m_capacity)
+		{
+			int cap = m_capacity;
+			if (cap == 0) cap = 1;
+			while (cap < n) cap *= 2;
+			int *p = (int *)operator new(cap * sizeof(int));
+			if (!p) exit(0);
+			memset(p, 0, cap * sizeof(int));
+			m_capacity = cap;
+			for (int i = 0; i < m_count; i++) p[i] = m_data[i];
+			operator delete(m_data);
+			m_data = p;
+		}
+		m_data[m_count] = v;
+		m_count++;
+	}
+};
+
+struct SColor { unsigned char c[4]; SColor(int r, int g, int b, int a) { c[0] = r; c[1] = g; c[2] = b; c[3] = a; } };
+
+#define F(T, o) (*(T *)((char *)this + (o)))
+
+vgui2::TextEntry::TextEntry(Panel *parent, const char *name) : Panel(parent, name)
+{
+	F(int, 0x124) = sub_101ac8c0()->GetIScheme(sub_101aa220())->GetFont("Default");
+	F(bool, 0x89) = false;
+	F(bool, 0x8a) = false;
+	F(bool, 0xb2) = false;
+	F(int, 0x70) = 0;
+	F(int, 0xd0) = 0;
+	F(bool, 0xd4) = true;
+	F(bool, 0x74) = false;
+	F(bool, 0x75) = false;
+	F(bool, 0xb1) = false;
+	F(int, 0x98) = 400;
+	F(bool, 0x8b) = false;
+	F(bool, 0x8c) = false;
+	F(bool, 0x8d) = false;
+	F(int, 0xb4) = 0;
+	F(bool, 0x100) = true;
+	F(bool, 0xf4) = false;
+	F(int, 0xac) = -1;
+	F(int, 0xa8) = 0;
+	F(bool, 0xf5) = false;
+	F(bool, 0xf6) = false;
+	F(int, 0xf8) = 0;
+	F(int, 0x9c) = -1;
+	F(int, 0xa0) = -1;
+	F(int, 0xfc) = 0;
+	((VTE *)this)->sub_101ad500();
+	vfunc54(2);
+	vfunc119();
+	SColor fg(0, 0, 0, 0);
+	vfunc51(*(int *)&fg);
+	SColor bg(255, 255, 255, 0);
+	vfunc50(*(int *)&bg);
+	vfunc134(true);
+	F(DarInt, 0x64).AddToTail(999999);
+	F(int, 0x11c) = -1;
+	F(int, 0x114) = 0;
+	F(bool, 0x118) = false;
+	F(bool, 0x11a) = false;
+	F(int, 0x120) = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101acd90 size=0x1e
 #include "vgui2__TextEntry.h"
 
