@@ -40768,6 +40768,83 @@ char sub_10080ff0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10081060 size=0x308
+#include "Vector.h"
+#include "C_Beam.h"
+#include "CBaseEntityList.h"
+
+struct CUnknown100290c0 { C_BaseEntity *sub_1007aca0(const CBaseHandle *h); };
+struct CUnknown100f2f90 { float x, y, z; void sub_10049f20(float x, float y, float z); };
+bool sub_10192d00(C_BaseEntity *pEnt, int nAttachment, Vector &origin);
+
+void C_Beam::sub_10081060(Vector *pMins, Vector *pMaxs)
+{
+	Vector &mins = *pMins;
+	Vector &maxs = *pMaxs;
+	Vector rmin, rmax;
+
+	switch (m_nBeamType & 0xf)
+	{
+	case 1:
+	case 2:
+	case 4:
+	case 5:
+		{
+			Vector attachmentPoint(0, 0, 0);
+			mins.Init(99999, 99999, 99999);
+			maxs.Init(-99999, -99999, -99999);
+			for (int i = 0; i < m_nNumBeamEnts; ++i)
+			{
+				if (((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0(&(&m_hStart)[i]))
+				{
+					C_BaseEntity *pEnt = ((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0(&(&m_hStart)[i]);
+					if (!sub_10192d00(pEnt, (&m_nAttach)[i], attachmentPoint))
+						continue;
+				}
+				else
+				{
+					if (i == 0)
+						attachmentPoint = sub_10080650();
+					else if (i == 1)
+						attachmentPoint = *(Vector *)sub_100806f0();
+				}
+
+				((CUnknown100f2f90 *)&rmin)->sub_10049f20(mins.x < attachmentPoint.x ? mins.x : attachmentPoint.x, mins.y < attachmentPoint.y ? mins.y : attachmentPoint.y, mins.z < attachmentPoint.z ? mins.z : attachmentPoint.z);
+				mins = rmin;
+				((CUnknown100f2f90 *)&rmax)->sub_10049f20(maxs.x > attachmentPoint.x ? maxs.x : attachmentPoint.x, maxs.y > attachmentPoint.y ? maxs.y : attachmentPoint.y, maxs.z > attachmentPoint.z ? maxs.z : attachmentPoint.z);
+				maxs = rmax;
+			}
+		}
+		break;
+
+	case 3:
+	default:
+		{
+			Vector vecAbsStart = sub_10080650();
+			Vector vecAbsEnd = *(Vector *)sub_100806f0();
+			for (int i = 0; i < 3; ++i)
+			{
+				if (vecAbsStart[i] < vecAbsEnd[i])
+				{
+					mins[i] = vecAbsStart[i];
+					maxs[i] = vecAbsEnd[i];
+				}
+				else
+				{
+					mins[i] = vecAbsEnd[i];
+					maxs[i] = vecAbsStart[i];
+				}
+			}
+		}
+		break;
+	}
+
+	Vector vecAbsOrigin = GetAbsOrigin();
+	mins -= vecAbsOrigin;
+	maxs -= vecAbsOrigin;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100814e0 size=0x30c
 #include "CMeshBuilder.h"
 
