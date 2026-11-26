@@ -28,6 +28,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual int vfunc125(int, int);
     virtual int vfunc126();
     virtual void vfunc131(int, int, int, int, int, int);
+    virtual void GetRenderBoundsWorldspace(Vector &mins, Vector &maxs);	// IClientRenderable slot 19
     char m_pad0014[0x6e4 - 0x14];
     CBoneAccessor m_BoneAccessor;	// 0x6e4
     char m_pad06f4[0x790 - 0x6f4];
