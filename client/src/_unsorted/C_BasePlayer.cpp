@@ -192,6 +192,23 @@ struct V { virtual void v0(); virtual void v1(); virtual void v2(); virtual void
 void __fastcall sub_100a5900(char *self, int edx) { ((V *)(self + 4))->v11(); }
 // END FUNCTION
 
+// FUNCTION: 0x100a5a90 size=0x40
+#include "C_BasePlayer.h"
+#include "engineclient.h"
+#include <stdio.h>
+
+void C_BasePlayer::vfunc188(int nRole)
+{
+	if (!*((bool *)this + 0x19c8))
+		return;
+	if (nRole > 0)
+		return;
+	char szCmd[64];
+	sprintf(szCmd, "vehicleRole %i\n", nRole);
+	engine->vfunc27(szCmd, true);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a5ad0 size=0x55
 #include "C_BasePlayer.h"
 #include "C_BaseAnimating.h"

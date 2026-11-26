@@ -4300,6 +4300,7 @@
 0x100a5a30 func   ?sub_100a5a30@@YAHXZ sub_100a5a30
 0x100a5a40 func   ?sub_100a5a40@@YAHXZ sub_100a5a40
 0x100a5a50 func   ?sub_100a5a50@CUnknown100a5a50@@QAEHXZ CUnknown100a5a50::sub_100a5a50
+0x100a5a90 func   ?vfunc188@C_BasePlayer@@UAEXH@Z C_BasePlayer::vfunc188
 0x100a5ad0 func   ?OnPreDataChanged@C_BasePlayer@@UAEXH@Z C_BasePlayer::OnPreDataChanged
 0x100a5b30 func   ?sub_100a5b30@CUnknown100a5b30@@QAEHH@Z CUnknown100a5b30::sub_100a5b30
 0x100a5b60 func   ?OnDataChanged@C_BasePlayer@@UAEXH@Z C_BasePlayer::OnDataChanged
