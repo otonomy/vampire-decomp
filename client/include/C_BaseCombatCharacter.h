@@ -15,7 +15,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc16();
 	virtual int vfunc17();
 	virtual void vfunc121();
-	virtual void vfunc127();
+	virtual void vfunc127(const Vector &origin, const QAngle &angles, int event, const char *options);
 	virtual void vfunc130();
 	virtual int vfunc143();
 	// the slots C_BaseCombatCharacter adds to its base's vtable: 146-148, vfuncK at slot K

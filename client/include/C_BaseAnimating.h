@@ -9,6 +9,7 @@ class C_BaseAnimating : public C_BaseEntity
 public:
 	C_BaseAnimating();
 	void sub_100966e0();
+	void sub_100935a0(const Vector &origin, const QAngle &angles, int event, const char *options);
 	void sub_100941d0(const char *, int, int);
 	void sub_10094250(int, int, int);
 	void sub_100027f0(int iBone, Vector *pOrigin, QAngle *pAngles);
@@ -76,7 +77,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc124(int, int);
 	virtual int vfunc125(int, int);
 	virtual int vfunc126();
-	virtual void vfunc127();
+	virtual void vfunc127(const Vector &origin, const QAngle &angles, int event, const char *options);
 	virtual void vfunc128();
 	virtual float vfunc129(int, float, float, float);
 	virtual void vfunc130();
