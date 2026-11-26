@@ -675,6 +675,273 @@ void vgui2::TextEntry::vfunc79()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101af3d0 size=0x570
+#include "vgui2__TextEntry.h"
+#include "vgui2__KeyValues.h"
+
+#define V4_101af3d0(a, b, c, d) virtual void v##a(); virtual void v##b(); virtual void v##c(); virtual void v##d();
+
+struct IInput_101af3d0
+{
+	V4_101af3d0(0, 1, 2, 3) V4_101af3d0(4, 5, 6, 7) V4_101af3d0(8, 9, 10, 11)
+	virtual bool IsKeyDown(int code);
+};
+IInput_101af3d0 *sub_101ac8b0();	// vgui2::input()
+
+struct ISurface_101af3d0
+{
+	V4_101af3d0(0, 1, 2, 3) V4_101af3d0(4, 5, 6, 7) V4_101af3d0(8, 9, 10, 11) V4_101af3d0(12, 13, 14, 15)
+	V4_101af3d0(16, 17, 18, 19) V4_101af3d0(20, 21, 22, 23) V4_101af3d0(24, 25, 26, 27) V4_101af3d0(28, 29, 30, 31)
+	V4_101af3d0(32, 33, 34, 35) V4_101af3d0(36, 37, 38, 39) V4_101af3d0(40, 41, 42, 43) V4_101af3d0(44, 45, 46, 47)
+	V4_101af3d0(48, 49, 50, 51) V4_101af3d0(52, 53, 54, 55) V4_101af3d0(56, 57, 58, 59)
+	virtual void v60(); virtual void v61(); virtual void v62();
+	virtual int GetFontTall(int font);
+};
+ISurface_101af3d0 *sub_101ac8d0();	// vgui2::surface()
+
+// vgui2::ScrollBar's own slots 107..111 (ScrollBar.h keeps slot 107 as the slider forwarder's `int vfunc107()`)
+struct ScrollBarView_101af3d0
+{
+	V4_101af3d0(0, 1, 2, 3) V4_101af3d0(4, 5, 6, 7) V4_101af3d0(8, 9, 10, 11) V4_101af3d0(12, 13, 14, 15)
+	V4_101af3d0(16, 17, 18, 19) V4_101af3d0(20, 21, 22, 23) V4_101af3d0(24, 25, 26, 27) V4_101af3d0(28, 29, 30, 31)
+	V4_101af3d0(32, 33, 34, 35) V4_101af3d0(36, 37, 38, 39) V4_101af3d0(40, 41, 42, 43) V4_101af3d0(44, 45, 46, 47)
+	V4_101af3d0(48, 49, 50, 51) V4_101af3d0(52, 53, 54, 55) V4_101af3d0(56, 57, 58, 59) V4_101af3d0(60, 61, 62, 63)
+	V4_101af3d0(64, 65, 66, 67) V4_101af3d0(68, 69, 70, 71) V4_101af3d0(72, 73, 74, 75) V4_101af3d0(76, 77, 78, 79)
+	V4_101af3d0(80, 81, 82, 83) V4_101af3d0(84, 85, 86, 87) V4_101af3d0(88, 89, 90, 91) V4_101af3d0(92, 93, 94, 95)
+	V4_101af3d0(96, 97, 98, 99) V4_101af3d0(100, 101, 102, 103)
+	virtual void v104(); virtual void v105(); virtual void v106();
+	virtual void SetValue(int value);	// 107
+	virtual int GetValue();				// 108
+	virtual void v109();
+	virtual void v110();
+	virtual int GetRangeWindow();		// 111
+};
+
+struct TEFields_101af3d0
+{
+	char m_pad00[0x70];
+	int _cursorPos;					// 0x70
+	bool _cursorIsAtEnd;			// 0x74
+	bool _putCursorAtEnd;			// 0x75
+	char m_pad76[0xa0 - 0x76];
+	int m_nA0;						// 0xa0
+	char m_padA4[0xb0 - 0xa4];
+	bool m_bB0;						// 0xb0
+	bool _multiline;				// 0xb1
+	char m_padB2[2];
+	ScrollBarView_101af3d0 *_vertScrollBar;	// 0xb4
+	char m_padB8[0xf4 - 0xb8];
+	bool _catchEnterKey;			// 0xf4
+	char m_cF5;
+	bool _sendNewLines;				// 0xf6
+	char m_padF7[0x124 - 0xf7];
+	int _font;						// 0x124
+};
+
+void vgui2::TextEntry::sub_101af3d0(int code)
+{
+	TEFields_101af3d0 *self = (TEFields_101af3d0 *)this;
+
+	self->_cursorIsAtEnd = self->_putCursorAtEnd;
+	self->_putCursorAtEnd = false;
+
+	bool shift = (sub_101ac8b0()->IsKeyDown(0x4f) || sub_101ac8b0()->IsKeyDown(0x50));
+	bool ctrl = (sub_101ac8b0()->IsKeyDown(0x53) || sub_101ac8b0()->IsKeyDown(0x54));
+	bool alt = (sub_101ac8b0()->IsKeyDown(0x51) || sub_101ac8b0()->IsKeyDown(0x52));
+	bool fallThrough = false;
+
+	if (ctrl)
+	{
+		switch (code)
+		{
+		case 72:
+		case 13:
+			vfunc127();
+			break;
+		case 32:
+			vfunc129();
+			vfunc128();
+			break;
+		case 34:
+			vfunc127();
+			vfunc129();
+			break;
+		case 36:
+			vfunc130();
+			break;
+		case 91:
+			vfunc114();
+			break;
+		case 89:
+			vfunc115();
+			break;
+		case 64:
+			if (self->_multiline)
+			{
+				vfunc129();
+				vfunc131();
+				vfunc120('\n');
+			}
+			if (self->_sendNewLines)
+			{
+				vfunc43(new vgui2::KeyValues("TextNewLine"));
+			}
+			break;
+		case 74:
+			vfunc118();
+			break;
+		case 75:
+			vfunc119();
+			break;
+		default:
+			fallThrough = true;
+			break;
+		}
+	}
+	else if (alt)
+	{
+		fallThrough = true;
+	}
+	else
+	{
+		switch (code)
+		{
+		case 72:
+			if (shift)
+			{
+				vfunc129();
+				vfunc128();
+			}
+			else
+			{
+				fallThrough = true;
+			}
+			break;
+		case 73:
+			if (shift)
+			{
+				vfunc127();
+				vfunc129();
+			}
+			else
+			{
+				vfunc123();
+			}
+			break;
+		case 89:
+			vfunc110();
+			break;
+		case 91:
+			vfunc111();
+			break;
+		case 88:
+			if (self->_multiline)
+				vfunc112();
+			else
+				fallThrough = true;
+			break;
+		case 90:
+			if (self->_multiline)
+				vfunc113();
+			else
+				fallThrough = true;
+			break;
+		case 74:
+			vfunc116();
+			break;
+		case 75:
+			vfunc117();
+			break;
+		case 66:
+			{
+				int x0, x1;
+				if (vfunc158((int)&x0, (int)&x1))
+					vfunc129();
+				else
+					vfunc122();
+			}
+			break;
+		case 64:
+			if (self->_multiline && self->_catchEnterKey)
+			{
+				vfunc129();
+				vfunc131();
+				vfunc120('\n');
+			}
+			else
+			{
+				fallThrough = true;
+			}
+			if (self->_sendNewLines)
+			{
+				vfunc43(new vgui2::KeyValues("TextNewLine"));
+			}
+			break;
+		case 76:
+			{
+				int val;
+				if (self->_vertScrollBar)
+					val = self->_vertScrollBar->GetValue();
+				if (self->_multiline)
+				{
+					int displayLines = sub_101ab1a0() / (sub_101ac8d0()->GetFontTall(self->_font) + 1);
+					for (int i = 0; i < displayLines; i++)
+						vfunc112();
+				}
+				if (self->_vertScrollBar)
+				{
+					int window = self->_vertScrollBar->GetRangeWindow();
+					int newval = self->_vertScrollBar->GetValue();
+					int linesToMove = window - (val - newval);
+					self->_vertScrollBar->SetValue(val - linesToMove - 1);
+				}
+			}
+			break;
+		case 77:
+			{
+				int val;
+				if (self->_vertScrollBar)
+					val = self->_vertScrollBar->GetValue();
+				if (self->_multiline)
+				{
+					int displayLines = sub_101ab1a0() / (sub_101ac8d0()->GetFontTall(self->_font) + 1);
+					for (int i = 0; i < displayLines; i++)
+						vfunc113();
+				}
+				if (self->_vertScrollBar)
+				{
+					int window = self->_vertScrollBar->GetRangeWindow();
+					int newval = self->_vertScrollBar->GetValue();
+					int linesToMove = window - (newval - val);
+					self->_vertScrollBar->SetValue(val + linesToMove + 1);
+				}
+			}
+			break;
+		case 67:
+		case 79:
+		case 80:
+		case 70:
+		case 92: case 93: case 94: case 95: case 96: case 97:
+		case 98: case 99: case 100: case 101: case 102: case 103:
+			fallThrough = true;
+			break;
+		default:
+			return;
+		}
+	}
+
+	self->m_nA0 = self->_cursorPos;
+	if (self->m_bB0)
+		vfunc157();
+
+	if (fallThrough)
+	{
+		self->_putCursorAtEnd = self->_cursorIsAtEnd;
+		this->Panel::sub_101aa6f0(code);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101af940 size=0x89
 #include "vgui2__TextEntry.h"
 extern int (__cdecl *g_101e31cc)(int);

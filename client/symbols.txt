@@ -9554,6 +9554,7 @@
 0x101af2f0 func   ?vfunc89@TextEntry@vgui2@@UAEXH@Z vgui2::TextEntry::vfunc89
 0x101af340 func   ?vfunc88@TextEntry@vgui2@@UAEXH@Z vgui2::TextEntry::vfunc88
 0x101af3c0 func   ?vfunc79@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc79
+0x101af3d0 func   ?sub_101af3d0@TextEntry@vgui2@@QAEXH@Z vgui2::TextEntry::sub_101af3d0
 0x101af940 func   ?vfunc93@TextEntry@vgui2@@UAEXH@Z vgui2::TextEntry::vfunc93
 0x101af9e0 func   ?sub_101af9e0@TextEntry@vgui2@@QAEXH@Z vgui2::TextEntry::sub_101af9e0
 0x101afa20 func   ?vfunc95@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc95
