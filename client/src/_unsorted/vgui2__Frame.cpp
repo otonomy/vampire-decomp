@@ -410,6 +410,97 @@ int vgui2::Frame::vfunc141(int a0, int a1, int a2, int a3)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b8ee0 size=0x240
+#include "vgui2__Frame.h"
+#define S(n) virtual void s##n();
+#define S10(p) S(p##0) S(p##1) S(p##2) S(p##3) S(p##4) S(p##5) S(p##6) S(p##7) S(p##8) S(p##9)
+struct Color_101b8ee0 { unsigned char r, g, b, a; };
+struct XBtn_101b8ee0 { S10(0) S10(1) S10(2) S10(3) S(40) S(41) S(42) S(43) S(44) S(45) virtual void v46(bool);
+	S(47) S(48) S(49) S(50) S(51) S(52) S(53) S(54) S(55) S(56) virtual void v57(int, int);
+	S(58) S(59) S10(6) S10(7) S10(8) S10(9) S10(10) S10(11) S10(12) S10(13) S10(14) S10(15) S(160) S(161) S(162) S(163) S(164) S(165) virtual void v166(bool); };
+struct XInput_101b8ee0 { S(0) S(1) S(2) virtual int GetFocus(); };
+struct XIvgui_101b8ee0 { S10(0) S10(1) virtual bool HasParent(int, int); };
+struct XScheme_101b8ee0 { S(0) S(1) virtual void v2(int); virtual void *GetBorder(const char *); virtual void *GetFont(const char *); };
+struct XSurf_101b8ee0 { S10(0) virtual void DrawSetColor(Color_101b8ee0); S(11) virtual void DrawFilledRect(int, int, int, int); S(13) S(14) S(15) S(16) virtual void DrawSetTextFont(void *); };
+struct XLabel_101b8ee0 { virtual void Paint(); virtual void SetPos(int, int); virtual void v2(); virtual void SetFgColor(Color_101b8ee0); };
+struct XBorder_101b8ee0 { S(0) S(1) virtual void Paint(int); };
+struct XSchemeMgr_101b8ee0 { S(0) S(1) S(2) S(3) virtual XScheme_101b8ee0 *GetIScheme(int); };
+struct XThis_101b8ee0 {
+	virtual int GetVPanel(); S(1) S(2) S(3) S(4) S(5) S(6) S(7) S(8) S(9)
+	S10(1) S10(2) S10(3) S10(4) S10(5) S10(6) S10(7) S10(8) S10(9) S10(10) S10(11) S10(12) S(130) S(131) S(132) virtual void g133();
+	int sub_101ab130(); void sub_101ab1a0(); int sub_101aa220(); void sub_101b4d50();
+};
+struct XFrame_101b8ee0 { char p[0x78]; Color_101b8ee0 m78; Color_101b8ee0 m7c; Color_101b8ee0 m80; Color_101b8ee0 m84; XLabel_101b8ee0 *m88; char pad8c[2]; bool m8e; char pad8f[0xb4 - 0x8f]; XBtn_101b8ee0 *mb4; XBtn_101b8ee0 *mb8; XBtn_101b8ee0 *mbc; XBtn_101b8ee0 *mc0; char pc4[4]; bool mc8; char pc9[0xd1 - 0xc9]; bool md1; };
+XInput_101b8ee0 *sub_101ac8b0();
+XIvgui_101b8ee0 *sub_101ac900();
+XSchemeMgr_101b8ee0 *sub_101ac8c0();
+XSurf_101b8ee0 *sub_101ac8d0();
+struct XText_101b8ee0 { void sub_101b9d60(int *); };
+
+#define T ((XThis_101b8ee0 *)this)
+#define F ((XFrame_101b8ee0 *)this)
+
+void vgui2::Frame::vfunc97()
+{
+	int wide = T->sub_101ab130();
+	T->sub_101ab1a0();
+	Color_101b8ee0 titleColor = F->m7c;
+	bool hasFocus = false;
+	T->sub_101b4d50();
+
+	int focus = sub_101ac8b0()->GetFocus();
+	if (focus && sub_101ac900()->HasParent(focus, T->GetVPanel()))
+	{
+		hasFocus = true;
+		titleColor = F->m78;
+	}
+
+	if (F->m8e != hasFocus)
+	{
+		F->m8e = hasFocus;
+		F->mb4->v166(!hasFocus);
+		F->mb8->v166(!hasFocus);
+		F->mbc->v166(!hasFocus);
+		F->mc0->v46(hasFocus);
+		F->mb4->v57(0, 0);
+		F->mb8->v57(0, 0);
+		F->mbc->v57(0, 0);
+		F->mc0->v57(0, 0);
+	}
+
+	if (F->m8e && F->mc8)
+		T->g133();
+
+	XScheme_101b8ee0 *pScheme = sub_101ac8c0()->GetIScheme(T->sub_101aa220());
+	XBorder_101b8ee0 *border = (XBorder_101b8ee0 *)pScheme->GetBorder("ButtonBorder");
+	if (border)
+		border->Paint(T->GetVPanel());
+
+	sub_101ac8d0()->DrawSetColor(titleColor);
+	sub_101ac8d0()->DrawFilledRect(5, 5, wide - 5, 0x1c);
+
+	if (F->m88)
+	{
+		if (hasFocus)
+			F->m88->SetFgColor(F->m80);
+		else
+			F->m88->SetFgColor(F->m84);
+		sub_101ac8d0()->DrawSetTextFont(pScheme->GetFont("Default"));
+		if (F->md1)
+		{
+			int w;
+			((XText_101b8ee0 *)F->m88)->sub_101b9d60(&w);
+			F->m88->SetPos((wide - w) / 2, 3);
+		}
+		else
+		{
+			F->m88->SetPos(0x1c, 9);
+		}
+		F->m88->Paint();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b9120 size=0x7
 #include "vgui2__Frame.h"
 int vgui2::Frame::vfunc138()
