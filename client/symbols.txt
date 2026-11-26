@@ -1605,6 +1605,7 @@
 0x10021530 func   ?_C_ItemKOceanHouseSewerKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKOceanHouseSewerKey_CreateObject
 0x100215f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKOceanHouseSewerKey@@@Z ClientClassInit
 0x10021680 func   ?vfunc17@C_ItemKOceanHouseBasementKey@@UAEHXZ C_ItemKOceanHouseBasementKey::vfunc17
+0x100216c0 func   ?sub_100216c0@@YAHXZ sub_100216c0
 0x10021710 func   ??_GC_ItemKOceanHouseBasementKey@@UAEPAXI@Z ??_GC_ItemKOceanHouseBasementKey@@UAEPAXI@Z
 0x10021730 func   ?vfunc16@C_ItemKOceanHouseBasementKey@@UAEHXZ C_ItemKOceanHouseBasementKey::vfunc16
 0x10021740 func   ?vfunc15@C_ItemKOceanHouseBasementKey@@UAEHXZ C_ItemKOceanHouseBasementKey::vfunc15
