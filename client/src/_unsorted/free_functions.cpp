@@ -37607,6 +37607,108 @@ void sub_10092530()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10092540 size=0x2c6
+#include "C_BaseAnimating.h"
+#include "CVProfile.h"
+struct CCyc : CCycleCountX { void Sample() { __asm { mov ecx, this
+		rdtsc
+		mov [ecx], eax
+		mov [ecx+4], edx } } };
+__declspec(dllimport) void vtune(bool);
+extern CVProfile *g_101e3138;
+struct StatsX { char pad[0x140]; double d140; char pad2[0xd0]; double d218; char pad3[0xe8]; struct TimerX *m_pTimer; };
+struct TimerX { virtual double Get(); };
+extern StatsX *sub_100ad7a0();
+struct GlobalsX { virtual void v0(); virtual bool IsDisabled(); char pad[0x28]; void *p2c; };
+extern GlobalsX *g_1049bee4;
+struct EngIfX { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void Enter(); virtual void Exit(); virtual void v6(); };
+extern EngIfX *g_104a57e4;
+extern EngIfX *g_104a57f4;
+struct PropsX { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual int Get(unsigned short); };
+extern PropsX *g_102b9060;
+struct SubObjX { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual int GetType(); virtual int v9(int, int); };
+struct FollowX { virtual void v0(); char pad[0xe4]; unsigned short m_idx; };
+struct EntBX : C_BaseAnimating
+{
+	FollowX *sub_100921d0();
+};
+struct RendX
+{
+	char pad[0xdc];
+	char m_bReadyToDraw;
+	int sub_10092540(int flags, int arg);
+};
+
+int RendX::sub_10092540(int flags, int arg)
+{
+	g_101e3138->EnterScope("C_BaseAnimating::DrawModel", 0, "Unaccounted", 0);
+	StatsX *s = sub_100ad7a0();
+	if (s->m_pTimer)
+		s->d218 = s->m_pTimer->Get();
+	if (!m_bReadyToDraw)
+	{
+		StatsX *s2 = sub_100ad7a0();
+		if (s2->m_pTimer)
+			s2->d140 += s2->m_pTimer->Get() - s2->d218;
+		CVProfile *vp = g_101e3138;
+		if (!vp->m_fAtRoot || vp->m_nPause)
+		{
+			if (vp->m_pCurNode->ExitScope())
+				vp->m_pCurNode = vp->m_pCurNode->m_pParent;
+			vp->m_fAtRoot = vp->m_pCurNode == vp->m_pRoot;
+		}
+		return 0;
+	}
+	int drawn = 0;
+	if (!g_1049bee4->IsDisabled() && g_1049bee4->p2c)
+	{
+		g_104a57e4->Enter();
+		g_104a57f4->Exit();
+		SubObjX *sub = (SubObjX *)((char *)this + 8);
+		if (sub->GetType() != 11 && sub->GetType() != 12)
+		{
+			drawn = ((EntBX *)((char *)this - 4))->vfunc125(flags, arg);
+		}
+		else
+		{
+			FollowX *follow = ((EntBX *)((char *)this - 4))->sub_100921d0();
+			if (follow && follow->m_idx != 0xffff)
+			{
+				SubObjX *fsub = (SubObjX *)((char *)follow + 4);
+				if (fsub->v9(8, g_102b9060->Get(follow->m_idx)))
+					drawn = ((EntBX *)((char *)this - 4))->vfunc125(1, arg);
+			}
+		}
+		g_104a57f4->v6();
+		g_104a57e4->Exit();
+	}
+	StatsX *s3 = sub_100ad7a0();
+	if (s3->m_pTimer)
+		s3->d140 += s3->m_pTimer->Get() - s3->d218;
+	CVProfile *vp = g_101e3138;
+	if (!vp->m_fAtRoot || vp->m_nPause)
+	{
+		CVProfNode *n = vp->m_pCurNode;
+		if (--n->m_nRecursions == 0 && n->m_nCurFrameCalls != 0)
+		{
+			CCyc c;
+			c.v = 0;
+			c.Sample();
+			n->m_CurFrameTime.v = c.v - n->m_CurFrameTime.v;
+			n->m_TotalTime += n->m_CurFrameTime;
+			CVProfile *g = g_101e3138;
+			int d = --g->m_nDepth;
+			if (g->m_Stack[d] != g->m_Stack[d + 1] && g->m_bEnabled && g->m_Stack[d + 1] == g->m_nCurBudget)
+				vtune(false);
+		}
+		if (n->m_nRecursions == 0)
+			vp->m_pCurNode = vp->m_pCurNode->m_pParent;
+		vp->m_fAtRoot = vp->m_pCurNode == vp->m_pRoot;
+	}
+	return drawn;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10093e20 size=0x1c
 namespace lifted {
 int sub_100681e0(int);

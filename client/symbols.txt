@@ -3522,6 +3522,7 @@
 0x100923e0 func   ?sub_100923e0@@YAXDD@Z sub_100923e0
 0x100924e0 func   ?sub_100924e0@@YAXXZ sub_100924e0
 0x10092530 func   ?sub_10092530@@YAXXZ sub_10092530
+0x10092540 func   ?sub_10092540@RendX@@QAEHHH@Z RendX::sub_10092540
 0x10092810 func   ?sub_10092810@C_BaseAnimating@@QAEHXZ C_BaseAnimating::sub_10092810
 0x10092970 func   ?vfunc125@C_BaseAnimating@@UAEHHH@Z C_BaseAnimating::vfunc125
 0x10093e20 func   ?sub_10093e20@CUnknown10093e20@@QAEHH@Z CUnknown10093e20::sub_10093e20
