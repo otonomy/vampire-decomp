@@ -222,6 +222,7 @@ public:
 	int sub_1012dec0(int i);	// "CUtlRBTree::NextInorder" of the sound record tree at +0x50 (sentinel 0x1072c414)
 	int sub_1012e570();	// "GetSoundCount" (stub 0x100070a9)
 	const char *sub_1012e530(int index);	// "GetSoundName" (stub 0x1000e732): the name of the sound record, null when the index is invalid
+	bool sub_1012fa30(const char *pszSound, const char *pszScript, const CSoundParamsFull &params);
 	int sub_1012f9e0(const char *pszScript);	// the index of a script file in the manifest (stub 0x1000b113), -1 when it is not in it
 		// "CSoundEmitterSystemBase::AddSound" (DevWarning format 0x10599780): 3 stack args, copies a sound record into the +0x54 table (0xe8 each at +0x14 + index*0xe8) and flags the script file in the 0x82-byte table at +0x9c; returns true
 	void sub_1012e0e0(const char *pszScript, UtlMem2 *pOut);	// "GetSoundIndexesForScript"-like: clears the output vector, then appends the index of every sound record whose script file is pszScript; DevWarning "Can't PrecacheSoundScript( '%s' ), file not in manifest '%s'" when the script is unknown
