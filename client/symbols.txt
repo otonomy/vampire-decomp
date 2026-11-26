@@ -1173,6 +1173,7 @@
 0x10018e30 func   ?_C_ItemGLillyPhoto_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGLillyPhoto_CreateObject
 0x10018ef0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGLillyPhoto@@@Z ClientClassInit
 0x10018f80 func   ?vfunc17@C_ItemGLillyDiary@@UAEHXZ C_ItemGLillyDiary::vfunc17
+0x10018fc0 func   ?sub_10018fc0@@YAHXZ sub_10018fc0
 0x10019010 func   ??_GC_ItemGLillyDiary@@UAEPAXI@Z ??_GC_ItemGLillyDiary@@UAEPAXI@Z
 0x10019030 func   ?vfunc16@C_ItemGLillyDiary@@UAEHXZ C_ItemGLillyDiary::vfunc16
 0x10019040 func   ?vfunc15@C_ItemGLillyDiary@@UAEHXZ C_ItemGLillyDiary::vfunc15
