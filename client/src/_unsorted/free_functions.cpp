@@ -12846,6 +12846,32 @@ template <> int ClientClassInit<DT_ItemGIdolCat::ignored>(DT_ItemGIdolCat::ignor
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001ec40 size=0x45
+namespace lifted {
+extern char g_10214144;
+extern char g_10214158;
+extern char g_10214194;
+extern char g_102141cc;
+extern char g_10214224;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001ec40()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10214224;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_102141cc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10214194;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10214158;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10214144;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001ecd0 size=0x6
 namespace lifted {
 extern char g_102dff74;
