@@ -6798,6 +6798,7 @@
 0x10125790 func   ?sub_10125790@@YAHXZ sub_10125790
 0x101257a0 func   ?vfunc125@C_ServerRagdoll@@UAEHHH@Z C_ServerRagdoll::vfunc125
 0x10125920 func   ?vfunc126@C_ServerRagdoll@@UAEHXZ C_ServerRagdoll::vfunc126
+0x10125a60 func   ?GetRenderBoundsWorldspace@C_ServerRagdoll@@UAEXAAVVector@@0@Z C_ServerRagdoll::GetRenderBoundsWorldspace
 0x10125a70 func   ?vfunc37@C_ServerRagdoll@@UAEXXZ C_ServerRagdoll::vfunc37
 0x10125ab0 func   ?vfunc131@C_ServerRagdoll@@UAEXHHHHHH@Z C_ServerRagdoll::vfunc131
 0x10125b40 func   ?vfunc123@C_ServerRagdoll@@UAEXPBVVector@@PBVQuaternion@@ABUmatrix3x4_t@@PBUStudioBoneMask@@@Z C_ServerRagdoll::vfunc123
