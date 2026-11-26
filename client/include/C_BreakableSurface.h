@@ -42,4 +42,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_nPanelFlags[1];
 	char m_pad0468[0x940 - 0x468];
 	bool sub_100b80f0(int x, int y);
+	void sub_100b8130(int nWidth, int nHeight);	// UpdateEdgeType: the eight neighbours' solidity picks each edge's style
+	void sub_100b84c0(int nWidth, int nHeight, int nEdge, int nStyle);	// SetupEdge-like
 };
