@@ -1,6 +1,18 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x10138320 size=0x37f
+#include "utlrbtree.h"
+
+typedef void (CUtlRBTree<const char *, unsigned short>::*LinkToParentFn_10138320)(unsigned short, unsigned short, bool);
+
+// TARGET: ?LinkToParent@?$CUtlRBTree@PBDG@@QAEXGG_N@Z
+LinkToParentFn_10138320 pcd_emit_10138320()
+{
+	return &CUtlRBTree<const char *, unsigned short>::LinkToParent;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101386a0 size=0x58
 #include "utlrbtree.h"
 
