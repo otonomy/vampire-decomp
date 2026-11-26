@@ -306,6 +306,61 @@ struct V1f70 { char pad[0x468]; Vec1f70 v; Vec1f70 sub_10001f70(); };
 Vec1f70 V1f70::sub_10001f70() { return v; }
 // END FUNCTION
 
+// FUNCTION: 0x10001fe0 size=0x216
+#include "C_BaseCineCamera.h"
+
+struct CamShot2
+{
+	char m_pad00[0xd8];
+	float m_fd8;
+	float m_fdc;
+	char m_pade0[0xfc - 0xe0];
+	float m_ffc;
+};
+
+float sub_100010b0(float a, float b)
+{
+	return a * a / (b + b);
+}
+float sub_10001070(float a, float b, float c, float d);
+void *__fastcall sub_10001f20(void *self);
+
+#define clamp_10001fe0(val, lo, hi) (((val) > (hi)) ? (hi) : (((val) < (lo)) ? (lo) : (val)))
+
+// TARGET: C_BaseCineCamera::sub_10001fe0
+Vector C_BaseCineCamera::sub_10001fe0(float dt)
+{
+	CamShot2 *cam = (CamShot2 *)sub_10001f20(this);
+	float maxSpeed = m_b4c0 ? cam->m_ffc : 1.0f;
+	Vector &pos = m_v468;
+	Vector delta = pos - m_v410;
+	m_f4c4 = FastSqrt(delta.x * delta.x + (delta.y * delta.y + delta.z * delta.z));
+	m_b4c0 = maxSpeed > m_f4c4 ? 1 : 0;
+	if (!m_b4c0)
+	{
+		Vector dir = m_v410 - pos;
+		VectorNormalize(dir);
+		if (sub_100010b0(m_f4a4, cam->m_fdc) < m_f4c4)
+			m_f4a4 = sub_10001070(m_f4a4, cam->m_fd8, cam->m_fdc, dt);
+		else
+			m_f4a4 = sub_10001070(m_f4a4, 0, cam->m_fdc, dt);
+		m_f4a4 = clamp_10001fe0(m_f4a4, 1.0f, cam->m_fd8);
+		float step = m_f4a4 * dt;
+		if (step > m_f4c4)
+			step = m_f4c4;
+		pos += dir * step;
+	}
+	else
+	{
+		m_af4a8[3] = pos.x;
+		m_af4a8[4] = pos.y;
+		m_af4a8[5] = pos.z;
+		m_f4a4 = 0;
+	}
+	return pos;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10002200 size=0x3
 void __stdcall sub_10002200(int a0)
 {
