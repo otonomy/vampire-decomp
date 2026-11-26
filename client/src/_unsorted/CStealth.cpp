@@ -1,6 +1,58 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x100622c0 size=0x200
+#include "CStealth.h"
+int sub_100cd100();
+int sub_100cd0f0();
+char *sub_1018c870(const char *);
+// TARGET: ??0CStealth@@QAE@H@Z
+CStealth::CStealth(int a)
+    : CManagedHudElement(a, (int)"VStealth")
+{
+    sub_10062610();
+    vfunc63(0);
+    m_n198 = (int)(100 * (sub_100cd100() * 0.0015625));
+    m_n19c = (int)(50 * (sub_100cd0f0() * 0.0020833333333333333));
+    m_n1a0 = (int)(50 * (sub_100cd100() * 0.0015625));
+    m_n1a4 = (int)(50 * (sub_100cd0f0() * 0.0020833333333333333));
+    m_n1a8 = (int)(15 * (sub_100cd0f0() * 0.0020833333333333333));
+    sub_101a9890(m_n178, m_n17c);
+    m_b186 = false;
+    m_b184 = true;
+    m_b185 = true;
+    m_n180 = 0;
+    m_b190 = false;
+    m_b192 = false;
+    m_b191 = false;
+    m_n188 = 0;
+    m_b195 = false;
+    m_b194 = false;
+    m_b193 = false;
+    m_n18c = 0;
+    m_p1b0 = 0;
+    int i;
+    for (i = 0; i < 5; i++)
+        m_arr1b4[i] = 0;
+    m_p1c8 = 0;
+    m_unk1cc = 0;
+    m_p1d0 = 0;
+    m_p1d4 = 0;
+    m_p1d8 = 0;
+    m_p1dc = 0;
+    m_p1e0 = 0;
+    m_p1e4 = 0;
+    m_p1fc = 0;
+    m_p200 = 0;
+    m_p204 = 0;
+    for (i = 0; i < 4; i++)
+        m_arr1e8[i] = 0;
+    IFontLike *p = sub_101ac830();
+    m_unk1f8 = p->GetFont(sub_1018c870("Copperplate"));
+    m_n1ac = -1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100624e0 size=0x1e
 #include "CStealth.h"
 
