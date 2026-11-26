@@ -97,7 +97,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc203();
 	virtual int vfunc204();
 	virtual float vfunc205();
-	virtual void vfunc206();
+	virtual void vfunc206(int sound_type, int channel, float flVolume, int iPitch, float flAttenuation, int iFlagsOverride);
 	virtual void vfunc207();
 	virtual bool vfunc208();
 	virtual bool vfunc209();
