@@ -5703,6 +5703,7 @@
 0x10101fc0 func   ?sub_10101fc0@@YAHXZ sub_10101fc0
 0x10101fd0 func   ?sub_10101fd0@@YAHXZ sub_10101fd0
 0x10101fe0 func   ?sub_10101fe0@@YAHXZ sub_10101fe0
+0x10101ff0 func   ?sub_10101ff0@@YAHXZ sub_10101ff0
 0x101022c0 func   ?sub_101022c0@@YAXXZ sub_101022c0
 0x101024e0 func   ?sub_101024e0@@YAHXZ sub_101024e0
 0x101024f0 func   ?sub_101024f0@@YAHXZ sub_101024f0
