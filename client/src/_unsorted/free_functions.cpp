@@ -134259,6 +134259,15 @@ int sub_101a74d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a74f0 size=0x17
+#include "CHud.h"
+void sub_101a7ac0(CHudElement *);
+void sub_101a74f0()
+{
+	sub_101a7ac0(gHUD.FindElement("CHudWeaponSelection"));
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a7510 size=0x17
 #include "CHud.h"
 void sub_101a7b40(CHudElement *);
