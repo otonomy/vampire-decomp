@@ -5572,6 +5572,7 @@
 0x100f9b20 func   ?sub_100f9b20@@YAXPAUDXTColorBGR888@@PAUDXTColBlock@@HPAUDXTColorBGRA8888@@222@Z sub_100f9b20
 0x100f9c40 func   ?sub_100f9c40@@YAXPAUPix565@@PBEH1111@Z sub_100f9c40
 0x100f9e40 func   ?sub_100f9e40@@YAXPAGPBEH1111@Z sub_100f9e40
+0x100fa2e0 func   ?sub_100fa2e0@@YAXPAUS3RGBA@@PBUDXTAlphaBlock3BitLinear@@H@Z sub_100fa2e0
 0x100fbd70 func   ?sub_100fbd70@@YAHXZ sub_100fbd70
 0x100fbd80 func   ?sub_100fbd80@@YAHXZ sub_100fbd80
 0x100fbd90 func   ?sub_100fbd90@@YAHXZ sub_100fbd90
