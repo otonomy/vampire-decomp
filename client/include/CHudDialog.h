@@ -33,6 +33,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_10054860();
 	void sub_10053ff0(bool bDraw, const char *pszText, int nFlags, int nType, int *pY);	// "CHudDialog::PaintResponseLine"
 	void sub_100549f0(int a, int b);
+	void sub_10053c70(bool bDraw, int nIndex, const char *pszText, int nFlags, int nType, int *pY);	// "CHudDialog::PaintResponse"
+	int sub_100556d0(int nFont, const char *pszText);
 	char m_pad0008[0x1a4 - 0x174];	// starts at 0x174 (the bases end there)
 	float m_flAlpha;	// 0x1a4: the dialog alpha ComputeAlpha clamps to 0..g_10285ad0
 	float m_flAlpha1a8;	// 0x1a8
