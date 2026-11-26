@@ -66,6 +66,167 @@ void vgui2::TreeView::vfunc114(int font)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101bc8c0 size=0x28c
+#include "vgui2__TreeView.h"
+#include "vgui2__TextImage.h"
+#include "vgui2__TextEntry.h"
+
+struct KV_101bc8c0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10();
+	virtual const char *GetString(const char *key, const char *def);
+	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16();
+	virtual void v17();
+	virtual KV_101bc8c0 *MakeCopy();
+	virtual void v19(); virtual void v20();
+	virtual void deleteThis();
+};
+
+struct ImgView_101bc8c0 { virtual void v0(); virtual void SetPos(int x, int y); };
+
+struct UtlMem { void sub_101be2e0(int, int); };
+struct ListElem_101bc8c0 { vgui2::Panel *m_Element; int m_Previous; int m_Next; };
+struct CUtlLinkedList12 { int sub_101be410(int); void sub_101be340(int, int); ListElem_101bc8c0 *m_pMemory; };
+struct UtlVec8 { void sub_101be2a0(int, int); };
+void sub_101be320(vgui2::Panel **dst, vgui2::Panel *const *src);
+struct CUtlVector4
+{
+	void sub_101be160(int, vgui2::Panel *const &);
+	void sub_101be210(int);
+	vgui2::Panel **m_pMemory; int m_nAlloc; int m_nGrow; int m_Size; vgui2::Panel **m_pElements;
+
+	vgui2::Panel *&Element(int i) { return m_pMemory[i]; }
+	int Count() const { return m_Size; }
+	int InsertBefore(int elem, vgui2::Panel *const &src)
+	{
+		sub_101be210(1);
+		((UtlVec8 *)this)->sub_101be2a0(elem, 1);
+		sub_101be320(&Element(elem), &src);
+		return elem;
+	}
+	void AddToTail(vgui2::Panel *const &src) { sub_101be160(m_Size, src); }
+};
+struct TreeNode_101bc860 { void sub_101bc860(int font); };
+struct CUnknown101bcca0 { void *sub_101bcca0(void *parent, const char *name); };
+struct CUnknown101bcb50 { void *sub_101bcb50(void *parent, const char *name); };
+extern char vt_10252cb4[];
+
+typedef bool (*TreeSortFunc_101bc8c0)(KV_101bc8c0 *a, KV_101bc8c0 *b);
+
+#define TN_DATA(n) (*(KV_101bc8c0 **)((char *)(n) + 0x58))
+#define TN_INDEX(n) (*(int *)((char *)(n) + 0x5c))
+#define TN_PARENT(n) (*(vgui2::Panel **)((char *)(n) + 0x60))
+#define TN_TEXT(n) (*(vgui2::TextEntry **)((char *)(n) + 0x64))
+#define TN_EXPAND(n) (*(vgui2::TextImage **)((char *)(n) + 0x68))
+#define TN_IMAGE(n) (*(vgui2::Panel **)((char *)(n) + 0x6c))
+#define TN_BEXPAND(n) (*(bool *)((char *)(n) + 0x70))
+#define TN_CHILDREN(n) (*(CUtlVector4 *)((char *)(n) + 0x74))
+#define TN_VIEW(n) (*(vgui2::Panel **)((char *)(n) + 0x88))
+
+#define TV_ROOT (*(vgui2::Panel **)((char *)this + 0x6c))
+#define TV_SORT(t) (*(TreeSortFunc_101bc8c0 *)((char *)(t) + 0x70))
+#define TV_FONT (*(int *)((char *)this + 0x74))
+#define TV_LIST (*(CUtlLinkedList12 *)((char *)this + 0x78))
+#define TV_SUBPANEL (*(vgui2::Panel **)((char *)this + 0xa0))
+
+static inline void TreeNode_AddChild(vgui2::Panel *parent, vgui2::Panel *node)
+{
+	if (TV_SORT(TN_VIEW(parent)))
+	{
+		int i;
+		for (i = 0; i < TN_CHILDREN(parent).Count(); i++)
+		{
+			vgui2::Panel **children = TN_CHILDREN(parent).m_pMemory;
+			if (TV_SORT(TN_VIEW(parent))(TN_DATA(node), TN_DATA(children[i])))
+				break;
+		}
+		if (i != TN_CHILDREN(parent).Count())
+		{
+			TN_CHILDREN(parent).InsertBefore(i, node);
+			return;
+		}
+	}
+	TN_CHILDREN(parent).AddToTail(node);
+}
+
+namespace vgui2
+{
+int TreeView::vfunc107(void *pData, int parentItemIndex)
+{
+	Panel *pTreeNode = (Panel *)Panel::operator new(0x8c);
+	if (pTreeNode)
+	{
+		Panel *node = pTreeNode;
+		node->sub_101a9480(TV_SUBPANEL);
+		CUtlVector4 &ch = TN_CHILDREN(node);
+		((UtlMem *)&ch)->sub_101be2e0(0, 0);
+		ch.m_Size = 0;
+		ch.m_pElements = ch.m_pMemory;
+		*(void **)node = vt_10252cb4;
+		TN_DATA(node) = 0;
+		TN_VIEW(node) = this;
+		TN_INDEX(node) = -1;
+
+		TN_EXPAND(node) = new TextImage("+", node->sub_101aa220());
+		((ImgView_101bc8c0 *)TN_EXPAND(node))->SetPos(3, 3);
+
+		void *mem = Panel::operator new(0x60);
+		TN_IMAGE(node) = (Panel *)(mem ? ((CUnknown101bcca0 *)mem)->sub_101bcca0(node, "TreeImage") : 0);
+		TN_IMAGE(node)->sub_101a9890(0x14, 3);
+
+		mem = Panel::operator new(0x128);
+		TN_TEXT(node) = (TextEntry *)(mem ? ((CUnknown101bcb50 *)mem)->sub_101bcb50(node, "TreeNode") : 0);
+		TN_TEXT(node)->vfunc138(0);
+		TN_TEXT(node)->vfunc134(0);
+		TN_TEXT(node)->sub_101a9890(0x28, 0);
+		TN_BEXPAND(node) = false;
+	}
+	else
+		pTreeNode = 0;
+
+	// m_NodeList.AddToTail(pTreeNode)
+	int idx = TV_LIST.sub_101be410(0);
+	TV_LIST.sub_101be340(-1, idx);
+	Panel **elem = &TV_LIST.m_pMemory[idx].m_Element;
+	if (elem)
+		*elem = pTreeNode;
+	TN_INDEX(pTreeNode) = idx;
+
+	// SetKVData(data)
+	if (TN_DATA(pTreeNode))
+		TN_DATA(pTreeNode)->deleteThis();
+	KV_101bc8c0 *data = (KV_101bc8c0 *)pData;
+	TN_DATA(pTreeNode) = data->MakeCopy();
+	const char *text = data->GetString("Text", "");
+	TN_TEXT(pTreeNode)->vfunc107(text);
+	TN_TEXT(pTreeNode)->sub_101b1790();
+	pTreeNode->vfunc57(0, 0);
+
+	if (TV_FONT)
+	{
+		int font = TV_FONT;
+		TN_TEXT(pTreeNode)->vfunc132(font);
+		for (int i = 0; i < TN_CHILDREN(pTreeNode).m_Size; i++)
+			((TreeNode_101bc860 *)TN_CHILDREN(pTreeNode).m_pMemory[i])->sub_101bc860(font);
+	}
+
+	if (parentItemIndex == -1)
+	{
+		TV_ROOT = pTreeNode;
+		TN_PARENT(pTreeNode) = 0;
+	}
+	else
+	{
+		TN_PARENT(pTreeNode) = TV_LIST.m_pMemory[parentItemIndex].m_Element;
+		TreeNode_AddChild(TN_PARENT(pTreeNode), pTreeNode);
+	}
+	return TN_INDEX(pTreeNode);
+}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101bd3d0 size=0x7
 #include "vgui2__TreeView.h"
 int vgui2::TreeView::vfunc108()
