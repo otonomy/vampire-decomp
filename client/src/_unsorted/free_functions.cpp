@@ -26075,6 +26075,169 @@ void sub_1004a9c0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004a9e0 size=0x5df
+#include "Vector.h"
+#include "engineclient.h"
+
+extern float g_103ecd74;
+extern Vector g_103ecd78;
+extern void *g_103ecd84;
+extern float g_10283eb8;
+
+#define FADE_MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define FADE_MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+struct FadeMeshBuilder;
+
+struct FadeMesh
+{
+	virtual void LockMesh(int numVerts, int numIndices, FadeMeshBuilder &desc);
+	virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void SetPrimitiveType(int type);
+	virtual void v11();
+	virtual void Draw(int firstIndex, int numIndices);
+};
+
+inline unsigned char FadeFToC(float c)
+{
+	volatile float dc;
+	dc = c * 255.0f + (float)(1 << 23);
+	return *(unsigned char *)&dc;
+}
+
+struct FadeMeshBuilder
+{
+	int m_VertexSize_Position;
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;
+	int m_VertexSize_Color;
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];
+	int m_unk28[(0x80 - 0x28) / 4];
+	FadeMesh *m_pMesh;
+	bool m_bGenerateIndices;
+	char m_pad85[3];
+	int m_NumVertices;
+	int m_NumIndices;
+	int m_n90;
+	int m_n94;
+	int m_nCurrentVertex;
+	int m_n9c;
+	int m_Type;
+	bool m_bA4;
+	char m_padA5[3];
+	float *m_pCurrPosition;
+	float *m_pCurrNormal;
+	float *m_pCurrTexCoord[4];
+	unsigned char *m_pCurrColor;
+
+	FadeMeshBuilder()
+	{
+		m_NumVertices = 0;
+		m_NumIndices = 0;
+		m_n90 = 0;
+		m_n94 = 0;
+		m_nCurrentVertex = 0;
+		m_n9c = 0;
+		m_bA4 = false;
+	}
+	void sub_100421f0(int type, int numPrimitives);
+	void sub_100422e0();
+	void sub_10005230();
+	void sub_1004afc0(float r, float g, float b, float a);
+	void sub_10031a20(int stage, float s, float t);
+	void sub_10041c90(bool bSpewData, bool bDraw);
+
+	void Begin(FadeMesh *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bGenerateIndices = false;
+		sub_100421f0(type, numPrimitives);
+		m_n94 = 0;
+		m_n90 = 0;
+		m_bA4 = true;
+		m_Type = type;
+		m_pMesh->SetPrimitiveType(2);
+		m_pMesh->LockMesh(m_NumVertices, m_NumIndices, *this);
+		sub_100422e0();
+	}
+	__forceinline void Position3f(float x, float y, float z)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = x;
+		*pDst++ = y;
+		*pDst = z;
+	}
+	void Color4f(float r, float g, float b, float a)
+	{
+		int col = (FadeFToC(b)) | (FadeFToC(g) << 8) | (FadeFToC(r) << 16) | (FadeFToC(a) << 24);
+		*(int *)m_pCurrColor = col;
+	}
+	void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+	void AdvanceVertex()
+	{
+		if (++m_nCurrentVertex > m_n90)
+			m_n90 = m_nCurrentVertex;
+		m_pCurrPosition = (float *)((unsigned char *)m_pCurrPosition + m_VertexSize_Position);
+		m_pCurrNormal = (float *)((unsigned char *)m_pCurrNormal + m_VertexSize_Normal);
+		m_pCurrTexCoord[0] = (float *)((unsigned char *)m_pCurrTexCoord[0] + m_VertexSize_TexCoord[0]);
+		m_pCurrTexCoord[1] = (float *)((unsigned char *)m_pCurrTexCoord[1] + m_VertexSize_TexCoord[1]);
+		m_pCurrTexCoord[2] = (float *)((unsigned char *)m_pCurrTexCoord[2] + m_VertexSize_TexCoord[2]);
+		m_pCurrTexCoord[3] = (float *)((unsigned char *)m_pCurrTexCoord[3] + m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+};
+
+void sub_1004a9e0()
+{
+	if (g_103ecd74 != 0.0f && g_103ecd84 && materials) {
+		materials->vfunc70(10);
+		materials->vfunc81();
+		materials->vfunc70(0);
+		materials->vfunc81();
+		FadeMesh *pMesh = (FadeMesh *)materials->GetDynamicMesh(true, 0, 0, g_103ecd84);
+		FadeMeshBuilder meshBuilder;
+		Vector color = g_103ecd78;
+		color.x = FADE_MIN(FADE_MAX(color.x, 0.0f), 1.0f);
+		color.y = FADE_MIN(FADE_MAX(color.y, 0.0f), 1.0f);
+		color.z = FADE_MIN(FADE_MAX(color.z, 0.0f), 1.0f);
+		float alpha = FADE_MIN(FADE_MAX(g_103ecd74, 0.0f), 1.0f);
+
+		meshBuilder.Begin(pMesh, 7, 1);
+
+		meshBuilder.Position3f(-g_10283eb8, -g_10283eb8, -g_10283eb8);
+		meshBuilder.Color4f(color.x, color.y, color.z, alpha);
+		meshBuilder.TexCoord2f(0, 0, 0);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.Position3f(-g_10283eb8, g_10283eb8, -g_10283eb8);
+		meshBuilder.Color4f(color.x, color.y, color.z, alpha);
+		meshBuilder.TexCoord2f(0, 0, 0);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.Position3f(g_10283eb8, g_10283eb8, -g_10283eb8);
+		meshBuilder.Color4f(color.x, color.y, color.z, alpha);
+		meshBuilder.TexCoord2f(0, 0, 0);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.Position3f(g_10283eb8, -g_10283eb8, -g_10283eb8);
+		meshBuilder.sub_1004afc0(color.x, color.y, color.z, alpha);
+		meshBuilder.sub_10031a20(0, 0, 0);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_10041c90(false, false);
+		pMesh->Draw(-1, 0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004afc0 size=0x89
 #include "CMeshBuilder.h"
 

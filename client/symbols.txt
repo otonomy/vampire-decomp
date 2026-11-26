@@ -2787,6 +2787,7 @@
 0x1004a950 func   ?sub_1004a950@CUnknown1004a950@@QAEHHH@Z CUnknown1004a950::sub_1004a950
 0x1004a980 func   ?sub_1004a980@@YAXXZ sub_1004a980
 0x1004a9c0 func   ?sub_1004a9c0@@YAXXZ sub_1004a9c0
+0x1004a9e0 func   ?sub_1004a9e0@@YAXXZ sub_1004a9e0
 0x1004afc0 func   ?sub_1004afc0@CMeshBuilder@@QAEXMMMM@Z CMeshBuilder::sub_1004afc0
 0x1004b050 func   ?sub_1004b050@CUnknown1004b050@@QAEPAXXZ CUnknown1004b050::sub_1004b050
 0x1004b070 func   ?vfunc2@CThermalMaterialProxy@@UAEXXZ CThermalMaterialProxy::vfunc2
