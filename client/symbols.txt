@@ -9473,6 +9473,7 @@
 0x101b8590 func   ??_GFrameSystemButton@vgui2@@UAEPAXI@Z ??_GFrameSystemButton@vgui2@@UAEPAXI@Z
 0x101b85b0 func   ??_GFrame@vgui2@@UAEPAXI@Z ??_GFrame@vgui2@@UAEPAXI@Z
 0x101b85d0 func   ??1Frame@vgui2@@UAE@XZ vgui2::Frame::~Frame
+0x101b86d0 func   ?vfunc144@Frame@vgui2@@UAEXXZ vgui2::Frame::vfunc144
 0x101b87f0 func   ?vfunc166@MenuButton@vgui2@@UAEXH@Z vgui2::MenuButton::vfunc166
 0x101b8800 func   ?vfunc167@MenuButton@vgui2@@UAEXH@Z vgui2::MenuButton::vfunc167
 0x101b8810 func   ?vfunc124@Frame@vgui2@@UAEHXZ vgui2::Frame::vfunc124
