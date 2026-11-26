@@ -9,6 +9,13 @@ struct BGRA8888_t
 	unsigned char a;
 };
 
+struct BGR888_t
+{
+	unsigned char b;
+	unsigned char g;
+	unsigned char r;
+};
+
 struct RGB888_t
 {
 	unsigned char r;
