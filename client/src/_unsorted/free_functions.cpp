@@ -11694,6 +11694,32 @@ template <> int ClientClassInit<DT_ItemGPishaBook::ignored>(DT_ItemGPishaBook::i
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001c440 size=0x45
+namespace lifted {
+extern char g_1020f444;
+extern char g_1020f458;
+extern char g_1020f494;
+extern char g_1020f4cc;
+extern char g_1020f524;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001c440()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1020f524;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020f4cc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1020f494;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1020f458;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1020f444;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001c4d0 size=0x6
 namespace lifted {
 extern char g_102e19cc;
