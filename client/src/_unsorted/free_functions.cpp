@@ -92640,6 +92640,18 @@ void CKeyValuesX::sub_10128100(const char *pszFile, IKeyValuesFileView *pFileSys
 }
 // END FUNCTION
 
+// FUNCTION: 0x10128230 size=0x22
+#include "CUtlBuffer.h"
+
+void sub_1013cee0(CUtlBuffer *buf, const char *pFmt, ...);
+
+void sub_10128230(CUtlBuffer *buf, int nDepth)
+{
+	for (int i = 0; i < nDepth; i++)
+		sub_1013cee0(buf, "\t");
+}
+// END FUNCTION
+
 // FUNCTION: 0x10128260 size=0xa
 struct CUnknown10128260 { int sub_10128260(int); };
 int CUnknown10128260::sub_10128260(int a0)
