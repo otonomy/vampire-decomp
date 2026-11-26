@@ -255,6 +255,9 @@ of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call th
 - **Pointers the header does not know** are `const void *` parameters and `void *` returns: cast at the call
   (`(const model_t *)engine->vfunc36(name)`), do not add a view. A class include/ defines keeps its own type
   (`ConVar *cvar->FindVar(name)`).
+- **An int where the header has a pointer** (or the other way) is a cast at the call too, both ways being 32 bits:
+  `modelinfo->GetModelType((const void *)(*(int *)((char *)this + 0x40)))`. A float, bool, char, short or by-value
+  struct difference is not a cast: the slot's type is wrong, so fix it with edit_context (judged against every reader).
 - **The names are macros** (`#define engine EngineGlobals::g_104a57d4`): a source that includes the header cannot use
   them as its own identifiers (a parameter named `filesystem`, a local `render`).
 
