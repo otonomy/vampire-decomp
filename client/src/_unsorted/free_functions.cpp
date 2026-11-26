@@ -12338,6 +12338,94 @@ next:
 }
 // END FUNCTION
 
+// FUNCTION: 0x1002b990 size=0x273
+#include "CUtlLinkedList8.h"
+#include "Tier1.h"
+extern "C" char *_mbsdup(const char *);
+extern "C" unsigned int strlen(const char *);
+#pragma intrinsic(strlen)
+extern void (*g_101e3110)(const char *pMsg, ...);
+extern void (*g_101e310c)(const char *pMsg, ...);
+char *sub_1004ba40(const char *pFmt, ...);
+int sub_1002b780(const char *pszPath);
+void sub_1002c110(int *pElem, int *pSrc);
+struct FS_2b99
+{
+	virtual int Open(const char *pName, const char *pOptions, const char *pPathID);
+	virtual void Close(int h);
+	virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual bool FileExists(const char *pName, const char *pPathID);
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual char *ReadLine(char *pBuf, int nMax, int h);
+};
+struct Mem_2b78 { void sub_1002c130(int n); };
+extern FS_2b99 *g_104a580c;
+extern CUtlLinkedList8 g_102eacb4;
+extern char g_102eabb0[0x104];
+
+// TARGET: sub_1002b990
+bool sub_1002b990()
+{
+	char szLine[0x400];
+	int hFile = g_104a580c->Open("maps/loadorder.txt", "rt", 0);
+	if (!hFile)
+	{
+		g_101e3108("Could not open maplist.txt to build pack files\n");
+		return false;
+	}
+	while (g_104a580c->ReadLine(szLine, 0x3ff, hFile))
+	{
+		g_101e318c(szLine, g_102eabb0, 0x104);
+		if (strlen(g_102eabb0) == 0 || g_102eabb0[0] == '/' || g_102eabb0[1] == '/')
+			continue;
+		char *pBsp = sub_1004ba40("maps/%s.bsp", g_102eabb0);
+		if (!g_104a580c->FileExists(pBsp, 0))
+		{
+			g_101e3108("Pack Files load order map error: %s, it does not exist\n", g_102eabb0);
+			g_101e3110("Pack Files load order map error: %s, it does not exist\n", g_102eabb0);
+			continue;
+		}
+		int str = (int)_mbsdup(g_102eabb0);
+		unsigned short newNode;
+		if (g_102eacb4.m_FirstFree == 0xffff)
+		{
+			if (g_102eacb4.m_NumAlloced == g_102eacb4.m_allocationCount)
+				((Mem_2b78 *)&g_102eacb4)->sub_1002c130(1);
+			newNode = g_102eacb4.m_NumAlloced++;
+			if (newNode == 0xffff)
+				g_101e310c("CUtlLinkedList overflow!\n");
+		}
+		else
+		{
+			newNode = g_102eacb4.m_FirstFree;
+			g_102eacb4.m_FirstFree = g_102eacb4.m_pMemory[g_102eacb4.m_FirstFree].m_Next;
+		}
+		g_102eacb4.m_pMemory[newNode].m_Previous = newNode;
+		g_102eacb4.m_pMemory[newNode].m_Next = newNode;
+		((int *)&g_102eacb4)[6] = (int)g_102eacb4.m_pMemory;
+		g_102eacb4.sub_1002c080(newNode);
+		CUtlLinkedList8Node &n = g_102eacb4.m_pMemory[newNode];
+		n.m_Next = 0xffff;
+		n.m_Previous = g_102eacb4.m_Tail;
+		g_102eacb4.m_Tail = newNode;
+		if (n.m_Previous == 0xffff)
+			g_102eacb4.m_Head = newNode;
+		else
+			g_102eacb4.m_pMemory[n.m_Previous].m_Next = newNode;
+		g_102eacb4.m_ElementCount++;
+		sub_1002c110(&g_102eacb4.m_pMemory[newNode].m_Data, &str);
+	}
+	g_104a580c->Close(hFile);
+	g_101e3108("\n\nSearching for extra maps that aren't in loadorder.txt\n");
+	sub_1002b780("maps/sm_*.bsp");
+	sub_1002b780("maps/la_*.bsp");
+	sub_1002b780("maps/hw_*.bsp");
+	sub_1002b780("maps/ch_*.bsp");
+	sub_1002b780("maps/sp_*.bsp");
+	return g_102eacb4.m_ElementCount > 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1002bfb0 size=0x63
 class IEngine_1002bfb0
 {
