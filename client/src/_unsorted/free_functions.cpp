@@ -117507,6 +117507,64 @@ int sub_1018f600()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018ffd0 size=0x301
+#include "ScopeTrace.h"
+#include "CInput.h"
+#include "C_BasePlayer.h"
+#include "engineclient.h"
+#include "ConVar.h"
+
+extern "C" double __cdecl sin(double);
+#pragma intrinsic(sin)
+
+#define M_PI 3.14159265358979323846
+
+extern int g_104e16f4;
+extern ConVar g_105fc508;	// cl_bobcycle
+extern ConVar g_105fca80;	// cl_bobup
+extern ConVar g_105fc958;	// cl_bob
+
+#define BOB_MIN(a, b) (((b) < (a)) ? (b) : (a))
+#define BOB_MAX(a, b) (((b) > (a)) ? (b) : (a))
+
+// CViewRender::CalcBob
+float sub_1018ffd0()
+{
+	ScopeTrace st("CViewRender::CalcBob", g_102de300);
+	static double bobtime;
+	static float bob;
+	float cycle;
+
+	if (input->vfunc29())
+		return 0.0f;
+
+	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
+	if (g_104e16f4 == -1 || engine->vfunc41(0) == 0.0)
+		return bob;
+	if (!(player->sub_100a2450() & 1))
+		return 0.0f;
+	if (player->sub_100a7890())
+		return 0.0f;
+
+	bobtime += engine->vfunc41(0);
+	cycle = bobtime - (int)(bobtime / g_105fc508.GetFloat()) * g_105fc508.GetFloat();
+	cycle /= g_105fc508.GetFloat();
+
+	if (cycle < g_105fca80.GetFloat())
+		cycle = cycle * M_PI / g_105fca80.GetFloat();
+	else
+		cycle = M_PI + (cycle - g_105fca80.GetFloat()) * M_PI / (1.0 - g_105fca80.GetFloat());
+
+	float scale = g_105fc958.GetFloat();
+	const Vector &vel = *(const Vector *)((char *)player + 0xa8);
+	bob = vel.Length2D() * scale;
+	bob = bob * (0.3 + 0.7 * sin(cycle));
+	bob = BOB_MIN(bob, 4.0);
+	bob = BOB_MAX(bob, -7.0);
+	return bob;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10190390 size=0x2a9
 #include "CInput.h"
 #include "CViewRender.h"
