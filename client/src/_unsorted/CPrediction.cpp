@@ -29,6 +29,103 @@ void CPrediction::vfunc2()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101225f0 size=0x250
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "CPrediction.h"
+#include "CGameTrace.h"
+#include "Ray_t.h"
+#include "CTraceFilterSimple.h"
+#include "CUnknown1070b254.h"
+#include "ConVar.h"
+#include "QAngle.h"
+
+extern ConVar *g_103edd9c;
+extern ConVar *g_104e1584;
+extern int g_104e16f4;
+extern float g_104e16f8;
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
+void sub_10108fd0(const Vector &start, float scale, const Vector &dir, Vector &dest);
+void sub_101659b0(const Vector &start, const Vector &end, int r, int g, int b, bool noDepthTest, float duration);
+
+static inline void UTIL_TraceLine(const Vector &vecAbsStart, const Vector &vecAbsEnd, unsigned int mask, const void *ignore, int collisionGroup, CGameTrace *ptr)
+{
+	Ray_t ray;
+	ray.sub_10005e00(&vecAbsStart.x, &vecAbsEnd.x);
+	CTraceFilterSimple traceFilter;
+	traceFilter.sub_1004b5c0(ignore, collisionGroup);
+	g_104a582c->vfunc4(&ray, mask, (CTraceFilterNoCharacterCollide *)&traceFilter, ptr);
+	if ((g_103edd9c->vfunc1() ? 0 : g_103edd9c->m_nValue) != 0)
+	{
+		sub_101659b0(*(const Vector *)ptr->m_startpos, *(const Vector *)ptr->m_endpos, 255, 0, 0, true, -1.0f);
+	}
+}
+
+void CPrediction::vfunc19(const Vector &origin, const QAngle &angles, const Vector &viewofs)
+{
+	if (g_104e16f4 == -1)
+		return;
+
+	Vector forward;
+	sub_101090a0(angles, &forward, 0, 0);
+	forward.z = 0;
+
+	float heights[6];
+	int count = 0;
+	for (int dist = 36; dist < 108; dist += 12)
+	{
+		Vector start;
+		sub_10108fd0(origin, (float)dist, forward, start);
+		start.z = pcd_stage(viewofs.z) + start.z;
+		Vector end;
+		end.x = start.x;
+		end.y = start.y;
+		end.z = start.z - 160.0f;
+
+		CGameTrace tr;
+		UTIL_TraceLine(start, end, 0x200400b, 0, 6, &tr);
+		if (tr.m_allsolid || tr.m_fraction == 1.0f)
+			return;
+		heights[count++] = start.z + tr.m_fraction * (end.z - start.z);
+	}
+
+	int lastStep = 0;
+	int nSteps = 0;
+	for (int i = 1; i < count; i++)
+	{
+		int t0 = heights[i] - heights[i - 1]; int step = (int)(t0);
+		if (step > -0.1 && step < 0.1)
+			continue;
+		if (lastStep)
+		{
+			int diff = step - lastStep;
+			if (diff > 0.1 || diff < -0.1)
+				return;
+		}
+		nSteps++;
+		lastStep = step;
+	}
+
+	if (!lastStep)
+	{
+		g_104e16f8 = 0;
+		return;
+	}
+	if (nSteps < 2)
+		return;
+	g_104e16f8 = (g_104e1584->vfunc1() ? 0.0f : g_104e1584->m_fValue) * -lastStep;
+}
+
+/* judged with these header patches (not saved):
+[
+ {
+  "path": "include/CPrediction.h",
+  "old": "    virtual void vfunc19();",
+  "new": "    virtual void vfunc19(const class Vector &origin, const class QAngle &angles, const class Vector &viewofs);"
+ }
+]
+*/
+// END FUNCTION
+
 // FUNCTION: 0x101230c0 size=0x4
 #include "CPrediction.h"
 bool CPrediction::vfunc12()
