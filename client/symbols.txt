@@ -212,6 +212,7 @@
 0x10006100 func   ?sub_10006100@CUnknown10006100@@QAEMXZ CUnknown10006100::sub_10006100
 0x10006110 func   ?sub_10006110@CUnknown10006110@@QAEMXZ CUnknown10006110::sub_10006110
 0x10006120 func   ?sub_10006120@CUnknown10006120@@QAEDXZ CUnknown10006120::sub_10006120
+0x10006170 func   ?sub_10006170@@YAHXZ sub_10006170
 0x10006190 func   ?vfunc16@C_WeaponRanged_Animalism@@UAEHXZ C_WeaponRanged_Animalism::vfunc16
 0x100061b0 func   ?sub_100061b0@@YAHXZ sub_100061b0
 0x10006210 func   ?_C_WeaponRanged_Animalism_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponRanged_Animalism_CreateObject
