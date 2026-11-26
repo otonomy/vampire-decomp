@@ -9861,6 +9861,7 @@
 0x101baba0 func   ?vfunc143@CheckButton@vgui2@@UAEXD@Z vgui2::CheckButton::vfunc143
 0x101babf0 func   ?vfunc156@CheckButton@vgui2@@UAEHH@Z vgui2::CheckButton::vfunc156
 0x101bac30 func   ?vfunc75@CheckButton@vgui2@@UAEXH@Z vgui2::CheckButton::vfunc75
+0x101bacd0 func   ?vfunc76@CheckButton@vgui2@@UAEHH@Z vgui2::CheckButton::vfunc76
 0x101bad20 func   ?vfunc108@CheckButton@vgui2@@UAEHH@Z vgui2::CheckButton::vfunc108
 0x101bad50 func   ?vfunc166@CheckButton@vgui2@@UAEXH@Z vgui2::CheckButton::vfunc166
 0x101badd0 func   ?vfunc102@CheckButton@vgui2@@UAEHXZ vgui2::CheckButton::vfunc102
