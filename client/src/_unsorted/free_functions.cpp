@@ -55445,6 +55445,69 @@ bool sub_100b3640(Vector vec, int type)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b38e0 size=0x21c
+#include "C_BasePlayer.h"
+#include "CClientEntityList.h"
+#include "engineclient.h"
+#include "Vector.h"
+#include "QAngle.h"
+
+struct color32_t
+{
+	unsigned char r, g, b, a;
+};
+
+extern "C" double atof(const char *);
+extern "C" int atoi(const char *);
+int sub_100b3b00(const char *name);
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
+
+void sub_100b38e0()
+{
+	float flDist = 40.0f;
+	switch (engine->vfunc63())
+	{
+	case 2:
+		break;
+	case 3:
+		flDist = atof(engine->Cmd_Argv(2));
+		break;
+	default:
+		return;
+	}
+
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return;
+
+	Vector forward, pos;
+	sub_101090a0(*(const QAngle *)pPlayer->vfunc195(), &forward, 0, 0);
+	Vector dir = forward * flDist;
+	pos = *(const Vector *)pPlayer->vfunc43() + *(Vector *)((char *)pPlayer + 0x148) + dir;
+	forward = -forward;
+
+	const char *name = engine->Cmd_Argv(1);
+	int index = atoi(name);
+	if (!index)
+		index = sub_100b3b00(name);
+
+	C_BaseEntity *pWorld = cl_entitylist->sub_100d0cf0(0);
+	if (pWorld)
+	{
+		color32_t color;
+		color.r = 255;
+		color.g = 128;
+		color.b = 128;
+		color.a = 150;
+		for (int i = 0; i < 30; i++)
+		{
+			effects->vfunc3(effects->Draw_DecalIndex(index), 0, *(const void **)((char *)pWorld + 0x40), pWorld->GetRenderOrigin(), pWorld->GetRenderAngles(), pos, 0, 0, &color);
+			pos = pos - forward * 5.0f;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b3b00 size=0x627
 #include <string.h>
 
