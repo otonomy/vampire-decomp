@@ -60294,6 +60294,84 @@ int sub_100eea30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100eee60 size=0x25b
+#include "CGlowOverlay.h"
+#include "CGameTrace.h"
+#include "Ray_t.h"
+#include "CTraceFilterSimple.h"
+#include "CUnknown1070b254.h"
+#include "ConVar.h"
+
+extern ConVar *g_103edd9c;
+extern float g_102bba84;
+const Vector &sub_10198d30();
+void sub_101659b0(const Vector &start, const Vector &end, int r, int g, int b, bool noDepthTest, float duration);
+struct IEngineClientGO
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40();
+	virtual float v41(int);
+};
+extern IEngineClientGO *g_104a57d4;
+
+static inline void UTIL_TraceLine(const Vector &vecAbsStart, const Vector &vecAbsEnd, unsigned int mask, const void *ignore, int collisionGroup, CGameTrace *ptr)
+{
+	Ray_t ray;
+	ray.sub_10005e00(&vecAbsStart.x, &vecAbsEnd.x);
+	CTraceFilterSimple traceFilter;
+	traceFilter.sub_1004b5c0(ignore, collisionGroup);
+	g_104a582c->vfunc4(&ray, mask, (CTraceFilterNoCharacterCollide *)&traceFilter, ptr);
+	if ((g_103edd9c->vfunc1() ? 0 : g_103edd9c->m_nValue) != 0)
+	{
+		sub_101659b0(*(const Vector *)ptr->m_startpos, *(const Vector *)ptr->m_endpos, 255, 0, 0, true, -1.0f);
+	}
+}
+
+#define GO_MIN(a, b) ((a) < (b) ? (a) : (b))
+#define GO_MAX(a, b) ((a) > (b) ? (a) : (b))
+
+// TARGET: CGlowOverlay::sub_100eee60
+void CGlowOverlay::sub_100eee60(const Vector &vToGlow)
+{
+	CGameTrace trace;
+	UTIL_TraceLine(sub_10198d30(), sub_10198d30() + vToGlow * 16000.0f, 1, 0, 0, &trace);
+
+	float flVisible;
+	if (m_bInSky)
+	{
+		bool bVisible = !(trace.m_fraction < 1.0f) || (trace.m_surfaceFlags & 4) != 0;
+		flVisible = bVisible;
+	}
+	else
+	{
+		Vector vToPos = m_vPos - sub_10198d30();
+		bool bVisible = vToPos.LengthSqr() < (*(const Vector *)trace.m_endpos - sub_10198d30()).LengthSqr();
+		flVisible = bVisible;
+	}
+	if (m_flProxyRadius == -1.0f)
+	{
+		m_flProxyRadius = flVisible;
+	}
+	else if (flVisible > m_flProxyRadius)
+	{
+		m_flProxyRadius += g_104a57d4->v41(0) / g_102bba84;
+		m_flProxyRadius = GO_MIN(m_flProxyRadius, flVisible);
+	}
+	else
+	{
+		m_flProxyRadius = (double)m_flProxyRadius - g_104a57d4->v41(0) / g_102bba84;
+		m_flProxyRadius = GO_MAX(m_flProxyRadius, flVisible);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100efe70 size=0x8
 struct CUnknown100efe70 { void sub_100efe70(); };
 void CUnknown100efe70::sub_100efe70()

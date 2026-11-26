@@ -5341,6 +5341,7 @@
 0x100eed70 func   ??_GCGlowOverlay@@UAEPAXI@Z ??_GCGlowOverlay@@UAEPAXI@Z
 0x100eed90 func   ??1CGlowOverlay@@UAE@XZ CGlowOverlay::~CGlowOverlay
 0x100eee50 func   ?vfunc1@CGlowOverlay@@UAE_NXZ CGlowOverlay::vfunc1
+0x100eee60 func   ?sub_100eee60@CGlowOverlay@@QAEXABVVector@@@Z CGlowOverlay::sub_100eee60
 0x100ef0c0 func   ?vfunc2@CGlowOverlay@@UAEXMPAVCGlowSprite@@PAM1PAVVector@@@Z CGlowOverlay::vfunc2
 0x100efe70 func   ?sub_100efe70@CUnknown100efe70@@QAEXXZ CUnknown100efe70::sub_100efe70
 0x100efe80 func   ?sub_100efe80@@YAXXZ sub_100efe80
