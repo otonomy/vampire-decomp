@@ -13447,6 +13447,137 @@ char CUnknown10031140::sub_10031140(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10031160 size=0x3dc
+#include "C_SteamJet.h"
+#include "engineclient.h"
+#include <stdlib.h>
+
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);	// AngleVectors
+
+// C_SteamJet's CParticleEffectBinding m_ParticleEffect (at +0x414; +4 from its IParticleEffect part)
+struct SteamJetBindingView
+{
+	void sub_101166d0(const Vector &mins, const Vector &maxs, bool bDisableAutoUpdate);	// SetBBox
+	void *sub_101165f0(int sizeInBytes, unsigned char hMaterial);				// AddParticle
+	int m_unk0[0x34 / 4];
+	int m_Flags;	// +0x34
+};
+
+// the SDK's TimedEvent (cl_dll/timedevent.h)
+struct SteamJetTimedEventView
+{
+	float m_TimeBetweenEvents;
+	float m_fNextEvent;
+
+	inline bool NextEvent(float &curDelta)
+	{
+		if (curDelta >= m_fNextEvent)
+		{
+			curDelta -= m_fNextEvent;
+			m_fNextEvent = m_TimeBetweenEvents;
+			return true;
+		}
+		else
+		{
+			m_fNextEvent -= curDelta;
+			return false;
+		}
+	}
+};
+
+struct SteamJetParticle
+{
+	int m_unk0[3];
+	Vector m_Pos;		// 0x0c
+	Vector m_Velocity;	// 0x18
+	float m_flRoll;		// 0x24
+	float m_flRollDelta;	// 0x28
+	float m_Lifetime;	// 0x2c
+	float m_DieTime;	// 0x30
+	unsigned char m_uchStartSize;	// 0x34
+	unsigned char m_uchEndSize;	// 0x35
+};
+
+// C_SteamJet seen from its IParticleEffect part (+0x410 in the game; the headers' C_BaseEntity has no layout yet)
+struct SteamJetParticleView
+{
+	int m_vtbl;
+	SteamJetBindingView m_ParticleEffect;	// 0x04 (0x414)
+	int m_unk3c[(0x5c - 0x3c) / 4];
+	float m_SpreadSpeed;	// 0x5c (0x46c)
+	float m_Speed;		// 0x60 (0x470)
+	float m_StartSize;	// 0x64 (0x474)
+	float m_EndSize;	// 0x68 (0x478)
+	float m_Rate;		// 0x6c
+	float m_JetLength;	// 0x70
+	int m_bEmit;		// 0x74 (0x484)
+	int m_nType;		// 0x78
+	bool m_bFaceLeft;	// 0x7c (0x48c)
+	Vector m_vLastRampUpdatePos;	// 0x80
+	QAngle m_vLastRampUpdateAngles;	// 0x8c
+	float m_Lifetime;	// 0x98 (0x4a8)
+	Vector m_Ramps[5];	// 0x9c
+	void *m_pParticleMgr;	// 0xd8 (0x4e8)
+	unsigned char m_MaterialHandle;	// 0xdc (0x4ec)
+	SteamJetTimedEventView m_ParticleSpawn;	// 0xe0 (0x4f0)
+
+	void sub_10031160(float fTimeDelta);
+};
+
+inline float FRand(float minVal, float maxVal)
+{
+	return minVal + ((float)rand() / 32767) * (maxVal - minVal);
+}
+
+void SteamJetParticleView::sub_10031160(float fTimeDelta)
+{
+	if (!m_pParticleMgr)
+		return;
+
+	C_SteamJet *pJet = (C_SteamJet *)((char *)this - 0x410);
+
+	Vector forward, right, up;
+	sub_101090a0(pJet->GetAbsAngles(), &forward, &right, &up);
+
+	if (m_bFaceLeft)
+	{
+		Vector temp = forward;
+		forward = -right;
+		right = temp;
+	}
+
+	Vector vEndPoint = pJet->GetAbsOrigin() + forward * m_Speed;
+	Vector vMin, vMax;
+	VectorMin(pJet->GetAbsOrigin(), vEndPoint, vMin);
+	VectorMax(pJet->GetAbsOrigin(), vEndPoint, vMax);
+	m_ParticleEffect.sub_101166d0(vMin, vMax, true);
+
+	if (m_bEmit && (m_ParticleEffect.m_Flags & 0x40))
+	{
+		float tempDelta = fTimeDelta;
+		while (m_ParticleSpawn.NextEvent(tempDelta))
+		{
+			SteamJetParticle *pParticle = (SteamJetParticle *)m_ParticleEffect.sub_101165f0(sizeof(SteamJetParticle), m_MaterialHandle);
+			if (pParticle)
+			{
+				pParticle->m_Pos = pJet->GetAbsOrigin();
+				pParticle->m_Velocity =
+					FRand(-m_SpreadSpeed, m_SpreadSpeed) * right +
+					FRand(-m_SpreadSpeed, m_SpreadSpeed) * up +
+					forward * m_Speed;
+				pParticle->m_Lifetime = 0;
+				pParticle->m_DieTime = m_Lifetime;
+				pParticle->m_uchStartSize = (unsigned char)m_StartSize;
+				pParticle->m_uchEndSize = (unsigned char)m_EndSize;
+				pParticle->m_flRoll = enginerandom->RandomFloat(0, 360);
+				pParticle->m_flRollDelta = enginerandom->RandomFloat(-8.0f, 8.0f);
+			}
+		}
+		pJet->sub_10031d80();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100319d0 size=0x1f
 struct Vec_100319d0 { int x, y, z; };
 struct Obj_100319d0
