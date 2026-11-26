@@ -92,10 +92,10 @@ bool CBaseStaticModel::SetupBones(matrix3x4_t *pBoneToWorldOut, int nMaxBones, i
 // END FUNCTION
 
 // FUNCTION: 0x100e0120 size=0xe3
+#include "C_BasePlayer.h"
 #include "CBaseStaticModel.h"
 
 extern void *g_102d43d8;
-extern void *g_104a0d50;
 extern void *g_104a57ec;
 extern void *g_104a57d8;
 
@@ -150,9 +150,9 @@ int CBaseStaticModel::DrawModel(int flags, int a1)
 	bool bSkip;
 	bool bCheck = ((ILeaf39 *)g_102d43d8)->s39(0, &bSkip);
 	if (bCheck) {
-		if (g_104a0d50) {
+		if (C_BasePlayer::GetLocalPlayer()) {
 			Vector vA, vB;
-			((IColl16 *)((char *)g_104a0d50 + 0x190))->s15(&vB, &vA);
+			((IColl16 *)((char *)C_BasePlayer::GetLocalPlayer() + 0x190))->s15(&vB, &vA);
 			if (vA.z + 10.0f < m_vecMaxs.z)
 				bSkip = true;
 		}

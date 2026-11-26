@@ -62,6 +62,7 @@ int CInput::vfunc35()
 // END FUNCTION
 
 // FUNCTION: 0x100ff800 size=0xf2
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "CInput.h"
 
@@ -134,7 +135,6 @@ public:
 
 
 extern char g_104d2700[];
-extern GameSysV *g_104a0d50;
 int sub_1009b210();
 
 // TARGET: CInput::vfunc36
@@ -142,7 +142,7 @@ void CInput::vfunc36()
 {
 	SelfV *self = (SelfV *)this;
 	((ConVarV *)g_104d2700)->sub_100dfa90(0);
-	GameSysV *gp = g_104a0d50;
+	GameSysV *gp = ((GameSysV *)C_BasePlayer::GetLocalPlayer());
 	self->m_f0 = (self->m_f0 == 0);
 	int p = sub_1009b210();
 	if ( p )

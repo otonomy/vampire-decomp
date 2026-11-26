@@ -25,13 +25,13 @@ void CHudManagerPanel::vfunc1()
 // END FUNCTION
 
 // FUNCTION: 0x10058dd0 size=0x1b
+#include "C_BasePlayer.h"
 #include "CHudManagerPanel.h"
-extern int g_104a0d50;
 bool sub_1018c770();
 // TARGET: CHudManagerPanel::vfunc2
 bool CHudManagerPanel::vfunc2(int)
 {
-	if (!g_104a0d50)
+	if (!C_BasePlayer::GetLocalPlayer())
 		return true;
 	return sub_1018c770() ? true : false;
 }
@@ -473,6 +473,7 @@ void CHudManagerPanel::vfunc36()
 // END FUNCTION
 
 // FUNCTION: 0x100591b0 size=0x91
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "CHudManagerPanel.h"
 #include "CHud.h"
@@ -514,13 +515,12 @@ struct PV_100591b0 {
 	virtual void Select(int);
 };
 struct HE_100591b0 { char m_pad[0x1c]; char m_b; };
-extern PV_100591b0 *g_104a0d50;
 extern CHud g_104cfe38;
 extern char sub_10052ed0();
 
 void CHudManagerPanel::vfunc38()
 {
-	PV_100591b0 *p = g_104a0d50;
+	PV_100591b0 *p = ((PV_100591b0 *)C_BasePlayer::GetLocalPlayer());
 	if (p && !sub_10052ed0()) {
 		if (engine->vfunc63() == 2) {
 			char buf[0x30];

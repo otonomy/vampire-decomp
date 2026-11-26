@@ -48,6 +48,7 @@ void VBarterLabel::vfunc86()
 // END FUNCTION
 
 // FUNCTION: 0x1016b300 size=0x24a
+#include "C_BasePlayer.h"
 template <class T> __forceinline T pcd_stage(T x) { return x; }
 #include "ehandle.h"
 #include "CHud.h"
@@ -87,7 +88,6 @@ struct BL {
 };
 
 extern CHud g_104cfe38;
-extern PlayerV *g_104a0d50;
 extern EngV *g_104a57d4;
 extern int g_104a0d48;
 
@@ -100,7 +100,7 @@ void VBarterLabel::vfunc89(int)
 		((HE *)g_104cfe38.sub_100f0ed0("VBarterUI"))->sub_1016f500(e1, p->m_b8);
 		if (((HE *)pcd_stage(g_104cfe38.sub_100f0ed0("VBarterUI")))->m181) {
 			void *ent = p->m_h.Get();
-			PlayerV *pl = g_104a0d50;
+			PlayerV *pl = ((PlayerV *)C_BasePlayer::GetLocalPlayer());
 			if (!pl || !ent)
 				return; pl->vf169(pl->vf167());
 			pl->vf168(ent);

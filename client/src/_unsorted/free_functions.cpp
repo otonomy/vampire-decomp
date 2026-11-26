@@ -18067,11 +18067,11 @@ int CUnknown10040970::sub_10040970()
 // END FUNCTION
 
 // FUNCTION: 0x10040990 size=0xc3
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "Vector.h"
 #include "QAngle.h"
 struct PlayerV { char m_pad[0x44]; int m_entindex; int entindex() { return m_entindex; } };
-extern PlayerV *g_104a0d50;
 void sub_101090a0(QAngle &a, Vector *f, Vector *r, Vector *u);
 void sub_10108fd0(const Vector &start, float scale, const Vector &dir, Vector &dest);
 void sub_100d9830(Vector &start, Vector &end);
@@ -18079,7 +18079,7 @@ void sub_100d9da0(Vector &start, Vector &end, int velocity, bool whiz);
 // TARGET: sub_10040990
 void sub_10040990(void *filter, float delay, const Vector *start, const Vector *end, int iEntIndex)
 {
-	PlayerV *player = g_104a0d50;
+	PlayerV *player = ((PlayerV *)C_BasePlayer::GetLocalPlayer());
 	if (player == 0)
 		return;
 	if (iEntIndex && iEntIndex == player->entindex())
@@ -20686,12 +20686,12 @@ void CHudStatSound::sub_1004f0c0(int stat, float volume, int pitch, int flags)
 // END FUNCTION
 
 // FUNCTION: 0x1004f760 size=0xa3
+#include "C_BasePlayer.h"
 #include "CVStatList_t.h"
 
 extern char g_103ede7c;
 extern int g_103ede80;
 extern int g_10284b9c;
-extern void *g_104a0d50;
 
 struct CharView {
     char m_pad[0x1178];
@@ -20704,7 +20704,7 @@ void sub_1004f760(int arg)
 {
     if (g_103ede7c)
         return;
-    CharView *p = (CharView *)g_104a0d50;
+    CharView *p = (CharView *)C_BasePlayer::GetLocalPlayer();
     if (!p)
         return;
     CVStatList_t *pList;
@@ -21106,6 +21106,7 @@ void CHudDialog::sub_100544d0(bool bEnabled)
 // END FUNCTION
 
 // FUNCTION: 0x10054670 size=0x125
+#include "C_BasePlayer.h"
 #include <string.h>
 #include "CHudDialog.h"
 #include "ScopeTrace.h"
@@ -21139,7 +21140,6 @@ public:
 };
 
 extern CNamedListX g_105e74fc;
-extern CPlayer_10054670 *g_104a0d50;
 const char *sub_1018c870(const char *name);
 
 class CUnk_10054670
@@ -21160,7 +21160,7 @@ void CUnk_10054670::sub_10054670(int arg0)
 	memset((char *)this + 0x5a60, 0, 0x10);
 	*(int *)((char *)this + 0x3a4c) = arg0;
 
-	CPlayer_10054670 *pPlayer = g_104a0d50;
+	CPlayer_10054670 *pPlayer = ((CPlayer_10054670 *)C_BasePlayer::GetLocalPlayer());
 	if (pPlayer)
 	{
 		static int nMalk = g_105e74fc.sub_1013fdf0("Player_Malkavian");
@@ -21859,8 +21859,8 @@ void PanelView::sub_100579c0(int a, int b, int c)
 // END FUNCTION
 
 // FUNCTION: 0x10057a20 size=0x2a
+#include "C_BasePlayer.h"
 namespace lifted {
-extern int g_104a0d50;
 struct C100a5520 { int sub_100a5520(int); };
 int sub_10114660(int, int);
 int sub_10114690();
@@ -21869,7 +21869,7 @@ void __stdcall sub_10057a20(int a0, int a1, int a2)
 {
     lifted::sub_10114660(a2, a1);
     int t0 = lifted::sub_10114690();
-    int t1 = lifted::g_104a0d50;
+    int t1 = ((int)C_BasePlayer::GetLocalPlayer());
     if (t1 != 0) {
         ((lifted::C100a5520 *)t1)->sub_100a5520(t0);
     }
@@ -22017,25 +22017,21 @@ void PanelView::sub_10057ca0(int a, int b, int c)
 // END FUNCTION
 
 // FUNCTION: 0x10057d00 size=0x19
-namespace lifted {
-extern int g_104a0d50;
-}
+#include "C_BasePlayer.h"
 void __stdcall sub_10057d00(int a0, int a1, int a2)
 {
-    if (lifted::g_104a0d50 != 0) {
-        *(int *)((char *)lifted::g_104a0d50 + 0x15e4) = *(signed char *)((char *)a2);
+    if (C_BasePlayer::GetLocalPlayer() != 0) {
+        *(int *)((char *)((int)C_BasePlayer::GetLocalPlayer()) + 0x15e4) = *(signed char *)((char *)a2);
     }
 }
 // END FUNCTION
 
 // FUNCTION: 0x10057d20 size=0x19
-namespace lifted {
-extern int g_104a0d50;
-}
+#include "C_BasePlayer.h"
 void __stdcall sub_10057d20(int a0, int a1, int a2)
 {
-    if (lifted::g_104a0d50 != 0) {
-        *(int *)((char *)lifted::g_104a0d50 + 0x15e8) = *(signed char *)((char *)a2);
+    if (C_BasePlayer::GetLocalPlayer() != 0) {
+        *(int *)((char *)((int)C_BasePlayer::GetLocalPlayer()) + 0x15e8) = *(signed char *)((char *)a2);
     }
 }
 // END FUNCTION
@@ -22082,8 +22078,8 @@ void PanelView10057d50::sub_10057d50(int a, int b, int c)
 // END FUNCTION
 
 // FUNCTION: 0x10057dc0 size=0x44
+#include "C_BasePlayer.h"
 namespace lifted {
-extern int g_104a0d50;
 struct C100a6740 { int sub_100a6740(int); };
 struct C100a6760 { int sub_100a6760(int); };
 int sub_10114660(int, int);
@@ -22091,7 +22087,7 @@ int sub_10114690();
 }
 void __stdcall sub_10057dc0(int a0, int a1, int a2)
 {
-    int t0 = lifted::g_104a0d50;
+    int t0 = ((int)C_BasePlayer::GetLocalPlayer());
     if (t0 != 0) {
         lifted::sub_10114660(a2, a1);
         int t1 = lifted::sub_10114690();
@@ -22824,6 +22820,7 @@ const char *CHudUseIcon::sub_1005e400(int idx)
 // END FUNCTION
 
 // FUNCTION: 0x1005e4a0 size=0x276
+#include "C_BasePlayer.h"
 #include "CHudUseIcon.h"
 #include "CHUDSprite.h"
 
@@ -22837,12 +22834,11 @@ struct Player_1005e4a0
 	int m_16c0;
 };
 
-extern Player_1005e4a0 *g_104a0d50;
 extern const char *g_10286ff8[];
 
 void CHudUseIcon::sub_1005e4a0( bool bShow )
 {
-	Player_1005e4a0 *pPlayer = g_104a0d50;
+	Player_1005e4a0 *pPlayer = ((Player_1005e4a0 *)C_BasePlayer::GetLocalPlayer());
 	if ( bShow )
 	{
 		if ( m_unk1c0 != pPlayer->m_16c0 || ( m_unk1c4 != pPlayer->m_16ac && pPlayer->m_16ac != 0 ) )
@@ -24025,6 +24021,7 @@ int sub_10064dd0(int a0, char a1)
 // END FUNCTION
 
 // FUNCTION: 0x10064df0 size=0x25e
+#include "C_BasePlayer.h"
 #include "ConVar.h"
 #include "CHUDSprite.h"
 #include "C_BaseCombatWeapon.h"
@@ -24052,7 +24049,6 @@ struct Player_10064df0
 	int m_16c4;
 };
 
-extern Player_10064df0 *g_104a0d50;
 extern int g_102880a0;
 extern int g_10288098;
 extern CHUDSprite *g_103eee5c;
@@ -24068,7 +24064,7 @@ extern void sub_10065050(int mode);
 
 void sub_10064df0(C_BaseCombatWeapon *pWeapon)
 {
-	Player_10064df0 *pPlayer = g_104a0d50;
+	Player_10064df0 *pPlayer = ((Player_10064df0 *)C_BasePlayer::GetLocalPlayer());
 	if (!pPlayer)
 		return;
 
@@ -24116,7 +24112,7 @@ void sub_10064df0(C_BaseCombatWeapon *pWeapon)
 			g_103eef4c[i] = 0;
 	}
 
-	Player_10064df0 *pPlayer2 = g_104a0d50;
+	Player_10064df0 *pPlayer2 = ((Player_10064df0 *)C_BasePlayer::GetLocalPlayer());
 	if (pPlayer2->m_16ac < 0)
 		pPlayer2->m_16c4 = 0;
 
@@ -39603,6 +39599,7 @@ int CView::sub_10099870() { return mfd0 != 0; }
 // END FUNCTION
 
 // FUNCTION: 0x10099880 size=0x233
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "CVStatList_t.h"
 #include <stdlib.h>
@@ -39662,7 +39659,6 @@ struct CObfEntity : public IBase0_10099880, public IBase4_10099880, public INet_
 };
 
 extern CGlobals_102b8494 *g_102b8494;
-extern CObfEntity *g_104a0d50;
 extern "C" float sub_100cd9e0(float cur, float target, float dt, float rate);
 
 float CObfEntity::sub_10099880()
@@ -39698,7 +39694,7 @@ float CObfEntity::sub_10099880()
 
 		if (level > 0 && m_bObfuscated)
 		{
-			if (g_104a0d50->entindex() == entindex())
+			if (((CObfEntity *)C_BasePlayer::GetLocalPlayer())->entindex() == entindex())
 			{
 				m_flTargetAlpha = (float)((12 - level) * 16);
 			}
@@ -39768,16 +39764,16 @@ void __fastcall sub_1009a2b0(void *self, void *edx, int classID, void *msg)
 // END FUNCTION
 
 // FUNCTION: 0x1009b210 size=0x15
+#include "C_BasePlayer.h"
 namespace lifted {
-extern int g_104a0d50;
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual void u44(); virtual void u45(); virtual void u46(); virtual void u47(); virtual void u48(); virtual void u49(); virtual void u50(); virtual void u51(); virtual void u52(); virtual void u53(); virtual void u54(); virtual void u55(); virtual void u56(); virtual void u57(); virtual void u58(); virtual void u59(); virtual void u60(); virtual void u61(); virtual void u62(); virtual void u63(); virtual void u64(); virtual void u65(); virtual void u66(); virtual void u67(); virtual void u68(); virtual void u69(); virtual void u70(); virtual void u71(); virtual void u72(); virtual void u73(); virtual void u74(); virtual void u75(); virtual void u76(); virtual void u77(); virtual void u78(); virtual void u79(); virtual void u80(); virtual void u81(); virtual void u82(); virtual void u83(); virtual void u84(); virtual void u85(); virtual void u86(); virtual void u87(); virtual void u88(); virtual void u89(); virtual void u90(); virtual void u91(); virtual void u92(); virtual void u93(); virtual void u94(); virtual void u95(); virtual void u96(); virtual void u97(); virtual void u98(); virtual void u99(); virtual void u100(); virtual void u101(); virtual void u102(); virtual void u103(); virtual void u104(); virtual void u105(); virtual void u106(); virtual void u107(); virtual void u108(); virtual void u109(); virtual void u110(); virtual void u111(); virtual void u112(); virtual void u113(); virtual void u114(); virtual void u115(); virtual void u116(); virtual void u117(); virtual void u118(); virtual void u119(); virtual void u120(); virtual void u121(); virtual void u122(); virtual void u123(); virtual void u124(); virtual void u125(); virtual void u126(); virtual void u127(); virtual void u128(); virtual void u129(); virtual void u130(); virtual void u131(); virtual void u132(); virtual void u133(); virtual void u134(); virtual void u135(); virtual void u136(); virtual void u137(); virtual void u138(); virtual void u139(); virtual void u140(); virtual void u141(); virtual void u142(); virtual void u143(); virtual void u144(); virtual void u145(); virtual void u146(); virtual void u147(); virtual int f148(); };
 }
 int sub_1009b210()
 {
-    if (lifted::g_104a0d50 == 0) {
+    if (C_BasePlayer::GetLocalPlayer() == 0) {
         return 0;
     }
-    return ((lifted::V *)lifted::g_104a0d50)->f148();
+    return ((lifted::V *)((int)C_BasePlayer::GetLocalPlayer()))->f148();
 }
 // END FUNCTION
 
@@ -40261,16 +40257,16 @@ C_BaseCombatWeapon *sub_1009c7f0(int slot, int pos)
 // END FUNCTION
 
 // FUNCTION: 0x1009c950 size=0x12
+#include "C_BasePlayer.h"
 namespace lifted {
-extern int g_104a0d50;
 struct C10099bd0 { int sub_10099bd0(); };
 }
 int sub_1009c950()
 {
-    if (lifted::g_104a0d50 == 0) {
+    if (C_BasePlayer::GetLocalPlayer() == 0) {
         return 0;
     }
-    return ((lifted::C10099bd0 *)lifted::g_104a0d50)->sub_10099bd0();
+    return ((lifted::C10099bd0 *)((int)C_BasePlayer::GetLocalPlayer()))->sub_10099bd0();
 }
 // END FUNCTION
 
@@ -43125,14 +43121,14 @@ bool C_BasePlayer::sub_100a54c0(int a, int b)
 // END FUNCTION
 
 // FUNCTION: 0x100a5910 size=0x1c
+#include "C_BasePlayer.h"
 struct G5910 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
  virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
  virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual int v29(); };
 struct V5910;
-extern V5910 *g_104a0d50;
 extern G5910 *g_1027ba58;
 struct V5910 { bool sub_100a5910(); };
-bool V5910::sub_100a5910() { if (g_104a0d50 != this) return true; return g_1027ba58->v29() ? true : false; }
+bool V5910::sub_100a5910() { if (((V5910 *)C_BasePlayer::GetLocalPlayer()) != this) return true; return g_1027ba58->v29() ? true : false; }
 // END FUNCTION
 
 // FUNCTION: 0x100a5930 size=0x47
@@ -44532,15 +44528,15 @@ void C_BaseViewModel::sub_100ab890(void *p)
 // END FUNCTION
 
 // FUNCTION: 0x100abdb0 size=0x31
+#include "C_BasePlayer.h"
 namespace lifted {
-extern int g_104a0d50;
 struct C100a1400 { int sub_100a1400(); };
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual void u44(); virtual void u45(); virtual void u46(); virtual void u47(); virtual void u48(); virtual void u49(); virtual void u50(); virtual void u51(); virtual void u52(); virtual void u53(); virtual void u54(); virtual void u55(); virtual void u56(); virtual void u57(); virtual void u58(); virtual void u59(); virtual void u60(); virtual void u61(); virtual void u62(); virtual void u63(); virtual void u64(); virtual void u65(); virtual void u66(); virtual void u67(); virtual void u68(); virtual void u69(); virtual void u70(); virtual void u71(); virtual void u72(); virtual void u73(); virtual void u74(); virtual void u75(); virtual void u76(); virtual void u77(); virtual void u78(); virtual void u79(); virtual void u80(); virtual void u81(); virtual void u82(); virtual void u83(); virtual void u84(); virtual void u85(); virtual void u86(); virtual void u87(); virtual void u88(); virtual void u89(); virtual void u90(); virtual void u91(); virtual void u92(); virtual void u93(); virtual void u94(); virtual void u95(); virtual void u96(); virtual void u97(); virtual void u98(); virtual void u99(); virtual void u100(); virtual void u101(); virtual void u102(); virtual void u103(); virtual void u104(); virtual void u105(); virtual void u106(); virtual void u107(); virtual void u108(); virtual void u109(); virtual void u110(); virtual void u111(); virtual void u112(); virtual void u113(); virtual void u114(); virtual void u115(); virtual void u116(); virtual void u117(); virtual void u118(); virtual void u119(); virtual void u120(); virtual void u121(); virtual void u122(); virtual void u123(); virtual void u124(); virtual void u125(); virtual void u126(); virtual void u127(); virtual void u128(); virtual void u129(); virtual void u130(); virtual void u131(); virtual void u132(); virtual void u133(); virtual void u134(); virtual void u135(); virtual void u136(); virtual void u137(); virtual void u138(); virtual void u139(); virtual void u140(); virtual void u141(); virtual void u142(); virtual void u143(); virtual void u144(); virtual void u145(); virtual void u146(); virtual void u147(); virtual void u148(); virtual void u149(); virtual void u150(); virtual void u151(); virtual void u152(); virtual void u153(); virtual void u154(); virtual void u155(); virtual void u156(); virtual void u157(); virtual void u158(); virtual void u159(); virtual void u160(); virtual void u161(); virtual void u162(); virtual void u163(); virtual void u164(); virtual void u165(); virtual void u166(); virtual void u167(); virtual void u168(); virtual void u169(); virtual void u170(); virtual void u171(); virtual void u172(); virtual void u173(); virtual bool f174(); virtual void u175(); virtual void u176(); virtual void u177(); virtual int f178(); };
 }
 struct CUnknown100abdb0 { int sub_100abdb0(); };
 int CUnknown100abdb0::sub_100abdb0()
 {
-    int t0 = lifted::g_104a0d50;
+    int t0 = ((int)C_BasePlayer::GetLocalPlayer());
     if (t0 != 0) {
         bool t1 = ((lifted::V *)t0)->f174();
         if (t1 != 0) {
@@ -44552,15 +44548,15 @@ int CUnknown100abdb0::sub_100abdb0()
 // END FUNCTION
 
 // FUNCTION: 0x100abdf0 size=0x31
+#include "C_BasePlayer.h"
 namespace lifted {
-extern int g_104a0d50;
 struct C10095f90 { int sub_10095f90(); };
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual void u44(); virtual void u45(); virtual void u46(); virtual void u47(); virtual void u48(); virtual void u49(); virtual void u50(); virtual void u51(); virtual void u52(); virtual void u53(); virtual void u54(); virtual void u55(); virtual void u56(); virtual void u57(); virtual void u58(); virtual void u59(); virtual void u60(); virtual void u61(); virtual void u62(); virtual void u63(); virtual void u64(); virtual void u65(); virtual void u66(); virtual void u67(); virtual void u68(); virtual void u69(); virtual void u70(); virtual void u71(); virtual void u72(); virtual void u73(); virtual void u74(); virtual void u75(); virtual void u76(); virtual void u77(); virtual void u78(); virtual void u79(); virtual void u80(); virtual void u81(); virtual void u82(); virtual void u83(); virtual void u84(); virtual void u85(); virtual void u86(); virtual void u87(); virtual void u88(); virtual void u89(); virtual void u90(); virtual void u91(); virtual void u92(); virtual void u93(); virtual void u94(); virtual void u95(); virtual void u96(); virtual void u97(); virtual void u98(); virtual void u99(); virtual void u100(); virtual void u101(); virtual void u102(); virtual void u103(); virtual void u104(); virtual void u105(); virtual void u106(); virtual void u107(); virtual void u108(); virtual void u109(); virtual void u110(); virtual void u111(); virtual void u112(); virtual void u113(); virtual void u114(); virtual void u115(); virtual void u116(); virtual void u117(); virtual void u118(); virtual void u119(); virtual void u120(); virtual void u121(); virtual void u122(); virtual void u123(); virtual void u124(); virtual void u125(); virtual void u126(); virtual void u127(); virtual void u128(); virtual void u129(); virtual void u130(); virtual void u131(); virtual void u132(); virtual void u133(); virtual void u134(); virtual void u135(); virtual void u136(); virtual void u137(); virtual void u138(); virtual void u139(); virtual void u140(); virtual void u141(); virtual void u142(); virtual void u143(); virtual void u144(); virtual void u145(); virtual void u146(); virtual void u147(); virtual void u148(); virtual void u149(); virtual void u150(); virtual void u151(); virtual void u152(); virtual void u153(); virtual void u154(); virtual void u155(); virtual void u156(); virtual void u157(); virtual void u158(); virtual void u159(); virtual void u160(); virtual void u161(); virtual void u162(); virtual void u163(); virtual void u164(); virtual void u165(); virtual void u166(); virtual void u167(); virtual void u168(); virtual void u169(); virtual void u170(); virtual void u171(); virtual void u172(); virtual void u173(); virtual bool f174(); virtual void u175(); virtual void u176(); virtual int f177(); };
 }
 struct CUnknown100abdf0 { int sub_100abdf0(); };
 int CUnknown100abdf0::sub_100abdf0()
 {
-    int t0 = lifted::g_104a0d50;
+    int t0 = ((int)C_BasePlayer::GetLocalPlayer());
     if (t0 != 0) {
         bool t1 = ((lifted::V *)t0)->f174();
         if (t1 != 0) {
@@ -44626,12 +44622,10 @@ int sub_100ac060()
 // END FUNCTION
 
 // FUNCTION: 0x100ac070 size=0x6
-namespace lifted {
-extern int g_104a0d50;
-}
+#include "C_BasePlayer.h"
 int sub_100ac070()
 {
-    return lifted::g_104a0d50;
+    return ((int)C_BasePlayer::GetLocalPlayer());
 }
 // END FUNCTION
 
@@ -48795,16 +48789,16 @@ void CUnknown100bde50::sub_100bde50()
 // END FUNCTION
 
 // FUNCTION: 0x100bdeb0 size=0x1c
+#include "C_BasePlayer.h"
 namespace lifted {
-extern int g_104a0d50;
 int __stdcall sub_100bded0(int);
 }
 struct CUnknown100bdeb0 { void sub_100bdeb0(); };
 void CUnknown100bdeb0::sub_100bdeb0()
 {
-    if (lifted::g_104a0d50 != 0) {
+    if (C_BasePlayer::GetLocalPlayer() != 0) {
         *(int *)((char *)this + 0x14) = 0;
-        lifted::sub_100bded0(lifted::g_104a0d50);
+        lifted::sub_100bded0(((int)C_BasePlayer::GetLocalPlayer()));
     }
 }
 // END FUNCTION
@@ -48829,8 +48823,8 @@ void C_RecipientFilter::sub_100bdf90(void *pPlayer)
 // END FUNCTION
 
 // FUNCTION: 0x100bdff0 size=0x37
+#include "C_BasePlayer.h"
 namespace lifted {
-extern int g_104a0d50;
 extern int g_104a57d4;
 struct C100bded0 { int sub_100bded0(int); };
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual int f34(); };
@@ -48840,8 +48834,8 @@ void CUnknown100bdff0::sub_100bdff0(int a0)
 {
     int t0 = ((lifted::V *)lifted::g_104a57d4)->f34();
     if (((1 << t0) & a0) != 0) {
-        if (lifted::g_104a0d50 != 0) {
-            ((lifted::C100bded0 *)this)->sub_100bded0(lifted::g_104a0d50);
+        if (C_BasePlayer::GetLocalPlayer() != 0) {
+            ((lifted::C100bded0 *)this)->sub_100bded0(((int)C_BasePlayer::GetLocalPlayer()));
         }
     }
 }
@@ -48911,9 +48905,9 @@ char CUnknown100be150::sub_100be150(char a0)
 // END FUNCTION
 
 // FUNCTION: 0x100be160 size=0x23
+#include "C_BasePlayer.h"
 namespace lifted {
 extern char g_10232160;
-extern int g_104a0d50;
 struct C100bdd80 { int sub_100bdd80(); };
 struct C100bded0 { int sub_100bded0(int); };
 }
@@ -48922,8 +48916,8 @@ void * CUnknown100be160::sub_100be160()
 {
     int t0 = ((lifted::C100bdd80 *)this)->sub_100bdd80();
     *(int *)this = (int)&lifted::g_10232160;
-    if (lifted::g_104a0d50 != 0) {
-        ((lifted::C100bded0 *)this)->sub_100bded0(lifted::g_104a0d50);
+    if (C_BasePlayer::GetLocalPlayer() != 0) {
+        ((lifted::C100bded0 *)this)->sub_100bded0(((int)C_BasePlayer::GetLocalPlayer()));
     }
     return this;
 }
@@ -60532,6 +60526,7 @@ float CUnknown100f10c0::sub_100f10c0()
 // END FUNCTION
 
 // FUNCTION: 0x100f10d0 size=0xb7
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 struct IObj_100f10d0
 {
@@ -60560,13 +60555,12 @@ struct IPlayer_100f10d0
 	char pad2[0x173c - 0x168c - 4];
 	bool m_b173c;
 };
-extern IPlayer_100f10d0 *g_104a0d50;
 extern IObj_100f10d0 *g_104cfebc;
 bool __stdcall sub_100f10d0(int mask)
 {
 	if (!engine->IsInGame())
 		return true;
-	IPlayer_100f10d0 *p = g_104a0d50;
+	IPlayer_100f10d0 *p = ((IPlayer_100f10d0 *)C_BasePlayer::GetLocalPlayer());
 	if (!p)
 		return true;
 	int hidden = p->m_iHideHUD;
@@ -60627,6 +60621,7 @@ CHudSub *CHud::sub_100f1200(const char *pName, int *pWide, int *pTall)
 // END FUNCTION
 
 // FUNCTION: 0x100f12b0 size=0x7f
+#include "C_BasePlayer.h"
 #include "CHud.h"
 
 struct V2I {
@@ -60660,7 +60655,6 @@ struct EngV {
 extern V2I *g_1027ba58;
 extern G105V *g_105f9994;
 extern EngV *g_104a57d4;
-extern char *g_104a0d50;
 extern CHud g_104cfe38;
 extern float g_104cfeb0;
 
@@ -60672,8 +60666,8 @@ void CHud::sub_100f12b0(bool b)
 	m_unk18 = g_1027ba58->vfc2(0);
 	g_104cfe38.sub_100f28d0();
 	float f;
-	if (g_104a0d50)
-		f = (float)*(int *)(g_104a0d50 + 0x1690);
+	if (C_BasePlayer::GetLocalPlayer())
+		f = (float)*(int *)(((char *)C_BasePlayer::GetLocalPlayer()) + 0x1690);
 	else if (g_105f9994->vfc1())
 		f = 0.0f;
 	else
@@ -61109,8 +61103,8 @@ void VHud2::sub_100f27b0(int a, int b, int c) { sub_10114660(c, b); m_b1c = sub_
 // END FUNCTION
 
 // FUNCTION: 0x100f27e0 size=0x2d
+#include "C_BasePlayer.h"
 namespace lifted {
-extern int g_104a0d50;
 int sub_10114660(int, int);
 int sub_10114690();
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual void u44(); virtual void u45(); virtual void u46(); virtual void u47(); virtual void u48(); virtual void u49(); virtual void u50(); virtual void u51(); virtual void u52(); virtual void u53(); virtual void u54(); virtual void u55(); virtual void u56(); virtual void u57(); virtual void u58(); virtual void u59(); virtual void u60(); virtual void u61(); virtual void u62(); virtual void u63(); virtual void u64(); virtual void u65(); virtual void u66(); virtual void u67(); virtual void u68(); virtual void u69(); virtual void u70(); virtual void u71(); virtual void u72(); virtual void u73(); virtual void u74(); virtual void u75(); virtual void u76(); virtual void u77(); virtual void u78(); virtual void u79(); virtual void u80(); virtual void u81(); virtual void u82(); virtual void u83(); virtual void u84(); virtual void u85(); virtual void u86(); virtual void u87(); virtual void u88(); virtual void u89(); virtual void u90(); virtual void u91(); virtual void u92(); virtual void u93(); virtual void u94(); virtual void u95(); virtual void u96(); virtual void u97(); virtual void u98(); virtual void u99(); virtual void u100(); virtual void u101(); virtual void u102(); virtual void u103(); virtual void u104(); virtual void u105(); virtual void u106(); virtual void u107(); virtual void u108(); virtual void u109(); virtual void u110(); virtual void u111(); virtual void u112(); virtual void u113(); virtual void u114(); virtual void u115(); virtual void u116(); virtual void u117(); virtual void u118(); virtual void u119(); virtual void u120(); virtual void u121(); virtual void u122(); virtual void u123(); virtual void u124(); virtual void u125(); virtual void u126(); virtual void u127(); virtual void u128(); virtual void u129(); virtual void u130(); virtual void u131(); virtual void u132(); virtual void u133(); virtual void u134(); virtual void u135(); virtual void u136(); virtual void u137(); virtual void u138(); virtual void u139(); virtual void u140(); virtual void u141(); virtual void u142(); virtual void u143(); virtual void u144(); virtual void u145(); virtual void u146(); virtual void u147(); virtual void u148(); virtual void u149(); virtual void u150(); virtual void u151(); virtual void u152(); virtual void u153(); virtual int f154(int); };
@@ -61119,7 +61113,7 @@ void __stdcall sub_100f27e0(int a0, int a1, int a2)
 {
     lifted::sub_10114660(a2, a1);
     int t0 = lifted::sub_10114690();
-    int t1 = lifted::g_104a0d50;
+    int t1 = ((int)C_BasePlayer::GetLocalPlayer());
     if (t1 != 0) {
         ((lifted::V *)t1)->f154(t0);
     }
@@ -61141,6 +61135,7 @@ void __cdecl sub_100f2850(FovVar *var)
 // END FUNCTION
 
 // FUNCTION: 0x100f28d0 size=0xfd
+#include "C_BasePlayer.h"
 #include "CHud.h"
 #include "CHudElement.h"
 #include "vgui2__Panel.h"
@@ -61222,7 +61217,6 @@ struct EngV51 {
 };
 
 extern EngV51 *g_104a57d4;
-extern char *g_104a0d50;
 int sub_1009b210();
 
 // TARGET: CHud::sub_100f28d0
@@ -61247,7 +61241,7 @@ void CHud::sub_100f28d0()
 	OBJ243 *p = (OBJ243 *)sub_1009b210();
 	if (p)
 		p->v243();
-	char *pl = g_104a0d50;
+	char *pl = ((char *)C_BasePlayer::GetLocalPlayer());
 	if (pl && !*(int *)(pl + 0x1690)) {
 		g_104a57d4->v51();
 		*(int *)(pl + 0x1690) = 0x3c;
@@ -63214,8 +63208,8 @@ int sub_100fbde0()
 // END FUNCTION
 
 // FUNCTION: 0x100fcca0 size=0x48
+#include "C_BasePlayer.h"
 namespace lifted {
-extern int g_104a0d50;
 extern int g_104a57e4;
 int sub_100b49b0(int);
 int sub_100b4a60();
@@ -63225,7 +63219,7 @@ void __stdcall sub_100fcca0(int a0, int a1)
 {
     bool t0 = ((lifted::V *)lifted::g_104a57e4)->f38();
     if (t0 == 0) {
-        int t1 = lifted::g_104a0d50;
+        int t1 = ((int)C_BasePlayer::GetLocalPlayer());
         if (t1 != 0) {
             int t2 = lifted::sub_100b49b0(*(int *)((char *)t1 + 0x16c4));
             if (t2 != 0) {
@@ -63239,6 +63233,7 @@ void __stdcall sub_100fcca0(int a0, int a1)
 // END FUNCTION
 
 // FUNCTION: 0x100fccf0 size=0x1ca
+#include "C_BasePlayer.h"
 #include "Vector.h"
 #include "QAngle.h"
 #include "StatDefault.h"
@@ -63330,7 +63325,6 @@ public:
 	int m_nModel2;
 };
 
-extern CPlayer_100fccf0 *g_104a0d50;
 extern StatOwner g_105f985c;
 extern ITempEnts_100fccf0 *g_1028073c;
 extern void sub_100fcec0( const Vector &origin, const QAngle &angles, Vector *pEnd, int a4 );
@@ -63345,7 +63339,7 @@ void CHelper_100fccf0::sub_100fccf0( const Vector &origin, const QAngle &angles 
 {
 	QAngle ang1 = angles;
 	QAngle ang2 = angles;
-	CPlayer_100fccf0 *pPlayer = g_104a0d50;
+	CPlayer_100fccf0 *pPlayer = ((CPlayer_100fccf0 *)C_BasePlayer::GetLocalPlayer());
 	if ( !pPlayer )
 		return;
 
@@ -63924,6 +63918,7 @@ int CUnknown10102fe0::sub_10102fe0(int a0, int a1)
 // END FUNCTION
 
 // FUNCTION: 0x101030c0 size=0x24b
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "Vector.h"
 #include "QAngle.h"
@@ -63972,7 +63967,6 @@ struct FrameData_101030c0
 	float m_flFrameTime;
 };
 
-extern CPlayer_101030c0 *g_104a0d50;
 extern CEntityList_101030c0 *g_102b8e9c;
 
 class CInput_101030c0
@@ -63989,7 +63983,7 @@ public:
 
 void CInput_101030c0::sub_101030c0( int a1, FrameData_101030c0 *pFrame )
 {
-	CPlayer_101030c0 *pPlayer = g_104a0d50;
+	CPlayer_101030c0 *pPlayer = ((CPlayer_101030c0 *)C_BasePlayer::GetLocalPlayer());
 	CEnt_101030c0 *pEnt = 0;
 	IEntBase_101030c0 *pTarget = 0;
 	if ( pPlayer && pPlayer->m_nTargetEnt )
@@ -74581,6 +74575,7 @@ void CUnknown10120e60::sub_10120e60()
 // END FUNCTION
 
 // FUNCTION: 0x10120ee0 size=0x1cf
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "CPrediction.h"
 #include "ConVar.h"
@@ -74599,7 +74594,6 @@ struct CPlayer_10120ee0
 	CPredFrame_10120ee0 *sub_100a2fa0(int commands_acknowledged);
 };
 
-extern CPlayer_10120ee0 *g_104a0d50;
 extern ConVar *g_104e170c;
 extern ConVar *g_104e166c;
 extern ConVar *g_104e1624;
@@ -74624,7 +74618,7 @@ void CPrediction::sub_10120ee0(int commands_acknowledged)
 	if (!ConVarGetInt(g_104e170c))
 		return;
 
-	CPlayer_10120ee0 *player = g_104a0d50;
+	CPlayer_10120ee0 *player = ((CPlayer_10120ee0 *)C_BasePlayer::GetLocalPlayer());
 	if (!player)
 		return;
 
@@ -86155,17 +86149,17 @@ bool CUnknown101d7520Rule::sub_10140450(void *pArg)
 // END FUNCTION
 
 // FUNCTION: 0x10140470 size=0x8c
+#include "C_BasePlayer.h"
 #include "CUnknown101d7520.h"
 extern "C" __declspec(dllimport) void Msg(const char *, ...);
 extern "C" __declspec(dllimport) int Q_snprintf(char *, int, const char *, ...);
-extern void *g_104a0d50;
 void CUnknown101d7520Rule::sub_10140470()
 {
 	char buf[0x200];
 	Q_snprintf(buf, sizeof(buf), "\nLevel Group(%d):\n", m_nGroup);
 	Msg("%s", buf);
 	m_sub.sub_10161bf0();
-	if (g_104a0d50 && !m_sub.sub_10161bb0(g_104a0d50))
+	if (C_BasePlayer::GetLocalPlayer() && !m_sub.sub_10161bb0(C_BasePlayer::GetLocalPlayer()))
 		Msg("%s", "<<Note: LevelGroup Will FAIL to process due to dependencies.>>\n");
 	for (int i = 0; i < m_nElements; i++)
 		m_ppElements[i]->sub_101401a0();
@@ -86841,10 +86835,10 @@ int CUnknown101416a0::sub_101416a0(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x101416b0 size=0x36
+#include "C_BasePlayer.h"
 struct PlayerV104 { char pad[0xd80]; char m_bd80; int sub_1008ebb0(); };
 struct Obj101416b0 { char pad[0x10]; int m_i10; int sub_101416b0(); };
 PlayerV104 *sub_10170f60();
-extern PlayerV104 *g_104a0d50;
 // TARGET: Obj101416b0::sub_101416b0
 int Obj101416b0::sub_101416b0()
 {
@@ -86852,8 +86846,8 @@ int Obj101416b0::sub_101416b0()
     PlayerV104 *p = sub_10170f60();
     if (p)
         flag = p->m_bd80;
-    if (g_104a0d50 && (!flag || m_i10 == -1))
-        return g_104a0d50->sub_1008ebb0();
+    if (((PlayerV104 *)C_BasePlayer::GetLocalPlayer()) && (!flag || m_i10 == -1))
+        return ((PlayerV104 *)C_BasePlayer::GetLocalPlayer())->sub_1008ebb0();
     return m_i10;
 }
 // END FUNCTION
@@ -87175,6 +87169,7 @@ char CClanFilter::sub_10141bf0(const char **ppName)
 // END FUNCTION
 
 // FUNCTION: 0x10141c90 size=0xc2
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "CUnknown10141c90.h"
 #include "CVStatList_t.h"
@@ -87185,11 +87180,10 @@ struct PlayerV
 	int m_nLists;
 	CVStatList_t **m_pLists;
 };
-extern PlayerV *g_104a0d50;
 // TARGET: ?sub_10141c90@CUnknown10141c90@@QAEXXZ
 void CUnknown10141c90::sub_10141c90()
 {
-	PlayerV *p = g_104a0d50;
+	PlayerV *p = ((PlayerV *)C_BasePlayer::GetLocalPlayer());
 	if (!p)
 	{
 		DevMsg(1, "ERROR: CharGenWizard: ProcessGenderChoices: Couldn't Find Player!\n");
@@ -87460,10 +87454,10 @@ bool CSlotChecker10142680::sub_10142680()
 // END FUNCTION
 
 // FUNCTION: 0x10142760 size=0x6e
+#include "C_BasePlayer.h"
 #include "CSlotChecker10142680.h"
 struct Obj101416b0 { int sub_101416b0(); };
 extern Obj101416b0 g_105e7780;
-extern void *g_104a0d50;
 __declspec(dllimport) void DevMsg(int, const char *, ...);
 struct Outer_10142310 { bool sub_10142310(); };
 struct CChk : CSlotChecker10142680 {
@@ -87474,7 +87468,7 @@ struct CChk : CSlotChecker10142680 {
 // TARGET: CChk::sub_10142760
 bool CChk::sub_10142760(int n)
 {
-	if (!g_104a0d50) {
+	if (!C_BasePlayer::GetLocalPlayer()) {
 		DevMsg(1, "ERROR: CharGenWizard: CanDisplay: Couldn't Find Local Player!\n");
 		return false;
 	}
@@ -88747,12 +88741,12 @@ void __stdcall sub_10144b50(int clan)
 // END FUNCTION
 
 // FUNCTION: 0x10144be0 size=0x8b
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "CStatDefault3List.h"
 #include <stdio.h>
 struct Obj101416b0 { int sub_101416b0(); };
 struct CUnknown10174640 { void sub_10174640(); };
-extern void *g_104a0d50;
 extern CStatDefault3List g_105e74fc;
 extern Obj101416b0 g_105e7780;
 extern CUnknown10174640 *sub_10170f60();
@@ -88761,7 +88755,7 @@ void sub_10144be0()
 {
 	char buf[32];
 	DevMsg(3, "[CharGenWiz]: Spending Player Stat Points:\n\n");
-	if (g_104a0d50) {
+	if (C_BasePlayer::GetLocalPlayer()) {
 		int idx = g_105e7780.sub_101416b0();
 		engine->vfunc27("giftxp 9000", 1);
 		int v = *(int *)((char *)g_105e74fc.sub_10140000(idx) + 0xb4);
@@ -108334,15 +108328,15 @@ int sub_1016ebe0()
 // END FUNCTION
 
 // FUNCTION: 0x1016ed80 size=0x29
+#include "C_BasePlayer.h"
 struct CPlayerData_104a0d50 { char pad[0x16d4]; int m_n16d4; };
-extern CPlayerData_104a0d50 *g_104a0d50;
 char __stdcall sub_1016ed80(void *p)
 {
-	if (!g_104a0d50)
+	if (!C_BasePlayer::GetLocalPlayer())
 		return 0;
 	if (!p)
 		return 0;
-	return g_104a0d50->m_n16d4 != 0;
+	return ((CPlayerData_104a0d50 *)C_BasePlayer::GetLocalPlayer())->m_n16d4 != 0;
 }
 // END FUNCTION
 
@@ -108741,6 +108735,7 @@ void CInv_10170470::sub_10170470()
 // END FUNCTION
 
 // FUNCTION: 0x10170aa0 size=0x114
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 // TARGET: ?sub_10170aa0@VBarterUI@@QAE_NPAX_N@Z
 #include "VBarterUI.h"
@@ -108782,12 +108777,11 @@ struct BarterItem_10170aa0
 	bool sub_1007d760(BarterPlayer_10170aa0 *pPlayer, void *pMerchant, bool bFlag);
 };
 
-extern BarterPlayer_10170aa0 *g_104a0d50;
 extern BarterEntityList_10170aa0 *g_102b8e9c;
 
 bool VBarterUI::sub_10170aa0(void *pItemVoid, bool bSell)
 {
-	BarterPlayer_10170aa0 *pPlayer = g_104a0d50;
+	BarterPlayer_10170aa0 *pPlayer = ((BarterPlayer_10170aa0 *)C_BasePlayer::GetLocalPlayer());
 	bool bRet = false;
 	if (!pPlayer)
 		return false;
@@ -109157,6 +109151,7 @@ void CVSPanelX::sub_10172850()
 // END FUNCTION
 
 // FUNCTION: 0x10172880 size=0x23c
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "CVStatList_t.h"
 #include "CHud.h"
@@ -109169,7 +109164,6 @@ struct VSelf { char p0[0x264]; int m264; void sub_101b7040(const char *); };
 struct VPanelB { char p0[0x6c]; int m6c; };
 struct VPanelA { char p0[0x14]; VPanelB *m14; };
 struct VCharEdit { char p0[0x274]; int m274; };
-extern VPlayer *g_104a0d50;
 extern CHud g_104cfe38;
 VPanelA *sub_10180c00(int);
 extern const char g_102d0148[];
@@ -109192,7 +109186,7 @@ void __fastcall sub_10172880(VSelf *self, int edx, const char *cmd)
 		if (strncmp(cmd, g_102cffac, 2) == 0) {
 			if (!self->m264) {
 				int n = atoi(cmd + 2);
-				VPlayer *pl = g_104a0d50;
+				VPlayer *pl = ((VPlayer *)C_BasePlayer::GetLocalPlayer());
 				if (pl) {
 					char buf[0x50];
 					if (n >= FindList(pl)->sub_1015dbd0(0x1b)) {
@@ -109332,13 +109326,13 @@ void CUnknown10173100::sub_10173100()
 // END FUNCTION
 
 // FUNCTION: 0x10173110 size=0xf7
+#include "C_BasePlayer.h"
 #include "CharEditPanel.h"
 #include "C_BasePlayer.h"
 #include "CStatDefault3List.h"
 #include "StatDefault3.h"
 #include "CVStatListManager_t.h"
 
-extern C_BasePlayer *g_104a0d50;
 extern CStatDefault3List g_105e74fc;
 extern char g_105f9220[];
 extern char g_105f90b8[];
@@ -109362,7 +109356,7 @@ int sub_1017f0f0(int);
 
 void CharEditPanel::sub_10173110()
 {
-    C_BasePlayer *pPlayer = g_104a0d50;
+    C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
     if ( pPlayer )
     {
         int idx = ((PlayerSub8V *)((char *)pPlayer + 8))->p9();
@@ -109458,6 +109452,7 @@ void vgui2::Panel::sub_10173270()
 // END FUNCTION
 
 // FUNCTION: 0x10173350 size=0x54
+#include "C_BasePlayer.h"
 struct GV
 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
@@ -109520,7 +109515,6 @@ struct ObjV
 };
 
 extern GV *g_10288318;
-extern void *g_104a0d50;
 void sub_1018ccf0(int n);
 
 void ObjV::sub_10173350()
@@ -109532,7 +109526,7 @@ void ObjV::sub_10173350()
 	*(char *)((char *)this + 0xcf9) = 1;
 	if (((V10 *)this)->v10())
 		return;
-	if (!g_104a0d50)
+	if (!C_BasePlayer::GetLocalPlayer())
 		return;
 	((Obj737c0 *)this)->sub_101737c0();
 	((V124 *)((char *)this + 0x10))->v124();
@@ -110916,9 +110910,9 @@ void CUnknown101764f0::sub_101764f0(char a0)
 // END FUNCTION
 
 // FUNCTION: 0x10176e90 size=0x97
+#include "C_BasePlayer.h"
 #include "CVStatList_t.h"
 
-extern void *g_104a0d50;
 extern int g_102d0820;
 
 struct CHudPanel
@@ -110933,7 +110927,7 @@ bool sub_10176e90(int index)
 	if (index == -1)
 		return true;
 
-	void *pPlayer = g_104a0d50;
+	void *pPlayer = C_BasePlayer::GetLocalPlayer();
 	int bounded = 0;
 	if (pPlayer)
 		bounded = ((CVStatListSet *)((char *)pPlayer + 0x1164))->Find(0)->sub_1015dbd0(11);
@@ -110943,14 +110937,14 @@ bool sub_10176e90(int index)
 // END FUNCTION
 
 // FUNCTION: 0x10176f30 size=0x2a
+#include "C_BasePlayer.h"
 #include "CStatDefault3List.h"
 struct VPlayer_1008ebb0 { int sub_1008ebb0(); };
-extern VPlayer_1008ebb0 *g_104a0d50;
 extern CStatDefault3List g_105e74fc;
 char sub_10176f30(int a)
 {
-	if (g_104a0d50)
-		return g_105e74fc.sub_10140000(g_104a0d50->sub_1008ebb0())->sub_1013f370(a);
+	if (C_BasePlayer::GetLocalPlayer())
+		return g_105e74fc.sub_10140000(((VPlayer_1008ebb0 *)C_BasePlayer::GetLocalPlayer())->sub_1008ebb0())->sub_1013f370(a);
 	return 0;
 }
 // END FUNCTION
@@ -111086,16 +111080,16 @@ void __stdcall sub_101779a0(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x101779b0 size=0x4a
+#include "C_BasePlayer.h"
 extern "C" int sprintf(char *, const char *, ...);
 struct NL { int sub_1013fdf0(int); };
 struct Eng { virtual void v0(){} virtual void v1(){} virtual void v2(){} virtual void v3(){} virtual void v4(){} virtual void v5(){} virtual void v6(){} virtual void v7(){} virtual void v8(){} virtual void v9(){}
 virtual void v10(){} virtual void v11(){} virtual void v12(){} virtual void v13(){} virtual void v14(){} virtual void v15(){} virtual void v16(){} virtual void v17(){} virtual void v18(){} virtual void v19(){}
 virtual void v20(){} virtual void v21(){} virtual void v22(){} virtual void v23(){} virtual void v24(){} virtual void v25(){} virtual void v26(){} virtual void ServerCmd(const char *, int){} };
-extern int g_104a0d50;
 extern NL g_105e74fc;
 extern Eng *g_104a57d4;
 void __stdcall sub_101779b0(int a) {
- if (g_104a0d50) {
+ if (C_BasePlayer::GetLocalPlayer()) {
   int i = g_105e74fc.sub_1013fdf0(a);
   if (i >= 0) {
    char buf[32];
@@ -111113,18 +111107,18 @@ void sub_10177a10()
 // END FUNCTION
 
 // FUNCTION: 0x10177a20 size=0x71
+#include "C_BasePlayer.h"
 #include "CharEditCharPanel.h"
 #include "C_BaseVCombatCharacter.h"
 
 static int g_102d093c;
 static int g_102d0940;
 
-extern C_BaseVCombatCharacter *g_104a0d50;
 
 // TARGET: CharEditCharPanel::sub_10177a20
 void CharEditCharPanel::sub_10177a20()
 {
-	C_BaseVCombatCharacter *pPlayer = g_104a0d50;
+	C_BaseVCombatCharacter *pPlayer = ((C_BaseVCombatCharacter *)C_BasePlayer::GetLocalPlayer());
 	if (!pPlayer)
 		return;
 
@@ -111536,6 +111530,7 @@ void sub_1017a5c0()
 // END FUNCTION
 
 // FUNCTION: 0x1017a630 size=0x51
+#include "C_BasePlayer.h"
 class CEquipItem_10178790
 {
 public:
@@ -111553,7 +111548,6 @@ extern CEquipItem_10178790 g_105fb458[11];
 extern int g_105fb5e4;
 extern int g_105fb5ec;
 extern void *g_105fb5f0;
-extern CPlayerView1017a630 *g_104a0d50;
 
 // TARGET: sub_1017a630
 void sub_1017a630()
@@ -111563,7 +111557,7 @@ void sub_1017a630()
 
 	g_105fb5e4 = 0;
 	g_105fb5ec = 0;
-	g_105fb5f0 = g_104a0d50 ? g_104a0d50->m_p14c4 : g_104a0d50->m_p14c4;
+	g_105fb5f0 = ((CPlayerView1017a630 *)C_BasePlayer::GetLocalPlayer()) ? ((CPlayerView1017a630 *)C_BasePlayer::GetLocalPlayer())->m_p14c4 : ((CPlayerView1017a630 *)C_BasePlayer::GetLocalPlayer())->m_p14c4;
 }
 // END FUNCTION
 
@@ -111978,6 +111972,7 @@ int CUnknown1017d660::sub_1017d660()
 
 // FUNCTION: 0x1017d930 size=0x26a
 #include "C_BasePlayer.h"
+#include "C_BasePlayer.h"
 
 struct StatPoolValue_1017d930
 {
@@ -111991,7 +111986,6 @@ struct StatOwner_1017d930
 };
 
 extern StatOwner_1017d930 g_105f985c;
-extern C_BasePlayer *g_104a0d50;
 
 struct StatPool_1017d930
 {
@@ -112016,7 +112010,7 @@ public:
 // TARGET: CUnknown1017d930::sub_1017d930
 void CUnknown1017d930::sub_1017d930(int level)
 {
-	C_BasePlayer *pPlayer = g_104a0d50;
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
 	if (!pPlayer)
 		return;
 	if (level < 0)
@@ -112083,9 +112077,9 @@ bool sub_1017f0d0(int a, int b)
 // END FUNCTION
 
 // FUNCTION: 0x1017f0f0 size=0xaf
+#include "C_BasePlayer.h"
 #include "CVStatList_t.h"
 struct PlayerV1178 { char p[0x1178]; int m_nLists; CVStatList_t **m_pLists; };
-extern PlayerV1178 *g_104a0d50;
 int sub_10170f60();
 int sub_1017f0f0(char flag)
 {
@@ -112093,7 +112087,7 @@ int sub_1017f0f0(char flag)
 	if (sub_10170f60() && !flag) {
 		result = *(int *)(sub_10170f60() + 0xed0);
 	} else {
-		PlayerV1178 *p = g_104a0d50;
+		PlayerV1178 *p = ((PlayerV1178 *)C_BasePlayer::GetLocalPlayer());
 		if (p) {
 			CVStatList_t *pList;
 			for (int i = 0; i < p->m_nLists; i++) {
@@ -112500,8 +112494,8 @@ int sub_10180cd0(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x10180ce0 size=0x3e
+#include "C_BasePlayer.h"
 struct StatOrder10180ce0 { char pad[0x30]; int count; char pad2[4]; int start; };
-extern void *g_104a0d50;
 struct ScoreV10180ce0
 {
     void sub_10180d20(StatOrder10180ce0 *, int, char);
@@ -112509,7 +112503,7 @@ struct ScoreV10180ce0
 };
 void ScoreV10180ce0::sub_10180ce0(StatOrder10180ce0 *p, char c)
 {
-    if (g_104a0d50)
+    if (C_BasePlayer::GetLocalPlayer())
     {
         for (int i = 0; i < p->count; i++)
             sub_10180d20(p, p->start + i, c);
@@ -112697,6 +112691,7 @@ void CharEditStatsPanel::sub_10181ba0()
 // END FUNCTION
 
 // FUNCTION: 0x10181bf0 size=0xcf
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "CharEditStatsPanel.h"
 #include "C_BasePlayer.h"
@@ -112711,7 +112706,6 @@ struct HostView
 	int m_ed0;
 };
 
-extern C_BasePlayer *g_104a0d50;
 extern CStatDefault3List g_105e74fc;
 extern int sub_10170f60();
 extern char sub_101713e0();
@@ -112720,7 +112714,7 @@ extern int sub_1017f0f0(char);
 // TARGET: CharEditStatsPanel::sub_10181bf0
 void CharEditStatsPanel::sub_10181bf0()
 {
-	C_BasePlayer *pPlayer = g_104a0d50;
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
 	if ( !pPlayer )
 		return;
 
@@ -112979,9 +112973,9 @@ int CUnknown101839e0::sub_101839e0()
 // END FUNCTION
 
 // FUNCTION: 0x10183a20 size=0x75
+#include "C_BasePlayer.h"
 namespace lifted {
 extern char g_103eee48;
-extern int g_104a0d50;
 struct C10182750 { int sub_10182750(); };
 int sub_1018ccf0(int);
 int sub_101ac8d0();
@@ -112990,7 +112984,7 @@ struct V { virtual int f0(int); virtual void u1(); virtual void u2(); virtual vo
 struct CUnknown10183a20 { void sub_10183a20(); };
 void CUnknown10183a20::sub_10183a20()
 {
-    if (lifted::g_104a0d50 != 0) {
+    if (C_BasePlayer::GetLocalPlayer() != 0) {
         if (lifted::g_103eee48 == 0) {
             int t0 = lifted::sub_1018ccf0(2);
             *(char *)((char *)this + 0x1e14) = 1;
@@ -114165,9 +114159,9 @@ void sub_10189130()
 // END FUNCTION
 
 // FUNCTION: 0x101892d0 size=0x6b
+#include "C_BasePlayer.h"
 #include "QuestLogPanel.h"
 
-extern void *g_104a0d50;
 void __stdcall sub_10189340(int);
 void __fastcall sub_10189600(void *self);
 
@@ -114186,7 +114180,7 @@ public:
 
 void QuestLogPanel::sub_101892d0(int index)
 {
-	unsigned char *pGlobal = (unsigned char *)g_104a0d50;
+	unsigned char *pGlobal = (unsigned char *)C_BasePlayer::GetLocalPlayer();
 	if (!pGlobal)
 		return;
 	int old = *(int *)(pGlobal + 0x15ec);
@@ -116013,19 +116007,19 @@ float __stdcall sub_101907a0(const QAngle &angles, const Vector &velocity, float
 // END FUNCTION
 
 // FUNCTION: 0x10190850 size=0xae
+#include "C_BasePlayer.h"
 #include "CViewRender.h"
 #include "C_BaseEntity.h"
 #include "QAngle.h"
 #include "Vector.h"
 struct VarV { virtual void v0(); virtual bool v1(); int p[9]; float m28; };
 struct GV { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual bool v26(); };
-extern C_BaseEntity *g_104a0d50;
 extern VarV *g_105fc5b4;
 extern VarV *g_105fc554;
 extern GV *g_1027ba58;
 void CViewRender::sub_10190850()
 {
-	C_BaseEntity *pPlayer = g_104a0d50;
+	C_BaseEntity *pPlayer = ((C_BaseEntity *)C_BasePlayer::GetLocalPlayer());
 	float f1, f2;
 	if (g_105fc5b4->v1())
 		f1 = 0;
@@ -116043,6 +116037,7 @@ void CViewRender::sub_10190850()
 // END FUNCTION
 
 // FUNCTION: 0x10190f30 size=0x21a
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "Vector.h"
 #include "Tier1.h"
@@ -116077,7 +116072,6 @@ struct PlayerV2 { char sub_10001970(); };
 struct CineV { char sub_100019a0(); void sub_100019d0(Vector *a, Vector *b); };
 
 extern ViewRenderV g_105fbf38;
-extern PlayerV *g_104a0d50;
 int sub_100aaf30();
 VMV *sub_100ab190(int i);
 
@@ -116111,7 +116105,7 @@ void sub_10190f30()
 		CamInfo *info = g_105fbf38.sub_1019e1f0(i);
 		Dev("info %d:  o:(%.1f,%.1f,%.1f) a:(%.1f,%.1f,%.1f)\n", i, info->v[0], info->v[1], info->v[2], info->v[3], info->v[4], info->v[5]);
 	}
-	CineV *cam = (CineV *)((PlayerV *)g_104a0d50)->sub_100a7890();
+	CineV *cam = (CineV *)((PlayerV *)((PlayerV *)C_BasePlayer::GetLocalPlayer()))->sub_100a7890();
 	if (cam && ((PlayerV2 *)cam)->sub_10001970() && cam->sub_100019a0())
 	{
 		Vector a, o;
@@ -116122,6 +116116,7 @@ void sub_10190f30()
 // END FUNCTION
 
 // FUNCTION: 0x10192550 size=0x229
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "ScopeTrace.h"
 #include "Vector.h"
@@ -116142,14 +116137,13 @@ struct CViewRender_10192550 {
 	float m_f498;
 	void sub_10192550(const XViewSetup *, int);
 };
-extern XPlayer *g_104a0d50;
 void sub_10109e90(Vector *, float, Vector *);
 int sub_10198380();
 
 void CViewRender_10192550::sub_10192550(const XViewSetup *view, int arg)
 {
 	ScopeTrace trace("CViewRender::SetupCrossfadeView", g_102de300);
-	XPlayer *p = g_104a0d50;
+	XPlayer *p = ((XPlayer *)C_BasePlayer::GetLocalPlayer());
 	if (p && p->m1794 > 0.0f) {
 		float t = 1.0 - (engine->Time(0) - p->m1790) / p->m1794;
 		m_f498 = t;
@@ -117550,6 +117544,7 @@ void CViewRender::sub_1019af80(bool bFlag, int arg1)
 // END FUNCTION
 
 // FUNCTION: 0x1019b030 size=0x33c
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "ScopeTrace.h"
 #include "Vector.h"
@@ -117619,7 +117614,6 @@ struct CViewRender_1019b030
 	void sub_1019b030(float intensity, const CViewSetup_1019b030 &view);
 };
 
-extern CPlayer_104a0d50 *g_104a0d50;
 extern Vector g_104d4970;
 
 void CViewRender_1019b030::sub_1019b030(float intensity, const CViewSetup_1019b030 &view)
@@ -117627,7 +117621,7 @@ void CViewRender_1019b030::sub_1019b030(float intensity, const CViewSetup_1019b0
 	ScopeTrace trace("CViewRender::DrawFeedingView", g_102de300);
 
 	m_fl44c = 0.0f;
-	if (!(intensity > 0.0f)) return; CPlayer_104a0d50 *pPlayer = g_104a0d50;
+	if (!(intensity > 0.0f)) return; CPlayer_104a0d50 *pPlayer = ((CPlayer_104a0d50 *)C_BasePlayer::GetLocalPlayer());
 		if (!(pPlayer)) return; m_b448 = true;
 			m_b449 = g_pMaterialSystemHardwareConfig->vfunc10();
 
@@ -118250,6 +118244,7 @@ void CViewRender::sub_1019c970()
 // END FUNCTION
 
 // FUNCTION: 0x1019ca60 size=0x23c
+#include "C_BasePlayer.h"
 #include "ConVar.h"
 #include "ScopeTrace.h"
 #include "Vector.h"
@@ -118267,7 +118262,6 @@ struct SFogPlayer
 	unsigned char m_pr, m_pg, m_pb, m_pa;
 	unsigned char m_sr, m_sg, m_sb, m_sa;
 };
-extern SFogPlayer *g_104a0d50;
 extern ConVar g_10618908;
 extern ConVar g_106193c8;
 extern void sub_101090a0(const QAngle &angles, Vector *fwd, Vector *right, Vector *up);
@@ -118275,7 +118269,7 @@ extern void sub_101090a0(const QAngle &angles, Vector *fwd, Vector *right, Vecto
 void sub_1019ca60(float *pColor)
 {
 	ScopeTrace scope("::GetFogColor", "", "");
-	SFogPlayer *pbp = g_104a0d50;
+	SFogPlayer *pbp = ((SFogPlayer *)C_BasePlayer::GetLocalPlayer());
 	if (!pbp)
 		return;
 	const char *fogColorString;
@@ -118310,9 +118304,9 @@ void sub_1019ca60(float *pColor)
 // END FUNCTION
 
 // FUNCTION: 0x1019cca0 size=0xe5
+#include "C_BasePlayer.h"
 #include "ScopeTrace.h"
 
-extern void *g_104a0d50;
 extern float g_101e34f0;
 extern float g_101e4408;
 
@@ -118340,7 +118334,7 @@ float sub_1019cca0()
 {
 	ScopeTrace scope("::GetFogStart", g_102de300);
 
-	void *pWorld = g_104a0d50;
+	void *pWorld = C_BasePlayer::GetLocalPlayer();
 	if (!pWorld)
 		return g_101e34f0;
 
@@ -118355,9 +118349,9 @@ float sub_1019cca0()
 // END FUNCTION
 
 // FUNCTION: 0x1019cd90 size=0xe5
+#include "C_BasePlayer.h"
 #include "ScopeTrace.h"
 
-extern void *g_104a0d50;
 extern float g_101e34f0;
 extern float g_101e4408;
 
@@ -118385,7 +118379,7 @@ float sub_1019cd90()
 {
 	ScopeTrace scope("::GetFogEnd", g_102de300);
 
-	void *pWorld = g_104a0d50;
+	void *pWorld = C_BasePlayer::GetLocalPlayer();
 	if (!pWorld)
 		return g_101e34f0;
 
@@ -118400,6 +118394,7 @@ float sub_1019cd90()
 // END FUNCTION
 
 // FUNCTION: 0x1019ce80 size=0xe0
+#include "C_BasePlayer.h"
 #include "ScopeTrace.h"
 
 struct V14
@@ -118417,7 +118412,6 @@ struct V1
 	virtual bool vfunc1();
 };
 
-extern void *g_104a0d50;
 extern V14 *g_105f99d8;
 extern V1 *g_106193cc;
 extern V1 *g_10618abc;
@@ -118426,7 +118420,7 @@ bool sub_1019ce80()
 {
 	ScopeTrace trace("::GetFogEnable", g_102de300);
 
-	void *pFog = g_104a0d50;
+	void *pFog = C_BasePlayer::GetLocalPlayer();
 
 	if ( !pFog )
 		return false; else { if ( !g_105f99d8->vfunc14() )
@@ -118444,6 +118438,7 @@ bool sub_1019ce80()
 // END FUNCTION
 
 // FUNCTION: 0x1019d0a0 size=0x23c
+#include "C_BasePlayer.h"
 #include "ConVar.h"
 #include "ScopeTrace.h"
 #include "Vector.h"
@@ -118463,7 +118458,6 @@ struct SkyPlayerView_1019d0a0
 	unsigned char m_col1[4];	// 0x17cc
 };
 
-extern SkyPlayerView_1019d0a0 *g_104a0d50;
 extern ConVar g_106194a0;
 extern ConVar g_106193c8;
 void sub_101090a0(const float *angles, Vector *forward, Vector *right, Vector *up);
@@ -118472,7 +118466,7 @@ void sub_101090a0(const float *angles, Vector *forward, Vector *right, Vector *u
 void sub_1019d0a0(float *pColor)
 {
 	ScopeTrace trace("::GetSkyboxFogColor", g_102de300, g_102de300);
-	SkyPlayerView_1019d0a0 *pbp = g_104a0d50;
+	SkyPlayerView_1019d0a0 *pbp = ((SkyPlayerView_1019d0a0 *)C_BasePlayer::GetLocalPlayer());
 	if (!pbp)
 		return;
 	const char *psz;
@@ -118514,9 +118508,9 @@ void sub_1019d0a0(float *pColor)
 // END FUNCTION
 
 // FUNCTION: 0x1019d2e0 size=0xe5
+#include "C_BasePlayer.h"
 #include "ScopeTrace.h"
 
-extern void *g_104a0d50;
 extern float g_101e34f0;
 extern float g_101e4408;
 
@@ -118544,7 +118538,7 @@ float sub_1019d2e0()
 {
 	ScopeTrace scope("::GetSkyboxFogStart", g_102de300);
 
-	void *pWorld = g_104a0d50;
+	void *pWorld = C_BasePlayer::GetLocalPlayer();
 	if (!pWorld)
 		return g_101e34f0;
 
@@ -118559,9 +118553,9 @@ float sub_1019d2e0()
 // END FUNCTION
 
 // FUNCTION: 0x1019d3d0 size=0xe5
+#include "C_BasePlayer.h"
 #include "ScopeTrace.h"
 
-extern void *g_104a0d50;
 extern float g_101e34f0;
 extern float g_101e4408;
 
@@ -118589,7 +118583,7 @@ float sub_1019d3d0()
 {
 	ScopeTrace scope("::GetSkyboxFogEnd", g_102de300);
 
-	void *pWorld = g_104a0d50;
+	void *pWorld = C_BasePlayer::GetLocalPlayer();
 	if (!pWorld)
 		return g_101e34f0;
 
@@ -118604,6 +118598,7 @@ float sub_1019d3d0()
 // END FUNCTION
 
 // FUNCTION: 0x1019d4c0 size=0xc4
+#include "C_BasePlayer.h"
 #include "ScopeTrace.h"
 struct FogCvarView
 {
@@ -118617,14 +118612,13 @@ struct FogPlayerView
 	char m_pad[0x17b8];
 	char m_b17b8;
 };
-extern FogPlayerView *g_104a0d50;
 extern FogCvarView *g_106193cc;
 extern FogCvarView *g_1061957c;
 // TARGET: sub_1019d4c0
 char sub_1019d4c0()
 {
 	ScopeTrace st("::GetSkyboxFogEnable", g_102de300, g_102de300);
-	FogPlayerView *pPlayer = g_104a0d50;
+	FogPlayerView *pPlayer = ((FogPlayerView *)C_BasePlayer::GetLocalPlayer());
 	if (!pPlayer)
 		return 0;
 	if (!g_106193cc->v1() && g_106193cc->m_n2c) {
@@ -121085,17 +121079,17 @@ int CUnknown101a79f0::sub_101a79f0()
 // END FUNCTION
 
 // FUNCTION: 0x101a7a00 size=0x5a
+#include "C_BasePlayer.h"
 #include "CHudWeaponSelection.h"
 #include "C_BasePlayer.h"
 #include "C_BaseCombatWeapon.h"
 
-extern C_BasePlayer *g_104a0d50;
 extern "C" int _strcmpi(const char *, const char *);
 
 // TARGET: CHudWeaponSelection::sub_101a7a00
 void CHudWeaponSelection::sub_101a7a00()
 {
-	C_BasePlayer *player = g_104a0d50;
+	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
 	if (player)
 	{
 		C_BaseCombatWeapon *weapon = *(C_BaseCombatWeapon **)((char *)this + 0x20);
@@ -121115,15 +121109,15 @@ void CHudWeaponSelection::sub_101a7a00()
 // END FUNCTION
 
 // FUNCTION: 0x101a7a60 size=0x59
+#include "C_BasePlayer.h"
 namespace lifted {
-extern int g_104a0d50;
 struct C100f05b0 { bool sub_100f05b0(); };
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual bool f18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual void u44(); virtual void u45(); virtual void u46(); virtual void u47(); virtual void u48(); virtual void u49(); virtual void u50(); virtual void u51(); virtual void u52(); virtual void u53(); virtual void u54(); virtual void u55(); virtual void u56(); virtual void u57(); virtual void u58(); virtual void u59(); virtual void u60(); virtual void u61(); virtual void u62(); virtual void u63(); virtual void u64(); virtual void u65(); virtual void u66(); virtual void u67(); virtual void u68(); virtual void u69(); virtual void u70(); virtual void u71(); virtual void u72(); virtual void u73(); virtual void u74(); virtual void u75(); virtual void u76(); virtual void u77(); virtual void u78(); virtual void u79(); virtual void u80(); virtual void u81(); virtual void u82(); virtual void u83(); virtual void u84(); virtual void u85(); virtual void u86(); virtual void u87(); virtual void u88(); virtual void u89(); virtual void u90(); virtual void u91(); virtual void u92(); virtual void u93(); virtual void u94(); virtual void u95(); virtual void u96(); virtual void u97(); virtual void u98(); virtual void u99(); virtual void u100(); virtual void u101(); virtual void u102(); virtual void u103(); virtual void u104(); virtual void u105(); virtual void u106(); virtual void u107(); virtual void u108(); virtual void u109(); virtual void u110(); virtual void u111(); virtual void u112(); virtual void u113(); virtual void u114(); virtual void u115(); virtual void u116(); virtual void u117(); virtual void u118(); virtual void u119(); virtual void u120(); virtual void u121(); virtual void u122(); virtual void u123(); virtual void u124(); virtual void u125(); virtual void u126(); virtual void u127(); virtual void u128(); virtual void u129(); virtual void u130(); virtual void u131(); virtual void u132(); virtual void u133(); virtual void u134(); virtual void u135(); virtual void u136(); virtual void u137(); virtual void u138(); virtual void u139(); virtual void u140(); virtual void u141(); virtual void u142(); virtual void u143(); virtual void u144(); virtual void u145(); virtual void u146(); virtual void u147(); virtual void u148(); virtual void u149(); virtual void u150(); virtual void u151(); virtual void u152(); virtual void u153(); virtual void u154(); virtual void u155(); virtual void u156(); virtual void u157(); virtual void u158(); virtual int f159(int, int, int); virtual void u160(); virtual void u161(); virtual void u162(); virtual void u163(); virtual void u164(); virtual void u165(); virtual void u166(); virtual void u167(); virtual void u168(); virtual void u169(); virtual void u170(); virtual void u171(); virtual void u172(); virtual void u173(); virtual void u174(); virtual void u175(); virtual void u176(); virtual void u177(); virtual void u178(); virtual void u179(); virtual void u180(); virtual void u181(); virtual void u182(); virtual void u183(); virtual void u184(); virtual void u185(); virtual void u186(); virtual void u187(); virtual int f188(int); };
 }
 struct CUnknown101a7a60 { void sub_101a7a60(int, int, int); };
 void CUnknown101a7a60::sub_101a7a60(int a0, int a1, int a2)
 {
-    int t0 = lifted::g_104a0d50;
+    int t0 = ((int)C_BasePlayer::GetLocalPlayer());
     if (t0 != 0) {
         bool t1 = ((lifted::V *)t0)->f18();
         if (t1 != 0) {
@@ -121141,10 +121135,10 @@ void CUnknown101a7a60::sub_101a7a60(int a0, int a1, int a2)
 // END FUNCTION
 
 // FUNCTION: 0x101a7ac0 size=0x76
+#include "C_BasePlayer.h"
 #include <string.h>
 #include "C_BasePlayer.h"
 
-extern C_BasePlayer *g_104a0d50;
 extern void *g_104a57d4;
 extern int (*g_101e31bc)(const char *, const char *, int);
 
@@ -121175,7 +121169,7 @@ struct IEngineClientView
 
 void sub_101a7ac0(void *pUnused)
 {
-    C_BasePlayer *player = g_104a0d50;
+    C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
     if (!player)
         return;
 
@@ -121199,6 +121193,7 @@ void sub_101a7ac0(void *pUnused)
 // END FUNCTION
 
 // FUNCTION: 0x101a7b40 size=0x30
+#include "C_BasePlayer.h"
 #include "CHudElement.h"
 struct PV {
 	virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void a5(); virtual void a6(); virtual void a7(); virtual void a8(); virtual void a9();
@@ -121220,11 +121215,10 @@ struct PV {
 	virtual void b60();
 	virtual void v161();
 };
-extern PV *g_104a0d50;
 void sub_101a7b40(CHudElement *e)
 {
 	if (e->sub_100f05b0()) {
-		PV *p = g_104a0d50;
+		PV *p = ((PV *)C_BasePlayer::GetLocalPlayer());
 		if (p && p->a18())
 			p->v161();
 	}
@@ -121232,6 +121226,7 @@ void sub_101a7b40(CHudElement *e)
 // END FUNCTION
 
 // FUNCTION: 0x101a7b70 size=0x30
+#include "C_BasePlayer.h"
 #include "CHudElement.h"
 struct V_101a7b70 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
@@ -121252,12 +121247,11 @@ struct V_101a7b70 {
 	virtual void v150(); virtual void v151(); virtual void v152(); virtual void v153(); virtual void v154(); virtual void v155(); virtual void v156(); virtual void v157(); virtual void v158(); virtual void v159();
 	virtual void v160(); virtual void v161(); virtual void v162();
 };
-extern V_101a7b70 *g_104a0d50;
 void sub_101a7b70(CHudElement *e)
 {
 	if (e->sub_100f05b0())
 	{
-		V_101a7b70 *p = g_104a0d50;
+		V_101a7b70 *p = ((V_101a7b70 *)C_BasePlayer::GetLocalPlayer());
 		if (p && p->v18())
 			p->v162();
 	}

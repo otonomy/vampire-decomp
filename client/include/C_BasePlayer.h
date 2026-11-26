@@ -12,6 +12,7 @@ class QAngle;
 class C_BasePlayer : public C_BaseVCombatCharacter
 {
 public:
+	static C_BasePlayer *GetLocalPlayer();
 	virtual ~C_BasePlayer();
 	int sub_100a2450();
 	int sub_100a93e0();
@@ -105,3 +106,11 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	char m_pad1638[0x16b0 - 0x1638];
 	int m_unk16b0;
 };
+
+// the local player (2004 SDK c_baseplayer.h): read it as C_BasePlayer::GetLocalPlayer()
+extern C_BasePlayer *g_pLocalPlayer;
+
+inline C_BasePlayer *C_BasePlayer::GetLocalPlayer()
+{
+	return g_pLocalPlayer;
+}

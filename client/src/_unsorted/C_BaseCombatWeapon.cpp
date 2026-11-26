@@ -729,9 +729,9 @@ bool C_BaseCombatWeapon::vfunc175()
 // END FUNCTION
 
 // FUNCTION: 0x1007bbf0 size=0x7a
+#include "C_BasePlayer.h"
 #include "C_BaseCombatWeapon.h"
 
-extern void *g_104a0d50;
 
 bool C_BaseCombatWeapon::vfunc152()
 {
@@ -741,7 +741,7 @@ bool C_BaseCombatWeapon::vfunc152()
 	if (vfunc219() & 1)
 		return true;
 
-	void *p = g_104a0d50;
+	void *p = C_BasePlayer::GetLocalPlayer();
 	if (!p)
 		return false;
 
@@ -1238,17 +1238,17 @@ bool C_BaseCombatWeapon::vfunc177() { void *p = *(void **)((char *)sub_1007b160(
 // END FUNCTION
 
 // FUNCTION: 0x1007d480 size=0x4f
+#include "C_BasePlayer.h"
 #include "C_BaseCombatWeapon.h"
 
 struct Player { int sub_100a8ba0(int i); };
 
-extern int g_104a0d50;
 
 struct WeaponView { char pad[0x79c]; int m_79c; };
 
 int C_BaseCombatWeapon::vfunc220()
 {
-	Player *pPlayer = (Player *)(void *)g_104a0d50;
+	Player *pPlayer = (Player *)(void *)((int)C_BasePlayer::GetLocalPlayer());
 	if ( !pPlayer )
 		return -1;
 	WeaponView *pThis = (WeaponView *)this;
@@ -1267,6 +1267,7 @@ int C_BaseCombatWeapon::vfunc220()
 // END FUNCTION
 
 // FUNCTION: 0x1007d4d0 size=0x4c
+#include "C_BasePlayer.h"
 #include "C_BaseCombatWeapon.h"
 
 class Player_1007d4d0
@@ -1275,12 +1276,11 @@ public:
 	int sub_100a8ba0(int);
 };
 
-extern Player_1007d4d0 *g_104a0d50;
 
 // TARGET: C_BaseCombatWeapon::vfunc221
 int C_BaseCombatWeapon::vfunc221()
 {
-	Player_1007d4d0 *player = g_104a0d50;
+	Player_1007d4d0 *player = ((Player_1007d4d0 *)C_BasePlayer::GetLocalPlayer());
 	if (!player)
 		return -1;
 
@@ -1406,13 +1406,13 @@ void C_BaseCombatWeapon::vfunc236(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x1009bda0 size=0x2a
+#include "C_BasePlayer.h"
 #include "C_BaseCombatWeapon.h"
-extern void *g_104a0d50;
 bool C_BaseCombatWeapon::vfunc240()
 {
 	if (!sub_1007bab0())
 		return false;
-	void *pPlayer = g_104a0d50;
+	void *pPlayer = C_BasePlayer::GetLocalPlayer();
 	return sub_1007bab0() == pPlayer;
 }
 // END FUNCTION

@@ -151,47 +151,45 @@ bool CPrediction::vfunc14()
 // END FUNCTION
 
 // FUNCTION: 0x101230f0 size=0x11
+#include "C_BasePlayer.h"
 #include "CPrediction.h"
-namespace lifted {
-extern int g_104a0d50;
-}
 int CPrediction::vfunc7()
 {
-    if (lifted::g_104a0d50 == 0) {
-        return lifted::g_104a0d50;
+    if (C_BasePlayer::GetLocalPlayer() == 0) {
+        return ((int)C_BasePlayer::GetLocalPlayer());
     }
-    return *(int *)((char *)lifted::g_104a0d50 + 0x90);
+    return *(int *)((char *)((int)C_BasePlayer::GetLocalPlayer()) + 0x90);
 }
 // END FUNCTION
 
 // FUNCTION: 0x10123110 size=0x37
+#include "C_BasePlayer.h"
 #include "CPrediction.h"
 #include "C_BasePlayer.h"
 #include "Vector.h"
-extern C_BasePlayer *g_104a0d50;
 // TARGET: CPrediction::vfunc8
 void CPrediction::vfunc8(Vector *v)
 {
-    if (g_104a0d50 == 0) {
+    if (C_BasePlayer::GetLocalPlayer() == 0) {
         v->x = 0;
         v->y = 0;
         v->z = 0;
     } else {
-        *v = g_104a0d50->GetAbsOrigin();
+        *v = C_BasePlayer::GetLocalPlayer()->GetAbsOrigin();
     }
 }
 // END FUNCTION
 
 // FUNCTION: 0x10123150 size=0x28
+#include "C_BasePlayer.h"
 #include "CPrediction.h"
 namespace lifted {
-extern int g_104a0d50;
 struct C100a2030 { int sub_100a2030(int); };
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual int f44(int); };
 }
 void CPrediction::vfunc9(int a0)
 {
-    int t0 = lifted::g_104a0d50;
+    int t0 = ((int)C_BasePlayer::GetLocalPlayer());
     if (t0 != 0) {
         ((lifted::C100a2030 *)t0)->sub_100a2030(a0);
         ((lifted::V *)t0)->f44(a0);
@@ -200,24 +198,25 @@ void CPrediction::vfunc9(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x10123180 size=0x3a
+#include "C_BasePlayer.h"
 #include "CPrediction.h"
 #include "C_BasePlayer.h"
 #include "Vector.h"
-extern C_BasePlayer *g_104a0d50;
 // TARGET: CPrediction::vfunc10
 void CPrediction::vfunc10(Vector *v)
 {
-    if (g_104a0d50 == 0) {
+    if (C_BasePlayer::GetLocalPlayer() == 0) {
         v->x = 0;
         v->y = 0;
         v->z = 0;
     } else {
-        *v = *(Vector *)g_104a0d50->vfunc195();
+        *v = *(Vector *)C_BasePlayer::GetLocalPlayer()->vfunc195();
     }
 }
 // END FUNCTION
 
 // FUNCTION: 0x101231c0 size=0x32
+#include "C_BasePlayer.h"
 #include "CPrediction.h"
 #include "Vector.h"
 #define V10(a) virtual void a##0(); virtual void a##1(); virtual void a##2(); virtual void a##3(); virtual void a##4(); virtual void a##5(); virtual void a##6(); virtual void a##7(); virtual void a##8(); virtual void a##9();
@@ -231,12 +230,11 @@ struct PlayerView {
  virtual void e4(); virtual void e5();
  virtual void vfunc196(Vector v);
 };
-extern PlayerView *g_104a0d50;
 // TARGET: CPrediction::vfunc11
 void CPrediction::vfunc11(const Vector *v)
 {
-    if (g_104a0d50)
-        g_104a0d50->vfunc196(*v);
+    if (C_BasePlayer::GetLocalPlayer())
+        ((PlayerView *)C_BasePlayer::GetLocalPlayer())->vfunc196(*v);
 }
 // END FUNCTION
 

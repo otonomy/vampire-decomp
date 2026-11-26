@@ -174,6 +174,7 @@ void C_BaseViewModel::vfunc118(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x100abe30 size=0x4f
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "C_BasePlayer.h"
 #include "C_BaseViewModel.h"
@@ -184,13 +185,12 @@ struct CUnknown100a9de0
 	float sub_100a9de0();
 };
 
-extern C_BasePlayer *g_104a0d50;
 
 float C_BaseViewModel::vfunc122()
 {
 	float scale = 1.0f;
 	float result = engine->Time(0);
-	C_BasePlayer *p = g_104a0d50;
+	C_BasePlayer *p = C_BasePlayer::GetLocalPlayer();
 	if (p)
 	{
 		scale = p->vfunc176();

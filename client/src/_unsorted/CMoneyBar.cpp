@@ -48,11 +48,11 @@ void CMoneyBar::vfunc112()
 // END FUNCTION
 
 // FUNCTION: 0x1005f340 size=0x1fc
+#include "C_BasePlayer.h"
 #include "engineclient.h"
 #include "CMoneyBar.h"
 #include "Tier1.h"
 struct PlayerLike { char pad[0x14c8]; int m_nMoney; };
-extern PlayerLike *g_104a0d50;
 extern float g_1022a374, g_1022a378;
 extern double g_10225160, g_101e58e0, g_10227eb8, g_10226fd0;
 extern float g_101e34f0;
@@ -64,7 +64,7 @@ void CMoneyBar::vfunc98()
 	int x, y, w;
 	if (!vfunc107())
 		return;
-	PlayerLike *pl = g_104a0d50;
+	PlayerLike *pl = ((PlayerLike *)C_BasePlayer::GetLocalPlayer());
 	if (!pl)
 		return;
 	sub_101a98c0(&x, &y);

@@ -94,6 +94,7 @@ void CHudWeaponSelection::vfunc2()
 // END FUNCTION
 
 // FUNCTION: 0x101a78c0 size=0x124
+#include "C_BasePlayer.h"
 #include "CHudWeaponSelection.h"
 
 extern "C" int __cdecl _strcmpi(const char *, const char *);
@@ -190,7 +191,6 @@ struct CPlayer_101a78c0
 	bool sub_100a6b90();
 };
 
-extern CPlayer_101a78c0 *g_104a0d50;
 extern int g_104cfe50;
 CHudPanel_101a78c0 *sub_100561f0();
 bool __cdecl sub_101a77c0(CPlayer_101a78c0 *pPlayer, CWeapon_101a78c0 *pWpn);
@@ -204,7 +204,7 @@ struct CHudWpnSelView_101a78c0
 // TARGET: ?vfunc6@CHudWeaponSelection@@UAEXXZ
 void CHudWeaponSelection::vfunc6()
 {
-	CPlayer_101a78c0 *pPlayer = g_104a0d50;
+	CPlayer_101a78c0 *pPlayer = ((CPlayer_101a78c0 *)C_BasePlayer::GetLocalPlayer());
 	if (!pPlayer)
 		return;
 
@@ -254,14 +254,14 @@ void CHudWeaponSelection::vfunc6()
 // END FUNCTION
 
 // FUNCTION: 0x101a7bc0 size=0x3e
+#include "C_BasePlayer.h"
 #include "CHudWeaponSelection.h"
 #include "C_BasePlayer.h"
-extern C_BasePlayer *g_104a0d50;
 bool sub_1018c770();
 // TARGET: CHudWeaponSelection::vfunc5
 void CHudWeaponSelection::vfunc5(int a)
 {
-    C_BasePlayer *p = g_104a0d50;
+    C_BasePlayer *p = C_BasePlayer::GetLocalPlayer();
     if (p && !sub_1018c770()) {
         C_BaseCombatWeapon *w = p->vfunc167();
         this->sub_101a7fa0(a, p, w, 0, 0, 0, 0, 0);

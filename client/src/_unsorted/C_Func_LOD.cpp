@@ -31,6 +31,7 @@ C_Func_LOD *pcd_emit_100bb6f0(const C_Func_LOD &other) { return new C_Func_LOD(o
 // END FUNCTION
 
 // FUNCTION: 0x100bb710 size=0x262
+#include "C_BasePlayer.h"
 #include "C_Func_LOD.h"
 #include "ConVar.h"
 #include "Vector.h"
@@ -40,7 +41,6 @@ extern ConVar *g_104a2a34;	// lod_TransitionDist
 extern ConVar *g_106198ac;
 
 struct LODPlayerView { float sub_100aa6d0(); };	// GetFOVDistanceAdjustFactor
-extern LODPlayerView *g_104a0d50;
 
 struct LODEngineView
 {
@@ -62,8 +62,8 @@ bool C_Func_LOD::LODTest()
 	float disappearDist = m_fDisappearDist;
 	float transitionDist = m_fDisappearDist + (g_104a2a34->vfunc1() ? 0.0f : g_104a2a34->m_fValue);
 	float dist = (sub_10198d30() - vfunc56()).Length();
-	if (g_104a0d50)
-		dist *= g_104a0d50->sub_100aa6d0();
+	if (C_BasePlayer::GetLocalPlayer())
+		dist *= ((LODPlayerView *)C_BasePlayer::GetLocalPlayer())->sub_100aa6d0();
 
 	if (dist < disappearDist)
 	{
