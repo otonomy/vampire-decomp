@@ -26628,6 +26628,30 @@ int sub_1004d590()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004dbe0 size=0x40
+struct CUnkFade {
+	char m_pad[0x24];
+	int m_n20;
+	bool m_bOn;
+	bool m_b25;
+	bool m_b26;
+	void sub_1004dbe0(bool on);
+};
+void CUnkFade::sub_1004dbe0(bool on)
+{
+	if (!m_bOn && on) {
+		m_n20 = 0;
+		m_b25 = true;
+		m_b26 = false;
+	} else if (m_bOn && !on) {
+		m_n20 = 255;
+		m_b26 = true;
+		m_b25 = on;
+	}
+	m_bOn = on;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004dc30 size=0x6
 namespace lifted {
 extern int g_103ede3c;
