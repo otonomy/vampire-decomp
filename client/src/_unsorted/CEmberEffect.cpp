@@ -29,3 +29,18 @@ void CEmberEffect::sub_10118870(EmberParticle_10118870 *pParticle, float timeDel
 	pParticle->m_vecVelocity *= len;
 }
 // END FUNCTION
+
+// FUNCTION: 0x10118930 size=0x80
+#include "CEmberEffect.h"
+#include "Vector.h"
+
+Vector CEmberEffect::vfunc12(const SimpleParticleC_t *p, float unused)
+{
+	float frac = 1.0f - p->m_flLifetime / p->m_flDieTime;
+	Vector tint;
+	tint.x = (float)p->m_uchColor[0] * frac * 0.003921569f;
+	tint.y = (float)p->m_uchColor[1] * frac * 0.003921569f;
+	tint.z = (float)p->m_uchColor[2] * frac * 0.003921569f;
+	return tint;
+}
+// END FUNCTION
