@@ -114896,6 +114896,130 @@ int sub_1018dd90()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018dda0 size=0x21d
+#include "CVProfPanel.h"
+#include "Tier1.h"
+
+struct VNode
+{
+	const char *m_name;
+	char m_pad4[0x14 - 4];
+	int m_frameCalls;
+	__int64 m_frameTime;
+	char m_pad20[0x30 - 0x20];
+	int m_calls;
+	char m_pad34[4];
+	__int64 m_totalTime;
+	__int64 m_peakTime;
+	char m_pad48[4];
+	VNode *m_pChild;
+	VNode *m_pSibling;
+	char m_pad54[4];
+	int m_treeIndex;
+};
+struct ProfV
+{
+	char m_pad[0x1018];
+	VNode *m_pRoot;
+	int m_frames;
+};
+struct KVV { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13();
+	virtual void SetString(const char *key, const char *val); };
+struct TreeW {
+	virtual void p0(); virtual void p1(); virtual void p2(); virtual void p3(); virtual void p4();
+	virtual void p5(); virtual void p6(); virtual void p7(); virtual void p8(); virtual void p9();
+	virtual void p10(); virtual void p11(); virtual void p12(); virtual void p13(); virtual void p14();
+	virtual void p15(); virtual void p16(); virtual void p17(); virtual void p18(); virtual void p19();
+	virtual void p20(); virtual void p21(); virtual void p22(); virtual void p23(); virtual void p24();
+	virtual void p25(); virtual void p26(); virtual void p27(); virtual void p28(); virtual void p29();
+	virtual void p30(); virtual void p31(); virtual void p32(); virtual void p33(); virtual void p34();
+	virtual void p35(); virtual void p36(); virtual void p37(); virtual void p38(); virtual void p39();
+	virtual void p40(); virtual void p41(); virtual void p42(); virtual void p43(); virtual void p44();
+	virtual void p45(); virtual void p46(); virtual void p47(); virtual void p48(); virtual void p49();
+	virtual void p50(); virtual void p51(); virtual void p52(); virtual void p53(); virtual void p54();
+	virtual void p55(); virtual void p56(); virtual void p57(); virtual void p58(); virtual void p59();
+	virtual void p60(); virtual void p61(); virtual void p62(); virtual void p63(); virtual void p64();
+	virtual void p65(); virtual void p66(); virtual void p67(); virtual void p68(); virtual void p69();
+	virtual void p70(); virtual void p71(); virtual void p72(); virtual void p73(); virtual void p74();
+	virtual void p75(); virtual void p76(); virtual void p77(); virtual void p78(); virtual void p79();
+	virtual void p80(); virtual void p81(); virtual void p82(); virtual void p83(); virtual void p84();
+	virtual void p85(); virtual void p86(); virtual void p87(); virtual void p88(); virtual void p89();
+	virtual void p90(); virtual void p91(); virtual void p92(); virtual void p93(); virtual void p94();
+	virtual void p95(); virtual void p96(); virtual void p97(); virtual void p98(); virtual void p99();
+	virtual void p100(); virtual void p101(); virtual void p102(); virtual void p103(); virtual void p104();
+	virtual void p105(); virtual void p106();
+	virtual int AddItem(KVV *kv, int parent);
+	virtual void p108(); virtual void p109(); virtual void p110(); virtual void p111(); virtual void p112();
+	virtual void ModifyItem(int id, KVV *kv);
+};
+extern ProfV *g_101e3138;
+extern double *g_101e3144;
+int sub_1018e300(char *buf, const char *fmt, ...);
+
+// TARGET: CVProfPanel::sub_1018dda0
+void CVProfPanel::sub_1018dda0(void *kvp, void *nodep, int parent)
+{
+	VNode *node = (VNode *)nodep;
+	VNode *c;
+	char text[1024];
+	text[0] = 0;
+	if (node == g_101e3138->m_pRoot)
+	{
+		node = node->m_pChild;
+		if (node)
+			sub_1018dda0(kvp, node, parent);
+		return;
+	}
+	int frames = g_101e3138->m_frames;
+	double avgCalls;
+	if (frames > 0)
+		avgCalls = (double)node->m_calls / frames;
+	else
+		avgCalls = 0;
+	int calls = node->m_calls;
+	double avgTime;
+	if (calls > 0)
+		avgTime = (double)node->m_totalTime * *g_101e3144 / calls;
+	else
+		avgTime = 0;
+	double avgSelf;
+	if (calls > 0)
+	{
+		double t = (double)node->m_totalTime * *g_101e3144;
+		for (c = node->m_pChild; c; c = c->m_pSibling)
+			t -= (double)c->m_totalTime * *g_101e3144;
+		avgSelf = t / calls;
+	}
+	else
+		avgSelf = 0;
+	double sumTotal = (double)node->m_totalTime * *g_101e3144;
+	double sumSelf = sumTotal;
+	for (c = node->m_pChild; c; c = c->m_pSibling)
+		sumSelf -= (double)c->m_totalTime * *g_101e3144;
+	double frameTotal = (double)node->m_frameTime * *g_101e3144;
+	double frameSelf = frameTotal;
+	for (c = node->m_pChild; c; c = c->m_pSibling)
+		frameSelf -= (double)c->m_frameTime * *g_101e3144;
+	double peak = (double)node->m_peakTime * *g_101e3144;
+	sub_1018e300(text, "%s: Frame[%dc, %.4f/%.4f] Avg[%.2fc, %.4f/%.4f] Sum[%dc, %.4f/%.4f] Peak[%.4f]", node->m_name, node->m_frameCalls, frameTotal, frameSelf, avgCalls, avgTime, avgSelf, calls, sumTotal, sumSelf, peak);
+	((KVV *)kvp)->SetString("Text", text);
+	int id = node->m_treeIndex;
+	if (id == -1)
+	{
+		id = ((TreeW *)((char *)this + 0x124))->AddItem((KVV *)kvp, parent);
+		node->m_treeIndex = id;
+	}
+	else
+		((TreeW *)((char *)this + 0x124))->ModifyItem(id, (KVV *)kvp);
+	if (node->m_pSibling)
+		sub_1018dda0(kvp, node->m_pSibling, parent);
+	if (node->m_pChild)
+		sub_1018dda0(kvp, node->m_pChild, id);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018e260 size=0x16
 extern void (*g_105fbc28)();
 void sub_1018e260()

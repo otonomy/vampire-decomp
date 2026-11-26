@@ -8496,6 +8496,7 @@
 0x1018dd40 func   ?sub_1018dd40@CUnknown1018dd40@@QAEHH@Z CUnknown1018dd40::sub_1018dd40
 0x1018dd70 func   ?CHudElement_vfunc9@CVProfPanel@@QAE_NXZ CVProfPanel::CHudElement_vfunc9
 0x1018dd90 func   ?sub_1018dd90@@YAHXZ sub_1018dd90
+0x1018dda0 func   ?sub_1018dda0@CVProfPanel@@QAEXPAX0H@Z CVProfPanel::sub_1018dda0
 0x1018e260 func   ?sub_1018e260@@YAXXZ sub_1018e260
 0x1018e280 func   ?sub_1018e280@@YAHXZ sub_1018e280
 0x1018e290 func   ?sub_1018e290@CUnknown1018e290@@QAEHXZ CUnknown1018e290::sub_1018e290
