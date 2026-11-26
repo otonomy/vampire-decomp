@@ -1677,6 +1677,7 @@
 0x10022bb0 func   ?_C_ItemKLeopoldIntKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKLeopoldIntKey_CreateObject
 0x10022c70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKLeopoldIntKey@@@Z ClientClassInit
 0x10022d00 func   ?vfunc17@C_ItemKMuseumBasementKey@@UAEHXZ C_ItemKMuseumBasementKey::vfunc17
+0x10022d40 func   ?sub_10022d40@@YAHXZ sub_10022d40
 0x10022d90 func   ??_GC_ItemKMuseumBasementKey@@UAEPAXI@Z ??_GC_ItemKMuseumBasementKey@@UAEPAXI@Z
 0x10022db0 func   ?vfunc16@C_ItemKMuseumBasementKey@@UAEHXZ C_ItemKMuseumBasementKey::vfunc16
 0x10022dc0 func   ?vfunc15@C_ItemKMuseumBasementKey@@UAEHXZ C_ItemKMuseumBasementKey::vfunc15
