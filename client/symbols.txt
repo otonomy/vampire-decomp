@@ -9172,6 +9172,7 @@
 0x1018d670 func   ?sub_1018d670@@YAXXZ sub_1018d670
 0x1018d6f0 func   ?sub_1018d6f0@@YAXXZ sub_1018d6f0
 0x1018d700 func   ?sub_1018d700@@YAXXZ sub_1018d700
+0x1018d770 func   ??0CVProfPanel@@QAE@PBD@Z CVProfPanel::CVProfPanel
 0x1018da50 func   ??_GCVProfPanel@@UAEPAXI@Z ??_GCVProfPanel@@UAEPAXI@Z
 0x1018da70 func   ??1CVProfPanel@@UAE@XZ CVProfPanel::~CVProfPanel
 0x1018dab0 func   ?vfunc74@CVProfPanel@@UAEHH@Z CVProfPanel::vfunc74
