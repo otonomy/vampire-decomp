@@ -1557,6 +1557,7 @@
 0x10020630 func   ?_C_ItemGGargoyleBook_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGGargoyleBook_CreateObject
 0x100206f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGGargoyleBook@@@Z ClientClassInit
 0x10020780 func   ?vfunc17@C_ItemGVVPhoto@@UAEHXZ C_ItemGVVPhoto::vfunc17
+0x100207c0 func   ?sub_100207c0@@YAHXZ sub_100207c0
 0x10020810 func   ??_GC_ItemGVVPhoto@@UAEPAXI@Z ??_GC_ItemGVVPhoto@@UAEPAXI@Z
 0x10020830 func   ?vfunc16@C_ItemGVVPhoto@@UAEHXZ C_ItemGVVPhoto::vfunc16
 0x10020840 func   ?vfunc15@C_ItemGVVPhoto@@UAEHXZ C_ItemGVVPhoto::vfunc15
