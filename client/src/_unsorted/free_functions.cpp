@@ -16230,6 +16230,32 @@ template <> int ClientClassInit<DT_ItemKHitmanLuKey::ignored>(DT_ItemKHitmanLuKe
 }
 // END FUNCTION
 
+// FUNCTION: 0x100261c0 size=0x45
+namespace lifted {
+extern char g_10222374;
+extern char g_10222388;
+extern char g_102223c4;
+extern char g_102223fc;
+extern char g_10222454;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100261c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10222454;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_102223fc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_102223c4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10222388;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10222374;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10026250 size=0x6
 namespace lifted {
 extern char g_102e1e3c;
