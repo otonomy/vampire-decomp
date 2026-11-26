@@ -2438,6 +2438,7 @@
 0x100417c0 func   ?DrawCube@C_TestTraceline@@QAEXAAVVector@@PAE@Z C_TestTraceline::DrawCube
 0x100417c0 func   ?sub_100417c0@C_TestTraceline@@QAEXAAVVector@@PAE@Z C_TestTraceline::sub_100417c0
 0x10041e00 func   ?sub_10041e00@S10041e00@@QAEXPBM@Z S10041e00::sub_10041e00
+0x10041e30 func   ?DrawModel@C_TestTraceline@@UAEHHH@Z C_TestTraceline::DrawModel
 0x100421e0 func   ?sub_100421e0@CUnknown100421e0@@QAEPAXXZ CUnknown100421e0::sub_100421e0
 0x100421f0 func   ?sub_100421f0@MeshDim@@QAEXHH@Z MeshDim::sub_100421f0
 0x10042370 func   ?sub_10042370@CUnknown10042370@@QAEPAXXZ CUnknown10042370::sub_10042370
