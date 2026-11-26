@@ -9,12 +9,9 @@ class Beam_t : public CDefaultClientRenderable
 public:
 	Beam_t();
 	void sub_10192db0();
-	int m_unk8;
-	int m_unkc;
-	int m_unk10;
-	int m_unk14;
-	int m_unk18;
-	int m_unk1c;
+	void sub_10192f20();	// ComputeBounds
+	Vector m_Mins;		// 0x08
+	Vector m_Maxs;		// 0x14
 	int m_unk20;
 	int m_unk24;
 	int type;			// 0x28
