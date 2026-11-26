@@ -116130,6 +116130,91 @@ int sub_1018f600()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10190390 size=0x2a9
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "ConVar.h"
+#include "C_BasePlayer.h"
+#include "engineclient.h"
+#include <math.h>
+
+struct IInput_1027ba58
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+	virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+	virtual void v24(); virtual void v25();
+	virtual bool v26();
+	virtual float v27();
+};
+extern IInput_1027ba58 *g_1027ba58;
+extern int g_104e16f4;
+extern float g_104e16f8;
+extern ConVar g_104d3088;
+extern ConVar g_105fc3e8;
+extern ConVar g_105fc760;
+
+struct pitchdrift_t
+{
+	float pitchvel;
+	bool nodrift;
+	float driftmove;
+};
+#define m_PitchDrift (*(pitchdrift_t *)((char *)this + 0x2a0))
+
+void CViewRender::sub_10190390()
+{
+	ScopeTrace st("CViewRender::DriftPitch", g_102de300);
+	float delta, move;
+	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
+	if (!player)
+		return;
+	if (g_1027ba58->v26() || g_104e16f4 == -1 || render->vfunc35())
+	{
+		m_PitchDrift.driftmove = 0;
+		m_PitchDrift.pitchvel = 0;
+		return;
+	}
+	if (m_PitchDrift.nodrift)
+	{
+		if (fabs(g_1027ba58->v27()) < g_104d3088.GetFloat())
+			m_PitchDrift.driftmove = 0;
+		else
+			m_PitchDrift.driftmove += engine->vfunc41(0);
+		if (m_PitchDrift.driftmove > g_105fc3e8.GetFloat())
+			vfunc8();
+		return;
+	}
+	delta = g_104e16f8 - player->GetAbsAngles()[0];
+	if (!delta)
+	{
+		m_PitchDrift.pitchvel = 0;
+		return;
+	}
+	move = engine->vfunc41(0) * m_PitchDrift.pitchvel;
+	m_PitchDrift.pitchvel += engine->vfunc41(0) * g_105fc760.GetFloat();
+	if (delta > 0)
+	{
+		if (move > delta)
+		{
+			m_PitchDrift.pitchvel = 0;
+			move = delta;
+		}
+		player->sub_100a2100(player->GetAbsAngles() + QAngle(move, 0, 0));
+	}
+	else if (delta < 0)
+	{
+		if (move > -delta)
+		{
+			m_PitchDrift.pitchvel = 0;
+			move = -delta;
+		}
+		player->sub_100a2100(player->GetAbsAngles() - QAngle(move, 0, 0));
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101907a0 size=0xaa
 #include "Vector.h"
 #include "QAngle.h"
