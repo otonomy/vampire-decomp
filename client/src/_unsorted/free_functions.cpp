@@ -137460,6 +137460,105 @@ void sub_10194d30(float *table, int n)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10194e20 size=0x245
+#include "CViewRenderBeams.h"
+#include "CGlobalVarsBase.h"
+#include "engineclient.h"
+
+struct BeamTrail_10194e20
+{
+	BeamTrail_10194e20 *next;
+	float die;
+	Vector org;
+	Vector vel;
+};
+
+extern Vector g_104d4970;	// vec3_origin
+void sub_10108fd0(const float *start, float scale, const float *direction, float *dest);	// VectorMA
+void sub_10085ad0(const char *spritemodel, void *pHead, int frame, int rendermode, Vector &delta, Vector &screen, Vector &screenLast, float die, const Vector &source, int flags, float width, float amplitude, float freq, float *color);
+
+void CViewRenderBeams::sub_10194e20(const char *sprite, Beam_t *pbeam, int frame, int rendermode, float frametime, float *color)
+{
+	BeamTrail_10194e20 *particles;
+	BeamTrail_10194e20 *pnew;
+	float div;
+	Vector delta;
+	Vector screenLast;
+	Vector screen;
+
+	sub_101947b0(&pbeam->trail);
+
+	particles = (BeamTrail_10194e20 *)pbeam->trail;
+	pnew = 0;
+
+	div = 0;
+	if (pbeam->flags & 1)
+	{
+		if (particles)
+		{
+			VectorSubtract(particles->org, pbeam->attachment[0], delta);
+			div = VectorLength(delta);
+
+			if (div >= 32 && m_unk1bc14)
+			{
+				pnew = (BeamTrail_10194e20 *)m_unk1bc14;
+				m_unk1bc14 = (int)pnew->next;
+			}
+		}
+		else if (m_unk1bc14)
+		{
+			pnew = (BeamTrail_10194e20 *)m_unk1bc14;
+			m_unk1bc14 = (int)pnew->next;
+			div = 0;
+		}
+	}
+
+	if (pnew)
+	{
+		VectorCopy(pbeam->attachment[0], pnew->org);
+		pnew->die = gpGlobals->curtime + pbeam->amplitude;
+		VectorCopy(g_104d4970, pnew->vel);
+
+		pbeam->die = gpGlobals->curtime + pbeam->amplitude;
+		pnew->next = particles;
+		pbeam->trail = pnew;
+		particles = pnew;
+	}
+
+	if (!particles)
+		return;
+
+	if (!pnew && div != 0)
+	{
+		VectorCopy(pbeam->attachment[0], delta);
+		debugoverlay->vfunc10(pbeam->attachment[0], screenLast);
+		debugoverlay->vfunc10(particles->org, screen);
+	}
+	else if (particles->next)
+	{
+		VectorCopy(particles->org, delta);
+		debugoverlay->vfunc10(particles->org, screenLast);
+		debugoverlay->vfunc10(particles->next->org, screen);
+		particles = particles->next;
+	}
+	else
+	{
+		return;
+	}
+
+	sub_10085ad0(sprite, pbeam->trail, frame, rendermode, delta, screen, screenLast,
+		pbeam->die, pbeam->attachment[0], pbeam->flags, pbeam->width,
+		pbeam->amplitude, pbeam->freq, color);
+
+	particles = (BeamTrail_10194e20 *)pbeam->trail;
+	while (particles)
+	{
+		sub_10108fd0(&particles->org.x, frametime, &particles->vel.x, &particles->org.x);
+		particles = particles->next;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10195070 size=0x4aa
 #include "CViewRenderBeams.h"
 #include <math.h>
