@@ -9711,6 +9711,7 @@
 0x101b4630 func   ?sub_101b4630@CUnknown101b4630@@QAEHXZ CUnknown101b4630::sub_101b4630
 0x101b4640 func   ?sub_101b4640@CUnknown101b4640@@QAEHXZ CUnknown101b4640::sub_101b4640
 0x101b4650 func   ?sub_101b4650@CUnknown101b4650@@QAEHXZ CUnknown101b4650::sub_101b4650
+0x101b4660 func   ??0EditablePanel@vgui2@@QAE@PAVPanel@1@PBD@Z vgui2::EditablePanel::EditablePanel
 0x101b46c0 func   ??_GEditablePanel@vgui2@@UAEPAXI@Z ??_GEditablePanel@vgui2@@UAEPAXI@Z
 0x101b4740 func   ??1EditablePanel@vgui2@@UAE@XZ vgui2::EditablePanel::~EditablePanel
 0x101b4780 func   ?vfunc10@EditablePanel@vgui2@@UAEXH@Z vgui2::EditablePanel::vfunc10
