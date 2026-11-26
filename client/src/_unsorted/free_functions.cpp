@@ -18631,6 +18631,143 @@ int CUnknown10041790::sub_10041790(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100417c0 size=0x34b
+#include "C_TestTraceline.h"
+#include "CMeshBuilder.h"
+#include "engineclient.h"
+
+struct IMeshView	// the dynamic mesh materials->GetDynamicMesh returns
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void Draw(int firstIndex, int numIndices);	// slot 12
+};
+
+struct CIC
+{
+	void sub_100052c0(const unsigned char *rgba);	// Color4ubv
+};
+
+struct S10041e00
+{
+	void sub_10041e00(const float *v);	// Position3fv
+};
+
+struct CMeshBuilderLocal : public CMeshBuilder	// CMeshBuilder's inline constructor
+{
+	CMeshBuilderLocal()
+	{
+		m_unk80[0] = 0;
+		m_unk80[2] = 0;
+		m_unk80[3] = 0;
+		m_n90 = 0;
+		m_nCurrentIndex = 0;
+		m_i98 = 0;
+		m_nIndexCount = 0;
+		*(bool *)&m_unka0[1] = false;
+	}
+};
+
+#define CUBE_SIZE 5.0f
+
+void C_TestTraceline::sub_100417c0(Vector &center, unsigned char *pColor)
+{
+	Vector facePoints[8];
+	Vector bmins, bmaxs;
+
+	bmins[0] = center[0] - CUBE_SIZE;
+	bmins[1] = center[1] - CUBE_SIZE;
+	bmins[2] = center[2] - CUBE_SIZE;
+
+	bmaxs[0] = center[0] + CUBE_SIZE;
+	bmaxs[1] = center[1] + CUBE_SIZE;
+	bmaxs[2] = center[2] + CUBE_SIZE;
+
+	facePoints[0][0] = bmins[0];
+	facePoints[0][1] = bmins[1];
+	facePoints[0][2] = bmins[2];
+
+	facePoints[1][0] = bmins[0];
+	facePoints[1][1] = bmins[1];
+	facePoints[1][2] = bmaxs[2];
+
+	facePoints[2][0] = bmins[0];
+	facePoints[2][1] = bmaxs[1];
+	facePoints[2][2] = bmins[2];
+
+	facePoints[3][0] = bmins[0];
+	facePoints[3][1] = bmaxs[1];
+	facePoints[3][2] = bmaxs[2];
+
+	facePoints[4][0] = bmaxs[0];
+	facePoints[4][1] = bmins[1];
+	facePoints[4][2] = bmins[2];
+
+	facePoints[5][0] = bmaxs[0];
+	facePoints[5][1] = bmins[1];
+	facePoints[5][2] = bmaxs[2];
+
+	facePoints[6][0] = bmaxs[0];
+	facePoints[6][1] = bmaxs[1];
+	facePoints[6][2] = bmins[2];
+
+	facePoints[7][0] = bmaxs[0];
+	facePoints[7][1] = bmaxs[1];
+	facePoints[7][2] = bmaxs[2];
+
+	int nFaces[6][4] =
+	{
+		{ 0, 2, 3, 1 },
+		{ 0, 1, 5, 4 },
+		{ 4, 5, 7, 6 },
+		{ 2, 6, 7, 3 },
+		{ 1, 3, 7, 5 },
+		{ 0, 4, 6, 2 }
+	};
+
+	for (int nFace = 0; nFace < 6; nFace++)
+	{
+		int nP1, nP2, nP3, nP4;
+
+		nP1 = nFaces[nFace][0];
+		nP2 = nFaces[nFace][1];
+		nP3 = nFaces[nFace][2];
+		nP4 = nFaces[nFace][3];
+
+		CMeshBuilderLocal meshBuilder;
+		IMeshView *pMesh = (IMeshView *)materials->GetDynamicMesh(true, 0, 0, 0);
+		meshBuilder.sub_10041b10(pMesh, 5, 4);
+
+		float *pDst = (float *)meshBuilder.m_a8;
+		const float *v = facePoints[nP1].Base();
+		*pDst++ = *v++;
+		*pDst++ = *v++;
+		*pDst = *v;
+		((CIC *)&meshBuilder)->sub_100052c0(pColor);
+		meshBuilder.sub_10005230();
+
+		pDst = (float *)meshBuilder.m_a8;
+		v = facePoints[nP2].Base();
+		*pDst++ = *v++;
+		*pDst++ = *v++;
+		*pDst = *v;
+		((CIC *)&meshBuilder)->sub_100052c0(pColor);
+		meshBuilder.sub_10005230();
+
+		((S10041e00 *)&meshBuilder)->sub_10041e00(facePoints[nP3].Base());
+		((CIC *)&meshBuilder)->sub_100052c0(pColor);
+		meshBuilder.sub_10005230();
+
+		((S10041e00 *)&meshBuilder)->sub_10041e00(facePoints[nP4].Base());
+		((CIC *)&meshBuilder)->sub_100052c0(pColor);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_10041c90(false, false);
+		pMesh->Draw(-1, 0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10041e00 size=0x22
 struct S10041e00 {
 	char pad[0xa8];
