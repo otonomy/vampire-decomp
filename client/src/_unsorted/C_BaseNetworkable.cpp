@@ -65,6 +65,20 @@ void C_BaseNetworkable::NotifyShouldTransmit(int state)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a3a00 size=0x30
+#include "C_BaseNetworkable.h"
+
+bool sub_100cc190(IClientNetworkable *ent, int updateType, int *storedEvent);	// AddDataChangeEvent
+
+void C_BaseNetworkable::PreDataUpdate(int updateType)
+{
+	if (sub_100cc190(this, updateType, &m_unkc))
+	{
+		OnPreDataChanged(updateType);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a3a90 size=0x1c
 #include "C_BaseNetworkable.h"
 __declspec(dllimport) void DevMsg(int, const char *, ...);
