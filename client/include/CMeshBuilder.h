@@ -6,6 +6,8 @@ public:
 	void sub_10081820(const float *v);
 	int m_i0; int m_unk4; int m_unk8; int m_ic; int m_i10; int m_unk14; int m_i18; int m_i1c; int m_i20; int m_i24; int m_unk28;
 	void sub_10005230();
+	void sub_10041b10(void *pMesh, int type, int numVertices);	// Begin
+	void sub_10041c90(bool bSpewData, bool bDraw);	// End
 	int m_i2c;
 	int m_unk30[(0x3c - 0x30) / 4];
 	unsigned short m_wIndexOffset;
