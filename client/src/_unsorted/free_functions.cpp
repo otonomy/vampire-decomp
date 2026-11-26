@@ -64978,6 +64978,164 @@ int sub_100f7f30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f7f40 size=0x378
+#include <malloc.h>
+
+struct S3RGBA { unsigned char b, g, r, a; };
+struct DXTAlphaBlock3BitLinear { unsigned char alpha0; unsigned char alpha1; unsigned char stuff[6]; };
+struct DXTColBlock { unsigned short col0; unsigned short col1; unsigned char row[4]; };
+struct Color565 { unsigned short nBlue : 5; unsigned short nGreen : 6; unsigned short nRed : 5; };
+
+void sub_100fa5a0(S3RGBA *pImPos, const DXTAlphaBlock3BitLinear *pAlphaBlock, int width);
+
+inline void GetColorBlockColors(DXTColBlock *pBlock, S3RGBA *col_0, S3RGBA *col_1, S3RGBA *col_2, S3RGBA *col_3, unsigned short &wrd)
+{
+	Color565 *pCol;
+
+	pCol = (Color565 *)&(pBlock->col0);
+	col_0->a = 0xff;
+	col_0->r = pCol->nRed;
+	col_0->r <<= 3;
+	col_0->g = pCol->nGreen;
+	col_0->g <<= 2;
+	col_0->b = pCol->nBlue;
+	col_0->b <<= 3;
+
+	pCol = (Color565 *)&(pBlock->col1);
+	col_1->a = 0xff;
+	col_1->r = pCol->nRed;
+	col_1->r <<= 3;
+	col_1->g = pCol->nGreen;
+	col_1->g <<= 2;
+	col_1->b = pCol->nBlue;
+	col_1->b <<= 3;
+
+	if (pBlock->col0 > pBlock->col1)
+	{
+		wrd = ((unsigned short)col_0->r * 2 + (unsigned short)col_1->r) / 3;
+		col_2->r = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->g * 2 + (unsigned short)col_1->g) / 3;
+		col_2->g = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->b * 2 + (unsigned short)col_1->b) / 3;
+		col_2->b = (unsigned char)wrd;
+		col_2->a = 0xff;
+
+		wrd = ((unsigned short)col_0->r + (unsigned short)col_1->r * 2) / 3;
+		col_3->r = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->g + (unsigned short)col_1->g * 2) / 3;
+		col_3->g = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->b + (unsigned short)col_1->b * 2) / 3;
+		col_3->b = (unsigned char)wrd;
+		col_3->a = 0xff;
+	}
+	else
+	{
+		wrd = ((unsigned short)col_0->r + (unsigned short)col_1->r) / 2;
+		col_2->r = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->g + (unsigned short)col_1->g) / 2;
+		col_2->g = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->b + (unsigned short)col_1->b) / 2;
+		col_2->b = (unsigned char)wrd;
+		col_2->a = 0xff;
+
+		col_3->r = 0x00;
+		col_3->g = 0xff;
+		col_3->b = 0xff;
+		col_3->a = 0x00;
+	}
+}
+
+inline void DecodeColorBlock(unsigned int *pImPos, DXTColBlock *pColorBlock, int width, unsigned int *col_0, unsigned int *col_1, unsigned int *col_2, unsigned int *col_3)
+{
+	unsigned int bits;
+	int r, n;
+	const unsigned int masks[] = { 3 << 0, 3 << 2, 3 << 4, 3 << 6 };
+	const int shift[] = { 0, 2, 4, 6 };
+
+	for (r = 0; r < 4; r++, pImPos += width - 4)
+	{
+		for (n = 0; n < 4; n++)
+		{
+			bits = pColorBlock->row[r] & masks[n];
+			bits >>= shift[n];
+			switch (bits)
+			{
+			case 0:
+				*pImPos = *col_0;
+				pImPos++;
+				break;
+			case 1:
+				*pImPos = *col_1;
+				pImPos++;
+				break;
+			case 2:
+				*pImPos = *col_2;
+				pImPos++;
+				break;
+			case 3:
+				*pImPos = *col_3;
+				pImPos++;
+				break;
+			default:
+				pImPos++;
+				break;
+			}
+		}
+	}
+}
+
+void sub_100f7f40(const unsigned char *src, unsigned char *dst, int width, int height)
+{
+	int realWidth = 0;
+	int realHeight = 0;
+	unsigned char *realDst = 0;
+
+	if (width < 4 || height < 4)
+	{
+		realWidth = width;
+		realHeight = height;
+		width = (width + 3) & ~3;
+		height = (height + 3) & ~3;
+		realDst = dst;
+		dst = (unsigned char *)_alloca(width * height * 4);
+	}
+
+	int xblocks, yblocks;
+	xblocks = width >> 2;
+	yblocks = height >> 2;
+
+	S3RGBA *pDstScan;
+	DXTColBlock *pBlock;
+	DXTAlphaBlock3BitLinear *pAlphaBlock;
+	S3RGBA col_0, col_1, col_2, col_3;
+	unsigned short wrd;
+
+	int i, j;
+	for (j = 0; j < yblocks; j++)
+	{
+		pBlock = (DXTColBlock *)((unsigned int)src + j * xblocks * 16);
+		for (i = 0; i < xblocks; i++, pBlock++)
+		{
+			pAlphaBlock = (DXTAlphaBlock3BitLinear *)pBlock;
+			pBlock++;
+			GetColorBlockColors(pBlock, &col_0, &col_1, &col_2, &col_3, wrd);
+			pDstScan = (S3RGBA *)dst + i * 4 + j * 4 * width;
+			DecodeColorBlock((unsigned int *)pDstScan, pBlock, width, (unsigned int *)&col_0, (unsigned int *)&col_1, (unsigned int *)&col_2, (unsigned int *)&col_3);
+			sub_100fa5a0(pDstScan, pAlphaBlock, width);
+		}
+	}
+
+	if (realDst)
+	{
+		for (int y = 0; y < realHeight; y++)
+		{
+			for (int x = 0; x < realWidth; x++)
+				((S3RGBA *)realDst)[y * realWidth + x] = ((S3RGBA *)dst)[y * width + x];
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100f86a0 size=0x17
 struct CUnknown100f86a0 { char sub_100f86a0(int); };
 char CUnknown100f86a0::sub_100f86a0(int a0)
