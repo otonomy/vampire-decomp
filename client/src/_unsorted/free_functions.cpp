@@ -9390,6 +9390,32 @@ template <> int ClientClassInit<DT_ItemGDrugsPillBottle::ignored>(DT_ItemGDrugsP
 }
 // END FUNCTION
 
+// FUNCTION: 0x10017440 size=0x45
+namespace lifted {
+extern char g_10205a44;
+extern char g_10205a58;
+extern char g_10205a94;
+extern char g_10205acc;
+extern char g_10205b24;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10017440()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10205b24;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10205acc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10205a94;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10205a58;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10205a44;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100174d0 size=0x6
 namespace lifted {
 extern char g_102e5be8;

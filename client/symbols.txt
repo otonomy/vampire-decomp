@@ -1085,6 +1085,7 @@
 0x100172b0 func   ?_C_ItemGDrugsPillBottle_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGDrugsPillBottle_CreateObject
 0x10017370 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGDrugsPillBottle@@@Z ClientClassInit
 0x10017400 func   ?vfunc17@C_ItemGDrugsDrugBox@@UAEHXZ C_ItemGDrugsDrugBox::vfunc17
+0x10017440 func   ?sub_10017440@@YAHXZ sub_10017440
 0x10017490 func   ??_GC_ItemGDrugsDrugBox@@UAEPAXI@Z ??_GC_ItemGDrugsDrugBox@@UAEPAXI@Z
 0x100174b0 func   ?vfunc16@C_ItemGDrugsDrugBox@@UAEHXZ C_ItemGDrugsDrugBox::vfunc16
 0x100174c0 func   ?vfunc15@C_ItemGDrugsDrugBox@@UAEHXZ C_ItemGDrugsDrugBox::vfunc15
