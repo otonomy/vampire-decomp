@@ -63645,6 +63645,107 @@ void sub_100fa2e0(S3RGBA *pImPos, DXTAlphaBlock3BitLinear const *pAlphaBlock, in
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fa5a0 size=0x2bc
+typedef unsigned char BYTE;
+typedef unsigned long DWORD;
+
+struct S3RGBA
+{
+	BYTE r, g, b, a;
+};
+
+struct DXTAlphaBlock3BitLinear
+{
+	BYTE alpha0;
+	BYTE alpha1;
+	BYTE stuff[6];
+};
+
+void sub_100fa5a0(S3RGBA *pImPos, DXTAlphaBlock3BitLinear const *pAlphaBlock, int width)
+{
+	static BYTE gBits[4][4];
+	static unsigned short gAlphas[8];
+	static S3RGBA gACol[4][4];
+
+	gAlphas[0] = pAlphaBlock->alpha0;
+	gAlphas[1] = pAlphaBlock->alpha1;
+
+	if (gAlphas[0] > gAlphas[1])
+	{
+		gAlphas[2] = (6 * gAlphas[0] + gAlphas[1]) / 7;
+		gAlphas[3] = (5 * gAlphas[0] + 2 * gAlphas[1]) / 7;
+		gAlphas[4] = (4 * gAlphas[0] + 3 * gAlphas[1]) / 7;
+		gAlphas[5] = (3 * gAlphas[0] + 4 * gAlphas[1]) / 7;
+		gAlphas[6] = (2 * gAlphas[0] + 5 * gAlphas[1]) / 7;
+		gAlphas[7] = (gAlphas[0] + 6 * gAlphas[1]) / 7;
+	}
+	else
+	{
+		gAlphas[2] = (4 * gAlphas[0] + gAlphas[1]) / 5;
+		gAlphas[3] = (3 * gAlphas[0] + 2 * gAlphas[1]) / 5;
+		gAlphas[4] = (2 * gAlphas[0] + 3 * gAlphas[1]) / 5;
+		gAlphas[5] = (gAlphas[0] + 4 * gAlphas[1]) / 5;
+		gAlphas[6] = 0;
+		gAlphas[7] = 255;
+	}
+
+	const DWORD mask = 0x00000007;
+	DWORD bits = *((DWORD *)&(pAlphaBlock->stuff[0]));
+
+	gBits[0][0] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[0][1] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[0][2] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[0][3] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[1][0] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[1][1] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[1][2] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[1][3] = (BYTE)(bits & mask);
+
+	bits = *((DWORD *)&(pAlphaBlock->stuff[3]));
+
+	gBits[2][0] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[2][1] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[2][2] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[2][3] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[3][0] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[3][1] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[3][2] = (BYTE)(bits & mask);
+	bits >>= 3;
+	gBits[3][3] = (BYTE)(bits & mask);
+
+	int row, pix;
+	for (row = 0; row < 4; row++)
+	{
+		for (pix = 0; pix < 4; pix++)
+		{
+			gACol[row][pix].a = (BYTE)gAlphas[gBits[row][pix]];
+		}
+	}
+
+	for (row = 0; row < 4; row++, pImPos += width - 4)
+	{
+		for (pix = 0; pix < 4; pix++)
+		{
+			pImPos->a = gACol[row][pix].a;
+			pImPos++;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fbd70 size=0xe
 namespace lifted {
 extern int g_1027ba58;
