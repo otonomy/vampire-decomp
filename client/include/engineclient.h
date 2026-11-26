@@ -37,7 +37,7 @@ public:
 	virtual void vfunc11(int, void *);	// slot 11
 	virtual void vfunc12(void *);	// slot 12; shapes differ
 	virtual void vfunc13();
-	virtual void vfunc14();
+	virtual int vfunc14();	// slot 14: the map version (CFPSPanel's "map: %s [ver: %d]")
 	virtual void vfunc15();
 	virtual void vfunc16();
 	virtual void vfunc17();
