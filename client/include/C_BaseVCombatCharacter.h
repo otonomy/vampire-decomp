@@ -46,5 +46,6 @@ public:
 	int m_mod3[17];
 	VStatBindPair_t m_pair3;
 	int sub_1008ebb0();
+	bool sub_1008eb70();	// a flag of the character's clan record (0x105e74fc table, +0x8c)
 	int sub_1014db90(class C_BaseVCombatCharacter *pTarget, int a, int b);
 };
