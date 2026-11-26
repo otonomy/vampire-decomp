@@ -12630,6 +12630,32 @@ template <> int ClientClassInit<DT_ItemGMercurioJournal::ignored>(DT_ItemGMercur
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001e4c0 size=0x45
+namespace lifted {
+extern char g_102132d4;
+extern char g_102132e8;
+extern char g_10213324;
+extern char g_1021335c;
+extern char g_102133b4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001e4c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_102133b4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1021335c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10213324;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_102132e8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_102132d4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001e550 size=0x6
 namespace lifted {
 extern char g_102e16b0;
