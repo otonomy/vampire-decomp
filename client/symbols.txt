@@ -4712,6 +4712,7 @@
 0x100cbb60 func   ?vfunc15@CHLClient@@UAEHHM@Z CHLClient::vfunc15
 0x100cbb80 func   ?IN_Accumulate@CHLClient@@UAEXXZ CHLClient::IN_Accumulate
 0x100cbb80 func   ?vfunc16@CHLClient@@UAEHXZ CHLClient::vfunc16
+0x100cbb90 func   ?IN_ClearStates@CHLClient@@UAEXXZ CHLClient::IN_ClearStates
 0x100cbb90 func   ?vfunc17@CHLClient@@UAEHXZ CHLClient::vfunc17
 0x100cbba0 func   ?vfunc18@CHLClient@@UAEHXZ CHLClient::vfunc18
 0x100cbbb0 func   ?vfunc19@CHLClient@@UAEHXZ CHLClient::vfunc19
