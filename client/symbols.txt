@@ -3839,6 +3839,7 @@
 0x10092540 func   ?sub_10092540@RendX@@QAEHHH@Z RendX::sub_10092540
 0x10092810 func   ?sub_10092810@C_BaseAnimating@@QAEHXZ C_BaseAnimating::sub_10092810
 0x10092970 func   ?vfunc125@C_BaseAnimating@@UAEHHH@Z C_BaseAnimating::vfunc125
+0x10093370 func   ?DoAnimationEvents@C_BaseAnimating@@UAEXXZ C_BaseAnimating::DoAnimationEvents
 0x10093e20 func   ?sub_10093e20@CUnknown10093e20@@QAEHH@Z CUnknown10093e20::sub_10093e20
 0x10093e40 func   ?sub_10093e40@C_BaseAnimating@@QAE_NXZ C_BaseAnimating::sub_10093e40
 0x10093e90 func   ?sub_10093e90@AnimV_10093e90@@QAEN_N@Z AnimV_10093e90::sub_10093e90
