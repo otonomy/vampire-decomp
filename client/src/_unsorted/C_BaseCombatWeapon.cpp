@@ -1438,6 +1438,186 @@ int C_BaseCombatWeapon::vfunc163()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009b2c0 size=0x630
+#include "C_BaseCombatWeapon.h"
+#include "C_BasePlayer.h"
+#include "CBaseHandle.h"
+#include "ehandle.h"
+#include "CHud.h"
+
+void sub_1009c1a0();
+void sub_10064bb0();
+void sub_1009c6b0(C_BaseCombatWeapon *pWeapon);
+extern "C" void *memmove(void *, const void *, unsigned int);
+
+struct WpnEntListView { void *sub_1007aca0(const CBaseHandle *h); };
+struct WpnHistoryView { void sub_100f01a0(int type, C_BaseCombatWeapon *pWeapon, int count); };
+
+static inline void *WpnLookup(const CBaseHandle &h)
+{
+	return ((WpnEntListView *)g_pEntityList)->sub_1007aca0(&h);
+}
+
+struct WpnHandleVec
+{
+	CBaseHandle *m_pMemory;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+	int m_Size;
+	CBaseHandle *m_pElements;
+
+	void sub_1009ce10(int num);
+	void sub_1009cea0(int elem, int num);
+	void sub_1007db30(int elem, int num);
+	void sub_1009cf00(int num);
+
+	int Find(const CBaseHandle &src)
+	{
+		for (int i = 0; i < m_Size; i++) {
+			const CBaseHandle &e = m_pMemory[i];
+			void *pEnt = WpnLookup(src);
+			if (e.Get() == pEnt)
+				return i;
+		}
+		return -1;
+	}
+	int FindLookup(const CBaseHandle &src)
+	{
+		for (int i = 0; i < m_Size; i++) {
+			if (WpnLookup(m_pMemory[i]) == WpnLookup(src))
+				return i;
+		}
+		return -1;
+	}
+	void RemoveInline(int elem)
+	{
+		int numToMove = m_Size - elem - 1;
+		if (numToMove > 0)
+			memmove(&m_pMemory[elem], &m_pMemory[elem + 1], numToMove * sizeof(CBaseHandle));
+		m_Size--;
+	}
+};
+CBaseHandle *sub_1009cee0(CBaseHandle *pMem, const CBaseHandle &src);
+
+extern WpnHandleVec g_1049d8f8;
+extern WpnHandleVec g_1049d964;
+extern WpnHandleVec g_1049d978;
+
+struct WpnOwnerView
+{
+	char m_pad0000[0x3f0];
+	struct WpnOwnerSub { char m_pad[0xfd0]; int m_nFD0; } *m_p3f0;
+};
+
+#define WF(T, off) (*(T *)((char *)this + (off)))
+
+void C_BaseCombatWeapon::OnDataChanged(int updateType)
+{
+	sub_1009c1a0();
+	C_BaseAnimating::OnDataChanged(updateType);
+	bool bNew = (updateType == 0);
+	CBaseHandle hThis;
+	C_BaseCombatWeapon *pThis = this;
+	hThis.m_Index = pThis ? *pThis->vfunc1() : 0xffffffff;
+
+	if (bNew) {
+		if (g_1049d964.Find(hThis) == -1) {
+			int elem = g_1049d964.m_Size;
+			g_1049d964.sub_1009ce10(1);
+			g_1049d964.sub_1009cea0(elem, 1);
+			CBaseHandle *p = &g_1049d964.m_pMemory[elem];
+			if (p)
+				*p = hThis;
+		}
+	}
+
+	C_BasePlayer *pLocal = C_BasePlayer::GetLocalPlayer();
+	if (!(pLocal && sub_1009b8f0() && sub_1007bab0() == pLocal)) {
+		if (!bNew) {
+			if (WF(int, 0x964) != 1 && WF(int, 0x964) != 2) {
+				if (WF(int, 0x934) == 0 && sub_1007bab0() && sub_1007bab0() != pLocal)
+					sub_1009c6b0(pThis);
+			} else {
+				int i = g_1049d8f8.FindLookup(hThis);
+				if (i != -1) {
+					g_1049d8f8.sub_1007db30(i, 1);
+					g_1049d8f8.m_Size--;
+				}
+				pLocal->vfunc190(pThis);
+			}
+		}
+		if (sub_1009b8f0()) {
+			WpnOwnerView *pOwner = (WpnOwnerView *)sub_1007bab0();
+			if (pOwner && pOwner->m_p3f0) {
+				if (!pOwner->m_p3f0->m_nFD0)
+					sub_100a06f0(WF(int, 0x7cc));
+				else
+					sub_100a06f0(WF(int, 0x7d0));
+			} else {
+				sub_100a06f0(WF(int, 0x924));
+			}
+		} else {
+			sub_100a06f0(WF(int, 0x924));
+		}
+		if (WF(int, 0x934) != 0 || WF(int, 0x964) == 0)
+			return;
+	}
+
+	if (!((WF(int, 0x934) == 1 || WF(int, 0x934) == 2) && (bNew || WF(int, 0x964) == 0))) {
+		if (WF(int, 0x934) == 0 && WF(int, 0x964) != 0) {
+			int i = g_1049d8f8.Find(hThis);
+			if (i != -1)
+				g_1049d8f8.RemoveInline(i);
+		}
+	} else {
+		if (g_1049d8f8.Find(hThis) == -1) {
+			int elem = g_1049d8f8.m_Size;
+			if (g_1049d8f8.m_Size + 1 > g_1049d8f8.m_nAllocationCount)
+				g_1049d8f8.sub_1009cf00(g_1049d8f8.m_Size + 1 - g_1049d8f8.m_nAllocationCount);
+			g_1049d8f8.m_Size++;
+			g_1049d8f8.m_pElements = g_1049d8f8.m_pMemory;
+			g_1049d8f8.sub_1009cea0(elem, 1);
+			sub_1009cee0(&g_1049d8f8.m_pMemory[elem], hThis);
+		}
+		CBaseHandle h2;
+		h2.m_Index = pThis ? *pThis->vfunc1() : 0xffffffff;
+		if (g_1049d978.Find(h2) != -1) {
+			int i = g_1049d978.Find(h2);
+			if (i != -1)
+				g_1049d978.RemoveInline(i);
+			pLocal->vfunc190(pThis);
+		}
+		if (vfunc242()) {
+			WpnHistoryView *pHistory = (WpnHistoryView *)gHUD.FindElement("CHudHistoryResource");
+			pHistory->sub_100f01a0(2, pThis, 0);
+		}
+	}
+
+	if (WF(int, 0x934) >= 2 && WF(int, 0x964) < 2) {
+		if (WF(int, 0x96c) != WF(int, 0x968)) {
+			WF(int, 0x968) = WF(int, 0x96c);
+			WF(float, 0x970) = 255.0f;
+		}
+		sub_1009c250();
+	}
+	if ((WF(int, 0x934) == 2 || WF(int, 0x934) == 0x40) && WF(int, 0x964) == 1) {
+		sub_10064bb0();
+		vfunc188();
+		sub_1009c1a0();
+		return;
+	}
+	if ((WF(int, 0x934) == 2 || WF(int, 0x934) == 0x40) && WF(int, 0x964) == 0) {
+		sub_10064bb0();
+		vfunc188();
+		sub_1009c1a0();
+		return;
+	}
+	if (WF(int, 0x934) == 1 && WF(int, 0x964) == 2)
+		vfunc189(0);
+	sub_1009c1a0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009b990 size=0x3
 #include "C_BaseCombatWeapon.h"
 int C_BaseCombatWeapon::vfunc86()
