@@ -4792,6 +4792,7 @@
 0x100bf1a0 func   ?sub_100bf1a0@CSlider100bf@@QAEXXZ CSlider100bf::sub_100bf1a0
 0x100bf1e0 func   ?sub_100bf1e0@C_RopeKeyframe_Net@@QAEXH@Z C_RopeKeyframe_Net::sub_100bf1e0
 0x100bf360 func   ?sub_100bf360@CFx100bf360@@QAEXM@Z CFx100bf360::sub_100bf360
+0x100bf3f0 func   ?ClientThink@C_RopeKeyframe@@UAEXXZ C_RopeKeyframe::ClientThink
 0x100bf6b0 func   ?sub_100bf6b0@CUnknown100bf6b0@@QAEHHH@Z CUnknown100bf6b0::sub_100bf6b0
 0x100bf700 func   ?sub_100bf700@CUnknown100bf700@@QAEHXZ CUnknown100bf700::sub_100bf700
 0x100bf710 func   ?sub_100bf710@@YIDPAUTrailView@@@Z sub_100bf710
