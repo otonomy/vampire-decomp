@@ -5413,6 +5413,7 @@
 0x100f1420 func   ??_GCHudChatLine@@UAEPAXI@Z ??_GCHudChatLine@@UAEPAXI@Z
 0x100f1440 func   ?vfunc74@CHudChatLine@@UAEHH@Z CHudChatLine::vfunc74
 0x100f14a0 func   ?sub_100f14a0@CUnknown100f14a0@@QAEHHHH@Z CUnknown100f14a0::sub_100f14a0
+0x100f14d0 func   ?vfunc98@CHudChatLine@@UAEXXZ CHudChatLine::vfunc98
 0x100f1780 func   ?sub_100f1780@ChatLineView@@QAEXXZ ChatLineView::sub_100f1780
 0x100f17e0 func   ?sub_100f17e0@CUnknown100f17e0@@QAEHXZ CUnknown100f17e0::sub_100f17e0
 0x100f17f0 func   ?sub_100f17f0@ChatItem@@QAE_NXZ ChatItem::sub_100f17f0
