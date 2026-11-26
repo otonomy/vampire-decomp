@@ -130327,6 +130327,129 @@ void CViewRenderBeams::sub_101947b0(void **ppList)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10194830 size=0x474
+#include "CViewRenderBeams.h"
+#include "engineclient.h"
+#include "CGlobalVarsBase.h"
+#include "ehandle.h"
+#include "Vector.h"
+
+#ifndef min
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+#endif
+#ifndef max
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#endif
+
+void sub_10194d30(float *noise, int divs);	// SineNoise
+void sub_10194cb0(float *noise, int divs, float scale);	// Noise
+bool sub_10192d00(IHandleEntity *pEnt, int nAttachment, Vector *pt);	// ComputeBeamEntPosition
+
+void CViewRenderBeams::sub_10194830(Beam_t *pbeam, float frametime)
+{
+	if (pbeam->modelIndex < 0)
+	{
+		pbeam->die = gpGlobals->curtime;
+		return;
+	}
+
+	if (!(pbeam->flags & 0x100))
+		pbeam->freq += frametime;
+	else
+		pbeam->freq += frametime * enginerandom->RandomFloat(1.0f, 2.0f);
+
+	pbeam->rgNoise[0] = 0;
+	pbeam->rgNoise[128] = 0;
+	if (pbeam->amplitude != 0.0f)
+	{
+		if (!(pbeam->flags & 0x100) || !pbeam->m_bCalculatedNoise)
+		{
+			if (pbeam->flags & 0x10)
+				sub_10194d30(pbeam->rgNoise, 128);
+			else
+				sub_10194cb0(pbeam->rgNoise, 128, 1.0f);
+			pbeam->m_bCalculatedNoise = true;
+		}
+	}
+
+	if (pbeam->flags & 3)
+	{
+		if (!sub_10195d00(pbeam))
+			return;
+
+		VectorSubtract(pbeam->attachment[1], pbeam->attachment[0], pbeam->delta);
+		if (pbeam->amplitude >= 0.50)
+			pbeam->segments = VectorLength(pbeam->delta) * 0.25 + 3;
+		else
+			pbeam->segments = VectorLength(pbeam->delta) * 0.075 + 3;
+	}
+
+	switch (pbeam->type)
+	{
+	case 25:
+		{
+			for (int i = 1; i < pbeam->numAttachments; i++)
+			{
+				if (!sub_10192d00(((CBaseHandle *)&pbeam->m_fill)[i].Get(), pbeam->attachmentIndex[i], &pbeam->attachment[i]))
+				{
+					VectorCopy(pbeam->attachment[i - 1], pbeam->attachment[i]);
+				}
+			}
+		}
+		break;
+
+	case 26:
+		{
+			float dr = pbeam->end_radius - pbeam->start_radius;
+			if (dr != 0.0f)
+			{
+				float frac = 1.0f;
+				float remaining = pbeam->die - gpGlobals->curtime;
+				if (remaining < pbeam->life && pbeam->life > 0.0f)
+				{
+					frac = remaining / pbeam->life;
+				}
+				frac = min(1.0f, frac);
+				frac = max(0.0f, frac);
+
+				frac = 1.0f - frac;
+
+				Vector endpos = pbeam->attachment[2];
+				endpos.x += (pbeam->start_radius + frac * dr) / 2.0f;
+				Vector startpos = pbeam->attachment[2];
+				startpos.x -= (pbeam->start_radius + frac * dr) / 2.0f;
+
+				pbeam->attachment[0] = startpos;
+				pbeam->attachment[1] = endpos;
+
+				VectorSubtract(pbeam->attachment[1], pbeam->attachment[0], pbeam->delta);
+				if (pbeam->amplitude >= 0.50)
+					pbeam->segments = VectorLength(pbeam->delta) * 0.25 + 3;
+				else
+					pbeam->segments = VectorLength(pbeam->delta) * 0.075 + 3;
+			}
+		}
+		break;
+
+	case 0:
+		if (!sub_101937e0(&pbeam->attachment[0], &pbeam->attachment[1], 0))
+			return;
+		break;
+	}
+
+	pbeam->t = pbeam->freq + (pbeam->die - gpGlobals->curtime);
+	if (pbeam->t != 0.0f)
+	{
+		pbeam->t = 1.0 - pbeam->freq / pbeam->t;
+	}
+
+	if (pbeam->fadeLength == 0.0f)
+	{
+		pbeam->fadeLength = VectorLength(pbeam->delta);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10194cb0 size=0x78
 #include "engineclient.h"
 
