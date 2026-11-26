@@ -117198,6 +117198,102 @@ void sub_10179840()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10179850 size=0x3ed
+#include "CharEditEquipPanel.h"
+#include "vgui2__Label.h"
+#include "vgui2__TextEntry.h"
+#include "C_BasePlayer.h"
+#include "CUnknown101ed170.h"
+#include <stdlib.h>
+
+struct SchemeColor
+{
+	SchemeColor() {}
+	int m_raw;
+};
+struct SchemeView
+{
+	virtual void a0(); virtual void a1(); virtual void a2();
+	virtual void *vfunc3(const char *pszName);
+	virtual void a4(); virtual void a5();
+	virtual SchemeColor vfunc6(const char *pszName);
+};
+
+struct CEquipItem_10178790
+{
+	void sub_10178790(bool bOn);
+	int m_data[9];
+};
+extern CEquipItem_10178790 g_105fb458[11];
+extern int g_105fb5e4;
+extern int g_105fb5ec;
+extern int g_105fb5f0;
+extern int g_105e85f8;
+extern CUnknown101ed170 **g_105e85fc;
+
+const char *sub_1017af70(int id, int index);
+const char *sub_1017b000(int id, int index);
+
+static inline CUnknown101ed170 *FindRecord(int id)
+{
+	for (int i = 0; i < g_105e85f8; i++)
+	{
+		if (g_105e85fc[i]->m_id == id)
+			return g_105e85fc[i];
+	}
+	static CUnknown101ed170 s_default(-1);
+	return &s_default;
+}
+
+#define F(type, off) (*(type *)((char *)this + (off)))
+
+void CharEditEquipPanel::sub_10179850()
+{
+	static bool s_bFirst = true;
+
+	SchemeView *pScheme = (SchemeView *)((vgui2::Panel *)this)->sub_101ac830();
+	void *pBorder = pScheme->vfunc3("InfoWinBorder");
+	F(vgui2::TextEntry *, 0x84)->vfunc60(pBorder);
+
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!s_bFirst)
+	{
+		if (!pPlayer || g_105fb5f0 == *(int *)((char *)pPlayer + 0x14c4))
+			return;
+	}
+	s_bFirst = false;
+	if (pPlayer)
+		g_105fb5f0 = *(int *)((char *)pPlayer + 0x14c4);
+	else
+		g_105fb5f0 = 0;
+
+	int i;
+	for (i = 0; i < 11; i++)
+		g_105fb458[i].sub_10178790(false);
+
+	g_105fb5e4 = 0;
+	g_105fb5ec = 0;
+
+	for (i = 0; i < FindRecord(g_105fb5f0)->m_n0c; i++)
+	{
+		if (((int *)FindRecord(g_105fb5f0)->m_p18)[i] & 1)
+			g_105fb458[i].sub_10178790(true);
+	}
+
+	int nOld = g_105fb5ec;
+	for (int j = 0; j < FindRecord(g_105fb5f0)->m_n1c; j++)
+	{
+		if (((int *)FindRecord(g_105fb5f0)->m_p28)[j] & 1)
+			g_105fb5ec = j;
+		g_105fb5e4 -= ((int *)FindRecord(g_105fb5f0)->m_p24)[nOld];
+		g_105fb5e4 += ((int *)FindRecord(g_105fb5f0)->m_p24)[g_105fb5ec];
+		F(vgui2::Label *, 0x80)->vfunc108(sub_1017af70(g_105fb5f0, g_105fb5ec));
+		F(vgui2::Label *, 0x80)->vfunc51(pScheme->vfunc6("VDesHeaderText").m_raw);
+		F(vgui2::TextEntry *, 0x84)->vfunc107(sub_1017b000(g_105fb5f0, g_105fb5ec));
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10179c40 size=0x1fd
 #include "CharEditEquipPanel.h"
 #include "vgui2__Panel.h"
