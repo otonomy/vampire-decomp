@@ -26,5 +26,12 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_unk430;
 	int m_DustFlags;	// 0x434: 2 scale motes by distance, 4 frozen
 	CParticleEffect m_ParticleEffect;
-	char m_pad04a8[0x4b8 - 0x4a8];
+	int m_unk4a8;
+	unsigned char m_hMaterial;	// 0x4ac
+	unsigned char m_unk4ad;
+	unsigned char m_unk4ae;
+	unsigned char m_unk4af;
+	int m_unk4b0;
+	int m_unk4b4;
+	void sub_100babb0();	// AttemptSpawnNewParticle (Source 2003 c_func_dust.cpp)
 };
