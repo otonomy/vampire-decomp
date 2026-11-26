@@ -455,6 +455,130 @@ int C_BaseAnimating::vfunc133()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10095160 size=0x330
+#include "C_BaseAnimating.h"
+#include "CVProfile.h"
+#include "engineclient.h"
+#include "CGlobalVarsBase.h"
+#include "StudioHdr.h"
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "matrix3x4_t.h"
+
+extern CVProfile *g_101e3138;
+__declspec(dllimport) void vtune(bool);
+
+struct CCycleCountS
+{
+	unsigned __int64 m_Int64;
+	CCycleCountS() { m_Int64 = 0; }
+	void Sample()
+	{
+		unsigned long *pSample = (unsigned long *)&m_Int64;
+		__asm
+		{
+			mov ecx, pSample
+			rdtsc
+			mov [ecx], eax
+			mov [ecx+4], edx
+		}
+	}
+};
+
+struct CBaseAnimatingHitView
+{
+	char pad0[0x70];
+	float m_flAnimTime;
+	char pad1[0x564 - 0x74];
+	int m_nHitboxSet;
+	char pad2[0x63c - 0x568];
+	int m_nSequence;
+	char pad3[0x6b4 - 0x640];
+	int m_lastPhysicsBone;
+};
+
+bool sub_1008bb10(const Ray_t &ray, StudioHdr *pStudioHdr, StudioHitboxSet *set, matrix3x4_t **hitboxbones, int fContentsMask, CGameTrace &tr);
+void *sub_1008b5f0(StudioHdr *pStudioHdr, int sequence, float animtime, const QAngle &angles, const Vector &origin, int boneMask);
+void *sub_1008b890(StudioHdr *pStudioHdr, int sequence, float animtime, const QAngle &angles, const Vector &origin, int boneMask, matrix3x4_t *bonetoworld);
+void sub_1008b560(matrix3x4_t **hitboxbones, void *pcache, StudioHdr *pStudioHdr, StudioHitboxSet *set);
+
+static inline void VProfExitOOL()
+{
+	CVProfile *p = g_101e3138;
+	if (!p->m_fAtRoot || p->m_nPause != 0)
+	{
+		if (p->m_pCurNode->ExitScope())
+			p->m_pCurNode = p->m_pCurNode->m_pParent;
+		p->m_fAtRoot = (p->m_pCurNode == p->m_pRoot);
+	}
+}
+
+// TestHitboxes(const Ray_t &ray, unsigned int fContentsMask, trace_t &tr): the slot is still declared (int, int, int) on C_BaseEntity
+bool C_BaseAnimating::vfunc27(int pRay, int nMask, int pTrace)
+{
+	const Ray_t &ray = *(const Ray_t *)pRay;
+	CGameTrace &tr = *(CGameTrace *)pTrace;
+	g_101e3138->EnterScope("C_BaseAnimating::TestCollision", 0, "Unaccounted", false);
+
+	StudioHdr *pStudioHdr = (StudioHdr *)modelinfo->vfunc20(GetModel());
+	if (!pStudioHdr)
+	{
+		VProfExitOOL();
+		return false;
+	}
+
+	CBaseAnimatingHitView *v = (CBaseAnimatingHitView *)this;
+	StudioHitboxSet *set = pStudioHdr->HitboxSet(v->m_nHitboxSet);
+	if (!set || !set->m_nHitboxes || !ray.m_IsRay)
+	{
+		VProfExitOOL();
+		return false;
+	}
+
+	int boneMask = 0xc;
+	void *pcache = sub_1008b5f0(pStudioHdr, v->m_nSequence, v->m_flAnimTime, GetAbsAngles(), GetAbsOrigin(), boneMask);
+	if (!pcache)
+	{
+		matrix3x4_t bonetoworld[350];
+		SetupBones(bonetoworld, 350, boneMask, gpGlobals->curtime, 0);
+		pcache = sub_1008b890(pStudioHdr, v->m_nSequence, v->m_flAnimTime, GetAbsAngles(), GetAbsOrigin(), boneMask, bonetoworld);
+	}
+	matrix3x4_t *hitboxbones[350];
+	sub_1008b560(hitboxbones, pcache, pStudioHdr, set);
+
+	if (sub_1008bb10(ray, pStudioHdr, set, hitboxbones, nMask, tr))
+	{
+		StudioHitbox *pbox = set->Hitbox(tr.m_hitbox);
+		StudioBone *pBone = pStudioHdr->Bone(pbox->m_iBone);
+		tr.m_surfaceName = "**studio**";
+		tr.m_surfaceFlags = 0x8000;
+		tr.m_surfaceProps = physprops->vfunc3((char *)pBone + *(int *)((char *)pBone + 0x98));
+		v->m_lastPhysicsBone = tr.m_physicsbone;
+	}
+
+	CVProfile *p = g_101e3138;
+	if (!p->m_fAtRoot || p->m_nPause != 0)
+	{
+		CVProfNode *node = p->m_pCurNode;
+		if (--node->m_nRecursions == 0 && node->m_nCurFrameCalls != 0)
+		{
+			CCycleCountS cnt;
+			cnt.Sample();
+			node->m_CurFrameTime.v = cnt.m_Int64 - node->m_CurFrameTime.v;
+			node->m_TotalTime += node->m_CurFrameTime;
+			CVProfile *q = g_101e3138;
+			q->m_nDepth--;
+			if (q->m_Stack[q->m_nDepth] != q->m_Stack[q->m_nDepth + 1] && q->m_bEnabled && q->m_Stack[q->m_nDepth + 1] == q->m_nCurBudget)
+				vtune(false);
+		}
+		if (node->m_nRecursions == 0)
+			p->m_pCurNode = p->m_pCurNode->m_pParent;
+		p->m_fAtRoot = (p->m_pCurNode == p->m_pRoot);
+	}
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10095490 size=0x34
 #include "C_BaseAnimating.h"
 float C_BaseAnimating::vfunc138(int iSequence)
