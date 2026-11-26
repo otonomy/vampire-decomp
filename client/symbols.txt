@@ -4833,6 +4833,7 @@
 0x100d2b30 func   ?vfunc9@CClientLeafSystem@@QAE_NHH@Z CClientLeafSystem::vfunc9
 0x100d2b50 func   ?vfunc12@CClientLeafSystem@@QAEXHPAH0H@Z CClientLeafSystem::vfunc12
 0x100d2d50 func   ?vfunc14@CClientLeafSystem@@QAEXPAVCUtlVector4@@@Z CClientLeafSystem::vfunc14
+0x100d2e00 func   ?vfunc13@CClientLeafSystem@@QAEXPAXHH0@Z CClientLeafSystem::vfunc13
 0x100d3310 func   ?vfunc21@CClientLeafSystem@@QAEPAXG@Z CClientLeafSystem::vfunc21
 0x100d3330 func   ?sub_100d3330@LLView2@@QAEHG@Z LLView2::sub_100d3330
 0x100d3370 func   ?sub_100d3370@CUnknown100d3370@@QAEXXZ CUnknown100d3370::sub_100d3370
