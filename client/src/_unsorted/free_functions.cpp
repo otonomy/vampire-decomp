@@ -101904,6 +101904,44 @@ unsigned int sub_10158b00(const char *pszFlags)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10158c80 size=0x270
+#include "CVDmg_t.h"
+#include "ScopeTrace.h"
+
+extern "C" char *__cdecl strcat(char *, const char *);
+extern "C" void *__cdecl memset(void *, int, unsigned int);
+#pragma intrinsic(strcat, memset)
+
+// TARGET: CVDmg_t::sub_10158c80
+char *CVDmg_t::sub_10158c80(int flags)
+{
+	ScopeTrace trace("CVDmg_t::DMGFlagsToStr", g_102de300);
+	static char s_szFlags[128];
+	memset(s_szFlags, 0, sizeof(s_szFlags));
+	if (flags & 0x80)
+		strcat(s_szFlags, "DMG_CLUB ");
+	if (flags & 4)
+		strcat(s_szFlags, "DMG_SLASH ");
+	if (flags & 2)
+		strcat(s_szFlags, "DMG_BULLET ");
+	if (flags & 0x4000000)
+		strcat(s_szFlags, "DMG_BUCKSHOT ");
+	if (flags & 0x40)
+		strcat(s_szFlags, "DMG_BLAST ");
+	if (flags & 0x10000000)
+		strcat(s_szFlags, "DMG_CLAWBITE ");
+	if (flags & 8)
+		strcat(s_szFlags, "DMG_BURN ");
+	if (flags & 0x80000000)
+		strcat(s_szFlags, "DMG_FAITH ");
+	if (flags & 0x40000000)
+		strcat(s_szFlags, "DMG_SUNLIGHT ");
+	if (flags & 0x10000000)
+		strcat(s_szFlags, "DMG_CLAWBITE");
+	return s_szFlags;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10159020 size=0x5f
 struct ScopeEntry { const char *a; const char *b; const char *c; };
 extern ScopeEntry *g_101e3124;
