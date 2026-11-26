@@ -1727,6 +1727,21 @@ template <> int ClientClassInit<DT_WeaponRanged_Animalism::ignored>(DT_WeaponRan
 }
 // END FUNCTION
 
+// FUNCTION: 0x10006440 size=0x1b
+namespace lifted {
+struct C10006fb0 { int sub_10006fb0(); };
+int sub_100a1eb0(int);
+}
+int sub_10006440()
+{
+    int t0 = lifted::sub_100a1eb0(0x9a8);
+    if (t0 != 0) {
+        return ((lifted::C10006fb0 *)t0)->sub_10006fb0();
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10006480 size=0x6
 namespace lifted {
 extern char g_102dfad0;

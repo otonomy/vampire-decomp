@@ -217,6 +217,7 @@
 0x100061b0 func   ?sub_100061b0@@YAHXZ sub_100061b0
 0x10006210 func   ?_C_WeaponRanged_Animalism_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponRanged_Animalism_CreateObject
 0x100062b0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponRanged_Animalism@@@Z ClientClassInit
+0x10006440 func   ?sub_10006440@@YAHXZ sub_10006440
 0x10006460 func   ?vfunc16@C_WeaponRanged_Dementation@@UAEHXZ C_WeaponRanged_Dementation::vfunc16
 0x10006480 func   ?sub_10006480@@YAHXZ sub_10006480
 0x100064e0 func   ?_C_WeaponRanged_Dementation_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponRanged_Dementation_CreateObject
