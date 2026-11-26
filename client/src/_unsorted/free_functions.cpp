@@ -3802,6 +3802,32 @@ template <> int ClientClassInit<DT_WeaponMelee_ChangBlade::ignored>(DT_WeaponMel
 }
 // END FUNCTION
 
+// FUNCTION: 0x1000b140 size=0x45
+namespace lifted {
+extern char g_101ee2e4;
+extern char g_101ee2f8;
+extern char g_101ee334;
+extern char g_101ee36c;
+extern char g_101ee3c4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1000b140()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101ee3c4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101ee36c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101ee334;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101ee2f8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101ee2e4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1000b1d0 size=0x6
 namespace lifted {
 extern char g_102e6754;

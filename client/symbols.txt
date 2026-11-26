@@ -461,6 +461,7 @@
 0x1000afb0 func   ?_C_WeaponMelee_ChangBlade_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_ChangBlade_CreateObject
 0x1000b070 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_ChangBlade@@@Z ClientClassInit
 0x1000b100 func   ?vfunc17@C_WeaponMelee_AVampBlade@@UAEHXZ C_WeaponMelee_AVampBlade::vfunc17
+0x1000b140 func   ?sub_1000b140@@YAHXZ sub_1000b140
 0x1000b190 func   ??_GC_WeaponMelee_AVampBlade@@UAEPAXI@Z ??_GC_WeaponMelee_AVampBlade@@UAEPAXI@Z
 0x1000b1b0 func   ?vfunc16@C_WeaponMelee_AVampBlade@@UAEHXZ C_WeaponMelee_AVampBlade::vfunc16
 0x1000b1c0 func   ?vfunc15@C_WeaponMelee_AVampBlade@@UAEHXZ C_WeaponMelee_AVampBlade::vfunc15
