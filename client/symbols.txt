@@ -7281,6 +7281,7 @@
 0x1014f6c0 func   ?sub_1014f6c0@CUnknown1014f6c0@@QAEPAXH@Z CUnknown1014f6c0::sub_1014f6c0
 0x1014f6f0 func   ?sub_1014f6f0@CUnknown1014f6f0@@QAEHXZ CUnknown1014f6f0::sub_1014f6f0
 0x1014f820 func   ?sub_1014f820@CUnknown101eb820@@QAEXXZ CUnknown101eb820::sub_1014f820
+0x1014f990 func   ?sub_1014f990@BotchLoader@@QAE_NXZ BotchLoader::sub_1014f990
 0x1014fbe0 func   ?sub_1014fbe0@S_1014fbe0@@QAEPAU1@H@Z S_1014fbe0::sub_1014fbe0
 0x1014fc00 func   ?sub_1014fc00@@YAXXZ sub_1014fc00
 0x1014fc10 func   ?sub_1014fc10@CUnknown101ebd30@@QAE_NPAX@Z CUnknown101ebd30::sub_1014fc10

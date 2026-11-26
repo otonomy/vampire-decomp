@@ -95012,6 +95012,91 @@ void CUnknown101eb820::sub_1014f820()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1014f990 size=0x246
+extern "C" int __cdecl sprintf(char *, const char *, ...);
+extern void (*g_101e3108)(const char *, ...);
+struct KVBase { virtual void v0(); virtual void v1(); };
+struct KVNode : virtual KVBase { virtual void k0(); virtual void k1(); virtual KVNode *v2(const char *); virtual KVNode *v3(); };
+struct BotchItem { BotchItem *sub_1014f6c0(int id); void sub_1014f6f0(); void sub_1014f700(KVNode *); char pad[0x58]; };
+struct BotchLoader {
+	int m_nGrow;
+	int m_nNext;
+	int m_nName;
+	int m_nTypes;
+	int m_nAlloc;
+	int m_nSize;
+	BotchItem **m_pData;
+	bool sub_1014f990();
+};
+KVNode *sub_101545c0(char *, void *);
+extern void *g_104a580c;
+struct KVT { int v; };
+KVT *sub_1015f810(KVT *, KVNode *);
+KVT *sub_1015f7e0(KVT *, KVNode *, const char *);
+
+// TARGET: BotchLoader::sub_1014f990
+bool BotchLoader::sub_1014f990()
+{
+	if (m_pData) {
+		for (int i = 0; i < m_nSize; i++) {
+			BotchItem *p = m_pData[i];
+			if (p) {
+				p->sub_1014f6f0();
+				delete p;
+			}
+			m_pData[i] = 0;
+		}
+		delete [] m_pData;
+		m_pData = 0;
+	}
+	char path[0x80];
+	m_nNext = 0;
+	m_nSize = 0;
+	m_nAlloc = 0;
+	sprintf(path, "%s%s.txt", "vdata\\system\\", "items");
+	KVNode *kv = sub_101545c0(path, g_104a580c);
+	if (kv) {
+		KVNode *types = kv->v2("BotchTypes");
+		if (types) {
+			KVT tmp;
+			m_nTypes = sub_1015f810(&tmp, types)->v;
+			m_nName = sub_1015f7e0(&tmp, types, "InternalName")->v;
+			for (KVNode *b = types->v2("BotchType"); b; b = b->v3()) {
+				if (m_nAlloc == m_nSize) {
+					m_nAlloc += m_nGrow;
+					if (m_pData) {
+						BotchItem **p = new BotchItem *[m_nAlloc];
+						int i;
+						for (i = 0; i < m_nSize; i++) p[i] = m_pData[i];
+						for (; i < m_nAlloc; i++) p[i] = 0;
+						delete [] m_pData;
+						m_pData = p;
+						m_nSize++;
+					} else {
+						m_pData = new BotchItem *[m_nAlloc];
+						for (int i = 0; i < m_nAlloc; i++) m_pData[i] = 0;
+						m_nSize++;
+					}
+				} else {
+					m_nSize = m_nSize + 1;
+				}
+				if (!m_pData[m_nSize - 1]) {
+					BotchItem *item = new BotchItem;
+					m_pData[m_nSize - 1] = item ? item->sub_1014f6c0(m_nNext++) : 0;
+				}
+				m_pData[m_nSize - 1]->sub_1014f700(b);
+			}
+		} else {
+			g_101e3108("Unable to open data file for: %s\n", path);
+		}
+		kv->v1();
+		return false;
+	}
+	g_101e3108("Unable to load data for: %s\n", path);
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1014fbe0 size=0x17
 struct S_1014fbe0 { int m0, m4, m8, idx[3]; S_1014fbe0 *sub_1014fbe0(int a); };
 S_1014fbe0 *S_1014fbe0::sub_1014fbe0(int a)
