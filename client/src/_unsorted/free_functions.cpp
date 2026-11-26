@@ -126804,6 +126804,144 @@ int CUnknown10180de0::sub_10180de0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10181400 size=0x560
+#include "CharEditStatsPanel.h"
+#include "StatOwner2.h"
+#include "CVStatInfoList_t.h"
+#include "C_BasePlayer.h"
+
+bool sub_101713e0();
+struct VCC_1008ebb0 { int sub_1008ebb0(); };
+struct CUnknown1017d340 { void sub_1017d340(int b); };
+struct CStatPageEntry_10181400 { CUnknown1017d340 *m_pButton; int m_unk04[8]; };
+struct CStatPageX
+{
+	int m_unk00;
+	int m_unk04;
+	CVStatInfoList_t *m_pList;	// +8
+	int m_unk0c[(0x3c - 0x0c) / 4];
+	CStatPageEntry_10181400 *m_pEntries;	// +0x3c
+	int sub_1017f870(int index);
+};
+
+#define SV(n) virtual void v##n();
+#define SV10(p) SV(p##0) SV(p##1) SV(p##2) SV(p##3) SV(p##4) SV(p##5) SV(p##6) SV(p##7) SV(p##8) SV(p##9)
+struct CEStatText_10181400
+{
+	SV(0) SV(1) SV(2) SV(3) SV(4) SV(5) SV(6) SV(7) SV(8) SV(9)
+	SV(10) SV(11) SV(12) SV(13) SV(14) SV(15) SV(16) SV(17) SV(18) SV(19) SV(20)
+	virtual void vfunc21(int b);	// 21
+	SV(22) SV(23) SV(24) SV(25) SV(26) SV(27) SV(28) SV(29)
+	SV10(3) SV10(4) SV10(5) SV10(6) SV10(7) SV10(8) SV10(9)
+	SV(100) SV(101) SV(102) SV(103) SV(104) SV(105) SV(106)
+	virtual void vfunc107(const char *text);	// 107
+	virtual void vfunc108(const char *text);	// 108
+};
+
+#define CE_INT(off) (*(int *)((char *)this + (off)))
+#define CE_TEXT(off) (*(CEStatText_10181400 **)((char *)this + (off)))
+#define CE_PTR(off, T) (*(T *)((char *)this + (off)))
+
+static inline const char *CE_Str_10181400(const char *const &s)
+{
+	return s ? s : "";
+}
+
+void CharEditStatsPanel::sub_10181400(const char *pszName)
+{
+	int index;
+	CStatPageX *pPage = (CStatPageX *)sub_101808d0(pszName, &index);
+	if (!pPage)
+		return;
+	CE_TEXT(0x2a4)->vfunc21(1);
+	int stat = index;
+	int cat = CE_INT(0xb4);
+	if (cat >= 6)
+	{
+		if (CE_INT(0xbc) < 0)
+		{
+			CE_TEXT(0x2ac)->vfunc108(g_105f93c0.sub_1015f2f0("StatCategoryTitles")->sub_1015ecd0(cat));
+			CE_TEXT(0x2b0)->vfunc107(g_105f93c0.sub_1015f2f0("StatCategoryLine1")->sub_1015ecd0(CE_INT(0xb4)));
+			CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_pszTitle));
+			CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[0]));
+		}
+		else
+		{
+			CE_TEXT(0x2ac)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_pszTitle));
+			CE_TEXT(0x2b0)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[0]));
+			switch (CE_INT(0xbc))
+			{
+			case 1:
+				CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[7]));
+				CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[2]));
+				break;
+			case 2:
+				CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[8]));
+				CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[3]));
+				break;
+			case 3:
+				CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[9]));
+				CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[4]));
+				break;
+			case 4:
+				CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[10]));
+				CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[5]));
+				break;
+			case 5:
+				CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[11]));
+				CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[6]));
+				break;
+			default:
+				CE_TEXT(0x2a8)->vfunc107("");
+				break;
+			}
+		}
+		CE_TEXT(0x2b4)->vfunc107("");
+		CE_TEXT(0x2b8)->vfunc107("");
+	}
+	else if (cat >= 0)
+	{
+		CE_TEXT(0x2ac)->vfunc108(g_105f93c0.sub_1015f2f0("StatCategoryTitles")->sub_1015ecd0(cat));
+		if (sub_101713e0())
+		{
+			if (!C_BasePlayer::GetLocalPlayer())
+				return;
+			int clan = ((VCC_1008ebb0 *)C_BasePlayer::GetLocalPlayer())->sub_1008ebb0();
+			CE_TEXT(0x2b0)->vfunc107(g_105f93c0.sub_1015f2f0(g_105f93c0.sub_1015f2f0("StatCategoryLine2")->sub_1015ecd0(clan))->sub_1015ecd0(CE_INT(0xb4)));
+			CE_TEXT(0x2b8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[1]));
+		}
+		else
+		{
+			CE_TEXT(0x2b0)->vfunc107(g_105f93c0.sub_1015f2f0("StatCategoryLine1")->sub_1015ecd0(CE_INT(0xb4)));
+			CE_TEXT(0x2b8)->vfunc107("");
+		}
+		CE_TEXT(0x2b4)->vfunc107("");
+		CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_pszTitle));
+		CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[0]));
+	}
+	else
+	{
+		CE_TEXT(0x2ac)->vfunc108("");
+		CE_TEXT(0x2b0)->vfunc107("");
+		CE_TEXT(0x2b4)->vfunc107("");
+		CE_TEXT(0x2b8)->vfunc107("");
+		CE_TEXT(0x2a0)->vfunc108("");
+		CE_TEXT(0x2a8)->vfunc107("");
+		CE_TEXT(0x2a4)->vfunc21(0);
+	}
+	if (CE_PTR(0x1f0, CUnknown1017d340 *))
+		CE_PTR(0x1f0, CUnknown1017d340 *)->sub_1017d340(0);
+	int k = pPage->sub_1017f870(stat);
+	if (k == -1)
+		return;
+	CE_PTR(0x1f0, CUnknown1017d340 *) = pPage->m_pEntries[k].m_pButton;
+	CE_PTR(0x1fc, CStatPageX *) = pPage;
+	CE_INT(0x200) = stat;
+	CE_PTR(0x1f0, CUnknown1017d340 *)->sub_1017d340(1);
+	sub_10181f80();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10181a30 size=0x9a
 #include "CVStatInfoList_t.h"
 #define D8(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); virtual void p##5(); virtual void p##6(); virtual void p##7();
