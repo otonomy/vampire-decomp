@@ -213,3 +213,70 @@ came across as they were: the address in them is vampire.dll's, not this binary'
 - **Reference source.** `get_function(addr, part="reference")` shows Valve's code of the same function (2004 SDK,
   project.toml `[reference]`; the client side lives in `cl_dll/`). Read it for control flow
   and names, then write the game's version under this project's names.
+
+## Engine interfaces (engine, materials, modelinfo, ...): use engineclient.h, never a view of your own
+
+`include/engineclient.h` declares the interfaces client.dll's `CHLClient::Init` asks the engine for, under the names
+of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call through the name; slot N sits at
++N*4 of the vtable, so `mov ecx, [0x104a57d4]; mov eax, [ecx]; call [eax+0x9c]` is `engine->Time(...)` (slot 39).
+
+| name | global | asked for as |
+|---|---|---|
+| `engine` | g_104a57d4 | VEngineClient006 |
+| `modelrender` | g_104a57d8 | VEngineModel006 |
+| `effects` | g_104a57dc | VEngineEffects001 |
+| `cvar` | g_104a57e0 | VEngineCvar001 |
+| `render` | g_104a57e4 | VEngineRenderView008 |
+| `debugoverlay` | g_104a57e8 | VDebugOverlay002 |
+| `materials` | g_104a57ec | VMaterialSystem074 |
+| `g_pMaterialSystemHardwareConfig` | g_104a57f0 | MaterialSystemHardwareConfig010 |
+| `engineCache` | g_104a57f4 | VEngineCache001 |
+| `modelinfo` | g_104a57f8 | VModelInfoClient001 |
+| `enginevgui` | g_104a57fc | VEngineVGui001 |
+| `netgraph` | g_104a5800 | VNETGRAPH001 |
+| `networkstringtable` | g_104a5804 | VEngineClientStringTable001 |
+| `partition` | g_104a5808 | SpatialPartition001 |
+| `filesystem` | g_104a580c | VFileSystem005 |
+| `shadowmgr` | g_104a5810 | VEngineShadowMgr001 |
+| `staticpropmgr` | g_104a5814 | StaticPropMgrClient001 |
+| `enginesound` | g_104a5818 | IEngineSoundClient003 |
+| `enginetrace` | g_104a582c | EngineTraceClient003 |
+| `enginerandom` | g_104a5738 | VEngineRandom001 (the SDK's `random`; the word is a local's name in matched code) |
+| `g_pMatSystemSurface` | g_104a5820 | MatSystemSurface001 |
+| `physics`, `physcollision`, `physprops` | g_104e0c84, g_104e0c8c, g_104e0c94 | VPhysics030, VPhysicsCollision007, VPhysicsSurfaceProps001 |
+
+- **Troika changed the interfaces.** The version strings are the SDK's, but the slots are not: VEngineClient006's
+  GetWindowCenterX/Y are slots 46/47 in the game, 18/19 in the SDK. Never number a slot from the SDK's header; the
+  header's slots come from what the matched functions call.
+- **A typed slot is proven by matched code**: its signature is the one most matched views used (a view whose function
+  calls the slot counting more). Slot 39 `double Time(int)` was measured: `float` broke 8 matched callers. A slot
+  still `virtual void vfuncN();` has no evidence yet: give it its type with edit_context when your function calls it
+  (the edit is judged against every function that includes the header).
+- **Pointers the header does not know** are `const void *` parameters and `void *` returns: cast at the call
+  (`(const model_t *)engine->vfunc36(name)`), do not add a view. A class include/ defines keeps its own type
+  (`ConVar *cvar->FindVar(name)`).
+- **The names are macros** (`#define engine EngineGlobals::g_104a57d4`): a source that includes the header cannot use
+  them as its own identifiers (a parameter named `filesystem`, a local `render`).
+
+## client.dll idioms (from the agents' matches and give-ups, 2026-11-26)
+
+- **A header slot written `virtual void vfuncN();` is a placeholder, not a fact.** Most give-ups with a working body
+  failed only because the function calls or overrides a slot the header still declares `void()` (ITempEnts.h,
+  C_BaseEntity, vgui2 panels). Give the slot its real signature with edit_context in the same submit as the
+  function: the edit is judged against every function that includes the header, and a header patch passed only in a
+  note is lost.
+- **vgui2 classes** live in `include/vgui2__<Class>.h` (namespace `vgui2`); a source that names `vgui2::X` includes
+  that header. Panels are allocated with `vgui2::Panel::operator new` (`new X(parent, name)`, never a raw
+  allocation call) and built on `Panel(Panel *parent, const char *name)`; the game's panel constructors store their
+  own vtable after the base constructor: write a real constructor.
+- **HUD elements** derive from CManagedHudElement (`CManagedHudElement.h`): the constructors pass the element's
+  name string and store two vtables (the class and its IManagedHudElement part).
+- **VtMB scope traces.** A push of a function-name string and a counter increment at the top is `ScopeTrace st("Class::
+  Method", name)` (`ScopeTrace.h`, 2- and 3-argument forms); the counter decrement at every exit is its destructor.
+- **Particles** hold their emitters in `CSmartPtr<T>` (`CSmartPtr.h`; AddRef/Release are sub_10117fd0/sub_10117fe0):
+  a null check before AddRef and a Release on every exit is the smart pointer, not hand code.
+- **Engine interfaces**: see "Engine interfaces" (engineclient.h); never a view of your own.
+- **Two functions in one row.** When the game's bytes end with `ret` / padding and go on with a second function
+  (another `ret N`, its own callers), the import merged two rows; note "merged row: second function at 0x..." and
+  move on (`pcdecomp split` cuts it), do not write both into one source.
+- **strcmp inline** (`repe cmpsb` with a length in ecx): `#pragma intrinsic(strcmp)` with the CRT declaration.
