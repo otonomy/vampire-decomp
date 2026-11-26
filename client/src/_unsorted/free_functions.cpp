@@ -78307,6 +78307,22 @@ int sub_101021f0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10102200 size=0x28
+struct kbutton_t;
+void sub_10101e20(kbutton_t *b, bool flag);
+extern kbutton_t g_104d38b8;
+bool sub_10052ed0();
+int sub_10052ef0();
+struct CUnknown100549f0 { void sub_100549f0(int a, int b); };
+void sub_10102200()
+{
+    if (sub_10052ed0())
+        ((CUnknown100549f0 *)sub_10052ef0())->sub_100549f0(-2, 0);
+    else
+        sub_10101e20(&g_104d38b8, false);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10102230 size=0x10
 namespace lifted {
 extern char g_104d2e40;
