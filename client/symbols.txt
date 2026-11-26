@@ -5416,6 +5416,7 @@
 0x100f0ed0 func   ?sub_100f0ed0@CHud@@QAEPAVCHudElement@@PBD@Z CHud::sub_100f0ed0
 0x100f10c0 func   ?sub_100f10c0@CUnknown100f10c0@@QAEMXZ CUnknown100f10c0::sub_100f10c0
 0x100f10d0 func   ?sub_100f10d0@@YG_NH@Z sub_100f10d0
+0x100f11d0 func   ?GetIcon@CHud@@QAEPAXPBD@Z CHud::GetIcon
 0x100f11d0 func   ?sub_100f11d0@CHud@@QAEPAXPBD@Z CHud::sub_100f11d0
 0x100f1200 func   ?sub_100f1200@CHud@@QAEPAUCHudSub@@PBDPAH1@Z CHud::sub_100f1200
 0x100f12b0 func   ?sub_100f12b0@CHud@@QAEX_N@Z CHud::sub_100f12b0
