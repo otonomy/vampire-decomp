@@ -63,7 +63,7 @@ public:
 	virtual void vfunc37();
 	virtual float vfunc38();	// slot 38; seen as Time 1
 	virtual double Time(int);	// slot 39
-	virtual void vfunc40();
+	virtual double vfunc40();	// slot 40: compared with Time(0) by C_BaseAnimating::DoAnimationEvents
 	virtual float vfunc41(int);	// slot 41; seen as GetFrameTime 1, Time 1
 	virtual float vfunc42();	// slot 42
 	virtual void vfunc43(float);	// slot 43: C_BasePlayer::OnDataChanged hands it 1 / +0x1078 (0.2f when dead)

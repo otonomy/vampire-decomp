@@ -52,6 +52,7 @@ public:
 	bool sub_10095d00(Vector *pVecWorldMins, Vector *pVecWorldMaxs);
 	int sub_10095990(int a, int b, int *p);
 	virtual ~C_BaseAnimating();
+	virtual void DoAnimationEvents();	// IClientRenderable slot 17
 	virtual void OnDataChanged(int updateType);
 	void sub_10094930();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
