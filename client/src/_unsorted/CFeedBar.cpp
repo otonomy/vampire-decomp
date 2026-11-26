@@ -69,6 +69,110 @@ void CFeedBar::vfunc113()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10050560 size=0x3c0
+#include "engineclient.h"
+#include "CFeedBar.h"
+#include "CHUDSprite.h"
+#include "C_BasePlayer.h"
+#include "ConVar.h"
+#include "CInput.h"
+
+struct PV { bool sub_100aa320(int, bool); };
+struct PlayerV5a80 { bool sub_100a5a80(); };
+bool sub_10050f60();
+int sub_100cd100();
+extern ConVar g_105faa30;
+extern int g_103ede90;
+struct RectV { int left; int right; int top; int bottom; };
+
+void CFeedBar::vfunc98()
+{
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer || !pPlayer->m_b14d4)
+	{
+		double limit = m_fl1b4;
+		if (engine->Time(0) >= limit)
+		{
+			vfunc5_hud(false);
+			return;
+		}
+	}
+	if (pPlayer)
+	{
+		if (((PV *)pPlayer)->sub_100aa320(0x100, false))
+			return;
+		if (((PlayerV5a80 *)pPlayer)->sub_100a5a80())
+		{
+			m_fl1b4 = 0.01f;
+			vfunc5_hud(false);
+			return;
+		}
+	}
+	static ConVar *v_hidevgui = cvar->FindVar("v_hidevgui");
+	if (v_hidevgui && v_hidevgui->GetBool())
+		return;
+	if (!g_105faa30.GetBool())
+		return;
+	if (input->vfunc52() > 0.0f)
+		return;
+	if (!m_pChild1)
+	{
+		m_pChild2 = (CFeedBarOwned *)new CHUDSprite("hud/BloodBar_Empty", 0, 0, 512, 64, 512, 64);
+		m_pChild1 = (CFeedBarOwned *)new CHUDSprite("hud/BloodBar_Full", 0, 0, 512, 64, 512, 64);
+	}
+	int x, y;
+	sub_101a98c0(&x, &y);
+	int a;
+	if (m_b1a5 && m_unk1a0 < 255)
+	{
+		a = m_unk1a0 + 5;
+		if (a > 255)
+			a = 255;
+		goto store;
+	}
+	if (m_b1a6 && m_unk1a0 > 0)
+	{
+		a = m_unk1a0 - 5;
+		a = a & ((a < 0) - 1);
+store:
+		m_unk1a0 = a;
+	}
+	if (sub_10050f60())
+		y -= m_unk190;
+	int v = m_unk1a8;
+	if (pPlayer)
+	{
+		if (pPlayer->m_b14d4)
+		{
+			if (pPlayer->m_fl14d0 > 0.0f)
+			{
+				float t = (engine->Time(0) - m_fl1b0) / pPlayer->m_fl14d0;
+				if (t > 1.0)
+					t = 1.0f;
+				float pct = 100.0 / m_unk1ac;
+				g_103ede90 = pct * t;
+			}
+		}
+		else
+		{
+			m_fl1b0 = engine->Time(0);
+		}
+		v -= g_103ede90;
+	}
+	RectV rc;
+	rc.left = 0;
+	rc.right = m_unk180;
+	rc.top = 0;
+	rc.bottom = m_unk184;
+	((CHUDSprite *)m_pChild2)->sub_1005c3b0(x, y, m_unk18c, m_unk190, (int)&rc);
+	rc.top = 0;
+	rc.right = 435;
+	rc.bottom = 64;
+	rc.left = 435 - v * 360 / 100;
+	((CHUDSprite *)m_pChild1)->sub_1005c430(m_unk194 + x, y, (int)((m_unk18c - m_unk194) - rc.left * (sub_100cd100() * 0.0009765625)), m_unk190, (int)&rc, m_unk1a0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10050920 size=0x1
 #include "CFeedBar.h"
 void CFeedBar::vfunc97()

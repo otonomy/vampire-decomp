@@ -2892,6 +2892,7 @@
 0x10050500 func   ?vfunc107@CFeedBar@@UAE_NXZ CFeedBar::vfunc107
 0x10050530 func   ?sub_10050530@V0530@@QAEXXZ V0530::sub_10050530
 0x10050550 func   ?vfunc113@CFeedBar@@UAEXXZ CFeedBar::vfunc113
+0x10050560 func   ?vfunc98@CFeedBar@@UAEXXZ CFeedBar::vfunc98
 0x10050920 func   ?vfunc97@CFeedBar@@UAEXXZ CFeedBar::vfunc97
 0x100509a0 func   ?sub_100509a0@CUnknown100509a0@@QAEDXZ CUnknown100509a0::sub_100509a0
 0x100509b0 func   ?sub_100509b0@@YAHXZ sub_100509b0
