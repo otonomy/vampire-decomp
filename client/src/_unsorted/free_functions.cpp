@@ -107721,6 +107721,98 @@ void CNetGraphPanel::sub_10168d20(NGEntry *e, unsigned char *a, int *flag, unsig
 }
 // END FUNCTION
 
+// FUNCTION: 0x10168eb0 size=0x283
+#include "CNetGraphPanel.h"
+#include "ConVar.h"
+#include "engineclient.h"
+
+struct cmdinfo_10168eb0
+{
+	float cmd_lerp;
+	int size;
+	bool sent;
+};
+
+struct vrect_10168eb0
+{
+	int x, y, width, height;
+	vrect_10168eb0 *pnext;
+};
+
+extern ConVar g_105faf20;
+
+#define NG_FONT (*(int *)((char *)this + 0x98d0))
+#define NG_CMDRATE (*(ConVar **)((char *)this + 0x98d8))
+#define NG_COLOR(n) ((unsigned char *)this + 0x58 + (n) * 3)
+
+#ifndef max
+#define max(a, b) (((a) > (b)) ? (a) : (b))
+#endif
+#ifndef min
+#define min(a, b) (((a) < (b)) ? (a) : (b))
+#endif
+
+void CNetGraphPanel::sub_10168eb0(vrect_10168eb0 vrect, cmdinfo_10168eb0 *cmdinfo, int x, int w)
+{
+	int ptx = max(x + w - 1 - 25, 1);
+	int pty = max(vrect.y + vrect.height - 4 - 24 + 1, 1);
+
+	g_pMatSystemSurface->vfunc12(NG_FONT, ptx, pty, 0xe5, 0xe5, 0xb2, 0xff, "%i/s", NG_CMDRATE->GetInt());
+
+	for (int a = 0; a < w; a++)
+	{
+		int i = (netgraph->vfunc0() - a) & (1024 - 1);
+		int h = (int)min(24 * (cmdinfo[i].cmd_lerp / 3.0), 24.0);
+		int j;
+
+		vrect_10168eb0 rcFill;
+		rcFill.x = x + w - a - 1;
+		rcFill.width = 1;
+		rcFill.height = 1;
+		rcFill.y = vrect.y + vrect.height - 4;
+
+		if (h >= 8)
+		{
+			int start = 0;
+			h -= 8;
+			rcFill.y -= 8;
+			if (!g_105faf20.GetInt())
+			{
+				start = h - 1;
+				rcFill.y -= h - 1;
+			}
+			for (j = start; j < h; j++)
+			{
+				sub_1016a550((NGState *)&rcFill, NG_COLOR(j + 8), 255);
+				rcFill.y--;
+			}
+		}
+		else
+		{
+			int oldh = h;
+			rcFill.y -= h;
+			h = 8 - h;
+			if (!g_105faf20.GetInt())
+				h = 1;
+			for (j = 0; j < h; j++)
+			{
+				sub_1016a550((NGState *)&rcFill, NG_COLOR(j + oldh), 255);
+				rcFill.y--;
+			}
+		}
+
+		rcFill.y = vrect.y + vrect.height - 12;
+		sub_1016a550((NGState *)&rcFill, NG_COLOR(26), 255);
+
+		rcFill.y = vrect.y + vrect.height - 3;
+		if (cmdinfo[i].sent)
+			sub_1016a550((NGState *)&rcFill, NG_COLOR(24), 255);
+		else
+			sub_1016a550((NGState *)&rcFill, NG_COLOR(25), 200);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101694c0 size=0x81
 #include "engineclient.h"
 struct NetEntryV {
