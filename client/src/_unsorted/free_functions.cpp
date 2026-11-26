@@ -14574,6 +14574,32 @@ template <> int ClientClassInit<DT_ItemKGimbleKey::ignored>(DT_ItemKGimbleKey::i
 }
 // END FUNCTION
 
+// FUNCTION: 0x10022840 size=0x45
+namespace lifted {
+extern char g_1021b4c4;
+extern char g_1021b4d8;
+extern char g_1021b514;
+extern char g_1021b54c;
+extern char g_1021b5a4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10022840()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1021b5a4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1021b54c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1021b514;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1021b4d8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1021b4c4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100228d0 size=0x6
 namespace lifted {
 extern char g_102e3f18;
