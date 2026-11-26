@@ -195,6 +195,7 @@
 0x100057c0 func   ??1C_PlasmaBeamNode@@UAE@XZ C_PlasmaBeamNode::~C_PlasmaBeamNode
 0x10005800 func   ?vfunc37@C_PlasmaBeamNode@@UAEXXZ C_PlasmaBeamNode::vfunc37
 0x100058e0 func   ?sub_100058e0@@YADXZ sub_100058e0
+0x100058f0 func   ?ClientThink@C_PlasmaBeamNode@@UAEXXZ C_PlasmaBeamNode::ClientThink
 0x10005c00 func   ?vfunc16@C_PlasmaBeamNode@@UAEHXZ C_PlasmaBeamNode::vfunc16
 0x10005c10 func   ?vfunc15@C_PlasmaBeamNode@@UAEHXZ C_PlasmaBeamNode::vfunc15
 0x10005c20 func   ?sub_10005c20@@YAHXZ sub_10005c20
