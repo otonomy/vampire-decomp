@@ -135254,6 +135254,75 @@ void sub_10190f30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101919e0 size=0x31a
+#include "CViewRender.h"
+#include "CViewSetup.h"
+#include "ScopeTrace.h"
+#include "C_PointCamera.h"
+#include "CClientEntityList.h"
+#include "engineclient.h"
+
+CClientEntityList *sub_1009e230();
+
+void CViewRender::sub_101919e0(CViewSetup cameraView)
+{
+	ScopeTrace st("CViewRender::DrawHighEndMonitors", g_102de300);
+
+	bool found;
+	void *pCameraTarget = materials->vfunc27("engine/camerarendertarget", &found, false);
+	if (!found)
+		return;
+
+	materials->vfunc70(1);
+	materials->vfunc71();
+	materials->vfunc70(0);
+	materials->vfunc71();
+
+	int vx, vy, vw, vh;
+	materials->vfunc90(&vx, &vy, &vw, &vh);
+
+	int pSaveRenderTarget = materials->vfunc34();
+	materials->vfunc33((int)pCameraTarget);
+
+	int width, height;
+	materials->vfunc35(&width, &height);
+	materials->vfunc89(0, 0, width, height);
+
+	CBaseHandle h = ClientEntityList().FirstHandle();
+	while (1) {
+		if (!h.IsValid())
+			break;
+		C_BaseEntity *pEnt = sub_1009e230()->sub_100d0dc0(h);
+		C_PointCamera *pCameraEnt = dynamic_cast<C_PointCamera *>(pEnt);
+		if (pCameraEnt && pCameraEnt->sub_10006120()) {
+			cameraView.width = width;
+			cameraView.height = height;
+			cameraView.x = 0;
+			cameraView.y = 0;
+			cameraView.clearColor = false;
+			cameraView.clearDepth = true;
+			VectorCopy(pCameraEnt->GetAbsOrigin(), cameraView.origin);
+			cameraView.angles = pCameraEnt->GetAbsAngles();
+			cameraView.fov = pCameraEnt->sub_10006100();
+			cameraView.m_bOrtho = false;
+			cameraView.m_b90 = true;
+
+			sub_1019d8f0((const char *)&cameraView);
+			sub_1019b370(true, cameraView, false, false);
+		}
+		h = sub_1009e230()->NextHandle(h);
+	}
+
+	materials->vfunc33(pSaveRenderTarget);
+	materials->vfunc89(vx, vy, vw, vh);
+
+	materials->vfunc70(1);
+	materials->vfunc72();
+	materials->vfunc70(0);
+	materials->vfunc72();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10192550 size=0x229
 #include "C_BasePlayer.h"
 #include "engineclient.h"
