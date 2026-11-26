@@ -5021,6 +5021,7 @@
 0x100d9da0 func   ?FX_Tracer@@YAXAAVVector@@0H_N@Z FX_Tracer
 0x100d9da0 func   ?sub_100d9da0@@YAXAAVVector@@0H_N@Z sub_100d9da0
 0x100da050 func   ?sub_100da050@@YAPAUSOut1023f3d0@@PBUSVec3@@0PAU1@@Z sub_100da050
+0x100da0b0 func   ?IntersectRayWithTriangle@@YAMABURay_t@@ABVVector@@11_N@Z IntersectRayWithTriangle
 0x100da0b0 func   ?sub_100da0b0@@YAMABURay_t@@ABVVector@@11_N@Z sub_100da0b0
 0x100da5c0 func   ?sub_100da5c0@@YAHABVVector@@00PBMPAM@Z sub_100da5c0
 0x100da870 func   ?sub_100da870@@YAHABVVector@@00M@Z sub_100da870
