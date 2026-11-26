@@ -741,6 +741,7 @@
 0x10010730 func   ?_C_ItemMMoneyEnvelope_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemMMoneyEnvelope_CreateObject
 0x100107f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemMMoneyEnvelope@@@Z ClientClassInit
 0x10010880 func   ?vfunc17@C_ResearchBook_LG_COMP@@UAEHXZ C_ResearchBook_LG_COMP::vfunc17
+0x100108c0 func   ?sub_100108c0@@YAHXZ sub_100108c0
 0x10010910 func   ??_GC_ResearchBook_LG_COMP@@UAEPAXI@Z ??_GC_ResearchBook_LG_COMP@@UAEPAXI@Z
 0x10010930 func   ?vfunc16@C_ResearchBook_LG_COMP@@UAEHXZ C_ResearchBook_LG_COMP::vfunc16
 0x10010940 func   ?vfunc15@C_ResearchBook_LG_COMP@@UAEHXZ C_ResearchBook_LG_COMP::vfunc15
