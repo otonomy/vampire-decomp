@@ -39515,6 +39515,72 @@ int RView10098780::sub_10098780()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10099630 size=0x215
+#include "Vector.h"
+#include "Tier1.h"
+
+struct SubV { virtual void v0(); virtual Vector *v1(); };
+struct EngV {
+	virtual void e0(); virtual void e1(); virtual void e2(); virtual void e3(); virtual void e4();
+	virtual void e5(); virtual void e6(); virtual void e7(); virtual void e8(); virtual void e9();
+	virtual void e10(); virtual void e11(); virtual void e12(); virtual void e13(); virtual void e14();
+	virtual void e15(); virtual void e16(); virtual void e17(); virtual void e18(); virtual void e19();
+	virtual void e20(); virtual void e21(); virtual void e22(); virtual void e23(); virtual void e24();
+	virtual void e25(); virtual void e26(); virtual void e27(); virtual void e28(); virtual void e29();
+	virtual void e30(); virtual void e31(); virtual void e32(); virtual void e33(); virtual void e34();
+	virtual void e35(); virtual void e36(); virtual void e37(); virtual void e38();
+	virtual float Time(int a);
+};
+struct SplashSelf {
+	int m0;
+	SubV sub;
+	char pad8[0x90 - 8];
+	int m90;
+	char pad94[0xa8 - 0x94];
+	Vector vel;
+	char padb4[0x10ac - 0xb4];
+	float mLast;
+	int mPrev;
+};
+extern EngV *g_104a57d4;
+float sub_100cd330(Vector *, float, float);
+void sub_100b48d0(const char *, Vector *, int, int, int, float, float, float, float);
+
+// TARGET: sub_10099630
+void __fastcall sub_10099630(SplashSelf *self, int edx, int arg)
+{
+	if (self->m90 != self->mPrev && self->m90 && !self->mPrev)
+	{
+		if (self->vel.z < -200.0f)
+		{
+			Vector v = *self->sub.v1();
+			v.z = v.z + sub_100cd330(&v, v.z, v.z + 1024.0f);
+			sub_100b48d0("waterbigsplash_emitter", &v, 0, 0, 0, 1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+	if (self->m90 > 0 && self->m90 < 3)
+	{
+		Vector w = self->vel;
+		float speed = pfSqrt(w.x * w.x + w.y * w.y);
+		if (speed >= 50.0f)
+		{
+			float now = g_104a57d4->Time(0);
+			if (now - self->mLast > 0.05f - speed * 7.8e-5f)
+			{
+				self->mLast = now;
+				Vector p = *self->sub.v1();
+				p.x = p.x - w.x * 0.035f;
+				p.y = p.y - w.y * 0.035f;
+				float h = sub_100cd330(&p, p.z, p.z + 1024.0f);
+				p.z = h + (float)g_101e31a4(0, 8);
+				sub_100b48d0("watersplash_emitter", &p, 0, 0, 0, 1.0f, 1.0f, 1.0f, 1.0f);
+			}
+		}
+	}
+	self->mPrev = self->m90;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10099870 size=0xe
 struct CView { char pad[0xfd0]; int mfd0; int sub_10099870(); };
 // TARGET: ?sub_10099870@CView@@QAEHXZ

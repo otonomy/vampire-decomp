@@ -3625,6 +3625,7 @@
 0x10098710 func   ?vfunc17@C_BaseCombatCharacter@@UAEHXZ C_BaseCombatCharacter::vfunc17
 0x10098720 func   ?sub_10098720@@YAMMMM@Z sub_10098720
 0x10098780 func   ?sub_10098780@RView10098780@@QAEHXZ RView10098780::sub_10098780
+0x10099630 func   ?sub_10099630@@YIXPAUSplashSelf@@HH@Z sub_10099630
 0x10099850 func   ?vfunc143@C_BaseCombatCharacter@@UAEHXZ C_BaseCombatCharacter::vfunc143
 0x10099870 func   ?sub_10099870@CView@@QAEHXZ CView::sub_10099870
 0x10099880 func   ?sub_10099880@CObfEntity@@QAEMXZ CObfEntity::sub_10099880
