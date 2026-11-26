@@ -573,6 +573,7 @@
 0x1000d2b0 func   ?_C_WeaponMelee_Sheriff_Sword_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_Sheriff_Sword_CreateObject
 0x1000d370 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_Sheriff_Sword@@@Z ClientClassInit
 0x1000d400 func   ?vfunc17@C_WeaponRanged@@UAEHXZ C_WeaponRanged::vfunc17
+0x1000d440 func   ?sub_1000d440@@YAHXZ sub_1000d440
 0x1000d490 func   ??_GC_WeaponRanged@@UAEPAXI@Z ??_GC_WeaponRanged@@UAEPAXI@Z
 0x1000d4b0 func   ?vfunc16@C_WeaponRanged@@UAEHXZ C_WeaponRanged::vfunc16
 0x1000d4c0 func   ?vfunc15@C_WeaponRanged@@UAEHXZ C_WeaponRanged::vfunc15
