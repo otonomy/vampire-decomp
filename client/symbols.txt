@@ -341,6 +341,7 @@
 0x10008a30 func   ?_C_WeaponMelee_FireAxe_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_FireAxe_CreateObject
 0x10008af0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_FireAxe@@@Z ClientClassInit
 0x10008b80 func   ?vfunc17@C_WeaponMelee_Katana@@UAEHXZ C_WeaponMelee_Katana::vfunc17
+0x10008bc0 func   ?sub_10008bc0@@YAHXZ sub_10008bc0
 0x10008c10 func   ??_GC_WeaponMelee_Katana@@UAEPAXI@Z ??_GC_WeaponMelee_Katana@@UAEPAXI@Z
 0x10008c30 func   ?vfunc16@C_WeaponMelee_Katana@@UAEHXZ C_WeaponMelee_Katana::vfunc16
 0x10008c40 func   ?vfunc15@C_WeaponMelee_Katana@@UAEHXZ C_WeaponMelee_Katana::vfunc15
