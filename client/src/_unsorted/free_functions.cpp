@@ -79781,6 +79781,19 @@ void sub_101076c0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10107710 size=0x1b
+float sub_10107710(float x)
+{
+	float	root = 0.f;
+	_asm
+	{
+		sqrtss		xmm0, x
+		movss		root, xmm0
+	}
+	return root;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10107730 size=0xa3
 // TARGET: sub_10107730
 #include "Vector.h"
