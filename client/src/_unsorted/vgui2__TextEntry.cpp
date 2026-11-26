@@ -89,6 +89,111 @@ int vgui2::TextEntry::vfunc133(char a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101ad710 size=0x22f
+#include "vgui2__TextEntry.h"
+
+#define F(T, off) (*(T *)((char *)this + (off)))
+
+struct SurfView_101ad710
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void SetCursor(int cursor); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54();
+	virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62();
+	virtual int GetFontTall(int font);
+};
+
+template <class T> struct Dar_101ad710
+{
+	int m_count;
+	int m_capacity;
+	T *m_data;
+	T Get(int i) { return (i >= 0 && i < m_count) ? m_data[i] : 0; }
+};
+
+extern SurfView_101ad710 *sub_101ac8d0();
+int sub_101ad550(int font, char ch);
+
+// TARGET: vgui2::TextEntry::vfunc160
+int vgui2::TextEntry::vfunc160(int cx, int cy)
+{
+	F(char, 0x75) = 0;
+	int fontTall = sub_101ac8d0()->GetFontTall(F(int, 0x124));
+	int yStart = vfunc162();
+	int x, y = yStart;
+	F(int, 0xa4) = 0;
+	int lineBreakIndexIndex = 0;
+	x = 3;
+	int startIndex = vfunc172(&lineBreakIndexIndex);
+	if (F(char, 0x100))
+	{
+		if (F(char, 0x8b))
+			vfunc166(startIndex);
+	}
+	if (F(char, 0x8b))
+	{
+		sub_101ac8d0()->SetCursor(F(int, 0x101));
+		F(int, 0xa4) = F(int, 0x108);
+		F(char, 0xd9) = F(char, 0x10c);
+	}
+	bool onRightLine = false;
+	int i;
+	for (i = startIndex; i < F(int, 0x58); i++)
+	{
+		char ch = F(Dar_101ad710<char>, 0x58).Get(i);
+		if (vfunc164(ch, (int)&i, (int)&x, (int)&y))
+			continue;
+		if (F(char, 0x89))
+			ch = '*';
+		if (F(Dar_101ad710<int>, 0x64).Get(lineBreakIndexIndex) == i)
+		{
+			vfunc161(&x, &y);
+			lineBreakIndexIndex++;
+			if (onRightLine)
+			{
+				F(char, 0x75) = 1;
+				return i;
+			}
+		}
+		if (cy < yStart)
+		{
+			F(char, 0x75) = 1;
+			onRightLine = true;
+		}
+		else if (cy >= y && cy < y + fontTall + 1)
+		{
+			onRightLine = true;
+		}
+		int wide = sub_101ad550(F(int, 0x124), ch);
+		if (onRightLine)
+		{
+			if (cx <= sub_101ab130())
+			{
+				if (cx < F(int, 0xa4) + 3 || cy < yStart)
+					break;
+			}
+			if (cx >= x && cx < x + wide)
+			{
+				if (cx < x + wide * 0.5)
+					return i;
+				return i + 1;
+			}
+		}
+		x += wide;
+	}
+	return i;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ada50 size=0x7d
 #include "vgui2__TextEntry.h"
 struct TE154Child {

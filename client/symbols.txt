@@ -9612,6 +9612,7 @@
 0x101acf00 func   ?vfunc137@TextEntry@vgui2@@UAEHH@Z vgui2::TextEntry::vfunc137
 0x101ad500 func   ?sub_101ad500@VTE@@QAEXXZ VTE::sub_101ad500
 0x101ad530 func   ?vfunc133@TextEntry@vgui2@@UAEHD@Z vgui2::TextEntry::vfunc133
+0x101ad710 func   ?vfunc160@TextEntry@vgui2@@UAEHHH@Z vgui2::TextEntry::vfunc160
 0x101ada50 func   ?vfunc154@TextEntry@vgui2@@UAEXHH@Z vgui2::TextEntry::vfunc154
 0x101adad0 func   ?vfunc155@TextEntry@vgui2@@UAE_NHH@Z vgui2::TextEntry::vfunc155
 0x101adb60 func   ?vfunc97@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc97
