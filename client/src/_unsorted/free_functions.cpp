@@ -100378,6 +100378,16 @@ void sub_10144d30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10144d40 size=0x10
+struct CUnknown10144d40 { void * sub_10144d40(); };
+void * CUnknown10144d40::sub_10144d40()
+{
+    *(int *)this = 0;
+    *(int *)((char *)this + 4) = 0;
+    return this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10144d50 size=0x5
 namespace lifted {
 int sub_10144d60();
