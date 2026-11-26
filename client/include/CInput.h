@@ -42,6 +42,13 @@ public:
     float m_f100;
     int m_unk104[(0x138 - 0x104) / 4];
     float m_f138;
+    int m_unk13c[(0x19c - 0x13c) / 4];
+    int m_fCameraDistanceMove;	// 0x19c
+    int m_nCameraOldX;	// 0x1a0
+    int m_nCameraOldY;	// 0x1a4
+    int m_nCameraX;	// 0x1a8
+    int m_nCameraY;	// 0x1ac
+    void sub_100fc170();	// CAM_Think-like: mouse / key camera angles and distance into cam_idealpitch/yaw/dist
     char sub_100ff0a0(struct CUnkPlayer *);
     void sub_100fc900();
     // vtable-slot layer (2026-11-22), from the game's vtables
