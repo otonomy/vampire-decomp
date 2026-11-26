@@ -101202,6 +101202,158 @@ struct V3f60 { char pad[0x10]; int a[3]; int sub_10143f60(int v); };
 int V3f60::sub_10143f60(int v) { for (int i = 0; i < 3; i++) if (a[i] == v) return i; return -1; }
 // END FUNCTION
 
+// FUNCTION: 0x10143f80 size=0x501
+#include "CUnknown10141210.h"
+#include "CUnknown10144490.h"
+#include "BigV_10142340.h"
+
+extern "C" __declspec(dllimport) void DevMsg(int level, const char *pMsg, ...);
+
+template <class T> class CDefaultedPtrVector
+{
+public:
+	int m_unk0;
+	int m_unk4;
+	int m_Size;
+	T **m_pElements;
+	T *Element(int i)
+	{
+		if (i >= 0 && i < m_Size)
+			return m_pElements[i];
+		static T s_Invalid(-1);
+		return &s_Invalid;
+	}
+};
+
+struct ClanList : public CDefaultedPtrVector<CUnknown10144490>
+{
+	void sub_10144b30(int clan1, int clan2);
+	void sub_10144b50(int clan);
+};
+
+struct ClanPairTable : public CDefaultedPtrVector<BigV_10142340>
+{
+	int sub_10142c90(int clan1, int clan2);
+};
+
+struct NamedList_105e74fc
+{
+	const char *sub_1013ffa0(int index);
+	int sub_1013fdf0(const char *name);
+};
+
+class CUnknown10143e30
+{
+public:
+	void sub_10143e30();
+	void sub_10143f80(const char **ppHelp, bool bForce);
+	int m_unk00[8];
+	int m_nCount;	// 0x20
+};
+
+extern CDefaultedPtrVector<CUnknown10141210> g_105e7780;
+extern ClanList g_105e7794;
+extern ClanPairTable g_105e77d0;
+extern int g_105e77e0;
+extern NamedList_105e74fc g_105e74fc;
+extern const char g_102de300[];
+
+void CUnknown10143e30::sub_10143f80(const char **ppHelp, bool bForce)
+{
+	sub_10143e30();
+	if (m_nCount < 3)
+		return;
+
+	if (!bForce)
+	{
+		if (!g_105e7780.Element(g_105e77e0)->sub_10141300(0))
+		{
+			if (!*ppHelp || !**ppHelp)
+				bForce = true;
+		}
+	}
+
+	DevMsg(3, "[CharGenWiz]: ClanOrderings:\n\n");
+	int i;
+	for (i = 0; i < g_105e7794.m_Size; i++)
+	{
+		CUnknown10144490 *pClan = g_105e7794.Element(i);
+		DevMsg(3, "   Clan: [%s]", pClan->sub_101445f0());
+		pClan->sub_10144600();
+		DevMsg(3, "  [TOTAL: %d]\n", pClan->m_n20);
+	}
+
+	int best = -1;
+	int second = -1;
+	int bestScore = 0;
+	int secondScore = 0;
+	for (i = 0; i < g_105e7794.m_Size; i++)
+	{
+		int score = g_105e7794.Element(i)->m_n20;
+		if (score > bestScore)
+		{
+			if (bestScore > secondScore)
+			{
+				secondScore = bestScore;
+				second = best;
+			}
+			bestScore = score;
+			best = i;
+		}
+		else if (score > secondScore)
+		{
+			secondScore = score;
+			second = i;
+		}
+	}
+	if (bestScore - secondScore > 5)
+		second = -1;
+
+	DevMsg(3, "[CharGenWizard]: Picked Clans: %s vs. %s\n", g_105e7794.Element(best)->sub_101445f0(), g_105e7794.Element(second)->sub_101445f0());
+
+	if (best != -1)
+		best = g_105e7794.Element(best)->m_n4;
+	if (second != -1)
+		second = g_105e7794.Element(second)->m_n4;
+	g_105e7794.sub_10144b30(best, second);
+
+	if (!bForce)
+	{
+		if (g_105e7780.Element(g_105e77e0)->sub_10141300(ppHelp))
+			*ppHelp = g_105e7780.Element(g_105e77e0)->sub_10141340();
+		return;
+	}
+
+	if (best != -1 && second != -1)
+	{
+		g_105e7794.sub_10144b30(best, second);
+		int pair = g_105e77d0.sub_10142c90(best, second);
+		if (pair != -1)
+		{
+			const char *psz = g_105e77d0.Element(pair)->m_pszHelp;
+			*ppHelp = psz ? psz : g_102de300;
+			return;
+		}
+		DevMsg(1, "ERROR: CharGenWizard: ProcessTraitChoices: Couldn't Find Clan Choice PopUp: %s vs %s!\n", g_105e74fc.sub_1013ffa0(best), g_105e74fc.sub_1013ffa0(second));
+		g_105e7794.sub_10144b50(g_105e74fc.sub_1013fdf0("Player_Malkavian"));
+		*ppHelp = "Help_Popup0b";
+		return;
+	}
+
+	if (best == -1)
+		best = second;
+	if (best != -1)
+	{
+		g_105e7794.sub_10144b50(best);
+		*ppHelp = "Help_Popup0b";
+		return;
+	}
+
+	DevMsg(1, "ERROR: CharGenWizard: ProcessTraitChoices: Couldn't Find ANY Clan Choices!!\n");
+	*ppHelp = g_102de300;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10144490 size=0x19
 struct CUnknown10144490 { void * sub_10144490(int); };
 void * CUnknown10144490::sub_10144490(int a0)
