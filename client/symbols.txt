@@ -9229,6 +9229,7 @@
 0x10195070 func   ?sub_10195070@CViewRenderBeams@@QAEXPAVBeam_t@@HHPAMPBD2@Z CViewRenderBeams::sub_10195070
 0x10195520 func   ?sub_10195520@CViewRenderBeams@@QAEXPAVBeam_t@@HHPAMPBDH@Z CViewRenderBeams::sub_10195520
 0x10195770 func   ?sub_10195770@@YGXPAUBeamSegView@@HHPAMPAX@Z sub_10195770
+0x101957f0 func   ?vfunc4@CViewRenderBeams@@UAEXPAVBeam_t@@@Z CViewRenderBeams::vfunc4
 0x10195c90 func   ?vfunc22@CViewRenderBeams@@UAEXPAUBeamV@@PAUBeamInfoV@@@Z CViewRenderBeams::vfunc22
 0x10196300 func   ?Init@CViewEffects@@UAEXXZ CViewEffects::Init
 0x10196300 func   ?vfunc0@CViewEffects@@UAEXXZ CViewEffects::vfunc0
