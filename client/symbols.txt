@@ -2642,6 +2642,7 @@
 0x1004f830 func   ?sub_1004f830@@YADXZ sub_1004f830
 0x1004f840 func   ?sub_1004f840@@YAXXZ sub_1004f840
 0x1004fe20 func   ?sub_1004fe20@@YAXXZ sub_1004fe20
+0x10050100 func   ?Purge@?$CUtlVector@HV?$CUtlMemory@H@@@@QAEXXZ CUtlVector<int,CUtlMemory<int> >::Purge
 0x10050100 func   ?sub_10050100@CUtlVector16@@QAEXXZ CUtlVector16::sub_10050100
 0x10050140 func   ?RemoveAll@?$CUtlVector@HV?$CUtlMemory@H@@@@QAEXXZ CUtlVector<int,CUtlMemory<int> >::RemoveAll
 0x10050140 func   ?sub_10050140@CUnknown10050140@@QAEXXZ CUnknown10050140::sub_10050140
