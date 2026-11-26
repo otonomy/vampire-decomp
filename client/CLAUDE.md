@@ -292,8 +292,9 @@ of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call th
   include StatOwner2.h instead of declaring it with a view type of your own.
 - **The input object** (0x1027ba58) is the SDK's `input` (`static CHLInput g_Input; IInput *input = &g_Input;`),
   declared `extern CInput *input;` in CInput.h because the slots are declared on CInput: call `input->vfuncN()`,
-  never `g_1027ba58` through a view. Some CInput slot signatures are still guesses (vfunc3 is the SDK's 6-argument
-  CreateMove); when yours disagrees with the game's call, note it rather than adding a second view.
+  never `g_1027ba58` through a view. Some CInput slot signatures are still guesses (vfunc3 is the SDK's CreateMove,
+  declared with the six dwords its matched caller passes); when yours disagrees with the game's call, note it rather
+  than adding a second view. A wrapper that only calls a `void` slot returns `void` (the lift's `int` was a guess).
 - **Two functions in one row.** When the game's bytes end with `ret` / padding and go on with a second function
   (another `ret N`, its own callers), the import merged two rows; note "merged row: second function at 0x..." and
   move on (`pcdecomp split` cuts it), do not write both into one source.
