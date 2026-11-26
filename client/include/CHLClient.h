@@ -3,6 +3,9 @@
 #pragma once
 #include "IBaseClientDLL.h"
 
+class bf_write;
+struct kbutton_s;
+
 class CHLClient : public IBaseClientDLL
 {
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
@@ -20,15 +23,15 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual int vfunc10();
     virtual int vfunc11(int, int, int, int);
     virtual void vfunc12(int);
-    virtual int vfunc13();
-    virtual int vfunc14();
-    virtual int vfunc15(int, float);
-    virtual int vfunc16();
-    virtual int vfunc17();
-    virtual int vfunc18();
-    virtual int vfunc19();
-    virtual void vfunc20(int, int, int, int, int, int);
-    virtual int vfunc21(int, int, int, float);
+    virtual void IN_ActivateMouse();	// slot 13
+    virtual void IN_DeactivateMouse();	// slot 14
+    virtual void IN_MouseEvent(int mstate, bool down);	// slot 15
+    virtual void IN_Accumulate();	// slot 16
+    virtual void IN_ClearStates();	// slot 17
+    virtual struct kbutton_s *IN_FindKey(const char *name);	// slot 18
+    virtual int IN_KeyEvent(int eventcode, int keynum, const char *pszCurrentBinding);	// slot 19
+    virtual void CreateMove(int sequence_number, int totalslots, float tick_frametime, float input_sample_frametime, int active, float packet_loss);	// slot 20
+    virtual void WriteUsercmdDeltaToBuffer(bf_write *buf, int from, int to, bool isnewcommand);	// slot 21
     virtual void vfunc22();
     virtual int vfunc23(int, int);
     virtual void vfunc24();
@@ -51,5 +54,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual int vfunc41(int);
     virtual void vfunc42();
     virtual void vfunc43(int, int, int);
-    virtual int vfunc44();
+    virtual bool vfunc44();	// forwards input->vfunc18()
 };

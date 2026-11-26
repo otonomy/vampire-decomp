@@ -163,10 +163,10 @@ namespace lifted {
 extern int g_102ccd98;
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual int f4(int); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual int f16(); };
 }
-int CHLClient::vfunc13()
+void CHLClient::IN_ActivateMouse()
 {
     input->vfunc16();
-    return ((lifted::V *)lifted::g_102ccd98)->f4(1);
+    ((lifted::V *)lifted::g_102ccd98)->f4(1);
 }
 // END FUNCTION
 
@@ -177,82 +177,64 @@ namespace lifted {
 extern int g_102ccd98;
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual int f4(int); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual int f17(); };
 }
-int CHLClient::vfunc14()
+void CHLClient::IN_DeactivateMouse()
 {
     input->vfunc17();
-    return ((lifted::V *)lifted::g_102ccd98)->f4(0);
+    ((lifted::V *)lifted::g_102ccd98)->f4(0);
 }
 // END FUNCTION
 
 // FUNCTION: 0x100cbb50 size=0xb
+#include "CInput.h"
 #include "CHLClient.h"
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual int f18(); };
-}
-int CHLClient::vfunc44()
+bool CHLClient::vfunc44()
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f18();
+	return input->vfunc18();
 }
 // END FUNCTION
 
 // FUNCTION: 0x100cbb60 size=0x13
+#include "CInput.h"
 #include "CHLClient.h"
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual int f15(int, float); };
-}
-int CHLClient::vfunc15(int a0, float a1)
+void CHLClient::IN_MouseEvent(int mstate, bool down)
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f15(a0, a1);
+	input->vfunc15(mstate, down);
 }
 // END FUNCTION
 
 // FUNCTION: 0x100cbb80 size=0xb
+#include "CInput.h"
 #include "CHLClient.h"
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual int f14(); };
-}
-int CHLClient::vfunc16()
+void CHLClient::IN_Accumulate()
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f14();
+	input->vfunc14();
 }
 // END FUNCTION
 
 // FUNCTION: 0x100cbb90 size=0xb
+#include "CInput.h"
 #include "CHLClient.h"
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual int f19(); };
-}
-int CHLClient::vfunc17()
+void CHLClient::IN_ClearStates()
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f19();
+	input->vfunc19();
 }
 // END FUNCTION
 
 // FUNCTION: 0x100cbba0 size=0xb
+#include "CInput.h"
 #include "CHLClient.h"
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual int f11(); };
-}
-int CHLClient::vfunc18()
+struct kbutton_s *CHLClient::IN_FindKey(const char *name)
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f11();
+	return (struct kbutton_s *)input->vfunc11(name);
 }
 // END FUNCTION
 
 // FUNCTION: 0x100cbbb0 size=0xb
+#include "CInput.h"
 #include "CHLClient.h"
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual int f10(); };
-}
-int CHLClient::vfunc19()
+int CHLClient::IN_KeyEvent(int eventcode, int keynum, const char *pszCurrentBinding)
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f10();
+	return input->vfunc10(eventcode, keynum, (int)pszCurrentBinding);
 }
 // END FUNCTION
 
@@ -275,7 +257,7 @@ struct EngV
 };
 
 
-void CHLClient::vfunc20(int a0, int a1, int a2, int a3, int a4, int a5)
+void CHLClient::CreateMove(int a0, int a1, float a2, float a3, int a4, float a5)
 {
 	((EngV *)g_104a5808)->vfunc16(0xac, 0);
 	sub_1009db70(1);
@@ -288,14 +270,11 @@ void CHLClient::vfunc20(int a0, int a1, int a2, int a3, int a4, int a5)
 // END FUNCTION
 
 // FUNCTION: 0x100cbc40 size=0x13
+#include "CInput.h"
 #include "CHLClient.h"
-namespace lifted {
-extern int g_1027ba58;
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual int f4(int, int, int, float); };
-}
-int CHLClient::vfunc21(int a0, int a1, int a2, float a3)
+void CHLClient::WriteUsercmdDeltaToBuffer(bf_write *buf, int from, int to, bool isnewcommand)
 {
-    return ((lifted::V *)lifted::g_1027ba58)->f4(a0, a1, a2, a3);
+	input->vfunc4(buf, from, to, isnewcommand);
 }
 // END FUNCTION
 

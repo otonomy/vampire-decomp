@@ -45,8 +45,8 @@ public:
     virtual void vfunc0();
     virtual void vfunc1();
     virtual int vfunc2(int bResetState);	// GetButtonBits
-    virtual void vfunc3(int a0, int a1, int a2, int a3, int a4, int a5);	// SDK IInput::CreateMove (frame times and packet loss are floats there); CHLClient::vfunc20 forwards six dwords
-    virtual void vfunc4(void *, int, int, int);
+    virtual void vfunc3(int sequence_number, int totalslots, float tick_frametime, float input_sample_frametime, int active, float packet_loss);	// SDK IInput::CreateMove, CHLClient::CreateMove forwards it
+    virtual void vfunc4(void *buf, int from, int to, bool isnewcommand);	// SDK IInput::WriteUsercmdDeltaToBuffer
     virtual void vfunc5(int, int, int);
     virtual void vfunc6(int, int, int);
     virtual char *vfunc7(int i);
@@ -57,7 +57,7 @@ public:
     virtual void vfunc12();
     virtual void vfunc13();
     virtual void vfunc14();
-    virtual void vfunc15();
+    virtual void vfunc15(int mstate, bool down);	// SDK IInput::MouseEvent, CHLClient::IN_MouseEvent forwards it
     virtual void vfunc16();
     virtual void vfunc17();
     virtual bool vfunc18();

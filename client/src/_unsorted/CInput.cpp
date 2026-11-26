@@ -447,9 +447,9 @@ void CInput::vfunc6(int a, int b, int c)
 // FUNCTION: 0x10103ba0 size=0xbc
 #include "CInput.h"
 #include "CUserCmd.h"
-void sub_10103c60(void *buf, CUserCmd *to, CUserCmd *from, int isnew);
+void sub_10103c60(void *buf, CUserCmd *to, CUserCmd *from, bool isnew);
 
-void CInput::vfunc4(void *buf, int from, int to, int isnew)
+void CInput::vfunc4(void *buf, int from, int to, bool isnew)
 {
     CUserCmd nullcmd;
     CUserCmd *f;
