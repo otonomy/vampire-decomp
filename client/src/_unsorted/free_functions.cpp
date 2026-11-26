@@ -134418,6 +134418,195 @@ void sub_1019b8b0(float offsetS, float offsetT)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019bc10 size=0x619
+#include "ConVar.h"
+#include "engineclient.h"
+
+struct IMesh_1019bc10
+{
+	virtual void LockMesh(int numVerts, int numIndices, void *desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+inline void IncrementFloatPointer(float *&pBufferPointer, int vertexSize)
+{
+	pBufferPointer = (float *)((unsigned char *)pBufferPointer + vertexSize);
+}
+
+class MeshBuilder_1019bc10
+{
+public:
+	int m_VertexSize_Position;	// 0x00
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;	// 0x0c
+	int m_VertexSize_Color;	// 0x10
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];	// 0x18
+	int m_unk28[(0x80 - 0x28) / 4];
+	IMesh_1019bc10 *m_pMesh;	// 0x80
+	bool m_bModify;	// 0x84
+	int m_nMaxVertexCount;	// 0x88
+	int m_nMaxIndexCount;	// 0x8c
+	int m_nVertexCount;	// 0x90
+	int m_nIndexCount;	// 0x94
+	int m_nCurrentVertex;	// 0x98
+	int m_nCurrentIndex;	// 0x9c
+	int m_Type;	// 0xa0
+	bool m_bGenerateIndices;	// 0xa4
+	float *m_pCurrPosition;	// 0xa8
+	float *m_pCurrNormal;	// 0xac
+	float *m_pCurrTexCoord[4];	// 0xb0
+	unsigned char *m_pCurrColor;	// 0xc0
+
+	void sub_100421f0(int type, int numPrimitives);	// ComputeNumVertsAndIndices
+	void sub_100422e0();	// Reset
+	void sub_10084560();	// the constructor, out of line
+	void sub_10041b10(IMesh_1019bc10 *pMesh, int type, int numPrimitives);	// Begin
+	void sub_100319d0(float x, float y, float z);	// Position3f
+	void sub_10031a20(int stage, float s, float t);	// TexCoord2f
+	void sub_10005230();	// AdvanceVertex
+	void sub_10041c90(bool bSpewData, bool bDraw);	// End
+
+	__forceinline void Construct()
+	{
+		m_pMesh = 0;
+		m_nMaxVertexCount = 0;
+		m_nMaxIndexCount = 0;
+		m_nVertexCount = 0;
+		m_nIndexCount = 0;
+		m_nCurrentVertex = 0;
+		m_nCurrentIndex = 0;
+		m_bGenerateIndices = false;
+	}
+	__forceinline void Begin(IMesh_1019bc10 *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_nIndexCount = 0;
+		m_nVertexCount = 0;
+		m_bGenerateIndices = true;
+		m_Type = type;
+		m_pMesh->SetPrimitiveType(2);
+		m_pMesh->LockMesh(m_nMaxVertexCount, m_nMaxIndexCount, this);
+		sub_100422e0();
+	}
+	__forceinline void Position3f(float x, float y, float z)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = x;
+		*pDst++ = y;
+		*pDst = z;
+	}
+	__forceinline void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+	__forceinline void AdvanceVertex()
+	{
+		if (++m_nCurrentVertex > m_nVertexCount)
+			m_nVertexCount = m_nCurrentVertex;
+		IncrementFloatPointer(m_pCurrPosition, m_VertexSize_Position);
+		IncrementFloatPointer(m_pCurrNormal, m_VertexSize_Normal);
+		IncrementFloatPointer(m_pCurrTexCoord[0], m_VertexSize_TexCoord[0]);
+		IncrementFloatPointer(m_pCurrTexCoord[1], m_VertexSize_TexCoord[1]);
+		IncrementFloatPointer(m_pCurrTexCoord[2], m_VertexSize_TexCoord[2]);
+		IncrementFloatPointer(m_pCurrTexCoord[3], m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+};
+
+struct ConVarFloat_1019bc10 { float sub_1019c230(); };	// ConVar::GetFloat, out of line
+
+void sub_1019bc10()
+{
+	float offsetS = (0.5f / 256.0f);
+	float offsetT = (0.5f / 256.0f);
+	bool found;
+	void *pMaterial = materials->FindMaterial("debug/debugrendertarget256", &found, true);
+	static ConVar mat_wateroverlaysize("mat_wateroverlaysize", "128", 0);
+	if (found)
+	{
+		materials->Bind(pMaterial, 0);
+		IMesh_1019bc10 *pMesh = (IMesh_1019bc10 *)materials->GetDynamicMesh(true, 0, 0, 0);
+
+		float w = mat_wateroverlaysize.GetFloat();
+		float h = mat_wateroverlaysize.GetFloat();
+
+		MeshBuilder_1019bc10 meshBuilder;
+		meshBuilder.Construct();
+		meshBuilder.Begin(pMesh, 7, 1);
+
+		meshBuilder.Position3f(0.0f, 0.0f, 0.0f);
+		meshBuilder.TexCoord2f(0, 0.0f + offsetS, 0.0f + offsetT);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.Position3f(w, 0.0f, 0.0f);
+		meshBuilder.TexCoord2f(0, 1.0f + offsetS, 0.0f + offsetT);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.Position3f(w, h, 0.0f);
+		meshBuilder.TexCoord2f(0, 1.0f + offsetS, 1.0f + offsetT);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.Position3f(0.0f, h, 0.0f);
+		meshBuilder.TexCoord2f(0, 0.0f + offsetS, 1.0f + offsetT);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.sub_10041c90(false, false);
+		pMesh->Draw();
+	}
+
+	pMaterial = materials->FindMaterial("debug/debugrendertarget256-2", &found, true);
+	if (found)
+	{
+		materials->Bind(pMaterial, 0);
+		IMesh_1019bc10 *pMesh = (IMesh_1019bc10 *)materials->GetDynamicMesh(true, 0, 0, 0);
+
+		float w = ((ConVarFloat_1019bc10 *)&mat_wateroverlaysize)->sub_1019c230();
+		float h = ((ConVarFloat_1019bc10 *)&mat_wateroverlaysize)->sub_1019c230();
+		float xoffset = ((ConVarFloat_1019bc10 *)&mat_wateroverlaysize)->sub_1019c230();
+
+		MeshBuilder_1019bc10 meshBuilder;
+		meshBuilder.sub_10084560();
+		meshBuilder.sub_10041b10(pMesh, 7, 1);
+
+		meshBuilder.sub_100319d0(xoffset, 0.0f, 0.0f);
+		meshBuilder.sub_10031a20(0, 0.0f + offsetS, 1.0f + offsetT);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_100319d0(xoffset + w, 0.0f, 0.0f);
+		meshBuilder.sub_10031a20(0, 1.0f + offsetS, 1.0f + offsetT);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_100319d0(xoffset + w, h, 0.0f);
+		meshBuilder.sub_10031a20(0, 1.0f + offsetS, 0.0f + offsetT);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_100319d0(xoffset, h, 0.0f);
+		meshBuilder.sub_10031a20(0, 0.0f + offsetS, 0.0f + offsetT);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_10041c90(false, false);
+		pMesh->Draw();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019c230 size=0x1f
 struct CUnk102a9640Obj
 {
