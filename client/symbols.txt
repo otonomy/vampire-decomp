@@ -130,6 +130,7 @@
 0x10003390 func   ?ClientClassInit@@YAHPAUignored@DT_ItemPhysicsHand@@@Z ClientClassInit
 0x10003470 func   ?sub_10003470@WeaponView@@QAEXH@Z WeaponView::sub_10003470
 0x100034d0 func   ?vfunc189@C_ItemPhysicsHand@@UAE_NH@Z C_ItemPhysicsHand::vfunc189
+0x10003540 func   ?sub_10003540@@YAHXZ sub_10003540
 0x10003560 func   ?vfunc16@C_ItemGKeyring@@UAEHXZ C_ItemGKeyring::vfunc16
 0x10003580 func   ?sub_10003580@@YAHXZ sub_10003580
 0x100035e0 func   ?_C_ItemGKeyring_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGKeyring_CreateObject

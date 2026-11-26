@@ -756,6 +756,21 @@ void WeaponView::sub_10003470(int arg)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10003540 size=0x1b
+namespace lifted {
+struct C10003710 { int sub_10003710(); };
+int sub_100a1eb0(int);
+}
+int sub_10003540()
+{
+    int t0 = lifted::sub_100a1eb0(0x990);
+    if (t0 != 0) {
+        return ((lifted::C10003710 *)t0)->sub_10003710();
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10003580 size=0x6
 namespace lifted {
 extern char g_102deaec;
