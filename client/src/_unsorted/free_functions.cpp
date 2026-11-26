@@ -63995,6 +63995,86 @@ void sub_100fa860(Pixel1555_100fa860 *pDst, const unsigned char *pSrc, int nPitc
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fab40 size=0x2d3
+struct BGRA4444_t
+{
+	unsigned short b : 4;
+	unsigned short g : 4;
+	unsigned short r : 4;
+	unsigned short a : 4;
+};
+
+struct Color32_t
+{
+	unsigned char r, g, b, a;
+};
+
+extern unsigned short g_104d1648[8];	// the block's eight alpha values
+extern unsigned char g_104d1628[16];	// the block's sixteen 3-bit alpha indices
+extern Color32_t g_104d1698[16];	// the decoded block
+
+// DXT5 alpha block -> the alpha nibble of a 4x4 block of BGRA4444 pixels
+void sub_100fab40(BGRA4444_t *pDst, const unsigned char *pBlock, int nPitch)
+{
+	unsigned short *alpha = g_104d1648;
+	alpha[0] = pBlock[0];
+	alpha[1] = pBlock[1];
+	if (alpha[0] > alpha[1])
+	{
+		alpha[2] = (6 * alpha[0] + 1 * alpha[1]) / 7;
+		alpha[3] = (5 * alpha[0] + 2 * alpha[1]) / 7;
+		alpha[4] = (4 * alpha[0] + 3 * alpha[1]) / 7;
+		alpha[5] = (3 * alpha[0] + 4 * alpha[1]) / 7;
+		alpha[6] = (2 * alpha[0] + 5 * alpha[1]) / 7;
+		alpha[7] = (1 * alpha[0] + 6 * alpha[1]) / 7;
+	}
+	else
+	{
+		alpha[2] = (4 * alpha[0] + 1 * alpha[1]) / 5;
+		alpha[3] = (3 * alpha[0] + 2 * alpha[1]) / 5;
+		alpha[4] = (2 * alpha[0] + 3 * alpha[1]) / 5;
+		alpha[5] = (1 * alpha[0] + 4 * alpha[1]) / 5;
+		alpha[6] = 0;
+		alpha[7] = 255;
+	}
+
+	unsigned char *bits = g_104d1628;
+	unsigned int b = *(const unsigned int *)&pBlock[2];
+	bits[0] = b & 7; b >>= 3;
+	bits[1] = b & 7; b >>= 3;
+	bits[2] = b & 7; b >>= 3;
+	bits[3] = b & 7; b >>= 3;
+	bits[4] = b & 7; b >>= 3;
+	bits[5] = b & 7; b >>= 3;
+	bits[6] = b & 7; b >>= 3;
+	bits[7] = b & 7;
+	b = *(const unsigned int *)&pBlock[5];
+	bits[8] = b & 7; b >>= 3;
+	bits[9] = b & 7; b >>= 3;
+	bits[10] = b & 7; b >>= 3;
+	bits[11] = b & 7; b >>= 3;
+	bits[12] = b & 7; b >>= 3;
+	bits[13] = b & 7; b >>= 3;
+	bits[14] = b & 7; b >>= 3;
+	bits[15] = b & 7;
+
+	int i, j;
+	for (i = 0; i < 4; i++)
+		for (j = 0; j < 4; j++)
+			g_104d1698[i * 4 + j].a = (unsigned char)alpha[bits[i * 4 + j]];
+
+	for (i = 0; i < 4; i++)
+	{
+		for (j = 0; j < 4; j++)
+		{
+			pDst->a = g_104d1698[i * 4 + j].a >> 4;
+			pDst++;
+		}
+		pDst += nPitch - 4;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fbd70 size=0xe
 namespace lifted {
 extern int g_1027ba58;

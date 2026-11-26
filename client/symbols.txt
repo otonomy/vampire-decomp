@@ -5580,6 +5580,7 @@
 0x100fa2e0 func   ?sub_100fa2e0@@YAXPAUS3RGBA@@PBUDXTAlphaBlock3BitLinear@@H@Z sub_100fa2e0
 0x100fa5a0 func   ?sub_100fa5a0@@YAXPAUS3RGBA@@PBUDXTAlphaBlock3BitLinear@@H@Z sub_100fa5a0
 0x100fa860 func   ?sub_100fa860@@YAXPAUPixel1555_100fa860@@PBEH@Z sub_100fa860
+0x100fab40 func   ?sub_100fab40@@YAXPAUBGRA4444_t@@PBEH@Z sub_100fab40
 0x100fbd70 func   ?sub_100fbd70@@YAHXZ sub_100fbd70
 0x100fbd80 func   ?sub_100fbd80@@YAHXZ sub_100fbd80
 0x100fbd90 func   ?sub_100fbd90@@YAHXZ sub_100fbd90
