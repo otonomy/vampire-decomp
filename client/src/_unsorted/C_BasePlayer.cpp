@@ -192,6 +192,165 @@ struct V { virtual void v0(); virtual void v1(); virtual void v2(); virtual void
 void __fastcall sub_100a5900(char *self, int edx) { ((V *)(self + 4))->v11(); }
 // END FUNCTION
 
+// FUNCTION: 0x100a5b60 size=0x451
+#include "C_BasePlayer.h"
+#include "ehandle.h"
+#include "CInput.h"
+#include "CHud.h"
+#include "ConVar.h"
+#include "engineclient.h"
+#include <stdlib.h>
+
+struct Obj_100a99d0 { bool sub_100a99d0(); };
+struct CUnknown100a2e40 { void sub_100a2e40(int); };
+struct CUnknown100a6920 { bool sub_100a6920(); };
+struct CHost_10097f80 { int sub_10097f80(int); };
+struct PV { bool sub_100aa320(int, int); };
+
+struct WeaponData_100a5b60 { char m_pad[0x2428]; int m_iFlags; };
+struct WeaponRes_100a5b60 { WeaponData_100a5b60 *sub_101a92d0(int iAmmo); };
+extern WeaponRes_100a5b60 g_10678dd4;
+
+struct CHudHistoryResource_100a5b60 { void sub_100f0250(int type, int id, int count); };
+
+struct WeaponInfoHolder_100a5b60 { char m_pad[0x2440]; int m_n2440; };
+struct Weapon_100a5b60 { WeaponInfoHolder_100a5b60 *sub_1007b160(); };
+
+struct Sub63Obj_100a5b60 { virtual void OnPlayerData(C_BasePlayer *pPlayer); };
+#define EV(n) virtual void e##n();
+#define EV10(p) EV(p##0) EV(p##1) EV(p##2) EV(p##3) EV(p##4) EV(p##5) EV(p##6) EV(p##7) EV(p##8) EV(p##9)
+struct Ent_100a5b60
+{
+    EV10(0) EV10(1) EV10(2) EV10(3) EV10(4) EV10(5)
+    EV(60) EV(61) EV(62)
+    virtual Sub63Obj_100a5b60 *vfunc63();
+};
+struct PlayerV_100a5b60
+{
+    EV10(0) EV10(1) EV10(2) EV10(3) EV10(4) EV10(5) EV10(6) EV10(7) EV10(8) EV10(9)
+    EV10(10) EV10(11) EV10(12) EV10(13)
+    EV(140) EV(141) EV(142) EV(143) EV(144) EV(145) EV(146) EV(147)
+    virtual Weapon_100a5b60 *vfunc148();
+};
+struct Renderable_100a5b60
+{
+    virtual void r0();
+    virtual const Vector &GetRenderOrigin();
+};
+
+extern ConVar g_105f9990;
+extern ConVar g_104d3fc0;
+extern ConVar g_104a0b88;
+extern float g_104cfe5c;
+
+bool sub_1018c840();
+void sub_101713c0(int);
+void sub_10101b90(bool);
+void sub_100c0c90(void *);
+void sub_10171390();
+float sub_100cd330(const Vector *pos, float minz, float maxz);
+
+#define PL(type, off) (*(type *)((char *)this + (off)))
+
+void C_BasePlayer::OnDataChanged(int updateType)
+{
+    if (((Obj_100a99d0 *)this)->sub_100a99d0())
+        ((CUnknown100a2e40 *)this)->sub_100a2e40(1);
+
+    C_BaseVCombatCharacter::OnDataChanged(updateType);
+
+    if (((Obj_100a99d0 *)this)->sub_100a99d0())
+    {
+        switch (PL(int, 0x15e8))
+        {
+        case 8:
+            input->vfunc35();
+            break;
+        case 0x10:
+            input->vfunc37();
+            break;
+        }
+        PL(int, 0x15e8) = 0;
+
+        *render->vfunc41() = (unsigned char *)this + 0x166c;
+
+        if (((CUnknown100a6920 *)this)->sub_100a6920() && PL(CBaseHandle, 0x19c4).Get() &&
+            ((Ent_100a5b60 *)PL(CBaseHandle, 0x19c4).Get())->vfunc63())
+        {
+            ((Ent_100a5b60 *)PL(CBaseHandle, 0x19c4).Get())->vfunc63()->OnPlayerData(this);
+        }
+
+        if ((PL(unsigned int, 0x1610) & 1) && sub_1018c840())
+        {
+            PL(unsigned int, 0x1610) &= ~1;
+            sub_101713c0(1);
+            engine->ClientCmd("chooseteam");
+        }
+
+        for (int i = 0; i < 32; i++)
+        {
+            if (((CHost_10097f80 *)this)->sub_10097f80(i) > ((int *)((char *)this + 0x1a28))[i])
+            {
+                WeaponData_100a5b60 *pWeaponData = g_10678dd4.sub_101a92d0(i);
+                if (!pWeaponData || !(pWeaponData->m_iFlags & 0x40))
+                {
+                    CHudHistoryResource_100a5b60 *pHudHR = (CHudHistoryResource_100a5b60 *)gHUD.FindElement("CHudHistoryResource");
+                    pHudHR->sub_100f0250(1, i, abs(((CHost_10097f80 *)this)->sub_10097f80(i) - ((int *)((char *)this + 0x1a28))[i]));
+                }
+            }
+        }
+
+        int nMax = g_105f9990.GetInt();
+        if (PL(int, 0x1690) == 0)
+            PL(int, 0x1690) = nMax;
+        if (PL(int, 0x1690) == nMax)
+            g_104cfe5c = 0;
+        else
+            g_104cfe5c = (float)PL(int, 0x1690) / nMax * g_104d3fc0.GetFloat() * g_104a0b88.GetFloat();
+
+        sub_10101b90(vfunc84() <= 0);
+        const float &flFrameRate = PL(float, 0x1078);
+        float flRate = vfunc84() > 0 ? 1.0f / flFrameRate : 0.2f;
+        engine->vfunc43(flRate);
+
+        sub_100c0c90((char *)this + 0x17f8);
+        sub_10171390();
+
+        bool bShow = false;
+        Weapon_100a5b60 *pWeapon = ((PlayerV_100a5b60 *)this)->vfunc148();
+        if (pWeapon && pWeapon->sub_1007b160()->m_n2440 == 0x10)
+            bShow = true;
+        if (((PV *)this)->sub_100aa320(0x10, 0) || ((PV *)this)->sub_100aa320(0x200, 0) || ((PV *)this)->sub_100aa320(2, 0))
+            bShow = true;
+        if (vfunc84() <= 0)
+            bShow = true;
+
+        if (PL(int, 0x90) == 3 || (PL(int, 0x90) > 1 && !(sub_100a2450() & 1)))
+        {
+            Renderable_100a5b60 *pRend = (Renderable_100a5b60 *)((char *)this + 4);
+            Vector vecOrigin = pRend->GetRenderOrigin();
+            float flDepth = sub_100cd330(&vecOrigin, vecOrigin.z, vecOrigin.z + 512.0f);
+            flDepth = flDepth - pRend->GetRenderOrigin().z - PL(float, 0x150);
+            if (PL(int, 0x90) == 3)
+                input->vfunc46(-1, *(int *)&flDepth);
+            else
+                input->vfunc46(1, *(int *)&flDepth);
+            bShow = true;
+        }
+        else
+        {
+            input->vfunc46(0, 0);
+        }
+
+        if (bShow)
+            input->vfunc37();
+        else
+            input->vfunc38();
+    }
+    sub_100a5fc0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a6b10 size=0x71
 #include "engineclient.h"
 #include "C_BasePlayer.h"
