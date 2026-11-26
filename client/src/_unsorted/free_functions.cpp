@@ -21235,6 +21235,53 @@ int sub_10052ef0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10053200 size=0x2ca
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+
+extern int g_10285ad0;
+float sub_100cd9e0(float flCur, float flTarget, float flFrameTime, float flSpeed);
+
+#define clamp_L(val, min, max) (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)))
+#define max_L(a, b) (((a) > (b)) ? (a) : (b))
+
+void CHudDialog::sub_10053200()
+{
+	ScopeTrace trace("CHudDialog::ComputeAlpha", g_102de300);
+	float flTime = engine->Time(1);
+	float flFrameTime = clamp_L(flTime - m_flLastTime, 0.01, 0.15);
+	m_flLastTime = flTime;
+
+	if (m_b1b4 && m_b1b0)
+	{
+		float flMax = g_10285ad0;
+		float flSpeed = flMax + flMax;
+		if (m_b1b3 || (m_b1b1 && m_flAlpha1ac == 0))
+			flSpeed = flMax * 0.8f;
+		if (m_b1b2)
+			m_flAlpha1ac = sub_100cd9e0(m_flAlpha1ac, 192.0f, flFrameTime, flSpeed);
+		else
+			m_flAlpha1ac = sub_100cd9e0(m_flAlpha1ac, 0, flFrameTime, flSpeed);
+		if (m_b1b1)
+			m_flAlpha1a8 = sub_100cd9e0(m_flAlpha1a8, 192.0f, flFrameTime, flSpeed);
+		else
+			m_flAlpha1a8 = sub_100cd9e0(m_flAlpha1a8, 0, flFrameTime, flSpeed);
+		m_flAlpha = max_L(m_flAlpha1ac, m_flAlpha1a8);
+	}
+	else
+	{
+		float flSpeed = g_10285ad0 * 0.8f;
+		m_flAlpha1a8 = sub_100cd9e0(m_flAlpha1a8, 0, flFrameTime, flSpeed);
+		m_flAlpha1ac = sub_100cd9e0(m_flAlpha1ac, 0, flFrameTime, flSpeed);
+		m_flAlpha = max_L(m_flAlpha1ac, m_flAlpha1a8);
+	}
+	m_flAlpha = clamp_L(m_flAlpha, 0.0f, g_10285ad0);
+	m_flAlpha1a8 = clamp_L(m_flAlpha1a8, 0.0f, 192.0f);
+	m_flAlpha1ac = clamp_L(m_flAlpha1ac, 0.0f, 192.0f);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10053f10 size=0xd3
 #include "CHudDialog.h"
 #include "ScopeTrace.h"
