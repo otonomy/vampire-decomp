@@ -63,34 +63,20 @@ void CMoveHelperClient::vfunc3()
 // END FUNCTION
 
 // FUNCTION: 0x1010f3f0 size=0x8e
+#include "engineclient.h"
 #include "CMoveHelperClient.h"
 #include "CWaterEnum.h"
-struct Eng_1010f3f0 {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18();
-	virtual int GetPointContents(int, const Vector &);
-};
-struct Part_1010f3f0 {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void Enum(int mask, const Vector &pt, int, CWaterEnum *);
-};
-extern Eng_1010f3f0 *g_104a57d4;
-extern Part_1010f3f0 *g_104a5808;
 
 int CMoveHelperClient::vfunc22(const Vector &pt)
 {
 	int ent = -1;
-	if (g_104a57d4->GetPointContents(0, pt) & 0x4030)
+	if (engine->vfunc19(0, pt) & 0x4030)
 		return 0;
 	CWaterEnum we;
 	we.m_vecPoint = pt;
 	we.m_pEntIndex = &ent;
 	we.m_nContents = 0;
-	g_104a5808->Enum(4, pt, 0, &we);
+	partition->vfunc15(4, pt, 0, &we);
 	if (!(we.m_nContents & 0x4030))
 		return -1;
 	return ent;
@@ -135,15 +121,9 @@ int CMoveHelperClient::vfunc16(Vector *p)
 // END FUNCTION
 
 // FUNCTION: 0x1010f5b0 size=0xb4
+#include "engineclient.h"
 #include "CMoveHelperClient.h"
 #include "C_RecipientFilter.h"
-struct IEngineSound_1010f5b0
-{
-	virtual int vfunc0(const char *sample, int a);
-	virtual int vfunc1();
-	virtual void EmitSound(IRecipientFilter &filter, int ent, int channel, const char *sample, float volume, int level, int flags, int pitch, const Vector *origin, int a, int b, int c);
-};
-extern IEngineSound_1010f5b0 *g_104a5818;
 struct CUnknown100be160
 {
 	void *m_vt;
@@ -181,11 +161,11 @@ void CMoveHelperClient::sub_1010f5b0(const Vector &origin, int channel, const ch
 {
 	if (!sample)
 		return;
-	g_104a5818->vfunc0(sample, 0);
+	enginesound->vfunc0(sample, 0);
 	CUnknown100be160 filter;
 	filter.sub_100be160();
 	filter.sub_100be0d0();
-	g_104a5818->EmitSound(*(IRecipientFilter *)&filter, -1, channel, sample, volume, level, 0, pitch, &origin, 0, 1, 0);
+	enginesound->vfunc2(*(IRecipientFilter *)&filter, -1, channel, sample, volume, level, 0, pitch, &origin, 0, 1, 0);
 }
 // END FUNCTION
 
@@ -249,18 +229,10 @@ void CMoveHelperClient::vfunc4(int idx, const char *fmt, ...)
 // END FUNCTION
 
 // FUNCTION: 0x1010f750 size=0xe
-struct IV { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
- virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
- virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
- virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
- virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
- virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
- virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
- virtual void v70(); virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74(); virtual void v75(); };
-extern IV *g_104a57d4;
+#include "engineclient.h"
 struct CView { void sub_1010f750(); };
 // TARGET: ?sub_1010f750@CView@@QAEXXZ
-void CView::sub_1010f750() { g_104a57d4->v75(); }
+void CView::sub_1010f750() { engine->vfunc75(); }
 // END FUNCTION
 
 // FUNCTION: 0x1010f760 size=0xb

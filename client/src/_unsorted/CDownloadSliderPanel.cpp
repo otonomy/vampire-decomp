@@ -23,115 +23,11 @@ void CDownloadSliderPanel::vfunc2()
 // END FUNCTION
 
 // FUNCTION: 0x10165b50 size=0x59
+#include "engineclient.h"
 #include "CDownloadSliderPanel.h"
 
-class IGlobalA
-{
-public:
-	virtual void a0() = 0;
-	virtual void a1() = 0;
-	virtual void a2() = 0;
-	virtual void a3() = 0;
-	virtual void a4() = 0;
-	virtual void a5() = 0;
-	virtual void a6() = 0;
-	virtual void a7() = 0;
-	virtual void a8() = 0;
-	virtual void a9() = 0;
-	virtual void a10() = 0;
-	virtual void a11() = 0;
-	virtual void a12() = 0;
-	virtual void a13() = 0;
-	virtual void a14() = 0;
-	virtual void a15() = 0;
-	virtual void a16() = 0;
-	virtual void a17() = 0;
-	virtual void a18() = 0;
-	virtual void a19() = 0;
-	virtual void a20() = 0;
-	virtual void a21() = 0;
-	virtual void a22() = 0;
-	virtual void a23() = 0;
-	virtual void a24() = 0;
-	virtual void a25() = 0;
-	virtual void a26() = 0;
-	virtual void a27() = 0;
-	virtual void a28() = 0;
-	virtual void a29() = 0;
-	virtual void a30() = 0;
-	virtual void a31() = 0;
-	virtual void a32() = 0;
-	virtual void a33() = 0;
-	virtual void a34() = 0;
-	virtual bool a35() = 0;
-};
 
-class IGlobalB
-{
-public:
-	virtual void b0() = 0;
-	virtual void b1() = 0;
-	virtual void b2() = 0;
-	virtual void b3() = 0;
-	virtual void b4() = 0;
-	virtual void b5() = 0;
-	virtual void b6() = 0;
-	virtual void b7() = 0;
-	virtual void b8() = 0;
-	virtual void b9() = 0;
-	virtual void b10() = 0;
-	virtual void b11() = 0;
-	virtual void b12() = 0;
-	virtual void b13() = 0;
-	virtual void b14() = 0;
-	virtual void b15() = 0;
-	virtual void b16() = 0;
-	virtual void b17() = 0;
-	virtual void b18() = 0;
-	virtual void b19() = 0;
-	virtual void b20() = 0;
-	virtual void b21() = 0;
-	virtual void b22() = 0;
-	virtual void b23() = 0;
-	virtual void b24() = 0;
-	virtual void b25() = 0;
-	virtual void b26() = 0;
-	virtual void b27() = 0;
-	virtual void b28() = 0;
-	virtual void b29() = 0;
-	virtual void b30() = 0;
-	virtual void b31() = 0;
-	virtual void b32() = 0;
-	virtual void b33() = 0;
-	virtual void b34() = 0;
-	virtual void b35() = 0;
-	virtual void b36() = 0;
-	virtual void b37() = 0;
-	virtual void b38() = 0;
-	virtual void b39() = 0;
-	virtual void b40() = 0;
-	virtual void b41() = 0;
-	virtual void b42() = 0;
-	virtual void b43() = 0;
-	virtual void b44() = 0;
-	virtual void b45() = 0;
-	virtual void b46() = 0;
-	virtual void b47() = 0;
-	virtual void b48() = 0;
-	virtual void b49() = 0;
-	virtual void b50() = 0;
-	virtual void b51() = 0;
-	virtual void b52() = 0;
-	virtual void b53() = 0;
-	virtual void b54() = 0;
-	virtual void b55() = 0;
-	virtual void b56() = 0;
-	virtual void b57() = 0;
-	virtual int b58() = 0;
-};
 
-extern IGlobalA *g_104a57e4;
-extern IGlobalB *g_104a57d4;
 
 class CDownloadChild
 {
@@ -168,7 +64,7 @@ bool CDownloadSliderPanel::vfunc107()
 		return false;
 	if (!p->m_pChild->c1() && p->m_pChild->m_i2c < 0)
 		return false;
-	if (g_104a57e4->a35() || g_104a57d4->b58() == 0)
+	if (render->vfunc35() || engine->vfunc58() == 0)
 	{
 		s->m_pPanel->p4(-1);
 		return false;

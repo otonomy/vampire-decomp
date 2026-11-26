@@ -53,6 +53,7 @@ C_BaseFlex::~C_BaseFlex()
 // END FUNCTION
 
 // FUNCTION: 0x100c4110 size=0xe4
+#include "engineclient.h"
 #include "C_BaseFlex.h"
 #include "Vector.h"
 
@@ -69,35 +70,13 @@ struct FlexView
 	int m_iEyeRightleft;
 };
 
-struct EngineView
-{
-	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3();
-	virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7();
-	virtual void s8(); virtual void s9(); virtual void s10(); virtual void s11();
-	virtual void s12(); virtual void s13(); virtual void s14(); virtual void s15();
-	virtual void s16(); virtual void s17(); virtual void s18(); virtual void s19();
-	virtual void s20(); virtual void s21(); virtual void s22(); virtual void s23();
-	virtual void s24(); virtual void s25(); virtual void s26(); virtual void s27();
-	virtual void s28(); virtual void s29(); virtual void s30(); virtual void s31();
-	virtual void s32(); virtual void s33(); virtual void s34(); virtual void s35();
-	virtual void s36(); virtual void s37(); virtual void s38();
-	virtual float s39(int);
-};
 
-struct ModelRenderView
-{
-	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3();
-	virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7();
-	virtual void SetViewTarget(const Vector &);
-};
 
-extern EngineView *g_104a57d4;
-extern ModelRenderView *g_104a57d8;
 
 void C_BaseFlex::vfunc145()
 {
 	FlexView *v = (FlexView *)this;
-	float flBlend = (g_104a57d4->s39(0) - v->m_flTime70) * 10.0;
+	float flBlend = (engine->Time(0) - v->m_flTime70) * 10.0;
 	Vector blended;
 	blended = v->m_prevviewtarget * (1.0f - flBlend);
 	blended += v->m_viewtarget * flBlend;
@@ -106,7 +85,7 @@ void C_BaseFlex::vfunc145()
 		v->m_iEyeUpdown = sub_100c4880("eyes_updown");
 	if (v->m_iEyeRightleft == -1)
 		v->m_iEyeRightleft = sub_100c4880("eyes_rightleft");
-	g_104a57d8->SetViewTarget(tmp);
+	modelrender->vfunc8(tmp);
 }
 // END FUNCTION
 

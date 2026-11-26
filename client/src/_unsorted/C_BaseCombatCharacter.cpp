@@ -112,6 +112,7 @@ int C_BaseCombatCharacter::vfunc143()
 // END FUNCTION
 
 // FUNCTION: 0x10099c00 size=0x21f
+#include "engineclient.h"
 #include "Vector.h"
 #include "C_BaseCombatCharacter.h"
 struct CUnknown10094ec0 { int sub_10094ec0(const char *); };
@@ -128,14 +129,8 @@ struct Q8_Weap
 	virtual bool vfunc57(int, int, int);
 	int sub_1007b160();
 };
-struct Q8_Glob { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38();
-	virtual int vfunc39(); };
 struct Q8_Temp { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
 	virtual void vfunc6(int, int, int, int, int, int, int, int, int); };
-extern Q8_Glob *g_104a57e4;
 extern Q8_Temp *g_1028073c;
 extern int g_104d5190;
 extern "C" int atoi(const char *);
@@ -143,7 +138,7 @@ extern "C" int atoi(const char *);
 void C_BaseCombatCharacter::vfunc127(const Vector &origin, const QAngle &angles, int event, const char *options)
 {
 	Vector vA, vB, vC, vD;
-	int hTime = g_104a57e4->vfunc39();
+	int hTime = render->vfunc39();
 	int idx;
 	switch (event)
 	{

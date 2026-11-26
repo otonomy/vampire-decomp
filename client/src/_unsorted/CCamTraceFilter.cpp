@@ -2,13 +2,7 @@
 #include "client.h"
 
 // FUNCTION: 0x100fbf30 size=0x62
-struct IV_100fbf30 {
-	virtual void v0();
-	virtual void v1();
-	virtual void v2();
-	virtual bool v3(void *p);
-};
-extern IV_100fbf30 *g_104a5814;
+#include "engineclient.h"
 
 struct Ent11V_100fbf30 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
@@ -27,7 +21,7 @@ bool __stdcall sub_100fbf30(void *a1, void *a2)
 {
 	if (!a1)
 		return true;
-	if (g_104a5814->v3(a1))
+	if (staticpropmgr->vfunc3(a1))
 		return ((Ent11V_100fbf30 *)a1)->v11() != 0;
 	if (!((SubV6_100fbf30 *)((char *)a1 + 0xc))->v6())
 		return false;

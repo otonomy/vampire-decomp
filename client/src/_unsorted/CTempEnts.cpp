@@ -240,23 +240,8 @@ void CTempEnts::vfunc15(int client, int modelIndex, float zoffset, float life)
 // END FUNCTION
 
 // FUNCTION: 0x1003c5d0 size=0x75
+#include "engineclient.h"
 #include "CTempEnts.h"
-struct IEng_1003c5d0 {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
-	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38();
-	virtual double Time(int);
-	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
-	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
-	virtual void v50();
-	virtual int GetMaxClients();
-};
-extern IEng_1003c5d0 *g_104a57d4;
 extern "C" __declspec(dllimport) void Warning(const char *fmt, ...);
 struct Tent_1003c5d0 {
 	char pad[0x7a8];
@@ -268,7 +253,7 @@ struct Tent_1003c5d0 {
 };
 void CTempEnts::vfunc16(int client)
 {
-	if (client < 0 || client > g_104a57d4->GetMaxClients())
+	if (client < 0 || client > engine->GetMaxClients())
 	{
 		Warning("Bad client in KillAttachedTents()!\n");
 		return;
@@ -279,7 +264,7 @@ void CTempEnts::vfunc16(int client)
 		if (pTemp->flags & 0x8000)
 		{
 			if (pTemp->clientIndex == client)
-				pTemp->die = (float)g_104a57d4->Time(0);
+				pTemp->die = (float)engine->Time(0);
 		}
 		pTemp = pTemp->next;
 	}
@@ -401,6 +386,7 @@ void CTempEnts::vfunc4(const void *pos, int r, int g, int b, int a, int modelInd
 // END FUNCTION
 
 // FUNCTION: 0x1003c9b0 size=0x77
+#include "engineclient.h"
 #include "CTempEnts.h"
 
 class CUnknown1003a840
@@ -414,14 +400,7 @@ struct CV1009f670
 	float sub_1009f670(int);
 };
 
-struct IRandomView
-{
-	virtual void v0();
-	virtual void v1();
-	virtual int RandomInt(int, int);
-};
 
-extern IRandomView *g_104a5738;
 
 void CTempEnts::vfunc13(C_LocalTempEntity *pEnt, int n)
 {
@@ -432,7 +411,7 @@ void CTempEnts::vfunc13(C_LocalTempEntity *pEnt, int n)
 	*(int *)((char *)pEnt + 0x4c) = 0;
 	((CUnknown1003a840 *)pEnt)->sub_1003a840(0, 0, 0x41f00000);
 
-	int r = g_104a5738->RandomInt(20, 35);
+	int r = enginerandom->RandomInt(20, 35);
 	((char *)pEnt)[0x50] = (char)r;
 	((char *)pEnt)[0x51] = (char)r;
 	((char *)pEnt)[0x52] = (char)r;
@@ -447,6 +426,7 @@ void CTempEnts::vfunc13(C_LocalTempEntity *pEnt, int n)
 // END FUNCTION
 
 // FUNCTION: 0x1003ca30 size=0x260
+#include "engineclient.h"
 #include "CTempEnts.h"
 #include "ConVar.h"
 #include "Vector.h"
@@ -454,27 +434,7 @@ void CTempEnts::vfunc13(C_LocalTempEntity *pEnt, int n)
 
 struct model_t;
 
-struct IUniformRandomStream_1003ca30
-{
-	virtual void SetSeed(int iSeed);
-	virtual float RandomFloat(float flMinVal, float flMaxVal);
-	virtual int RandomInt(int iMinVal, int iMaxVal);
-};
 
-struct IVEngineClient_1003ca30
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
-	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
-	virtual void v36(); virtual void v37(); virtual void v38();
-	virtual double Time(int);
-};
 
 struct LocalTempEnt_1003ca30
 {
@@ -507,8 +467,6 @@ extern void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, V
 
 extern ConVar *g_102eec5c;
 extern ConVar *g_105fb29c;
-extern IUniformRandomStream_1003ca30 *g_104a5738;
-extern IVEngineClient_1003ca30 *g_104a57d4;
 
 void CTempEnts::vfunc19(const Vector &pos1, const QAngle &angles, const QAngle &gunAngles, int type, const Vector &vel)
 {
@@ -548,9 +506,9 @@ void CTempEnts::vfunc19(const Vector &pos1, const QAngle &angles, const QAngle &
 	pTemp->m_nBody = 0;
 	pTemp->flags |= 0xa6;
 
-	pTemp->tempent_angles[0] = g_104a5738->RandomFloat(-256.0f, 255.0f);
-	pTemp->tempent_angles[1] = g_104a5738->RandomFloat(-256.0f, 255.0f);
-	pTemp->tempent_angles[2] = g_104a5738->RandomFloat(-256.0f, 255.0f);
+	pTemp->tempent_angles[0] = enginerandom->RandomFloat(-256.0f, 255.0f);
+	pTemp->tempent_angles[1] = enginerandom->RandomFloat(-256.0f, 255.0f);
+	pTemp->tempent_angles[2] = enginerandom->RandomFloat(-256.0f, 255.0f);
 
 	if (type >= 3)
 	{
@@ -567,7 +525,7 @@ void CTempEnts::vfunc19(const Vector &pos1, const QAngle &angles, const QAngle &
 	Vector dir;
 	sub_101090a0(angles, &dir, 0, 0);
 
-	dir *= g_104a5738->RandomFloat(150.0f, 200.0f);
+	dir *= enginerandom->RandomFloat(150.0f, 200.0f);
 	dir += vel;
 
 	if (type >= 3)
@@ -577,12 +535,12 @@ void CTempEnts::vfunc19(const Vector &pos1, const QAngle &angles, const QAngle &
 	else
 	{
 		pTemp->sub_1003a840(
-			dir[0] + g_104a5738->RandomFloat(-64.0f, 64.0f),
-			dir[1] + g_104a5738->RandomFloat(-64.0f, 64.0f),
-			dir[2] + g_104a5738->RandomFloat(0.0f, 64.0f));
+			dir[0] + enginerandom->RandomFloat(-64.0f, 64.0f),
+			dir[1] + enginerandom->RandomFloat(-64.0f, 64.0f),
+			dir[2] + enginerandom->RandomFloat(0.0f, 64.0f));
 	}
 
-	pTemp->die = g_104a5738->RandomFloat(0.0f, 1.0f) + g_104a57d4->Time(0) + 5.0;
+	pTemp->die = enginerandom->RandomFloat(0.0f, 1.0f) + engine->Time(0) + 5.0;
 }
 // END FUNCTION
 
@@ -601,6 +559,7 @@ int CTempEnts::vfunc6(int a0, int a1, int a2, int a3, char a4, int a5, int a6, i
 // END FUNCTION
 
 // FUNCTION: 0x1003ccd0 size=0xb0
+#include "engineclient.h"
 #include "CTempEnts.h"
 struct CVAll
 {
@@ -609,13 +568,6 @@ struct CVAll
 	void sub_1009f680(int, float);
 };
 float __stdcall sub_1009f670(int);
-struct IRandomView
-{
-	virtual void v0();
-	virtual void v1();
-	virtual int RandomInt(int, int);
-};
-extern IRandomView *g_104a5738;
 // TARGET: CTempEnts::vfunc10
 void CTempEnts::vfunc10(C_LocalTempEntity *pEnt, int n, int flags)
 {
@@ -633,7 +585,7 @@ void CTempEnts::vfunc10(C_LocalTempEntity *pEnt, int n, int flags)
 			*(int *)((char *)pEnt + 0x48) = 5;
 	}
 	if (flags & 0x20)
-		e->sub_1009f6c0(2, (float)g_104a5738->RandomInt(0, 360));
+		e->sub_1009f6c0(2, (float)enginerandom->RandomInt(0, 360));
 	*(int *)((char *)pEnt + 0x4c) = 0;
 	e->sub_1003a840(0, 0, 0x41000000);
 	((unsigned char *)pEnt)[0x50] = 0xff;
@@ -673,6 +625,7 @@ int CTempEnts::vfunc24(int a0, int a1, int a2)
 // END FUNCTION
 
 // FUNCTION: 0x1003d770 size=0x1d1
+#include "engineclient.h"
 #include "CTempEnts.h"
 #include "Vector.h"
 #include "QAngle.h"
@@ -684,27 +637,7 @@ struct color32
 	unsigned char r, g, b, a;
 };
 
-struct IUniformRandomStream_1003d770
-{
-	virtual void SetSeed(int iSeed);
-	virtual float RandomFloat(float flMinVal, float flMaxVal);
-	virtual int RandomInt(int iMinVal, int iMaxVal);
-};
 
-struct IVEngineClient_1003d770
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
-	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
-	virtual void v36(); virtual void v37(); virtual void v38();
-	virtual double Time(int);
-};
 
 struct IViewRender_1003d770
 {
@@ -785,8 +718,6 @@ public:
 
 extern CSmartPtr_1003d770<CSimpleEmitter_1003d770> sub_10118160(const char *pDebugName);
 
-extern IUniformRandomStream_1003d770 *g_104a5738;
-extern IVEngineClient_1003d770 *g_104a57d4;
 extern IViewRender_1003d770 *g_102d43d8;
 extern QAngle g_104d5190;
 
@@ -806,7 +737,7 @@ void CTempEnts::vfunc21(const Vector &origin, const QAngle &angles, int entityIn
 	pTemp->m_clrRender.a = 255;
 	pTemp->m_nRenderFX = 0;
 
-	pTemp->die = g_104a57d4->Time(0) + 0.01f;
+	pTemp->die = engine->Time(0) + 0.01f;
 	pTemp->m_flFrame = 0.0f;
 	pTemp->m_flFrameMax = 1.0f;
 
@@ -814,10 +745,10 @@ void CTempEnts::vfunc21(const Vector &origin, const QAngle &angles, int entityIn
 	pTemp->sub_100a2100(g_104d5190);
 	pTemp->sub_100a2100(angles);
 
-	pTemp->m_flSpriteScale = g_104a5738->RandomFloat(0.2f, 0.3f) * 0.3f;
-	pTemp->sub_1009f6c0(2, (float)g_104a5738->RandomInt(0, 360));
+	pTemp->m_flSpriteScale = enginerandom->RandomFloat(0.2f, 0.3f) * 0.3f;
+	pTemp->sub_1009f6c0(2, (float)enginerandom->RandomInt(0, 360));
 	pTemp->flags = 4;
-	pTemp->m_flRoll = g_104a5738->RandomFloat(0.0f, 360.0f);
+	pTemp->m_flRoll = enginerandom->RandomFloat(0.0f, 360.0f);
 
 	g_102d43d8->AddVisibleEntity(pTemp);
 
@@ -830,7 +761,7 @@ void CTempEnts::vfunc21(const Vector &origin, const QAngle &angles, int entityIn
 	if (pParticle == 0)
 		return;
 
-	int alpha = g_104a5738->RandomInt(64, 128);
+	int alpha = enginerandom->RandomInt(64, 128);
 
 	pParticle->m_flLifetime = 0.0f;
 	pParticle->m_flDieTime = 0.25f;
@@ -842,10 +773,10 @@ void CTempEnts::vfunc21(const Vector &origin, const QAngle &angles, int entityIn
 	pParticle->m_uchColor[2] = alpha;
 	pParticle->m_uchStartAlpha = alpha;
 	pParticle->m_uchEndAlpha = 0;
-	pParticle->m_uchStartSize = g_104a5738->RandomInt(4, 8);
+	pParticle->m_uchStartSize = enginerandom->RandomInt(4, 8);
 	pParticle->m_uchEndSize = pParticle->m_uchStartSize * 2;
-	pParticle->m_flRoll = (float)g_104a5738->RandomInt(0, 360);
-	pParticle->m_flRollDelta = g_104a5738->RandomFloat(-4.0f, 4.0f);
+	pParticle->m_flRoll = (float)enginerandom->RandomInt(0, 360);
+	pParticle->m_flRollDelta = enginerandom->RandomFloat(-4.0f, 4.0f);
 	pParticle->m_vecVelocity.z = 16.0f;
 }
 // END FUNCTION

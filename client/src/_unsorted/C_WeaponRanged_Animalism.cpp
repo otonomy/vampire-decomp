@@ -74,21 +74,18 @@ void C_WeaponRanged_Animalism::vfunc167()
 // END FUNCTION
 
 // FUNCTION: 0x10006d70 size=0x47
+#include "engineclient.h"
 #include "C_WeaponRanged_Animalism.h"
 #include "CHud.h"
-struct EngV { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
- virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
- virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void ServerCmd(const char *, int); };
 struct HudElV { char pad[0x1c]; char m1c; };
 extern CHud g_104cfe38;
-extern EngV *g_104a57d4;
 // TARGET: ?vfunc246@C_WeaponRanged_Animalism@@UAEHHHH@Z
 int C_WeaponRanged_Animalism::vfunc246(int a, int b, int c)
 {
 	if (a == 0 && b == 0x98967f) {
 		HudElV *e = (HudElV *)g_104cfe38.sub_100f0ed0("CHudWeaponSelection");
 		if (!e->m1c) {
-			g_104a57d4->ServerCmd("lastinv", 1);
+			engine->vfunc27("lastinv", 1);
 			return 0;
 		}
 	}

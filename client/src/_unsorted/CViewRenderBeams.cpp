@@ -111,16 +111,9 @@ void CViewRenderBeams::vfunc6(IHandleEntity *pDeadEntity)
 // END FUNCTION
 
 // FUNCTION: 0x10193f90 size=0xa9
+#include "engineclient.h"
 #include "CViewRenderBeams.h"
 #include "Vector.h"
-struct IMI
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual int GetModelIndex(const char *name);
-};
-extern IMI *g_104a57f8;
 struct BeamInfoV
 {
 	int m_nType;
@@ -146,9 +139,9 @@ Beam_t *CViewRenderBeams::vfunc12(BeamInfoV *info)
 			return 0;
 	}
 	if (info->m_pszModelName && info->m_nModelIndex == -1)
-		info->m_nModelIndex = g_104a57f8->GetModelIndex(info->m_pszModelName);
+		info->m_nModelIndex = modelinfo->GetModelIndex(info->m_pszModelName);
 	if (info->m_pszHaloName && info->m_nHaloIndex == -1)
-		info->m_nHaloIndex = g_104a57f8->GetModelIndex(info->m_pszHaloName);
+		info->m_nHaloIndex = modelinfo->GetModelIndex(info->m_pszHaloName);
 	Beam_t *pBeam = sub_101938a0(info);
 	if (!pBeam)
 		return 0;

@@ -129,6 +129,7 @@ char CGameMovement::vfunc15(void *pSurface, float volume)
 // END FUNCTION
 
 // FUNCTION: 0x100e6fc0 size=0xee
+#include "engineclient.h"
 #include "CGameMovement.h"
 #include "CGameMovementViews.h"
 #include "ConVar.h"
@@ -156,17 +157,10 @@ public:
 	virtual ISoundEmitter *GetEmitter();	// slot 9
 };
 
-class IRandomView
-{
-public:
-	virtual void v0(); virtual void v1();
-	virtual int RandomInt(int nMin, int nMax);	// slot 2
-};
 
 extern GlobalsView *g_102b8494;
 extern ConVar *g_104dfaa4;
 extern ISoundSystem *g_104df784;
-extern IRandomView *g_104a5738;
 
 // TARGET: CGameMovement::vfunc16
 void CGameMovement::vfunc16(void *pSurface, float volume, char bForce)
@@ -199,7 +193,7 @@ void CGameMovement::vfunc16(void *pSurface, float volume, char bForce)
 		return;
 	int name = pEmitter->vfunc6(snd);
 	ISoundSystem *pSys = g_104df784;
-	pSys->vfunc5((char *)m_pPlayer + 0x70, 4, name, volume, 0x4b, 0, g_104a5738->RandomInt(0, 10) + 0x5f);
+	pSys->vfunc5((char *)m_pPlayer + 0x70, 4, name, volume, 0x4b, 0, enginerandom->RandomInt(0, 10) + 0x5f);
 }
 // END FUNCTION
 

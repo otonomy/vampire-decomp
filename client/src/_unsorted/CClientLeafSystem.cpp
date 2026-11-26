@@ -34,26 +34,11 @@ bool CClientLeafSystem::vfunc16(char a0)
 // END FUNCTION
 
 // FUNCTION: 0x100d1c10 size=0x5d
+#include "engineclient.h"
 #include "CClientLeafSystem.h"
 #include "IClientRenderable.h"
 
-class IVModelInfo_100d1c10
-{
-public:
-	virtual void v0() = 0;
-	virtual void v1() = 0;
-	virtual void v2() = 0;
-	virtual void v3() = 0;
-	virtual void v4() = 0;
-	virtual void v5() = 0;
-	virtual void v6() = 0;
-	virtual void v7() = 0;
-	virtual void v8() = 0;
-	virtual void v9() = 0;
-	virtual bool IsModelTwoPass(const model_t *model) = 0;
-};
 
-extern IVModelInfo_100d1c10 *g_104a57f8;
 
 void CClientLeafSystem::vfunc0(IClientRenderable *pRenderable, bool bRenderWithViewModels)
 {
@@ -62,7 +47,7 @@ void CClientLeafSystem::vfunc0(IClientRenderable *pRenderable, bool bRenderWithV
 	bool bTwoPass = false;
 	if (group == 2)
 	{
-		bTwoPass = g_104a57f8->IsModelTwoPass(pRenderable->GetModel());
+		bTwoPass = modelinfo->vfunc10(pRenderable->GetModel());
 	}
 
 	int flags = bRenderWithViewModels ? 2 : 0;

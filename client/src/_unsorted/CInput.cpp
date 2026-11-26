@@ -62,6 +62,7 @@ int CInput::vfunc35()
 // END FUNCTION
 
 // FUNCTION: 0x100ff800 size=0xf2
+#include "engineclient.h"
 #include "CInput.h"
 
 struct SelfV
@@ -131,21 +132,9 @@ public:
 	virtual int slot148();
 };
 
-class EngineV
-{
-public:
-	virtual void e000(); virtual void e001(); virtual void e002(); virtual void e003(); virtual void e004();
-	virtual void e005(); virtual void e006(); virtual void e007(); virtual void e008(); virtual void e009();
-	virtual void e010(); virtual void e011(); virtual void e012(); virtual void e013(); virtual void e014();
-	virtual void e015(); virtual void e016(); virtual void e017(); virtual void e018(); virtual void e019();
-	virtual void e020(); virtual void e021(); virtual void e022(); virtual void e023(); virtual void e024();
-	virtual void e025(); virtual void e026();
-	virtual void ClientCmd(const char *cmd, int a);
-};
 
 extern char g_104d2700[];
 extern GameSysV *g_104a0d50;
-extern EngineV *g_104a57d4;
 int sub_1009b210();
 
 // TARGET: CInput::vfunc36
@@ -163,7 +152,7 @@ void CInput::vfunc36()
 		if ( ((PlayerV *)p)->sub_1007b160() )
 		{
 			if ( ((EntV *)((PlayerV *)p)->sub_1007b160())->m_x4fe84 > 0 )
-				g_104a57d4->ClientCmd("force_sniper_third_person", 1);
+				engine->vfunc27("force_sniper_third_person", 1);
 		}
 	}
 	else
@@ -178,7 +167,7 @@ void CInput::vfunc36()
 			{
 				if ( ((EntV *)((PlayerV *)gp->slot148())->sub_1007b160())->m_x24d0 == 0 )
 				{
-					g_104a57d4->ClientCmd("inven_holster", 1);
+					engine->vfunc27("inven_holster", 1);
 					self->m_f0 = 0;
 					self->m_f8 = 0;
 				}
@@ -532,18 +521,12 @@ bool CInput::vfunc26()
 // END FUNCTION
 
 // FUNCTION: 0x10105d50 size=0x13e
+#include "engineclient.h"
 #include "CInput.h"
 #include "CUserCmd.h"
 
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 
-struct ICvar_10105d50
-{
-	virtual void v0();
-	virtual void v1();
-	virtual void *FindVar(const char *var_name);
-};
-extern ICvar_10105d50 *g_104a57e0;
 
 struct CInputFields_10105d50
 {
@@ -610,8 +593,8 @@ void CInput::vfunc0()
 	f->sub_10101db0();
 	f->sub_101003b0();
 
-	f->m_pCmdRate = g_104a57e0->FindVar("cl_cmdrate");
-	f->m_pUpdateRate = g_104a57e0->FindVar("cl_updaterate");
+	f->m_pCmdRate = cvar->FindVar("cl_cmdrate");
+	f->m_pUpdateRate = cvar->FindVar("cl_updaterate");
 }
 // END FUNCTION
 
@@ -699,6 +682,7 @@ void CInput::vfunc25()
 // END FUNCTION
 
 // FUNCTION: 0x101067d0 size=0x8f
+#include "engineclient.h"
 #include "CInput.h"
 struct Gv_101067d0 {
 	virtual void v0();
@@ -706,30 +690,15 @@ struct Gv_101067d0 {
 	int m_pad[10];
 	int m_n2c;
 };
-struct Eng_101067d0 {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
-	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
-	virtual void v45();
-	virtual int GetX();
-	virtual int GetY();
-};
 extern Gv_101067d0 *g_104d400c;
-extern Eng_101067d0 *g_104a57d4;
 
 void CInput::vfunc14()
 {
 	int x, y;
 	if (!g_104d400c->v1() && g_104d400c->m_n2c && !m_unkec && !m_unk24 && m_unk28) {
 		sub_10106860(&x, &y);
-		m_unk54 += x - g_104a57d4->GetX();
-		m_unk58 += y - g_104a57d4->GetY();
+		m_unk54 += x - engine->vfunc46();
+		m_unk58 += y - engine->vfunc47();
 		vfunc25();
 	}
 }
@@ -747,19 +716,9 @@ bool CInput::vfunc24() { if (m_unk24) return true; return false; }
 // END FUNCTION
 
 // FUNCTION: 0x101069d0 size=0xe9
+#include "engineclient.h"
 #include "CInput.h"
 
-struct EngV
-{
-	virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9();
-	virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19();
-	virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29();
-	virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39();
-	virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual void u44(); virtual void u45();
-	virtual int f46();
-	virtual int f47();
-};
-extern EngV *g_104a57d4;
 
 extern int sub_100cd100();
 extern int sub_100cd0f0();
@@ -770,8 +729,8 @@ void CInput::vfunc22(int *a1, int *a2, int *a3, int *a4)
 		return;
 	int x, y;
 	sub_10106860(&x, &y);
-	x -= g_104a57d4->f46();
-	y -= g_104a57d4->f47();
+	x -= engine->vfunc46();
+	y -= engine->vfunc47();
 	x += sub_100cd100() / 2;
 	y += sub_100cd0f0() / 2;
 	if (a3)
@@ -790,25 +749,13 @@ void CInput::vfunc22(int *a1, int *a2, int *a3, int *a4)
 // END FUNCTION
 
 // FUNCTION: 0x10106ac0 size=0x52
+#include "engineclient.h"
 #include "CInput.h"
 
 int sub_100cd0f0();
 int sub_100cd100();
 
-class IEngineView_104a57d4
-{
-public:
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
-	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45();
-	virtual int vfunc46();
-	virtual int vfunc47();
-};
 
-extern IEngineView_104a57d4 *g_104a57d4;
 
 struct CInputCallView_10106ac0
 {
@@ -819,8 +766,8 @@ struct CInputCallView_10106ac0
 void CInput::vfunc23(int a1, int a2)
 {
 	((CInputCallView_10106ac0 *)this)->sub_10106880(
-		a1 - sub_100cd100() / 2 + g_104a57d4->vfunc46(),
-		a2 - sub_100cd0f0() / 2 + g_104a57d4->vfunc47());
+		a1 - sub_100cd100() / 2 + engine->vfunc46(),
+		a2 - sub_100cd0f0() / 2 + engine->vfunc47());
 }
 // END FUNCTION
 

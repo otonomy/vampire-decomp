@@ -97,29 +97,17 @@ int CHLClient::vfunc8(float a0)
 // END FUNCTION
 
 // FUNCTION: 0x100cba80 size=0x46
+#include "engineclient.h"
 #include "CHLClient.h"
 #include "IClientMode.h"
-struct IEng41 {
-    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-    virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-    virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-    virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-    virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-    virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-    virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
-    virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-    virtual void v40();
-    virtual float v41(int);
-};
 struct IObj135100 { virtual void v0(); virtual void v1(); };
-extern IEng41 *g_104a57d4;
 extern IClientMode *g_105f99d8;
 IObj135100 *sub_10135100();
 void sub_100f4240(float);
 void sub_1002c430();
 void CHLClient::vfunc9(int a)
 {
-    float f = g_104a57d4->v41(0);
+    float f = engine->vfunc41(0);
     g_105f99d8->vfunc9(a);
     sub_10135100()->v1();
     sub_100f4240(f);
@@ -319,6 +307,7 @@ int CHLClient::vfunc21(int a0, int a1, int a2, float a3)
 // END FUNCTION
 
 // FUNCTION: 0x100cbc60 size=0x76
+#include "engineclient.h"
 #include "Vector.h"
 
 struct ViewV
@@ -326,18 +315,7 @@ struct ViewV
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
 	virtual void vfunc4(int);
 };
-struct EngineV
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22();
-	virtual Vector *vfunc23(Vector *out, void *p, int a);
-};
 extern ViewV *g_102d43d8;
-extern EngineV *g_104a57d4;
 extern float g_103ecd74;
 extern Vector g_103ecd78;
 
@@ -352,7 +330,7 @@ void __stdcall sub_100cbc60(int n)
 	if (g_103ecd74 > 0.0f)
 	{
 		Vector temp;
-		g_103ecd78 = *g_104a57d4->vfunc23(&temp, (void *)sub_10198d30(), 1);
+		g_103ecd78 = *engine->vfunc23(&temp, (void *)sub_10198d30(), 1);
 		sub_1004a9e0();
 	}
 }
@@ -602,30 +580,10 @@ void CHLClient::vfunc31(const char *name)
 // END FUNCTION
 
 // FUNCTION: 0x100cc660 size=0x98
+#include "engineclient.h"
 #include "CHLClient.h"
 #include "CHud.h"
 
-struct V5808
-{
-    virtual void v0();
-    virtual void v1();
-    virtual void v2();
-    virtual void v3();
-    virtual void v4();
-    virtual void v5();
-    virtual void v6();
-    virtual void v7();
-    virtual void v8();
-    virtual void v9();
-    virtual void v10();
-    virtual void v11();
-    virtual void v12();
-    virtual void v13();
-    virtual void v14();
-    virtual void v15();
-    virtual void v16(int, int);
-};
-extern V5808 *g_104a5808;
 
 struct VProfPanel
 {
@@ -657,7 +615,7 @@ void CHLClient::vfunc32(int n)
     case 1:
         sub_1009db80(0);
         sub_1009db70(0);
-        g_104a5808->v16(0xac, 1);
+        partition->vfunc16(0xac, 1);
         sub_100cc630();
         break;
     case 2:

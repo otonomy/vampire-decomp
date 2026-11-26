@@ -192,43 +192,13 @@ void __fastcall sub_100a5900(char *self, int edx) { ((V *)(self + 4))->v11(); }
 // END FUNCTION
 
 // FUNCTION: 0x100a6b10 size=0x71
+#include "engineclient.h"
 #include "C_BasePlayer.h"
 #include "Vector.h"
 #include "QAngle.h"
 
-struct EngV
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
-	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
-	virtual void v36(); virtual void v37(); virtual void v38();
-	virtual double v39(int);
-};
 
-struct RenV
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
-	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
-	virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40(); virtual void v41();
-	virtual double v42();
-};
 
-extern EngV *g_104a57d4;
-extern RenV *g_104a57e4;
 
 bool __fastcall sub_100a99d0(void *self);
 
@@ -236,7 +206,7 @@ bool C_BasePlayer::sub_100a6b10()
 {
 	if (!sub_100a99d0(this))
 	{
-		float dt = g_104a57d4->v39(0) - g_104a57e4->v42();
+		float dt = engine->Time(0) - render->vfunc42();
 		Vector origin;
 		QAngle angles;
 		vfunc149(dt, &origin, &angles);
@@ -337,24 +307,13 @@ bool C_BasePlayer::vfunc174()
 // END FUNCTION
 
 // FUNCTION: 0x100a7b80 size=0xaf
+#include "engineclient.h"
 #include "C_BasePlayer.h"
 #include "C_BaseCombatWeapon.h"
 
 extern "C" __declspec(dllimport) int Q_snprintf(char *pDest, int maxLen, const char *pFormat, ...);
 
-struct IVEngineClient_100a7b80
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26();
-	virtual void ServerCmd(const char *szCmdString, bool bReliable);
-};
 
-extern IVEngineClient_100a7b80 *g_104a57d4;
 
 // TARGET: C_BasePlayer::vfunc158
 void C_BasePlayer::vfunc158()
@@ -363,11 +322,11 @@ void C_BasePlayer::vfunc158()
 	{
 		char szBuf[128];
 		Q_snprintf(szBuf, sizeof(szBuf), "%s %i", (const char *)vfunc167()->vfunc223(), vfunc167()->vfunc169());
-		g_104a57d4->ServerCmd(szBuf, true);
+		engine->vfunc27(szBuf, true);
 	}
 	else
 	{
-		g_104a57d4->ServerCmd((const char *)vfunc167()->vfunc223(), true);
+		engine->vfunc27((const char *)vfunc167()->vfunc223(), true);
 	}
 }
 // END FUNCTION
@@ -743,55 +702,12 @@ int C_BasePlayer::vfunc196(int a0, int a1, int a2)
 // END FUNCTION
 
 // FUNCTION: 0x100aa280 size=0x93
+#include "engineclient.h"
 #include "C_BasePlayer.h"
 
 extern unsigned int g_104cfe50;
 
-struct Engine_100aa280
-{
-	virtual void v0();
-	virtual void v1();
-	virtual void v2();
-	virtual void v3();
-	virtual void v4();
-	virtual void v5();
-	virtual void v6();
-	virtual void v7();
-	virtual void v8();
-	virtual void v9();
-	virtual void v10();
-	virtual void v11();
-	virtual void v12();
-	virtual void v13();
-	virtual void v14();
-	virtual void v15();
-	virtual void v16();
-	virtual void v17();
-	virtual void v18();
-	virtual void v19();
-	virtual void v20();
-	virtual void v21();
-	virtual void v22();
-	virtual void v23();
-	virtual void v24();
-	virtual void v25();
-	virtual void v26();
-	virtual void v27();
-	virtual void v28();
-	virtual void v29();
-	virtual void v30();
-	virtual void v31();
-	virtual void v32();
-	virtual void v33();
-	virtual void v34();
-	virtual void v35();
-	virtual void v36();
-	virtual void v37();
-	virtual void v38();
-	virtual double v39(int);
-};
 
-extern Engine_100aa280 *g_104a57d4;
 
 struct Mode_100aa280
 {
@@ -821,9 +737,9 @@ void C_BasePlayer::vfunc191()
 		return;
 	}
 
-	if (self->m_flNextTime < g_104a57d4->v39(0))
+	if (self->m_flNextTime < engine->Time(0))
 	{
-		self->m_flNextTime = g_104a57d4->v39(0) + 0.01;
+		self->m_flNextTime = engine->Time(0) + 0.01;
 		self->m_Modes[self->m_iMode].sub_100a8f90(this);
 	}
 }

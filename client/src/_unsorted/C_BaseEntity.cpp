@@ -289,9 +289,8 @@ void C_BaseEntity::vfunc93(int a0, int a1, int a2)
 // END FUNCTION
 
 // FUNCTION: 0x1007de30 size=0x3c
+#include "engineclient.h"
 #include "C_BaseEntity.h"
-struct IGlobal104a5738 { virtual void v0(); virtual void v1(); virtual int v2(int, int); };
-extern IGlobal104a5738 *g_104a5738;
 // TARGET: C_BaseEntity::vfunc91
 int C_BaseEntity::vfunc91(int a, int b)
 {
@@ -300,7 +299,7 @@ int C_BaseEntity::vfunc91(int a, int b)
 		return -1;
 	if (v && b == 0x47)
 		return 0x34;
-	return g_104a5738->v2(0, 4);
+	return enginerandom->RandomInt(0, 4);
 }
 // END FUNCTION
 
@@ -445,20 +444,14 @@ bool C_BaseEntity::Init(int entnum, int iSerialNum)
 // END FUNCTION
 
 // FUNCTION: 0x1009e0b0 size=0x3c
+#include "engineclient.h"
 #include "C_BaseEntity.h"
 
-struct ModelInfoView {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual int v12(const char *);
-};
-extern ModelInfoView *g_104a57f8;
 
 // TARGET: C_BaseEntity::vfunc60
 void C_BaseEntity::vfunc60(int a, int b)
 {
-	sub_1009e0f0(a ? g_104a57f8->v12((const char *)a) : -1, b);
+	sub_1009e0f0(a ? modelinfo->GetModelIndex((const char *)a) : -1, b);
 }
 // END FUNCTION
 
@@ -540,18 +533,11 @@ int C_BaseEntity::vfunc86()
 // END FUNCTION
 
 // FUNCTION: 0x1009f4d0 size=0xe9
+#include "engineclient.h"
 #include "C_BaseEntity.h"
 #include "QAngle.h"
 #include "matrix3x4_t.h"
 
-struct MIView
-{
-	virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3();
-	virtual void f4(void *, int, void *, void *);
-	virtual void u5();
-	virtual int f6(void *);
-};
-extern MIView *g_104a57f8;
 
 struct IRV
 {
@@ -575,10 +561,10 @@ extern void sub_1010b210(matrix3x4_t &, Vector &, Vector &, Vector &, Vector &);
 void C_BaseEntity::GetRenderBoundsWorldspace(Vector &absMins, Vector &absMaxs)
 {
 	char *r = (char *)this + 4;
-	int t = g_104a57f8->f6(*(void **)(r + 0x3c));
+	int t = modelinfo->GetModelType(*(void **)(r + 0x3c));
 	if (t == 3 || t == 1)
 	{
-		g_104a57f8->f4(((IRV *)r)->GetModel(), 0, &absMins, &absMaxs);
+		modelinfo->vfunc4(((IRV *)r)->GetModel(), 0, &absMins, &absMaxs);
 		QAngle &angles = ((IRV *)r)->GetRenderAngles();
 		Vector &origin = ((IRV *)r)->GetRenderOrigin();
 		if ((*(int *)&angles.x | *(int *)&angles.y | *(int *)&angles.z) != 0)
@@ -639,12 +625,11 @@ int C_BaseEntity::vfunc51()
 // END FUNCTION
 
 // FUNCTION: 0x1009fca0 size=0x28
+#include "engineclient.h"
 #include "C_BaseEntity.h"
-struct ModelInfoView { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual bool IsTranslucent(int idx); };
-extern ModelInfoView *g_104a57f8;
 bool C_BaseEntity::IsTransparent()
 {
-	return g_104a57f8->IsTranslucent(*(int *)((char *)this + 0x40)) || *(int *)((char *)this + 0x48);
+	return modelinfo->vfunc9(*(int *)((char *)this + 0x40)) || *(int *)((char *)this + 0x48);
 }
 // END FUNCTION
 
@@ -671,25 +656,13 @@ bool C_BaseEntity::vfunc57(int a1, int a2, int a3)
 // END FUNCTION
 
 // FUNCTION: 0x1009fd30 size=0xf7
+#include "engineclient.h"
 #include <math.h>
 #include "C_BaseEntity.h"
 #include "Vector.h"
 #include "QAngle.h"
 
-struct IVModelInfo_104a57f8
-{
-	virtual void v0() = 0;
-	virtual void v1() = 0;
-	virtual void v2() = 0;
-	virtual void v3() = 0;
-	virtual void v4() = 0;
-	virtual void v5() = 0;
-	virtual int GetModelType(const model_t *model) const = 0;
-	virtual void v7() = 0;
-	virtual bool IsTranslucent(const model_t *model) const = 0;
-};
 
-extern IVModelInfo_104a57f8 *g_104a57f8;
 
 struct CBaseEntityModelView
 {
@@ -699,7 +672,7 @@ struct CBaseEntityModelView
 
 bool C_BaseEntity::vfunc79()
 {
-	if (g_104a57f8->GetModelType(((CBaseEntityModelView *)this)->m_model) != 1)
+	if (modelinfo->GetModelType(((CBaseEntityModelView *)this)->m_model) != 1)
 		return false;
 
 	if (IsTransparent())
@@ -713,7 +686,7 @@ bool C_BaseEntity::vfunc79()
 		fmod(GetAbsAngles().z, 360.0) != 0.0)
 		return false;
 
-	if (g_104a57f8->IsTranslucent(((CBaseEntityModelView *)this)->m_model))
+	if (modelinfo->IsTranslucent(((CBaseEntityModelView *)this)->m_model))
 		return false;
 
 	return true;
@@ -721,6 +694,7 @@ bool C_BaseEntity::vfunc79()
 // END FUNCTION
 
 // FUNCTION: 0x1009fe30 size=0x7a
+#include "engineclient.h"
 #include "C_BaseEntity.h"
 
 class CClientStatsTime_1009fe30
@@ -755,19 +729,13 @@ struct CClientStats_1009fe30
 	}
 };
 
-class IRenderView_104a57e4
-{
-public:
-	virtual void DrawBrushModel(C_BaseEntity *baseentity, const model_t *model, const Vector &origin, const QAngle &angles, int flags) = 0;
-};
 
 int sub_100ad7a0();
-extern IRenderView_104a57e4 *g_104a57e4;
 
 int C_BaseEntity::vfunc80(int flags)
 {
 	((CClientStats_1009fe30 *)sub_100ad7a0())->BeginTimedStat();
-	g_104a57e4->DrawBrushModel(this, *(const model_t **)((char *)this + 0x40), GetAbsOrigin(), GetAbsAngles(), flags);
+	render->vfunc0(this, *(const model_t **)((char *)this + 0x40), GetAbsOrigin(), GetAbsAngles(), flags);
 	((CClientStats_1009fe30 *)sub_100ad7a0())->EndTimedStat();
 	return 1;
 }

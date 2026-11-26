@@ -118,11 +118,10 @@ int C_BaseAnimating::vfunc86()
 // END FUNCTION
 
 // FUNCTION: 0x1008f8a0 size=0x52
+#include "engineclient.h"
 #include "C_BaseAnimating.h"
 #include "StudioHdr.h"
 
-struct ModelInfoView { virtual StudioHdr *GetStudiomodel(const void *); };
-extern ModelInfoView *g_104a57d8;
 
 // TARGET: C_BaseAnimating::vfunc71
 bool C_BaseAnimating::vfunc71()
@@ -131,7 +130,7 @@ bool C_BaseAnimating::vfunc71()
 	void *pModel = *(void **)((char *)this + 0x40);
 	if (!pModel)
 		return false;
-	StudioHdr *hdr = g_104a57d8->GetStudiomodel(pModel);
+	StudioHdr *hdr = modelrender->GetStudiomodel(pModel);
 	if (!hdr)
 		return false;
 	char *pName = hdr->m_name[0] ? hdr->m_name : 0;
@@ -417,21 +416,14 @@ void C_BaseAnimating::vfunc37()
 // END FUNCTION
 
 // FUNCTION: 0x10095030 size=0x39
+#include "engineclient.h"
 #include "C_BaseAnimating.h"
-struct IEng41 {
-  virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-  virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-  virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-  virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-  virtual void v40(); virtual float v41(int);
-};
-extern IEng41 *g_104a57d4;
 // TARGET: C_BaseAnimating::vfunc61
 void C_BaseAnimating::vfunc61()
 {
   if (*((char *)this + 0x6a8)) {
     vfunc70();
-    vfunc137(g_104a57d4->v41(0));
+    vfunc137(engine->vfunc41(0));
   }
 }
 // END FUNCTION

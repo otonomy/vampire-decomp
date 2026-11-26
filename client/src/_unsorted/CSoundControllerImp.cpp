@@ -208,14 +208,10 @@ void __stdcall sub_10134d40(void *p)
 // END FUNCTION
 
 // FUNCTION: 0x10134d70 size=0x101
+#include "engineclient.h"
 #include "CSoundControllerImp.h"
 #include "Tier1.h"
 
-struct RandomView {
-    virtual void v0();
-    virtual float RandomFloat(float flMinVal, float flMaxVal);
-};
-extern RandomView *g_104a5738;
 
 // TARGET: CSoundControllerImp::vfunc16
 float CSoundControllerImp::vfunc16(void *pSound, int soundCommand, envelopePoint_t *points, int numPoints)
@@ -228,13 +224,13 @@ float CSoundControllerImp::vfunc16(void *pSound, int soundCommand, envelopePoint
 
     for (int i = 0; i < numPoints; i++) {
         if (points[i].amplitudeMin != -1.0f || points[i].amplitudeMax != -1.0f) {
-            amplitude = g_104a5738->RandomFloat(points[i].amplitudeMin, points[i].amplitudeMax);
+            amplitude = enginerandom->RandomFloat(points[i].amplitudeMin, points[i].amplitudeMax);
         } else if (i == 0) {
             g_101e3108("Invalid starting amplitude value in envelope!  (Cannot be -1)\n");
         }
 
         if (points[i].durationMin != -1.0f || points[i].durationMax != -1.0f) {
-            duration = g_104a5738->RandomFloat(points[i].durationMin, points[i].durationMax);
+            duration = enginerandom->RandomFloat(points[i].durationMin, points[i].durationMax);
         } else if (i == 0) {
             g_101e3108("Invalid starting duration value in envelope! (Cannot be -1)\n");
         }

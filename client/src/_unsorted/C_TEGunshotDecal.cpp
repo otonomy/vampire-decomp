@@ -38,13 +38,8 @@ void C_TEGunshotDecal::vfunc13()
 // END FUNCTION
 
 // FUNCTION: 0x10039620 size=0xba
+#include "engineclient.h"
 #include "C_TEGunshotDecal.h"
-struct IEng_10039620
-{
-	virtual void v0();
-	virtual int vfunc1(char a, int b);
-};
-extern IEng_10039620 *g_104a57d4;
 extern bool sub_100b42a0(Vector origin, int decal, Vector a, Vector b, float c, float d, float e, int f);
 void C_TEGunshotDecal::vfunc16(int a, int b)
 {
@@ -52,7 +47,7 @@ void C_TEGunshotDecal::vfunc16(int a, int b)
 	up.x = 0; up.y = 0; up.z = 1.0f;
 	Vector right;
 	right.x = 1.0f; right.y = 0; right.z = 0;
-	int decal = g_104a57d4->vfunc1(m_unk38, *(int *)((char *)this + 0x40));
+	int decal = engine->vfunc1(m_unk38, *(int *)((char *)this + 0x40));
 	if (decal)
 		sub_100b42a0(m_v1, decal, right, up, 0.8f, 0.8f, 0.8f, m_unk3c);
 }

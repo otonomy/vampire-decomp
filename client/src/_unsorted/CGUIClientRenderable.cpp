@@ -18,6 +18,7 @@ char * CGUIClientRenderable::vfunc13()
 // END FUNCTION
 
 // FUNCTION: 0x1018a1f0 size=0x15b
+#include "engineclient.h"
 #include "CGUIClientRenderable.h"
 #include "Vector.h"
 #include "Quaternion.h"
@@ -36,12 +37,7 @@ struct SBoneMask
 	unsigned int m_extra[10];
 };
 
-struct IModelInfo_104a57d8
-{
-	virtual void *GetStudiomodel(void *model);
-};
 
-extern IModelInfo_104a57d8 *g_104a57d8;
 
 SeqDesc *sub_1008d9d0(StudioHdr *, int);
 SPoseHdr *sub_1008d930(SPoseHdr *, int);
@@ -57,7 +53,7 @@ void CGUIClientRenderable::vfunc10(Vector *pos, Quaternion *q)
 	}
 
 	float curTime = sub_1018a7d0();
-	void *hdr = !m_pModel ? 0 : g_104a57d8->GetStudiomodel(m_pModel);
+	void *hdr = !m_pModel ? 0 : modelrender->GetStudiomodel(m_pModel);
 
 	float poseParameter[24];
 	for (int i = 0; i < 24; i++)

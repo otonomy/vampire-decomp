@@ -84,16 +84,11 @@ void CDebugOverlay::vfunc2()
 // END FUNCTION
 
 // FUNCTION: 0x101657b0 size=0x11
+#include "engineclient.h"
 #include "CDebugOverlay.h"
-struct IView104a57e8 {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual int v11();
-};
-extern IView104a57e8 *g_104a57e8;
 bool CDebugOverlay::vfunc107()
 {
-	return g_104a57e8->v11() ? true : false;
+	return debugoverlay->vfunc11() ? true : false;
 }
 // END FUNCTION
 

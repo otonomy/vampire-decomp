@@ -473,28 +473,11 @@ void CHudManagerPanel::vfunc36()
 // END FUNCTION
 
 // FUNCTION: 0x100591b0 size=0x91
+#include "engineclient.h"
 #include "CHudManagerPanel.h"
 #include "CHud.h"
 #include "Tier1.h"
 #include <stdlib.h>
-struct EV_100591b0 {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-	virtual void v25(); virtual void v26();
-	virtual void ClientCmd(const char *cmd, int);
-	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32();
-	virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37();
-	virtual void v38(); virtual void v39(); virtual void v40(); virtual void v41(); virtual void v42();
-	virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47();
-	virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52();
-	virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57();
-	virtual void v58(); virtual void v59(); virtual void v60(); virtual void v61(); virtual void v62();
-	virtual int GetState();
-	virtual char *GetArg(int);
-};
 struct PV_100591b0 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
 	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
@@ -531,7 +514,6 @@ struct PV_100591b0 {
 	virtual void Select(int);
 };
 struct HE_100591b0 { char m_pad[0x1c]; char m_b; };
-extern EV_100591b0 *g_104a57d4;
 extern PV_100591b0 *g_104a0d50;
 extern CHud g_104cfe38;
 extern char sub_10052ed0();
@@ -540,12 +522,12 @@ void CHudManagerPanel::vfunc38()
 {
 	PV_100591b0 *p = g_104a0d50;
 	if (p && !sub_10052ed0()) {
-		if (g_104a57d4->GetState() == 2) {
+		if (engine->vfunc63() == 2) {
 			char buf[0x30];
-			g_101e3190(buf, 0x30, "vhotkey_int %d", atoi(g_104a57d4->GetArg(1) + 1) - 1);
+			g_101e3190(buf, 0x30, "vhotkey_int %d", atoi(engine->Cmd_Argv(1) + 1) - 1);
 			if (((HE_100591b0 *)g_104cfe38.sub_100f0ed0("CHudWeaponSelection"))->m_b)
 				p->Select(0);
-			g_104a57d4->ClientCmd(buf, 1);
+			engine->vfunc27(buf, 1);
 		}
 	}
 }

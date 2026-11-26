@@ -51,30 +51,14 @@ C_Beam *pcd_emit_10080300(const C_Beam &other) { return new C_Beam(other); }
 // END FUNCTION
 
 // FUNCTION: 0x10080320 size=0x51
+#include "engineclient.h"
 #include "C_Beam.h"
 __declspec(dllimport) void Msg(const char *, ...);
-struct IModelInfoView
-{
-	virtual void v0();
-	virtual void v1();
-	virtual void *GetModel(int index);
-	virtual void v3();
-	virtual void v4();
-	virtual void v5();
-	virtual int GetModelType(void *pModel);
-	virtual void v7();
-	virtual void v8();
-	virtual void v9();
-	virtual void v10();
-	virtual void v11();
-	virtual int GetModelIndex(const char *pName);
-};
-extern IModelInfoView *g_104a57f8;
 void C_Beam::vfunc120(const char *szModelName)
 {
-	int modelIndex = g_104a57f8->GetModelIndex( szModelName );
-	void *model = g_104a57f8->GetModel( modelIndex );
-	if ( model && g_104a57f8->GetModelType( model ) != 2 )
+	int modelIndex = modelinfo->GetModelIndex( szModelName );
+	void *model = modelinfo->GetModel( modelIndex );
+	if ( model && modelinfo->GetModelType( model ) != 2 )
 	{
 		Msg( "Setting CBeam to non-sprite model %s\n", szModelName );
 	}

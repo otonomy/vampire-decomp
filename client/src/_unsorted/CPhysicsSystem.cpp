@@ -40,17 +40,16 @@ void CPhysicsSystem::vfunc2() { m_unk14 = 0; }
 // END FUNCTION
 
 // FUNCTION: 0x10119140 size=0x46
+#include "engineclient.h"
 #include "CPhysicsSystem.h"
-struct PhysV { virtual void v0(); virtual void v1(void *); virtual void v2(); virtual void v3(); virtual void v4(void *); };
-extern PhysV *g_104e0c84;
 extern void *g_104e0c90;
 extern void *g_104e0c98;
 extern int g_104e0c88;
 // TARGET: CPhysicsSystem::sub_10119140
 void CPhysicsSystem::sub_10119140() {
 	if (g_104e0c90)
-		g_104e0c84->v1(g_104e0c90);
-	g_104e0c84->v4(g_104e0c98);
+		physics->vfunc1(g_104e0c90);
+	physics->vfunc4(g_104e0c98);
 	g_104e0c98 = 0;
 	g_104e0c90 = 0;
 	g_104e0c88 = 0;
