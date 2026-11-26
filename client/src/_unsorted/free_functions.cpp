@@ -74163,6 +74163,120 @@ void CHud::sub_100f28d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f29d0 size=0x221
+#include "CHud.h"
+#include "CHudElement.h"
+#include "ehandle.h"
+#include "C_BasePlayer.h"
+#include "ConVar.h"
+
+struct Col4_100f29d0 { int a, b, c, d; };
+struct Obj_100f29d0 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void Redraw(float); };
+struct Elem_100f29d0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void Redraw(float);
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual bool ShouldDraw();
+};
+struct Ent_100f29d0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62();
+	virtual Obj_100f29d0 *vfunc63();
+};
+struct Surf_100f29d0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual int vfunc4(int, int);
+	virtual int vfunc5(int, int);
+	virtual void vfunc6(int, int, int, int);
+	virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12();
+	virtual void vfunc13(int, int, int, int);
+	virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+	virtual void vfunc18(int, Col4_100f29d0, int, int, int);
+	virtual void vfunc19();
+};
+struct Mode_100f29d0 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26();
+	virtual bool vfunc27(); };
+extern ConVar g_104cfdf0;
+extern Surf_100f29d0 *g_102bc800;
+extern Mode_100f29d0 *g_105f99d8;
+extern Col4_100f29d0 g_104d0f60;
+extern int g_102bc550[];
+struct Game2V_100f29d0
+{
+#define V10(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); virtual void p##5(); virtual void p##6(); virtual void p##7(); virtual void p##8(); virtual void p##9();
+	V10(a0) V10(a1) V10(a2) V10(a3) V10(a4) V10(a5) V10(a6) V10(a7) V10(a8) V10(a9)
+	V10(b0) V10(b1) V10(b2) V10(b3) V10(b4) V10(b5) V10(b6) V10(b7) V10(b8) V10(b9)
+	V10(c0) V10(c1) V10(c2)
+	virtual void c30(); virtual void c31(); virtual void c32(); virtual void c33(); virtual void c34();
+	virtual void vfunc235(float);
+};
+Game2V_100f29d0 *sub_1009b210();
+int sub_100ccbd0(const char *);
+int sub_100cd100();
+
+int CHud::sub_100f29d0(float flTime, int intermission)
+{
+	m_flOldTime = m_flTime;
+	m_flTime = flTime;
+	m_dFrameTime = flTime - m_flOldTime;
+	if (m_dFrameTime < 0.0)
+		m_dFrameTime = 0.0;
+	m_unk2c = intermission;
+	if (m_unk30 && *(int *)(m_unk30 + 0x118) == 0)
+		sub_100f09d0();
+	if (!g_104cfdf0.GetInt())
+		return 0;
+	if (!intermission && !gHUD.sub_100f10d0(0x11))
+	{
+		Game2V_100f29d0 *pGame = sub_1009b210();
+		if (pGame)
+			pGame->vfunc235(flTime);
+		else
+			g_102bc800->vfunc18(0, g_104d0f60, 0, 0, 0);
+	}
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (pPlayer && *((bool *)pPlayer + 0x19c8))
+	{
+		Ent_100f29d0 *pEnt = (Ent_100f29d0 *)((CBaseHandle *)((char *)pPlayer + 0x19c4))->Get();
+		Obj_100f29d0 *pObj = pEnt->vfunc63();
+		if (pObj)
+			pObj->Redraw(flTime);
+	}
+	for (int i = 0; i < m_HudListSize; i++)
+	{
+		if (((Elem_100f29d0 *)m_HudListMem[i])->ShouldDraw())
+			((Elem_100f29d0 *)m_HudListMem[i])->Redraw(flTime);
+	}
+	if (*(bool *)&m_unk5c)
+	{
+		if (!m_unk58)
+			m_unk58 = sub_100ccbd0("sprites/%d_logo.vmt");
+		if (m_unk58)
+		{
+			g_102bc800->vfunc6(m_unk58, 250, 250, 250);
+			int w = g_102bc800->vfunc5(m_unk58, 0);
+			int x = sub_100cd100() - w;
+			int h = g_102bc800->vfunc4(m_unk58, 0) / 2;
+			int i = (int)(flTime * 20.0f);
+			g_102bc800->vfunc13(g_102bc550[i % 56] - 1, x, h, 0);
+		}
+	}
+	if (g_105f99d8->vfunc27())
+		g_102bc800->vfunc19();
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100f2c00 size=0x3c
 // TARGET: sub_100f2c00
 void sub_100f2c00(int *r, int *g, int *b, int a)
