@@ -2092,6 +2092,7 @@
 0x100365f0 func   ?sub_100365f0@@YAHXZ sub_100365f0
 0x10036690 func   ?sub_10036690@@YAHXZ sub_10036690
 0x10036700 func   ?ClientClassInit@@YAHPAUignored@DT_TEEnergySplash@@@Z ClientClassInit
+0x100367e0 func   ?vfunc0@CRagdollExplosionEnumerator@@UAEHPAX@Z CRagdollExplosionEnumerator::vfunc0
 0x100369f0 func   ??0C_TEExplosion@@QAE@XZ C_TEExplosion::C_TEExplosion
 0x10036a40 func   ??_GC_TEExplosion@@UAEPAXI@Z ??_GC_TEExplosion@@UAEPAXI@Z
 0x10036a60 func   ??1C_TEExplosion@@UAE@XZ C_TEExplosion::~C_TEExplosion
