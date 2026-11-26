@@ -33309,6 +33309,135 @@ char sub_10080ff0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100814e0 size=0x30c
+#include "CMeshBuilder.h"
+
+extern void (__fastcall *g_102be4ec)(Vector &v);	// pfVectorNormalizeFast
+const Vector &sub_10198d30();	// CurrentViewOrigin
+void sub_10108fd0(const float *start, float scale, const float *direction, float *dest);	// VectorMA
+void sub_10045630(const float *a, const float *b, float *result);	// CrossProduct
+
+struct VStore
+{
+	void sub_100817f0(const float *v);	// TangentS3fv
+};
+
+struct S10041e00
+{
+	void sub_10041e00(const float *v);	// Position3fv
+};
+
+struct CBeamSeg
+{
+	Vector m_vPos;
+	Vector m_vColor;
+	float m_flTexCoord;
+	float m_flWidth;
+	float m_flAlpha;
+
+	CBeamSeg &operator=(const CBeamSeg &s)	// the implicit copy, with the color's operator= out of line as the game has it
+	{
+		m_vPos = s.m_vPos;
+		m_vColor.sub_10039080(s.m_vColor);
+		m_flTexCoord = s.m_flTexCoord;
+		m_flWidth = s.m_flWidth;
+		m_flAlpha = s.m_flAlpha;
+		return *this;
+	}
+};
+
+__forceinline void VectorSubtractF(const Vector &a, const Vector &b, Vector &c)
+{
+	c.x = a.x - b.x;
+	c.y = a.y - b.y;
+	c.z = a.z - b.z;
+}
+
+__forceinline void CrossProductF(const Vector &a, const Vector &b, Vector &result)
+{
+	result.x = a.y * b.z - a.z * b.y;
+	result.y = a.z * b.x - a.x * b.z;
+	result.z = a.x * b.y - a.y * b.x;
+}
+
+struct CBeamSegDraw : public CMeshBuilder
+{
+	Vector m_vNormalLast;	// 0xc4
+	int m_nTotalSegs;	// 0xd0
+	int m_nSegsDrawn;	// 0xd4
+	CBeamSeg m_Seg;	// 0xd8
+
+	void sub_10081850(const Vector &vNormal);	// SpecifySeg
+	void sub_100814e0(CBeamSeg *pSeg);	// NextSeg
+
+	__forceinline void ComputeNormal(const Vector &vStartPos, const Vector &vNextPos, Vector *pNormal)
+	{
+		Vector vTangentY;
+		VectorSubtractF(vStartPos, vNextPos, vTangentY);
+		Vector vDirToBeam;
+		VectorSubtractF(vStartPos, sub_10198d30(), vDirToBeam);
+		sub_10045630(&vTangentY.x, &vDirToBeam.x, &pNormal->x);
+		(*g_102be4ec)(*pNormal);
+	}
+
+	__forceinline void SpecifySegInline(const Vector &vNormal)
+	{
+		Vector vDirToBeam, vTangentY;
+		VectorSubtractF(m_Seg.m_vPos, sub_10198d30(), vDirToBeam);
+		CrossProductF(vDirToBeam, vNormal, vTangentY);
+		(*g_102be4ec)(vTangentY);
+
+		Vector vPoint1, vPoint2;
+		sub_10108fd0(&m_Seg.m_vPos.x, m_Seg.m_flWidth * 0.5f, &vNormal.x, &vPoint1.x);
+		sub_10108fd0(&m_Seg.m_vPos.x, -m_Seg.m_flWidth * 0.5f, &vNormal.x, &vPoint2.x);
+
+		((S10041e00 *)this)->sub_10041e00(&vPoint1.x);
+		sub_1004afc0(m_Seg.m_vColor.x, m_Seg.m_vColor.y, m_Seg.m_vColor.z, m_Seg.m_flAlpha);
+		sub_10031a20(0, 0, m_Seg.m_flTexCoord);
+		sub_10031a20(1, 0, m_Seg.m_flTexCoord);
+		((VStore *)this)->sub_100817f0(&vNormal.x);
+		sub_10081820(&vTangentY.x);
+		sub_10005230();
+
+		((S10041e00 *)this)->sub_10041e00(&vPoint2.x);
+		sub_1004afc0(m_Seg.m_vColor.x, m_Seg.m_vColor.y, m_Seg.m_vColor.z, m_Seg.m_flAlpha);
+		sub_10031a20(0, 1, m_Seg.m_flTexCoord);
+		sub_10031a20(1, 1, m_Seg.m_flTexCoord);
+		((VStore *)this)->sub_100817f0(&vNormal.x);
+		sub_10081820(&vTangentY.x);
+		sub_10005230();
+	}
+};
+
+void CBeamSegDraw::sub_100814e0(CBeamSeg *pSeg)
+{
+	if (m_nSegsDrawn > 0)
+	{
+		Vector vNormal, vAveNormal;
+		ComputeNormal(m_Seg.m_vPos, pSeg->m_vPos, &vNormal);
+
+		if (m_nSegsDrawn > 1)
+		{
+			VectorAdd(vNormal, m_vNormalLast, vAveNormal);
+			vAveNormal *= 0.5f;
+			(*g_102be4ec)(vAveNormal);
+		}
+		else
+		{
+			vAveNormal = vNormal;
+		}
+
+		m_vNormalLast = vNormal;
+		SpecifySegInline(vAveNormal);
+	}
+
+	m_Seg = *pSeg;
+
+	if (++m_nSegsDrawn == m_nTotalSegs)
+		sub_10081850(m_vNormalLast);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100817f0 size=0x2b
 struct VStore {
 	char pad0[0x28]; int m_stride;
