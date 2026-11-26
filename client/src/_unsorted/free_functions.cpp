@@ -109792,6 +109792,122 @@ int sub_10173750()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101740e0 size=0x286
+#include "CharEditPanel.h"
+#include "vgui2__TextEntry.h"
+#include "engineclient.h"
+#include <string.h>
+#include <stdio.h>
+#pragma intrinsic(memset, strcpy)
+
+#define V10(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); \
+	virtual void p##5(); virtual void p##6(); virtual void p##7(); virtual void p##8(); virtual void p##9();
+
+struct View118_101740e0
+{
+	V10(v) V10(v1) V10(v2) V10(v3) V10(v4) V10(v5) V10(v6) V10(v7) V10(v8) V10(v9) V10(v10)
+	virtual void v110(); virtual void v111(); virtual void v112(); virtual void v113(); virtual void v114();
+	virtual void v115(); virtual void v116(); virtual void v117();
+	virtual void vfunc118();
+};
+
+struct View145_101740e0
+{
+	V10(v) V10(v1) V10(v2) V10(v3) V10(v4) V10(v5) V10(v6) V10(v7) V10(v8) V10(v9) V10(v10) V10(v11) V10(v12) V10(v13)
+	virtual void v140(); virtual void v141(); virtual void v142(); virtual void v143(); virtual void v144();
+	virtual View118_101740e0 *vfunc145();
+};
+
+struct Iface_10286860_101740e0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6();
+	virtual void vfunc7();
+};
+
+extern vgui2::TextEntry *g_105fb120;
+extern Iface_10286860_101740e0 *g_10286860;
+extern void *g_104a0d50;
+bool sub_101713e0();
+int sub_1017f0f0(int);
+void sub_10174e30();
+
+void CharEditPanel::sub_101740e0(bool bApply)
+{
+	if (bApply)
+	{
+		static ConVar *s_pName = cvar->FindVar("name");
+		if (s_pName)
+		{
+			char cmd[46];
+			memset(cmd, 0, sizeof(cmd));
+			strcpy(cmd, "name \"");
+			g_105fb120->vfunc108(0, cmd + 6, 40);
+			strncat(cmd, "\"", 32);
+			engine->ClientCmd(cmd);
+
+			memset(cmd, 0, sizeof(cmd));
+			strcpy(cmd, "vplayername \"");
+			g_105fb120->vfunc108(0, cmd + 13, 33);
+			strncat(cmd, "\"", 32);
+			engine->ClientCmd(cmd);
+		}
+
+		if (g_104a0d50)
+		{
+			if (sub_101713e0())
+				engine->vfunc27("giftxp 0", 1);
+			int level = sub_1017f0f0(1);
+			if (m_ied0 != level)
+			{
+				char cmd[46];
+				sprintf(cmd, "vautolvl %d", m_ied0);
+				engine->vfunc27(cmd, 1);
+			}
+		}
+	}
+
+	((View145_101740e0 *)((char *)this + sizeof(CHudElement)))->vfunc145()->vfunc118();
+
+	if (!bApply)
+	{
+		delete m_p284;
+		m_p284 = NULL;
+		delete m_p290;
+		m_p290 = NULL;
+		delete m_p294;
+		m_p294 = NULL;
+		int i;
+		for (i = 0; i < 5; i++)
+		{
+			delete m_p4c0[i];
+			m_p4c0[i] = NULL;
+		}
+		for (i = 0; i < 10; i++)
+		{
+			delete m_p4d4[i];
+			m_p4d4[i] = NULL;
+		}
+		delete g_105fb120;
+		g_105fb120 = NULL;
+	}
+
+	enginesound->vfunc10((int)m_szCfa, 0, 100, 4, 0);
+	sub_10174e30();
+	m_iee0 = 0;
+	m_iee4 = 0;
+
+	if (bApply)
+	{
+		engine->ClientCmd("v_unpause");
+		if (m_unk274)
+			engine->ClientCmd("teleport_player firetrans");
+		if (g_10286860)
+			g_10286860->vfunc7();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10174370 size=0x7a
 #include <string.h>
 

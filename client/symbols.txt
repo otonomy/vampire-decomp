@@ -8149,6 +8149,7 @@
 0x10173620 func   ?sub_10173620@@YAHXZ sub_10173620
 0x10173640 func   ?sub_10173640@@YAHXZ sub_10173640
 0x10173750 func   ?sub_10173750@@YAHXZ sub_10173750
+0x101740e0 func   ?sub_101740e0@CharEditPanel@@QAEX_N@Z CharEditPanel::sub_101740e0
 0x10174370 func   ?sub_10174370@@YA_NXZ sub_10174370
 0x10174450 func   ?sub_10174450@@YAXH@Z sub_10174450
 0x101744c0 func   ?sub_101744c0@CharEditCharPanel@@QAEXH@Z CharEditCharPanel::sub_101744c0
