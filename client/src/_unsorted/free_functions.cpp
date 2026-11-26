@@ -87907,6 +87907,98 @@ void CPtrList101d6400::sub_10143a90()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10143c10 size=0x219
+#include "CUnknown101439f0.h"
+#include "CNamedList10203020.h"
+#include "Tier1.h"
+
+extern "C" int sprintf(char *, const char *, ...);
+
+struct DFBase { virtual void v0(); virtual void Release(); };
+struct TNode { virtual void v0(); virtual void v1(); virtual TNode *Find(const char *name); virtual TNode *Next(); };
+struct DataFile : virtual DFBase { virtual void a0(); virtual void a1(); virtual TNode *Find(const char *name); };
+struct Trait { char m_[1]; int sub_10143a20(TNode *); };
+extern CNamedList10203020 g_105f93c0;
+extern int g_102c6ef0;
+extern int g_104a580c;
+DataFile *sub_101545c0(const char *path, int a);
+struct Sub1 { void sub_10143200(TNode *); };
+struct Sub2 { void sub_10143830(TNode *); };
+extern Sub1 g_105e77e4;
+extern Sub2 g_105e77f8;
+
+struct TraitMgr
+{
+	int m_grow;
+	int m_alloc;
+	int m_count;
+	CUnknown101439f0 **m_mem;
+
+	// TARGET: sub_10143c10
+	bool sub_10143c10();
+};
+
+bool TraitMgr::sub_10143c10()
+{
+	g_102c6ef0 = g_105f93c0.sub_1015f160("TraitOrderingStrs");
+	char path[260];
+	sprintf(path, "%s%s.txt", "vdata\\system\\", "CharCreateWizard");
+	DataFile *pFile = sub_101545c0(path, g_104a580c);
+	if (!pFile)
+	{
+		g_101e3108("Unable to open data file for: %s\n", path);
+		return false;
+	}
+	TNode *traits = pFile->Find("Traits");
+	if (traits)
+	{
+		TNode *node = traits->Find("Trait");
+		while (node)
+		{
+			if (m_alloc == m_count)
+			{
+				m_alloc += m_grow;
+				if (m_mem)
+				{
+					CUnknown101439f0 **p = (CUnknown101439f0 **)operator new(m_alloc * 4);
+					int i = 0;
+					for (; i < m_count; i++)
+						p[i] = m_mem[i];
+					for (; i < m_alloc; i++)
+						p[i] = 0;
+					operator delete(m_mem);
+					m_mem = p;
+					m_count++;
+				}
+				else
+				{
+					m_mem = (CUnknown101439f0 **)operator new(m_alloc * 4);
+					for (int i = 0; i < m_alloc; i++)
+						m_mem[i] = 0;
+					m_count++;
+				}
+			}
+			else
+				m_count = m_count + 1;
+			if (!m_mem[m_count - 1])
+				m_mem[m_count - 1] = new CUnknown101439f0(m_count - 1);
+			if (!m_mem[m_count - 1])
+			{
+				g_101e3108("Unable to parse data file for: %s.  Memory allocation ERROR!\n", path);
+				pFile->Release();
+				return false;
+			}
+			((Trait *)m_mem[m_count - 1])->sub_10143a20(node);
+			node = node->Next();
+		}
+	}
+	g_105e77e4.sub_10143200(traits);
+	g_105e77f8.sub_10143830(traits);
+	pFile->Release();
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10143e30 size=0x12a
 template <class T> __forceinline T pcd_stage(T x) { return x; }
 #include <stdlib.h>
