@@ -3345,6 +3345,7 @@
 0x1007f4a0 func   ?sub_1007f4a0@CUnknown1007f4a0@@QAEPAXXZ CUnknown1007f4a0::sub_1007f4a0
 0x1007f4f0 func   ?sub_1007f4f0@@YIPAVC_BaseEntity@@PAV1@HI@Z sub_1007f4f0
 0x1007f530 func   ?vfunc120@C_BaseParticleEntity@@UAEXXZ C_BaseParticleEntity::vfunc120
+0x1007f550 func   ?sub_1007f550@CUnknown1007f550@@QAEHH@Z CUnknown1007f550::sub_1007f550
 0x1007f5e0 func   ?sub_1007f5e0@@YGDHHH@Z sub_1007f5e0
 0x1007f600 func   ??0C_BaseViewModel@@QAE@XZ C_BaseViewModel::C_BaseViewModel
 0x1007f6a0 func   ?vfunc145@C_BaseViewModel@@UAEPAXXZ C_BaseViewModel::vfunc145
