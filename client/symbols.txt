@@ -1117,6 +1117,7 @@
 0x10017cb0 func   ?_C_ItemGCarStereo_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGCarStereo_CreateObject
 0x10017d70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGCarStereo@@@Z ClientClassInit
 0x10017e00 func   ?vfunc17@C_ItemGGhostPendant@@UAEHXZ C_ItemGGhostPendant::vfunc17
+0x10017e40 func   ?sub_10017e40@@YAHXZ sub_10017e40
 0x10017e90 func   ??_GC_ItemGGhostPendant@@UAEPAXI@Z ??_GC_ItemGGhostPendant@@UAEPAXI@Z
 0x10017eb0 func   ?vfunc16@C_ItemGGhostPendant@@UAEHXZ C_ItemGGhostPendant::vfunc16
 0x10017ec0 func   ?vfunc15@C_ItemGGhostPendant@@UAEHXZ C_ItemGGhostPendant::vfunc15
