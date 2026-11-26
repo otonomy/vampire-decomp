@@ -36518,6 +36518,122 @@ bool sub_1008b8a0(const Ray_t &ray, StudioHdr *pStudioHdr, StudioHitboxSet *set,
 }
 // END FUNCTION
 
+// FUNCTION: 0x1008bd50 size=0x308
+#include "Vector.h"
+#include "Ray_t.h"
+#include "CGameTrace.h"
+
+extern "C" double __cdecl fabs(double);
+#pragma intrinsic(fabs)
+
+struct HitboxBBox	// mstudiobbox_t
+{
+	int bone;
+	int group;
+	Vector bbmin;
+	Vector bbmax;
+};
+
+struct HitboxMatrix	// matrix3x4_t
+{
+	float m[3][4];
+};
+
+void sub_10107f80(const Vector *in, const HitboxMatrix *mat, Vector *out);	// VectorTransform
+void sub_10108080(const float *in, const HitboxMatrix *mat, Vector *out);	// VectorITransform
+bool sub_100db470(const Vector &start, const Vector &delta, const Vector &mins, const Vector &maxs, float tolerance, CGameTrace *pTrace);	// IntersectRayWithBox
+
+// ClipRayToHitbox: the side of the hitbox the ray enters (+3 for the positive side), -1 when it misses
+int sub_1008bd50(const Ray_t &ray, HitboxBBox *pbox, HitboxMatrix &matrix, CGameTrace &tr)
+{
+	CGameTrace trace;
+	float scale = tr.m_fraction * 0.5f;
+	Vector delta;
+	delta.x = scale * ray.m_Delta[0];
+	delta.y = scale * ray.m_Delta[1];
+	delta.z = scale * ray.m_Delta[2];
+
+	// compute center in local space
+	Vector boxExtents;
+	boxExtents.x = (pbox->bbmin.x + pbox->bbmax.x) * 0.5;
+	boxExtents.y = (pbox->bbmin.y + pbox->bbmax.y) * 0.5;
+	boxExtents.z = (pbox->bbmin.z + pbox->bbmax.z) * 0.5;
+
+	// transform to world space
+	Vector boxCenter;
+	sub_10107f80(&boxExtents, &matrix, &boxCenter);
+
+	// calc extents from local center
+	boxExtents.x = pbox->bbmax.x - boxExtents.x;
+	boxExtents.y = pbox->bbmax.y - boxExtents.y;
+	boxExtents.z = pbox->bbmax.z - boxExtents.z;
+
+	Vector extent, uextent;
+	extent.Init();
+	float segX = delta.x + ray.m_Start[0] - boxCenter.x;
+	float segY = delta.y + ray.m_Start[1] - boxCenter.y;
+	float segZ = delta.z + ray.m_Start[2] - boxCenter.z;
+
+	// check box axes for separation
+	for (int j = 0; j < 3; j++)
+	{
+		extent[j] = delta.x * matrix.m[0][j] + (delta.y * matrix.m[1][j] + delta.z * matrix.m[2][j]);
+		uextent[j] = fabs(extent[j]);
+		float coord = segX * matrix.m[0][j] + (segY * matrix.m[1][j] + segZ * matrix.m[2][j]);
+		coord = fabs(coord);
+		if (coord > uextent[j] + boxExtents[j])
+			return -1;
+	}
+
+	// now check cross axes for separation
+	Vector cross;
+	float t;
+	cross.x = delta.y * segZ;
+	t = delta.z;
+	cross.x -= t * segY;
+	t = delta.z;
+	cross.y = t * segX - segZ * delta.x;
+	t = delta.y;
+	cross.z = segY * delta.x - t * segX;
+
+	float cextent = cross.x * matrix.m[0][0] + (cross.z * matrix.m[2][0] + cross.y * matrix.m[1][0]);
+	cextent = fabs(cextent);
+	if (cextent > uextent.y * boxExtents.z + uextent.z * boxExtents.y)
+		return -1;
+
+	cextent = cross.x * matrix.m[0][1] + (cross.z * matrix.m[2][1] + cross.y * matrix.m[1][1]);
+	cextent = fabs(cextent);
+	float tmp = uextent.z * boxExtents.x;
+	if (cextent > tmp + uextent.x * boxExtents.z)
+		return -1;
+
+	cextent = cross.x * matrix.m[0][2] + (cross.z * matrix.m[2][2] + cross.y * matrix.m[1][2]);
+	cextent = fabs(cextent);
+	tmp = uextent.y * boxExtents.x;
+	if (cextent > tmp + uextent.x * boxExtents.y)
+		return -1;
+
+	// we hit this box: compute the ray start in bone space
+	Vector start;
+	sub_10108080(ray.m_Start, &matrix, &start);
+
+	// extent is the ray's half delta in bone space
+	extent.x *= 2.0f;
+	extent.y *= 2.0f;
+	extent.z *= 2.0f;
+
+	if (!sub_100db470(start, extent, pbox->bbmin, pbox->bbmax, 0.0f, &trace))
+		return -1;
+
+	tr.m_fraction *= trace.m_fraction;
+	tr.m_startsolid = trace.m_startsolid;
+	int hitside = (unsigned char)trace.m_planeType;
+	if (trace.m_planeNormal[hitside] >= 0)
+		hitside += 3;
+	return hitside;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1008c060 size=0x186
 struct StudioHdr
 {
