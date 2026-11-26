@@ -10086,6 +10086,7 @@
 0x101c2c10 func   ?sub_101c2c10@CUtlVector4@@QAEXPBHH@Z CUtlVector4::sub_101c2c10
 0x101c2c80 func   ?sub_101c2c80@UtlMem@@QAEPAV1@HH@Z UtlMem::sub_101c2c80
 0x101c2cc0 func   ?sub_101c2cc0@UtlMem@@QAEXXZ UtlMem::sub_101c2cc0
+0x101c2cf0 func   ?Grow@?$CUtlMemory@VPHandle@vgui2@@@@QAEXH@Z CUtlMemory<vgui2::PHandle>::Grow
 0x101c2cf0 func   ?sub_101c2cf0@UtlMem@@QAEXH@Z UtlMem::sub_101c2cf0
 0x101c2df0 func   ??0FocusNavGroup@vgui2@@QAE@PAVPanel@1@@Z vgui2::FocusNavGroup::FocusNavGroup
 0x101c2e30 func   ?sub_101c2e30@CUnknown101c2e30@@QAEXXZ CUnknown101c2e30::sub_101c2e30
