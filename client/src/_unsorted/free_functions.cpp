@@ -8958,6 +8958,32 @@ template <> int ClientClassInit<DT_WeaponIThrownGrenade::ignored>(DT_WeaponIThro
 }
 // END FUNCTION
 
+// FUNCTION: 0x10016540 size=0x45
+namespace lifted {
+extern char g_10203d64;
+extern char g_10203d78;
+extern char g_10203db4;
+extern char g_10203dec;
+extern char g_10203e44;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10016540()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10203e44;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10203dec;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10203db4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10203d78;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10203d64;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100165d0 size=0x6
 namespace lifted {
 extern char g_102e0570;
