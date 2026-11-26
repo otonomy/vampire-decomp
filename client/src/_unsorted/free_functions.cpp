@@ -4018,6 +4018,32 @@ template <> int ClientClassInit<DT_WeaponRanged_Tzimisce2Head::ignored>(DT_Weapo
 }
 // END FUNCTION
 
+// FUNCTION: 0x1000b8c0 size=0x45
+namespace lifted {
+extern char g_101ef154;
+extern char g_101ef168;
+extern char g_101ef1a4;
+extern char g_101ef1dc;
+extern char g_101ef234;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1000b8c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101ef234;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101ef1dc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101ef1a4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101ef168;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101ef154;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1000b950 size=0x6
 namespace lifted {
 extern char g_102e69ec;
