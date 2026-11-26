@@ -2654,6 +2654,7 @@
 0x10050c80 func   ?vfunc107@CFrenzyBar@@UAE_NXZ CFrenzyBar::vfunc107
 0x10050cb0 func   ?vfunc112@CFrenzyBar@@UAEXXZ CFrenzyBar::vfunc112
 0x10050cd0 func   ?vfunc113@CFrenzyBar@@UAEXXZ CFrenzyBar::vfunc113
+0x10050ce0 func   ?vfunc98@CFrenzyBar@@UAEXXZ CFrenzyBar::vfunc98
 0x10050f10 func   ?vfunc97@CFrenzyBar@@UAEXXZ CFrenzyBar::vfunc97
 0x10050f20 func   ?sub_10050f20@CUnkFade@@QAEX_N@Z CUnkFade::sub_10050f20
 0x10050f80 func   ??0CHealthAnkh@@QAE@H@Z CHealthAnkh::CHealthAnkh

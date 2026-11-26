@@ -78,6 +78,68 @@ void CFrenzyBar::vfunc113()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10050ce0 size=0x22d
+#include "CFrenzyBar.h"
+#include "CHUDSprite.h"
+struct PlayerV5a80 { bool sub_100a5a80(); };
+struct PanelV170 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void SetVisible(bool b); };
+struct TimeV { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual double GetTime(int a); };
+extern TimeV *g_104a57d4;
+extern PlayerV5a80 *g_104a0d50;
+int sub_100cd100();
+struct RectV { int left; int right; int top; int bottom; };
+// TARGET: CFrenzyBar::vfunc98
+void CFrenzyBar::vfunc98()
+{
+	double limit = m_unk19c;
+	if (g_104a57d4->GetTime(0) >= limit)
+	{
+		((PanelV170 *)((char *)this + 0x170))->SetVisible(false);
+		return;
+	}
+	if (g_104a0d50 && g_104a0d50->sub_100a5a80())
+	{
+		m_unk19c = 0.01f;
+		((PanelV170 *)((char *)this + 0x170))->SetVisible(false);
+		return;
+	}
+	if (!m_pChild1)
+	{
+		m_pChild2 = (CFrenzyBarOwned *)new CHUDSprite("hud/FrenzyBar_Empty", 0, 0, 512, 64, 512, 64);
+		m_pChild1 = (CFrenzyBarOwned *)new CHUDSprite("hud/FrenzyBar_Full", 0, 0, 512, 64, 512, 64);
+	}
+	int x, y;
+	sub_101a98c0(&x, &y);
+	int a;
+	if (m_unk195 && m_unk190 < 255)
+	{
+		a = m_unk190 + 5;
+		if (a > 255)
+			a = 255;
+		goto store;
+	}
+	if (m_unk196 && m_unk190 > 0)
+	{
+		a = m_unk190 - 5;
+		a = a & ((a < 0) - 1);
+store:
+		m_unk190 = a;
+	}
+	int h = m_unk180 - m_unk198 * m_unk180 / 100;
+	RectV rc;
+	rc.left = 0;
+	rc.right = m_unk180;
+	rc.top = 0;
+	rc.bottom = m_unk184;
+	((CHUDSprite *)m_pChild2)->sub_1005c3b0(x, y, m_unk188, m_unk18c, (int)&rc);
+	rc.left = h;
+	rc.right = m_unk180;
+	rc.top = 0;
+	rc.bottom = m_unk184;
+	((CHUDSprite *)m_pChild1)->sub_1005c3b0(x, y, (int)(m_unk188 - h * (sub_100cd100() * 0.0009765625)), m_unk18c, (int)&rc);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10050f10 size=0x1
 #include "CFrenzyBar.h"
 void CFrenzyBar::vfunc97()
