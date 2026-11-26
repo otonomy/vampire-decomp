@@ -7,6 +7,18 @@
 #include "CGameTrace.h"
 
 class C_BaseEntity;
+// the SDK's trace_t as the movement code copies it: memberwise, cplane_t's normal through the out-of-line Vector::operator= (sub_10039080), csurface_t bitwise
+struct cplane_t
+{
+	Vector normal;
+	float dist;
+	unsigned char type;
+	unsigned char signbits;
+	unsigned char unused[2];
+	cplane_t &operator=(const cplane_t &o) { normal.sub_10039080(o.normal); dist = o.dist; type = o.type; signbits = o.signbits; for (unsigned int i = 0; i < 2; i++) unused[i] = o.unused[i]; return *this; }
+};
+struct csurface_t { const char *name; short surfaceProps; unsigned short flags; };
+struct CMoveTrace_t { Vector startpos; Vector endpos; cplane_t plane; float fraction; int contents; unsigned short dispFlags; bool allsolid; bool startsolid; float fractionleftsolid; csurface_t surface; int hitgroup; short physicsbone; C_BaseEntity *m_pEnt; int hitbox; };
 class CGameMovement : public IGameMovement
 {
 public:
@@ -61,6 +73,8 @@ public:
 	Vector m_vecObsHullMin;	// 0x44
 	Vector m_vecObsHullMax;	// 0x50
 	float *sub_100e6ef0();
+	void sub_100ee140(CMoveTrace_t &pm, Vector &move);	// "PerformFlyCollisionResolution"
+	CMoveTrace_t sub_100eb9d0(Vector &push);	// "PushEntity": returns the trace
 	void sub_100e73c0();	// "UpdateStepSound": step sound timer (player +0x1994), surface from m_pSurface9c or the ladder / wade / water props, volume from the texture type (m_bA4) and the convar 0x104cf7cc, then slot 16
 	void sub_100ec660(C_BaseEntity *pNew);
 	void sub_100e85b0();
