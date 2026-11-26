@@ -1213,6 +1213,7 @@
 0x10019ab0 func   ?_C_ItemGWerewolfBlood_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGWerewolfBlood_CreateObject
 0x10019b70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGWerewolfBlood@@@Z ClientClassInit
 0x10019c00 func   ?vfunc17@C_ItemGJumblesFlyer@@UAEHXZ C_ItemGJumblesFlyer::vfunc17
+0x10019c40 func   ?sub_10019c40@@YAHXZ sub_10019c40
 0x10019c90 func   ??_GC_ItemGJumblesFlyer@@UAEPAXI@Z ??_GC_ItemGJumblesFlyer@@UAEPAXI@Z
 0x10019cb0 func   ?vfunc16@C_ItemGJumblesFlyer@@UAEHXZ C_ItemGJumblesFlyer::vfunc16
 0x10019cc0 func   ?vfunc15@C_ItemGJumblesFlyer@@UAEHXZ C_ItemGJumblesFlyer::vfunc15

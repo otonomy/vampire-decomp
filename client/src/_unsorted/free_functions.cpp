@@ -10542,6 +10542,32 @@ template <> int ClientClassInit<DT_ItemGWerewolfBlood::ignored>(DT_ItemGWerewolf
 }
 // END FUNCTION
 
+// FUNCTION: 0x10019c40 size=0x45
+namespace lifted {
+extern char g_1020a744;
+extern char g_1020a758;
+extern char g_1020a794;
+extern char g_1020a7cc;
+extern char g_1020a824;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10019c40()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1020a824;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020a7cc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1020a794;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1020a758;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1020a744;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10019cd0 size=0x6
 namespace lifted {
 extern char g_102e3ad0;
