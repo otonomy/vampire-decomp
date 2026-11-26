@@ -836,6 +836,122 @@ void CTempEnts::vfunc10(C_LocalTempEntity *pEnt, int n, int flags)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1003cfe0 size=0x278
+#define PCD_LPF_CTOR
+#include "CTempEnts.h"
+#include "C_RecipientFilter.h"
+#include <string.h>
+#include <stdlib.h>
+
+#ifndef min
+#define min(a, b) (((a) < (b)) ? (a) : (b))
+#endif
+
+struct TERandomView	// g_104a5738: random stream
+{
+	virtual void v0(); virtual void v1();
+	virtual int RandomInt(int lo, int hi);
+};
+extern TERandomView *g_104a5738;
+
+struct TESoundView	// g_104a5818: engine sound
+{
+	virtual void PrecacheSound(const char *pSample, bool bPreload);
+	virtual void v1(); virtual void v2();
+	virtual void EmitSound(IRecipientFilter &filter, int iEntIndex, int iChannel, const char *pSample, float flVolume, float flAttenuation, int iFlags, int iPitch, const Vector *pOrigin, const Vector *pDirection, bool bUpdatePositions, float soundtime);
+};
+extern TESoundView *g_104a5818;
+
+void CTempEnts::vfunc18(C_LocalTempEntity *pTemp, float damp)
+{
+	int isshellcasing = 0;
+	int nSounds = -1;
+	float fvol = 1.0f;
+	const char *soundlist[6];
+	memset(soundlist, 0, sizeof(soundlist));
+
+	switch (*(int *)((char *)pTemp + 0x7c8))
+	{
+	default:
+		return;
+	case 1:
+		break;
+	case 2:
+		break;
+	case 4:
+		break;
+	case 8:
+		break;
+	case 0x10:
+		break;
+	case 0x20:
+		soundlist[0] = "weapons/ejection/drop_shell_1.wav";
+		soundlist[1] = "weapons/ejection/drop_shell_2.wav";
+		soundlist[2] = "weapons/ejection/drop_shell_3.wav";
+		fvol = 0.8f;
+		nSounds = 3;
+		isshellcasing = 1;
+		break;
+	case 0x40:
+		break;
+	case 0x80:
+		soundlist[0] = "weapons/ejection/drop_shotgun_shell_1.wav";
+		soundlist[1] = "weapons/ejection/drop_shotgun_shell_2.wav";
+		soundlist[2] = "weapons/ejection/drop_shotgun_shell_3.wav";
+		fvol = 0.5f;
+		nSounds = 3;
+		isshellcasing = 1;
+		break;
+	case 0x1000:
+		soundlist[0] = "weapons/ejection/drop_clip_1.wav";
+		soundlist[1] = "weapons/ejection/drop_clip_2.wav";
+		soundlist[2] = "weapons/ejection/drop_clip_3.wav";
+		fvol = 0.8f;
+		nSounds = 3;
+		isshellcasing = 1;
+		break;
+	}
+
+	int zvel = abs((int)*(float *)((char *)pTemp + 0x808));
+
+	if (isshellcasing)
+	{
+		if (zvel < 200 && g_104a5738->RandomInt(0, 3))
+			return;
+	}
+	else
+	{
+		if (g_104a5738->RandomInt(0, 5))
+			return;
+	}
+
+	if (nSounds <= 0)
+		return;
+
+	if (damp > 0.0)
+	{
+		int pitch;
+		if (isshellcasing)
+			fvol *= min(1.0, ((float)zvel) / 350.0);
+		else
+			fvol *= min(1.0, ((float)zvel) / 450.0);
+
+		if (g_104a5738->RandomInt(0, 3))
+			pitch = 100;
+		else if (isshellcasing)
+			pitch = 100;
+		else
+			pitch = g_104a5738->RandomInt(90, 124);
+
+		const char *soundname = soundlist[g_104a5738->RandomInt(0, nSounds - 1)];
+		g_104a5818->PrecacheSound(soundname, false);
+
+		CLocalPlayerFilter filter;
+		g_104a5818->EmitSound(filter, 0, 6, soundname, fvol, 0.8f, 0, pitch, &pTemp->GetAbsOrigin(), 0, true, 0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1003d440 size=0x19e
 #include "CTempEnts.h"
 namespace lifted {
