@@ -151,6 +151,7 @@
 0x10003c10 func   ?sub_10003c10@CUtlMemory192@@QAEXH@Z CUtlMemory192::sub_10003c10
 0x10003c80 func   ?vfunc246@C_BaseCombatWeapon@@UAEHHHH@Z C_BaseCombatWeapon::vfunc246
 0x10003c90 func   ?sub_10003c90@SBase@@QAEXH@Z SBase::sub_10003c90
+0x10003d10 func   ?sub_10003d10@@YAHXZ sub_10003d10
 0x10003d60 func   ?vfunc16@C_OccultRegen@@UAEHXZ C_OccultRegen::vfunc16
 0x10003d80 func   ?sub_10003d80@@YAHXZ sub_10003d80
 0x10003de0 func   ?_C_OccultRegen_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_OccultRegen_CreateObject

@@ -967,6 +967,32 @@ void SBase::sub_10003c90(int a)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10003d10 size=0x45
+namespace lifted {
+extern char g_101e4dac;
+extern char g_101e4dc0;
+extern char g_101e4dfc;
+extern char g_101e4e34;
+extern char g_101e4e8c;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10003d10()
+{
+    int t0 = lifted::sub_100a1eb0(0x988);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101e4e8c;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101e4e34;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101e4dfc;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101e4dc0;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101e4dac;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10003d80 size=0x6
 namespace lifted {
 extern char g_102dec00;
