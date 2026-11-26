@@ -5,11 +5,22 @@
 #include "VMatrix.h"
 
 struct CVGuiMemA { int m_unk0; void sub_100cd1e0(); ~CVGuiMemA() { sub_100cd1e0(); } };
-struct CVGuiMemB { int m_unk0; void sub_10110440(); ~CVGuiMemB() { sub_10110440(); } };
+struct CVGuiMemB { int m_unk0; void sub_10110440(); void *sub_101104a0(); ~CVGuiMemB() { sub_10110440(); } };
 class C_VGuiScreen : public C_BaseEntity
 {
 public:
-	char m_pad0014[0x43c - 0x14];
+	char m_pad0014[0x410 - 0x14];
+	int m_nPixelWidth;	// 0x410
+	int m_nPixelHeight;	// 0x414
+	int m_unk418;
+	int m_unk41c;
+	int m_unk420;
+	int m_unk424;
+	int m_nButtonPressed;	// 0x428
+	int m_nButtonReleased;	// 0x42c
+	int m_nOldPx;	// 0x430
+	int m_nOldPy;	// 0x434
+	int m_unk438;
 	int m_n43c;
 	char m_pad0440[0x450 - 0x440];
 	CVGuiMemA m_a;
@@ -17,6 +28,7 @@ public:
 	VMatrix m_matrix;
 	CVGuiMemB m_c;
 	virtual int vfunc16();
+	virtual void ClientThink();	// IClientThinkable slot 0
 	void sub_100c9270(int);
 	void sub_100c9680(Vector &v1, Vector &v2, Vector &v3);
 	void sub_100c9820();
