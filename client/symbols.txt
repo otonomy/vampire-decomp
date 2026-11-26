@@ -2740,6 +2740,7 @@
 0x100456d0 func   ?sub_100456d0@CUnknown100456d0@@QAEPAXHHHHHHHHH@Z CUnknown100456d0::sub_100456d0
 0x10045740 func   ??_GCFXLine@@UAEPAXI@Z ??_GCFXLine@@UAEPAXI@Z
 0x10045760 func   ??1CFXLine@@UAE@XZ CFXLine::~CFXLine
+0x10045780 func   ?vfunc1@CFXLine@@UAEXN@Z CFXLine::vfunc1
 0x10045c50 func   ?vfunc3@CFXLine@@UAE_NXZ CFXLine::vfunc3
 0x10045c70 func   ?vfunc4@CFXLine@@UAEXXZ CFXLine::vfunc4
 0x10045c90 func   ?vfunc5@CFXLine@@UAEXN@Z CFXLine::vfunc5
