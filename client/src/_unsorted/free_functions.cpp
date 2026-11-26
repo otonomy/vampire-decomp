@@ -6250,6 +6250,32 @@ template <> int ClientClassInit<DT_ItemMMoneyClip::ignored>(DT_ItemMMoneyClip::i
 }
 // END FUNCTION
 
+// FUNCTION: 0x10010640 size=0x45
+namespace lifted {
+extern char g_101f8684;
+extern char g_101f8698;
+extern char g_101f86d4;
+extern char g_101f870c;
+extern char g_101f8764;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10010640()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101f8764;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101f870c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101f86d4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101f8698;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101f8684;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100106d0 size=0x6
 namespace lifted {
 extern char g_102e1548;

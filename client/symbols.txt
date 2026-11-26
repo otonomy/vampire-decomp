@@ -733,6 +733,7 @@
 0x100104b0 func   ?_C_ItemMMoneyClip_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemMMoneyClip_CreateObject
 0x10010570 func   ?ClientClassInit@@YAHPAUignored@DT_ItemMMoneyClip@@@Z ClientClassInit
 0x10010600 func   ?vfunc17@C_ItemMMoneyEnvelope@@UAEHXZ C_ItemMMoneyEnvelope::vfunc17
+0x10010640 func   ?sub_10010640@@YAHXZ sub_10010640
 0x10010690 func   ??_GC_ItemMMoneyEnvelope@@UAEPAXI@Z ??_GC_ItemMMoneyEnvelope@@UAEPAXI@Z
 0x100106b0 func   ?vfunc16@C_ItemMMoneyEnvelope@@UAEHXZ C_ItemMMoneyEnvelope::vfunc16
 0x100106c0 func   ?vfunc15@C_ItemMMoneyEnvelope@@UAEHXZ C_ItemMMoneyEnvelope::vfunc15
