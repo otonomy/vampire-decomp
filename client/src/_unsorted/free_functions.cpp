@@ -122086,6 +122086,22 @@ CUnknown102029c0 *CUnknown10203240::sub_1015f2f0(const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015f390 size=0x50
+#include "StatOwner2.h"
+#include <stdio.h>
+
+void sub_1015fbb0(const char *);
+
+void StatOwner2::sub_1015f390()
+{
+	char buf[128];
+	sprintf(buf, "\n   %s:\n\n", "Strings");
+	sub_1015fbb0(buf);
+	for (int i = 0; i < m_nCount; i++)
+		m_ppRecords[i]->sub_1015ee00();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015f3e0 size=0x40
 #include <stdio.h>
 extern char g_105f9408[2][12];

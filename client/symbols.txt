@@ -8253,6 +8253,7 @@
 0x1015f240 func   ?sub_1015f240@CUnknown10203150@@QAE_NH@Z CUnknown10203150::sub_1015f240
 0x1015f270 func   ?sub_1015f270@StatOwner2@@QAEPAVCUnknown102029c0@@H@Z StatOwner2::sub_1015f270
 0x1015f2f0 func   ?sub_1015f2f0@CUnknown10203240@@QAEPAVCUnknown102029c0@@PBD@Z CUnknown10203240::sub_1015f2f0
+0x1015f390 func   ?sub_1015f390@StatOwner2@@QAEXXZ StatOwner2::sub_1015f390
 0x1015f3e0 func   ?sub_1015f3e0@@YAPADH@Z sub_1015f3e0
 0x1015f420 func   ?sub_1015f420@@YAHH@Z sub_1015f420
 0x1015f450 func   ?sub_1015f450@@YAHH@Z sub_1015f450
