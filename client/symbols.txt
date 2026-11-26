@@ -949,6 +949,7 @@
 0x10014830 func   ?_C_GargoyleTalisman_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_GargoyleTalisman_CreateObject
 0x100148f0 func   ?ClientClassInit@@YAHPAUignored@DT_GargoyleTalisman@@@Z ClientClassInit
 0x10014980 func   ?vfunc17@C_BloodPack@@UAEHXZ C_BloodPack::vfunc17
+0x100149c0 func   ?sub_100149c0@@YAHXZ sub_100149c0
 0x10014a10 func   ??_GC_BloodPack@@UAEPAXI@Z ??_GC_BloodPack@@UAEPAXI@Z
 0x10014a30 func   ?vfunc16@C_BloodPack@@UAEHXZ C_BloodPack::vfunc16
 0x10014a40 func   ?vfunc15@C_BloodPack@@UAEHXZ C_BloodPack::vfunc15
