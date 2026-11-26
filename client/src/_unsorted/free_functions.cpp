@@ -56392,6 +56392,217 @@ void C_BreakableSurface::sub_100b8a00(IBrushSurface *pBrushSurface, IMesh *pMesh
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b8f30 size=0x5d0
+#include "C_BreakableSurface.h"
+#include "Vector.h"
+
+struct Vector2D_b8f30
+{
+	float x, y;
+	float *Base() { return &x; }
+};
+
+class IBrushSurface
+{
+public:
+	virtual void ComputeTextureCoordinate(const Vector &worldPos, Vector2D_b8f30 &texCoord) = 0;
+	virtual void ComputeLightmapCoordinate(const Vector &worldPos, Vector2D_b8f30 &lightmapCoord) = 0;
+};
+
+struct IMesh
+{
+	virtual void LockMesh(int numVerts, int numIndices, void *desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+inline void IncrementFloatPointer(float *&pBufferPointer, int vertexSize)
+{
+	pBufferPointer = (float *)((unsigned char *)pBufferPointer + vertexSize);
+}
+
+class MeshBuilder_b8f30
+{
+public:
+	int m_VertexSize_Position;	// 0x00
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;	// 0x0c
+	int m_VertexSize_Color;	// 0x10
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];	// 0x18
+	int m_unk28[(0x80 - 0x28) / 4];
+	IMesh *m_pMesh;	// 0x80
+	bool m_bModify;	// 0x84
+	int m_nMaxVertexCount;	// 0x88
+	int m_nMaxIndexCount;	// 0x8c
+	int m_nVertexCount;	// 0x90
+	int m_nIndexCount;	// 0x94
+	int m_nCurrentVertex;	// 0x98
+	int m_nCurrentIndex;	// 0x9c
+	int m_Type;	// 0xa0
+	bool m_bGenerateIndices;	// 0xa4
+	float *m_pCurrPosition;	// 0xa8
+	float *m_pCurrNormal;	// 0xac
+	float *m_pCurrTexCoord[4];	// 0xb0
+	unsigned char *m_pCurrColor;	// 0xc0
+
+	void sub_100421f0(int type, int numPrimitives);	// ComputeNumVertsAndIndices
+	void sub_100422e0();	// Reset
+	void sub_100319d0(float x, float y, float z);	// Position3f
+	void sub_100319f0(const float *n);	// Normal3fv
+	void sub_10042960(int r, int g, int b, int a);	// Color4ub
+	void sub_100ba0a0(int stage, const float *v);	// TexCoord2fv
+	void sub_10031a20(int stage, float s, float t);	// TexCoord2f
+	void sub_10005230();	// AdvanceVertex
+	void sub_10041c90(bool bSpewData, bool bDraw);	// End
+
+	__forceinline void Begin(IMesh *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_nIndexCount = 0;
+		m_nVertexCount = 0;
+		m_bGenerateIndices = true;
+		m_Type = type;
+		m_pMesh->SetPrimitiveType(2);
+		m_pMesh->LockMesh(m_nMaxVertexCount, m_nMaxIndexCount, this);
+		sub_100422e0();
+	}
+	__forceinline void Position3f(float x, float y, float z)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = x;
+		*pDst++ = y;
+		*pDst = z;
+	}
+	__forceinline void Normal3fv(const float *n)
+	{
+		float *pDst = m_pCurrNormal;
+		*pDst++ = *n++;
+		*pDst++ = *n++;
+		*pDst = *n;
+	}
+	__forceinline void Color4ub(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+	{
+		int col = b | (g << 8) | (r << 16) | (a << 24);
+		*(int *)m_pCurrColor = col;
+	}
+	__forceinline void TexCoord2fv(int stage, const float *v)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = *v++;
+		*pDst = *v;
+	}
+	__forceinline void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+	__forceinline void AdvanceVertex()
+	{
+		if (++m_nCurrentVertex > m_nVertexCount)
+			m_nVertexCount = m_nCurrentVertex;
+		IncrementFloatPointer(m_pCurrPosition, m_VertexSize_Position);
+		IncrementFloatPointer(m_pCurrNormal, m_VertexSize_Normal);
+		IncrementFloatPointer(m_pCurrTexCoord[0], m_VertexSize_TexCoord[0]);
+		IncrementFloatPointer(m_pCurrTexCoord[1], m_VertexSize_TexCoord[1]);
+		IncrementFloatPointer(m_pCurrTexCoord[2], m_VertexSize_TexCoord[2]);
+		IncrementFloatPointer(m_pCurrTexCoord[3], m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+};
+
+void C_BreakableSurface::sub_100b8f30(IBrushSurface *pBrushSurface, IMesh *pMesh, CMeshBuilder *pInMeshBuilder, const Vector &vCurPos, const Vector &vEdgeStep, const Vector &vEdgeExtStep, int nEdgeType)
+{
+	MeshBuilder_b8f30 *pMeshBuilder = (MeshBuilder_b8f30 *)pInMeshBuilder;
+	pMeshBuilder->Begin(pMesh, 7, 1);
+
+	Vector2D_b8f30 texCoord, lightCoord;
+	pBrushSurface->ComputeTextureCoordinate(vCurPos, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vCurPos, lightCoord);
+	pMeshBuilder->Position3f(vCurPos.x, vCurPos.y, vCurPos.z);
+	pMeshBuilder->Normal3fv(m_vNormal.Base());
+	pMeshBuilder->Color4ub(255, 255, 255, 255);
+	pMeshBuilder->TexCoord2fv(2, texCoord.Base());
+	pMeshBuilder->TexCoord2fv(1, lightCoord.Base());
+	switch (nEdgeType)
+	{
+	case 1: pMeshBuilder->TexCoord2f(0, 1.0f, 0.0f); break;
+	case 0: pMeshBuilder->TexCoord2f(0, 1.0f, 1.0f); break;
+	case 3: pMeshBuilder->TexCoord2f(0, 0.0f, 1.0f); break;
+	case 2: pMeshBuilder->TexCoord2f(0, 0.0f, 0.0f); break;
+	}
+	pMeshBuilder->AdvanceVertex();
+
+	Vector vTemp = vCurPos + vEdgeStep;
+	pBrushSurface->ComputeTextureCoordinate(vTemp, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vTemp, lightCoord);
+	pMeshBuilder->Position3f(vTemp.x, vTemp.y, vTemp.z);
+	pMeshBuilder->Normal3fv(m_vNormal.Base());
+	pMeshBuilder->Color4ub(255, 255, 255, 255);
+	pMeshBuilder->TexCoord2fv(2, texCoord.Base());
+	pMeshBuilder->TexCoord2fv(1, lightCoord.Base());
+	switch (nEdgeType)
+	{
+	case 1: pMeshBuilder->TexCoord2f(0, 1.0f, 1.0f); break;
+	case 0: pMeshBuilder->TexCoord2f(0, 0.0f, 1.0f); break;
+	case 3: pMeshBuilder->TexCoord2f(0, 0.0f, 0.0f); break;
+	case 2: pMeshBuilder->TexCoord2f(0, 1.0f, 0.0f); break;
+	}
+	pMeshBuilder->AdvanceVertex();
+
+	vTemp = vTemp + vEdgeExtStep;
+	pBrushSurface->ComputeTextureCoordinate(vTemp, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vTemp, lightCoord);
+	pMeshBuilder->Position3f(vTemp.x, vTemp.y, vTemp.z);
+	pMeshBuilder->Normal3fv(m_vNormal.Base());
+	pMeshBuilder->Color4ub(255, 255, 255, 255);
+	pMeshBuilder->TexCoord2fv(2, texCoord.Base());
+	pMeshBuilder->TexCoord2fv(1, lightCoord.Base());
+	switch (nEdgeType)
+	{
+	case 1: pMeshBuilder->sub_10031a20(0, 0.0f, 1.0f); break;
+	case 0: pMeshBuilder->sub_10031a20(0, 0.0f, 0.0f); break;
+	case 3: pMeshBuilder->sub_10031a20(0, 1.0f, 0.0f); break;
+	case 2: pMeshBuilder->sub_10031a20(0, 1.0f, 1.0f); break;
+	}
+	pMeshBuilder->sub_10005230();
+
+	vTemp.sub_10039080(vTemp.sub_100b9b80(vEdgeStep));
+	pBrushSurface->ComputeTextureCoordinate(vTemp, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vTemp, lightCoord);
+	pMeshBuilder->sub_100319d0(vTemp.x, vTemp.y, vTemp.z);
+	pMeshBuilder->sub_100319f0(m_vNormal.Base());
+	pMeshBuilder->sub_10042960(255, 255, 255, 255);
+	pMeshBuilder->sub_100ba0a0(2, texCoord.Base());
+	pMeshBuilder->sub_100ba0a0(1, lightCoord.Base());
+	switch (nEdgeType)
+	{
+	case 1: pMeshBuilder->sub_10031a20(0, 0.0f, 0.0f); break;
+	case 0: pMeshBuilder->sub_10031a20(0, 1.0f, 0.0f); break;
+	case 3: pMeshBuilder->sub_10031a20(0, 1.0f, 1.0f); break;
+	case 2: pMeshBuilder->sub_10031a20(0, 0.0f, 1.0f); break;
+	}
+	pMeshBuilder->sub_10005230();
+
+	pMeshBuilder->sub_10041c90(false, false);
+	pMesh->Draw();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b9b80 size=0x43
 #include "Vector.h"
 Vector Vector::sub_100b9b80(const Vector &v) const

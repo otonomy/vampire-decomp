@@ -4549,6 +4549,7 @@
 0x100b83f0 func   ?sub_100b83f0@C_BreakableSurface@@QAEHHHH@Z C_BreakableSurface::sub_100b83f0
 0x100b8460 func   ?sub_100b8460@C_BreakableSurface@@QAEHHH@Z C_BreakableSurface::sub_100b8460
 0x100b8a00 func   ?sub_100b8a00@C_BreakableSurface@@QAEXPAVIBrushSurface@@PAUIMesh@@PAVCMeshBuilder@@ABVVector@@33@Z C_BreakableSurface::sub_100b8a00
+0x100b8f30 func   ?sub_100b8f30@C_BreakableSurface@@QAEXPAVIBrushSurface@@PAUIMesh@@PAVCMeshBuilder@@ABVVector@@33H@Z C_BreakableSurface::sub_100b8f30
 0x100b9b80 func   ??GVector@@QBE?AV0@ABV0@@Z ??GVector@@QBE?AV0@ABV0@@Z
 0x100b9b80 func   ?sub_100b9b80@Vector@@QBE?AV1@ABV1@@Z Vector::sub_100b9b80
 0x100b9bf0 func   ?sub_100b9bf0@CUnknown100b9bf0@@QAEXXZ CUnknown100b9bf0::sub_100b9bf0
