@@ -5674,6 +5674,32 @@ template <> int ClientClassInit<DT_WeaponRanged_Smg_Uzi::ignored>(DT_WeaponRange
 }
 // END FUNCTION
 
+// FUNCTION: 0x1000f240 size=0x45
+namespace lifted {
+extern char g_101f6004;
+extern char g_101f6018;
+extern char g_101f6054;
+extern char g_101f608c;
+extern char g_101f60e4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1000f240()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101f60e4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101f608c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101f6054;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101f6018;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101f6004;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1000f2d0 size=0x6
 namespace lifted {
 extern char g_102e59a4;
