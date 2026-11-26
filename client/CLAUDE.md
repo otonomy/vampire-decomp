@@ -291,10 +291,11 @@ of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call th
   no real name known): `g_105f93c0.sub_1015f2f0("MiscStrs")->sub_1015ecd0(i)` by name, `.sub_1015f270(id)` by id;
   include StatOwner2.h instead of declaring it with a view type of your own.
 - **The input object** (0x1027ba58) is the SDK's `input` (`static CHLInput g_Input; IInput *input = &g_Input;`),
-  declared `extern CInput *input;` in CInput.h because the slots are declared on CInput: call `input->vfuncN()`,
-  never `g_1027ba58` through a view. Some CInput slot signatures are still guesses (vfunc3 is the SDK's CreateMove,
-  declared with the six dwords its matched caller passes); when yours disagrees with the game's call, note it rather
-  than adding a second view. A wrapper that only calls a `void` slot returns `void` (the lift's `int` was a guess).
+  declared `extern CInput *input;` in CInput.h because the slots are declared on CInput: call `input->ActivateMouse()`
+  and the like, never `g_1027ba58` through a view. CInput's slots 0-23 carry the SDK's IInput names (VtMB has no
+  ExtraMouseSample; slots 18 and 21 are its own and stay vfunc18 / vfunc21, as do 24 and up). Some argument types are
+  still guesses; when yours disagrees with the game's call, note it rather than adding a second view. A wrapper that
+  only calls a `void` slot returns `void` (the lift's `int` was a guess).
 - **CHLClient** (vtable 0x10233f44) follows the SDK's IBaseClientDLL order: slots 13-21 carry the SDK names and
   types (IN_ActivateMouse .. IN_KeyEvent, CreateMove, WriteUsercmdDeltaToBuffer), each forwarding to the input slot of
   the same SDK name. VC6 compiles such a forward to a sibling `jmp [eax+N]`, and a forwarded `bool` shows as
