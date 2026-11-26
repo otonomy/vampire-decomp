@@ -37,6 +37,7 @@ public:
 	int sub_101a99f0(int);
 	void sub_101aa6f0(int);
 	void sub_101aa720(int);
+	void *sub_101ac830();	// GetScheme: the panel's IScheme
 	int m_unk4[(0x18 - 4) / 4];
 	bool m_b18;
 	char m_c19; char m_c1a; char m_c1b;
