@@ -3189,6 +3189,7 @@
 0x1005fa40 func   ?sub_1005fa40@@YADD@Z sub_1005fa40
 0x1005fa50 func   ?sub_1005fa50@@YADD@Z sub_1005fa50
 0x1005fa60 func   ?sub_1005fa60@@YAHHHH@Z sub_1005fa60
+0x1005fa90 func   ??0CProgBar@@QAE@H@Z CProgBar::CProgBar
 0x1005fa90 func   ?sub_1005fa90@CUnknown1005fa90@@QAEPAXH@Z CUnknown1005fa90::sub_1005fa90
 0x1005fb00 func   ?sub_1005fb00@@YAHXZ sub_1005fb00
 0x1005fb10 func   ?sub_1005fb10@CUnknown1005fb10@@QAEDXZ CUnknown1005fb10::sub_1005fb10
