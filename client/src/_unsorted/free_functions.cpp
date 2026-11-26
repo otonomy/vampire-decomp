@@ -14214,6 +14214,32 @@ template <> int ClientClassInit<DT_ItemKOceanHouseUpstairsKey::ignored>(DT_ItemK
 }
 // END FUNCTION
 
+// FUNCTION: 0x10021bc0 size=0x45
+namespace lifted {
+extern char g_10219cb4;
+extern char g_10219cc8;
+extern char g_10219d04;
+extern char g_10219d3c;
+extern char g_10219d94;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10021bc0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10219d94;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10219d3c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10219d04;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10219cc8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10219cb4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10021c50 size=0x6
 namespace lifted {
 extern char g_102e1fb4;
