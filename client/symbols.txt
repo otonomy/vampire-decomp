@@ -1653,6 +1653,7 @@
 0x10022430 func   ?_C_ItemKMalcomOfficeKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKMalcomOfficeKey_CreateObject
 0x100224f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKMalcomOfficeKey@@@Z ClientClassInit
 0x10022580 func   ?vfunc17@C_ItemKGimbleKey@@UAEHXZ C_ItemKGimbleKey::vfunc17
+0x100225c0 func   ?sub_100225c0@@YAHXZ sub_100225c0
 0x10022610 func   ??_GC_ItemKGimbleKey@@UAEPAXI@Z ??_GC_ItemKGimbleKey@@UAEPAXI@Z
 0x10022630 func   ?vfunc16@C_ItemKGimbleKey@@UAEHXZ C_ItemKGimbleKey::vfunc16
 0x10022640 func   ?vfunc15@C_ItemKGimbleKey@@UAEHXZ C_ItemKGimbleKey::vfunc15
