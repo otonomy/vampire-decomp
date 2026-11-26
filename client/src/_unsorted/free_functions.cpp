@@ -64367,6 +64367,53 @@ void __stdcall sub_101064b0(int *pX, int *pY)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10106560 size=0x21a
+#include "CInput.h"
+
+struct CVar_10106560
+{
+	virtual char v0();
+	virtual char vfunc1();
+	int m_pad[9];
+	float m_fValue;
+	int m_nValue;
+};
+
+#define CVF(g) ((g)->vfunc1() ? 0.0f : (g)->m_fValue)
+
+extern unsigned char g_104d3978;
+extern unsigned char g_104d3514;
+extern CVar_10106560 *g_104d33e4;
+extern CVar_10106560 *g_104d3f34;
+extern CVar_10106560 *g_104d3eec;
+extern CVar_10106560 *g_104d3e5c;
+extern CVar_10106560 *g_104d3044;
+extern CVar_10106560 *g_104d351c;
+extern CVar_10106560 *g_104d3f7c;
+
+void CInput::sub_10106560(float *pAng, float *pCmd, int a2, int a3)
+{
+	if (!(g_104d3978 & 1) && (g_104d33e4->vfunc1() || !g_104d33e4->m_nValue || !(g_104d3514 & 1)))
+		pAng[1] -= CVF(g_104d3f34) * a2;
+	else
+		pCmd[9] += CVF(g_104d3eec) * a2;
+
+	if ((g_104d3514 & 1) && !(g_104d3978 & 1))
+	{
+		pAng[0] += CVF(g_104d3e5c) * a3;
+		if (pAng[0] > CVF(g_104d3044))
+			pAng[0] = CVF(g_104d3044);
+		if (pAng[0] < -CVF(g_104d351c))
+			pAng[0] = -CVF(g_104d351c);
+		return;
+	}
+	if ((g_104d3978 & 1) && vfunc26())
+		pCmd[10] -= CVF(g_104d3f7c) * a3;
+	else
+		pCmd[8] -= CVF(g_104d3f7c) * a3;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10106860 size=0x15
 namespace lifted {
 int sub_10166ee0(int, int);
