@@ -845,6 +845,7 @@
 0x100127b0 func   ?_C_OccultHacking_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_OccultHacking_CreateObject
 0x10012870 func   ?ClientClassInit@@YAHPAUignored@DT_OccultHacking@@@Z ClientClassInit
 0x10012900 func   ?vfunc17@C_OccultFrenzy@@UAEHXZ C_OccultFrenzy::vfunc17
+0x10012940 func   ?sub_10012940@@YAHXZ sub_10012940
 0x10012990 func   ??_GC_OccultFrenzy@@UAEPAXI@Z ??_GC_OccultFrenzy@@UAEPAXI@Z
 0x100129b0 func   ?vfunc16@C_OccultFrenzy@@UAEHXZ C_OccultFrenzy::vfunc16
 0x100129c0 func   ?vfunc15@C_OccultFrenzy@@UAEHXZ C_OccultFrenzy::vfunc15
