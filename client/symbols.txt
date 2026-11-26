@@ -7077,6 +7077,7 @@
 0x1012cd20 func   ?sub_1012cd20@V1012@@QAEXH@Z V1012::sub_1012cd20
 0x1012cd40 func   ?sub_1012cd40@@YAXPAXHPBDPBXMPAM@Z sub_1012cd40
 0x1012cea0 func   ?sub_1012cea0@@YAXHPBD@Z sub_1012cea0
+0x1012d1a0 func   ?sub_1012d1a0@@YAXAAUIRecipientFilter@@HUEmitSound_t@@@Z sub_1012d1a0
 0x1012d3f0 func   ?sub_1012d3f0@@YAXHHPBD@Z sub_1012d3f0
 0x1012d500 func   ?sub_1012d500@@YAHH@Z sub_1012d500
 0x1012d510 func   ?sub_1012d510@@YAHH@Z sub_1012d510
