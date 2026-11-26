@@ -33,7 +33,8 @@ public:
 	float sub_100d6430(class IClientEntity *pEnt, const Vector &mins, const Vector &maxs, const Vector &localShadowDir, float backupFactor, Vector &origin);
 	void sub_100d65a0(class IClientEntity *pEnt, unsigned short handle, const Vector *vec, const Vector &mins, const Vector &maxs, const Vector &localShadowDir);
 
-	void sub_100d66d0(int a0, unsigned short h);
+	void sub_100d66d0(int a0, unsigned short h);	// BuildOrthoShadow-like: a blob box (-18,-18,0)..(18,18,+0xa4) around the shadow direction (+8)
+	void sub_100d6320(class VMatrix &worldToShadow, const Vector &origin, const Vector &dir, const Vector &xvec, const Vector &yvec);	// BuildGeneralWorldToShadowMatrix
 	void sub_100d5bd0(unsigned short h);
 	void sub_100d6ca0(int a0, unsigned short h, int *a2, int *a3);
 	void sub_100d7130(int a0, unsigned short h, int *a2);
