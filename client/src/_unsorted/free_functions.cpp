@@ -72399,6 +72399,67 @@ const char *sub_100edcf0(int state)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ee140 size=0x22f
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "ConVar.h"
+#include "CGlobalVarsBase.h"
+
+struct SMoveCollide_100ee140 { virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual void g7(); virtual void g8(); virtual int GetMoveCollide(); };
+extern ConVar g_104dfce0;
+
+#define mv ((CMovePlayerView *)m_pPlayer)
+#define player ((SMoveCollide_100ee140 *)((char *)m_pMove + 0xc))
+
+void CGameMovement::sub_100ee140(CMoveTrace_t &pm, Vector &move)
+{
+	Vector base;
+	float backoff;
+	float vel;
+
+	switch (player->GetMoveCollide())
+	{
+	case 0:
+	case 1:
+		{
+			if (player->GetMoveCollide() == 1)
+				backoff = 2.0 - m_fieldA0;
+			else
+				backoff = 1;
+
+			sub_100ebb50(mv->m_vecVelocity, pm.plane.normal, mv->m_vecVelocity, backoff);
+		}
+		break;
+	default:
+		break;
+	}
+
+	if (pm.plane.normal[2] > 0.7)
+	{
+		base.Init();
+		if (mv->m_vecVelocity[2] < g_104dfce0.GetFloat() * gpGlobals->frametime)
+		{
+			sub_100ec660((C_BaseEntity *)pm.m_pEnt);
+			mv->m_vecVelocity[2] = 0;
+		}
+
+		vel = DotProduct(mv->m_vecVelocity, mv->m_vecVelocity);
+
+		if (vel < (30 * 30) || (player->GetMoveCollide() != 1))
+		{
+			sub_100ec660((C_BaseEntity *)pm.m_pEnt);
+			mv->m_vecVelocity.Init();
+		}
+		else
+		{
+			VectorScale(mv->m_vecVelocity, (1.0 - pm.fraction) * gpGlobals->frametime * 0.9, move);
+			pm = sub_100eb9d0(move);
+		}
+		VectorSubtract(mv->m_vecVelocity, base, mv->m_vecVelocity);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ee370 size=0x3a7
 #include "CGameMovement.h"
 #include "C_BaseEntity.h"
