@@ -17,14 +17,28 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual bool vfunc107();
 	virtual void vfunc112();
 	int m_unk174;
-	int m_n178;
+	union { int m_n178; float m_fl178; };	// 0x178: alpha 0..255
 	char m_b17c;
 	char m_b17d;
 	char m_b17e;
-	char m_pad017f[0x1a8 - 0x17f];
+	char m_c17f;
+	int m_n180;
+	int m_n184;
+	int m_n188;
+	int m_n18c;
+	int m_n190;
+	int m_n194;
+	int m_n198;
+	int m_n19c;
+	int m_n1a0;
+	int m_n1a4;
 	int m_n1a8;
 	int m_n1ac;
 	int m_n1b0;
-	char m_b1b4;
-	char m_pad01b5[0x1c4 - 0x1b5];
+	unsigned char m_b1b4;
+	char m_c1b5; char m_c1b6; char m_c1b7;
+	class CHUDSprite *m_pSprite1b8;
+	class CHUDSprite *m_pSprite1bc;
+	int m_n1c0;	// font
+	const char *sub_1005fea0(int i);	// "UI_Progress_Bar" string i (a member: callers load this into ecx)
 };

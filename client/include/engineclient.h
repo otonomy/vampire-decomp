@@ -726,7 +726,7 @@ public:
 	virtual void vfunc10();
 	virtual void vfunc11();
 	virtual void __cdecl vfunc12(int, int, int, ...);	// slot 12; seen as Draw 1; DrawColoredText(font, x, y, r, g, b, a, fmt, ...)
-	virtual void vfunc13();
+	virtual void vfunc13(int, int, int, int, int, int, int, int, int, const char *, ...);	// slot 13: text in a box (font, x, y, w, h, r, g, b, a, fmt, ...) (CProgBar)
 	virtual void vfunc14(int, int, int *, const char *, ...);	// slot 14: text size with a wrap width (CCredits)
 	virtual int vfunc15(int, const char *, ...);	// slot 15; seen as DrawTextLen 1
 };
