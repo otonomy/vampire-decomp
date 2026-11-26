@@ -295,6 +295,10 @@ of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call th
   never `g_1027ba58` through a view. Some CInput slot signatures are still guesses (vfunc3 is the SDK's CreateMove,
   declared with the six dwords its matched caller passes); when yours disagrees with the game's call, note it rather
   than adding a second view. A wrapper that only calls a `void` slot returns `void` (the lift's `int` was a guess).
+- **CHLClient** (vtable 0x10233f44) follows the SDK's IBaseClientDLL order: slots 13-21 carry the SDK names and
+  types (IN_ActivateMouse .. IN_KeyEvent, CreateMove, WriteUsercmdDeltaToBuffer), each forwarding to the input slot of
+  the same SDK name. VC6 compiles such a forward to a sibling `jmp [eax+N]`, and a forwarded `bool` shows as
+  `mov edx,[esp+N]; mov [esp+N],edx`: read that as a bool parameter, not an int.
 - **Two functions in one row.** When the game's bytes end with `ret` / padding and go on with a second function
   (another `ret N`, its own callers), the import merged two rows; note "merged row: second function at 0x..." and
   move on (`pcdecomp split` cuts it), do not write both into one source.
