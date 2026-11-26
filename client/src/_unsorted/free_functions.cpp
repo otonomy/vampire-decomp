@@ -7978,6 +7978,32 @@ template <> int ClientClassInit<DT_OccultThaumDamage::ignored>(DT_OccultThaumDam
 }
 // END FUNCTION
 
+// FUNCTION: 0x10014240 size=0x45
+namespace lifted {
+extern char g_101ffa04;
+extern char g_101ffa18;
+extern char g_101ffa54;
+extern char g_101ffa8c;
+extern char g_101ffae4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10014240()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101ffae4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101ffa8c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101ffa54;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101ffa18;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101ffa04;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100142d0 size=0x6
 namespace lifted {
 extern char g_102e1f10;
