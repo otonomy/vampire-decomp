@@ -11,6 +11,115 @@ vgui2::PropertySheet *pcd_emit_101c84a0(const vgui2::PropertySheet &other) { ret
 // TARGET: ??_GPropertySheet@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101c84f0 size=0x285
+#include "vgui2__PropertySheet.h"
+#include "vgui2__Button.h"
+
+extern "C" __declspec(noreturn) void exit(int);
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+void *sub_101b6840(unsigned int size);
+struct CUnknown101b5670 { CUnknown101b5670 *sub_101b5670(const char *name); };
+struct Button_101b3630 { Button_101b3630 *sub_101b3630(void *parent, const char *name, const char *text); };
+extern void *vt_102551e4;
+
+struct TabColor
+{
+	unsigned char _color[4];
+	void Init() { _color[0] = 0; _color[1] = 0; _color[2] = 0; _color[3] = 0; }
+};
+struct PageTabMem
+{
+	void *vtable;
+	char pad4[0xf0 - 4];
+	bool _active;	// 0xf0
+	TabColor _textColor;	// 0xf1
+	TabColor _dimTextColor;	// 0xf5
+};
+
+struct PanelDar
+{
+	int _count;
+	int _capacity;
+	vgui2::Panel **_data;
+
+	int Find(vgui2::Panel *elem)
+	{
+		for (int i = 0; i < _count; i++)
+		{
+			if (_data[i] == elem)
+				return i;
+		}
+		return -1;
+	}
+	void EnsureCapacity(int wantedCapacity)
+	{
+		if (wantedCapacity <= _capacity)
+			return;
+		int newCapacity = _capacity;
+		if (newCapacity == 0)
+			newCapacity = 1;
+		while (newCapacity < wantedCapacity)
+			newCapacity *= 2;
+		vgui2::Panel **newData = new vgui2::Panel *[newCapacity];
+		if (newData == 0)
+			exit(0);
+		memset(newData, 0, sizeof(vgui2::Panel *) * newCapacity);
+		_capacity = newCapacity;
+		for (int i = 0; i < _count; i++)
+			newData[i] = _data[i];
+		delete[] _data;
+		_data = newData;
+	}
+	void AddElement(vgui2::Panel *elem)
+	{
+		EnsureCapacity(_count + 1);
+		_data[_count] = elem;
+		_count++;
+	}
+};
+
+void vgui2::PropertySheet::vfunc107(vgui2::Panel *page, const char *title, int unused)
+{
+	PanelDar &pages = *(PanelDar *)((char *)this + 0x58);
+	PanelDar &pageTabs = *(PanelDar *)((char *)this + 0x64);
+	if (pages.Find(page) >= 0)
+		return;
+
+	vgui2::Panel *tab;
+	PageTabMem *mem = (PageTabMem *)vgui2::Panel::operator new(0xfc);
+	if (mem)
+	{
+		((Button_101b3630 *)mem)->sub_101b3630(this, "tab", title);
+		mem->_textColor.Init();
+		mem->_dimTextColor.Init();
+		mem->vtable = &vt_102551e4;
+		void *kvmem = sub_101b6840(0x1c);
+		((Button *)mem)->Button::vfunc161((int)(kvmem ? ((CUnknown101b5670 *)kvmem)->sub_101b5670("TabPressed") : 0));
+		mem->_active = false;
+		tab = (vgui2::Panel *)mem;
+	}
+	else
+		tab = 0;
+
+	tab->vfunc41((int)this);
+	int wide, tall;
+	tab->sub_101a9920(&wide, &tall);
+	tab->sub_101a98f0(m_unk78, tall);
+	int x, y;
+	tab->sub_101a98c0(&x, &y);
+	tab->sub_101a9890(x, y + m_h80);
+	tab->vfunc63(0);
+
+	pageTabs.AddElement(tab);
+	pages.AddElement(page);
+
+	page->vfunc33((int)this);
+	page->vfunc21(0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c8780 size=0x35
 #include "vgui2__PropertySheet.h"
 struct PSView { char pad[0x58]; int m_n; int m_unk5c; int *m_data; };
