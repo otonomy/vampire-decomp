@@ -8612,6 +8612,32 @@ template <> int ClientClassInit<DT_WeaponIArmor_Hvy_Cloth::ignored>(DT_WeaponIAr
 }
 // END FUNCTION
 
+// FUNCTION: 0x100158c0 size=0x45
+namespace lifted {
+extern char g_10202554;
+extern char g_10202568;
+extern char g_102025a4;
+extern char g_102025dc;
+extern char g_10202634;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100158c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10202634;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_102025dc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_102025a4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10202568;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10202554;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10015950 size=0x6
 namespace lifted {
 extern char g_102e0f14;
