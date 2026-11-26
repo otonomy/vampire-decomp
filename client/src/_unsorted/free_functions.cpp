@@ -108830,6 +108830,68 @@ void CVSPanelX::sub_10172850()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10172880 size=0x23c
+#include "CVStatList_t.h"
+#include "CHud.h"
+extern "C" int __cdecl atoi(const char *);
+extern "C" int __cdecl strncmp(const char *, const char *, unsigned);
+extern "C" int __cdecl sprintf(char *, const char *, ...);
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+struct VPlayer { char p0[0x1178]; int m1178; CVStatList_t **m117c; };
+struct VEngine { virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual void g7(); virtual void g8(); virtual void g9(); virtual void g10(); virtual void g11(); virtual void g12(); virtual void g13(); virtual void g14(); virtual void g15(); virtual void g16(); virtual void g17(); virtual void g18(); virtual void g19(); virtual void g20(); virtual void g21(); virtual void g22(); virtual void g23(); virtual void g24(); virtual void g25(); virtual void g26(); virtual void g27(const char *, int); };
+struct VSelf { char p0[0x264]; int m264; void sub_101b7040(const char *); };
+struct VPanelB { char p0[0x6c]; int m6c; };
+struct VPanelA { char p0[0x14]; VPanelB *m14; };
+struct VCharEdit { char p0[0x274]; int m274; };
+extern VPlayer *g_104a0d50;
+extern VEngine *g_104a57d4;
+extern CHud g_104cfe38;
+VPanelA *sub_10180c00(int);
+extern const char g_102d0148[];
+extern const char g_102cffac[];
+
+static inline CVStatList_t *FindList(VPlayer *pl)
+{
+	for (int i = 0; i < pl->m1178; i++) {
+		if (pl->m117c[i]->m_field10 == 0)
+			return pl->m117c[i];
+	}
+	static CVStatList_t s_default(-1);
+	return &s_default;
+}
+
+// TARGET: sub_10172880
+void __fastcall sub_10172880(VSelf *self, int edx, const char *cmd)
+{
+	if (_strcmpi(cmd, g_102d0148) != 0) {
+		if (strncmp(cmd, g_102cffac, 2) == 0) {
+			if (!self->m264) {
+				int n = atoi(cmd + 2);
+				VPlayer *pl = g_104a0d50;
+				if (pl) {
+					char buf[0x50];
+					if (n >= FindList(pl)->sub_1015dbd0(0x1b)) {
+						sprintf(buf, "vstats buy humanity %d", 1);
+						g_104a57d4->g27(buf, 1);
+						return;
+					}
+					if (n <= FindList(pl)->sub_1015dbd0(0x1b) - 1) {
+						VPanelA *panel = sub_10180c00(0);
+						VCharEdit *ce = (VCharEdit *)g_104cfe38.sub_100f0ed0("CharEditPanel");
+						if (ce->m274 || FindList(pl)->sub_1015dbd0(0x1b) > panel->m14->m6c) {
+							sprintf(buf, "vstats sell humanity %d", 1);
+							g_104a57d4->g27(buf, 1);
+						}
+					}
+				}
+			}
+		} else {
+			self->sub_101b7040(cmd);
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10172ac0 size=0x3
 char sub_10172ac0()
 {
