@@ -16446,6 +16446,32 @@ template <> int ClientClassInit<DT_ItemKSkylineHavenKey::ignored>(DT_ItemKSkylin
 }
 // END FUNCTION
 
+// FUNCTION: 0x10026940 size=0x45
+namespace lifted {
+extern char g_102231e4;
+extern char g_102231f8;
+extern char g_10223234;
+extern char g_1022326c;
+extern char g_102232c4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10026940()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_102232c4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1022326c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10223234;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_102231f8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_102231e4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100269d0 size=0x6
 namespace lifted {
 extern char g_102e766c;

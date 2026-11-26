@@ -1869,6 +1869,7 @@
 0x100267b0 func   ?_C_ItemKSkylineHavenKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKSkylineHavenKey_CreateObject
 0x10026870 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKSkylineHavenKey@@@Z ClientClassInit
 0x10026900 func   ?vfunc17@C_ItemKMuseumOfficeKey@@UAEHXZ C_ItemKMuseumOfficeKey::vfunc17
+0x10026940 func   ?sub_10026940@@YAHXZ sub_10026940
 0x10026990 func   ??_GC_ItemKMuseumOfficeKey@@UAEPAXI@Z ??_GC_ItemKMuseumOfficeKey@@UAEPAXI@Z
 0x100269b0 func   ?vfunc16@C_ItemKMuseumOfficeKey@@UAEHXZ C_ItemKMuseumOfficeKey::vfunc16
 0x100269c0 func   ?vfunc15@C_ItemKMuseumOfficeKey@@UAEHXZ C_ItemKMuseumOfficeKey::vfunc15
