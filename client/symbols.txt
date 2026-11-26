@@ -1613,6 +1613,7 @@
 0x100217b0 func   ?_C_ItemKOceanHouseBasementKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKOceanHouseBasementKey_CreateObject
 0x10021870 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKOceanHouseBasementKey@@@Z ClientClassInit
 0x10021900 func   ?vfunc17@C_ItemKOceanHouseUpstairsKey@@UAEHXZ C_ItemKOceanHouseUpstairsKey::vfunc17
+0x10021940 func   ?sub_10021940@@YAHXZ sub_10021940
 0x10021990 func   ??_GC_ItemKOceanHouseUpstairsKey@@UAEPAXI@Z ??_GC_ItemKOceanHouseUpstairsKey@@UAEPAXI@Z
 0x100219b0 func   ?vfunc16@C_ItemKOceanHouseUpstairsKey@@UAEHXZ C_ItemKOceanHouseUpstairsKey::vfunc16
 0x100219c0 func   ?vfunc15@C_ItemKOceanHouseUpstairsKey@@UAEHXZ C_ItemKOceanHouseUpstairsKey::vfunc15
