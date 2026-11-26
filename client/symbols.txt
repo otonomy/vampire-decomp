@@ -557,6 +557,7 @@
 0x1000cdb0 func   ?_C_WeaponMelee_Claws_Ghoul_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_Claws_Ghoul_CreateObject
 0x1000ce70 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_Claws_Ghoul@@@Z ClientClassInit
 0x1000cf00 func   ?vfunc17@C_WeaponRanged_Rifle_RemingtonBach@@UAEHXZ C_WeaponRanged_Rifle_RemingtonBach::vfunc17
+0x1000cf40 func   ?sub_1000cf40@@YAHXZ sub_1000cf40
 0x1000cf90 func   ??_GC_WeaponRanged_Rifle_RemingtonBach@@UAEPAXI@Z ??_GC_WeaponRanged_Rifle_RemingtonBach@@UAEPAXI@Z
 0x1000cfb0 func   ?vfunc16@C_WeaponRanged_Rifle_RemingtonBach@@UAEHXZ C_WeaponRanged_Rifle_RemingtonBach::vfunc16
 0x1000cfc0 func   ?vfunc15@C_WeaponRanged_Rifle_RemingtonBach@@UAEHXZ C_WeaponRanged_Rifle_RemingtonBach::vfunc15
