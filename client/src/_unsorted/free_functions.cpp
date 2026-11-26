@@ -63916,6 +63916,85 @@ void sub_100fa5a0(S3RGBA *pImPos, DXTAlphaBlock3BitLinear const *pAlphaBlock, in
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fa860 size=0x2d3
+struct Pixel1555_100fa860
+{
+	unsigned short b : 5;
+	unsigned short g : 5;
+	unsigned short r : 5;
+	unsigned short a : 1;
+};
+
+struct Color32_100fa860
+{
+	unsigned char r, g, b, a;
+};
+
+extern unsigned short g_104d1068[8];	// the block's 8 alpha values
+extern unsigned char g_104d1058[4][4];	// the block's 3-bit alpha indices
+extern Color32_100fa860 g_104d1658[4][4];	// the decoded 4x4 block
+
+// DXT5-style alpha block: two alpha endpoints, 16 3-bit indices; the decoded alpha's top bit goes into the
+// 1-bit alpha of a 4x4 block of A1R5G5B5 pixels (pitch in pixels)
+void sub_100fa860(Pixel1555_100fa860 *pDst, const unsigned char *pSrc, int nPitch)
+{
+	g_104d1068[0] = pSrc[0];
+	g_104d1068[1] = pSrc[1];
+	if (g_104d1068[0] > g_104d1068[1])
+	{
+		g_104d1068[2] = (6 * g_104d1068[0] + 1 * g_104d1068[1]) / 7;
+		g_104d1068[3] = (5 * g_104d1068[0] + 2 * g_104d1068[1]) / 7;
+		g_104d1068[4] = (4 * g_104d1068[0] + 3 * g_104d1068[1]) / 7;
+		g_104d1068[5] = (3 * g_104d1068[0] + 4 * g_104d1068[1]) / 7;
+		g_104d1068[6] = (2 * g_104d1068[0] + 5 * g_104d1068[1]) / 7;
+		g_104d1068[7] = (1 * g_104d1068[0] + 6 * g_104d1068[1]) / 7;
+	}
+	else
+	{
+		g_104d1068[2] = (4 * g_104d1068[0] + 1 * g_104d1068[1]) / 5;
+		g_104d1068[3] = (3 * g_104d1068[0] + 2 * g_104d1068[1]) / 5;
+		g_104d1068[4] = (2 * g_104d1068[0] + 3 * g_104d1068[1]) / 5;
+		g_104d1068[5] = (1 * g_104d1068[0] + 4 * g_104d1068[1]) / 5;
+		g_104d1068[6] = 0;
+		g_104d1068[7] = 255;
+	}
+
+	unsigned int bits = *(const unsigned int *)&pSrc[2];
+	g_104d1058[0][0] = bits & 7; bits >>= 3;
+	g_104d1058[0][1] = bits & 7; bits >>= 3;
+	g_104d1058[0][2] = bits & 7; bits >>= 3;
+	g_104d1058[0][3] = bits & 7; bits >>= 3;
+	g_104d1058[1][0] = bits & 7; bits >>= 3;
+	g_104d1058[1][1] = bits & 7; bits >>= 3;
+	g_104d1058[1][2] = bits & 7; bits >>= 3;
+	g_104d1058[1][3] = bits & 7;
+	bits = *(const unsigned int *)&pSrc[5];
+	g_104d1058[2][0] = bits & 7; bits >>= 3;
+	g_104d1058[2][1] = bits & 7; bits >>= 3;
+	g_104d1058[2][2] = bits & 7; bits >>= 3;
+	g_104d1058[2][3] = bits & 7; bits >>= 3;
+	g_104d1058[3][0] = bits & 7; bits >>= 3;
+	g_104d1058[3][1] = bits & 7; bits >>= 3;
+	g_104d1058[3][2] = bits & 7; bits >>= 3;
+	g_104d1058[3][3] = bits & 7;
+
+	int x, y;
+	for (y = 0; y < 4; y++)
+		for (x = 0; x < 4; x++)
+			g_104d1658[y][x].a = (unsigned char)g_104d1068[g_104d1058[y][x]];
+
+	for (y = 0; y < 4; y++)
+	{
+		for (x = 0; x < 4; x++)
+		{
+			pDst->a = g_104d1658[y][x].a >> 7;
+			pDst++;
+		}
+		pDst += nPitch - 4;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fbd70 size=0xe
 namespace lifted {
 extern int g_1027ba58;
