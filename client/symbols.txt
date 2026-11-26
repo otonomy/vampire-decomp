@@ -2854,6 +2854,7 @@
 0x1004dbd0 func   ?vfunc97@CBossHealthBar@@UAEXXZ CBossHealthBar::vfunc97
 0x1004dbe0 func   ?sub_1004dbe0@CUnkFade@@QAEX_N@Z CUnkFade::sub_1004dbe0
 0x1004dc30 func   ?sub_1004dc30@@YAHXZ sub_1004dc30
+0x1004dc40 func   ??0CCredits@@QAE@H@Z CCredits::CCredits
 0x1004dd20 func   ??_GCCredits@@UAEPAXI@Z ??_GCCredits@@UAEPAXI@Z
 0x1004dd40 func   ??1CCredits@@UAE@XZ CCredits::~CCredits
 0x1004ddd0 func   ?sub_1004ddd0@CUnknown1004ddd0@@QAEHXZ CUnknown1004ddd0::sub_1004ddd0
