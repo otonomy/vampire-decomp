@@ -7734,6 +7734,7 @@
 0x10162710 func   ?sub_10162710@QuestJournal@@QAEXXZ QuestJournal::sub_10162710
 0x10162840 func   ?sub_10162840@QuestJournal@@QAEXXZ QuestJournal::sub_10162840
 0x10162870 func   ?sub_10162870@QuestJournal@@QAEXPBDH@Z QuestJournal::sub_10162870
+0x10162940 func   ?sub_10162940@QuestJournal@@QAEXPAVCUnknown10248a50@@H@Z QuestJournal::sub_10162940
 0x10162f00 func   ?sub_10162f00@QuestJournal@@QAEPADH@Z QuestJournal::sub_10162f00
 0x10162fa0 func   ?sub_10162fa0@QuestJournal@@QAEDH@Z QuestJournal::sub_10162fa0
 0x10163030 func   ?sub_10163030@QuestJournal@@QAEDH@Z QuestJournal::sub_10163030

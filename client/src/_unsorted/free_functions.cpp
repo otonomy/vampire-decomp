@@ -104635,6 +104635,83 @@ void QuestJournal::sub_10162870(const char *pszFile, int index)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10162940 size=0x20b
+#include "ScopeTrace.h"
+#include "QuestJournal.h"
+#include "CUnknown10248a50.h"
+extern "C" void *__cdecl memmove(void *, const void *, unsigned int);
+extern "C" void *memset(void *, int, unsigned int);
+extern "C" unsigned int strlen(const char *);
+#pragma intrinsic(memset)
+#pragma intrinsic(strlen)
+extern char g_105f9a18[];
+__declspec(dllimport) void Q_trimspace(char *, char *, int);
+__declspec(dllimport) char *Q_strncpy(char *, const char *, int);
+struct QRec { int f[26]; };
+struct QVec {
+	QRec *m_pMemory; int m_alloc; int m_grow; int m_size; QRec *m_pElements;
+	void sub_101639e0(int n);
+	void GrowN(int num)
+	{
+		if (m_size + num > m_alloc)
+			sub_101639e0(m_size + num - m_alloc);
+		m_size += num;
+		m_pElements = m_pMemory;
+	}
+	void ShiftRightN(int elem, int num)
+	{
+		int n = m_size - elem - num;
+		if (n > 0)
+			memmove(&m_pMemory[elem + num], &m_pMemory[elem], n * sizeof(QRec));
+	}
+	int AddToTailNew(const QRec &src)
+	{
+		int elem = m_size;
+		GrowN(1);
+		ShiftRightN(elem, 1);
+		QRec *p = &m_pMemory[elem];
+		if (p)
+			*p = src;
+		return elem;
+	}
+};
+struct KV {
+	char *sub_10128590(const char *, const char *);
+	KV *sub_10128350(const char *, int);
+	KV *sub_101283b0();
+};
+struct QJ2 { int sub_10162b50(KV *); };
+// TARGET: ?sub_10162940@QuestJournal@@QAEXPAVCUnknown10248a50@@H@Z
+void QuestJournal::sub_10162940(CUnknown10248a50 *pKey, int index)
+{
+	ScopeTrace trace("QuestJournal::AddQuest", g_102de300, g_102de300);
+	KV *key = (KV *)pKey;
+	QRec rec;
+	memset(&rec, 0, sizeof(rec));
+	rec.f[2] = index;
+	Q_trimspace(key->sub_10128590("Title", "!!TITLE!!"), g_105f9a18, 0x1000);
+	rec.f[0] = (int)new char[strlen(g_105f9a18) + 1];
+	Q_strncpy((char *)rec.f[0], g_105f9a18, strlen(g_105f9a18) + 1);
+	Q_trimspace(key->sub_10128590("DisplayName", "!!DISPLAYNAME!!"), g_105f9a18, 0x1000);
+	rec.f[1] = (int)new char[strlen(g_105f9a18) + 1];
+	Q_strncpy((char *)rec.f[1], g_105f9a18, strlen(g_105f9a18) + 1);
+	KV *k = key->sub_10128350("CompletionState", 0);
+	for (int i = 0; i < 20; i++)
+		rec.f[5 + i] = -1;
+	int n = 0;
+	while (k && n < 20) {
+		int idx = ((QJ2 *)this)->sub_10162b50(k);
+		rec.f[5 + n] = idx;
+		if (idx != -1)
+			n++;
+		k = k->sub_101283b0();
+	}
+	rec.f[4] = -1;
+	rec.f[3] = 0;
+	((QVec *)&m_field[5])->AddToTailNew(rec);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10162f00 size=0x9e
 #include "QuestJournal.h"
 
