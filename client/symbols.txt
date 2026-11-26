@@ -8359,6 +8359,7 @@
 0x10174690 func   ?vfunc7@CharEditPanel@@UAEXXZ CharEditPanel::vfunc7
 0x101746b0 func   ?sub_101746b0@@YADXZ sub_101746b0
 0x101746d0 func   ?sub_101746d0@@YAXXZ sub_101746d0
+0x101747c0 func   ?sub_101747c0@@YAHXZ sub_101747c0
 0x10174950 func   ??_GVCharWizardUI@@UAEPAXI@Z ??_GVCharWizardUI@@UAEPAXI@Z
 0x10174970 func   ??1VCharWizardUI@@UAE@XZ VCharWizardUI::~VCharWizardUI
 0x10174b20 func   ?sub_10174b20@CUnknown10174b20@@QAEHXZ CUnknown10174b20::sub_10174b20
