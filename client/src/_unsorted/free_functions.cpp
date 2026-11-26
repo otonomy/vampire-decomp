@@ -16086,6 +16086,32 @@ template <> int ClientClassInit<DT_ItemKFUOfficeKey::ignored>(DT_ItemKFUOfficeKe
 }
 // END FUNCTION
 
+// FUNCTION: 0x10025cc0 size=0x45
+namespace lifted {
+extern char g_102219d4;
+extern char g_102219e8;
+extern char g_10221a24;
+extern char g_10221a5c;
+extern char g_10221ab4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10025cc0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10221ab4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10221a5c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10221a24;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_102219e8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_102219d4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10025d50 size=0x6
 namespace lifted {
 extern char g_102e1c58;
