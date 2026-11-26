@@ -7097,6 +7097,7 @@
 0x10144be0 func   ?sub_10144be0@@YAXXZ sub_10144be0
 0x10144d10 func   ?sub_10144d10@CUnknown10144d10@@QAEPAXXZ CUnknown10144d10::sub_10144d10
 0x10144d30 func   ?sub_10144d30@@YAXXZ sub_10144d30
+0x10144d50 func   ?sub_10144d50@@YAHXZ sub_10144d50
 0x10144d60 func   ?sub_10144d60@@YIXPAH@Z sub_10144d60
 0x10144d90 func   ?sub_10144d90@CUnkDelete101d7c90@@QAEPAXE@Z CUnkDelete101d7c90::sub_10144d90
 0x10144dc0 func   ?sub_10144dc0@CUnknown101d7ec0@@QAEXXZ CUnknown101d7ec0::sub_10144dc0

@@ -92514,6 +92514,16 @@ void sub_10144d30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10144d50 size=0x5
+namespace lifted {
+int sub_10144d60();
+}
+int sub_10144d50()
+{
+    return lifted::sub_10144d60();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10144d60 size=0x25
 // TARGET: sub_10144d60
 void __fastcall sub_10144d60(int *pThis)
