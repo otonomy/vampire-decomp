@@ -2433,6 +2433,7 @@
 0x10041740 func   ??_GC_TestTraceline@@UAEPAXI@Z ??_GC_TestTraceline@@UAEPAXI@Z
 0x10041760 func   ??1C_TestTraceline@@UAE@XZ C_TestTraceline::~C_TestTraceline
 0x10041790 func   ?sub_10041790@CUnknown10041790@@QAEHH@Z CUnknown10041790::sub_10041790
+0x100417c0 func   ?DrawCube@C_TestTraceline@@QAEXAAVVector@@PAE@Z C_TestTraceline::DrawCube
 0x100417c0 func   ?sub_100417c0@C_TestTraceline@@QAEXAAVVector@@PAE@Z C_TestTraceline::sub_100417c0
 0x10041e00 func   ?sub_10041e00@S10041e00@@QAEXPBM@Z S10041e00::sub_10041e00
 0x100421e0 func   ?sub_100421e0@CUnknown100421e0@@QAEPAXXZ CUnknown100421e0::sub_100421e0
