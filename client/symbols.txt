@@ -4719,6 +4719,7 @@
 0x100be160 func   ?sub_100be160@CUnknown100be160@@QAEPAXXZ CUnknown100be160::sub_100be160
 0x100be190 func   ??_GCLocalPlayerFilter@@UAEPAXI@Z ??_GCLocalPlayerFilter@@UAEPAXI@Z
 0x100be200 func   ?sub_100be200@UtlMem@@QAEXH@Z UtlMem::sub_100be200
+0x100be270 func   ?vfunc0@IPredictionSystem@@QAEPAXD@Z IPredictionSystem::vfunc0
 0x100be290 func   ?sub_100be290@@YAHHHH@Z sub_100be290
 0x100be2b0 func   ?vfunc16@C_RopeKeyframe@@UAEHXZ C_RopeKeyframe::vfunc16
 0x100be2c0 func   ?vfunc15@C_RopeKeyframe@@UAEHXZ C_RopeKeyframe::vfunc15
