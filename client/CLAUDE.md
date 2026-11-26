@@ -281,6 +281,10 @@ of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call th
   `g_104a0d50` yourself. Cast for a member the header does not declare yet, or give C_BasePlayer.h the member.
 - **gpGlobals** (0x102b8494) is the SDK's `CGlobalVarsBase *gpGlobals`: `#include "CGlobalVarsBase.h"` and read
   `gpGlobals->curtime` (+0xc), `->frametime` (+0x10), `->framecount`, `->maxClients`, ...; never a view of your own.
+- **The entity list** is the SDK's `g_pEntityList` (0x102b8e98, `CBaseEntityList *`, CBaseEntityList.h) and
+  `cl_entitylist` (0x102b8e9c, `CClientEntityList *`, CClientEntityList.h, with `ClientEntityList()`); both point at
+  one object. A handle lookup is `CBaseHandle::Get()` (ehandle.h). Never declare `g_102b8e98` / `g_102b8e9c`: a
+  second name for the same global keeps VC6 from merging the loads, and the function stops matching.
 - **Two functions in one row.** When the game's bytes end with `ret` / padding and go on with a second function
   (another `ret N`, its own callers), the import merged two rows; note "merged row: second function at 0x..." and
   move on (`pcdecomp split` cuts it), do not write both into one source.
