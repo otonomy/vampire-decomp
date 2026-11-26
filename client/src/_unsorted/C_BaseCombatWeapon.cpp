@@ -342,7 +342,6 @@ struct NLV
 };
 extern NLV g_105f8b98;
 
-extern StatOwner2 g_105f93c0;
 
 struct DmgV
 {

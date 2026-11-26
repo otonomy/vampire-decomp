@@ -23598,11 +23598,11 @@ void CProgBar::sub_1005fe40(int a, int b, int c)
 // END FUNCTION
 
 // FUNCTION: 0x1005fea0 size=0xc6
+#include "StatOwner2.h"
 #include "CUnknown10203240.h"
 #include "CUnknown10202ba0.h"
 #include "Tier1.h"
 #include <string.h>
-extern CUnknown10203240 g_105f93c0;
 extern char g_103eee00[64];
 // TARGET: sub_1005fea0
 const char * __stdcall sub_1005fea0(int n)
@@ -85968,10 +85968,10 @@ int CIndexTables::sub_1013f2a0(int type, int index)
 // END FUNCTION
 
 // FUNCTION: 0x1013f2f0 size=0x24
+#include "StatOwner2.h"
 #include "CUnknown10203240.h"
 
 extern char g_102de300[];
-extern CUnknown10203240 g_105f93c0;
 
 struct CClanStrsRec
 {
@@ -86120,6 +86120,7 @@ int StatDefault3::sub_1013f440(int n)
 // END FUNCTION
 
 // FUNCTION: 0x1013f490 size=0x409
+#include "StatOwner2.h"
 #include "CVStatInfoList_t.h"
 #include "CUnknown101f0e50.h"
 #include "CUnknown10203240.h"
@@ -86133,7 +86134,6 @@ extern CVStatInfoList_t g_105f9220;
 extern CVStatInfoList_t g_105f90b8;
 extern CVStatInfoList_t g_105f8c60;
 extern CUnknown101f0e50 g_105f8b98;
-extern CUnknown10203240 g_105f93c0;
 
 struct CUnknown10150b90
 {
@@ -88558,7 +88558,6 @@ void sub_101433b0()
 extern "C" int __cdecl _strcmpi(const char *, const char *);
 extern char g_102de300[];
 extern int g_102c6ef0;
-extern StatOwner2 g_105f93c0;
 
 struct KeyValues_101433c0
 {
@@ -89018,6 +89017,7 @@ void CPtrList101d6400::sub_10143a90()
 // END FUNCTION
 
 // FUNCTION: 0x10143c10 size=0x219
+#include "StatOwner2.h"
 #include "CUnknown101439f0.h"
 #include "CNamedList10203020.h"
 #include "Tier1.h"
@@ -89028,7 +89028,6 @@ struct DFBase { virtual void v0(); virtual void Release(); };
 struct TNode { virtual void v0(); virtual void v1(); virtual TNode *Find(const char *name); virtual TNode *Next(); };
 struct DataFile : virtual DFBase { virtual void a0(); virtual void a1(); virtual TNode *Find(const char *name); };
 struct Trait { char m_[1]; int sub_10143a20(TNode *); };
-extern CNamedList10203020 g_105f93c0;
 extern int g_102c6ef0;
 extern int g_104a580c;
 DataFile *sub_101545c0(const char *path, int a);
@@ -89224,7 +89223,6 @@ public:
 };
 
 extern CNamedListX g_105e74fc;
-extern StatOwner2 g_105f93c0;
 
 struct KVNodeV
 {
@@ -89381,7 +89379,6 @@ struct KVFile_10144840 : virtual KVFileBase_10144840
 };
 extern void *g_104a580c;
 KVFile_10144840 *sub_101545c0(const char *pszFile, void *pFS);
-extern StatOwner2 g_105f93c0;
 extern int g_102c6ef0;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
@@ -89668,6 +89665,7 @@ char CUnknown10144f20::sub_10144f20(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x10144f40 size=0xb2
+#include "StatOwner2.h"
 #include "CUnknown101d82d0.h"
 
 extern "C" int __cdecl _strcmpi(const char *, const char *);
@@ -89701,7 +89699,6 @@ struct CClanStringTable	// the global at 0x1074e968
 	CClanStringList *sub_1015f270(int index);
 };
 
-extern CClanStringTable g_105f93c0;
 
 struct CClanNames	// count at +0, 12 byte records at +4
 {
@@ -90283,10 +90280,9 @@ int sub_10145d80()
 // END FUNCTION
 
 // FUNCTION: 0x10145d90 size=0x7f
+#include "StatOwner2.h"
 #include "CUnknown101d9210.h"
 
-struct SHandleMgr { void sub_1015f110(int handle); };
-extern SHandleMgr g_105f93c0;
 
 void CUnknown101d9210::sub_10145d90()
 {
@@ -90310,6 +90306,7 @@ void CUnknown101d9210::sub_10145d90()
 // END FUNCTION
 
 // FUNCTION: 0x10145e10 size=0x2ab
+#include "StatOwner2.h"
 #include "CUnknown101d9210.h"
 #include "CUnknown101d90c0.h"
 #include "string_t.h"
@@ -90320,11 +90317,6 @@ extern int g_104a580c;
 string_t sub_1015fc40(const char *psz);
 const char *sub_1015fb60(const char *psz);
 
-struct CUnknown10202ec0
-{
-	int sub_1015f060(CUnknown101d90c0_Section *pSection, const char *pszKey, int nDefault);
-};
-extern CUnknown10202ec0 g_105f93c0;
 
 struct CRollIface
 {
@@ -90402,8 +90394,7 @@ void CUnknown101d9210::sub_10145e10()
 // END FUNCTION
 
 // FUNCTION: 0x101460c0 size=0x1d
-struct StatOwner2 { int sub_1015f270(int); };
-extern StatOwner2 g_105f93c0;
+#include "StatOwner2.h"
 extern char g_102de300[];
 
 // TARGET: sub_101460c0
@@ -90432,8 +90423,7 @@ int CUnknown101460e0::sub_101460e0(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x10146100 size=0x1d
-struct StatOwner2 { int sub_1015f270(int); };
-extern StatOwner2 g_105f93c0;
+#include "StatOwner2.h"
 extern char g_102de300[];
 
 // TARGET: sub_10146100
@@ -98223,13 +98213,13 @@ void CReactionData::sub_101532e0()
 // END FUNCTION
 
 // FUNCTION: 0x10153500 size=0x110
+#include "StatOwner2.h"
 #include "IFileSystemFind.h"
 #include "CUnknown101f10e0.h"
 #include "CUnknown10202c80.h"
 #include "CUnknown1006cf30.h"
 
 extern IFileSystemFind *g_104a580c;
-extern CUnknown10202c80 g_105f93c0;
 extern CUnknown1006cf30 g_105f985c;
 extern "C" __declspec(dllimport) void Msg(const char *, ...);
 extern "C" int sprintf(char *, const char *, ...);
@@ -98566,6 +98556,7 @@ int __stdcall sub_10153970(int a0, int a1)
 // END FUNCTION
 
 // FUNCTION: 0x10153980 size=0x59
+#include "StatOwner2.h"
 #include "StatDefault.h"
 
 struct StatOwner
@@ -98573,10 +98564,6 @@ struct StatOwner
 	StatDefault *sub_10160590(int id);
 };
 
-struct CTableList
-{
-	const char *sub_1015f1c0(int a, int b);
-};
 
 struct CReactionNames
 {
@@ -98585,7 +98572,6 @@ struct CReactionNames
 };
 
 extern StatOwner g_105f985c;
-extern CTableList g_105f93c0;
 extern int g_105e8aa8;
 extern int g_105e8aa4;
 extern char g_105e89d8[];
@@ -102903,13 +102889,10 @@ CVStatInfo_t *CVStatInfo_t::sub_1015b050()
 // END FUNCTION
 
 // FUNCTION: 0x1015b270 size=0x90
+#include "StatOwner2.h"
 #include "CVStatInfo_t.h"
 #include "ScopeTrace.h"
 
-struct CTableList_1015b270 {
-	const char *sub_1015f1c0(int id, int arg);
-};
-extern CTableList_1015b270 g_105f93c0;
 
 const char *CVStatInfo_t::sub_1015b270(int arg)
 {
@@ -104821,9 +104804,8 @@ int sub_1015f600(const char *pszName)
 // END FUNCTION
 
 // FUNCTION: 0x1015f660 size=0x1c
+#include "StatOwner2.h"
 struct CUnk102036e0Target { void sub_1015ecd0(int a); };
-struct CUnk102036e0Table { CUnk102036e0Target *sub_1015f2f0(const char *name); };
-extern CUnk102036e0Table g_105f93c0;
 
 // TARGET: sub_1015f660
 void sub_1015f660(int a)
@@ -104833,13 +104815,13 @@ void sub_1015f660(int a)
 // END FUNCTION
 
 // FUNCTION: 0x1015f680 size=0x48
+#include "StatOwner2.h"
 #include "CUnknown10203240.h"
 #include "CUnknown10202ba0.h"
 struct S10203710Entry { int m_pad0; int m_pad4; const char *m_pText; };
 struct T10203710 { S10203710Entry *sub_1014e6d0(int i); };
 extern T10203710 g_105e8544;
 extern int g_105e8548;
-extern CUnknown10203240 g_105f93c0;
 extern char g_102de300[];
 // TARGET: sub_1015f680
 const char *sub_1015f680(int index)
@@ -104857,13 +104839,13 @@ const char *sub_1015f680(int index)
 // END FUNCTION
 
 // FUNCTION: 0x1015f6d0 size=0x48
+#include "StatOwner2.h"
 #include "CUnknown10203240.h"
 #include "CUnknown10202ba0.h"
 struct S10203780Entry { int m_pad0; const char *m_pText; };
 struct T10203780 { S10203780Entry *sub_1014e6d0(int i); };
 extern T10203780 g_105e8544;
 extern int g_105e8548;
-extern CUnknown10203240 g_105f93c0;
 extern char g_102de300[];
 // TARGET: sub_1015f6d0
 const char *sub_1015f6d0(int index)
@@ -111717,9 +111699,8 @@ char sub_10176f30(int a)
 // END FUNCTION
 
 // FUNCTION: 0x10176f60 size=0x1c
+#include "StatOwner2.h"
 struct CUnk102036e0Target { void sub_1015ecd0(int a); };
-struct CUnk102036e0Table { CUnk102036e0Target *sub_1015f2f0(const char *name); };
-extern CUnk102036e0Table g_105f93c0;
 
 // TARGET: sub_10176f60
 void sub_10176f60(int a)
@@ -112898,6 +112879,7 @@ void ScoreV::sub_1017f1a0()
 // END FUNCTION
 
 // FUNCTION: 0x1017f1d0 size=0xbf
+#include "StatOwner2.h"
 #include "CUnknown10203240.h"
 struct CUnknown1017b270 { int sub_1017b270(int); };
 struct PanelV { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(int); };
@@ -112909,7 +112891,6 @@ struct ScoreV {
 	int sub_1017dc00();
 	void sub_1017f1d0();
 };
-extern CUnknown10203240 g_105f93c0;
 bool sub_101713e0();
 void sub_1018c8f0(ScoreV *, PanelV **, const char *, const char *, int, int, int, int);
 // TARGET: ScoreV::sub_1017f1d0
@@ -113363,6 +113344,7 @@ void Score10181a30::sub_10181a30()
 // END FUNCTION
 
 // FUNCTION: 0x10181ad0 size=0x97
+#include "StatOwner2.h"
 #include "CUnknown10203240.h"
 #include "CUnknown10202ba0.h"
 struct PanelLike {
@@ -113392,7 +113374,6 @@ struct StatsPanelX {
     // TARGET: StatsPanelX::sub_10181ad0
     void sub_10181ad0(int idx);
 };
-extern CUnknown10203240 g_105f93c0;
 void StatsPanelX::sub_10181ad0(int idx)
 {
     if (m2ac) {
@@ -121582,7 +121563,6 @@ char *sub_1015fb10(const char *psz);
 
 struct CVStatInfoList_t { int sub_1015c8f0(const char *psz); };
 extern CVStatInfoList_t g_105f90b8;
-extern StatOwner2 g_105f93c0;
 struct CNamedListXB { int sub_10157b30(const char *psz); };
 extern CNamedListXB g_105f8b98;
 

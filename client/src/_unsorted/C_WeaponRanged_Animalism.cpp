@@ -12,11 +12,10 @@ int C_WeaponRanged_Animalism::vfunc16()
 // END FUNCTION
 
 // FUNCTION: 0x10006c70 size=0x62
+#include "StatOwner2.h"
 #include "C_WeaponRanged_Animalism.h"
 
 struct StatV_10006c70 { char *sub_1015ecd0(int); };
-struct StatOwnerV_10006c70 { StatV_10006c70 *sub_1015f270(int); };
-extern StatOwnerV_10006c70 g_105f93c0;
 void sub_10064b60(const char *, int, int, char);
 
 struct Weap_10006c70 {
