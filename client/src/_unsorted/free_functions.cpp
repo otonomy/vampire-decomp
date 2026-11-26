@@ -803,6 +803,21 @@ template <> int ClientClassInit<DT_ItemGKeyring::ignored>(DT_ItemGKeyring::ignor
 }
 // END FUNCTION
 
+// FUNCTION: 0x10003960 size=0x1b
+namespace lifted {
+struct C10003b50 { int sub_10003b50(); };
+int sub_100a1eb0(int);
+}
+int sub_10003960()
+{
+    int t0 = lifted::sub_100a1eb0(0x9c0);
+    if (t0 != 0) {
+        return ((lifted::C10003b50 *)t0)->sub_10003b50();
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100039a0 size=0x6
 namespace lifted {
 extern char g_102dead0;
