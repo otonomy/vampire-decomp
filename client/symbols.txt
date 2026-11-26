@@ -8657,6 +8657,7 @@
 0x1019cca0 func   ?sub_1019cca0@@YAMXZ sub_1019cca0
 0x1019cd90 func   ?sub_1019cd90@@YAMXZ sub_1019cd90
 0x1019ce80 func   ?sub_1019ce80@@YA_NXZ sub_1019ce80
+0x1019d0a0 func   ?sub_1019d0a0@@YAXPAM@Z sub_1019d0a0
 0x1019d2e0 func   ?sub_1019d2e0@@YAMXZ sub_1019d2e0
 0x1019d3d0 func   ?sub_1019d3d0@@YAMXZ sub_1019d3d0
 0x1019d4c0 func   ?sub_1019d4c0@@YADXZ sub_1019d4c0

@@ -118291,6 +118291,76 @@ bool sub_1019ce80()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019d0a0 size=0x23c
+#include "ConVar.h"
+#include "ScopeTrace.h"
+#include "Vector.h"
+
+extern "C" int sscanf(const char *, const char *, ...);
+
+struct SkyPlayerView_1019d0a0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual float *vfunc10();
+	char m_pad0004[0x17b9 - 4];
+	bool m_bFogBlend;	// 0x17b9
+	char m_pad17ba[2];
+	Vector m_fogDir;	// 0x17bc
+	unsigned char m_col0[4];	// 0x17c8
+	unsigned char m_col1[4];	// 0x17cc
+};
+
+extern SkyPlayerView_1019d0a0 *g_104a0d50;
+extern ConVar g_106194a0;
+extern ConVar g_106193c8;
+void sub_101090a0(const float *angles, Vector *forward, Vector *right, Vector *up);
+
+// TARGET: sub_1019d0a0
+void sub_1019d0a0(float *pColor)
+{
+	ScopeTrace trace("::GetSkyboxFogColor", g_102de300, g_102de300);
+	SkyPlayerView_1019d0a0 *pbp = g_104a0d50;
+	if (!pbp)
+		return;
+	const char *psz;
+	if (g_106194a0.m_pParent->vfunc1())
+		psz = g_102de300;
+	else if (g_106194a0.m_nFlags & 0x1000)
+		psz = "FCVAR_NEVER_AS_STRING";
+	else
+	{
+		psz = g_106194a0.m_pParent->m_pszString;
+		if (!psz)
+			psz = g_102de300;
+	}
+	if (g_106193c8.GetInt() && psz)
+	{
+		sscanf(psz, "%f%f%f", &pColor[0], &pColor[1], &pColor[2]);
+	}
+	else if (pbp->m_bFogBlend)
+	{
+		Vector forward;
+		sub_101090a0(pbp->vfunc10(), &forward, 0, 0);
+		Vector &dir = pbp->m_fogDir;
+		dir.NormalizeInPlace();
+		float t = (forward.y * dir.y + forward.z * dir.z + forward.x * dir.x + 1.0) * 0.5;
+		pColor[0] = pbp->m_col1[0] * (1.0f - t) + pbp->m_col0[0] * t;
+		pColor[1] = pbp->m_col1[1] * (1.0f - t) + pbp->m_col0[1] * t;
+		pColor[2] = pbp->m_col1[2] * (1.0f - t) + pbp->m_col0[2] * t;
+	}
+	else
+	{
+		pColor[0] = pbp->m_col0[0];
+		pColor[1] = pbp->m_col0[1];
+		pColor[2] = pbp->m_col0[2];
+	}
+	pColor[0] *= 0.003921569f;
+	pColor[1] *= 0.003921569f;
+	pColor[2] *= 0.003921569f;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019d2e0 size=0xe5
 #include "ScopeTrace.h"
 
