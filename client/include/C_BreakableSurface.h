@@ -52,7 +52,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_unk934;
 	void *m_pMaterialEdge;	// 0x938
 	int m_unk93c;
-	void sub_100b7bf0(class IBrushSurface *pBrushSurface);	// DrawRenderListHighlights
+	void sub_100b7bf0(class IBrushSurface *pBrushSurface);	// DrawRenderList
+	void sub_100b7e60(class IBrushSurface *pBrushSurface);	// DrawRenderListHighlights
 	bool sub_100b80f0(int x, int y);
 	void sub_100b8130(int nWidth, int nHeight);	// UpdateEdgeType: the eight neighbours' solidity picks each edge's style
 	void sub_100b84c0(int nWidth, int nHeight, int nEdge, int nStyle);	// SetupEdge-like
