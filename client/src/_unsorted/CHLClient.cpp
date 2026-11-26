@@ -12,6 +12,171 @@ int CHLClient::vfunc41(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100cb5a0 size=0x3e1
+#include "CHLClient.h"
+#include "engineclient.h"
+#include "CGlobalVarsBase.h"
+#include "CHud.h"
+#include "CInput.h"
+
+typedef void *(*CreateInterfaceFn)(const char *pName, int *pReturnCode);
+
+class IUniformRandomStream;
+class CGaussianRandomStream
+{
+public:
+	__declspec(dllimport) void AttachToStream(IUniformRandomStream *pUniformStream);
+};
+extern CGaussianRandomStream g_104a57a4;
+extern char g_104a57a0[];
+
+struct GameSysView;
+void sub_100dfb70();
+void sub_1010c0a0(float gamma, float texGamma, float brightness, int overbright, bool b3DNow, bool bSSE, bool bSSE2, bool bMMX);
+CreateInterfaceFn sub_10106f30(const char *pszModule);
+void sub_100cd0d0();
+void sub_100df190(void *pAccessor);
+bool sub_10106b70();
+bool sub_10166f20(CreateInterfaceFn factory);
+struct SurfaceFactoryView { virtual void a0(); virtual void a1(); virtual void *vfunc2(const char *pszName); };
+SurfaceFactoryView *sub_101ac8d0();
+void sub_100f3f90(GameSysView *pSystem);
+GameSysView *sub_100dfdf0();
+GameSysView *sub_101666a0();
+GameSysView *sub_100d0640();
+GameSysView *sub_100c0c80();
+void sub_1015f860();
+void sub_100f40e0();
+void sub_1002c3d0();
+void sub_10166f50();
+void sub_1004a980();
+void sub_100c6580();
+bool sub_10118c80(CreateInterfaceFn physicsFactory);
+int sub_1012b820();
+
+struct CUnknown104e0768 { bool sub_10117400(int nSize, void *pMaterials); };
+extern CUnknown104e0768 g_104e0768;
+struct CUnknown105e8668 { void sub_10151a60(); };
+extern CUnknown105e8668 g_105e8668;
+
+struct VInit0 { virtual void vfunc0(); };
+struct VInit13 { virtual void a0(); virtual void vfunc1(); virtual void a2(); virtual void vfunc3(); };
+struct VInit9 { virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void a5(); virtual void a6(); virtual void a7(); virtual void a8(); virtual void vfunc9(int); };
+
+extern void *g_104a581c;
+extern void *g_104a5828;
+extern char *g_102b9060;
+extern GameSysView *g_102b9470;
+extern char g_104a6d28[];
+extern VInit0 *g_102ccd98;
+extern VInit13 *g_105f99d8;
+extern VInit0 *g_102d43d8;
+extern VInit0 *g_102d5238;
+extern VInit9 *g_102c37a0;
+
+int CHLClient::vfunc0(CreateInterfaceFn appSystemFactory, CreateInterfaceFn physicsFactory, CGlobalVarsBase *pGlobals)
+{
+	sub_100dfb70();
+	sub_1010c0a0(2.2f, 2.2f, 0.0f, 2, true, true, true, true);
+	gpGlobals = pGlobals;
+
+	if ((engine = (EngineGlobals::IVEngineClient *)appSystemFactory("VEngineClient006", 0)) == 0)
+		goto failed;
+	if ((modelrender = (EngineGlobals::IVModelRender *)appSystemFactory("VEngineModel006", 0)) == 0)
+		goto failed;
+	if ((effects = (EngineGlobals::IVEfx *)appSystemFactory("VEngineEffects001", 0)) == 0)
+		goto failed;
+	if ((cvar = (EngineGlobals::ICvar *)appSystemFactory("VEngineCvar001", 0)) == 0)
+		goto failed;
+	if ((enginetrace = (EngineGlobals::IEngineTrace *)appSystemFactory("EngineTraceClient003", 0)) == 0)
+		goto failed;
+	if ((render = (EngineGlobals::IVRenderView *)appSystemFactory("VEngineRenderView008", 0)) == 0)
+		goto failed;
+	if ((debugoverlay = (EngineGlobals::IVDebugOverlay *)appSystemFactory("VDebugOverlay002", 0)) == 0)
+		goto failed;
+	if ((materials = (EngineGlobals::IMaterialSystem *)appSystemFactory("VMaterialSystem074", 0)) == 0)
+		goto failed;
+	if ((engineCache = (EngineGlobals::IVEngineCache *)appSystemFactory("VEngineCache001", 0)) == 0)
+		goto failed;
+	if ((modelinfo = (EngineGlobals::IVModelInfoClient *)appSystemFactory("VModelInfoClient001", 0)) == 0)
+		goto failed;
+	if ((netgraph = (EngineGlobals::INetGraph *)appSystemFactory("VNETGRAPH001", 0)) == 0)
+		goto failed;
+	if ((enginevgui = (EngineGlobals::IEngineVGui *)appSystemFactory("VEngineVGui001", 0)) == 0)
+		goto failed;
+	if ((networkstringtable = (EngineGlobals::INetworkStringTableClient *)appSystemFactory("VEngineClientStringTable001", 0)) == 0)
+		goto failed;
+	if ((partition = (EngineGlobals::ISpatialPartition *)appSystemFactory("SpatialPartition001", 0)) == 0)
+		goto failed;
+	if ((shadowmgr = (EngineGlobals::IShadowMgr *)appSystemFactory("VEngineShadowMgr001", 0)) == 0)
+		goto failed;
+	if ((staticpropmgr = (EngineGlobals::IStaticPropMgrClient *)appSystemFactory("StaticPropMgrClient001", 0)) == 0)
+		goto failed;
+	if ((enginesound = (EngineGlobals::IEngineSound *)appSystemFactory("IEngineSoundClient003", 0)) == 0)
+		goto failed;
+	if ((g_104a581c = appSystemFactory("TParticleManager004", 0)) == 0)
+		goto failed;
+	if ((filesystem = (EngineGlobals::IFileSystem *)appSystemFactory("VFileSystem005", 0)) == 0)
+		goto failed;
+	if ((enginerandom = (EngineGlobals::IUniformRandomStream *)appSystemFactory("VEngineRandom001", 0)) == 0)
+		goto failed;
+
+	{
+		CreateInterfaceFn gameUIFactory = sub_10106f30("gameui.dll");
+		if (gameUIFactory)
+			g_104a5828 = gameUIFactory("GameUI005", 0);
+	}
+
+	if ((g_pMaterialSystemHardwareConfig = (EngineGlobals::IMaterialSystemHardwareConfig *)materials->vfunc8("MaterialSystemHardwareConfig010", 0)) == 0)
+		goto failed;
+
+	sub_100cd0d0();
+	g_104a57a4.AttachToStream((IUniformRandomStream *)enginerandom);
+	sub_100df190(g_104a57a0);
+
+	if (!sub_10106b70())
+		goto failed;
+	if (!g_104e0768.sub_10117400(0x2000, materials))
+		goto failed;
+	if (!sub_10166f20(appSystemFactory))
+		goto failed;
+	if ((g_pMatSystemSurface = (EngineGlobals::IMatSystemSurface *)sub_101ac8d0()->vfunc2("MatSystemSurface001")) == 0)
+		goto failed;
+
+	sub_100f3f90(g_102b9060 ? (GameSysView *)(g_102b9060 + 4) : 0);
+	sub_100f3f90(sub_100dfdf0());
+	sub_100f3f90(sub_101666a0());
+	sub_100f3f90(sub_100d0640());
+	sub_100f3f90(g_102b9470);
+	sub_100f3f90((GameSysView *)g_104a6d28);
+	sub_100f3f90(sub_100c0c80());
+
+	g_102ccd98->vfunc0();
+	sub_1015f860();
+	g_105e8668.sub_10151a60();
+	gHUD.sub_100f06d0();
+	g_105f99d8->vfunc1();
+	sub_100f40e0();
+	g_105f99d8->vfunc3();
+	g_102d43d8->vfunc0();
+	g_102d5238->vfunc0();
+	sub_1002c3d0();
+	input->Init_All();
+	sub_10166f50();
+	sub_1004a980();
+	sub_100c6580();
+
+	if (sub_10118c80(physicsFactory))
+	{
+		g_102c37a0->vfunc9(sub_1012b820());
+		return true;
+	}
+
+failed:
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100cb990 size=0x88
 #include "CInput.h"
 #include "CHLClient.h"

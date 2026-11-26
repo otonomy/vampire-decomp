@@ -4729,6 +4729,7 @@
 0x100cb560 func   ?sub_100cb560@@YAHXZ sub_100cb560
 0x100cb570 func   ?sub_100cb570@CUnknown100cb570@@QAEPAXXZ CUnknown100cb570::sub_100cb570
 0x100cb590 func   ?vfunc41@CHLClient@@UAEHH@Z CHLClient::vfunc41
+0x100cb5a0 func   ?vfunc0@CHLClient@@UAEHP6APAXPBDPAH@Z2PAVCGlobalVarsBase@@@Z CHLClient::vfunc0
 0x100cb990 func   ?vfunc1@CHLClient@@UAEXXZ CHLClient::vfunc1
 0x100cba20 func   ?vfunc6@CHLClient@@UAEHXZ CHLClient::vfunc6
 0x100cba40 func   ?vfunc7@CHLClient@@UAEHHH@Z CHLClient::vfunc7
