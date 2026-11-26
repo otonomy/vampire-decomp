@@ -1573,6 +1573,7 @@
 0x10020b30 func   ?_C_ItemGSewerBook1_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGSewerBook1_CreateObject
 0x10020bf0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGSewerBook1@@@Z ClientClassInit
 0x10020c80 func   ?vfunc17@C_ItemKGalleryNoirKey@@UAEHXZ C_ItemKGalleryNoirKey::vfunc17
+0x10020cc0 func   ?sub_10020cc0@@YAHXZ sub_10020cc0
 0x10020d10 func   ??_GC_ItemKGalleryNoirKey@@UAEPAXI@Z ??_GC_ItemKGalleryNoirKey@@UAEPAXI@Z
 0x10020d30 func   ?vfunc16@C_ItemKGalleryNoirKey@@UAEHXZ C_ItemKGalleryNoirKey::vfunc16
 0x10020d40 func   ?vfunc15@C_ItemKGalleryNoirKey@@UAEHXZ C_ItemKGalleryNoirKey::vfunc15
