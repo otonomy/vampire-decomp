@@ -19,7 +19,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	bool sub_1004e220(const char *);
 	virtual void vfunc114(const char *);
 	virtual void vfunc115();
-	int m_unk174; int m_unk178; int m_unk17c; int m_unk180; int m_unk184; int m_unk188; int m_unk18c;
+	int m_unk174; int m_unk178; int m_unk17c; int m_unk180; int m_unk184; int m_unk188; float m_flStartTime;
 	void *m_pMem; int m_allocCount; int m_growSize; int m_size; void *m_pElements;
 	int m_unk1a4; int m_unk1a8; int m_unk1ac; int m_unk1b0; int m_unk1b4; int m_unk1b8; int m_unk1bc; int m_unk1c0;
 };
