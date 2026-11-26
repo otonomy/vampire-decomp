@@ -4,9 +4,43 @@
 
 class Range;
 
+#include "string_t.h"
+#include "CUnknown101ddc30.h"
+#include "CUnknown101dce30.h"
+
 class CUnknown101df000	// one 0xac byte action record
 {
 public:
+	bool m_bInUse;	// 0x00
+	int m_n04;	// 0x04: Dmg_Health range (min, max)
+	int m_n08;
+	int m_n0c;	// 0x0c: Dmg_Health_Src range
+	int m_n10;
+	int m_n14;	// 0x14: Blood_Suck range
+	int m_n18;
+	bool m_bClearCopyProp;	// 0x1c
+	bool m_bGibOnDeath;	// 0x1d
+	bool m_bAddToComfort;	// 0x1e
+	int m_n20;	// 0x20: Heal_Blood range
+	int m_n24;
+	int m_n28;	// 0x28: Health_Buffer range
+	int m_n2c;
+	int m_nHealthBufferBlockPercent;	// 0x30
+	string_t m_iszSchedule;	// 0x34: AI_Schedule
+	int m_nPlayerAnim;	// 0x38: Player_Anim activity
+	int m_nGestureAnim;	// 0x3c
+	float m_flGestureDuration;	// 0x40
+	string_t m_iszExpression;	// 0x44
+	int m_nFlinch;	// 0x48
+	int m_nKnockback;	// 0x4c
+	CUnknown101ddc30 m_casting;	// 0x50: Trigger_Casting
+	CUnknown101dce30 m_effectInstant;	// 0x5c: Effect_Tgt_Instant
+	CUnknown101dce30 m_effectHit;	// 0x78: Effect_Tgt_Hit
+	CUnknown101dc5a0 m_sounds;	// 0x94
+	int m_na4;
+	int m_na8;
+
+	bool sub_10148350(CUnknown101dc5a0Keys *pKV, const char *pszName);	// loads the record ("HitInfo") from the sub key pszName of pKV (the key itself when null or empty); false without a key
 	void sub_101485b0(const char *pszLabel);	// stub 0x100102ad: prints the record under that label when it is in use
 		// stub 0x1000852b: loads the record from the sub key of that name of pKV (a null name: the key itself)
 };
