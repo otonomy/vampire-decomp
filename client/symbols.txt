@@ -1221,6 +1221,7 @@
 0x10019d30 func   ?_C_ItemGJumblesFlyer_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGJumblesFlyer_CreateObject
 0x10019df0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGJumblesFlyer@@@Z ClientClassInit
 0x10019e80 func   ?vfunc17@C_ItemGLarryBriefcase@@UAEHXZ C_ItemGLarryBriefcase::vfunc17
+0x10019ec0 func   ?sub_10019ec0@@YAHXZ sub_10019ec0
 0x10019f10 func   ??_GC_ItemGLarryBriefcase@@UAEPAXI@Z ??_GC_ItemGLarryBriefcase@@UAEPAXI@Z
 0x10019f30 func   ?vfunc16@C_ItemGLarryBriefcase@@UAEHXZ C_ItemGLarryBriefcase::vfunc16
 0x10019f40 func   ?vfunc15@C_ItemGLarryBriefcase@@UAEHXZ C_ItemGLarryBriefcase::vfunc15

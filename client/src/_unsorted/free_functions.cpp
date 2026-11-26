@@ -10614,6 +10614,32 @@ template <> int ClientClassInit<DT_ItemGJumblesFlyer::ignored>(DT_ItemGJumblesFl
 }
 // END FUNCTION
 
+// FUNCTION: 0x10019ec0 size=0x45
+namespace lifted {
+extern char g_1020ac14;
+extern char g_1020ac28;
+extern char g_1020ac64;
+extern char g_1020ac9c;
+extern char g_1020acf4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10019ec0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1020acf4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020ac9c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1020ac64;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1020ac28;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1020ac14;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10019f50 size=0x6
 namespace lifted {
 extern char g_102e7268;
