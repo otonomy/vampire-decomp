@@ -8622,6 +8622,7 @@
 0x1016edf0 func   ?sub_1016edf0@VBarterUI@@QAEXXZ VBarterUI::sub_1016edf0
 0x1016eea0 func   ?sub_1016eea0@CUnknown1016eea0@@QAEHH@Z CUnknown1016eea0::sub_1016eea0
 0x1016ef00 func   ?sub_1016ef00@@YAXXZ sub_1016ef00
+0x1016ef40 func   ?sub_1016ef40@VBarterUI@@QAEXXZ VBarterUI::sub_1016ef40
 0x1016f0c0 func   ?sub_1016f0c0@VBarterView@@QAEXXZ VBarterView::sub_1016f0c0
 0x1016f380 func   ?sub_1016f380@Panel_1016f380@@QAEXXZ Panel_1016f380::sub_1016f380
 0x1016f470 func   ?sub_1016f470@CUnknown1016f470@@QAEHXZ CUnknown1016f470::sub_1016f470
