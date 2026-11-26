@@ -98572,6 +98572,204 @@ int sub_1013bab0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013bb00 size=0x728
+#include "bf_write.h"
+#include "CUserCmd.h"
+
+inline void WriteOneBit_1013bb00(bf_write *buf, int nValue)
+{
+	if (!buf->sub_10104360(1))
+		buf->sub_10104380(nValue);
+}
+
+inline void WriteUBitLong_1013bb00(bf_write *buf, unsigned int curData, int numbits)
+{
+	if (buf->m_iCurBit + numbits > buf->m_nDataBits) {
+		buf->m_iCurBit = buf->m_nDataBits;
+		buf->m_bOverflow = true;
+	} else {
+		int iCurBit = buf->m_iCurBit;
+		int iDWord = iCurBit >> 5;
+		int iCurBitMasked = iCurBit & 31;
+		buf->m_pData[iDWord] &= g_104871b0[iCurBitMasked][numbits];
+		buf->m_pData[iDWord] |= curData << iCurBitMasked;
+		int nBitsWritten = 32 - iCurBitMasked;
+		if (nBitsWritten < numbits) {
+			iCurBitMasked = (iCurBit + nBitsWritten) & 31;
+			buf->m_pData[iDWord + 1] &= g_104871b0[iCurBitMasked][numbits - nBitsWritten];
+			buf->m_pData[iDWord + 1] |= (curData >> nBitsWritten) << iCurBitMasked;
+		}
+		buf->m_iCurBit += numbits;
+	}
+}
+
+void sub_1013bb00(bf_write *buf, CUserCmd *to, CUserCmd *from)
+{
+	if (to->command_number != from->command_number + 1)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		WriteUBitLong_1013bb00(buf, to->command_number, 32);
+	}
+	else
+	{
+		WriteOneBit_1013bb00(buf, 0);
+	}
+
+	if (to->viewangles.x != from->viewangles.x)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		buf->sub_10086f10(to->viewangles.x, 16);
+	}
+	else
+	{
+		WriteOneBit_1013bb00(buf, 0);
+	}
+
+	if (to->viewangles.y != from->viewangles.y)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		buf->sub_10086f10(to->viewangles.y, 16);
+	}
+	else
+	{
+		WriteOneBit_1013bb00(buf, 0);
+	}
+
+	if (to->viewangles.z != from->viewangles.z)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		buf->sub_10086f10(to->viewangles.z, 8);
+	}
+	else
+	{
+		WriteOneBit_1013bb00(buf, 0);
+	}
+
+	if (to->forwardmove != from->forwardmove)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		buf->sub_100866b0((int)to->forwardmove, 16);
+	}
+	else
+	{
+		WriteOneBit_1013bb00(buf, 0);
+	}
+
+	if (to->sidemove != from->sidemove)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		buf->sub_100866b0((int)to->sidemove, 16);
+	}
+	else
+	{
+		WriteOneBit_1013bb00(buf, 0);
+	}
+
+	if (to->upmove != from->upmove)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		buf->sub_100866b0((int)to->upmove, 16);
+	}
+	else
+	{
+		WriteOneBit_1013bb00(buf, 0);
+	}
+
+	if (to->buttons != from->buttons)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		WriteUBitLong_1013bb00(buf, to->buttons, 32);
+	}
+	else
+	{
+		WriteOneBit_1013bb00(buf, 0);
+	}
+
+	if (to->m_n34 != from->m_n34)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		WriteUBitLong_1013bb00(buf, to->m_n34, 32);
+	}
+	else
+	{
+		WriteOneBit_1013bb00(buf, 0);
+	}
+
+	if (to->impulse != from->impulse)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		WriteUBitLong_1013bb00(buf, to->impulse, 8);
+	}
+	else
+	{
+		WriteOneBit_1013bb00(buf, 0);
+	}
+
+	WriteUBitLong_1013bb00(buf, to->msec, 8);
+	WriteOneBit_1013bb00(buf, to->m_b44);
+	WriteOneBit_1013bb00(buf, to->m_b45);
+
+	if (to->m_fl08 != from->m_fl08)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		buf->sub_10087210((int)to->m_fl08, 8, true);
+	}
+	else
+	{
+		WriteOneBit_1013bb00(buf, 0);
+	}
+
+	if (to->m_b47 != from->m_b47)
+	{
+		WriteOneBit_1013bb00(buf, 1);
+		buf->sub_10087210(to->m_b47, 8, true);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+
+	if (to->m_b46 != from->m_b46)
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087210(to->m_b46, 8, true);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+
+	if (to->m_n3c != from->m_n3c)
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087210(to->m_n3c, 11, true);
+		if (to->m_n40 != from->m_n40)
+		{
+			buf->sub_101043d0(1);
+			buf->sub_10087210(to->m_n40, 6, true);
+		}
+		else
+		{
+			buf->sub_101043d0(0);
+		}
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+
+	if (to->m_n48 != from->m_n48)
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087210(to->m_n48, 32, true);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013c790 size=0x19
 #include "Vector.h"
 Vector &Vector::sub_1013c790(const Vector &v)
