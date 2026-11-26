@@ -1493,6 +1493,7 @@
 0x1001f230 func   ?_C_ItemGIdolElephant_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGIdolElephant_CreateObject
 0x1001f2f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGIdolElephant@@@Z ClientClassInit
 0x1001f380 func   ?vfunc17@C_ItemGGarysCD@@UAEHXZ C_ItemGGarysCD::vfunc17
+0x1001f3c0 func   ?sub_1001f3c0@@YAHXZ sub_1001f3c0
 0x1001f410 func   ??_GC_ItemGGarysCD@@UAEPAXI@Z ??_GC_ItemGGarysCD@@UAEPAXI@Z
 0x1001f430 func   ?vfunc16@C_ItemGGarysCD@@UAEHXZ C_ItemGGarysCD::vfunc16
 0x1001f440 func   ?vfunc15@C_ItemGGarysCD@@UAEHXZ C_ItemGGarysCD::vfunc15
