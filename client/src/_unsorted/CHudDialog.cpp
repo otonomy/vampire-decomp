@@ -1,6 +1,85 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x10052980 size=0x50e
+#include "CHudDialog.h"
+#include "CHUDSprite.h"
+#include "ScopeTrace.h"
+
+char *sub_1018c870(const char *);
+int sub_100cd0f0();
+int sub_100cd100();
+extern int g_10285ad0;
+extern CHudDialog *g_103ee138;
+
+struct DlgScheme_10052980
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual int GetFont(const char *name);
+	virtual void v5();
+	virtual DlgColor GetColor(const char *name);
+};
+
+CHudDialog::CHudDialog(int a)
+	: CManagedHudElement(a, (int)"VDialog"), m_n178(0), m_n17c(0), m_n180(0), m_n184(0), m_n188(0)
+{
+	ScopeTrace st("CHudDialog::CHudDialog", g_102de300);
+	sub_100545d0();
+	m_n194 = (int)(832 * (sub_100cd100() / 1024.0));
+	m_n198 = (int)(163 * (sub_100cd0f0() / 768.0));
+	m_n19c = (int)(22 * (sub_100cd0f0() / 768.0));
+	m_n1a0 = (sub_100cd100() - m_n194) / 2;
+	sub_101a99f0(1);
+	vfunc64(1);
+	vfunc63(0);
+	int y = sub_100cd0f0() - m_n19c;
+	sub_101a9890(m_n1a0, y - m_n198);
+	sub_101a98f0(m_n194, m_n198);
+	DlgScheme_10052980 *pScheme = (DlgScheme_10052980 *)sub_101ac830();
+	m_nFonts[0] = pScheme->GetFont(sub_1018c870("Dlg_Base"));
+	m_nFonts[1] = pScheme->GetFont(sub_1018c870("Dlg_Base"));
+	m_nFonts[2] = pScheme->GetFont(sub_1018c870("Dlg_Base"));
+	m_nFonts[3] = pScheme->GetFont(sub_1018c870("Dlg_Persuasion"));
+	m_nFonts[4] = pScheme->GetFont(sub_1018c870("Dlg_Seduction"));
+	m_nFonts[5] = pScheme->GetFont(sub_1018c870("Dlg_Dominate"));
+	m_nFonts[6] = pScheme->GetFont(sub_1018c870("Dlg_Dementation"));
+	m_nFonts[7] = pScheme->GetFont(sub_1018c870("Dlg_Intimidate"));
+	m_aColors[0] = pScheme->GetColor("Dlg_Base");
+	m_aColors[1] = pScheme->GetColor("Dlg_Persuasion");
+	m_aColors[2] = pScheme->GetColor("Dlg_Seduction");
+	m_aColors[3] = pScheme->GetColor("Dlg_Dominate");
+	m_aColors[4] = pScheme->GetColor("Dlg_Dementation");
+	m_aColors[5] = pScheme->GetColor("Dlg_Intimidate");
+	m_colError = pScheme->GetColor("Dlg_Error");
+	m_colFillBkg = pScheme->GetColor("Dlg_FillBkg");
+	g_10285ad0 = m_colFillBkg.c[3];
+	for (int y2 = 0; y2 < 2; y2++)
+	{
+		for (int x = 0; x < 2; x++)
+		{
+			m_pCorners[y2][x] = new CHUDSprite("hud/DialogFrmCrnrs", x * 64, y2 * 64, 64, 64, 128, 128);
+			m_pEdges[y2][x] = new CHUDSprite("hud/DialogFrmEdgs", x * 8, y2 * 8, 8, 8, 16, 16);
+		}
+	}
+	m_n18c = 0;
+	sub_10054bd0(true);
+	m_col5a70.c[0] = 230;
+	m_col5a70.c[1] = 180;
+	m_col5a70.c[2] = 0;
+	m_col5a74.c[1] = 255;
+	m_col5a74.c[2] = 255;
+	m_col5a74.c[0] = 255;
+	m_col5a78.c[0] = 155;
+	m_col5a78.c[1] = 110;
+	m_col5a78.c[2] = 0;
+	m_col5a7c.c[1] = 170;
+	m_col5a7c.c[2] = 170;
+	m_col5a7c.c[0] = 170;
+	g_103ee138 = this;
+	m_b190 = true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10052eb0 size=0x1e
 #include "CHudDialog.h"
 
