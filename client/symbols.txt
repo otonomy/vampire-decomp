@@ -16638,6 +16638,7 @@
 0x1027b384 data   ??_R0?AVClientModeHLNormal@@@8 ??_R0?AVClientModeHLNormal@@@8
 0x1027b734 data   ??_R0?AVITraceFilter@@@8 ??_R0?AVITraceFilter@@@8
 0x1027b750 data   ??_R0?AVC_TraceFilterNoCharacterCollide@@@8 ??_R0?AVC_TraceFilterNoCharacterCollide@@@8
+0x1027ba58 data   ?input@@3PAVCInput@@A input
 0x1027ba5c data   ??_R0?AVIInput@@@8 ??_R0?AVIInput@@@8
 0x1027ba74 data   ??_R0?AVCInput@@@8 ??_R0?AVCInput@@@8
 0x1027ba8c data   ??_R0?AVCHLInput@@@8 ??_R0?AVCHLInput@@@8
