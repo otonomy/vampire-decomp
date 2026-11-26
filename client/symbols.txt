@@ -2653,6 +2653,7 @@
 0x1004f0c0 func   ?sub_1004f0c0@CHudStatSound@@QAEXHMHH@Z CHudStatSound::sub_1004f0c0
 0x1004f270 func   ?vfunc114@CDiscipline@@UAEXHH@Z CDiscipline::vfunc114
 0x1004f2e0 func   ?vfunc107@CDiscipline@@UAE_NXZ CDiscipline::vfunc107
+0x1004f750 func   ?sub_1004f750@CUnknown1004f750@@QAEDXZ CUnknown1004f750::sub_1004f750
 0x1004f760 func   ?sub_1004f760@@YAXH@Z sub_1004f760
 0x1004f810 func   ?sub_1004f810@@YAHXZ sub_1004f810
 0x1004f830 func   ?sub_1004f830@@YADXZ sub_1004f830

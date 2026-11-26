@@ -21321,6 +21321,14 @@ void CHudStatSound::sub_1004f0c0(int stat, float volume, int pitch, int flags)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004f750 size=0x4
+struct CUnknown1004f750 { char sub_1004f750(); };
+char CUnknown1004f750::sub_1004f750()
+{
+    return *(char *)((char *)this + 0x34);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004f760 size=0xa3
 #include "C_BasePlayer.h"
 #include "CVStatList_t.h"
