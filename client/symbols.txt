@@ -10431,6 +10431,7 @@
 0x101c96d0 func   ?vfunc81@MenuButton@vgui2@@UAEXXZ vgui2::MenuButton::vfunc81
 0x101c96f0 func   ?vfunc170@MenuButton@vgui2@@UAEHXZ vgui2::MenuButton::vfunc170
 0x101c9740 func   ?vfunc171@MenuButton@vgui2@@UAEHH@Z vgui2::MenuButton::vfunc171
+0x101c9750 func   ?vfunc147@MenuButton@vgui2@@UAEHXZ vgui2::MenuButton::vfunc147
 0x101c9a30 func   ?vfunc85@MenuButton@vgui2@@UAEXXZ vgui2::MenuButton::vfunc85
 0x101c9af0 func   ?vfunc102@MenuButton@vgui2@@UAEHXZ vgui2::MenuButton::vfunc102
 0x101c9b00 func   ?sub_101c9b00@ImageList@@QAEPAU1@D@Z ImageList::sub_101c9b00
