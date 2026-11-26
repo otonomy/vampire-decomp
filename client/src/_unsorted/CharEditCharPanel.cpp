@@ -127,6 +127,125 @@ void CharEditCharPanel::vfunc101()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10177b20 size=0x37a
+#include "CharEditCharPanel.h"
+#include "CharEditPanel.h"
+#include "vgui2__Label.h"
+#include "vgui2__TextEntry.h"
+#include "C_BasePlayer.h"
+#include "CHud.h"
+#include "engineclient.h"
+#include "CStatDefault3List.h"
+#include "StatOwner2.h"
+
+struct ClanRec1014e6d0 { int m_0; int m_4; const char *m_pszName; const char *m_pszDesc; };
+struct CUnknown101f0e50 { ClanRec1014e6d0 *sub_1014e6d0(int id); };
+extern CUnknown101f0e50 g_105e8544;
+extern CStatDefault3List g_105e74fc;
+extern int g_102d0944;
+
+void sub_10171400();
+void sub_10171390();
+
+#define F(type, off) (*(type *)((char *)this + (off)))
+#define LBL (F(vgui2::Label *, 0x80))
+#define TXT (F(vgui2::TextEntry *, 0x84))
+
+static inline const char *SafeStr(const char *const &s)
+{
+	return s ? s : "";
+}
+
+void CharEditCharPanel::vfunc3()
+{
+	if (!engine->IsInGame())
+		return;
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return;
+	if (*(int *)((char *)pPlayer + 0x14c0) != g_102d0944)
+	{
+		F(bool, 0xc4) = true;
+		g_102d0944 = *(int *)((char *)pPlayer + 0x14c0);
+		sub_10171400();
+		sub_10171390();
+	}
+	if (!F(bool, 0xc4))
+		return;
+
+	if (!((CharEditPanel *)gHUD.FindElement("CharEditPanel"))->sub_10172ac0())
+	{
+		switch (F(int, 0xc0))
+		{
+		case 0:
+			LBL->vfunc108(g_105e74fc.sub_1013ffa0(pPlayer->sub_1008ebb0()));
+			TXT->vfunc107(SafeStr(g_105e74fc.sub_10140000(pPlayer->sub_1008ebb0())->m_pszDisplayName));
+			break;
+		case 1:
+			LBL->vfunc108(g_105e74fc.sub_1013ffa0(pPlayer->sub_1008ebb0()));
+			TXT->vfunc107(SafeStr(g_105e74fc.sub_10140000(pPlayer->sub_1008ebb0())->m_pszDisplayName));
+			break;
+		case 2:
+			if (*(int *)((char *)pPlayer + 0x14c0) != -1)
+			{
+				LBL->vfunc108(SafeStr(g_105e8544.sub_1014e6d0(*(int *)((char *)pPlayer + 0x14c0))->m_pszName));
+				TXT->vfunc107(SafeStr(g_105e8544.sub_1014e6d0(*(int *)((char *)pPlayer + 0x14c0))->m_pszDesc));
+			}
+			else
+			{
+				LBL->vfunc108("");
+				TXT->vfunc107("");
+			}
+			break;
+		default:
+			LBL->vfunc108("");
+			TXT->vfunc107("");
+			break;
+		}
+	}
+	else
+	{
+		switch (F(int, 0xc0))
+		{
+		case 0:
+			LBL->vfunc108(g_105f93c0.sub_1015f2f0("KineKindred")->sub_1015ecd0(F(unsigned char, 0xbc)));
+			TXT->vfunc107(g_105f93c0.sub_1015f2f0("KineKindredDescriptions")->sub_1015ecd0(F(unsigned char, 0xbc)));
+			break;
+		case 1:
+			LBL->vfunc108(g_105f93c0.sub_1015f2f0("KineKindred")->sub_1015ecd0(F(unsigned char, 0xbc)));
+			TXT->vfunc107(g_105f93c0.sub_1015f2f0("KineKindredDescriptions")->sub_1015ecd0(F(unsigned char, 0xbc)));
+			break;
+		case 2:
+			if (*(int *)((char *)pPlayer + 0x14c0) != -1)
+			{
+				LBL->vfunc108(SafeStr(g_105e8544.sub_1014e6d0(*(int *)((char *)pPlayer + 0x14c0))->m_pszName));
+				TXT->vfunc107(SafeStr(g_105e8544.sub_1014e6d0(*(int *)((char *)pPlayer + 0x14c0))->m_pszDesc));
+			}
+			else
+			{
+				LBL->vfunc108("");
+				TXT->vfunc107("");
+			}
+			break;
+		default:
+			LBL->vfunc108("");
+			TXT->vfunc107("");
+			break;
+		}
+	}
+
+	TXT->vfunc101();
+	int nLines = TXT->sub_101b1c70();
+	if (TXT->sub_101b16e0() > nLines)
+		TXT->vfunc140(1);
+	else
+		TXT->vfunc140(0);
+	TXT->vfunc101();
+	TXT->vfunc49();
+	F(bool, 0xc4) = false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10177ef0 size=0x16
 #define V8(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7();
 struct O_10177ef0 {

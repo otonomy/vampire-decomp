@@ -8821,6 +8821,7 @@
 0x10177aa0 func   ?vfunc123@CharEditCharPanel@@UAEXXZ CharEditCharPanel::vfunc123
 0x10177ad0 func   ?vfunc21@CharEditCharPanel@@UAEHH@Z CharEditCharPanel::vfunc21
 0x10177b00 func   ?vfunc101@CharEditCharPanel@@UAEXXZ CharEditCharPanel::vfunc101
+0x10177b20 func   ?vfunc3@CharEditCharPanel@@UAEXXZ CharEditCharPanel::vfunc3
 0x10177ea0 func   ?sub_10177ea0@@YAXXZ sub_10177ea0
 0x10177eb0 func   ?sub_10177eb0@CUnknown10177eb0@@QAEHXZ CUnknown10177eb0::sub_10177eb0
 0x10177ed0 func   ?sub_10177ed0@CUnknown10177ed0@@QAEHXZ CUnknown10177ed0::sub_10177ed0
