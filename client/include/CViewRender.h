@@ -20,6 +20,7 @@ public:
 	void sub_1019add0(int, int, int);
 	void sub_1019ab90(bool, int, int, int);
     void sub_10191710();
+    void sub_1019a560(int unused);	// "CViewRender::DrawObfuscatedEntities": draws the obfuscated model (+0x404) of each entity in the handle list at +0x464 with the local player's blend, then purges the list
     void CopyViewModelInfoToEntities();
     int sub_1018fab0();
     int sub_1018fb10();
