@@ -49673,6 +49673,88 @@ void SndscapeX::sub_100c1310(CKeyValuesX *pPlayLooping, const SubSoundscapeParam
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c1520 size=0x218
+#include "CKeyValuesX.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+extern "C" __declspec(dllimport) int __cdecl Q_strcasecmp(const char *, const char *);
+struct interval_x { float start; float range; };
+interval_x sub_10107010(const char *pString);
+struct SubSoundscapeParamsX { int pad0; float m_flVolume; int m_nStart; int m_nOverride; int m_nDefault; };
+struct Pos7 { int v[3]; };
+struct T64
+{
+	Pos7 m_pos;
+	int m_unk0c;
+	interval_x time;
+	interval_x volume;
+	interval_x pitch;
+	interval_x attenuation;
+	float masterVolume;
+	int waveCount;
+	bool isAmbient;
+	CKeyValuesX *pWaves;
+};
+struct CSoundList { int sub_100c1bc0(const T64 &); };
+struct SndscapeX
+{
+	char pad[0x1c];
+	Pos7 m_Positions[8];
+	void sub_100c1520(CKeyValuesX *pKey, const SubSoundscapeParamsX &params);
+};
+
+void SndscapeX::sub_100c1520(CKeyValuesX *pPlayRandom, const SubSoundscapeParamsX &params)
+{
+	T64 rs;
+	memset(&rs, 0, sizeof(rs));
+	int positionIndex = -1;
+	rs.masterVolume = params.m_flVolume;
+	CKeyValuesX *pKey = pPlayRandom->sub_101283a0();
+	while (pKey)
+	{
+		if (!Q_strcasecmp(pKey->sub_10127c70(), "volume"))
+			rs.volume = sub_10107010(pKey->sub_10128590(0, ""));
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "pitch"))
+			rs.pitch = sub_10107010(pKey->sub_10128590(0, ""));
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "attenuation"))
+			rs.attenuation = sub_10107010(pKey->sub_10128590(0, ""));
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "time"))
+			rs.time = sub_10107010(pKey->sub_10128590(0, ""));
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "rndwave"))
+		{
+			rs.pWaves = pKey->sub_101283a0();
+			rs.waveCount = 0;
+			for (CKeyValuesX *pWave = rs.pWaves; pWave; pWave = pWave->sub_101283b0())
+				rs.waveCount++;
+		}
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "position"))
+			positionIndex = pKey->sub_101284c0(0, 0) + params.m_nStart;
+		pKey = pKey->sub_101283b0();
+	}
+	if (positionIndex < 0)
+		positionIndex = params.m_nDefault;
+	else if (params.m_nOverride >= 0)
+		positionIndex = params.m_nOverride;
+	if (rs.waveCount)
+	{
+		if (positionIndex < 0)
+		{
+			rs.isAmbient = true;
+			((CSoundList *)this)->sub_100c1bc0(rs);
+		}
+		else if (positionIndex <= 31 && (*(int *)((char *)this + 0x50) & (1 << positionIndex)))
+		{
+			rs.isAmbient = false;
+			const Pos7 &p = m_Positions[positionIndex];
+			rs.m_pos.v[0] = p.v[0];
+			rs.m_pos.v[1] = p.v[1];
+			rs.m_pos.v[2] = p.v[2];
+			((CSoundList *)this)->sub_100c1bc0(rs);
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c18e0 size=0x20
 namespace lifted {
 extern char g_104d4970;
