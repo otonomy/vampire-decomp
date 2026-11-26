@@ -77,7 +77,7 @@ bool CDataObjectAccessSystem::vfunc0()
 		((STView_1011b0d0 *)tbuf)->sub_1011b0d0("CDataObjectAccessSystem::AddDataAccessor", g_102de300, g_102de300);
 		if (!m_data[2])
 			m_data[2] = q;
-		(*g_101e3128)--;
+		(g_ScopeTraceStackDepth)--;
 	}
 	p = (RawInst_100 *)operator new(0x28);
 	if (p)
@@ -95,9 +95,7 @@ bool CDataObjectAccessSystem::vfunc0()
 // END FUNCTION
 
 // FUNCTION: 0x1011b150 size=0x77
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 struct IObj { virtual ~IObj(); };
 struct Sys {
@@ -107,15 +105,15 @@ struct Sys {
 
 void __fastcall sub_1011b150(Sys *self)
 {
-    g_101e3124[*g_101e3128].a = "CDataObjectAccessSystem::Shutdown";
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CDataObjectAccessSystem::Shutdown";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     for (int i = 0; i < 32; i++) {
         delete self->m_pObjects[i];
         self->m_pObjects[i] = 0;
     }
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 

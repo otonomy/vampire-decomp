@@ -23340,23 +23340,21 @@ void CHUDSprite::sub_1005c3b0(int a, int b, int c, int d, int e)
 // END FUNCTION
 
 // FUNCTION: 0x1005d6e0 size=0x6a
-struct TraceEnt { const char *a; void *b; void *c; };
-extern int *g_101e3128;
-extern TraceEnt *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_10286d90[];
 extern char g_102de300[];
 struct CVStatInfo_t { char pad[0x4]; int m_hidden; bool sub_1005d6e0(); };
 bool CVStatInfo_t::sub_1005d6e0()
 {
-    g_101e3124[*g_101e3128].a = g_10286d90;
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_10286d90;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     if (m_hidden == 0) {
-        --*g_101e3128;
+        --g_ScopeTraceStackDepth;
         return false;
     }
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     return true;
 }
 // END FUNCTION
@@ -66777,37 +66775,33 @@ void sub_10106bb0()
 // END FUNCTION
 
 // FUNCTION: 0x10106be0 size=0x7c
+#include "ScopeTrace.h"
 #include "InterfaceReg.h"
 
-struct ScopeTrace { const char *name; const char *ent; const char *extra; };
-extern ScopeTrace *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 extern InterfaceReg *g_104d4050;
 
 InterfaceReg *InterfaceReg::sub_10106be0(void *createFn, const char *pName)
 {
     m_pName = pName;
-    g_101e3124[*g_101e3128].name = "InterfaceReg::InterfaceReg";
-    g_101e3124[*g_101e3128].ent = g_102de300;
-    g_101e3124[*g_101e3128].extra = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "InterfaceReg::InterfaceReg";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     m_CreateFn = createFn;
     m_pNext = g_104d4050;
     g_104d4050 = this;
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     return this;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10106c60 size=0xdc
+#include "ScopeTrace.h"
 #include "platform.h"
 #include "InterfaceReg.h"
 #include <string.h>
 
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 extern InterfaceReg *g_104d4050;
 
@@ -66816,30 +66810,28 @@ extern InterfaceReg *g_104d4050;
 // TARGET: CreateInterface
 DLL_EXPORT void *CreateInterface(const char *pName, int *pReturnCode)
 {
-	g_101e3124[*g_101e3128].a = "CreateInterface";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	++*g_101e3128;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CreateInterface";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	++g_ScopeTraceStackDepth;
 	for (InterfaceReg *pCur = g_104d4050; pCur; pCur = pCur->m_pNext) {
 		if (strcmp(pCur->m_pName, pName) == 0) {
 			if (pReturnCode)
 				*pReturnCode = 0;
 			void *pRet = ((void *(*)())pCur->m_CreateFn)();
-			--*g_101e3128;
+			--g_ScopeTraceStackDepth;
 			return pRet;
 		}
 	}
 	if (pReturnCode)
 		*pReturnCode = 1;
-	--*g_101e3128;
+	--g_ScopeTraceStackDepth;
 	return 0;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10106d40 size=0x9b
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 extern "C" __declspec(dllimport) void *__stdcall LoadLibraryA(const char *);
 extern "C" __declspec(dllimport) int Q_snprintf(char *, int, const char *, ...);
@@ -66847,24 +66839,22 @@ extern "C" __declspec(dllimport) int Q_snprintf(char *, int, const char *, ...);
 void *sub_10106d40(const char *name)
 {
     char buf[512];
-    g_101e3124[*g_101e3128].a = "Sys_LoadModule";
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "Sys_LoadModule";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     void *h = LoadLibraryA(name);
     if (!h) {
         Q_snprintf(buf, 512, "%s.dll", name);
         h = LoadLibraryA(buf);
     }
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
     return h;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10106de0 size=0x65
-struct ScopeEnt { const char* a; const void* b; const void* c; };
-extern ScopeEnt* g_101e3124;
-extern int* g_101e3128;
+#include "ScopeTrace.h"
 extern char g_102be184[];
 extern char g_102de300[];
 extern "C" __declspec(dllimport) int __stdcall FreeLibrary(void* h);
@@ -66872,35 +66862,33 @@ extern "C" __declspec(dllimport) int __stdcall FreeLibrary(void* h);
 // TARGET: sub_10106de0
 void sub_10106de0(void* h)
 {
-	g_101e3124[*g_101e3128].a = g_102be184;
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102be184;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	if (h)
 		FreeLibrary(h);
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10106e50 size=0x78
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 extern int (__stdcall *g_101e30d8)(int, const char *);
 
 int sub_10106e50(int hModule)
 {
-    g_101e3124[*g_101e3128].a = "Sys_GetFactory";
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "Sys_GetFactory";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     if (!hModule) {
-        (*g_101e3128)--;
+        (g_ScopeTraceStackDepth)--;
         return 0;
     }
     int r = g_101e30d8(hModule, "CreateInterface");
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
     return r;
 }
 // END FUNCTION
@@ -66919,40 +66907,36 @@ void *sub_10106ed0()
 // END FUNCTION
 
 // FUNCTION: 0x10106f30 size=0x69
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 int sub_10106fa0(const char *a, const char *b);
 
 int sub_10106f30(const char *module)
 {
-    g_101e3124[*g_101e3128].a = "Sys_GetFactory";
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "Sys_GetFactory";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     int r = sub_10106fa0(module, "CreateInterface");
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
     return r;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10106fa0 size=0x6e
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 extern int (__stdcall *g_101e30d4)(const char *, const char *);
 extern int (__stdcall *g_101e30d8)(int);
 
 int sub_10106fa0(const char *a, const char *b)
 {
-    g_101e3124[*g_101e3128].a = "Sys_GetProcAddress";
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "Sys_GetProcAddress";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     int r = g_101e30d8(g_101e30d4(a, b));
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
     return r;
 }
 // END FUNCTION
@@ -74428,22 +74412,20 @@ void C_BaseEntity::sub_1011ac90(BASEPTR thinkFunc, int a, int b)
 // END FUNCTION
 
 // FUNCTION: 0x1011b1d0 size=0x77
+#include "ScopeTrace.h"
 #include "CDataObjectAccessSystem.h"
 
-struct ScopeTrace { const char *name; const char *ent; const char *extra; };
-extern ScopeTrace *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 void CDataObjectAccessSystem::sub_1011b1d0(int index, void *pData)
 {
-    g_101e3124[*g_101e3128].name = "CDataObjectAccessSystem::AddDataAccessor";
-    g_101e3124[*g_101e3128].ent = g_102de300;
-    g_101e3124[*g_101e3128].extra = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CDataObjectAccessSystem::AddDataAccessor";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     if (index >= 0 && index < 32 && m_data[index] == 0)
         m_data[index] = pData;
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
 }
 // END FUNCTION
 
@@ -74617,21 +74599,19 @@ void C_BaseEntity::sub_1011bdf0(C_BaseEntity *other)
 // END FUNCTION
 
 // FUNCTION: 0x1011c140 size=0x6d
-struct TraceEnt { const char *a; void *b; void *c; };
+#include "ScopeTrace.h"
 struct trace21 { int d[21]; };
-extern int *g_101e3128;
-extern TraceEnt *g_101e3124;
 extern char g_102c156c[];
 extern char g_102de300[];
 extern trace21 g_104e0b20;
 trace21 *sub_1011c140(trace21 *out)
 {
-    g_101e3124[*g_101e3128].a = g_102c156c;
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102c156c;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     *out = g_104e0b20;
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     return out;
 }
 // END FUNCTION
@@ -103285,40 +103265,31 @@ int CTraitIdListY::sub_10158250(int a, int b, int c)
 // END FUNCTION
 
 // FUNCTION: 0x10158790 size=0x56
-struct ScopeTraceEntry_t
-{
-	const char *m_pszFunc;
-	const char *m_pszName;
-	const char *m_pszExtra;
-};
+#include "ScopeTrace.h"
 
-extern ScopeTraceEntry_t *g_101e3124;
-extern int *g_101e3128;
 
 // TARGET: sub_10158790
 void sub_10158790()
 {
-	g_101e3124[*g_101e3128].m_pszFunc = "CVDmg_t::~CVDmg_t";
-	g_101e3124[*g_101e3128].m_pszName = "";
-	g_101e3124[*g_101e3128].m_pszExtra = "";
-	(*g_101e3128)++;
-	(*g_101e3128)--;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVDmg_t::~CVDmg_t";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = "";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = "";
+	(g_ScopeTraceStackDepth)++;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
 // FUNCTION: 0x101587f0 size=0xc1
+#include "ScopeTrace.h"
 #include "CVDmg_t.h"
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 
 void CVDmg_t::sub_101587f0(CVDmg_t *pOther)
 {
-    g_101e3124[*g_101e3128].a = "CVDmg_t::Copy";
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVDmg_t::Copy";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     int *d = (int *)this;
     int *s = (int *)pOther;
     d[0] = s[0];
@@ -103330,23 +103301,21 @@ void CVDmg_t::sub_101587f0(CVDmg_t *pOther)
     *(CVDmgBlock16_t *)(d + 9) = *(CVDmgBlock16_t *)(s + 9);
     d[13] = s[13];
     d[16] = s[16];
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
 // FUNCTION: 0x101588c0 size=0x83
+#include "ScopeTrace.h"
 #include "CVDmg_t.h"
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 
 void CVDmg_t::sub_101588c0()
 {
-	g_101e3124[*g_101e3128].a = "CVDmg_t::Null";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVDmg_t::Null";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	int *p = (int *)this;
 	p[0] = -1;
 	p[4] = 0;
@@ -103356,54 +103325,50 @@ void CVDmg_t::sub_101588c0()
 	((CVDmgBlock16_t *)(p + 9))->sub_10160670();
 	p[0xd] = 0;
 	p[0x10] = 0;
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10158950 size=0x6e
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 struct CVDmg_t { int f0; int f4; int f8; int fc; int f10; };
 
 void __fastcall sub_10158950(CVDmg_t *self, int, int a, int b, int c)
 {
-    g_101e3124[*g_101e3128].a = "CVDmg_t::Set";
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVDmg_t::Set";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     self->f0 = a;
     self->f10 = b;
     self->f4 = c;
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10158a80 size=0x7b
+#include "ScopeTrace.h"
 #include "CVDmg_t.h"
-struct TraceEnt { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern TraceEnt *g_101e3124;
 extern char g_102cb38c[];
 extern char g_102de300[];
 int CVDmg_t::sub_10158a80()
 {
-    g_101e3124[*g_101e3128].a = g_102cb38c;
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102cb38c;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     if (m_field08 > 0) {
         int v = m_field08;
-        --*g_101e3128;
+        --g_ScopeTraceStackDepth;
         return v;
     }
     if (m_field08 == 0) {
         int v = m_field04;
-        --*g_101e3128;
+        --g_ScopeTraceStackDepth;
         return v;
     }
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     return 0;
 }
 // END FUNCTION
@@ -103504,87 +103469,79 @@ char *CVDmg_t::sub_10158c80(int flags)
 // END FUNCTION
 
 // FUNCTION: 0x10159020 size=0x5f
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 extern int g_105f938c;
 
 void sub_10159020(int callback)
 {
-	g_101e3124[*g_101e3128].a = "CVDmg_t::SetDmgApplyCallback";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVDmg_t::SetDmgApplyCallback";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	g_105f938c = callback;
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10159080 size=0x83
+#include "ScopeTrace.h"
 #include "CVDmg_t.h"
 
-struct ScopeTrace { const char *name; const char *ent; const char *extra; };
-extern ScopeTrace *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 extern int (*g_105f938c)(CVDmg_t *, int, int);
 
 int CVDmg_t::sub_10159080(int a, int b)
 {
-    g_101e3124[*g_101e3128].name = "CVDmg_t::Apply";
-    g_101e3124[*g_101e3128].ent = g_102de300;
-    g_101e3124[*g_101e3128].extra = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVDmg_t::Apply";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     if (g_105f938c) {
         int r = g_105f938c(this, a, b);
-        --*g_101e3128;
+        --g_ScopeTraceStackDepth;
         return r;
     }
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     return 0;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10159110 size=0x5f
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 extern int g_105f9390;
 
 void sub_10159110(int callback)
 {
-	g_101e3124[*g_101e3128].a = "SetDmgEvadeCallback";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "SetDmgEvadeCallback";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	g_105f9390 = callback;
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10159170 size=0x7e
+#include "ScopeTrace.h"
 #include "CVDmg_t.h"
 
-struct ScopeTrace { const char *name; const char *ent; const char *extra; };
-extern ScopeTrace *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 extern bool (*g_105f9390)(CVDmg_t *, int);
 
 bool CVDmg_t::sub_10159170(int target)
 {
-    g_101e3124[*g_101e3128].name = "CVDmg_t::EvadeCheck";
-    g_101e3124[*g_101e3128].ent = g_102de300;
-    g_101e3124[*g_101e3128].extra = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVDmg_t::EvadeCheck";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     if (g_105f9390) {
         bool r = g_105f9390(this, target);
-        --*g_101e3128;
+        --g_ScopeTraceStackDepth;
         return r;
     }
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     return false;
 }
 // END FUNCTION
@@ -103614,78 +103571,63 @@ void CVDmg_t::sub_101591f0(unsigned int flags)
 // END FUNCTION
 
 // FUNCTION: 0x101594e0 size=0x6d
+#include "ScopeTrace.h"
 #include "CVStatCost_t.h"
 
-struct ScopeEntry {
-	const char *fn;
-	const char *name;
-	const char *extra;
-};
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
 
 CVStatSubCost_t *CVStatSubCost_t::sub_101594e0()
 {
-	g_101e3124[*g_101e3128].fn = "CVStatSubCost_t::CVStatSubCost_t";
-	g_101e3124[*g_101e3128].name = "";
-	g_101e3124[*g_101e3128].extra = "";
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatSubCost_t::CVStatSubCost_t";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = "";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = "";
+	(g_ScopeTraceStackDepth)++;
 	*(int *)&m_data[0x10] = 0;
 	sub_10159550();
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return this;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10159550 size=0x8b
+#include "ScopeTrace.h"
 #include "CVStatCost_t.h"
 
-struct ScopeTraceEntry_t
-{
-	const char *m_pszFunc;
-	const char *m_pszName;
-	const char *m_pszExtra;
-};
 
-extern ScopeTraceEntry_t *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 void CVStatSubCost_t::sub_10159550()
 {
 	int *f = (int *)m_data;
-	g_101e3124[*g_101e3128].m_pszFunc = "CVStatSubCost_t::Null";
-	g_101e3124[*g_101e3128].m_pszName = g_102de300;
-	g_101e3124[*g_101e3128].m_pszExtra = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatSubCost_t::Null";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	f[0] = 10000;
 	f[1] = 1;
 	f[2] = 0;
 	f[3] = 0;
 	delete (char *)f[4];
 	f[4] = 0;
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
 // FUNCTION: 0x101595e0 size=0x6c
-struct TraceEnt { const char *a; void *b; void *c; };
-extern int *g_101e3128;
-extern TraceEnt *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102cb5d8[];
 extern char g_102de300[];
 struct CVStatSubCost_t { int v; bool sub_101595e0(); };
 bool CVStatSubCost_t::sub_101595e0()
 {
-    g_101e3124[*g_101e3128].a = g_102cb5d8;
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102cb5d8;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     if (v != 10000) {
-        --*g_101e3128;
+        --g_ScopeTraceStackDepth;
         return false;
     }
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     return true;
 }
 // END FUNCTION
@@ -103765,19 +103707,17 @@ void CVStatSubCost_t::sub_10159650(const char *str)
 // END FUNCTION
 
 // FUNCTION: 0x101597d0 size=0xa3
+#include "ScopeTrace.h"
 #include "CVStatCost_t.h"
 
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 
 int CVStatSubCost_t::sub_101597d0(int level)
 {
-	g_101e3124[*g_101e3128].a = "CVStatSubCost_t::GetCostToBuy";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatSubCost_t::GetCostToBuy";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	int *p = (int *)m_data;
 	int cost = p[0];
 	switch (cost) {
@@ -103786,34 +103726,32 @@ int CVStatSubCost_t::sub_101597d0(int level)
 		break;
 	case 9999: {
 		int r = p[1] * level + p[2];
-		(*g_101e3128)--;
+		(g_ScopeTraceStackDepth)--;
 		return r;
 	}
 	case 10000:
-		(*g_101e3128)--;
+		(g_ScopeTraceStackDepth)--;
 		return 10000;
 	}
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return cost;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10159880 size=0xbd
+#include "ScopeTrace.h"
 #include "CVStatCost_t.h"
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 
 int CVStatSubCost_t::sub_10159880(int level, bool bForce)
 {
     int *d = (int *)m_data;
-    g_101e3124[*g_101e3128].a = "CVStatSubCost_t::GetCostToSell";
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatSubCost_t::GetCostToSell";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     if (!bForce && level <= 1) {
-        (*g_101e3128)--;
+        (g_ScopeTraceStackDepth)--;
         return 0;
     }
     int cost = d[0];
@@ -103823,14 +103761,14 @@ int CVStatSubCost_t::sub_10159880(int level, bool bForce)
         break;
     case 9999: {
         int r = (level - 1) * d[1] + d[2];
-        (*g_101e3128)--;
+        (g_ScopeTraceStackDepth)--;
         return r;
     }
     case 10000:
-        (*g_101e3128)--;
+        (g_ScopeTraceStackDepth)--;
         return 0;
     }
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
     return cost;
 }
 // END FUNCTION
@@ -103863,26 +103801,24 @@ bool CUnit101fbfc0::sub_10159b40(int a, int b, int c, int d, int e)
 // END FUNCTION
 
 // FUNCTION: 0x10159b70 size=0x9f
+#include "ScopeTrace.h"
 #include <stdio.h>
 #include "CVStatCost_t.h"
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 extern void (__cdecl *g_101e3118)(int level, const char *fmt, ...);
 
 void CVStatSubCost_t::sub_10159b70(const char *pszLabel)
 {
     char buf[128];
-    g_101e3124[*g_101e3128].a = "CVStatSubCost_t::Debug_Display";
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatSubCost_t::Debug_Display";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     if (!sub_101595e0()) {
         sprintf(buf, "\t\t\t( %s: '%s' )\t", pszLabel, sub_10159940());
         g_101e3118(1, buf);
     }
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
@@ -103905,37 +103841,30 @@ void CVStatCost_t::sub_10159c10()
 // END FUNCTION
 
 // FUNCTION: 0x10159c80 size=0x81
+#include "ScopeTrace.h"
 #include "CVStatCost_t.h"
 
-struct ScopeTrace { const char *name; const char *ent; const char *extra; };
-extern ScopeTrace *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 bool CVStatCost_t::sub_10159c80()
 {
-    g_101e3124[*g_101e3128].name = "CVStatCost_t::IsNull";
-    g_101e3124[*g_101e3128].ent = g_102de300;
-    g_101e3124[*g_101e3128].extra = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatCost_t::IsNull";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     if (m_first.sub_101595e0() && m_second.sub_101595e0()) {
-        --*g_101e3128;
+        --g_ScopeTraceStackDepth;
         return true;
     }
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     return false;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10159d10 size=0xeb
+#include "ScopeTrace.h"
 #include "CVStatCost_t.h"
 
-struct ScopeTraceEntry_t
-{
-	const char *m_pszFunc;
-	const char *m_pszName;
-	const char *m_pszExtra;
-};
 
 #define KV_SLOTS(p) virtual void p##0(); virtual void p##1();
 
@@ -103949,16 +103878,14 @@ struct CVStatKV
 	virtual const char *GetString(const char *name, const char *def);	// slot 13
 };
 
-extern ScopeTraceEntry_t *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 bool CVStatCost_t::sub_10159d10(CVStatKV *pKV)
 {
-	g_101e3124[*g_101e3128].m_pszFunc = "CVStatCost_t::Load";
-	g_101e3124[*g_101e3128].m_pszName = g_102de300;
-	g_101e3124[*g_101e3128].m_pszExtra = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatCost_t::Load";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	if (pKV) {
 		CVStatKV *pCosts = pKV->FindKey("Costs");
 		if (pCosts) {
@@ -103968,34 +103895,32 @@ bool CVStatCost_t::sub_10159d10(CVStatKV *pKV)
 				m_first = m_second;
 			else if (m_second.sub_101595e0())
 				m_second = m_first;
-			(*g_101e3128)--;
+			(g_ScopeTraceStackDepth)--;
 			return true;
 		}
 	}
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return false;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10159e00 size=0x85
+#include "ScopeTrace.h"
 #include "CVStatCost_t.h"
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
 extern char g_102cb744[];
 extern char g_102de300[];
 int CVStatCost_t::sub_10159e00(int level, bool bFirst)
 {
-    g_101e3124[*g_101e3128].a = g_102cb744;
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102cb744;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     int r;
     if (bFirst)
         r = m_first.sub_101597d0(level);
     else
         r = m_second.sub_101597d0(level);
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     return r;
 }
 // END FUNCTION
@@ -104059,57 +103984,48 @@ char C101fc540::sub_10159f70(T_101fc540 a, T_101fc540 b)
 // END FUNCTION
 
 // FUNCTION: 0x10159fc0 size=0xb3
+#include "ScopeTrace.h"
 #include "CVStatCost_t.h"
 #include <stdio.h>
 #include <string.h>
 
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 extern char g_105f8cb8[];
 
 const char *CVStatCost_t::sub_10159fc0()
 {
-	g_101e3124[*g_101e3128].a = "CVStatCost_t::ToStr";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatCost_t::ToStr";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	sprintf(g_105f8cb8, "%s: '%s'", "New", m_first.sub_10159940());
 	int nLen = strlen(g_105f8cb8);
 	sprintf(g_105f8cb8 + nLen, ", %s: '%s'", "Raise", m_second.sub_10159940());
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return g_105f8cb8;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015a080 size=0x85
+#include "ScopeTrace.h"
 #include "CVStatCost_t.h"
 
-struct ScopeTraceEntry_t
-{
-	const char *m_pszFunc;
-	const char *m_pszName;
-	const char *m_pszExtra;
-};
 
-extern ScopeTraceEntry_t *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 extern void (__cdecl *g_101e3118)(int level, const char *msg);
 
 void CVStatCost_t::sub_1015a080()
 {
-	g_101e3124[*g_101e3128].m_pszFunc = "CVStatCost_t::Debug_Display";
-	g_101e3124[*g_101e3128].m_pszName = g_102de300;
-	g_101e3124[*g_101e3128].m_pszExtra = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatCost_t::Debug_Display";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	if (!sub_10159c80()) {
 		void (__cdecl *devMsg)(int, const char *) = g_101e3118;
 		devMsg(1, "\tCost:");
 		devMsg(1, sub_10159fc0());
 	}
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
@@ -104173,31 +104089,23 @@ void CVStatAction_t::sub_1015a1b0()
 // END FUNCTION
 
 // FUNCTION: 0x1015a230 size=0x5f
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 extern int g_105f9394;
 
 void sub_1015a230(int callback)
 {
-	g_101e3124[*g_101e3128].a = "SetExtraActionParseFunc";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "SetExtraActionParseFunc";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	g_105f9394 = callback;
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015a290 size=0x68
-struct TScope {
-	const char *name;
-	void *a;
-	void *b;
-};
-extern int *g_101e3128;
-extern TScope *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102cb824[];
 extern char g_102de300[];
 
@@ -104211,13 +104119,13 @@ struct TStat {
 
 void TStat::sub_1015a290(int a, int b)
 {
-	g_101e3124[*g_101e3128].name = g_102cb824;
-	g_101e3124[*g_101e3128].a = g_102de300;
-	g_101e3124[*g_101e3128].b = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102cb824;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	f4 = a;
 	f3c = b;
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
@@ -104249,38 +104157,34 @@ bool CVStatAction_t::sub_1015a750()
 // END FUNCTION
 
 // FUNCTION: 0x1015a7e0 size=0x5f
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 extern int g_105f9398;
 
 void sub_1015a7e0(int callback)
 {
-	g_101e3124[*g_101e3128].a = "SetStatActionApplyCallback";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "SetStatActionApplyCallback";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	g_105f9398 = callback;
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015a840 size=0x5f
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 extern int g_105f939c;
 
 void sub_1015a840(int callback)
 {
-	g_101e3124[*g_101e3128].a = "SetStatActionRemoveCallback";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "SetStatActionRemoveCallback";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	g_105f939c = callback;
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
@@ -104318,13 +104222,7 @@ void CVStatAction_t::sub_1015a920(int a, int b, int c)
 // END FUNCTION
 
 // FUNCTION: 0x1015ab20 size=0x69
-struct TScope {
-	const char *name;
-	void *a;
-	void *b;
-};
-extern int *g_101e3128;
-extern TScope *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102cb9e0[];
 extern char g_102de300[];
 
@@ -104335,14 +104233,14 @@ struct TList {
 
 TList *TList::sub_1015ab20()
 {
-	g_101e3124[*g_101e3128].name = g_102cb9e0;
-	g_101e3124[*g_101e3128].a = g_102de300;
-	g_101e3124[*g_101e3128].b = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102cb9e0;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	a = 0;
 	b = 0;
 	c = 0;
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return this;
 }
 // END FUNCTION
@@ -104395,20 +104293,18 @@ void VList::sub_1015abf0()
 // END FUNCTION
 
 // FUNCTION: 0x1015aeb0 size=0x5f
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 extern int g_105f93a0;
 
 void sub_1015aeb0(int callback)
 {
-	g_101e3124[*g_101e3128].a = "SetStatActionUpdateCallback";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "SetStatActionUpdateCallback";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	g_105f93a0 = callback;
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
@@ -104427,6 +104323,7 @@ void CVStatActionList_t::sub_1015af10(CVStatActionTarget *pTarget, int a1, int a
 // END FUNCTION
 
 // FUNCTION: 0x1015b050 size=0xf5
+#include "ScopeTrace.h"
 #include "CVStatInfo_t.h"
 #include "CVStatCost_t.h"
 
@@ -104442,9 +104339,6 @@ struct TList
     TList *sub_1015ab20();
 };
 
-struct ScopeEntry_t { const char *m_pszName; const char *m_pszEnt; const char *m_pszExtra; };
-extern ScopeEntry_t *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 CVStatInfo_t *CVStatInfo_t::sub_1015b050()
@@ -104463,17 +104357,17 @@ CVStatInfo_t *CVStatInfo_t::sub_1015b050()
     m_field0130 = 0;
     m_field0134 = 0;
     m_field0138 = 0;
-    g_101e3124[*g_101e3128].m_pszName = "CVStatInfo_t::CVStatInfo_t";
-    g_101e3124[*g_101e3128].m_pszEnt = g_102de300;
-    g_101e3124[*g_101e3128].m_pszExtra = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatInfo_t::CVStatInfo_t";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     m_field0000 = 0;
     m_field0004 = 0;
     m_field0008 = -1;
     m_flags = 0;
     m_bField0108 = 0;
     m_pLevels = 0;
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
     return this;
 }
 // END FUNCTION
@@ -104496,11 +104390,9 @@ const char *CVStatInfo_t::sub_1015b270(int arg)
 // END FUNCTION
 
 // FUNCTION: 0x1015b300 size=0xae
+#include "ScopeTrace.h"
 #include "CVStatInfo_t.h"
 extern "C" int __cdecl atoi(const char *);
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 extern char g_102cbb4c[];
 
@@ -104515,10 +104407,10 @@ extern CStatNameTable g_105f93c0;
 int CVStatInfo_t::sub_1015b300(const char *pszValue)
 {
 	int r;
-	g_101e3124[*g_101e3128].a = g_102cbb4c;
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	++*g_101e3128;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102cbb4c;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	++g_ScopeTraceStackDepth;
 	if (m_field0008 != -1) {
 		r = g_105f93c0.sub_1015f270(m_field0008, pszValue)->sub_1015ed00();
 	} else if (m_field0004) {
@@ -104526,19 +104418,13 @@ int CVStatInfo_t::sub_1015b300(const char *pszValue)
 	} else {
 		r = atoi(pszValue);
 	}
-	--*g_101e3128;
+	--g_ScopeTraceStackDepth;
 	return r;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015b3b0 size=0x69
-struct TScope {
-	const char *name;
-	void *a;
-	void *b;
-};
-extern int *g_101e3128;
-extern TScope *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102cbb68[];
 extern char g_102de300[];
 
@@ -104549,15 +104435,15 @@ struct TInfo {
 
 bool TInfo::sub_1015b3b0()
 {
-	g_101e3124[*g_101e3128].name = g_102cbb68;
-	g_101e3124[*g_101e3128].a = g_102de300;
-	g_101e3124[*g_101e3128].b = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102cbb68;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	if (p) {
-		(*g_101e3128)--;
+		(g_ScopeTraceStackDepth)--;
 		return true;
 	}
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return false;
 }
 // END FUNCTION
@@ -104649,15 +104535,9 @@ void CVStatInfo_t::sub_1015b420(CVStatKV *pKV)
 // END FUNCTION
 
 // FUNCTION: 0x1015bcc0 size=0x93
+#include "ScopeTrace.h"
 #include "CVStatInfo_t.h"
 
-struct ScopeEntry {
-	const char *fn;
-	const char *name;
-	const char *extra;
-};
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
 
 struct StatMgr {
 	virtual void v0();
@@ -104669,30 +104549,24 @@ extern StatMgr *g_105f9284;
 
 bool CVStatInfo_t::sub_1015bcc0()
 {
-	g_101e3124[*g_101e3128].fn = "CVStatInfo_t::IsPassive";
-	g_101e3124[*g_101e3128].name = "";
-	g_101e3124[*g_101e3128].extra = "";
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatInfo_t::IsPassive";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = "";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = "";
+	(g_ScopeTraceStackDepth)++;
 	if (!g_105f9284->v1() && g_105f9284->m_field2c) {
 		bool r = (m_flags >> 2) & 1;
-		(*g_101e3128)--;
+		(g_ScopeTraceStackDepth)--;
 		return r;
 	}
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return false;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015bdb0 size=0x93
+#include "ScopeTrace.h"
 #include "CVStatInfo_t.h"
 
-struct ScopeEntry {
-	const char *fn;
-	const char *name;
-	const char *extra;
-};
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
 
 struct StatMgr {
 	virtual void v0();
@@ -104704,90 +104578,84 @@ extern StatMgr *g_105f934c;
 
 bool CVStatInfo_t::sub_1015bdb0()
 {
-	g_101e3124[*g_101e3128].fn = "CVStatInfo_t::IsRenewable";
-	g_101e3124[*g_101e3128].name = "";
-	g_101e3124[*g_101e3128].extra = "";
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatInfo_t::IsRenewable";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = "";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = "";
+	(g_ScopeTraceStackDepth)++;
 	if (!g_105f934c->v1() && g_105f934c->m_field2c) {
 		bool r = (m_flags >> 3) & 1;
-		(*g_101e3128)--;
+		(g_ScopeTraceStackDepth)--;
 		return r;
 	}
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return false;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015be50 size=0x6d
-struct TraceEnt { const char *a; void *b; void *c; };
-extern int *g_101e3128;
-extern TraceEnt *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102cbe74[];
 extern char g_102de300[];
 struct CVStatInfo_t { char pad[0xfc]; int m_hidden; bool sub_1015be50(); };
 bool CVStatInfo_t::sub_1015be50()
 {
-    g_101e3124[*g_101e3128].a = g_102cbe74;
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102cbe74;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     if (m_hidden == 0) {
-        --*g_101e3128;
+        --g_ScopeTraceStackDepth;
         return false;
     }
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     return true;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015bec0 size=0x86
+#include "ScopeTrace.h"
 #include "CVStatInfo_t.h"
 
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 
 int CVStatInfo_t::sub_1015bec0(int level)
 {
-	g_101e3124[*g_101e3128].a = "CVStatInfo_t::Get_Duration_Initial";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	++*g_101e3128;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatInfo_t::Get_Duration_Initial";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	++g_ScopeTraceStackDepth;
 	if (level > 5)
 		level = 5;
 	if (m_pLevels) {
 		int r = m_pLevels[level - 1].m_duration;
-		--*g_101e3128;
+		--g_ScopeTraceStackDepth;
 		return r;
 	}
-	--*g_101e3128;
+	--g_ScopeTraceStackDepth;
 	return 0;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015bf50 size=0x86
+#include "ScopeTrace.h"
 #include "CVStatInfo_t.h"
 
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 
 int CVStatInfo_t::sub_1015bf50(int level)
 {
-	g_101e3124[*g_101e3128].a = "CVStatInfo_t::Get_Duration_Add";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	++*g_101e3128;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatInfo_t::Get_Duration_Add";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	++g_ScopeTraceStackDepth;
 	if (level > 5)
 		level = 5;
 	if (m_pLevels) {
 		int r = m_pLevels[level - 1].m_durationAdd;
-		--*g_101e3128;
+		--g_ScopeTraceStackDepth;
 		return r;
 	}
-	--*g_101e3128;
+	--g_ScopeTraceStackDepth;
 	return 0;
 }
 // END FUNCTION
@@ -104897,11 +104765,9 @@ int CVStatInfo_t::sub_1015c280(int arg)
 // END FUNCTION
 
 // FUNCTION: 0x1015c2f0 size=0xa3
+#include "ScopeTrace.h"
 #include "CVStatInfoList_t.h"
 
-struct ScopeEntry_t { const char *m_pszName; const char *m_pszEnt; const char *m_pszExtra; };
-extern ScopeEntry_t *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 CVStatInfoList_t *CVStatInfoList_t::sub_1015c2f0(const char *name, int a, int b)
@@ -104909,10 +104775,10 @@ CVStatInfoList_t *CVStatInfoList_t::sub_1015c2f0(const char *name, int a, int b)
     CVStatSubCost_t *pCost = &m_cost.m_first;
     pCost->sub_101594e0();
     (pCost + 1)->sub_101594e0();
-    g_101e3124[*g_101e3128].m_pszName = "CVStatInfoList_t::CVStatInfoList_t";
-    g_101e3124[*g_101e3128].m_pszEnt = g_102de300;
-    g_101e3124[*g_101e3128].m_pszExtra = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatInfoList_t::CVStatInfoList_t";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     m_pad0000 = b;
     m_field2c = a;
     m_nStats = 0;
@@ -104926,28 +104792,26 @@ CVStatInfoList_t *CVStatInfoList_t::sub_1015c2f0(const char *name, int a, int b)
         s++;
         d++;
     } while (c);
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
     return this;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015c3a0 size=0x9e
+#include "ScopeTrace.h"
 #include "CVStatInfoList_t.h"
 
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 
 void CVStatInfoList_t::sub_1015c3a0()
 {
-	g_101e3124[*g_101e3128].a = "CVStatInfoList_t::~CVStatInfoList_t";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatInfoList_t::~CVStatInfoList_t";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	delete[] m_pStats;
 	m_nStats = 0;
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
@@ -104982,11 +104846,9 @@ void *CVStatInfo_t::sub_1015c440(unsigned int flags)
 // END FUNCTION
 
 // FUNCTION: 0x1015c8f0 size=0xb8
+#include "ScopeTrace.h"
 #include "CVStatInfoList_t.h"
 
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 extern "C" int __cdecl sub_101e28e0(const char *, const char *);
 
@@ -104998,27 +104860,25 @@ struct StrWrap
 
 int CVStatInfoList_t::sub_1015c8f0(const char *name)
 {
-	g_101e3124[*g_101e3128].a = "CVStatInfoList_t::Lookup( char *name )";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	++*g_101e3128;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatInfoList_t::Lookup( char *name )";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	++g_ScopeTraceStackDepth;
 	for (int i = 0; i < m_nStats; i++) {
 		if (sub_101e28e0(((StrWrap *)&m_pStats[i].m_pszName)->Get(), name) == 0) {
-			--*g_101e3128;
+			--g_ScopeTraceStackDepth;
 			return i;
 		}
 	}
-	--*g_101e3128;
+	--g_ScopeTraceStackDepth;
 	return -1;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015c9b0 size=0xb8
+#include "ScopeTrace.h"
 #include "CVStatInfoList_t.h"
 
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 extern "C" int __cdecl sub_101e28e0(const char *, const char *);
 
@@ -105030,29 +104890,27 @@ struct StrWrap
 
 int CVStatInfoList_t::sub_1015c9b0(const char *name)
 {
-	g_101e3124[*g_101e3128].a = "CVStatInfoList_t::Lookup( const char *name )";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	++*g_101e3128;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatInfoList_t::Lookup( const char *name )";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	++g_ScopeTraceStackDepth;
 	for (int i = 0; i < m_nStats; i++) {
 		if (sub_101e28e0(((StrWrap *)&m_pStats[i].m_pszName)->Get(), name) == 0) {
-			--*g_101e3128;
+			--g_ScopeTraceStackDepth;
 			return i;
 		}
 	}
-	--*g_101e3128;
+	--g_ScopeTraceStackDepth;
 	return -1;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015ca70 size=0x11b
+#include "ScopeTrace.h"
 #include "CVStatInfoList_t.h"
 
 extern "C" char *sub_101d23bd(char *);
 extern "C" char *sub_101d1300(const char *, const char *);
-struct ScopeEntry_t { const char *m_pszName; const char *m_pszEnt; const char *m_pszExtra; };
-extern ScopeEntry_t *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 struct StatName_t
@@ -105063,10 +104921,10 @@ struct StatName_t
 
 int CVStatInfoList_t::sub_1015ca70(const char *name)
 {
-    g_101e3124[*g_101e3128].m_pszName = "CVStatInfoList_t::LookupPartial( char *name )";
-    g_101e3124[*g_101e3128].m_pszEnt = g_102de300;
-    g_101e3124[*g_101e3128].m_pszExtra = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatInfoList_t::LookupPartial( char *name )";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     char szQuery[128];
     char szName[128];
     const char *s = name;
@@ -105093,26 +104951,24 @@ int CVStatInfoList_t::sub_1015ca70(const char *name)
             } while (c2);
             sub_101d23bd(szName);
             if (sub_101d1300(szName, szQuery) == szName) {
-                (*g_101e3128)--;
+                (g_ScopeTraceStackDepth)--;
                 return i;
             }
             i++;
             off += 0x13c;
         } while (i < m_nStats);
     }
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
     return -1;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015cb90 size=0x11b
+#include "ScopeTrace.h"
 #include "CVStatInfoList_t.h"
 
 extern "C" char *sub_101d23bd(char *);
 extern "C" char *sub_101d1300(const char *, const char *);
-struct ScopeEntry_t { const char *m_pszName; const char *m_pszEnt; const char *m_pszExtra; };
-extern ScopeEntry_t *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 struct StatName_t
@@ -105123,10 +104979,10 @@ struct StatName_t
 
 int CVStatInfoList_t::sub_1015cb90(const char *name)
 {
-    g_101e3124[*g_101e3128].m_pszName = "CVStatInfoList_t::LookupPartial( const char *name )";
-    g_101e3124[*g_101e3128].m_pszEnt = g_102de300;
-    g_101e3124[*g_101e3128].m_pszExtra = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatInfoList_t::LookupPartial( const char *name )";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     char szQuery[128];
     char szName[128];
     const char *s = name;
@@ -105153,14 +105009,14 @@ int CVStatInfoList_t::sub_1015cb90(const char *name)
             } while (c2);
             sub_101d23bd(szName);
             if (sub_101d1300(szName, szQuery) == szName) {
-                (*g_101e3128)--;
+                (g_ScopeTraceStackDepth)--;
                 return i;
             }
             i++;
             off += 0x13c;
         } while (i < m_nStats);
     }
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
     return -1;
 }
 // END FUNCTION
@@ -105204,25 +105060,18 @@ void CVStatList_t::sub_1015d2c0()
 // END FUNCTION
 
 // FUNCTION: 0x1015d350 size=0x87
+#include "ScopeTrace.h"
 #include "CVStatList_t.h"
 
-struct ScopeTraceEntry_t
-{
-	const char *m_pszFunc;
-	const char *m_pszName;
-	const char *m_pszExtra;
-};
 
-extern ScopeTraceEntry_t *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 void CVStatList_t::sub_1015d350(int a, int *pSource, int c)
 {
-	g_101e3124[*g_101e3128].m_pszFunc = "CVStatList_t::Bind";
-	g_101e3124[*g_101e3128].m_pszName = g_102de300;
-	g_101e3124[*g_101e3128].m_pszExtra = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatList_t::Bind";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	if (m_field04 != 0)
 		m_field04 = 0;
 	m_pad0000 = a;
@@ -105230,7 +105079,7 @@ void CVStatList_t::sub_1015d350(int a, int *pSource, int c)
 	m_field04 = pSource[1];
 	m_field08 = c;
 	sub_1015d2c0();
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
@@ -105310,10 +105159,8 @@ int CVStatList_t::sub_1015d5b0(int stat)
 // END FUNCTION
 
 // FUNCTION: 0x1015d650 size=0x88
+#include "ScopeTrace.h"
 #include "CVStatList_t.h"
-struct ScopeEntryX { const char *m_pName; const char *m_p4; const char *m_p8; };
-extern ScopeEntryX *g_101e3124;
-extern int *g_101e3128;
 char CVStatList_t::sub_1015d3e0(int stat)
 {
     return stat >= 0 && stat < m_field04;
@@ -105321,31 +105168,24 @@ char CVStatList_t::sub_1015d3e0(int stat)
 // TARGET: CVStatList_t::sub_1015d650
 void CVStatList_t::sub_1015d650(int stat, int value)
 {
-    g_101e3124[*g_101e3128].m_pName = "CVStatList_t::Set";
-    g_101e3124[*g_101e3128].m_p4 = "";
-    g_101e3124[*g_101e3128].m_p8 = "";
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatList_t::Set";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = "";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = "";
+    ++g_ScopeTraceStackDepth;
     int max = sub_1015d5b0(stat);
     if (value > max)
         value = max;
     if (sub_1015d3e0(stat))
         (*(int **)m_field08)[stat] = value;
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015d6e0 size=0x83
+#include "ScopeTrace.h"
 #include "CVStatList_t.h"
 
-struct ScopeTraceEntry_t
-{
-	const char *m_pszFunc;
-	const char *m_pszName;
-	const char *m_pszExtra;
-};
 
-extern ScopeTraceEntry_t *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 // CVStatList_t::sub_102008b0: the game compiled it before this function, in the same unit, so VC6 knows which registers it keeps;
@@ -105368,16 +105208,16 @@ using namespace block_10200ca0;
 // TARGET: CVStatList_t::sub_1015d6e0
 int CVStatList_t::sub_1015d6e0(int stat)
 {
-	g_101e3124[*g_101e3128].m_pszFunc = "CVStatList_t::GetBase";
-	g_101e3124[*g_101e3128].m_pszName = g_102de300;
-	g_101e3124[*g_101e3128].m_pszExtra = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatList_t::GetBase";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	if (((CVStatListUnit *)this)->sub_1015d3e0(stat)) {
 		int value = (**(int ***)&m_field08)[stat];
-		(*g_101e3128)--;
+		(g_ScopeTraceStackDepth)--;
 		return value;
 	}
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return 0;
 }
 // END FUNCTION
@@ -105441,22 +105281,20 @@ char CVStatList_t::sub_1015d950(int stat, int amount)
 // END FUNCTION
 
 // FUNCTION: 0x1015da50 size=0x6c
+#include "ScopeTrace.h"
 #include "CVStatList_t.h"
 
-struct TraceEnt { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern TraceEnt *g_101e3124;
 extern char g_102de300[];
 
 // TARGET: CVStatList_t::sub_1015da50
 char CVStatList_t::sub_1015da50(int stat, int amount)
 {
-	g_101e3124[*g_101e3128].a = "CVStatList_t::SubBase";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	++*g_101e3128;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatList_t::SubBase";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	++g_ScopeTraceStackDepth;
 	char r = sub_1015d950(stat, -amount);
-	--*g_101e3128;
+	--g_ScopeTraceStackDepth;
 	return r;
 }
 // END FUNCTION
@@ -105528,25 +105366,23 @@ void CVStatList_t::sub_1015ded0(int stat)
 // END FUNCTION
 
 // FUNCTION: 0x1015dfa0 size=0x89
+#include "ScopeTrace.h"
 #include "CVStatList_t.h"
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 
 bool CVStatList_t::sub_1015dfa0(int a, int b)
 {
-	g_101e3124[*g_101e3128].a = "CVStatList_t::IsEqual";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatList_t::IsEqual";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	int x = sub_1015dbd0(a);
 	int y = sub_1015dbd0(b);
 	if (x == y) {
-		(*g_101e3128)--;
+		(g_ScopeTraceStackDepth)--;
 		return true;
 	}
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return false;
 }
 // END FUNCTION
@@ -105572,11 +105408,9 @@ CVStatInfo_t *CVStatList_t::sub_1015e030(int stat)
 // END FUNCTION
 
 // FUNCTION: 0x1015e100 size=0x8c
+#include "ScopeTrace.h"
 #include "CVStatList_t.h"
 
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 int CVStatList_t::sub_1015e100()
@@ -105584,10 +105418,10 @@ int CVStatList_t::sub_1015e100()
 	int bestIndex = -1;
 	int best = -1;
 	int i = 0;
-	g_101e3124[*g_101e3128].a = "CVStatList_t::GetHighestValueIndex";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatList_t::GetHighestValueIndex";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	if (m_field04 > 0) {
 		do {
 			int v = sub_1015dbd0(i);
@@ -105598,7 +105432,7 @@ int CVStatList_t::sub_1015e100()
 			i++;
 		} while (i < m_field04);
 	}
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return bestIndex;
 }
 // END FUNCTION
@@ -105712,11 +105546,9 @@ void CUnknown10201ca0::sub_1015e320(int a, int b)
 // END FUNCTION
 
 // FUNCTION: 0x1015e490 size=0xf0
+#include "ScopeTrace.h"
 #include "CVStatListManager_t.h"
 
-struct ScopeEntry { const char *name; const void *file; const void *line; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 extern int g_105f9220[];
 extern int g_105f90b8[];
@@ -105726,10 +105558,10 @@ extern int g_105f91c8[];
 // TARGET: CVStatListManager_t::sub_1015e490
 void CVStatListManager_t::sub_1015e490(int which, int c)
 {
-	g_101e3124[*g_101e3128].name = "CVStatListManager_t::BindStatList";
-	g_101e3124[*g_101e3128].file = g_102de300;
-	g_101e3124[*g_101e3128].line = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatListManager_t::BindStatList";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	switch (which)
 	{
 	case 0:
@@ -105745,15 +105577,13 @@ void CVStatListManager_t::sub_1015e490(int which, int c)
 		m_pLists[3]->sub_1015d350((int)this, g_105f91c8, c);
 		break;
 	}
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015e580 size=0x90
+#include "ScopeTrace.h"
 #include "CVStatListManager_t.h"
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 // TARGET: CVStatListManager_t::sub_1015e580
@@ -105761,10 +105591,10 @@ char CVStatListManager_t::sub_1015e580(int time)
 {
     char changed = 0;
     int i = 0;
-    g_101e3124[*g_101e3128].a = "CVStatListManager_t::Update";
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "CVStatListManager_t::Update";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     m_nTime = time;
     if (m_nLists > 0) {
         do {
@@ -105773,7 +105603,7 @@ char CVStatListManager_t::sub_1015e580(int time)
             i++;
         } while (i < m_nLists);
     }
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     return changed;
 }
 // END FUNCTION
@@ -105855,9 +105685,7 @@ int sub_1015eb10(int i) { return g_102cb118[i]; }
 // END FUNCTION
 
 // FUNCTION: 0x1015eb20 size=0xa3
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 extern "C" int __cdecl _strcmpi(const char *, const char *);
 extern void (__cdecl *g_101e3120)(int, const char *, ...);
@@ -105870,44 +105698,42 @@ extern ParticleAttachName_t g_102483a0[25];
 
 int sub_1015eb20(const char *pszType)
 {
-	g_101e3124[*g_101e3128].a = "ParseParticleAttachType";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "ParseParticleAttachType";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	for (unsigned int i = 0; i < 25; i++) {
 		if (!_strcmpi(g_102483a0[i].m_pName, pszType)) {
 			int type = g_102483a0[i].m_nType;
-			(*g_101e3128)--;
+			(g_ScopeTraceStackDepth)--;
 			return type;
 		}
 	}
 	g_101e3120(1, "Invalid particle attach type '%s'\n", pszType);
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return 0;
 }
 // END FUNCTION
 
 // FUNCTION: 0x1015ebd0 size=0x8c
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
+#include "ScopeTrace.h"
 extern char g_102de300[];
 extern const char *g_102cb140[];
 extern void (*g_101e3120)(int level, const char *fmt, ...);
 
 const char *sub_1015ebd0(int type)
 {
-	g_101e3124[*g_101e3128].a = "GetParticleAttachTypeName";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "GetParticleAttachTypeName";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	if (type >= 0 && type < 0x13) {
 		const char *name = g_102cb140[type];
-		(*g_101e3128)--;
+		(g_ScopeTraceStackDepth)--;
 		return name;
 	}
 	g_101e3120(1, "Invalid particle attach type '%d'\n", type);
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return "Invalid attach type";
 }
 // END FUNCTION
@@ -107983,22 +107809,20 @@ void CUnknown10162340::sub_10162340()
 // END FUNCTION
 
 // FUNCTION: 0x101624d0 size=0x83
+#include "ScopeTrace.h"
 #include "QuestJournal.h"
 
-struct ScopeTrace { const char *name; const char *ent; const char *extra; };
-extern ScopeTrace *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 struct CScopeGuard {
     CScopeGuard(const char *name)
     {
-        g_101e3124[*g_101e3128].name = name;
-        g_101e3124[*g_101e3128].ent = g_102de300;
-        g_101e3124[*g_101e3128].extra = g_102de300;
-        ++*g_101e3128;
+        g_ScopeTraceStack[g_ScopeTraceStackDepth].name = name;
+        g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+        g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+        ++g_ScopeTraceStackDepth;
     }
-    ~CScopeGuard() { --*g_101e3128; }
+    ~CScopeGuard() { --g_ScopeTraceStackDepth; }
 };
 
 QuestJournal *QuestJournal::sub_101624d0()
@@ -108020,10 +107844,8 @@ QuestJournal *QuestJournal::sub_101624d0()
 // END FUNCTION
 
 // FUNCTION: 0x10162650 size=0xb1
+#include "ScopeTrace.h"
 #include "QuestJournal.h"
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 extern char g_102cd04c[];
 extern int (__cdecl *g_101e3190)(char *, int, const char *, ...);
@@ -108031,10 +107853,10 @@ extern const char *g_102ccf58[];
 
 void QuestJournal::sub_10162650()
 {
-	g_101e3124[*g_101e3128].a = g_102cd04c;
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	++*g_101e3128;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102cd04c;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	++g_ScopeTraceStackDepth;
 	if (!m_flag28) {
 		int (__cdecl *pfnSnprintf)(char *, int, const char *, ...) = g_101e3190;
 		for (int i = 0; i < 4; i++) {
@@ -108044,16 +107866,14 @@ void QuestJournal::sub_10162650()
 		}
 		m_flag28 = 1;
 	}
-	--*g_101e3128;
+	--g_ScopeTraceStackDepth;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10162710 size=0x123
+#include "ScopeTrace.h"
 #include "QuestJournal.h"
 
-struct ScopeEntry_t { const char *m_pszName; const char *m_pszEnt; const char *m_pszExtra; };
-extern ScopeEntry_t *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 extern void (*g_101e30fc)(void *);
 
@@ -108069,10 +107889,10 @@ struct Completion_t
 
 void QuestJournal::sub_10162710()
 {
-    g_101e3124[*g_101e3128].m_pszName = "QuestJournal::PurgeQuestData";
-    g_101e3124[*g_101e3128].m_pszEnt = g_102de300;
-    g_101e3124[*g_101e3128].m_pszExtra = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "QuestJournal::PurgeQuestData";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     int i = 0;
     m_flag28 = 0;
     for (i = 0; i < m_field[3]; i++) {
@@ -108112,7 +107932,7 @@ void QuestJournal::sub_10162710()
         }
         m_field[9] = pB[0];
     }
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
 }
 // END FUNCTION
 
@@ -108239,50 +108059,46 @@ void QuestJournal::sub_10162940(CUnknown10248a50 *pKey, int index)
 // END FUNCTION
 
 // FUNCTION: 0x10162f00 size=0x9e
+#include "ScopeTrace.h"
 #include "QuestJournal.h"
 
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 extern void (*g_101e3140)(const char *fmt, ...);
 
 char *QuestJournal::sub_10162f00(int index)
 {
-	g_101e3124[*g_101e3128].a = "QuestJournal::GetQuest";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	++*g_101e3128;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "QuestJournal::GetQuest";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	++g_ScopeTraceStackDepth;
 	if (sub_10162fa0(index))
 	{
 		char *base = (char *)m_field[5];
-		--*g_101e3128;
+		--g_ScopeTraceStackDepth;
 		return base + index * 0x68;
 	}
 	g_101e3140("Could not find quest!\n");
 	char *base = (char *)m_field[5];
-	--*g_101e3128;
+	--g_ScopeTraceStackDepth;
 	return base;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10162fa0 size=0x85
+#include "ScopeTrace.h"
 #include "QuestJournal.h"
 
-struct ScopeTrace { const char *name; const char *ent; const char *extra; };
-extern ScopeTrace *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 struct CScopeGuard {
     CScopeGuard(const char *name)
     {
-        g_101e3124[*g_101e3128].name = name;
-        g_101e3124[*g_101e3128].ent = g_102de300;
-        g_101e3124[*g_101e3128].extra = g_102de300;
-        ++*g_101e3128;
+        g_ScopeTraceStack[g_ScopeTraceStackDepth].name = name;
+        g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+        g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+        ++g_ScopeTraceStackDepth;
     }
-    ~CScopeGuard() { --*g_101e3128; }
+    ~CScopeGuard() { --g_ScopeTraceStackDepth; }
 };
 
 char QuestJournal::sub_10162fa0(int index)
@@ -108297,22 +108113,20 @@ char QuestJournal::sub_10162fa0(int index)
 // END FUNCTION
 
 // FUNCTION: 0x10163030 size=0x85
+#include "ScopeTrace.h"
 #include "QuestJournal.h"
 
-struct ScopeTrace { const char *name; const char *ent; const char *extra; };
-extern ScopeTrace *g_101e3124;
-extern int *g_101e3128;
 extern char g_102de300[];
 
 struct CScopeGuard {
     CScopeGuard(const char *name)
     {
-        g_101e3124[*g_101e3128].name = name;
-        g_101e3124[*g_101e3128].ent = g_102de300;
-        g_101e3124[*g_101e3128].extra = g_102de300;
-        ++*g_101e3128;
+        g_ScopeTraceStack[g_ScopeTraceStackDepth].name = name;
+        g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+        g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+        ++g_ScopeTraceStackDepth;
     }
-    ~CScopeGuard() { --*g_101e3128; }
+    ~CScopeGuard() { --g_ScopeTraceStackDepth; }
 };
 
 char QuestJournal::sub_10163030(int index)
@@ -108327,55 +108141,51 @@ char QuestJournal::sub_10163030(int index)
 // END FUNCTION
 
 // FUNCTION: 0x101630c0 size=0xb4
+#include "ScopeTrace.h"
 #include "QuestJournal.h"
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 extern void (*g_101e3140)(const char *fmt, ...);
 
 char *QuestJournal::sub_101630c0(int quest, int index)
 {
-    g_101e3124[*g_101e3128].a = "QuestJournal::GetCompletionStateForQuest";
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    (*g_101e3128)++;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "QuestJournal::GetCompletionStateForQuest";
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    (g_ScopeTraceStackDepth)++;
     if (sub_10162fa0(quest) && index >= 0 && index < 20) {
         int state = ((int *)m_field[5])[index + quest * 0x1a + 5];
         char *r = sub_10163180(state);
-        (*g_101e3128)--;
+        (g_ScopeTraceStackDepth)--;
         return r;
     }
     g_101e3140("Could not find quest!\n");
     char *r = (char *)m_field[0];
-    (*g_101e3128)--;
+    (g_ScopeTraceStackDepth)--;
     return r;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10163180 size=0x99
+#include "ScopeTrace.h"
 #include "QuestJournal.h"
 
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern ScopeEntry *g_101e3124;
 extern char g_102de300[];
 extern void (*g_101e3140)(const char *, ...);
 
 char *QuestJournal::sub_10163180(int index)
 {
-	g_101e3124[*g_101e3128].a = "QuestJournal::GetCompletionState";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "QuestJournal::GetCompletionState";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	(g_ScopeTraceStackDepth)++;
 	if (sub_10163030(index)) {
 		char *base = (char *)m_field[0];
-		(*g_101e3128)--;
+		(g_ScopeTraceStackDepth)--;
 		return base + index * 0x18;
 	}
 	g_101e3140("Could not find quest completion state!\n");
 	char *base = (char *)m_field[0];
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return base;
 }
 // END FUNCTION
@@ -108404,21 +108214,19 @@ void * CUnknown102221d0::sub_10163260()
 // END FUNCTION
 
 // FUNCTION: 0x10163290 size=0xb5
+#include "ScopeTrace.h"
 #include "CExperienceTable.h"
-struct ScopeEntry { const char *a; const char *b; const char *c; };
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
 extern char g_102cd2a4[];
 extern char g_102de300[];
 extern "C" __declspec(dllimport) void __cdecl Plat_Free(void *);
 void CExperienceTable::sub_10163290()
 {
-    g_101e3124[*g_101e3128].a = g_102cd2a4;
-    g_101e3124[*g_101e3128].b = g_102de300;
-    g_101e3124[*g_101e3128].c = g_102de300;
-    ++*g_101e3128;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].name = g_102cd2a4;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+    g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+    ++g_ScopeTraceStackDepth;
     sub_10163410();
-    --*g_101e3128;
+    --g_ScopeTraceStackDepth;
     m_Size = 0;
     if (m_growSize != -1) {
         if (m_pMemory) {
@@ -108472,41 +108280,33 @@ void CExperienceTable::sub_10163410()
 // END FUNCTION
 
 // FUNCTION: 0x10163600 size=0x95
+#include "ScopeTrace.h"
 #include "CExperienceTable.h"
 
-struct ScopeEntry {
-	const char *fn;
-	const char *name;
-	const char *extra;
-};
-extern ScopeEntry *g_101e3124;
-extern int *g_101e3128;
 extern void (*g_101e3140)(const char *, ...);
 extern CExperienceAward g_105f9a0c;
 
 CExperienceAward *CExperienceTable::sub_10163600(int index)
 {
-	g_101e3124[*g_101e3128].fn = "ExperienceTable::GetAward";
-	g_101e3124[*g_101e3128].name = "";
-	g_101e3124[*g_101e3128].extra = "";
-	(*g_101e3128)++;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "ExperienceTable::GetAward";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = "";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = "";
+	(g_ScopeTraceStackDepth)++;
 	if (index >= 0 && index < m_Size) {
 		CExperienceAward *base = m_pMemory;
-		(*g_101e3128)--;
+		(g_ScopeTraceStackDepth)--;
 		return &base[index];
 	}
 	g_101e3140("Invalid index for experience table: %d\n", index);
-	(*g_101e3128)--;
+	(g_ScopeTraceStackDepth)--;
 	return &g_105f9a0c;
 }
 // END FUNCTION
 
 // FUNCTION: 0x101637f0 size=0x173
+#include "ScopeTrace.h"
 #include "CExperienceTable.h"
 
-struct TraceEnt { const char *a; const char *b; const char *c; };
-extern int *g_101e3128;
-extern TraceEnt *g_101e3124;
 extern char g_102de300[];
 extern char g_102cd404[];
 extern "C" __declspec(dllimport) void __cdecl Q_trimspace(const char *, char *, int);
@@ -108519,10 +108319,10 @@ void *operator new(unsigned int);
 // TARGET: CExperienceTable::sub_101637f0
 bool CExperienceTable::sub_101637f0(char *line, CExperienceAward *out)
 {
-	g_101e3124[*g_101e3128].a = "ExperienceTable::ParseLine";
-	g_101e3124[*g_101e3128].b = g_102de300;
-	g_101e3124[*g_101e3128].c = g_102de300;
-	++*g_101e3128;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].name = "ExperienceTable::ParseLine";
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].entity = g_102de300;
+	g_ScopeTraceStack[g_ScopeTraceStackDepth].extra = g_102de300;
+	++g_ScopeTraceStackDepth;
 	if (line && strlen(line) != 0)
 	{
 		char *p = strstr(line, g_102cd404);
@@ -108544,13 +108344,13 @@ bool CExperienceTable::sub_101637f0(char *line, CExperienceAward *out)
 					out->m_b = (int)b;
 					Q_trimspace(desc, b, strlen(desc) + 1);
 					out->m_c = atoi(num);
-					--*g_101e3128;
+					--g_ScopeTraceStackDepth;
 					return true;
 				}
 			}
 		}
 	}
-	--*g_101e3128;
+	--g_ScopeTraceStackDepth;
 	return false;
 }
 // END FUNCTION
