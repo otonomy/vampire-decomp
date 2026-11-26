@@ -1,9 +1,12 @@
 #pragma once
 #include "CSpriteRendererSub.h"
+#include "Vector.h"
+#include "QAngle.h"
 class C_SpriteRenderer
 {
 public:
 	~C_SpriteRenderer();
+	void sub_100c31e0(int type, const Vector &origin, const QAngle &angles, Vector &forward, Vector &right, Vector &up);	// "GetSpriteAxes" (2003 c_sprite.cpp): SPR_VP_PARALLEL_UPRIGHT 0, FACING_UPRIGHT 1, VP_PARALLEL 2, ORIENTED 3, VP_PARALLEL_ORIENTED 4
 	C_SpriteRenderer() { m_unk18 = -1; }
 	CSpriteRendererSub m_sub;
 	int m_unk18;
