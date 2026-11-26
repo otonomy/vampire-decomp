@@ -1109,6 +1109,7 @@
 0x10017a30 func   ?_C_ItemGCashBox_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGCashBox_CreateObject
 0x10017af0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGCashBox@@@Z ClientClassInit
 0x10017b80 func   ?vfunc17@C_ItemGCarStereo@@UAEHXZ C_ItemGCarStereo::vfunc17
+0x10017bc0 func   ?sub_10017bc0@@YAHXZ sub_10017bc0
 0x10017c10 func   ??_GC_ItemGCarStereo@@UAEPAXI@Z ??_GC_ItemGCarStereo@@UAEPAXI@Z
 0x10017c30 func   ?vfunc16@C_ItemGCarStereo@@UAEHXZ C_ItemGCarStereo::vfunc16
 0x10017c40 func   ?vfunc15@C_ItemGCarStereo@@UAEHXZ C_ItemGCarStereo::vfunc15
