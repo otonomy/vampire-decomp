@@ -20,6 +20,8 @@ public:
 	int m_unk20[10];
 	CVProfNode *m_pParent;
 	__declspec(dllimport) bool ExitScope();
+	__declspec(dllimport) CVProfNode *GetSubNode(const char *pszName, int detailLevel, const char *pBudgetGroupName);
+	__declspec(dllimport) void EnterScope();
 };
 
 class CVProfile
@@ -36,5 +38,6 @@ public:
 	CVProfNode *m_pCurNode;
 	CVProfNode *m_pRoot;
 	__declspec(dllimport) void ExitScope();
+	__declspec(dllimport) void PopGroup();
 	__declspec(dllimport) void EnterScope(const char *pszName, int detailLevel, const char *pBudgetGroupName, bool bAssertAccounted);
 };
