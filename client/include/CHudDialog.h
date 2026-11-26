@@ -27,5 +27,17 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void ScrollUp();
 	void sub_100544d0(bool bEnabled);
 	void sub_10054bd0(bool bEnabled);
-	char m_pad0008[0x5a84 - 0x8];
+	void sub_10055360(bool b);
+	void sub_10054670(int n);
+	void sub_10054f70(int type, const char *text);
+	void sub_10054860();
+	char m_pad0008[0x122c - 0x174];	// starts at 0x174 (the bases end there)
+	char m_szItems[4][0x800];	// 0x122c
+	char m_pad322c[0x324c - 0x322c];
+	char m_szText[0x800];	// 0x324c
+	int m_nOptions;	// 0x3a4c
+	char m_szOptions[4][0x800];	// 0x3a50
+	int m_iOptionA[4];	// 0x5a50
+	int m_iOptionB[4];	// 0x5a60
+	char m_pad5a70[0x5bf0 - 0x5a70];
 };
