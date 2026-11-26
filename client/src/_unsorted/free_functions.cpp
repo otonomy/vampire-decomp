@@ -72427,6 +72427,99 @@ unsigned short CUtlRBTree16::sub_10112270()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10112390 size=0x381
+#include "CUtlRBTree16.h"
+
+// CUtlRBTree::LinkToParent with InsertRebalance (and the left branch's RotateLeft) inlined, written on the
+// 16-byte-node view: Links() is the out-of-line const copy sub_10112720, IsLeftChild sub_10114120,
+// RotateLeft sub_101141e0, RotateRight sub_101143a0.
+inline CUtlRBTree16::Links_t &RB16Links(CUtlRBTree16 *t, unsigned short i)
+{
+	return *(CUtlRBTree16::Links_t *)(i * sizeof(CUtlRBTree16::Node_t) + (char *)t->m_pElements);
+}
+inline unsigned short RB16Parent(CUtlRBTree16 *t, unsigned short i) { return t->sub_10112720(i).m_Parent; }
+inline unsigned short RB16Left(CUtlRBTree16 *t, unsigned short i) { return t->sub_10112720(i).m_Left; }
+inline unsigned short RB16Right(CUtlRBTree16 *t, unsigned short i) { return t->sub_10112720(i).m_Right; }
+inline void RB16SetColor(CUtlRBTree16 *t, unsigned short i, int c) { RB16Links(t, i).m_Tag = (unsigned short)c; }
+
+void CUtlRBTree16::sub_10112390(unsigned short i, unsigned short parent, bool isLeft)
+{
+	Links_t &elem = RB16Links(this, i);
+	elem.m_Parent = parent;
+	elem.m_Left = elem.m_Right = InvalidIndex();
+	elem.m_Tag = 0;
+
+	if (parent != InvalidIndex()) {
+		if (isLeft)
+			RB16Links(this, parent).m_Left = i;
+		else
+			RB16Links(this, parent).m_Right = i;
+	} else {
+		m_Root = i;
+	}
+
+	unsigned short e = i;
+	while (e != m_Root && sub_10112720(RB16Parent(this, e)).m_Tag == 0) {
+		unsigned short p = RB16Parent(this, e);
+		unsigned short gp = RB16Parent(this, p);
+
+		if (RB16Left(this, RB16Parent(this, p)) == p) {
+			unsigned short uncle = RB16Right(this, gp);
+			if (sub_10112720(uncle).m_Tag == 0) {
+				RB16SetColor(this, p, 1);
+				RB16SetColor(this, uncle, 1);
+				RB16SetColor(this, gp, 0);
+				e = gp;
+			} else {
+				if (RB16Right(this, RB16Parent(this, e)) == e) {
+					e = p;
+					unsigned short rightchild = RB16Right(this, e);
+					RB16Links(this, e).m_Right = RB16Left(this, rightchild);
+					if (RB16Left(this, rightchild) != InvalidIndex())
+						RB16Links(this, RB16Left(this, rightchild)).m_Parent = e;
+					if (rightchild != InvalidIndex())
+						RB16Links(this, rightchild).m_Parent = RB16Parent(this, e);
+					if (e != m_Root) {
+						if (sub_10114120(e))
+							RB16Links(this, RB16Parent(this, e)).m_Left = rightchild;
+						else
+							RB16Links(this, RB16Parent(this, e)).m_Right = rightchild;
+					} else
+						m_Root = rightchild;
+					RB16Links(this, rightchild).m_Left = e;
+					if (e != InvalidIndex())
+						RB16Links(this, e).m_Parent = rightchild;
+					p = RB16Parent(this, e);
+					gp = RB16Parent(this, p);
+				}
+				RB16SetColor(this, p, 1);
+				RB16SetColor(this, gp, 0);
+				sub_101143a0(gp);
+			}
+		} else {
+			unsigned short uncle = RB16Left(this, gp);
+			if (sub_10112720(uncle).m_Tag == 0) {
+				RB16SetColor(this, p, 1);
+				RB16SetColor(this, uncle, 1);
+				RB16SetColor(this, gp, 0);
+				e = gp;
+			} else {
+				if (RB16Left(this, RB16Parent(this, e)) == e) {
+					e = p;
+					sub_101143a0(p);
+					p = RB16Parent(this, e);
+					gp = RB16Parent(this, p);
+				}
+				RB16SetColor(this, p, 1);
+				RB16SetColor(this, gp, 0);
+				sub_101141e0(gp);
+			}
+		}
+	}
+	RB16SetColor(this, m_Root, 1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10112720 size=0x57
 #include "CUtlRBTree16.h"
 
