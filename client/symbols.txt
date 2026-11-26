@@ -5655,6 +5655,7 @@
 0x10102fd0 func   ?sub_10102fd0@@YGXH@Z sub_10102fd0
 0x10102fe0 func   ?sub_10102fe0@CUnknown10102fe0@@QAEHHH@Z CUnknown10102fe0::sub_10102fe0
 0x101030c0 func   ?sub_101030c0@CInput_101030c0@@QAEXHPAUFrameData_101030c0@@@Z CInput_101030c0::sub_101030c0
+0x10103310 func   ?MakeWeaponSelection@CInput@@UAEXH@Z CInput::MakeWeaponSelection
 0x10103310 func   ?vfunc8@CInput@@UAEXH@Z CInput::vfunc8
 0x10103320 func   ?CreateMove@CInput@@UAEXHHMMHM@Z CInput::CreateMove
 0x10103a60 func   ?EncodeUserCmdToBuffer@CInput@@UAEXHHH@Z CInput::EncodeUserCmdToBuffer
