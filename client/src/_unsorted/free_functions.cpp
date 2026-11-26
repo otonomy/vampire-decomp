@@ -114140,6 +114140,12 @@ int CUnknown1016eea0::sub_1016eea0(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1016ef00 size=0x1
+void sub_1016ef00()
+{
+}
+// END FUNCTION
+
 // FUNCTION: 0x1016f380 size=0x1e
 #include "CInput.h"
 struct SubObj_1016f380
