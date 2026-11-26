@@ -115239,6 +115239,97 @@ void CViewRender::sub_10190850()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10190f30 size=0x21a
+#include "Vector.h"
+#include "Tier1.h"
+
+struct EngVF {
+	virtual void e0(); virtual void e1(); virtual void e2(); virtual void e3(); virtual void e4();
+	virtual void e5(); virtual void e6(); virtual void e7(); virtual void e8(); virtual void e9();
+	virtual void e10(); virtual void e11(); virtual void e12(); virtual void e13(); virtual void e14();
+	virtual void e15(); virtual void e16(); virtual void e17(); virtual void e18(); virtual void e19();
+	virtual void e20(); virtual void e21(); virtual void e22(); virtual void e23(); virtual void e24();
+	virtual void e25(); virtual void e26(); virtual void e27(); virtual void e28(); virtual void e29();
+	virtual void e30(); virtual void e31(); virtual void e32(); virtual void e33(); virtual void e34();
+	virtual void e35(); virtual void e36(); virtual void e37(); virtual void e38(); virtual void e39();
+	virtual void e40(); virtual void e41(); virtual void e42(); virtual void e43();
+	virtual int FrameCount();
+};
+struct VMV {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual Vector *GetOrigin();
+	virtual Vector *GetAngles();
+	virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual char **v50(void *out);
+	char m_pad[0x63c - 4];
+	int m63c;
+	char m_pad2[0x648 - 0x640];
+	float m648;
+	char sub_1009f140(int flag);
+	void *sub_100ac070();
+	int sub_1007f870();
+};
+struct WeaponV { const char *sub_100a5a50(); };
+struct CamInfo { char m_pad[8]; float v[6]; };
+struct ViewRenderV { CamInfo *sub_1019e1f0(int i); };
+struct PlayerV { void *sub_100a7890(); };
+struct PlayerV2 { char sub_10001970(); };
+struct CineV { char sub_100019a0(); void sub_100019d0(Vector *a, Vector *b); };
+
+extern EngVF *g_104a57d4;
+extern ViewRenderV g_105fbf38;
+extern PlayerV *g_104a0d50;
+int sub_100aaf30();
+VMV *sub_100ab190(int i);
+
+// TARGET: sub_10190f30
+void sub_10190f30()
+{
+	void (*Dev)(const char *, ...) = g_101e311c;
+	Dev("\n\n====================================================================\n");
+	Dev("Printing Viewmodel Info on frame: %d\n", g_104a57d4->FrameCount());
+	for (int i = 0; i < sub_100aaf30(); i++)
+	{
+		VMV *vm = sub_100ab190(i);
+		const char *vis;
+		if (vm->sub_1009f140(0x40))
+			vis = "not visible";
+		else
+			vis = "visible";
+		WeaponV *w = (WeaponV *)vm->sub_100ac070();
+		const char *wname;
+		if (w)
+			wname = ((WeaponV *)vm->sub_100ac070())->sub_100a5a50();
+		else
+			wname = "none";
+		char *tmp;
+		int seq = vm->m63c;
+		char **pname = vm->v50(&tmp);
+		Dev("VM %d:  %s (id:%d) (seq: %d, %.2f) (%s) (%s)\n", i, *pname, vm->sub_1007f870(), vm->m648, seq, vis, wname);
+		Vector *ang = vm->GetAngles();
+		Vector *org = vm->GetOrigin();
+		Dev("VM %d:  o:(%.1f,%.1f,%.1f) a:(%.1f,%.1f,%.1f)\n", i, org->x, vm->GetOrigin()->y, vm->GetOrigin()->z, ang->x, vm->GetAngles()->y, vm->GetAngles()->z);
+		CamInfo *info = g_105fbf38.sub_1019e1f0(i);
+		Dev("info %d:  o:(%.1f,%.1f,%.1f) a:(%.1f,%.1f,%.1f)\n", i, info->v[0], info->v[1], info->v[2], info->v[3], info->v[4], info->v[5]);
+	}
+	CineV *cam = (CineV *)((PlayerV *)g_104a0d50)->sub_100a7890();
+	if (cam && ((PlayerV2 *)cam)->sub_10001970() && cam->sub_100019a0())
+	{
+		Vector a, o;
+		cam->sub_100019d0(&a, &o);
+		Dev("cam  o:(%.1f,%.1f,%.1f) a:(%.1f,%.1f,%.1f)\n", o.x, o.y, o.z, a.x, a.y, a.z);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10192bf0 size=0xb2
 struct MatVarView
 {

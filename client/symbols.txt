@@ -8547,6 +8547,7 @@
 0x10190360 func   ?vfunc9@CViewRender@@UAEXXZ CViewRender::vfunc9
 0x101907a0 func   ?sub_101907a0@@YGMABVQAngle@@ABVVector@@MM@Z sub_101907a0
 0x10190850 func   ?sub_10190850@CViewRender@@QAEXXZ CViewRender::sub_10190850
+0x10190f30 func   ?sub_10190f30@@YAXXZ sub_10190f30
 0x101911a0 func   ?vfunc3@CViewRender@@UAEXXZ CViewRender::vfunc3
 0x10191610 func   ?vfunc14@CViewRender@@UAEPAXXZ CViewRender::vfunc14
 0x10191670 func   ?vfunc15@CViewRender@@UAEXABVVector@@@Z CViewRender::vfunc15
