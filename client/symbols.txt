@@ -2870,6 +2870,7 @@
 0x1004e420 func   ?sub_1004e420@@YAXPBDPAH111@Z sub_1004e420
 0x1004e800 func   ?sub_1004e800@@YAXPAPBD@Z sub_1004e800
 0x1004e830 func   ?sub_1004e830@UtlMem@@QAEXH@Z UtlMem::sub_1004e830
+0x1004e8b0 func   ??0CDiscipline@@QAE@H@Z CDiscipline::CDiscipline
 0x1004ea40 func   ?vfunc112@CManagedHudElement@@UAEXXZ CManagedHudElement::vfunc112
 0x1004ea50 func   ?sub_1004ea50@@YAHXZ sub_1004ea50
 0x1004ea80 func   ??1CDiscipline@@UAE@XZ CDiscipline::~CDiscipline
