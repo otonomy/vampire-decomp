@@ -16865,6 +16865,34 @@ void CUnknown10028020::sub_10028020()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100282c0 size=0x50
+namespace lifted {
+extern char g_10224544;
+extern char g_10224558;
+extern char g_10224594;
+extern char g_102245cc;
+extern char g_10224624;
+struct C100285a0 { int sub_100285a0(); };
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100282c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x9b0);
+    if (t0 != 0) {
+        ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        int t1 = ((lifted::C100285a0 *)((char *)t0 + 0x978))->sub_100285a0();
+        *(int *)((char *)t0) = (int)&lifted::g_10224624;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_102245cc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10224594;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10224558;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10224544;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10028370 size=0x20
 struct Mem8370 { void sub_10028820(void *); };
 struct V8370 { char pad[0x970]; Mem8370 m; void sub_1009b2c0(int); void sub_10028370(int p); };
