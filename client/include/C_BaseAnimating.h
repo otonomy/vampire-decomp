@@ -33,6 +33,7 @@ public:
 	void sub_10002680(int);
 	bool sub_10095ac0(int idx, int arg);
 	int sub_1008f900(int index);
+	void sub_100968a0(Vector *pos, class Quaternion *q, int sequence, float cycle, const float *poseParameter, const struct CBitVecWords *boneMask);	// CalcPose over the model and its two extra studio headers (bone maps at +0x4d0)
 	int sub_100940d0(int index, int *pOut);
 	int LookupBone(const char *pszName);
 	void sub_10096c30();
