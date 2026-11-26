@@ -3256,6 +3256,7 @@
 0x1007ce00 func   ?vfunc15@C_BaseCombatWeapon@@UAEHXZ C_BaseCombatWeapon::vfunc15
 0x1007ce10 func   ?sub_1007ce10@@YAHXZ sub_1007ce10
 0x1007ce70 func   ?_C_BaseCombatWeapon_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_BaseCombatWeapon_CreateObject
+0x1007cee0 func   ?sub_1007cee0@@YAHXZ sub_1007cee0
 0x1007cf60 func   ?ClientClassInit@@YAHPAUignored@DT_LocalActiveWeaponData@@@Z ClientClassInit
 0x1007d050 func   ?ClientClassInit@@YAHPAUignored@DT_LocalWeaponData@@@Z ClientClassInit
 0x1007d1c0 func   ?ClientClassInit@@YAHPAUignored@DT_BaseCombatWeapon@@@Z ClientClassInit

@@ -32998,6 +32998,21 @@ int sub_1007ce10()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007cee0 size=0x1b
+namespace lifted {
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1007cee0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        return ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007cf60 size=0x7d
 #include "RecvTable.h"
 extern RecvTable g_10486410;
