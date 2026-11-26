@@ -7256,6 +7256,7 @@
 0x10146300 func   ?sub_10146300@@YAHXZ sub_10146300
 0x10146360 func   ?_C_DisciplineProjectile_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_DisciplineProjectile_CreateObject
 0x10146400 func   ?ClientClassInit@@YAHPAUignored@DT_DisciplineProjectile@@@Z ClientClassInit
+0x101464d0 func   ?sub_101464d0@@YAHXZ sub_101464d0
 0x10146520 func   ??0C_DisciplineProjectile@@QAE@XZ C_DisciplineProjectile::C_DisciplineProjectile
 0x10146520 func   ?sub_10146520@CUnknown10146520@@QAEPAXXZ CUnknown10146520::sub_10146520
 0x10146550 func   ??_GC_DisciplineProjectile@@UAEPAXI@Z ??_GC_DisciplineProjectile@@UAEPAXI@Z

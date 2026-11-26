@@ -95594,6 +95594,21 @@ template <> int ClientClassInit<DT_DisciplineProjectile::ignored>(DT_DisciplineP
 }
 // END FUNCTION
 
+// FUNCTION: 0x101464d0 size=0x1b
+namespace lifted {
+int sub_100a1eb0(int);
+struct C10146520 { int sub_10146520(); };
+}
+int sub_101464d0()
+{
+    int t0 = lifted::sub_100a1eb0(0x808);
+    if (t0 != 0) {
+        return ((lifted::C10146520 *)t0)->sub_10146520();
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10146520 size=0x2e
 namespace lifted {
 extern char g_10247c20;
