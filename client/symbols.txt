@@ -7930,6 +7930,7 @@
 0x101539e0 func   ?sub_101539e0@CUnknown101f1e20@@QAEXXZ CUnknown101f1e20::sub_101539e0
 0x10153ab0 func   ??0VKeyValues@@QAE@PBD@Z VKeyValues::VKeyValues
 0x10153b40 func   ?vfunc2@IKeyCacheable@@QAEPAXD@Z IKeyCacheable::vfunc2
+0x10153b60 func   ??_GIKeyValues@@UAEPAXI@Z ??_GIKeyValues@@UAEPAXI@Z
 0x10153ba0 func   ?sub_10153ba0@VKeyValues@@QAEXPBD@Z VKeyValues::sub_10153ba0
 0x10153bd0 func   ??1VKeyValues@@UAE@XZ VKeyValues::~VKeyValues
 0x10153c10 func   ?sub_10153c10@@YIXPAD@Z sub_10153c10
