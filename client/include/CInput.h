@@ -40,6 +40,7 @@ public:
     int m_unk104[(0x138 - 0x104) / 4];
     float m_f138;
     char sub_100ff0a0(struct CUnkPlayer *);
+    void sub_100fc900();
     // vtable-slot layer (2026-11-22), from the game's vtables
     // the slots CInput adds to its base's vtable: 0-56, vfuncK at slot K
     virtual void Init_All();	// slot 0
