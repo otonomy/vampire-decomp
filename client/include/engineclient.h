@@ -52,7 +52,7 @@ public:
 	virtual void vfunc26();
 	virtual void vfunc27(const char *, int);	// slot 27; seen as ClientCmd 7, ServerCmd 4; shapes differ
 	virtual void ClientCmd(const char *);	// slot 28
-	virtual void vfunc29();
+	virtual void vfunc29(const char *pszName, int (*pfnHook)(const char *, int, void *));	// slot 29: HookUserMsg (CViewEffects::Init hooks "ScreenShake" / "ScreenFade")
 	virtual void vfunc30(int, void *);	// slot 30
 	virtual void vfunc31();
 	virtual void vfunc32();
