@@ -3277,6 +3277,7 @@
 0x10067950 func   ?sub_10067950@CUnknown10067950@@QAEXH@Z CUnknown10067950::sub_10067950
 0x10067990 func   ?sub_10067990@CUnknown10067990@@QAE_NPAHH00@Z CUnknown10067990::sub_10067990
 0x10067a50 func   ?sub_10067a50@UtlMem@@QAEXH@Z UtlMem::sub_10067a50
+0x10067ac0 func   ?Grow@?$CUtlMemory@UMMParticleEmitter_t@@@@QAEXH@Z CUtlMemory<MMParticleEmitter_t>::Grow
 0x10067ac0 func   ?sub_10067ac0@@YIXPAUUtlMemView@@HH@Z sub_10067ac0
 0x10067d00 func   ?sub_10067d00@@YAXXZ sub_10067d00
 0x10067db0 func   ?sub_10067db0@@YAXXZ sub_10067db0
