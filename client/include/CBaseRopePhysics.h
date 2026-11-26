@@ -40,6 +40,11 @@ public:
 	virtual void vfunc0(CRopeNode *pNodes, int iNode, Vector *pAccel);	// GetNodeForces: the delegate's, else none
 	virtual void vfunc1(CRopeNode *pNodes, int nNodes);	// ApplyConstraints: the global number of times pulls the first count - 1 link pairs back to the rest length (when further apart than the squared limit at +0x18), handing the nodes on to the delegate at +4 after every iteration; subclasses call it as CBaseRopePhysics::vfunc1
 
+	CRopeNode *GetNode(int i) { return &m_pNodes[i]; }
+	CRopeNode *GetFirstNode() { return GetNode(0); }
+	CRopeNode *GetLastNode() { return GetNode(m_nNodes - 1); }
+	int NumNodes() { return m_nNodes; }
+
 	CSimplePhysics::IHelper *m_pNext;	// 0x04 the delegate the forces and constraints are handed on to
 	CRopeNode *m_pNodes;	// 0x08
 	int m_nNodes;	// 0x0c
