@@ -4670,6 +4670,7 @@
 0x100c9680 func   ?sub_100c9680@C_VGuiScreen@@QAEXAAVVector@@00@Z C_VGuiScreen::sub_100c9680
 0x100c9790 func   ?sub_100c9790@CVGuiScreen_100c9790@@QAEHABVVector@@@Z CVGuiScreen_100c9790::sub_100c9790
 0x100c9820 func   ?sub_100c9820@C_VGuiScreen@@QAEXXZ C_VGuiScreen::sub_100c9820
+0x100c9860 func   ?sub_100c9860@C_VGuiScreen@@QAEXXZ C_VGuiScreen::sub_100c9860
 0x100c9d40 func   ?sub_100c9d40@CUnknown100c9d40@@QAEHXZ CUnknown100c9d40::sub_100c9d40
 0x100c9d50 func   ?sub_100c9d50@HList@@QAEPAXH@Z HList::sub_100c9d50
 0x100c9d90 func   ?sub_100c9d90@@YAPAVC_VGuiScreen@@ABVVector@@ABVQAngle@@H@Z sub_100c9d90
