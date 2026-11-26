@@ -15411,16 +15411,16 @@ int CUnknown10037060::sub_10037060()
 // END FUNCTION
 
 // FUNCTION: 0x10037080 size=0x30
+#include "CClientEntityList.h"
 namespace lifted {
 extern int g_1028073c;
-extern int g_102b8e9c;
 struct C100d0cf0 { int sub_100d0cf0(int); };
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual int f11(int, int, int); };
 }
 struct CUnknown10037080 { void sub_10037080(int); };
 void CUnknown10037080::sub_10037080(int a0)
 {
-    int t0 = ((lifted::C100d0cf0 *)lifted::g_102b8e9c)->sub_100d0cf0(*(int *)((char *)this + 0xc));
+    int t0 = ((lifted::C100d0cf0 *)((int)cl_entitylist))->sub_100d0cf0(*(int *)((char *)this + 0xc));
     if (t0 != 0) {
         ((lifted::V *)lifted::g_1028073c)->f11(t0, *(int *)((char *)this + 0x10), *(int *)((char *)this + 0x14));
     }
@@ -15721,6 +15721,7 @@ int CUnknown10037ad0::sub_10037ad0()
 // END FUNCTION
 
 // FUNCTION: 0x10037b90 size=0x8b
+#include "CClientEntityList.h"
 #include "engineclient.h"
 #include "ConVar.h"
 #include "CClientEntityList.h"
@@ -15730,14 +15731,13 @@ int CUnknown10037ad0::sub_10037ad0()
 
 
 
-extern CClientEntityList *g_102b8e9c;
 
 void sub_10037b90(void *filter, float delay, const Vector *pos, const Vector *start, int entity, int index, int hitbox)
 {
 	ConVar *r_decals = cvar->FindVar("r_decals");
 	if (r_decals && r_decals->GetInt())
 	{
-		C_BaseEntity *ent = g_102b8e9c->sub_100d0cf0(entity);
+		C_BaseEntity *ent = cl_entitylist->sub_100d0cf0(entity);
 		if (ent)
 		{
 			effects->DecalShoot(
@@ -17957,8 +17957,8 @@ void * CUnknown10040340::sub_10040340()
 // END FUNCTION
 
 // FUNCTION: 0x10040390 size=0x72
+#include "CClientEntityList.h"
 struct CEntList100d0cf0 { void *sub_100d0cf0(int idx); };
-extern CEntList100d0cf0 *g_102b8e9c;
 struct CPart100af150 { void sub_100af150(); };
 struct CEntView40390
 {
@@ -17984,7 +17984,7 @@ struct CFx40390
 
 void CFx40390::sub_10040390(int)
 {
-	CEntView40390 *e = (CEntView40390 *)g_102b8e9c->sub_100d0cf0(m_idx);
+	CEntView40390 *e = (CEntView40390 *)((CEntList100d0cf0 *)cl_entitylist)->sub_100d0cf0(m_idx);
 	if (e && e->m_p404)
 	{
 		CPart100af150 *p = sub_100b4820(m_a, e->v43(), e->v45(), e, m_b, m_c, 1.0f, 1.0f, 1.0f, 1.0f);
@@ -18062,9 +18062,9 @@ void * CUnknown10040630::sub_10040630()
 
 // FUNCTION: 0x10040680 size=0x79
 #include "CClientEntityList.h"
+#include "CClientEntityList.h"
 #include "C_EnvParticle.h"
 
-extern CClientEntityList *g_102b8e9c;
 extern C_EnvParticle *sub_100b4820(int idx, int a1, int a2, int a3, int a4, int a5, float f1, float f2, float f3, float f4);
 
 struct Ent_10040680
@@ -18101,7 +18101,7 @@ struct Part_10040680
 
 void Fx_10040680::sub_10040680(int)
 {
-	Ent_10040680 *ent = (Ent_10040680 *)g_102b8e9c->sub_100d0cf0(m_nC);
+	Ent_10040680 *ent = (Ent_10040680 *)cl_entitylist->sub_100d0cf0(m_nC);
 	if (ent && ent->m_n404)
 	{
 		Part_10040680 *p = (Part_10040680 *)sub_100b4820(m_n10, ent->vfunc43(), ent->vfunc45(), (int)ent, m_n14, 0, 1.0f, 1.0f, 1.0f, 1.0f);
@@ -18363,6 +18363,7 @@ int CUnknown10041100::sub_10041100()
 // END FUNCTION
 
 // FUNCTION: 0x100411c0 size=0x84
+#include "CClientEntityList.h"
 #include "engineclient.h"
 #include "ConVar.h"
 #include "CClientEntityList.h"
@@ -18372,14 +18373,13 @@ int CUnknown10041100::sub_10041100()
 
 
 
-extern CClientEntityList *g_102b8e9c;
 
 void sub_100411c0(void *filter, float delay, const Vector *pos, int index)
 {
 	ConVar *r_decals = cvar->FindVar("r_decals");
 	if (r_decals && r_decals->GetInt())
 	{
-		C_BaseEntity *ent = g_102b8e9c->sub_100d0cf0(0);
+		C_BaseEntity *ent = cl_entitylist->sub_100d0cf0(0);
 		if (ent)
 		{
 			effects->DecalShoot(
@@ -23006,6 +23006,7 @@ char CUnknown1005e3c0::sub_1005e3c0(char a0)
 // END FUNCTION
 
 // FUNCTION: 0x1005e400 size=0x91
+#include "CClientEntityList.h"
 #include "CHudUseIcon.h"
 extern "C" __declspec(dllimport) char *Q_strncpy(char *, const char *, int);
 extern "C" void *memset(void *, int, unsigned int);
@@ -23015,11 +23016,10 @@ struct CWpn1007b160 { CInfo1007b160 *sub_1007b160(); };
 struct CWpnInfo { char pad[0x5ebc8]; int m_n5ebc8; };
 struct CEntX { char pad[0x3ec]; CWpn1007b160 *m_p3ec; };
 struct CEntList100d0cf0 { CEntX *sub_100d0cf0(int); };
-extern CEntList100d0cf0 *g_102b8e9c;
 const char *CHudUseIcon::sub_1005e400(int idx)
 {
 	int ret = 0;
-	CEntX *pEnt = g_102b8e9c->sub_100d0cf0(idx);
+	CEntX *pEnt = ((CEntList100d0cf0 *)cl_entitylist)->sub_100d0cf0(idx);
 	if (pEnt && pEnt->m_p3ec) {
 		CWpn1007b160 *p = pEnt->m_p3ec;
 		if (((CWpnInfo *)p->sub_1007b160())->m_n5ebc8)
@@ -24389,6 +24389,7 @@ int sub_100650b0(int a0)
 
 // FUNCTION: 0x10065230 size=0x81
 #include "CClientEntityList.h"
+#include "CClientEntityList.h"
 extern "C" __declspec(dllimport) char *Q_strncpy(char *, const char *, int);
 extern "C" void *memset(void *, int, unsigned int);
 struct InfoV { char m_pad[0x88]; char m_szName[0x40]; };
@@ -24399,11 +24400,10 @@ struct TargetedV {
 	char m_szName[0x40];
 	int sub_10065230(int index);
 };
-extern CClientEntityList *g_102b8e9c;
 int TargetedV::sub_10065230(int index)
 {
 	int result = 0;
-	EntV *ent = (EntV *)g_102b8e9c->sub_100d0cf0(index);
+	EntV *ent = (EntV *)cl_entitylist->sub_100d0cf0(index);
 	if (ent && ent->m_pWeapon) {
 		WeaponV *w = ent->m_pWeapon;
 		if (*(int *)((char *)w->sub_1007b160() + 0x5ebc8))
@@ -31501,17 +31501,17 @@ int C_BaseCombatWeapon::sub_1007ba10(int n, int m)
 // END FUNCTION
 
 // FUNCTION: 0x1007bab0 size=0x38
+#include "CBaseEntityList.h"
 struct EntView { char pad[0x3f0]; int m3f0; };
 struct EntInfo { EntView *ent; int serial; int pad; };
 struct EntList { int hdr; EntInfo e[8192]; };
-extern EntList *g_102b8e98;
 struct Handle {
 	unsigned long m_Index;
 	EntView *Get() const
 	{
 		if (m_Index == 0xffffffff)
 			return 0;
-		EntInfo *i = &g_102b8e98->e[m_Index & 0x1fff];
+		EntInfo *i = &((EntList *)g_pEntityList)->e[m_Index & 0x1fff];
 		if (i->serial != (int)(m_Index >> 13))
 			return 0;
 		return i->ent;
@@ -31530,17 +31530,17 @@ int HV::sub_1007bab0()
 // END FUNCTION
 
 // FUNCTION: 0x1007baf0 size=0x38
+#include "CBaseEntityList.h"
 struct EntView { char pad[0x3f0]; int m3f0; };
 struct EntInfo { EntView *ent; int serial; int pad; };
 struct EntList { int hdr; EntInfo e[8192]; };
-extern EntList *g_102b8e98;
 struct Handle {
 	unsigned long m_Index;
 	EntView *Get() const
 	{
 		if (m_Index == 0xffffffff)
 			return 0;
-		EntInfo *i = &g_102b8e98->e[m_Index & 0x1fff];
+		EntInfo *i = &((EntList *)g_pEntityList)->e[m_Index & 0x1fff];
 		if (i->serial != (int)(m_Index >> 13))
 			return 0;
 		return i->ent;
@@ -31559,17 +31559,17 @@ int HV::sub_1007baf0()
 // END FUNCTION
 
 // FUNCTION: 0x1007bb30 size=0x38
+#include "CBaseEntityList.h"
 struct EntView { char pad[0x3f8]; int m3f0; };
 struct EntInfo { EntView *ent; int serial; int pad; };
 struct EntList { int hdr; EntInfo e[8192]; };
-extern EntList *g_102b8e98;
 struct Handle {
 	unsigned long m_Index;
 	EntView *Get() const
 	{
 		if (m_Index == 0xffffffff)
 			return 0;
-		EntInfo *i = &g_102b8e98->e[m_Index & 0x1fff];
+		EntInfo *i = &((EntList *)g_pEntityList)->e[m_Index & 0x1fff];
 		if (i->serial != (int)(m_Index >> 13))
 			return 0;
 		return i->ent;
@@ -32492,17 +32492,17 @@ void C_BasePlayer::sub_1007ede0(C_BaseEntity *pEntity)
 // END FUNCTION
 
 // FUNCTION: 0x1007f0f0 size=0x38
+#include "CBaseEntityList.h"
 struct EntView { char pad[0x3f0]; int m3f0; };
 struct EntInfo { EntView *ent; int serial; int pad; };
 struct EntList { int hdr; EntInfo e[8192]; };
-extern EntList *g_102b8e98;
 struct Handle {
 	unsigned long m_Index;
 	EntView *Get() const
 	{
 		if (m_Index == 0xffffffff)
 			return 0;
-		EntInfo *i = &g_102b8e98->e[m_Index & 0x1fff];
+		EntInfo *i = &((EntList *)g_pEntityList)->e[m_Index & 0x1fff];
 		if (i->serial != (int)(m_Index >> 13))
 			return 0;
 		return i->ent;
@@ -32924,6 +32924,7 @@ void C_Beam::sub_100805a0(char *arg)
 // END FUNCTION
 
 // FUNCTION: 0x10080650 size=0x8b
+#include "CBaseEntityList.h"
 #include "C_Beam.h"
 #include "ehandle.h"
 struct StaticBeamVec { float x, y, z; StaticBeamVec() {} ~StaticBeamVec() {} };
@@ -32932,7 +32933,7 @@ static inline void *BeamLookup(unsigned long h)
 {
     if (h != 0xffffffff)
     {
-        CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[h & 0x1fff];
+        CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h & 0x1fff];
         if (e.m_SerialNumber == (int)(h >> 13))
             return e.m_pEntity;
     }
@@ -32953,10 +32954,10 @@ const Vector &C_Beam::sub_10080650()
 // END FUNCTION
 
 // FUNCTION: 0x100806f0 size=0xe7
+#include "CBaseEntityList.h"
 #include "C_Beam.h"
 struct EntInfo { void *m_pEntity; unsigned int m_Serial; int m_unk8; };
 struct EntList { int m_unk0; EntInfo m_Ents[1]; };
-extern EntList *g_102b8e98;
 struct Vector3 { float x, y, z; Vector3() {} ~Vector3() {} };
 bool sub_10192d00(void *pEnt, int nAttach, Vector3 *pOut);
 void sub_10107f80(Vector3 *a, Vector3 *b, Vector3 *c);
@@ -32966,7 +32967,7 @@ inline void *LookupHandle(unsigned int h)
 {
 	if (h != 0xffffffff)
 	{
-		EntInfo *e = &g_102b8e98->m_Ents[h & 0x1fff];
+		EntInfo *e = &((EntList *)g_pEntityList)->m_Ents[h & 0x1fff];
 		if (e->m_Serial == (h >> 13))
 			return e->m_pEntity;
 	}
@@ -37892,6 +37893,7 @@ bool C_BaseAnimating::sub_10091910(int idx, int arg)
 // END FUNCTION
 
 // FUNCTION: 0x100921d0 size=0xe7
+#include "CBaseEntityList.h"
 #include "engineclient.h"
 #include "CBaseEntityList.h"
 
@@ -37900,7 +37902,6 @@ extern "C" __declspec(dllimport) void __cdecl Warning(const char *fmt, ...);
 struct model_t;
 
 
-extern CBaseEntityList *g_102b8e98;
 
 struct IBase0_100921d0
 {
@@ -37932,7 +37933,7 @@ struct Ent_100921d0 : public IBase0_100921d0, public IClientRenderable_100921d0
 		unsigned int h = m_hMoveParent;
 		if (h != 0xffffffff)
 		{
-			CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[h & 0x1fff];
+			CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[h & 0x1fff];
 			if (e->m_SerialNumber == (int)(h >> 13))
 				return (Ent_100921d0 *)e->m_pEntity;
 		}
@@ -39926,13 +39927,13 @@ float CObfEntity::sub_10099880()
 
 // FUNCTION: 0x10099bd0 size=0x2d
 #include "CBaseEntityList.h"
-extern CBaseEntityList *g_102b8e98;
+#include "CBaseEntityList.h"
 struct XHOwner { char u[0x10d8]; unsigned int m_h10d8; void *sub_10099bd0(); };
 void *XHOwner::sub_10099bd0()
 {
 	unsigned int h = m_h10d8;
 	if (h != 0xffffffff) {
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e->m_SerialNumber == (int)(h >> 13))
 			return e->m_pEntity;
 	}
@@ -40336,10 +40337,10 @@ void sub_1009c7e0()
 // END FUNCTION
 
 // FUNCTION: 0x1009c7f0 size=0x155
+#include "CBaseEntityList.h"
 #include "C_BaseCombatWeapon.h"
 #include "CBaseEntityList.h"
 
-extern CBaseEntityList *g_102b8e98;
 
 struct CBaseHandle_1009c7f0;
 
@@ -40354,7 +40355,7 @@ struct CBaseHandle_1009c7f0
 
 	inline void *Get() const
 	{
-		return ((EntListHelper_1009c7f0 *)g_102b8e98)->sub_1007aca0(*this);
+		return ((EntListHelper_1009c7f0 *)g_pEntityList)->sub_1007aca0(*this);
 	}
 };
 
@@ -40473,6 +40474,7 @@ int sub_1009c950()
 // END FUNCTION
 
 // FUNCTION: 0x1009cd10 size=0x71
+#include "CBaseEntityList.h"
 #include "C_BaseCombatWeapon.h"
 #include "CBaseHandle.h"
 #include "ehandle.h"
@@ -40502,7 +40504,7 @@ int C_BaseCombatWeapon::sub_1009cd10()
 	{
 		int idx = (int)(h & 0x1fff);
 		int serial = (int)(h >> 13);
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[idx];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[idx];
 		if ( e->m_SerialNumber == serial )
 		{
 			p = (EntView *)e->m_pEntity;
@@ -40829,12 +40831,12 @@ void * CUnknown1009dd60::sub_1009dd60()
 // END FUNCTION
 
 // FUNCTION: 0x1009e0f0 size=0x51
+#include "CClientEntityList.h"
 #include "C_BaseEntity.h"
 
 struct CUnknown1009fbb0 { void sub_100a06f0(int); };
 struct CUnknown10044400 { void sub_10044400(); };
 struct CUnk100e2360 { void sub_100e2360(void *out, void *ent); };
-extern CUnk100e2360 *g_102b8e9c;
 
 // TARGET: C_BaseEntity::sub_1009e0f0
 bool C_BaseEntity::sub_1009e0f0(int a, int b)
@@ -40842,7 +40844,7 @@ bool C_BaseEntity::sub_1009e0f0(int a, int b)
 	((CUnknown1009fbb0 *)this)->sub_100a06f0(a);
 	void *ent = ((IClientRenderable *)((char *)this + 4))->GetIClientUnknown();
 	int tmp;
-	g_102b8e9c->sub_100e2360(&tmp, ent);
+	((CUnk100e2360 *)cl_entitylist)->sub_100e2360(&tmp, ent);
 	sub_100a1a70(b);
 	((CUnknown10044400 *)((char *)this + 0x190))->sub_10044400();
 	*(int *)((char *)this + 0x44) = -1;
@@ -40852,12 +40854,10 @@ bool C_BaseEntity::sub_1009e0f0(int a, int b)
 // END FUNCTION
 
 // FUNCTION: 0x1009e230 size=0x6
-namespace lifted {
-extern int g_102b8e9c;
-}
+#include "CClientEntityList.h"
 int sub_1009e230()
 {
-    return lifted::g_102b8e9c;
+    return ((int)cl_entitylist);
 }
 // END FUNCTION
 
@@ -41146,18 +41146,18 @@ void *C_BaseEntity::sub_1009f7f0(void *arg)
 // END FUNCTION
 
 // FUNCTION: 0x1009f8a0 size=0x1c3
+#include "CBaseEntityList.h"
 #include "C_BaseEntity.h"
 #include "CBaseHandle.h"
 struct CEntInfoX { void *m_pEntity; int m_SerialNumber; int m_pPrev; };
 struct CEntListX { int m_pad; CEntInfoX m_Ents[1]; };
-extern CEntListX *g_102b8e98;
 extern char g_102af675;
 extern float g_104d5190, g_104d5194, g_104d5198;
 inline void *GetHandleEnt(const CBaseHandle &h)
 {
 	if (h.m_Index == 0xffffffff)
 		return 0;
-	CEntInfoX *p = &g_102b8e98->m_Ents[h.m_Index & 0x1fff];
+	CEntInfoX *p = &((CEntListX *)g_pEntityList)->m_Ents[h.m_Index & 0x1fff];
 	if (p->m_SerialNumber == (int)(h.m_Index >> 13))
 		return p->m_pEntity;
 	return 0;
@@ -41545,10 +41545,10 @@ void C_BaseEntity::sub_100a1110()
 // END FUNCTION
 
 // FUNCTION: 0x100a1140 size=0x51
+#include "CBaseEntityList.h"
 #include "C_BaseEntity.h"
 #include "CBaseEntityList.h"
 
-extern CBaseEntityList *g_102b8e98;
 
 bool C_BaseEntity::sub_100a1140()
 {
@@ -41556,17 +41556,17 @@ bool C_BaseEntity::sub_100a1140()
 	return sub_1009f140(1)
 		&& GetSolid() == 0
 		&& *(int *)((char *)this + 0x208) != -1
-		&& (e = &g_102b8e98->m_EntPtrArray[*(int *)((char *)this + 0x208) & 0x1fff], e->m_SerialNumber == (*(unsigned int *)((char *)this + 0x208) >> 13))
+		&& (e = &g_pEntityList->m_EntPtrArray[*(int *)((char *)this + 0x208) & 0x1fff], e->m_SerialNumber == (*(unsigned int *)((char *)this + 0x208) >> 13))
 		&& e->m_pEntity != 0;
 }
 // END FUNCTION
 
 // FUNCTION: 0x100a11a0 size=0x3b
+#include "CBaseEntityList.h"
 #include "C_BaseEntity.h"
 #include "CBaseEntityList.h"
 #include "CBaseHandle.h"
 
-extern CBaseEntityList *g_102b8e98;
 
 // TARGET: C_BaseEntity::sub_100a11a0
 C_BaseEntity *C_BaseEntity::sub_100a11a0()
@@ -41578,7 +41578,7 @@ C_BaseEntity *C_BaseEntity::sub_100a11a0()
 	h.m_Index = *(unsigned long *)((char *)this + 0x208);
 	if ( h.IsValid() )
 	{
-		CBaseEntityListEntry *pEnt = &g_102b8e98->m_EntPtrArray[h.GetEntryIndex()];
+		CBaseEntityListEntry *pEnt = &g_pEntityList->m_EntPtrArray[h.GetEntryIndex()];
 		if ( pEnt->m_SerialNumber == h.GetSerialNumber() )
 			return (C_BaseEntity *)pEnt->m_pEntity;
 	}
@@ -41594,16 +41594,16 @@ void sub_100a1200()
 
 // FUNCTION: 0x100a1230 size=0x3d
 #include "CClientEntityList.h"
+#include "CClientEntityList.h"
 #include "C_BaseEntity.h"
 
-extern CClientEntityList *g_102b8e9c;
 
 void sub_100a1230()
 {
-	int n = g_102b8e9c->vfunc6();
+	int n = cl_entitylist->vfunc6();
 	for (int i = 0; i <= n; i++)
 	{
-		C_BaseEntity *p = g_102b8e9c->sub_100d0cf0(i);
+		C_BaseEntity *p = cl_entitylist->sub_100d0cf0(i);
 		if (p)
 			p->sub_100a0d10();
 	}
@@ -41611,6 +41611,7 @@ void sub_100a1230()
 // END FUNCTION
 
 // FUNCTION: 0x100a1270 size=0xcc
+#include "CClientEntityList.h"
 #include "C_BaseEntity.h"
 #include "CClientEntityList.h"
 
@@ -41655,18 +41656,17 @@ struct CBaseEntBa
 	bool sub_100a2ba0();
 };
 
-extern CClientEntityList *g_102b8e9c;
 extern IPredictablesView *g_102af678;
 extern IViewRenderV *g_102d43d8;
 
 void sub_100a1270(void)
 {
 	int i;
-	int nCount = ((EntListSub *)((char *)g_102b8e9c + 0x1803c))->v6();
+	int nCount = ((EntListSub *)((char *)cl_entitylist + 0x1803c))->v6();
 	C_BaseEntity *pEntity;
 	for (i = 0; i <= nCount; i++)
 	{
-		pEntity = g_102b8e9c->sub_100d0cf0(i);
+		pEntity = cl_entitylist->sub_100d0cf0(i);
 		if (!pEntity)
 			continue;
 		if (pEntity->ShouldDraw())
@@ -42219,13 +42219,13 @@ int CUnknown100a2a80::sub_100a2a80()
 // END FUNCTION
 
 // FUNCTION: 0x100a2a90 size=0x11
+#include "CClientEntityList.h"
 namespace lifted {
-extern int g_102b8e9c;
 struct C100d0cf0 { int sub_100d0cf0(int); };
 }
 int sub_100a2a90(int a0)
 {
-    return ((lifted::C100d0cf0 *)lifted::g_102b8e9c)->sub_100d0cf0(a0);
+    return ((lifted::C100d0cf0 *)((int)cl_entitylist))->sub_100d0cf0(a0);
 }
 // END FUNCTION
 
@@ -42845,15 +42845,15 @@ template <> int ClientClassInit<DT_BaseNetworkable::ignored>(DT_BaseNetworkable:
 // END FUNCTION
 
 // FUNCTION: 0x100a3910 size=0x36
+#include "CClientEntityList.h"
 #include "C_BaseNetworkable.h"
 struct EListView { int *sub_100e2340(int *out, int a, int b, int c); };
-extern EListView *g_102b8e9c;
 // TARGET: C_BaseNetworkable::sub_100a3910
 void C_BaseNetworkable::sub_100a3910(int a, int b)
 {
 	int tmp;
 	m_unk12 = (unsigned short)a;
-	EListView *list = g_102b8e9c;
+	EListView *list = ((EListView *)cl_entitylist);
 	m_unk14.v = *list->sub_100e2340(&tmp, (int)GetIClientUnknown(), a, b);
 }
 // END FUNCTION
@@ -43689,6 +43689,7 @@ int C_BasePlayer::sub_100a6850(int b, int h)
 // END FUNCTION
 
 // FUNCTION: 0x100a6920 size=0x46
+#include "CBaseEntityList.h"
 struct CEntInfo
 {
 	void *m_pEntity;
@@ -43702,7 +43703,6 @@ struct EntList
 	CEntInfo e[8192];
 };
 
-extern EntList *g_102b8e98;
 
 struct CBaseHandle
 {
@@ -43712,7 +43712,7 @@ struct CBaseHandle
 	{
 		if (m_Index == 0xFFFFFFFF)
 			return 0;
-		CEntInfo *pInfo = &g_102b8e98->e[m_Index & 0x1FFF];
+		CEntInfo *pInfo = &((EntList *)g_pEntityList)->e[m_Index & 0x1FFF];
 		if (pInfo->m_SerialNumber != (int)(m_Index >> 13))
 			return 0;
 		return pInfo->m_pEntity;
@@ -43762,16 +43762,16 @@ int sub_100a6b00()
 // END FUNCTION
 
 // FUNCTION: 0x100a6b90 size=0x3c
+#include "CBaseEntityList.h"
 struct EntView { int m0; };
 struct EntInfo { EntView *ent; int serial; int pad; };
 struct EntList { int hdr; EntInfo e[8192]; };
-extern EntList *g_102b8e98;
 struct Handle {
 	unsigned long m_Index;
 	EntView *Get() const
 	{
 		if (m_Index != 0xffffffff) {
-			EntInfo *i = &g_102b8e98->e[m_Index & 0x1fff];
+			EntInfo *i = &((EntList *)g_pEntityList)->e[m_Index & 0x1fff];
 			if (i->serial == (int)(m_Index >> 13))
 				return i->ent;
 		}
@@ -43791,6 +43791,7 @@ int HV100a::sub_100a6b90()
 // END FUNCTION
 
 // FUNCTION: 0x100a7890 size=0xfb
+#include "CClientEntityList.h"
 #include "C_BasePlayer.h"
 #include "ehandle.h"
 
@@ -43817,7 +43818,6 @@ struct EntV {
 };
 
 extern GameRulesV *g_104a0c5c;
-extern EntListV *g_102b8e9c;
 
 struct PlayerV {
 	char m_pad0000[0x1640];
@@ -43839,7 +43839,7 @@ C_BaseEntity *C_BasePlayer::sub_100a7890()
 		((PlayerV *)this)->m_hSomething.m_Index = -1;
 	}
 	{
-		void *e = g_102b8e9c->sub_100d0cf0(((PlayerV *)this)->m_iSomething);
+		void *e = ((EntListV *)cl_entitylist)->sub_100d0cf0(((PlayerV *)this)->m_iSomething);
 		if (!e)
 			return 0;
 		((PlayerV *)this)->m_hSomething.m_Index = *(int *)(((EntV *)e)->vfunc1());
@@ -44145,11 +44145,11 @@ void C_BasePlayer::sub_100a9f40(C_BaseEntity *pEntity)
 // END FUNCTION
 
 // FUNCTION: 0x100aa040 size=0x1f8
+#include "CBaseEntityList.h"
 #include <string.h>
 #include "CBaseEntityList.h"
 #include "utlmemory.h"
 
-extern CBaseEntityList *g_102b8e98;
 
 struct EntView_100aa040 {
     bool sub_1007dba0();
@@ -44178,7 +44178,7 @@ struct CBaseHandle_100aa040
 
     inline void *Get() const
     {
-        return ((EntListHelper_100aa040 *)g_102b8e98)->sub_1007aca0(*this);
+        return ((EntListHelper_100aa040 *)g_pEntityList)->sub_1007aca0(*this);
     }
 };
 
@@ -44657,6 +44657,7 @@ IHandleEntity *sub_100ab190(int i)
 // END FUNCTION
 
 // FUNCTION: 0x100ab1e0 size=0x68
+#include "CBaseEntityList.h"
 #include "ehandle.h"
 #include "CUnknown1007f870.h"
 extern CBaseHandle *g_104a0d64;
@@ -44672,7 +44673,7 @@ CUnknown1007f870 *sub_100ab1e0(int v)
 		unsigned long h = g_104a0d64[i].m_Index;
 		if (h != 0xffffffff)
 		{
-			CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[h & 0x1fff];
+			CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h & 0x1fff];
 			if (e.m_SerialNumber == (int)(h >> 13))
 				p = (CUnknown1007f870 *)e.m_pEntity;
 			else
@@ -45257,9 +45258,9 @@ int CUnknown100aeff0::sub_100aeff0()
 // END FUNCTION
 
 // FUNCTION: 0x100af000 size=0x3a
+#include "CClientEntityList.h"
 struct CUnknown10044400 { void sub_10044400(); };
 struct CUnk100e2360 { void sub_100e2360(void *out, void *ent); };
-extern CUnk100e2360 *g_102b8e9c;
 struct CUnknown100af000 {
 	int m_unk[0x11]; int m_n44; char pad[0x190 - 0x48]; CUnknown10044400 m_sub190; char pad2[0x3e0 - 0x191]; char m_b3e0;
 	void sub_100a1a70(int);
@@ -45269,7 +45270,7 @@ struct CUnknown100af000 {
 void CUnknown100af000::sub_100af000()
 {
 	int tmp;
-	g_102b8e9c->sub_100e2360(&tmp, this);
+	((CUnk100e2360 *)cl_entitylist)->sub_100e2360(&tmp, this);
 	sub_100a1a70(2);
 	m_sub190.sub_10044400();
 	m_n44 = -1;
@@ -48755,6 +48756,7 @@ void * CUnknown100bdae0::sub_100bdae0()
 // END FUNCTION
 
 // FUNCTION: 0x100bdb60 size=0x6f
+#include "CBaseEntityList.h"
 #include "C_BaseAnimating.h"
 #include "Vector.h"
 #include "ehandle.h"
@@ -48778,7 +48780,7 @@ void C_BaseAnimating::sub_100bdb60(Vector &mins, Vector &maxs)
 		{
 			int idx = (int)(h & 0x1fff);
 			int serial = (int)(h >> 13);
-			CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[idx];
+			CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[idx];
 			if ( e->m_SerialNumber == serial )
 			{
 				p = (C_BaseEntity *)e->m_pEntity;
@@ -48796,6 +48798,7 @@ void C_BaseAnimating::sub_100bdb60(Vector &mins, Vector &maxs)
 // END FUNCTION
 
 // FUNCTION: 0x100bdbd0 size=0x6f
+#include "CBaseEntityList.h"
 #include "C_BaseAnimating.h"
 #include "Vector.h"
 #include "ehandle.h"
@@ -48819,7 +48822,7 @@ void C_BaseAnimating::sub_100bdbd0(Vector &mins, Vector &maxs)
 		{
 			int idx = (int)(h & 0x1fff);
 			int serial = (int)(h >> 13);
-			CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[idx];
+			CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[idx];
 			if ( e->m_SerialNumber == serial )
 			{
 				p = (C_BaseEntity *)e->m_pEntity;
@@ -48837,6 +48840,7 @@ void C_BaseAnimating::sub_100bdbd0(Vector &mins, Vector &maxs)
 // END FUNCTION
 
 // FUNCTION: 0x100bdc40 size=0x6f
+#include "CBaseEntityList.h"
 #include "C_BaseAnimating.h"
 #include "Vector.h"
 #include "ehandle.h"
@@ -48866,7 +48870,7 @@ void C_BaseAnimating::sub_100bdc40(Vector &mins, Vector &maxs)
 		{
 			int idx = (int)(h & 0x1fff);
 			int serial = (int)(h >> 13);
-			CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[idx];
+			CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[idx];
 			if ( e->m_SerialNumber == serial )
 			{
 				p = (C_BaseEntity *)e->m_pEntity;
@@ -48884,6 +48888,7 @@ void C_BaseAnimating::sub_100bdc40(Vector &mins, Vector &maxs)
 // END FUNCTION
 
 // FUNCTION: 0x100bdcb0 size=0x6f
+#include "CBaseEntityList.h"
 #include "C_BaseAnimating.h"
 #include "Vector.h"
 #include "ehandle.h"
@@ -48914,7 +48919,7 @@ void C_BaseAnimating::sub_100bdcb0(Vector &mins, Vector &maxs)
 		{
 			int idx = (int)(h & 0x1fff);
 			int serial = (int)(h >> 13);
-			CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[idx];
+			CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[idx];
 			if ( e->m_SerialNumber == serial )
 			{
 				p = (C_BaseEntity *)e->m_pEntity;
@@ -49669,6 +49674,7 @@ bool C_RopeKeyframe::sub_100c0630(AttV *pEnt, int iAttachment, Vector &vPos, QAn
 // END FUNCTION
 
 // FUNCTION: 0x100c0700 size=0xa4
+#include "CBaseEntityList.h"
 #include "C_RopeKeyframe.h"
 #include "QAngle.h"
 #include "ehandle.h"
@@ -49682,7 +49688,7 @@ bool C_RopeKeyframe::sub_100c0700(int iPt, Vector &vPos)
 		unsigned int h = m_hStartPoint.m_Index;
 		if (h != 0xffffffff)
 		{
-			CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[h & 0x1fff];
+			CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h & 0x1fff];
 			if (e.m_SerialNumber == (int)(h >> 13))
 				p = (IHandleEntity *)e.m_pEntity;
 			else
@@ -49695,7 +49701,7 @@ bool C_RopeKeyframe::sub_100c0700(int iPt, Vector &vPos)
 	unsigned int h = m_hEndPoint.m_Index;
 	if (h != 0xffffffff)
 	{
-		CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e.m_SerialNumber == (int)(h >> 13))
 			p = (IHandleEntity *)e.m_pEntity;
 		else
@@ -49708,13 +49714,14 @@ bool C_RopeKeyframe::sub_100c0700(int iPt, Vector &vPos)
 // END FUNCTION
 
 // FUNCTION: 0x100c07b0 size=0x9b
+#include "CBaseEntityList.h"
 #include "C_RopeKeyframe.h"
 #include "ehandle.h"
 #include "QAngle.h"
 static inline IHandleEntity *GetEnt(const CBaseHandle &h)
 {
     if (h.m_Index != 0xffffffff) {
-        CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[h.m_Index & 0x1fff];
+        CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h.m_Index & 0x1fff];
         if (e.m_SerialNumber == (int)(h.m_Index >> 13))
             return (IHandleEntity *)e.m_pEntity;
     }
@@ -51534,14 +51541,14 @@ int CUnknown100c9d40::sub_100c9d40()
 // END FUNCTION
 
 // FUNCTION: 0x100c9d50 size=0x38
+#include "CBaseEntityList.h"
 struct EntInfo { void *m_pEntity; int m_SerialNumber; int m_unk; };
 struct EntList { int m_unk0; EntInfo m_Info[1]; };
-extern EntList *g_102b8e98;
 struct Hnd {
 	unsigned int m_Index;
 	void *Get() const {
 		if (m_Index != 0xFFFFFFFF) {
-			EntInfo *info = &g_102b8e98->m_Info[m_Index & 0x1fff];
+			EntInfo *info = &((EntList *)g_pEntityList)->m_Info[m_Index & 0x1fff];
 			if (info->m_SerialNumber == (int)(m_Index >> 13))
 				return info->m_pEntity;
 		}
@@ -53750,31 +53757,29 @@ void * CUnknown100d1120::sub_100d1120()
 // END FUNCTION
 
 // FUNCTION: 0x100d1130 size=0x10
-namespace lifted {
-extern int g_102b8e9c;
-}
+#include "CClientEntityList.h"
 struct CUnknown100d1130 { int sub_100d1130(); };
 int CUnknown100d1130::sub_100d1130()
 {
-    int t0 = lifted::g_102b8e9c;
-    short t1 = *(short *)((char *)lifted::g_102b8e9c + 0x28058);
+    int t0 = ((int)cl_entitylist);
+    short t1 = *(short *)((char *)((int)cl_entitylist) + 0x28058);
     *(short *)this = t1;
     return t0;
 }
 // END FUNCTION
 
 // FUNCTION: 0x100d1140 size=0x41
+#include "CClientEntityList.h"
 struct SubIface { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual bool v8(); };
 struct SlotObj { int a; int b; SubIface sub; };
 struct SlotEntry { SlotObj *p; unsigned short pad; unsigned short next; };
 struct ListHolder { char pad[0x2804c]; SlotEntry *entries; };
-extern ListHolder *g_102b8e9c;
 struct Iter { unsigned short cur; SlotObj *sub_100d1140(); };
 SlotObj *Iter::sub_100d1140() {
 	SlotObj *o;
 	do {
 		if (cur == 0xffff) return 0;
-		SlotEntry *e = &g_102b8e9c->entries[cur];
+		SlotEntry *e = &((ListHolder *)cl_entitylist)->entries[cur];
 		o = e->p;
 		cur = e->next;
 	} while (o->sub.v8());
@@ -59982,6 +59987,7 @@ float __stdcall sub_100ecfb0(float a, float b)
 // END FUNCTION
 
 // FUNCTION: 0x100ed4d0 size=0x24e
+#include "CBaseEntityList.h"
 #include "CGameMovement.h"
 #include "CGameMovementViews.h"
 #include "CVProfile.h"
@@ -59990,7 +59996,6 @@ float __stdcall sub_100ecfb0(float a, float b)
 #include "CUnknown100290c0.h"
 
 extern CVProfile *g_101e3138;
-extern CUnknown100290c0 *g_102b8e98;
 void sub_100e7380(int, int, int, int, int);
 
 class CUnknown100a2410
@@ -60023,7 +60028,7 @@ inline void TracePlayerBBox(CGameMovement *gm, const Vector &start, const Vector
 	g_101e3138->EnterScope("CGameMovement::TracePlayerBBox", 0, "Unaccounted", false);
 	Ray_t ray;
 	ray.sub_100e91e0(start, end, gm->sub_100e6ef0(), (float *)gm->sub_100e6f20(), (char)((((CUnduckMove *)gm->m_pMove)->m_sub.g7() >> 6) & 1), 0);
-	sub_100e7380((int)&ray, fMask, g_102b8e98->sub_1007aca0(&((CMovePlayerView *)gm->m_pPlayer)->m_hRef), collisionGroup, (int)&pm);
+	sub_100e7380((int)&ray, fMask, ((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0(&((CMovePlayerView *)gm->m_pPlayer)->m_hRef), collisionGroup, (int)&pm);
 	g_101e3138->ExitScope();
 }
 
@@ -60142,14 +60147,14 @@ R1042c030 sub_100ee8c0(int key)
 // END FUNCTION
 
 // FUNCTION: 0x100ee8e0 size=0x1e
+#include "CClientEntityList.h"
 #include "CGameTrace.h"
 #include "CClientEntityList.h"
 
-extern CClientEntityList *g_102b8e9c;
 
 bool CGameTrace::sub_100ee8e0() const
 {
-	return m_pEnt == (CBaseEntity *)g_102b8e9c->sub_100d0cf0(0);
+	return m_pEnt == (CBaseEntity *)cl_entitylist->sub_100d0cf0(0);
 }
 // END FUNCTION
 
@@ -75265,9 +75270,9 @@ int __stdcall sub_10122430(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x10122840 size=0xe5
+#include "CBaseEntityList.h"
 extern void *g_1027ba58;
 extern void *g_102af678;
-extern char *g_102b8e98;
 
 struct IGameMove {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
@@ -75340,7 +75345,7 @@ void __stdcall sub_10122840(void *arg)
 			if (h != -1) {
 				int idx = h & 0x1fff;
 				unsigned int gen = (unsigned int)h >> 13;
-				char *base = g_102b8e98;
+				char *base = ((char *)g_pEntityList);
 				int *entry = (int *)(base + idx * 12 + 4);
 				if ((unsigned int)entry[1] == gen) {
 					void *e = (void *)entry[0];
@@ -75701,17 +75706,17 @@ void CPredictionCopy::sub_10123800(int dt, Vector *outValue, const Vector *inVal
 // END FUNCTION
 
 // FUNCTION: 0x101238a0 size=0x126
+#include "CBaseEntityList.h"
 #include "C_BaseEntity.h"
 #include "CBaseHandle.h"
 #include "type_info.h"
 struct CEntInfoX { void *m_pEntity; int m_SerialNumber; int m_pPrev; };
 struct CEntListX { int m_pad; CEntInfoX m_Ents[1]; };
-extern CEntListX *g_102b8e98;
 inline void *GetHandleEnt(const CBaseHandle &h)
 {
 	if (h.m_Index == 0xffffffff)
 		return 0;
-	CEntInfoX *p = &g_102b8e98->m_Ents[h.m_Index & 0x1fff];
+	CEntInfoX *p = &((CEntListX *)g_pEntityList)->m_Ents[h.m_Index & 0x1fff];
 	if (p->m_SerialNumber == (int)(h.m_Index >> 13))
 		return p->m_pEntity;
 	return 0;
@@ -77250,13 +77255,13 @@ void sub_101275e0()
 // END FUNCTION
 
 // FUNCTION: 0x101275f0 size=0x82
+#include "CClientEntityList.h"
 #include "ehandle.h"
 struct HEnt { int m_a; CBaseHandle m_h; int *m_pOut; int m_idx; };
 struct IEnt { virtual void v0(); virtual int *v1(); };
 struct EList { IEnt *sub_100d0cf0(int); };
 extern HEnt *g_104e1be4;
 extern int g_104e1bf0;
-extern EList *g_102b8e9c;
 void sub_101275e0();
 // TARGET: sub_101275f0
 void sub_101275f0()
@@ -77271,7 +77276,7 @@ void sub_101275f0()
 				e = 0;
 				o = p->m_pOut;
 			} else {
-				e = g_102b8e9c->sub_100d0cf0(p->m_idx);
+				e = ((EList *)cl_entitylist)->sub_100d0cf0(p->m_idx);
 				o = p->m_pOut;
 			}
 			if (e)
@@ -78944,6 +78949,7 @@ int __stdcall sub_1012abd0(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x1012ae60 size=0x5e
+#include "CBaseEntityList.h"
 #include "CRestore.h"
 #include "CBaseEntityList.h"
 
@@ -78963,7 +78969,6 @@ struct SaveData2X
 	SaveEntX *m_pArray;
 };
 
-extern CBaseEntityList *g_102b8e98;
 
 CBaseEntity *CRestore::sub_1012ae60(int index)
 {
@@ -78981,7 +78986,7 @@ CBaseEntity *CRestore::sub_1012ae60(int index)
 				unsigned int h = ent->m_h;
 				if (h == 0xffffffff)
 					return 0;
-				CBaseEntityList *list = g_102b8e98;
+				CBaseEntityList *list = g_pEntityList;
 				int slot = h & 0x1fff;
 				CBaseEntityListEntry *e = &list->m_EntPtrArray[slot];
 				if (e->m_SerialNumber != (int)(h >> 13))
@@ -79042,10 +79047,10 @@ int sub_1012b820()
 // END FUNCTION
 
 // FUNCTION: 0x1012b830 size=0xe6
+#include "CClientEntityList.h"
 #include "engineclient.h"
 #include <string.h>
 
-extern char *g_102b8e9c;
 extern int g_104d4970;
 extern int g_104d4974;
 extern int g_104d4978;
@@ -79070,7 +79075,7 @@ void *sub_1012b830(int n)
 	if (n <= 0)
 		n = 0x400000;
 
-	int count = ((EntSub *)(g_102b8e9c + 0x1803c))->f5();
+	int count = ((EntSub *)(((char *)cl_entitylist) + 0x1803c))->f5();
 
 	char *p = (char *)engine->vfunc117(count * 48 + n + 0x1338, 1);
 	if (p)
@@ -81925,6 +81930,7 @@ float __fastcall sub_10133a10(void *self)
 // END FUNCTION
 
 // FUNCTION: 0x10133a20 size=0x92
+#include "CBaseEntityList.h"
 #include "ehandle.h"
 struct NetV_10133a20 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
@@ -81950,7 +81956,7 @@ void SoundV_10133a20::sub_10133a20()
 			if (m_hEnt.m_Index == 0xffffffff)
 				ent = 0;
 			else {
-				CBaseEntityListEntry *pe = &g_102b8e98->m_EntPtrArray[m_hEnt.m_Index & 0x1fff];
+				CBaseEntityListEntry *pe = &g_pEntityList->m_EntPtrArray[m_hEnt.m_Index & 0x1fff];
 				ent = (pe->m_SerialNumber == (int)(m_hEnt.m_Index >> 13)) ? (IHandleEntity *)pe->m_pEntity : 0;
 			}
 			NetV_10133a20 *net = (NetV_10133a20 *)((char *)ent + 8);
@@ -108678,6 +108684,7 @@ char __stdcall sub_1016d110(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x1016ebe0 size=0x78
+#include "CBaseEntityList.h"
 #include "ehandle.h"
 #include "C_BaseCombatWeapon.h"
 
@@ -108701,7 +108708,7 @@ int sub_1016ebe0()
 		C_BaseCombatWeapon *ent;
 		if (h.IsValid())
 		{
-			CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[h.GetEntryIndex()];
+			CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h.GetEntryIndex()];
 			if (e.m_SerialNumber == h.GetSerialNumber())
 				ent = (C_BaseCombatWeapon *)e.m_pEntity;
 			else
@@ -109045,6 +109052,7 @@ void sub_10170440()
 // END FUNCTION
 
 // FUNCTION: 0x10170470 size=0x102
+#include "CBaseEntityList.h"
 #include "engineclient.h"
 #include "CHud.h"
 #include "ehandle.h"
@@ -109065,7 +109073,7 @@ struct MyHandle
 	{
 		if (m_Index == 0xffffffff)
 			return 0;
-		const CBaseEntityListEntry *pInfo = &g_102b8e98->m_EntPtrArray[m_Index & 0x1fff];
+		const CBaseEntityListEntry *pInfo = &g_pEntityList->m_EntPtrArray[m_Index & 0x1fff];
 		if (pInfo->m_SerialNumber == (int)(m_Index >> 13))
 			return (IHandleEntity *)pInfo->m_pEntity;
 		return 0;
@@ -122036,6 +122044,7 @@ void sub_101a8c90()
 // END FUNCTION
 
 // FUNCTION: 0x101a8ca0 size=0x8c
+#include "CBaseEntityList.h"
 #include "ehandle.h"
 struct XInfo;
 struct XRes { void sub_101a8d30(XInfo *); void sub_101a8ca0(); };
@@ -122044,7 +122053,7 @@ extern HandleVec g_1049d8f8;
 static inline IHandleEntity *GetEnt(const CBaseHandle &h)
 {
 	if (h.m_Index != 0xffffffff) {
-		CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[h.m_Index & 0x1fff];
+		CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h.m_Index & 0x1fff];
 		if (e.m_SerialNumber == (int)(h.m_Index >> 13))
 			return (IHandleEntity *)e.m_pEntity;
 	}

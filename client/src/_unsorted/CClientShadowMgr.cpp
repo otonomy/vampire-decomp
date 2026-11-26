@@ -326,12 +326,12 @@ void *CClientShadowMgr::vfunc16(unsigned short h)
 // END FUNCTION
 
 // FUNCTION: 0x100d7ec0 size=0xfb
+#include "CClientEntityList.h"
 #include "ConVar.h"
 #include "CClientEntityList.h"
 #include "C_BaseEntity.h"
 #include "CClientShadowMgr.h"
 
-extern CClientEntityList *g_102b8e9c;
 extern ConVar g_104cf010;
 extern ConVar g_1049dbd8;
 extern ConVar g_105fb370;
@@ -360,10 +360,10 @@ void CClientShadowMgr::vfunc6()
 	g_104cf1b4 = nC;
 	g_104cf004 = nD;
 
-	int nHighest = g_102b8e9c->vfunc6();
+	int nHighest = cl_entitylist->vfunc6();
 	for (int i = 0; i <= nHighest; i++)
 	{
-		C_BaseEntity *pEnt = g_102b8e9c->sub_100d0cf0(i);
+		C_BaseEntity *pEnt = cl_entitylist->sub_100d0cf0(i);
 		if (pEnt)
 			pEnt->sub_1009e2d0(1);
 	}

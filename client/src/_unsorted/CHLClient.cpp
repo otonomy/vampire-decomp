@@ -404,12 +404,12 @@ void CHLClient::vfunc2(int a)
 // END FUNCTION
 
 // FUNCTION: 0x100cbdd0 size=0x77
+#include "CClientEntityList.h"
 #include "CHLClient.h"
 #include "CClientEntityList.h"
 
 extern char g_104a579c;
 extern void *g_102ccd98;
-extern CClientEntityList *g_102b8e9c;
 extern void *g_1028073c;
 extern void *g_102cdad8;
 extern void *g_102cef78;
@@ -467,7 +467,7 @@ void CHLClient::vfunc4()
     sub_100576b0();
     sub_100f41f0();
     ((IVt3 *)g_102ccd98)->v3();
-    g_102b8e9c->sub_100d0b40();
+    cl_entitylist->sub_100d0b40();
     sub_100f4200();
     ((IVt1 *)g_1028073c)->v1();
     ((CPMBView *)&g_104e0768)->sub_101177a0();

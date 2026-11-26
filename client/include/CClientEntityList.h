@@ -21,3 +21,11 @@ public:
 		Tail() { a = 0; b = 0; c = 0; d = 0xffff; e = 0xffff; f = 0xffff; h = 0; g = 0; i = 0; }
 	} m_tail;
 };
+
+// the client's entity list (SDK cl_dll/cliententitylist.h): cl_entitylist, ClientEntityList()
+extern CClientEntityList *cl_entitylist;
+
+inline CClientEntityList &ClientEntityList()
+{
+	return *cl_entitylist;
+}

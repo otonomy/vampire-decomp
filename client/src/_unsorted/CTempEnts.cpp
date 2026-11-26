@@ -296,6 +296,7 @@ void CTempEnts::vfunc8(const Vector &mins, const Vector &maxs, float height, int
 // END FUNCTION
 
 // FUNCTION: 0x1003c3e0 size=0x1e3
+#include "CClientEntityList.h"
 #include "CTempEnts.h"
 #define D1(n) virtual void n(){}
 #define D4(p) virtual void p##a(){} virtual void p##b(){} virtual void p##c(){} virtual void p##d(){}
@@ -307,7 +308,6 @@ extern IEngC *g_104a57d4;
 struct IMdl { D1(a) D1(b) virtual const void *GetModel(int); D1(c) D1(d) virtual int GetModelFrameCount(const void *); virtual int GetModelType(const void *); };
 extern IMdl *g_104a57f8;
 struct EntList { D1(a) D1(b) D1(c) virtual char *GetEntry(int); };
-extern char *g_102b8e9c;
 struct IUnk { D4(a) D1(b) virtual void *GetIClientEntity(); };
 struct INet { virtual IUnk *GetUnk(); };
 struct IEnt { D4(a) D4(b) D1(c) virtual const V3 &GetAbsOrigin(); };
@@ -326,7 +326,7 @@ void CTempEnts::vfunc15(int client, int modelIndex, float zoffset, float life)
 		Warning("Bad client in AttachTentToPlayer()!\n");
 		return;
 	}
-	char *pEntry = ((EntList *)(g_102b8e9c + 0x1803c))->GetEntry(client);
+	char *pEntry = ((EntList *)(((char *)cl_entitylist) + 0x1803c))->GetEntry(client);
 	INet *pNet = pEntry ? (INet *)(pEntry + 8) : 0;
 	IEnt *clientClass = 0;
 	if (pEntry && pNet)

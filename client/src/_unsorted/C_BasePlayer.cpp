@@ -19,14 +19,14 @@ int C_BasePlayer::vfunc84()
 // END FUNCTION
 
 // FUNCTION: 0x10002b10 size=0x2d
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 #include "CBaseEntityList.h"
-extern CBaseEntityList *g_102b8e98;
 C_BaseCombatWeapon *C_BasePlayer::vfunc167()
 {
 	unsigned int h = *(unsigned int *)((char *)this + 0x1a08);
 	if (h != 0xffffffff) {
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e->m_SerialNumber == (int)(h >> 13))
 			return (C_BaseCombatWeapon *)e->m_pEntity;
 	}
@@ -35,17 +35,17 @@ C_BaseCombatWeapon *C_BasePlayer::vfunc167()
 // END FUNCTION
 
 // FUNCTION: 0x10002b40 size=0x2d
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 struct EntInfo_10002b40 { void *m_pEntity; int m_SerialNumber; EntInfo_10002b40 *m_pPrev; };
 struct EntList_10002b40 { int m_unk0; EntInfo_10002b40 m_Info[0x2000]; };
-extern EntList_10002b40 *g_102b8e98;
 struct View_10002b40 { char pad[0x1a0c]; unsigned long m_hHandle; void *sub_10002b40(); };
 void *View_10002b40::sub_10002b40()
 {
 	unsigned long h = m_hHandle;
 	if (h != 0xffffffff)
 	{
-		EntInfo_10002b40 *pInfo = &g_102b8e98->m_Info[h & 0x1fff];
+		EntInfo_10002b40 *pInfo = &((EntList_10002b40 *)g_pEntityList)->m_Info[h & 0x1fff];
 		if (pInfo->m_SerialNumber == (int)(h >> 13))
 			return pInfo->m_pEntity;
 	}
@@ -73,6 +73,7 @@ float C_BasePlayer::vfunc176()
 // END FUNCTION
 
 // FUNCTION: 0x1002a2f0 size=0xaf
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 #include "ehandle.h"
 #include "QAngle.h"
@@ -86,7 +87,7 @@ int C_BasePlayer::vfunc108()
 	unsigned long h = *(unsigned long *)((char *)this + 0x208);
 	CVehicleView *pVehicle = 0;
 	if (h != 0xffffffff) {
-		CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e.m_SerialNumber == (int)(h >> 13))
 			pVehicle = (CVehicleView *)e.m_pEntity;
 	}
@@ -168,9 +169,9 @@ void C_BasePlayer::vfunc177() { IsTransparent(); }
 // END FUNCTION
 
 // FUNCTION: 0x100a58b0 size=0x45
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 #include "CBaseEntityList.h"
-extern CBaseEntityList *g_102b8e98;
 // TARGET: C_BasePlayer::vfunc119
 void C_BasePlayer::vfunc119(int ent) {
 	unsigned int *ph = (unsigned int *)((char *)this + 0x14e8);
@@ -178,7 +179,7 @@ void C_BasePlayer::vfunc119(int ent) {
 	if (*ph == 0xffffffff)
 		p = 0;
 	else {
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[*ph & 0x1fff];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[*ph & 0x1fff];
 		p = (e->m_SerialNumber == (int)(*ph >> 13)) ? e->m_pEntity : 0;
 	}
 	if ((void *)ent == p)
@@ -400,13 +401,13 @@ void C_BasePlayer::vfunc169(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x100a8920 size=0x100
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 #include "C_BaseCombatWeapon.h"
 #include "CBaseHandle.h"
 #include "CBaseEntityList.h"
 #include "utlvector.h"
 
-extern CBaseEntityList *g_102b8e98;
 extern CUtlVector<CBaseHandle> g_1049d8f8;
 extern CUtlVector<CBaseHandle> g_1049d978;
 
@@ -416,7 +417,7 @@ inline IHandleEntity *CBaseHandle::Get() const
 {
 	if (!IsValid())
 		return 0;
-	const CBaseEntityListEntry *pInfo = &g_102b8e98->m_EntPtrArray[GetEntryIndex()];
+	const CBaseEntityListEntry *pInfo = &g_pEntityList->m_EntPtrArray[GetEntryIndex()];
 	if (pInfo->m_SerialNumber != GetSerialNumber())
 		return 0;
 	return (IHandleEntity *)pInfo->m_pEntity;
@@ -454,15 +455,15 @@ C_BaseCombatWeapon *C_BasePlayer::vfunc165(int slot, int pos)
 // END FUNCTION
 
 // FUNCTION: 0x100a8bc0 size=0x87
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 struct CEntInfo8bc0 { void *m_pEntity; int m_Serial; int m_unk; };
 struct CEntList8bc0 { int m_unk; CEntInfo8bc0 m_Ent[0x2000]; };
-extern CEntList8bc0 *g_102b8e98;
 static inline void *HandleToEnt(unsigned long h)
 {
 	if (h != 0xffffffff)
 	{
-		CEntInfo8bc0 *e = &g_102b8e98->m_Ent[h & 0x1fff];
+		CEntInfo8bc0 *e = &((CEntList8bc0 *)g_pEntityList)->m_Ent[h & 0x1fff];
 		if (e->m_Serial == (int)(h >> 13))
 			return e->m_pEntity;
 	}
@@ -478,6 +479,7 @@ void C_BasePlayer::vfunc172(C_BaseCombatWeapon *pWeapon)
 // END FUNCTION
 
 // FUNCTION: 0x100a9920 size=0x86
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 #include "ehandle.h"
 #define V10(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7(); virtual void n##8(); virtual void n##9();
@@ -490,7 +492,7 @@ extern "C" int _strcmpi(const char *, const char *);
 static inline IName223 *ResolveH(const CBaseHandle &r)
 {
 	if (r.m_Index != 0xffffffff) {
-		CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[r.m_Index & 0x1fff];
+		CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[r.m_Index & 0x1fff];
 		if (e.m_SerialNumber == (int)(r.m_Index >> 13))
 			return (IName223 *)e.m_pEntity;
 	}

@@ -134,9 +134,9 @@ bool CHudTimerUI::vfunc107()
 // END FUNCTION
 
 // FUNCTION: 0x1005df70 size=0x79
+#include "CClientEntityList.h"
 #include "CHudTimerUI.h"
 
-extern void *g_102b8e9c;
 
 int sub_101146c0();
 int sub_10114660(int, int);
@@ -170,7 +170,7 @@ void CHudTimerUI::vfunc114(int a0, int a1, int a2)
 		return;
 	}
 	p->vfunc5(1);
-	EntityV *e = (EntityV *)((EntListV *)g_102b8e9c)->sub_100d0cf0(b);
+	EntityV *e = (EntityV *)((EntListV *)cl_entitylist)->sub_100d0cf0(b);
 	if (e)
 		m_unk194.v = *e->vfunc1();
 	else

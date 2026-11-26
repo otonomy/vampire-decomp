@@ -487,11 +487,11 @@ void CSave::vfunc34(CSaveEdict *const *pEdicts, int count)
 // END FUNCTION
 
 // FUNCTION: 0x10129f40 size=0x89
+#include "CBaseEntityList.h"
 #include "CSave.h"
 
 struct EntInfo_t { void *m_pEntity; int m_SerialNumber; EntInfo_t *m_pPrev; };
 struct EntList_t { int m_unk0; EntInfo_t m_EntPtrArray[8192]; };
-extern EntList_t *g_102b8e98;
 
 struct EHandleT {
     unsigned long m_Index;
@@ -499,7 +499,7 @@ struct EHandleT {
     {
         if (m_Index == 0xffffffff)
             return 0;
-        EntInfo_t *pInfo = &g_102b8e98->m_EntPtrArray[m_Index & 0x1fff];
+        EntInfo_t *pInfo = &((EntList_t *)g_pEntityList)->m_EntPtrArray[m_Index & 0x1fff];
         if (pInfo->m_SerialNumber == (int)(m_Index >> 13))
             return pInfo->m_pEntity;
         return 0;

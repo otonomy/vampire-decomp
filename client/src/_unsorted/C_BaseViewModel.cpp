@@ -2,14 +2,14 @@
 #include "client.h"
 
 // FUNCTION: 0x1007f6a0 size=0x2d
+#include "CBaseEntityList.h"
 #include "C_BaseViewModel.h"
 #include "CBaseEntityList.h"
-extern CBaseEntityList *g_102b8e98;
 void *C_BaseViewModel::vfunc145()
 {
 	unsigned int h = *(unsigned int *)((char *)this + 0x7d8);
 	if (h != 0xffffffff) {
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e->m_SerialNumber == (int)(h >> 13))
 			return e->m_pEntity;
 	}

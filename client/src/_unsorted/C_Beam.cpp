@@ -84,6 +84,7 @@ void C_Beam::vfunc19()
 // END FUNCTION
 
 // FUNCTION: 0x100803c0 size=0x8f
+#include "CBaseEntityList.h"
 #include "C_Beam.h"
 #include "CBaseHandle.h"
 
@@ -100,7 +101,6 @@ struct CBaseEntityList_100803c0
 	CEntInfo_100803c0 m_EntPtrArray[1];
 };
 
-extern CBaseEntityList_100803c0 *g_102b8e98;
 
 struct C_Beam_Helper_100803c0
 {
@@ -115,7 +115,7 @@ inline C_BaseEntity *GetEntity_100803c0(const CBaseHandle &h)
 {
 	if (!h.IsValid())
 		return 0;
-	const CEntInfo_100803c0 *pInfo = &g_102b8e98->m_EntPtrArray[h.GetEntryIndex()];
+	const CEntInfo_100803c0 *pInfo = &((CBaseEntityList_100803c0 *)g_pEntityList)->m_EntPtrArray[h.GetEntryIndex()];
 	if (pInfo->m_SerialNumber == h.GetSerialNumber())
 		return (C_BaseEntity *)pInfo->m_pEntity;
 	return 0;

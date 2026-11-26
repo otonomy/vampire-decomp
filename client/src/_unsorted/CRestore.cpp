@@ -550,6 +550,7 @@ int CRestore::vfunc30(unsigned int *pValues, int count, int nBytesAvailable)
 // END FUNCTION
 
 // FUNCTION: 0x1012b060 size=0xec
+#include "CBaseEntityList.h"
 #include "CRestore.h"
 #include "ehandle.h"
 
@@ -569,7 +570,7 @@ int CRestore::vfunc31(int *pValues, int nCount, int nBytesAvailable)
         unsigned int &h = pRec->m_hEntity;
         if (h != 0xffffffff)
         {
-            CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[h & 0x1fff];
+            CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h & 0x1fff];
             if (e.m_SerialNumber == (int)(h >> 13) && e.m_pEntity)
             {
                 pValues[i] = pRec->m_hEntity;

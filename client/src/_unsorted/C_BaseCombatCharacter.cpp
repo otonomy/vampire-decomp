@@ -20,14 +20,14 @@ C_BaseCombatCharacter::~C_BaseCombatCharacter()
 // END FUNCTION
 
 // FUNCTION: 0x10097fa0 size=0x2d
+#include "CBaseEntityList.h"
 #include "C_BaseCombatCharacter.h"
 #include "CBaseEntityList.h"
-extern CBaseEntityList *g_102b8e98;
 void *C_BaseCombatCharacter::vfunc148()
 {
 	unsigned int h = *(unsigned int *)((char *)this + 0x105c);
 	if (h != 0xffffffff) {
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e->m_SerialNumber == (int)(h >> 13))
 			return e->m_pEntity;
 	}
@@ -36,6 +36,7 @@ void *C_BaseCombatCharacter::vfunc148()
 // END FUNCTION
 
 // FUNCTION: 0x10098120 size=0xa8
+#include "CBaseEntityList.h"
 #include "C_BaseCombatCharacter.h"
 #include "C_BaseCombatWeapon.h"
 #include "ehandle.h"
@@ -45,7 +46,7 @@ inline C_BaseCombatWeapon *GetAW10098120(char *self)
 	unsigned int h = *(unsigned int *)(self + 0x105c);
 	if (h != 0xffffffff)
 	{
-		CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e.m_SerialNumber == (int)(h >> 13))
 			return (C_BaseCombatWeapon *)e.m_pEntity;
 	}

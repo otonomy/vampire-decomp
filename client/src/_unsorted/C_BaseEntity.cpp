@@ -428,15 +428,15 @@ void C_BaseEntity::vfunc21()
 // END FUNCTION
 
 // FUNCTION: 0x1009e070 size=0x3c
+#include "CClientEntityList.h"
 #include "C_BaseEntity.h"
 struct CUnknown100e2340 { int sub_100e2340(int a, int b, int c, int d); };
 struct CUnknown10044400 { short sub_10044400(); };
-extern CUnknown100e2340 *g_102b8e9c;
 struct EntHandleView { virtual int v0(); };
 // TARGET: ?Init@C_BaseEntity@@UAE_NHH@Z
 bool C_BaseEntity::Init(int entnum, int iSerialNum)
 {
-	g_102b8e9c->sub_100e2340((int)&iSerialNum, ((EntHandleView *)((char *)this + 4))->v0(), entnum, iSerialNum);
+	((CUnknown100e2340 *)cl_entitylist)->sub_100e2340((int)&iSerialNum, ((EntHandleView *)((char *)this + 4))->v0(), entnum, iSerialNum);
 	((CUnknown10044400 *)((char *)this + 0x190))->sub_10044400();
 	*(int *)((char *)this + 0x44) = entnum;
 	return true;
@@ -894,6 +894,7 @@ void __stdcall sub_100a0df0(C_BaseEntity *ent, float *pos, float *ang)
 // END FUNCTION
 
 // FUNCTION: 0x100a0e30 size=0x272
+#include "CBaseEntityList.h"
 #include "Vector.h"
 #include "C_BaseEntity.h"
 #include "ehandle.h"
@@ -911,10 +912,10 @@ struct C_BaseEntity_LocalView
 void C_BaseEntity::vfunc77()
 {
 	CBaseHandle &hParent = *(CBaseHandle *)((char *)this + 0x188);
-	if (!((CUnknown100290c0 *)g_102b8e98)->sub_1007aca0((unsigned int *)&hParent))
+	if (!((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0((unsigned int *)&hParent))
 		return;
 	if (GetSolid() == 11) {
-		int pParent = ((CUnknown100290c0 *)g_102b8e98)->sub_1007aca0((unsigned int *)&hParent);
+		int pParent = ((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0((unsigned int *)&hParent);
 		if (!pParent)
 			return;
 		Vector unused;
@@ -1194,14 +1195,14 @@ void C_BaseEntity::vfunc103(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x100a2d70 size=0x2d
+#include "CBaseEntityList.h"
 #include "C_BaseEntity.h"
 #include "CBaseEntityList.h"
-extern CBaseEntityList *g_102b8e98;
 void *C_BaseEntity::sub_100a2d70()
 {
 	unsigned int h = *(unsigned int *)((char *)this + 0x98);
 	if (h != 0xffffffff) {
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e->m_SerialNumber == (int)(h >> 13))
 			return e->m_pEntity;
 	}

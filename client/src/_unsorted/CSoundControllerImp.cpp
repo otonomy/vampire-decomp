@@ -44,18 +44,18 @@ void CSoundControllerImp::vfunc5(void *pSound)
 // END FUNCTION
 
 // FUNCTION: 0x101349e0 size=0xc2
+#include "CBaseEntityList.h"
 #include "Pool.h"
 #include "CBaseHandle.h"
 #include "CBaseEntityList.h"
 
 extern Pool g_105e5aac;
-extern CBaseEntityList *g_102b8e98;
 
 inline IHandleEntity *CBaseHandle::Get() const
 {
 	if (IsValid())
 	{
-		const CBaseEntityListEntry *pInfo = &g_102b8e98->m_EntPtrArray[GetEntryIndex()];
+		const CBaseEntityListEntry *pInfo = &g_pEntityList->m_EntPtrArray[GetEntryIndex()];
 		if (pInfo->m_SerialNumber == GetSerialNumber())
 			return (IHandleEntity *)pInfo->m_pEntity;
 	}
@@ -64,8 +64,8 @@ inline IHandleEntity *CBaseHandle::Get() const
 
 inline CBaseHandle GetNetworkableHandle(int nEntIndex)
 {
-	if (g_102b8e98->m_EntPtrArray[nEntIndex].m_pEntity)
-		return CBaseHandle(nEntIndex, g_102b8e98->m_EntPtrArray[nEntIndex].m_SerialNumber);
+	if (g_pEntityList->m_EntPtrArray[nEntIndex].m_pEntity)
+		return CBaseHandle(nEntIndex, g_pEntityList->m_EntPtrArray[nEntIndex].m_SerialNumber);
 	else
 		return CBaseHandle();
 }

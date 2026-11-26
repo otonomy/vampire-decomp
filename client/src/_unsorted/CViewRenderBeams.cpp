@@ -55,6 +55,7 @@ void CViewRenderBeams::vfunc1()
 // END FUNCTION
 
 // FUNCTION: 0x10193520 size=0xbb
+#include "CBaseEntityList.h"
 #include "CViewRenderBeams.h"
 #include "ehandle.h"
 struct TrailV10193520 { TrailV10193520 *next; float die; };
@@ -85,7 +86,7 @@ void CViewRenderBeams::vfunc6(IHandleEntity *pDeadEntity)
         IHandleEntity *pEnt;
         unsigned long h = pbeam->entity.m_Index;
         CBaseEntityListEntry *e;
-        if (h != 0xffffffff && (e = &g_102b8e98->m_EntPtrArray[h & 0x1fff], e->m_SerialNumber == (int)(h >> 13)))
+        if (h != 0xffffffff && (e = &g_pEntityList->m_EntPtrArray[h & 0x1fff], e->m_SerialNumber == (int)(h >> 13)))
             pEnt = (IHandleEntity *)e->m_pEntity;
         else
             pEnt = 0;

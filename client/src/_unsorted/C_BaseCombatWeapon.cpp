@@ -51,14 +51,14 @@ bool C_BaseCombatWeapon::vfunc156(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x10003060 size=0x2d
+#include "CBaseEntityList.h"
 #include "C_BaseCombatWeapon.h"
 #include "CBaseEntityList.h"
-extern CBaseEntityList *g_102b8e98;
 void *C_BaseCombatWeapon::sub_10003060()
 {
 	unsigned int h = *(unsigned int *)((char *)this + 0x8f8);
 	if (h != 0xffffffff) {
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e->m_SerialNumber == (int)(h >> 13))
 			return e->m_pEntity;
 	}
