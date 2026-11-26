@@ -1453,6 +1453,7 @@
 0x1001e5b0 func   ?_C_ItemGHannahsApptBook_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGHannahsApptBook_CreateObject
 0x1001e670 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGHannahsApptBook@@@Z ClientClassInit
 0x1001e700 func   ?vfunc17@C_ItemGJunkyardBusinesscard@@UAEHXZ C_ItemGJunkyardBusinesscard::vfunc17
+0x1001e740 func   ?sub_1001e740@@YAHXZ sub_1001e740
 0x1001e790 func   ??_GC_ItemGJunkyardBusinesscard@@UAEPAXI@Z ??_GC_ItemGJunkyardBusinesscard@@UAEPAXI@Z
 0x1001e7b0 func   ?vfunc16@C_ItemGJunkyardBusinesscard@@UAEHXZ C_ItemGJunkyardBusinesscard::vfunc16
 0x1001e7c0 func   ?vfunc15@C_ItemGJunkyardBusinesscard@@UAEHXZ C_ItemGJunkyardBusinesscard::vfunc15
