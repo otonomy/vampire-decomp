@@ -16,7 +16,12 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc16();
 	char m_pad0014[0x410 - 0x14];
 	unsigned char m_Color[4];	// 0x410: r, g, b, a
-	char m_pad0414[0x42c - 0x414];
+	int m_unk414;
+	float m_flSizeMin;	// 0x418
+	float m_flSizeMax;	// 0x41c
+	int m_SpeedMax;	// 0x420
+	int m_LifetimeMin;	// 0x424
+	int m_LifetimeMax;	// 0x428
 	int m_DistMax;	// 0x42c
 	int m_unk430;
 	int m_DustFlags;	// 0x434: 2 scale motes by distance, 4 frozen
