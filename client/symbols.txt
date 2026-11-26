@@ -1737,6 +1737,7 @@
 0x10028820 func   ?sub_10028820@V8370@@QAEXH@Z V8370::sub_10028820
 0x10028850 func   ?sub_10028850@@YGHHH@Z sub_10028850
 0x10028920 func   ?sub_10028920@@YAXPAMPBD@Z sub_10028920
+0x10028a10 func   ?sub_10028a10@CCameraShotTable@@QAEXPAVCKeyValuesX@@PAX@Z CCameraShotTable::sub_10028a10
 0x10028d20 func   ?sub_10028d20@CCameraShotTable@@QAEXPAVCUnknown10248a50@@@Z CCameraShotTable::sub_10028d20
 0x100291b0 func   ??0CCameraShotAttach@@QAE@XZ CCameraShotAttach::CCameraShotAttach
 0x100291b0 func   ?sub_100291b0@CUnknown100291b0@@QAEPAXXZ CUnknown100291b0::sub_100291b0

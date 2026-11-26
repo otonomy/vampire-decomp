@@ -11574,6 +11574,90 @@ void sub_10028920(float *out, const char *str)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10028a10 size=0x305
+#include "CCameraShotTable.h"
+#include "CKeyValuesX.h"
+#include "Tier1.h"
+#include "Vector.h"
+
+extern "C" char *strstr(const char *, const char *);
+extern "C" int strcmp(const char *, const char *);
+#pragma intrinsic(strcmp)
+
+Vector sub_10028920(const char *pszVector);
+
+struct Attach_10028a10
+{
+	unsigned int m_nFlags;	// 0x00
+	char m_szName[16];	// 0x04
+	Vector m_vecOffsetOrigin;	// 0x14
+	Vector m_vecOffsetAngles;	// 0x20
+};
+
+void CCameraShotTable::sub_10028a10(CKeyValuesX *pKey, void *pOutV)
+{
+	Attach_10028a10 *pOut = (Attach_10028a10 *)pOutV;
+
+	const char *pszPos = pKey->sub_10128590("Position", "None");
+	if (strstr(pszPos, "Player"))
+		pOut->m_nFlags |= 1;
+	else if (strstr(pszPos, "DialogTarget"))
+		pOut->m_nFlags |= 2;
+	else if (strstr(pszPos, "GrappleVictim"))
+		pOut->m_nFlags |= 0x80000;
+	else if (strstr(pszPos, "GrappleAttacker"))
+		pOut->m_nFlags |= 0x100000;
+	else if (strstr(pszPos, "Named"))
+		pOut->m_nFlags |= 8;
+	else
+		pOut->m_nFlags |= 4;
+
+	const char *pszAttach = pKey->sub_10128590("AttachPos", "None");
+	if (strstr(pszAttach, "Bone:"))
+	{
+		g_101e318c((char *)pszAttach + 5, pOut->m_szName, 16);
+		pOut->m_nFlags |= 0x200;
+	}
+	else if (strstr(pszAttach, "Attachment:"))
+	{
+		g_101e318c((char *)pszAttach + 11, pOut->m_szName, 16);
+		pOut->m_nFlags |= 0x400;
+	}
+	else if (strstr(pszAttach, "Center"))
+		pOut->m_nFlags |= 0x20;
+	else if (strstr(pszAttach, "EyePosition"))
+		pOut->m_nFlags |= 0x40;
+	else if (strstr(pszAttach, "Top"))
+		pOut->m_nFlags |= 0x100;
+	else if (strstr(pszAttach, "Bottom"))
+		pOut->m_nFlags |= 0x80;
+	else if (strstr(pszAttach, "AbsMin"))
+		pOut->m_nFlags |= 0x800;
+	else if (strstr(pszAttach, "AbsMax"))
+		pOut->m_nFlags |= 0x1000;
+	else
+		pOut->m_nFlags |= 0x10;
+
+	const char *pszType = pKey->sub_10128590("AttachType", "None");
+	if (!strcmp(pszType, "Follow"))
+		pOut->m_nFlags |= 0x4000;
+	else if (!strcmp(pszType, "FollowNoAngles"))
+		pOut->m_nFlags |= 0x8000;
+	else if (!strcmp(pszType, "FollowEntAngles"))
+		pOut->m_nFlags |= 0x10000;
+	else
+		pOut->m_nFlags |= 0x2000;
+
+	pOut->m_vecOffsetOrigin = sub_10028920(pKey->sub_10128590("OffsetOrigin", "[0, 0, 0]"));
+	if (pOut->m_vecOffsetOrigin.Length() != 0.0f)
+		pOut->m_nFlags |= 0x20000;
+
+	pOut->m_vecOffsetAngles = sub_10028920(pKey->sub_10128590("OffsetAngles", "[0, 0, 0]"));
+	if (pOut->m_vecOffsetAngles.Length() != 0.0f)
+		pOut->m_nFlags |= 0x40000;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10028d20 size=0x486
 #include "AttachPos_t.h"
 #include "CUnknown10248a50.h"
