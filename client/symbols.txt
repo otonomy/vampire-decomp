@@ -1589,6 +1589,7 @@
 0x10021030 func   ?_C_ItemKLillyKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKLillyKey_CreateObject
 0x100210f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKLillyKey@@@Z ClientClassInit
 0x10021180 func   ?vfunc17@C_ItemKMuriettaKey@@UAEHXZ C_ItemKMuriettaKey::vfunc17
+0x100211c0 func   ?sub_100211c0@@YAHXZ sub_100211c0
 0x10021210 func   ??_GC_ItemKMuriettaKey@@UAEPAXI@Z ??_GC_ItemKMuriettaKey@@UAEPAXI@Z
 0x10021230 func   ?vfunc16@C_ItemKMuriettaKey@@UAEHXZ C_ItemKMuriettaKey::vfunc16
 0x10021240 func   ?vfunc15@C_ItemKMuriettaKey@@UAEHXZ C_ItemKMuriettaKey::vfunc15
