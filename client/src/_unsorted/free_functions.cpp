@@ -88847,6 +88847,22 @@ bool CUtlRBTree16::sub_10139850(unsigned short i) const
 }
 // END FUNCTION
 
+// FUNCTION: 0x10139cb0 size=0x20
+namespace lifted {
+extern char g_102864a0;
+struct C10139d00 { int sub_10139d00(int); };
+int sub_101d270e(int, int);
+}
+int sub_10139cb0()
+{
+    int t0 = lifted::sub_101d270e(1, 0x14);
+    if (t0 != 0) {
+        return ((lifted::C10139d00 *)t0)->sub_10139d00((int)&lifted::g_102864a0);
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10139d00 size=0x19
 namespace lifted {
 extern char g_10247bc0;
