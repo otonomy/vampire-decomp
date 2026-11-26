@@ -6062,6 +6062,7 @@
 0x1010e3e0 func   ?sub_1010e3e0@Pool@@QAEPAII@Z Pool::sub_1010e3e0
 0x1010e440 func   ?sub_1010e440@CUnk1013dce0@@QAEXPAH@Z CUnk1013dce0::sub_1010e440
 0x1010e460 func   ?sub_1010e460@@YGDH@Z sub_1010e460
+0x1010e490 func   ?sub_1010e490@@YAHXZ sub_1010e490
 0x1010e4c0 func   ?sub_1010e4c0@@YAXHHH@Z sub_1010e4c0
 0x1010e4f0 func   ?sub_1010e4f0@@YAXHHH@Z sub_1010e4f0
 0x1010e520 func   ?sub_1010e520@CUnknown1010e520@@QAEPAXH@Z CUnknown1010e520::sub_1010e520

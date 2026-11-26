@@ -73898,6 +73898,22 @@ char __stdcall sub_1010e460(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1010e490 size=0x23
+namespace lifted {
+extern char g_102bbea0;
+struct C1010e520 { int sub_1010e520(int); };
+int sub_101d270e(int, int);
+}
+int sub_1010e490()
+{
+    int t0 = lifted::sub_101d270e(1, 0xe8);
+    if (t0 != 0) {
+        return ((lifted::C1010e520 *)t0)->sub_1010e520((int)&lifted::g_102bbea0);
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010e4c0 size=0x2a
 namespace lifted {
 extern char g_102bbea0;
