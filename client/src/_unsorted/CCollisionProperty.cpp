@@ -17,6 +17,17 @@ struct V { virtual void v0(); virtual void v1(); virtual void v2(); virtual void
 void __fastcall sub_100431e0(CCollisionProperty *self, int edx) { ((V *)((char *)self->m_unk3c + 0xc))->v12(); }
 // END FUNCTION
 
+// FUNCTION: 0x10043210 size=0xa
+#include "CCollisionProperty.h"
+namespace lifted {
+struct V { virtual int f0(); };
+}
+void CCollisionProperty::vfunc13()
+{
+    ((lifted::V *)((*(int *)((char *)this + 0x3c)) + 4))->f0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10043290 size=0x4
 #include "CCollisionProperty.h"
 // TARGET: CCollisionProperty::vfunc11

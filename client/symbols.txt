@@ -2469,6 +2469,7 @@
 0x10043150 func   ?sub_10043150@Rec64@@QAEXH@Z Rec64::sub_10043150
 0x100431d0 func   ?vfunc0@CCollisionProperty@@UAEPAXXZ CCollisionProperty::vfunc0
 0x100431e0 func   ?sub_100431e0@@YIXPAVCCollisionProperty@@H@Z sub_100431e0
+0x10043210 func   ?vfunc13@CCollisionProperty@@UAEXXZ CCollisionProperty::vfunc13
 0x10043220 func   ?sub_10043220@@YAXXZ sub_10043220
 0x10043230 func   ?sub_10043230@CCollisionProperty@@QAEXH@Z CCollisionProperty::sub_10043230
 0x10043290 func   ?vfunc11@CCollisionProperty@@QAEHXZ CCollisionProperty::vfunc11
