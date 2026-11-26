@@ -717,6 +717,7 @@
 0x1000ffb0 func   ?_C_WeaponWallet_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponWallet_CreateObject
 0x10010070 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponWallet@@@Z ClientClassInit
 0x10010100 func   ?vfunc17@C_ItemMWallet@@UAEHXZ C_ItemMWallet::vfunc17
+0x10010140 func   ?sub_10010140@@YAHXZ sub_10010140
 0x10010190 func   ??_GC_ItemMWallet@@UAEPAXI@Z ??_GC_ItemMWallet@@UAEPAXI@Z
 0x100101b0 func   ?vfunc16@C_ItemMWallet@@UAEHXZ C_ItemMWallet::vfunc16
 0x100101c0 func   ?vfunc15@C_ItemMWallet@@UAEHXZ C_ItemMWallet::vfunc15
