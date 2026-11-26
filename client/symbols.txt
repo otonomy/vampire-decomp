@@ -1301,6 +1301,7 @@
 0x1001b630 func   ?_C_ItemGGiovanniInvitationVictor_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGGiovanniInvitationVictor_CreateObject
 0x1001b6f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGGiovanniInvitationVictor@@@Z ClientClassInit
 0x1001b780 func   ?vfunc17@C_ItemGGiovanniInvitationMaria@@UAEHXZ C_ItemGGiovanniInvitationMaria::vfunc17
+0x1001b7c0 func   ?sub_1001b7c0@@YAHXZ sub_1001b7c0
 0x1001b810 func   ??_GC_ItemGGiovanniInvitationMaria@@UAEPAXI@Z ??_GC_ItemGGiovanniInvitationMaria@@UAEPAXI@Z
 0x1001b830 func   ?vfunc16@C_ItemGGiovanniInvitationMaria@@UAEHXZ C_ItemGGiovanniInvitationMaria::vfunc16
 0x1001b840 func   ?vfunc15@C_ItemGGiovanniInvitationMaria@@UAEHXZ C_ItemGGiovanniInvitationMaria::vfunc15
