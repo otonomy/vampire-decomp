@@ -4714,6 +4714,7 @@
 0x100cbb80 func   ?vfunc16@CHLClient@@UAEHXZ CHLClient::vfunc16
 0x100cbb90 func   ?IN_ClearStates@CHLClient@@UAEXXZ CHLClient::IN_ClearStates
 0x100cbb90 func   ?vfunc17@CHLClient@@UAEHXZ CHLClient::vfunc17
+0x100cbba0 func   ?IN_FindKey@CHLClient@@UAEPAUkbutton_s@@PBD@Z CHLClient::IN_FindKey
 0x100cbba0 func   ?vfunc18@CHLClient@@UAEHXZ CHLClient::vfunc18
 0x100cbbb0 func   ?vfunc19@CHLClient@@UAEHXZ CHLClient::vfunc19
 0x100cbbc0 func   ?vfunc20@CHLClient@@UAEXHHHHHH@Z CHLClient::vfunc20
