@@ -10,5 +10,13 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual int vfunc15();
     virtual int vfunc16();
     virtual void vfunc123(const Vector *pos, const Quaternion *q, const matrix3x4_t &cameraTransform, const struct StudioBoneMask *pBoneComputed);	// BuildTransformations
-    char m_pad0adc[0xb28 - 0xadc];
+    char m_pad0adc[0xaf0 - 0xadc];
+    Vector m_attachmentPointBoneSpace;	// 0xaf0
+    Vector m_vecOffset;	// 0xafc
+    Vector m_attachmentPointRagdollSpace;	// 0xb08
+    int m_ragdollAttachedObjectIndex;	// 0xb14
+    int m_boneIndexAttached;	// 0xb18
+    float m_parentTime;	// 0xb1c
+    int m_unkb20;
+    int m_unkb24;
 };
