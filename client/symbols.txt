@@ -17144,3 +17144,4 @@
 0x102db368 data   ??_R0?AV__non_rtti_object@@@8 ??_R0?AV__non_rtti_object@@@8
 0x102db388 data   ??_R0?AVbad_cast@@@8 ??_R0?AVbad_cast@@@8
 0x104a0d50 data   ?g_pLocalPlayer@@3PAVC_BasePlayer@@A g_pLocalPlayer
+0x104cfe38 data   ?gHUD@@3VCHud@@A gHUD
