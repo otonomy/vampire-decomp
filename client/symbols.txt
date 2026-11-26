@@ -1877,6 +1877,7 @@
 0x10026a30 func   ?_C_ItemKMuseumOfficeKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKMuseumOfficeKey_CreateObject
 0x10026af0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKMuseumOfficeKey@@@Z ClientClassInit
 0x10026b80 func   ?vfunc17@C_ItemKAshCellKey@@UAEHXZ C_ItemKAshCellKey::vfunc17
+0x10026bc0 func   ?sub_10026bc0@@YAHXZ sub_10026bc0
 0x10026c10 func   ??_GC_ItemKAshCellKey@@UAEPAXI@Z ??_GC_ItemKAshCellKey@@UAEPAXI@Z
 0x10026c30 func   ?vfunc16@C_ItemKAshCellKey@@UAEHXZ C_ItemKAshCellKey::vfunc16
 0x10026c40 func   ?vfunc15@C_ItemKAshCellKey@@UAEHXZ C_ItemKAshCellKey::vfunc15
