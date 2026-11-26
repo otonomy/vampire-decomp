@@ -89553,6 +89553,23 @@ void * CUnknown10120690::sub_10120690(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101206b0 size=0x1d
+struct CallbackNode_104e0c9c
+{
+	void (*m_pfn)(void *);
+	void *m_pData;
+	CallbackNode_104e0c9c *m_pNext;
+};
+
+extern CallbackNode_104e0c9c *g_104e0c9c;
+
+void sub_101206b0()
+{
+	for (CallbackNode_104e0c9c *p = g_104e0c9c; p; p = p->m_pNext)
+		p->m_pfn(p->m_pData);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101206d0 size=0x5
 namespace lifted {
 int sub_100cd9a0();
