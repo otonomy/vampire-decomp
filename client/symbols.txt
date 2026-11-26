@@ -3812,6 +3812,7 @@
 0x100a0df0 func   ?vfunc64@C_BaseEntity@@UAEHHH@Z C_BaseEntity::vfunc64
 0x100a0df0 func   ?vfunc64@C_BaseEntity@@UAEHHHH@Z C_BaseEntity::vfunc64
 0x100a0df0 func   ?vfunc64@C_BaseEntity@@UAEXPAV1@PAM1@Z C_BaseEntity::vfunc64
+0x100a0e30 func   ?vfunc77@C_BaseEntity@@UAEXXZ C_BaseEntity::vfunc77
 0x100a10b0 func   ?sub_100a10b0@C_BaseEntity@@QAEXH@Z C_BaseEntity::sub_100a10b0
 0x100a1110 func   ?sub_100a1110@C_BaseEntity@@QAEXXZ C_BaseEntity::sub_100a1110
 0x100a1140 func   ?sub_100a1140@C_BaseEntity@@QAE_NXZ C_BaseEntity::sub_100a1140

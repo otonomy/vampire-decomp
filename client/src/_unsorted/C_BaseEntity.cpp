@@ -925,6 +925,66 @@ void __stdcall sub_100a0df0(C_BaseEntity *ent, float *pos, float *ang)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a0e30 size=0x272
+#include "Vector.h"
+#include "C_BaseEntity.h"
+#include "ehandle.h"
+#include "CUnknown100290c0.h"
+#include "QAngle.h"
+#include <math.h>
+
+struct C_BaseEntity_LocalView
+{
+	char m_pad[0x2b4];
+	Vector m_vecOrigin2b4;
+	QAngle m_angRotation2c0;
+};
+
+void C_BaseEntity::vfunc77()
+{
+	CBaseHandle &hParent = *(CBaseHandle *)((char *)this + 0x188);
+	if (!((CUnknown100290c0 *)g_102b8e98)->sub_1007aca0((unsigned int *)&hParent))
+		return;
+	if (GetSolid() == 11) {
+		int pParent = ((CUnknown100290c0 *)g_102b8e98)->sub_1007aca0((unsigned int *)&hParent);
+		if (!pParent)
+			return;
+		Vector unused;
+		QAngle angles;
+		Vector origin;
+		vfunc64(pParent, (int)&origin, (int)&angles);
+		sub_100a2030(&origin);
+		sub_100a2100(angles);
+		((C_BaseEntity_LocalView *)this)->m_vecOrigin2b4 = origin;
+		((C_BaseEntity_LocalView *)this)->m_angRotation2c0 = angles;
+	} else if (GetSolid() == 12) {
+		C_BaseEntity *pEnt = (C_BaseEntity *)hParent.Get();
+		if (!pEnt)
+			return;
+		Vector vOffset = pEnt->vfunc53();
+		QAngle angles;
+		float flYaw = pEnt->GetAbsAngles()[1] * 0.017453292f;
+		vOffset.x = sin(flYaw) * (vOffset.y * 0.6f);
+		vOffset.y = cos(flYaw) * (vOffset.y * -0.6f);
+		vOffset.z = vOffset.z * 0.9f;
+		{
+			Vector a = vOffset + pEnt->GetRenderOrigin();
+			sub_100a2030(&a);
+		}
+		{
+			Vector b = vOffset + pEnt->GetAbsOrigin();
+			vfunc44((int)&b);
+		}
+		angles = pEnt->GetAbsAngles();
+		angles.x += 90.0f;
+		vfunc46((int)&angles);
+		angles = pEnt->GetRenderAngles();
+		angles.x += 90.0f;
+		sub_100a2100(angles);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a11e0 size=0x7
 #include "C_BaseEntity.h"
 namespace lifted {
