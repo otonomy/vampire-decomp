@@ -1269,6 +1269,7 @@
 0x1001ac30 func   ?_C_ItemGVampyrApocrypha_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGVampyrApocrypha_CreateObject
 0x1001acf0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGVampyrApocrypha@@@Z ClientClassInit
 0x1001ad80 func   ?vfunc17@C_ItemGPishaFetish@@UAEHXZ C_ItemGPishaFetish::vfunc17
+0x1001adc0 func   ?sub_1001adc0@@YAHXZ sub_1001adc0
 0x1001ae10 func   ??_GC_ItemGPishaFetish@@UAEPAXI@Z ??_GC_ItemGPishaFetish@@UAEPAXI@Z
 0x1001ae30 func   ?vfunc16@C_ItemGPishaFetish@@UAEHXZ C_ItemGPishaFetish::vfunc16
 0x1001ae40 func   ?vfunc15@C_ItemGPishaFetish@@UAEHXZ C_ItemGPishaFetish::vfunc15

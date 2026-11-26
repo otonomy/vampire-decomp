@@ -11046,6 +11046,32 @@ template <> int ClientClassInit<DT_ItemGVampyrApocrypha::ignored>(DT_ItemGVampyr
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001adc0 size=0x45
+namespace lifted {
+extern char g_1020c8f4;
+extern char g_1020c908;
+extern char g_1020c944;
+extern char g_1020c97c;
+extern char g_1020c9d4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001adc0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1020c9d4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020c97c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1020c944;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1020c908;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1020c8f4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001ae50 size=0x6
 namespace lifted {
 extern char g_102e4a18;
