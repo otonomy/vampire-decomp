@@ -14430,6 +14430,32 @@ template <> int ClientClassInit<DT_ItemKClinicCSKey::ignored>(DT_ItemKClinicCSKe
 }
 // END FUNCTION
 
+// FUNCTION: 0x10022340 size=0x45
+namespace lifted {
+extern char g_1021ab24;
+extern char g_1021ab38;
+extern char g_1021ab74;
+extern char g_1021abac;
+extern char g_1021ac04;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10022340()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1021ac04;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1021abac;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1021ab74;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1021ab38;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1021ab24;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100223d0 size=0x6
 namespace lifted {
 extern char g_102e7868;
