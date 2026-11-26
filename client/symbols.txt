@@ -1293,6 +1293,7 @@
 0x1001b3b0 func   ?_C_ItemGEDaneReport_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGEDaneReport_CreateObject
 0x1001b470 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGEDaneReport@@@Z ClientClassInit
 0x1001b500 func   ?vfunc17@C_ItemGGiovanniInvitationVictor@@UAEHXZ C_ItemGGiovanniInvitationVictor::vfunc17
+0x1001b540 func   ?sub_1001b540@@YAHXZ sub_1001b540
 0x1001b590 func   ??_GC_ItemGGiovanniInvitationVictor@@UAEPAXI@Z ??_GC_ItemGGiovanniInvitationVictor@@UAEPAXI@Z
 0x1001b5b0 func   ?vfunc16@C_ItemGGiovanniInvitationVictor@@UAEHXZ C_ItemGGiovanniInvitationVictor::vfunc16
 0x1001b5c0 func   ?vfunc15@C_ItemGGiovanniInvitationVictor@@UAEHXZ C_ItemGGiovanniInvitationVictor::vfunc15

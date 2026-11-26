@@ -11262,6 +11262,32 @@ template <> int ClientClassInit<DT_ItemGEDaneReport::ignored>(DT_ItemGEDaneRepor
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001b540 size=0x45
+namespace lifted {
+extern char g_1020d764;
+extern char g_1020d778;
+extern char g_1020d7b4;
+extern char g_1020d7ec;
+extern char g_1020d844;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001b540()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1020d844;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020d7ec;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1020d7b4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1020d778;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1020d764;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001b5d0 size=0x6
 namespace lifted {
 extern char g_102e2554;
