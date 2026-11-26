@@ -5649,6 +5649,7 @@
 0x10101e20 func   ?sub_10101e20@@YAXPAUkbutton_t@@_N@Z sub_10101e20
 0x10101ea0 func   ?sub_10101ea0@@YAXPAUkbutton_t@@_N@Z sub_10101ea0
 0x10102500 func   ?vfunc10@CInput@@UAEHHHH@Z CInput::vfunc10
+0x10102520 func   ?KeyState@CInput@@UAEMPAUkbutton_t@@@Z CInput::KeyState
 0x101025b0 func   ?sub_101025b0@@YGMM@Z sub_101025b0
 0x101025f0 func   ?sub_101025f0@CInput@@QAEXMAAUVector@@@Z CInput::sub_101025f0
 0x10102800 func   ?sub_10102800@CInput@@QAEXPAUVector@@@Z CInput::sub_10102800
