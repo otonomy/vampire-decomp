@@ -6346,6 +6346,7 @@
 0x101260d0 func   ?sub_101260d0@@YAHXZ sub_101260d0
 0x10126130 func   ?_C_ServerRagdollAttached_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ServerRagdollAttached_CreateObject
 0x10126230 func   ?sub_10126230@@YAHH@Z sub_10126230
+0x10126260 func   ?vfunc123@C_ServerRagdollAttached@@UAEXPBVVector@@PBVQuaternion@@ABUmatrix3x4_t@@PBUStudioBoneMask@@@Z C_ServerRagdollAttached::vfunc123
 0x101265f0 func   ??_GC_ServerRagdollAttached@@UAEPAXI@Z ??_GC_ServerRagdollAttached@@UAEPAXI@Z
 0x10126670 func   ?ClientClassInit@@YAHPAUignored@DT_Ragdoll_Attached@@@Z ClientClassInit
 0x10126770 func   ?sub_10126770@CUnknown10126770@@QAEXH@Z CUnknown10126770::sub_10126770
