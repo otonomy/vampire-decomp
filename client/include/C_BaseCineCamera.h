@@ -3,6 +3,7 @@
 // the destructor is slot 8 of its vtable; the virtual functions before it are not declared yet
 #pragma once
 #include "C_BaseEntity.h"
+#include "Vector.h"
 
 class C_BaseCineCamera : public C_BaseEntity
 {
@@ -16,11 +17,16 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	bool sub_100019a0();
 	bool sub_10001970();
 	void sub_100019d0(QAngle *pAngles, Vector *pOrigin);	// the camera's angles (+0x474) and origin (+0x468)
-	char m_pad0014[0x4a4 - 0x14];
+	char m_pad0014[0x410 - 0x14];
+	Vector m_v410;	// the target position
+	char m_pad041c[0x468 - 0x41c];
+	Vector m_v468;	// the camera position
+	char m_pad0474[0x4a4 - 0x474];
 	float m_f4a4;
 	float m_af4a8[6];
 	char m_b4c0;
 	char m_ab4c1[3];
 	float m_f4c4;
 	float sub_10001c80(int idx, float f, float d);
+	Vector sub_10001fe0(float dt);	// moves m_v468 toward m_v410, returns the new position
 };
