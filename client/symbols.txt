@@ -4171,6 +4171,7 @@
 0x100a2a90 func   ?sub_100a2a90@@YAHH@Z sub_100a2a90
 0x100a2ab0 func   ?sub_100a2ab0@@YAPAXPBD@Z sub_100a2ab0
 0x100a2b30 func   ?sub_100a2b30@@YAXXZ sub_100a2b30
+0x100a2cf0 func   ?vfunc113@C_BaseEntity@@UAE_N_NPAV1@@Z C_BaseEntity::vfunc113
 0x100a2d40 func   ?vfunc103@C_BaseEntity@@UAEXH@Z C_BaseEntity::vfunc103
 0x100a2d70 func   ?sub_100a2d70@C_BaseEntity@@QAEPAXXZ C_BaseEntity::sub_100a2d70
 0x100a2da0 func   ?sub_100a2da0@@YAHXZ sub_100a2da0
