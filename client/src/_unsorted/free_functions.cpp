@@ -71711,6 +71711,95 @@ void CUtlMemory12::sub_10119fe0(int num)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011a060 size=0x259
+#include "engineclient.h"
+#include "utlvector.h"
+#include "C_RecipientFilter.h"
+#include "CSoundParameters.h"
+#include "IPhysicsObject.h"
+
+struct surfacedata_t
+{
+	int m_unk00;
+	int m_unk04;
+	int m_unk08;
+	int m_unk0c;
+	int m_unk10;
+	int m_unk14;
+	float hardness;	// 0x18
+	int m_unk1c;
+	int m_unk20;
+	float hardThreshold;	// 0x24
+	int m_unk28;
+	int m_unk2c;
+	unsigned short impactDefault;	// 0x30
+	unsigned short impactSoft;	// 0x32
+	unsigned short impactHard;	// 0x34
+};
+
+struct impactsound_t
+{
+	int m_unk00;
+	int m_unk04;
+	int entityIndex;	// 0x08
+	IPhysicsObject *pObject;	// 0x0c
+	float volume;	// 0x10
+	unsigned short surfaceProps;	// 0x14
+	unsigned short hitSurfaceProps;	// 0x16
+};
+
+bool sub_1012d7f0(const char *pSound, CSoundParameters &params);
+void sub_1012d1a0(IRecipientFilter &filter, int iEntIndex, int iChannel, const char *pSample, float flVolume, int iSoundlevel, int iFlags, int iPitch, const Vector *pOrigin, const Vector *pDirection, int a10);
+extern "C" __declspec(dllimport) char *Q_strncpy(char *, const char *, int);
+
+void sub_1011a060(CUtlVector<impactsound_t> &list)
+{
+	const char *pSound = 0;
+	for (int i = list.Count() - 1; i >= 0; --i)
+	{
+		impactsound_t &sound = list[i];
+		const surfacedata_t *pSurf = (const surfacedata_t *)physprops->vfunc5(sound.surfaceProps);
+		if (pSurf->impactHard)
+		{
+			const surfacedata_t *pHitSurf = (const surfacedata_t *)physprops->vfunc5(sound.hitSurfaceProps);
+			unsigned short soundName = pSurf->impactHard;
+			if (pHitSurf && pSurf->impactSoft)
+			{
+				if (pHitSurf->hardness < pSurf->hardThreshold)
+					soundName = pSurf->impactSoft;
+			}
+			pSound = physprops->vfunc6(soundName);
+		}
+		if (!pSound || !pSound[0])
+			pSound = physprops->vfunc6(pSurf->impactDefault);
+		if (pSound && pSound[0])
+		{
+			CSoundParameters params;
+			if (!sub_1012d7f0(pSound, params))
+			{
+				params.channel = 0;
+				params.volume = 1.0f;
+				params.pitch = 100;
+				params.pitchlow = 100;
+				params.pitchhigh = 100;
+				params.soundlevel = 75;
+				params.play_to_owner_only = false;
+				params.count = 0;
+				Q_strncpy(params.soundname, pSound, sizeof(params.soundname));
+			}
+			Vector origin;
+			sound.pObject->vfunc37(&origin, 0);
+			if (sound.volume > 1.0f)
+				sound.volume = 1.0f;
+			params.volume *= 0.45f;
+			CPASAttenuationFilter filter(origin);
+			sub_1012d1a0(filter, 0, sound.entityIndex, params.soundname, params.volume * sound.volume, params.soundlevel, 0, params.pitch, &origin, 0, 0);
+		}
+	}
+	list.RemoveAll();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011a2c0 size=0xfb
 #include "utlmemory.h"
 #include "utlrbtree.h"

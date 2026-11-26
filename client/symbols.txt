@@ -6098,6 +6098,7 @@
 0x10119f70 func   ?sub_10119f70@CMem8b_t@@QAEXH@Z CMem8b_t::sub_10119f70
 0x10119fe0 func   ?sub_10119fe0@CUtlMemory12@@QAEXH@Z CUtlMemory12::sub_10119fe0
 0x1011a050 func   ?sub_1011a050@@YGXHH@Z sub_1011a050
+0x1011a060 func   ?sub_1011a060@@YAXAAV?$CUtlVector@Uimpactsound_t@@V?$CUtlMemory@Uimpactsound_t@@@@@@@Z sub_1011a060
 0x1011a2c0 func   ?sub_1011a2c0@@YAXPAUS10032fb0@@HHHHIGM@Z sub_1011a2c0
 0x1011a3c0 func   ?sub_1011a3c0@S10032fb0@@QAEXH@Z S10032fb0::sub_1011a3c0
 0x1011a430 func   ?vfunc111@C_BaseEntity@@UAEXXZ C_BaseEntity::vfunc111
