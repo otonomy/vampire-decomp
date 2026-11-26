@@ -74437,6 +74437,20 @@ int sub_10115ef0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10115f60 size=0x2d
+struct CUnknown10115f60 { int sub_10115f60(int, int); };
+int CUnknown10115f60::sub_10115f60(int a0, int a1)
+{
+    *(int *)((char *)a0) = *(int *)((char *)this + 8);
+    *(int *)((char *)a0 + 4) = *(int *)((char *)this + 0xc);
+    *(int *)((char *)a0 + 8) = *(int *)((char *)this + 0x10);
+    *(int *)((char *)a1) = *(int *)((char *)this + 0x14);
+    *(int *)((char *)a1 + 4) = *(int *)((char *)this + 0x18);
+    *(int *)((char *)a1 + 8) = *(int *)((char *)this + 0x1c);
+    return a1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10115f90 size=0x3
 char sub_10115f90()
 {
