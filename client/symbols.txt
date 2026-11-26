@@ -8366,6 +8366,7 @@
 0x10166b50 func   ?sub_10166b50@CUnk10166dd0@@QAE_NPAU1@@Z CUnk10166dd0::sub_10166b50
 0x10166c00 func   ?sub_10166c00@S10166c00@@QAEHXZ S10166c00::sub_10166c00
 0x10166c30 func   ?vfunc98@CGrid@vgui2@@UAEXXZ vgui2::CGrid::vfunc98
+0x10166d20 func   ?sub_10166d20@@YGHHDHFFFF@Z sub_10166d20
 0x10166d70 func   ?sub_10166d70@CUnknown10166d70@@QAEHXZ CUnknown10166d70::sub_10166d70
 0x10166d90 func   ?sub_10166d90@GridV@@QAEPAUGridCell@@HH@Z GridV::sub_10166d90
 0x10166dd0 func   ?sub_10166dd0@CUnk10166dd0@@QAEXH@Z CUnk10166dd0::sub_10166dd0

@@ -118500,6 +118500,25 @@ int S10166c00::sub_10166c00()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10166d20 size=0x45
+namespace lifted {
+int __stdcall sub_10166d90(int, int);
+}
+int __stdcall sub_10166d20(int a0, char a1, int a2, short a3, short a4, short a5, short a6)
+{
+    int t0 = lifted::sub_10166d90(0, a0);
+    *(char *)((char *)t0 + 4) = a1;
+    if (a1 != 0) {
+        *(int *)((char *)t0 + 0x10) = a2;
+        *(short *)((char *)t0 + 6) = a3;
+        *(short *)((char *)t0 + 8) = a4;
+        *(short *)((char *)t0 + 0xa) = a5;
+        *(short *)((char *)t0 + 0xc) = a6;
+    }
+    return t0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10166d70 size=0x18
 struct CUnknown10166d70 { int sub_10166d70(); };
 int CUnknown10166d70::sub_10166d70()
