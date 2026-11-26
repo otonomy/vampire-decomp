@@ -31,7 +31,7 @@ public:
 	virtual void vfunc5();
 	virtual bool vfunc6();	// slot 6
 	virtual void vfunc7();
-	virtual void vfunc8();
+	virtual const char *vfunc8(int);	// slot 8: a name for an index (C_BaseTerminal's key sound)
 	virtual void vfunc9();
 	virtual bool vfunc10();	// slot 10
 	virtual void vfunc11(int, void *);	// slot 11
