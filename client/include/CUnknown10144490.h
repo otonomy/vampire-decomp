@@ -14,7 +14,11 @@ public:
 	int m_n1C;	// 0x1c
 	int m_n20;	// 0x20: cleared by sub_101444c0
 
+	CUnknown10144490(int index);	// 0x10144490
+	~CUnknown10144490() {}
 	void *sub_10144490(int index);
+	const char *sub_101445f0();	// the clan name
+	void sub_10144600();	// DevMsgs the trait scores
 	bool sub_101444c0(void *pNode);
 	void sub_10144540(void *pNode, const char *name, int *pOut);
 };
