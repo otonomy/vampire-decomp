@@ -27,7 +27,9 @@ public:
 	int m_TotalElements;	// 0x1c
 
 	static int InvalidIndex() { return -1; }
-	void sub_10133080(int elem);
+	void sub_10133080(int elem);	// "CUtlRBTree::RotateRight" of the instance whose Links is sub_10131a70
+	void sub_10132e80(int elem);	// "CUtlRBTree::RotateLeft" of that instance
+	void sub_101316c0(int i, int parent, bool isLeft);	// "CUtlRBTree::LinkToParent" with InsertRebalance inlined (called by InsertAt 0x10130c50)
 
 	Node_t &ElementAt(int i) const { return m_pElements[i]; }
 
