@@ -95690,6 +95690,54 @@ void sub_1012cea0(int, int);
 void V1012::sub_1012cd20(int p) { sub_1012cea0(b.v9(), p); }
 // END FUNCTION
 
+// FUNCTION: 0x1012cd40 size=0x160
+#include "CSoundEmitterSystemBase.h"
+#include "Tier1.h"
+struct IEngSnd2
+{
+	virtual void v0();
+	virtual float GetSoundDuration(const char *);
+	virtual void EmitSound(void *filter, int ent, int chan, const char *name, float vol, int level, int flags, int pitch, const void *origin, const void *dir, bool upd, float t);
+};
+struct SysV3
+{
+	virtual void v0(); virtual void v1(); virtual void v2();
+	virtual void Log(const char *fmt, ...);
+};
+struct IEntV50
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual const char **v50(void *out);
+};
+IEntV50 *sub_100a2a90(int);
+extern IEngSnd2 *g_104a5818;
+__declspec(dllimport) void DevMsg(const char *pMsg, ...);
+// TARGET: sub_1012cd40
+void __cdecl sub_1012cd40(void *filter, int entindex, const char *soundname, const void *origin, float soundtime, float *pDuration)
+{
+	CSoundParameters params;
+	IEntV50 *ent = sub_100a2a90(entindex);
+	if (ent) {
+		char tmp[4];
+		const char *n = *ent->v50(tmp);
+		if (!n) n = "";
+		g_105e5540.sub_1012ec90(n);
+	}
+	if (g_105e5540.sub_1012e6d0(soundname, params) && params.soundname[0]) {
+		if (g_101e31dc(params.soundname, "vo", 2) == 0 && params.channel != 5 && params.channel != 2)
+			DevMsg("EmitSound:  Voice .wav file %s doesn't specify CHAN_VOICE or CHAN_STREAM for sound %s\n", params.soundname, soundname);
+		g_104a5818->EmitSound(filter, entindex, params.channel, params.soundname, params.volume, params.soundlevel, 0, params.pitch, origin, 0, true, soundtime);
+		if (pDuration)
+			*pDuration = g_104a5818->GetSoundDuration(params.soundname);
+		((SysV3 *)&g_105e5540)->Log("EmitSound:  '%s' emitted as '%s' (ent %i)\n", soundname, params.soundname, entindex);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012cea0 size=0xa1
 #include "CSoundEmitterSystemBase.h"
 #include "engineclient.h"
