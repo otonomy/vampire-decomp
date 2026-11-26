@@ -8640,6 +8640,7 @@
 0x10187f70 func   ?sub_10187f70@@YAXXZ sub_10187f70
 0x10187fa0 func   ?sub_10187fa0@@YAHXZ sub_10187fa0
 0x10187fc0 func   ?sub_10187fc0@@YAHXZ sub_10187fc0
+0x10187fe0 func   ?sub_10187fe0@@YAHXZ sub_10187fe0
 0x10188030 func   ??1QuestLogPanel@@UAE@XZ QuestLogPanel::~QuestLogPanel
 0x10188050 func   ??_GQuestLogPanel@@UAEPAXI@Z ??_GQuestLogPanel@@UAEPAXI@Z
 0x101880d0 func   ??_GVQQuestButton@@UAEPAXI@Z ??_GVQQuestButton@@UAEPAXI@Z
