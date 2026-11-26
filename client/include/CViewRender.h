@@ -91,6 +91,9 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     void sub_10199ed0(const struct CViewSetup &view, void *pInfo, void *pRenderList, bool, bool, bool);
     void sub_10190a70();
     void sub_10191200();
+    float sub_10190900();
+    void sub_10190640();
+    float sub_1018ffd0();
     // m_View (the CViewSetup at +0x10) through an accessor: classes of matched code derive from CViewRender with
     // members placed after sizeof(CViewRender), so CViewRender declares no data members yet
     CViewSetup &View() { return *(CViewSetup *)((char *)this + 0x10); }
