@@ -98,7 +98,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual C_BaseEntity *vfunc194(const char *pName);
 	virtual char * vfunc195();
 	virtual int vfunc196(int, int, int);
-	char m_pad1438[0x14e4 - 0x1438];
+	char m_pad1438[0x14d0 - 0x1438];
+	float m_fl14d0;
+	bool m_b14d4;
+	char m_pad14d5[0x14e4 - 0x14d5];
 	int m_unk14e4;
 	CBaseHandle m_h14e8;
 	char m_pad14ec[0x162c - 0x14ec];
