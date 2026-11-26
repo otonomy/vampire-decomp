@@ -1438,6 +1438,20 @@ int C_BaseCombatWeapon::vfunc163()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009b230 size=0x40
+#include "C_BaseCombatWeapon.h"
+
+void C_BaseCombatWeapon::vfunc29(char b)
+{
+	if (!IsDormant() && b)
+	{
+		if (!vfunc240())
+			vfunc189(0);
+	}
+	C_BaseEntity::vfunc29(b);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009b2c0 size=0x630
 #include "C_BaseCombatWeapon.h"
 #include "C_BasePlayer.h"
