@@ -301,6 +301,7 @@
 0x10007db0 func   ?_C_WeaponMelee_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_CreateObject
 0x10007e70 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee@@@Z ClientClassInit
 0x10007f00 func   ?vfunc17@C_WeaponMelee_BaseballBat@@UAEHXZ C_WeaponMelee_BaseballBat::vfunc17
+0x10007f40 func   ?sub_10007f40@@YAHXZ sub_10007f40
 0x10007f90 func   ??_GC_WeaponMelee_BaseballBat@@UAEPAXI@Z ??_GC_WeaponMelee_BaseballBat@@UAEPAXI@Z
 0x10007fb0 func   ?vfunc16@C_WeaponMelee_BaseballBat@@UAEHXZ C_WeaponMelee_BaseballBat::vfunc16
 0x10007fc0 func   ?vfunc15@C_WeaponMelee_BaseballBat@@UAEHXZ C_WeaponMelee_BaseballBat::vfunc15
