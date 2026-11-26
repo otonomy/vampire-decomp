@@ -13481,6 +13481,90 @@ void S100319f0::sub_100319f0(const float *s)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10031d80 size=0x3e3
+#include "C_SteamJet.h"
+#include "engineclient.h"
+
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);	// AngleVectors
+
+#define STEAMJET_NUMRAMPS 5
+
+inline float FloatMakePositive(float f)
+{
+	int i = *(int *)&f & 0x7FFFFFFF;
+	return *(float *)&i;
+}
+
+inline bool VectorsAreEqual(const Vector &src1, const Vector &src2, float tolerance)
+{
+	if (FloatMakePositive(src1.x - src2.x) > tolerance)
+		return false;
+	if (FloatMakePositive(src1.y - src2.y) > tolerance)
+		return false;
+	return (FloatMakePositive(src1.z - src2.z) <= tolerance);
+}
+
+inline bool QAnglesAreEqual(const QAngle &src1, const QAngle &src2, float tolerance)
+{
+	if (FloatMakePositive(src1.x - src2.x) > tolerance)
+		return false;
+	if (FloatMakePositive(src1.y - src2.y) > tolerance)
+		return false;
+	return (FloatMakePositive(src1.z - src2.z) <= tolerance);
+}
+
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+void C_SteamJet::sub_10031d80()
+{
+	if (VectorsAreEqual(m_vLastRampUpdatePos, GetAbsOrigin(), 0.1f) &&
+		QAnglesAreEqual(m_vLastRampUpdateAngles, GetAbsAngles(), 0.1f))
+	{
+		return;
+	}
+
+	m_vLastRampUpdatePos = GetAbsOrigin();
+	m_vLastRampUpdateAngles = GetAbsAngles();
+
+	Vector forward, right, up;
+	sub_101090a0(GetAbsAngles(), &forward, &right, &up);
+
+	if (m_bFaceLeft)
+	{
+		Vector temp = forward;
+		forward = -right;
+		right = temp;
+	}
+
+	Vector startPos = GetAbsOrigin();
+	Vector endPos = GetAbsOrigin() + forward * (m_Lifetime * m_Speed);
+
+	const unsigned char *clr = (const unsigned char *)this + 0x50;	// C_BaseEntity::m_clrRender
+
+	for (int iRamp = 0; iRamp < STEAMJET_NUMRAMPS; iRamp++)
+	{
+		float t = (float)iRamp / (STEAMJET_NUMRAMPS - 1);
+		Vector vTestPos = startPos + (endPos - startPos) * t;
+
+		Vector *pRamp = &m_Ramps[iRamp];
+		Vector light;
+		engine->vfunc23(&light, &vTestPos, false);
+		*pRamp = light;
+
+		float flScale = 1.0f / 255.0f;
+		pRamp->x = (clr[0] * flScale) * pRamp->x;
+		pRamp->y = (clr[1] * flScale) * pRamp->y;
+		pRamp->z = (clr[2] * flScale) * pRamp->z;
+
+		float fMax = MAX(pRamp->x, MAX(pRamp->y, pRamp->z));
+		if (fMax > 1.0f)
+		{
+			*pRamp = *pRamp / fMax;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100321e0 size=0x12
 namespace lifted {
 extern char g_10225c30;
