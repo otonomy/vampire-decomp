@@ -67474,6 +67474,47 @@ bool sub_100da750(const Vector &center1, float radius1, const Vector &center2, f
 }
 // END FUNCTION
 
+// FUNCTION: 0x100da7a0 size=0xc4
+#include "Vector.h"
+
+bool sub_100da7a0(const Vector &boxMin, const Vector &boxMax, const Vector &center, float radius)
+{
+	float dmin = 0.0f;
+	float flDelta;
+	if (center[0] < boxMin[0])
+	{
+		flDelta = center[0] - boxMin[0];
+		dmin += flDelta * flDelta;
+	}
+	else if (center[0] > boxMax[0])
+	{
+		flDelta = boxMax[0] - center[0];
+		dmin += flDelta * flDelta;
+	}
+	if (center[1] < boxMin[1])
+	{
+		flDelta = center[1] - boxMin[1];
+		dmin += flDelta * flDelta;
+	}
+	else if (center[1] > boxMax[1])
+	{
+		flDelta = boxMax[1] - center[1];
+		dmin += flDelta * flDelta;
+	}
+	if (center[2] < boxMin[2])
+	{
+		flDelta = center[2] - boxMin[2];
+		dmin += flDelta * flDelta;
+	}
+	else if (center[2] > boxMax[2])
+	{
+		flDelta = boxMax[2] - center[2];
+		dmin += flDelta * flDelta;
+	}
+	return dmin < radius * radius;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100da870 size=0xcd
 #include "vector.h"
 

@@ -5353,6 +5353,7 @@
 0x100da0b0 func   ?sub_100da0b0@@YAMABURay_t@@ABVVector@@11_N@Z sub_100da0b0
 0x100da5c0 func   ?sub_100da5c0@@YAHABVVector@@00PBMPAM@Z sub_100da5c0
 0x100da750 func   ?sub_100da750@@YA_NABVVector@@M0M@Z sub_100da750
+0x100da7a0 func   ?sub_100da7a0@@YA_NABVVector@@00M@Z sub_100da7a0
 0x100da870 func   ?sub_100da870@@YAHABVVector@@00M@Z sub_100da870
 0x100da940 func   ?sub_100da940@@YA_NABVVector@@00M@Z sub_100da940
 0x100da9e0 func   ?sub_100da9e0@@YAHPBVVector@@00MM@Z sub_100da9e0
