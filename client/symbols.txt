@@ -781,6 +781,7 @@
 0x100113b0 func   ?_C_ResearchBook_HG_FIRE_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ResearchBook_HG_FIRE_CreateObject
 0x10011470 func   ?ClientClassInit@@YAHPAUignored@DT_ResearchBook_HG_FIRE@@@Z ClientClassInit
 0x10011500 func   ?vfunc17@C_ResearchBook_MG_BRAWL@@UAEHXZ C_ResearchBook_MG_BRAWL::vfunc17
+0x10011540 func   ?sub_10011540@@YAHXZ sub_10011540
 0x10011590 func   ??_GC_ResearchBook_MG_BRAWL@@UAEPAXI@Z ??_GC_ResearchBook_MG_BRAWL@@UAEPAXI@Z
 0x100115b0 func   ?vfunc16@C_ResearchBook_MG_BRAWL@@UAEHXZ C_ResearchBook_MG_BRAWL::vfunc16
 0x100115c0 func   ?vfunc15@C_ResearchBook_MG_BRAWL@@UAEHXZ C_ResearchBook_MG_BRAWL::vfunc15
