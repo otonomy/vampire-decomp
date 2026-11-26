@@ -4,6 +4,7 @@
 #pragma once
 #include "C_BaseEntity.h"
 #include "IBrushRenderer.h"
+#include "Vector.h"
 
 class C_BreakableSurface : public C_BaseEntity, public IBrushRenderer
 {
@@ -21,7 +22,9 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	char m_pad0018[0x414 - 0x18];
 	int m_nWidth;
 	int m_nHeight;
-	char m_pad041c[0x43c - 0x41c];
+	char m_pad041c[0x424 - 0x41c];
+	Vector m_vNormal;	// 0x424
+	char m_pad0430[0x43c - 0x430];
 	bool sub_100b7450(int x, int y);
 	int sub_100b8460(int x, int y);
 	void sub_100b7490(int x, int y, bool bSet);
@@ -45,4 +48,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	bool sub_100b80f0(int x, int y);
 	void sub_100b8130(int nWidth, int nHeight);	// UpdateEdgeType: the eight neighbours' solidity picks each edge's style
 	void sub_100b84c0(int nWidth, int nHeight, int nEdge, int nStyle);	// SetupEdge-like
+	void sub_100b8a00(class IBrushSurface *pBrushSurface, struct IMesh *pMesh, class CMeshBuilder *pMeshBuilder, const Vector &vCurPos, const Vector &vWidthStep, const Vector &vHeightStep);	// DrawOneBlock
 };
