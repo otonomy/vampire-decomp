@@ -67056,6 +67056,18 @@ void sub_10101ea0(kbutton_t *b, bool bDown)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101024e0 size=0xa
+namespace lifted {
+int sub_10102130();
+int sub_10102250();
+}
+int sub_101024e0()
+{
+    lifted::sub_10102250();
+    return lifted::sub_10102130();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101025b0 size=0x3b
 struct ObjX { virtual int vfunc0(); virtual bool vfunc1(); char pad[0x24]; float m_f28; };
 extern ObjX *g_104d3d9c;
