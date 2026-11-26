@@ -965,6 +965,7 @@
 0x10014d30 func   ?_C_BlueBloodPack_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_BlueBloodPack_CreateObject
 0x10014df0 func   ?ClientClassInit@@YAHPAUignored@DT_BlueBloodPack@@@Z ClientClassInit
 0x10014e80 func   ?vfunc17@C_ElderVitaePack@@UAEHXZ C_ElderVitaePack::vfunc17
+0x10014ec0 func   ?sub_10014ec0@@YAHXZ sub_10014ec0
 0x10014f10 func   ??_GC_ElderVitaePack@@UAEPAXI@Z ??_GC_ElderVitaePack@@UAEPAXI@Z
 0x10014f30 func   ?vfunc16@C_ElderVitaePack@@UAEHXZ C_ElderVitaePack::vfunc16
 0x10014f40 func   ?vfunc15@C_ElderVitaePack@@UAEHXZ C_ElderVitaePack::vfunc15

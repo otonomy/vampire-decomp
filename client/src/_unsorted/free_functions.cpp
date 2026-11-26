@@ -8338,6 +8338,32 @@ template <> int ClientClassInit<DT_BlueBloodPack::ignored>(DT_BlueBloodPack::ign
 }
 // END FUNCTION
 
+// FUNCTION: 0x10014ec0 size=0x45
+namespace lifted {
+extern char g_10201214;
+extern char g_10201228;
+extern char g_10201264;
+extern char g_1020129c;
+extern char g_102012f4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10014ec0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_102012f4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020129c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10201264;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10201228;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10201214;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10014f50 size=0x6
 namespace lifted {
 extern char g_102e09bc;
