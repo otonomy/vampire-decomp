@@ -2866,6 +2866,32 @@ template <> int ClientClassInit<DT_WeaponMelee_Knife::ignored>(DT_WeaponMelee_Kn
 }
 // END FUNCTION
 
+// FUNCTION: 0x100090c0 size=0x45
+namespace lifted {
+extern char g_101ea454;
+extern char g_101ea468;
+extern char g_101ea4a4;
+extern char g_101ea4dc;
+extern char g_101ea534;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100090c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101ea534;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101ea4dc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101ea4a4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101ea468;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101ea454;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10009150 size=0x6
 namespace lifted {
 extern char g_102e6390;
