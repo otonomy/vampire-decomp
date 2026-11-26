@@ -1429,6 +1429,7 @@
 0x1001de30 func   ?_C_ItemGWarrLedger1_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGWarrLedger1_CreateObject
 0x1001def0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGWarrLedger1@@@Z ClientClassInit
 0x1001df80 func   ?vfunc17@C_ItemGWarrLedger2@@UAEHXZ C_ItemGWarrLedger2::vfunc17
+0x1001dfc0 func   ?sub_1001dfc0@@YAHXZ sub_1001dfc0
 0x1001e010 func   ??_GC_ItemGWarrLedger2@@UAEPAXI@Z ??_GC_ItemGWarrLedger2@@UAEPAXI@Z
 0x1001e030 func   ?vfunc16@C_ItemGWarrLedger2@@UAEHXZ C_ItemGWarrLedger2::vfunc16
 0x1001e040 func   ?vfunc15@C_ItemGWarrLedger2@@UAEHXZ C_ItemGWarrLedger2::vfunc15
