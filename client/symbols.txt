@@ -1061,6 +1061,7 @@
 0x10016b30 func   ?_C_WeaponThrown_Chang_Ghost_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponThrown_Chang_Ghost_CreateObject
 0x10016bf0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponThrown_Chang_Ghost@@@Z ClientClassInit
 0x10016c80 func   ?vfunc17@C_ItemGDrugsMorphineBottle@@UAEHXZ C_ItemGDrugsMorphineBottle::vfunc17
+0x10016cc0 func   ?sub_10016cc0@@YAHXZ sub_10016cc0
 0x10016d10 func   ??_GC_ItemGDrugsMorphineBottle@@UAEPAXI@Z ??_GC_ItemGDrugsMorphineBottle@@UAEPAXI@Z
 0x10016d30 func   ?vfunc16@C_ItemGDrugsMorphineBottle@@UAEHXZ C_ItemGDrugsMorphineBottle::vfunc16
 0x10016d40 func   ?vfunc15@C_ItemGDrugsMorphineBottle@@UAEHXZ C_ItemGDrugsMorphineBottle::vfunc15

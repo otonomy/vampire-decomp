@@ -9174,6 +9174,32 @@ template <> int ClientClassInit<DT_WeaponThrown_Chang_Ghost::ignored>(DT_WeaponT
 }
 // END FUNCTION
 
+// FUNCTION: 0x10016cc0 size=0x45
+namespace lifted {
+extern char g_10204bd4;
+extern char g_10204be8;
+extern char g_10204c24;
+extern char g_10204c5c;
+extern char g_10204cb4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10016cc0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10204cb4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10204c5c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10204c24;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10204be8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10204bd4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10016d50 size=0x6
 namespace lifted {
 extern char g_102e5e94;
