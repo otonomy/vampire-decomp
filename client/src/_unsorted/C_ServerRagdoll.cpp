@@ -185,6 +185,87 @@ void C_ServerRagdoll::vfunc131(int a1, int a2, int a3, int a4, int a5, int a6)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10125b40 size=0x27d
+#include "C_ServerRagdoll.h"
+#include "StudioHdr.h"
+#include "matrix3x4_t.h"
+
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+void sub_101094b0(const QAngle &angles, const Vector &position, matrix3x4_t &matrix);
+bool sub_1008b180(StudioHdr *pHdr, int iBone, CBoneAccessor *pAccessor);
+void sub_1010a570(const Quaternion &q, matrix3x4_t &matrix);
+void sub_10108a50(const matrix3x4_t &in1, const matrix3x4_t &in2, matrix3x4_t &out);
+
+// the blend members behind C_ServerRagdoll's declared ones (C_ServerRagdoll::vfunc37's matched source views +0xae0 / +0xae4 from sizeof(C_ServerRagdoll))
+struct C_ServerRagdollBlendView : public C_ServerRagdoll
+{
+	int m_unkadc;
+	float m_unkae0;
+	float m_flBlendWeight;	// 0xae4
+	int m_iBlendSequence;	// 0xae8
+};
+
+void C_ServerRagdoll::vfunc123(const Vector *pos, const Quaternion *q, const matrix3x4_t &cameraTransform, const StudioBoneMask *pBoneComputed)
+{
+	StudioHdr *hdr = (StudioHdr *)sub_1008f900(-1);
+	if (!hdr)
+		return;
+
+	matrix3x4_t bonematrix;
+	bool boneSimulated[350];
+	memset(boneSimulated, 0, sizeof(boneSimulated));
+	StudioBone *pbones = hdr->Bone(0);
+
+	C_ServerRagdollBlendView *pThis = (C_ServerRagdollBlendView *)this;
+	StudioSeqDesc *pSeqDesc = 0;
+	if (pThis->m_iBlendSequence >= 0 && pThis->m_iBlendSequence < hdr->m_nLocalSeq)
+		pSeqDesc = hdr->pSeqdesc(pThis->m_iBlendSequence);
+
+	int i;
+	for (i = 0; i < m_elementCount; i++)
+	{
+		int index = m_boneIndex[i];
+		if (index >= 0 && (pBoneComputed->m_bits[index >> 5] & (1 << (index & 31))))
+		{
+			matrix3x4_t &matrix = m_BoneAccessor.m_pBones[index];
+			boneSimulated[index] = true;
+			if (pThis->m_flBlendWeight != 0.0f && pSeqDesc && pSeqDesc->weight(index) != 0.0f)
+			{
+				boneSimulated[index] = false;
+				continue;
+			}
+			sub_101094b0(m_ragAngles[i], m_ragPos[i], matrix);
+		}
+	}
+
+	for (i = 0; i < hdr->m_nBones; i++)
+	{
+		if (!(pBoneComputed->m_bits[i >> 5] & (1 << (i & 31))))
+			continue;
+		if (boneSimulated[i])
+			continue;
+		if (sub_1008b180(hdr, i, &m_BoneAccessor))
+			continue;
+
+		sub_1010a570(q[i], bonematrix);
+		bonematrix[0][3] = pos[i].x;
+		bonematrix[1][3] = pos[i].y;
+		bonematrix[2][3] = pos[i].z;
+
+		if (pbones[i].m_iParent == -1)
+		{
+			sub_10108a50(cameraTransform, bonematrix, m_BoneAccessor.m_pBones[i]);
+		}
+		else
+		{
+			sub_10108a50(m_BoneAccessor.m_pBones[pbones[i].m_iParent], bonematrix, m_BoneAccessor.m_pBones[i]);
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10125e50 size=0x6
 #include "C_ServerRagdoll.h"
 namespace lifted {

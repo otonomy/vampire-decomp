@@ -6334,6 +6334,7 @@
 0x10125920 func   ?vfunc126@C_ServerRagdoll@@UAEHXZ C_ServerRagdoll::vfunc126
 0x10125a70 func   ?vfunc37@C_ServerRagdoll@@UAEXXZ C_ServerRagdoll::vfunc37
 0x10125ab0 func   ?vfunc131@C_ServerRagdoll@@UAEXHHHHHH@Z C_ServerRagdoll::vfunc131
+0x10125b40 func   ?vfunc123@C_ServerRagdoll@@UAEXPBVVector@@PBVQuaternion@@ABUmatrix3x4_t@@PBUStudioBoneMask@@@Z C_ServerRagdoll::vfunc123
 0x10125dc0 func   ?sub_10125dc0@@YGHH@Z sub_10125dc0
 0x10125e50 func   ?vfunc16@C_ServerRagdoll@@UAEHXZ C_ServerRagdoll::vfunc16
 0x10125e60 func   ?vfunc15@C_ServerRagdoll@@UAEHXZ C_ServerRagdoll::vfunc15
