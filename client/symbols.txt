@@ -1069,6 +1069,7 @@
 0x10016db0 func   ?_C_ItemGDrugsMorphineBottle_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGDrugsMorphineBottle_CreateObject
 0x10016e70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGDrugsMorphineBottle@@@Z ClientClassInit
 0x10016f00 func   ?vfunc17@C_ItemGDrugsPerscriptionBottle@@UAEHXZ C_ItemGDrugsPerscriptionBottle::vfunc17
+0x10016f40 func   ?sub_10016f40@@YAHXZ sub_10016f40
 0x10016f90 func   ??_GC_ItemGDrugsPerscriptionBottle@@UAEPAXI@Z ??_GC_ItemGDrugsPerscriptionBottle@@UAEPAXI@Z
 0x10016fb0 func   ?vfunc16@C_ItemGDrugsPerscriptionBottle@@UAEHXZ C_ItemGDrugsPerscriptionBottle::vfunc16
 0x10016fc0 func   ?vfunc15@C_ItemGDrugsPerscriptionBottle@@UAEHXZ C_ItemGDrugsPerscriptionBottle::vfunc15
