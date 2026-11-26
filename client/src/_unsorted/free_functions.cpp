@@ -119299,6 +119299,16 @@ int sub_10184520()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10184530 size=0x5
+namespace lifted {
+int sub_101844d0();
+}
+int sub_10184530()
+{
+    return lifted::sub_101844d0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10184860 size=0x335
 #include "VItemInfoUI.h"
 #include "CStudiomodelPanel.h"
