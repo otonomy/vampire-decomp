@@ -92620,6 +92620,42 @@ int sub_10125790()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101259d0 size=0x90
+#include "C_BaseEntity.h"
+struct VecR { float x, y, z; };
+struct RagObj {
+	virtual int v0();
+	virtual VecR *vf1();
+	virtual VecR *vf2();
+	char pad[0x40 - 4];
+	int m_40;
+	unsigned char m_44;
+	bool IsBoundsDefinedInEntitySpace() const
+	{
+		return !(m_44 & 0x80) && m_40 != 2 && m_40 != 0;
+	}
+};
+void sub_1010b7e0(void *, VecR *, VecR *, VecR *, VecR *);
+struct RendRag {
+	char pad[0x18c];
+	RagObj m_rag;
+	void sub_101259d0(VecR *mins, VecR *maxs);
+};
+// TARGET: RendRag::sub_101259d0
+void RendRag::sub_101259d0(VecR *mins, VecR *maxs)
+{
+	RagObj *p = &m_rag;
+	if (!p->IsBoundsDefinedInEntitySpace()) {
+		C_BaseEntity *ent = (C_BaseEntity *)((char *)this - 4);
+		ent->sub_1009f8a0();
+		sub_1010b7e0((char *)ent + 0x26c, p->vf1(), p->vf2(), mins, maxs);
+	} else {
+		*mins = *p->vf1();
+		*maxs = *p->vf2();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10125dc0 size=0x5
 int __stdcall sub_10125dc0(int a0)
 {
