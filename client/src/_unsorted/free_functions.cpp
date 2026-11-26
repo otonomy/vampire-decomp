@@ -94846,6 +94846,96 @@ void VFeat1014ae20::sub_1014ae20(CVStatKV *kv)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1014aec0 size=0x340
+#include <stdio.h>
+#include "CStatDefaultList.h"
+
+struct CUnknown101461c0
+{
+	int sub_101461c0(const char *pszName);	// the weighting table's index of the name
+};
+
+extern CUnknown101461c0 g_105e792c;
+extern CStatDefaultList g_105f985c;
+const char *sub_1015fb60(const char *pszText);
+__declspec(dllimport) void Msg(const char *pMsg, ...);
+
+// a feat record (VtMB's CVFeat_t): the blocks of its numbered "Base", "Automatic" and "Display2nd" keys
+struct CVFeat_t
+{
+	int m_unk00[6];
+	int m_nMaxValue;	// 0x18
+	int m_nBase;	// 0x1c
+	CVDmgBlock16_t *m_pBase;	// 0x20
+	int m_nAutomatic;	// 0x24
+	CVDmgBlock16_t *m_pAutomatic;	// 0x28
+	int m_nDisplay2nd;	// 0x2c
+	CVDmgBlock16_t *m_pDisplay2nd;	// 0x30
+	int m_nPCWeighting;	// 0x34
+	int m_nNPCWeighting;	// 0x38
+
+	void sub_1014aec0(CVTraitKV *pKV, CVDmgBlock16_t *pBlock);
+};
+
+void CVFeat_t::sub_1014aec0(CVTraitKV *pKV, CVDmgBlock16_t *pBlock)
+{
+	char szKey[128];
+	int i;
+
+	if (pKV)
+	{
+		m_nMaxValue = pKV->GetInt("MaxValue", 10);
+
+		sprintf(szKey, "Base%d", m_nBase);
+		while (pKV->v6(szKey))
+			sprintf(szKey, "Base%d", ++m_nBase);
+		if (m_nBase > 0)
+		{
+			m_pBase = new CVDmgBlock16_t[m_nBase];
+			for (i = 0; i < m_nBase; i++)
+			{
+				sprintf(szKey, "Base%d", i);
+				m_pBase[i].sub_101608a0(sub_1015fb60(pKV->GetString(szKey, "")));
+			}
+		}
+
+		sprintf(szKey, "Automatic%d", m_nAutomatic);
+		while (pKV->v6(szKey))
+			sprintf(szKey, "Automatic%d", ++m_nAutomatic);
+		if (m_nAutomatic > 0)
+		{
+			m_pAutomatic = new CVDmgBlock16_t[m_nAutomatic];
+			for (i = 0; i < m_nAutomatic; i++)
+			{
+				sprintf(szKey, "Automatic%d", i);
+				m_pAutomatic[i].sub_101608a0(sub_1015fb60(pKV->GetString(szKey, "")));
+			}
+		}
+
+		sprintf(szKey, "Display2nd%d", m_nDisplay2nd);
+		while (pKV->v6(szKey))
+			sprintf(szKey, "Display2nd%d", ++m_nDisplay2nd);
+		if (m_nDisplay2nd > 0)
+		{
+			m_pDisplay2nd = new CVDmgBlock16_t[m_nDisplay2nd];
+			for (i = 0; i < m_nDisplay2nd; i++)
+			{
+				sprintf(szKey, "Display2nd%d", i);
+				m_pDisplay2nd[i].sub_101608a0(sub_1015fb60(pKV->GetString(szKey, "")));
+			}
+		}
+
+		m_nPCWeighting = g_105e792c.sub_101461c0(pKV->GetString("PCWeighting", ""));
+		m_nNPCWeighting = g_105e792c.sub_101461c0(pKV->GetString("NPCWeighting", ""));
+		g_105f985c.sub_101604b0(pKV, 0);
+	}
+	else
+	{
+		Msg("Unable to load VFeat data\n");
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1014b580 size=0x5
 int __stdcall sub_1014b580(int a0)
 {
