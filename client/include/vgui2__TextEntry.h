@@ -11,6 +11,26 @@ class TextEntry : public vgui2::Panel
 {
 public:
 	virtual ~TextEntry();
+	TextEntry(Panel *parent, const char *name);
+	// The game's TextEntry members at 0x58..0x104 (Dar<int> {count, capacity, data} at 0x58 / 0x64 / 0x78 / 0xe0 and
+	// Color() at 0xb8 / 0xbc / 0xc0 / 0xc4 / 0xc8 / 0xd5 / 0xf0 / 0x101) are constructed before the vptr store. Panel's
+	// header is 0x170 bytes (the game's Panel is 0x58), so this stand-in member constructs them through its own
+	// address until Panel shrinks to the game's size and they can be declared here at their offsets.
+	struct CMemberInit
+	{
+		static __forceinline void Dar(char *p) { *(int *)p = 0; *(int *)(p + 4) = 0; *(int *)(p + 8) = 0; }
+		static __forceinline void Color(char *p) { p[0] = 0; p[1] = 0; p[2] = 0; p[3] = 0; }
+		__forceinline CMemberInit()
+		{
+			char *p = (char *)this - sizeof(vgui2::Panel);
+			Dar(p + 0x58); Dar(p + 0x64); Dar(p + 0x78);
+			Color(p + 0xb8); Color(p + 0xbc); Color(p + 0xc0); Color(p + 0xc4); Color(p + 0xc8);
+			Color(p + 0xd5);
+			Dar(p + 0xe0);
+			Color(p + 0xf0);
+			Color(p + 0x101);
+		}
+	} m_memberInit;
 	void sub_101af9e0(int a);
 	bool sub_101aff70(int n);
 	int sub_101afbf0();
