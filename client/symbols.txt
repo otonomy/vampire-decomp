@@ -885,6 +885,7 @@
 0x10013430 func   ?_C_OccultDexterity_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_OccultDexterity_CreateObject
 0x100134f0 func   ?ClientClassInit@@YAHPAUignored@DT_OccultDexterity@@@Z ClientClassInit
 0x10013580 func   ?vfunc17@C_OccultStrength@@UAEHXZ C_OccultStrength::vfunc17
+0x100135c0 func   ?sub_100135c0@@YAHXZ sub_100135c0
 0x10013610 func   ??_GC_OccultStrength@@UAEPAXI@Z ??_GC_OccultStrength@@UAEPAXI@Z
 0x10013630 func   ?vfunc16@C_OccultStrength@@UAEHXZ C_OccultStrength::vfunc16
 0x10013640 func   ?vfunc15@C_OccultStrength@@UAEHXZ C_OccultStrength::vfunc15
