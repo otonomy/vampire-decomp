@@ -1165,6 +1165,7 @@
 0x10018bb0 func   ?_C_ItemGWatchFancy_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGWatchFancy_CreateObject
 0x10018c70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGWatchFancy@@@Z ClientClassInit
 0x10018d00 func   ?vfunc17@C_ItemGLillyPhoto@@UAEHXZ C_ItemGLillyPhoto::vfunc17
+0x10018d40 func   ?sub_10018d40@@YAHXZ sub_10018d40
 0x10018d90 func   ??_GC_ItemGLillyPhoto@@UAEPAXI@Z ??_GC_ItemGLillyPhoto@@UAEPAXI@Z
 0x10018db0 func   ?vfunc16@C_ItemGLillyPhoto@@UAEHXZ C_ItemGLillyPhoto::vfunc16
 0x10018dc0 func   ?vfunc15@C_ItemGLillyPhoto@@UAEHXZ C_ItemGLillyPhoto::vfunc15
