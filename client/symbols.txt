@@ -893,6 +893,7 @@
 0x100136b0 func   ?_C_OccultStrength_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_OccultStrength_CreateObject
 0x10013770 func   ?ClientClassInit@@YAHPAUignored@DT_OccultStrength@@@Z ClientClassInit
 0x10013800 func   ?vfunc17@C_OccultExperience@@UAEHXZ C_OccultExperience::vfunc17
+0x10013840 func   ?sub_10013840@@YAHXZ sub_10013840
 0x10013890 func   ??_GC_OccultExperience@@UAEPAXI@Z ??_GC_OccultExperience@@UAEPAXI@Z
 0x100138b0 func   ?vfunc16@C_OccultExperience@@UAEHXZ C_OccultExperience::vfunc16
 0x100138c0 func   ?vfunc15@C_OccultExperience@@UAEHXZ C_OccultExperience::vfunc15
