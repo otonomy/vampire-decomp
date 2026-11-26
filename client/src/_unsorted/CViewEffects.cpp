@@ -116,6 +116,171 @@ void CViewEffects::vfunc9(Vector &origin, QAngle &angles, float factor)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10197190 size=0x323
+#include "CViewEffects.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+
+struct screenfade_t
+{
+	float Speed;	// 0x00: alpha change per second
+	float End;	// 0x04: when the fade ends
+	float Reset;	// 0x08: when it is removed
+	unsigned char r, g, b, alpha;	// 0x0c
+	int Flags;	// 0x10
+};
+
+struct ScreenFade_t	// the message a fade starts from
+{
+	unsigned short duration;
+	unsigned short holdTime;
+	short fadeFlags;
+	unsigned char r, g, b, a;
+};
+
+struct FadeListView	// m_FadeList, a CUtlVector<screenfade_t *> at +4
+{
+	screenfade_t **m_pMemory;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+	int m_Size;
+	screenfade_t **m_pElements;
+
+	void sub_101979e0(int elem, int num);	// ShiftElementsLeft
+
+	screenfade_t *&operator[](int i) { return m_pMemory[i]; }
+	int Count() const { return m_Size; }
+	int Find(screenfade_t *const &src) const
+	{
+		for (int i = 0; i < Count(); ++i)
+		{
+			if (m_pMemory[i] == src)
+				return i;
+		}
+		return -1;
+	}
+	void Remove(int elem)
+	{
+		sub_101979e0(elem, 1);
+		--m_Size;
+	}
+	bool FindAndRemove(screenfade_t *const &src)
+	{
+		int elem = Find(src);
+		if (elem != -1)
+		{
+			Remove(elem);
+			return true;
+		}
+		return false;
+	}
+};
+
+#define m_FadeList (*(FadeListView *)&m_unk04)
+
+extern void (*g_106187fc)(int);	// s_pfnFadeDoneCallback
+extern int g_10618700;	// s_nCallbackParameter
+
+extern "C" void *__cdecl memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+// FadeCalculate
+void CViewEffects::vfunc16()
+{
+	ScopeTrace st("CViewEffects::FadeCalculate", g_102de300, g_102de300);
+
+	int i;
+	int iSize = m_FadeList.Count();
+	for (i = iSize - 1; i >= 0; i--)
+	{
+		screenfade_t *pFade = m_FadeList[i];
+
+		if (pFade->Flags & 8)
+			pFade->Reset = engine->Time(0) + 0.1;
+
+		if (engine->Time(0) > pFade->Reset && engine->Time(0) > pFade->End)
+		{
+			if (pFade->Flags & 0x20)
+			{
+				pFade->Flags = (pFade->Flags & ~0x22) | 1;
+				pFade->Reset = engine->Time(0);
+				pFade->Speed = -pFade->Speed;
+				if (pFade->Speed != 0.0f)
+				{
+					pFade->End = pFade->alpha / pFade->Speed;
+					pFade->End += engine->Time(0);
+				}
+				continue;
+			}
+
+			if (g_106187fc)
+			{
+				g_106187fc(g_10618700);
+				g_106187fc = 0;
+				g_10618700 = 0;
+			}
+
+			if (pFade->Flags & 0x40)
+			{
+				engine->ClientCmd("disconnect");
+				ScreenFade_t sf;
+				memset(&sf, 0, sizeof(sf));
+				sf.duration = 0xa00;
+				sf.r = 0;
+				sf.g = 0;
+				sf.b = 0;
+				sf.a = 255;
+				sf.holdTime = 0x200;
+				sf.fadeFlags = 1;
+				vfunc4(0, 0, &sf);
+			}
+
+			m_FadeList.FindAndRemove(pFade);
+			delete pFade;
+		}
+	}
+
+	*(unsigned char *)&m_unk98 = 0;
+	m_unk88 = m_unk8c = m_unk90 = m_unk94 = 0;
+
+	for (i = 0; i < m_unk10; i++)
+	{
+		screenfade_t *pFade = ((screenfade_t **)m_unk04)[i];
+
+		m_unk88 += pFade->r;
+		m_unk8c += pFade->g;
+		m_unk90 += pFade->b;
+
+		int iFadeAlpha;
+		if (pFade->Flags & 3)
+		{
+			iFadeAlpha = pFade->Speed * (pFade->End - engine->Time(0));
+			if (pFade->Flags & 2)
+				iFadeAlpha += pFade->alpha;
+			iFadeAlpha = iFadeAlpha < pFade->alpha ? iFadeAlpha : pFade->alpha;
+			iFadeAlpha = 0 > iFadeAlpha ? 0 : iFadeAlpha;
+		}
+		else
+		{
+			iFadeAlpha = pFade->alpha;
+		}
+
+		if (iFadeAlpha > m_unk94)
+			m_unk94 = iFadeAlpha;
+
+		if (pFade->Flags & 4)
+			*(unsigned char *)&m_unk98 = 1;
+	}
+
+	if (m_unk10)
+	{
+		m_unk88 /= m_unk10;
+		m_unk8c /= m_unk10;
+		m_unk90 /= m_unk10;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101974c0 size=0xbe
 #include "CViewEffects.h"
 #include "ScopeTrace.h"
