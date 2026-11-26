@@ -4703,6 +4703,7 @@
 0x100cbae0 func   ?vfunc5@CHLClient@@UAEHXZ CHLClient::vfunc5
 0x100cbaf0 func   ?vfunc11@CHLClient@@UAEHHHHH@Z CHLClient::vfunc11
 0x100cbb00 func   ?vfunc12@CHLClient@@UAEXH@Z CHLClient::vfunc12
+0x100cbb10 func   ?IN_ActivateMouse@CHLClient@@UAEXXZ CHLClient::IN_ActivateMouse
 0x100cbb10 func   ?vfunc13@CHLClient@@UAEHXZ CHLClient::vfunc13
 0x100cbb30 func   ?vfunc14@CHLClient@@UAEHXZ CHLClient::vfunc14
 0x100cbb50 func   ?vfunc44@CHLClient@@UAEHXZ CHLClient::vfunc44
