@@ -18,7 +18,9 @@ struct VKeyValuesInterface	// the IKeyValues part: slot 0 is the key's name
 	virtual void vfunc1();
 	virtual VKeyValuesInterface *vfunc2(const char *pszName);	// slot 2: the sub key of that name (FindKey), 0 when none
 	virtual VKeyValuesInterface *vfunc3();	// slot 3: the next key of the same level
-	virtual void vfunc4(); virtual void vfunc5(); virtual void vfunc6(); virtual void vfunc7(); virtual void vfunc8(); virtual void vfunc9();
+	virtual VKeyValuesInterface *vfunc4();	// slot 4: the first sub key
+	virtual VKeyValuesInterface *vfunc5();	// slot 5: the next sub key of the same parent
+	virtual void vfunc6(); virtual void vfunc7(); virtual void vfunc8(); virtual void vfunc9();
 	virtual int vfunc10(const char *pszKey, int nDefault);	// slot 10: GetInt
 	virtual float vfunc11(const char *pszKey, float flDefault);
 	virtual char vfunc12(const char *pszKey, int nDefault);
