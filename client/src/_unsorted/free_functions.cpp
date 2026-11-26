@@ -115514,6 +115514,18 @@ void CUnknown10202ba0::sub_1015ee00()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015ee80 size=0x10
+struct CUnknown1015ee80 { void * sub_1015ee80(); };
+void * CUnknown1015ee80::sub_1015ee80()
+{
+    *(int *)this = 0;
+    *(int *)((char *)this + 4) = 0;
+    *(int *)((char *)this + 0x8) = 0;
+    *(int *)((char *)this + 12) = 0;
+    return this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015ee90 size=0x5
 namespace lifted {
 int sub_1015eea0();
