@@ -7783,6 +7783,7 @@
 0x1015a1b0 func   ?sub_1015a1b0@CVStatAction_t@@QAEXXZ CVStatAction_t::sub_1015a1b0
 0x1015a230 func   ?sub_1015a230@@YAXH@Z sub_1015a230
 0x1015a290 func   ?sub_1015a290@TStat@@QAEXHH@Z TStat::sub_1015a290
+0x1015a300 func   ?sub_1015a300@CVStatActionView@@QAE_NPAUCVStatKV@@@Z CVStatActionView::sub_1015a300
 0x1015a6d0 func   ?sub_1015a6d0@CUnknown1015a6d0@@QAE_NH@Z CUnknown1015a6d0::sub_1015a6d0
 0x1015a750 func   ?sub_1015a750@CVStatAction_t@@QAE_NXZ CVStatAction_t::sub_1015a750
 0x1015a7e0 func   ?sub_1015a7e0@@YAXH@Z sub_1015a7e0

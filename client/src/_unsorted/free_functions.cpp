@@ -106656,6 +106656,161 @@ void TStat::sub_1015a290(int a, int b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015a300 size=0x3cc
+#include "ScopeTrace.h"
+#include "CVStatInfo_t.h"
+#include "CVStatAction_t.h"
+#include <string.h>
+#include <stdlib.h>
+
+class CNamedListX
+{
+public:
+	int sub_10157b80(const char *pszName);
+};
+extern CNamedListX g_105f8b98;
+char *sub_1015fb60(const char *psz);
+int sub_1015eb20(const char *psz);
+typedef void (*StatActionFunc_t)(CVStatAction_t *pAction, const char *pszFunc);
+extern StatActionFunc_t g_105f9394;
+extern char g_10286db0[];
+extern "C" __declspec(dllimport) void Q_strncpy(char *pDest, const char *pSrc, int maxLen);
+
+struct CVStatPredep
+{
+	virtual void a0();
+	virtual void vfunc1(const char *psz);
+};
+struct CVStatActionStat
+{
+	void sub_101608a0(const char *psz);
+};
+struct CVStatActionParticle
+{
+	char m_szDefinition[0x80];
+	int m_nAttachType;
+	char m_szBone[0x80];
+	bool m_bViewmodel;
+};
+
+struct CVStatActionView
+{
+	int m_flags;
+	int m_nType;
+	int m_nMin;
+	int m_nMax;
+	CVStatPredep m_Predep;
+	int m_unk14; int m_unk18; int m_unk1c; int m_unk20; int m_unk24; int m_unk28; int m_unk2c; int m_unk30; int m_unk34; int m_unk38;
+	int m_n3c;
+	CVStatActionStat m_Stat;
+
+	bool sub_1015a300(CVStatKV *pKV);
+};
+
+bool CVStatActionView::sub_1015a300(CVStatKV *pKV)
+{
+	ScopeTrace st("CVStatAction_t::Load", g_102de300);
+	if (pKV)
+	{
+		const char *pszTriggers = pKV->vfunc13("Triggers", g_102de300);
+		if (*pszTriggers)
+		{
+			if (!_strcmpi(pszTriggers, "Inc"))
+				m_flags |= 2;
+			else if (!_strcmpi(pszTriggers, "Dec"))
+				m_flags |= 1;
+			else if (!_strcmpi(pszTriggers, "Set"))
+				m_flags |= 4;
+			if (!_strcmpi(pszTriggers, "Enter"))
+				m_flags |= 0x10;
+			else if (!_strcmpi(pszTriggers, "Exit"))
+				m_flags |= 8;
+		}
+
+		char buf[64];
+		strcpy(buf, pKV->vfunc13("Value", g_102de300));
+		if (buf[0] == '>')
+		{
+			if (buf[1] == '=')
+				m_nMin = atoi(buf + 2);
+			else
+				m_nMin = atoi(buf + 1) + 1;
+		}
+		else if (buf[0] == '<')
+		{
+			if (buf[1] == '=')
+				m_nMax = atoi(buf + 2);
+			else
+				m_nMax = atoi(buf + 1) - 1;
+		}
+		else
+		{
+			char *pDash = strchr(buf, '-');
+			if (pDash)
+			{
+				m_nMin = atoi(buf);
+				m_nMax = atoi(pDash + 1);
+			}
+			else
+			{
+				m_nMin = m_nMax = atoi(buf);
+			}
+		}
+
+		const char *pszPredep = pKV->vfunc13("Predependency", g_102de300);
+		m_Predep.vfunc1(pszPredep);
+
+		const char *pszEffect = pKV->vfunc13("Effect", g_102de300);
+		const char *pszStat;
+		const char *pszFunc;
+		if (*pszEffect)
+		{
+			m_nType = 1;
+			m_n3c = g_105f8b98.sub_10157b80(sub_1015fb60(pszEffect));
+		}
+		else if (*(pszStat = pKV->vfunc13("Stat", g_102de300)))
+		{
+			m_nType = 2;
+			char *pszCopy = sub_1015fb60(pszStat);
+			m_Stat.sub_101608a0(strtok(pszCopy, g_10286db0));
+			char *pszTok = strtok(0, g_10286db0);
+			if (pszTok)
+				m_n3c = atoi(pszTok);
+			else
+				m_n3c = 0;
+		}
+		else if (*(pszFunc = pKV->vfunc13("Function", g_102de300)) && g_105f9394)
+		{
+			g_105f9394((CVStatAction_t *)this, pszFunc);
+		}
+		else if (*(pszEffect = pKV->vfunc13("Effect", g_102de300)))
+		{
+			m_nType = 1;
+			m_n3c = g_105f8b98.sub_10157b80(sub_1015fb60(pszEffect));
+		}
+		else
+		{
+			CVStatKV *pParticle = pKV->vfunc2("Particle");
+			if (pParticle)
+			{
+				m_nType = 4;
+				CVStatActionParticle *p = new CVStatActionParticle;
+				memset(p, 0, sizeof(*p));
+				Q_strncpy(p->m_szDefinition, pParticle->vfunc13("Definition", "grenade_frag_emitter"), 0x80);
+				Q_strncpy(p->m_szBone, pParticle->vfunc13("Bone", "Bip01"), 0x80);
+				p->m_nAttachType = sub_1015eb20(pParticle->vfunc13("AttachType", "origin"));
+				p->m_bViewmodel = pParticle->vfunc10("Viewmodel", 0) != 0;
+				m_n3c = (int)p;
+			}
+			else
+				m_n3c = 0;
+		}
+		return true;
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015a6d0 size=0x7e
 #include "CUnknown1015a6d0.h"
 #include "ScopeTrace.h"
