@@ -67419,6 +67419,19 @@ int sub_100da5c0(const Vector &p0, const Vector &p1, const Vector &p2, const flo
 }
 // END FUNCTION
 
+// FUNCTION: 0x100da750 size=0x50
+#include "Vector.h"
+
+bool sub_100da750(const Vector &center1, float radius1, const Vector &center2, float radius2)
+{
+	Vector delta;
+	VectorSubtract(center2, center1, delta);
+	float distSq = delta.LengthSqr();
+	float radiusSum = radius1 + radius2;
+	return (distSq <= (radiusSum * radiusSum));
+}
+// END FUNCTION
+
 // FUNCTION: 0x100da870 size=0xcd
 #include "vector.h"
 
