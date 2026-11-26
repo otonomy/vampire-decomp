@@ -2871,6 +2871,7 @@
 0x1005da90 func   ??0CHudTimerUI@@QAE@H@Z CHudTimerUI::CHudTimerUI
 0x1005db00 func   ??_GCHudTimerUI@@UAEPAXI@Z ??_GCHudTimerUI@@UAEPAXI@Z
 0x1005db20 func   ??1CHudTimerUI@@UAE@XZ CHudTimerUI::~CHudTimerUI
+0x1005dc60 func   ?vfunc98@CHudTimerUI@@UAEXXZ CHudTimerUI::vfunc98
 0x1005df10 func   ?sub_1005df10@CUnknown1005df10@@QAEDD@Z CUnknown1005df10::sub_1005df10
 0x1005df20 func   ?vfunc107@CHudTimerUI@@UAE_NXZ CHudTimerUI::vfunc107
 0x1005df70 func   ?vfunc114@CHudTimerUI@@UAEXHHH@Z CHudTimerUI::vfunc114

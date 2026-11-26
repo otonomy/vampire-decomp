@@ -35,6 +35,90 @@ CHudTimerUI::~CHudTimerUI()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1005dc60 size=0x2a8
+#include "CHudTimerUI.h"
+#include "ehandle.h"
+#include "engineclient.h"
+#include "CVStatList_t.h"
+#include "Tier1.h"
+
+struct CStatOwner_10099880
+{
+	char m_pad0000[0x1178];
+	int m_nLists;
+	CVStatList_t **m_pLists;
+
+	CVStatList_t *FindStatList(int type)
+	{
+		for (int i = 0; i < m_nLists; i++)
+		{
+			if (m_pLists[i]->m_field10 == type)
+				return m_pLists[i];
+		}
+		static CVStatList_t s_default(-1);
+		return &s_default;
+	}
+};
+
+extern void *g_104a0d50;
+extern "C" float sub_100cd9e0(float cur, float target, float dt, float rate);
+
+#define TIMER_ACTIVE (*(bool *)&m_unk18c)
+#define TIMER_TARGET (*(CBaseHandle *)&m_unk194)
+#define ENT_F(e, off) (*(float *)((char *)(e) + (off)))
+#define ENT_I(e, off) (*(int *)((char *)(e) + (off)))
+
+void CHudTimerUI::vfunc98()
+{
+	CStatOwner_10099880 *pPlayer = (CStatOwner_10099880 *)g_104a0d50;
+	if (TIMER_ACTIVE)
+	{
+		if (!pPlayer)
+		{
+			TIMER_ACTIVE = false;
+			m_unk188 = 0;
+			return;
+		}
+		if (!TIMER_TARGET.Get())
+			TIMER_ACTIVE = false;
+	}
+
+	if (TIMER_ACTIVE)
+		m_unk188 = sub_100cd9e0(m_unk188, 210.0f, engine->vfunc41(1), 105.0f);
+	else
+		m_unk188 = sub_100cd9e0(m_unk188, 0.0f, engine->vfunc41(1), 105.0f);
+
+	if (!vfunc107())
+		return;
+
+	if (TIMER_TARGET.Get())
+	{
+		void *pTarget = TIMER_TARGET.Get();
+		float t;
+		if (ENT_I(pTarget, 0x418) == 1)
+			t = ENT_F(pTarget, 0x410) - ENT_F(pTarget, 0x414);
+		else
+			t = ENT_F(pTarget, 0x414);
+		m_unk190 = (t > ENT_F(pTarget, 0x410)) ? ENT_F(pTarget, 0x410) : ((t < 0.0f) ? 0.0f : t);
+	}
+
+	int secs = (int)m_unk190;
+	int mins = secs / 60;
+	int rem = secs % 60;
+	if (pPlayer)
+	{
+		int n = pPlayer->FindStatList(3)->sub_1015dbd0(3);
+		if (n > 0 && engine->vfunc44() % (n + 1) != 0)
+			goto draw;
+	}
+	m_unk198 = (int)((m_unk190 - secs) * 100.0f);
+draw:
+	char buf[32];
+	g_101e3190(buf, 32, "%02d:%02d:%02d", mins, rem, m_unk198);
+	g_pMatSystemSurface->vfunc12(m_unk19c, 0, 0, 255, 0, 0, (int)m_unk188, buf);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1005df20 size=0x43
 #include "CHudTimerUI.h"
 struct IUnkG286860 { virtual void v0(); virtual void v1(); virtual bool Check(int); };
