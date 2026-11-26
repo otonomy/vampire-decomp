@@ -398,6 +398,107 @@ int C_BaseAnimating::LookupBone(const char *pszName)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10094b20 size=0x363
+#include "C_BaseAnimating.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include <string.h>
+#include <math.h>
+#pragma intrinsic(memcmp)
+
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+void sub_1008df90(void *p, int a, const char *b, int c, const char *d);
+float sub_1010c470(float a, float b);
+
+#define F(type, off) (*(type *)((char *)this + (off)))
+
+void C_BaseAnimating::OnDataChanged(int updateType)
+{
+	ScopeTrace st("C_BaseAnimating::OnDataChanged", g_102de300);
+
+	if (F(int, 0x6b0))
+	{
+		if (F(int, 0x63c) != F(int, 0x634))
+		{
+			F(int, 0x63c) = F(int, 0x634);
+			F(int, 0x640) = 0;
+		}
+	}
+	if (!F(int, 0x6b0))
+	{
+		if (F(int, 0x638) != -1)
+		{
+			F(int, 0x63c) = F(int, 0x638);
+			F(int, 0x638) = -1;
+		}
+	}
+	if (updateType == 0)
+	{
+		F(int, 0x634) = -1;
+		F(int, 0x638) = -1;
+		sub_10096650();
+	}
+
+	if (memcmp((char *)this + 0x478, (char *)this + 0x420, 8) != 0
+		|| _strcmpi((char *)this + 0x480, (char *)this + 0x428) != 0
+		|| _strcmpi((char *)this + 0x4a8, (char *)this + 0x450) != 0)
+	{
+		for (int i = 0; i < 2; i++)
+			sub_1008df90((char *)this + 0x4d0 + i * 0x14, sub_1008f900(i), (char *)this + 0x428, sub_1008f900(-1), (char *)this + 0x450);
+		sub_10096c30();
+	}
+
+	if (F(int, 0x63c) != F(int, 0x634)
+		|| F(Vector, 0x2b4) != F(Vector, 0x29c)
+		|| F(QAngle, 0x2c0) != F(QAngle, 0x2a8))
+	{
+		sub_1009e2d0(1);
+		F(int, 0x634) = F(int, 0x63c);
+	}
+
+	bool bChanged = false;
+	if (F(bool, 0x6a8))
+	{
+		bChanged = true;
+		if (F(char, 0x6a9) != F(char, 0x6aa))
+			F(int, 0x648) = 0;
+	}
+
+	if (F(int, 0x4c) == 0x17 && !F(bool, 0x6b8))
+	{
+		sub_100a02e0(true);
+		GetAbsOrigin();
+		sub_10094930();
+	}
+	if (F(int, 0x6b0) && F(int, 0x4c) != 0x17)
+		sub_10095c40();
+
+	if (sub_1009f140(0x10))
+	{
+		char *p = F(char *, 0x6d8);
+		if (p && *p)
+		{
+			delete p;
+			F(char *, 0x6d8) = 0;
+		}
+	}
+	if (bChanged)
+		vfunc83(-1293.0f);
+
+	if (updateType == 0)
+		F(int, 0x414) = F(int, 0x410);
+	if (F(int, 0x414) != F(int, 0x410))
+	{
+		F(float, 0x41c) = engine->Time(0);
+		F(int, 0x414) = F(int, 0x410);
+	}
+
+	Vector delta = F(Vector, 0x2b4) - F(Vector, 0x29c);
+	if (delta.LengthSqr() > 2500.0f || fabs(sub_1010c470(F(QAngle, 0x2a8).y, F(QAngle, 0x2c0).y)) > 60.0)
+		sub_10096c30();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10094e90 size=0x22
 #include "C_BaseAnimating.h"
 namespace lifted {
