@@ -138533,6 +138533,282 @@ bool sub_101a3de0(SKeyValues *kv, char *out, const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a3eb0 size=0x775
+#include "StatOwner2.h"
+#include "StatDefault.h"
+#include "Vector.h"
+#include "Tier1.h"
+
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+extern "C" char *__cdecl strcpy(char *, const char *);
+#pragma intrinsic(strcpy)
+
+#define VECTOR_CONE_10DEGREES Vector(0.08716f, 0.08716f, 0.08716f)
+
+struct SKeyValues
+{
+	virtual void v0(); virtual void v1();
+	virtual SKeyValues *FindKey(const char *pszName);	// 2
+	virtual void v3(); virtual void v4(); virtual void v5();
+	virtual SKeyValues *FindFirst(const char *pszName);	// 6
+	virtual SKeyValues *FindNext();	// 7
+	virtual void v8(); virtual void v9();
+	virtual int GetInt(const char *pszName, int nDefault);	// 10
+	virtual float GetFloat(const char *pszName, float flDefault);	// 11
+	virtual void v12();
+	virtual const char *GetString(const char *pszName, const char *pszDefault);	// 13
+};
+
+struct WeaponDmg_101a3eb0
+{
+	void sub_10158ef0(const char *psz);
+};
+
+struct WeaponStatTable_101a3eb0
+{
+	int m_n0;
+	int m_n4;
+	int m_n8;
+	void sub_10160330();
+	void sub_10160340();
+	void sub_101604b0(SKeyValues *pKV, int n);
+	int sub_10160500(const char *pszName);
+	StatDefault *sub_10160590(int idx);
+};
+
+struct StatRow_101a3eb0
+{
+	int sub_10160230(int i);
+};
+
+struct NameString_101a3eb0
+{
+	const char *m_psz;
+	const char *String() const { return m_psz ? m_psz : ""; }
+};
+
+struct NamedEntry_101a3eb0
+{
+	int m_id;
+	NameString_101a3eb0 m_Name;
+};
+
+struct NamedList_101a3eb0
+{
+	int m_nCount;
+	NamedEntry_101a3eb0 **m_ppItems;
+
+	int Find(const char *pszName)
+	{
+		for (int i = 0; i < m_nCount; i++)
+		{
+			if (!_strcmpi(m_ppItems[i]->m_Name.String(), pszName))
+				return m_ppItems[i]->m_id;
+		}
+		return -1;
+	}
+};
+
+extern NamedList_101a3eb0 g_105e8630;
+extern NamedList_101a3eb0 g_105e85a4;
+
+struct WeaponMode_101a3eb0
+{
+	int m_unk0;
+	char m_szTag[0x80];	// 0x4
+	char m_szType[0x80];	// 0x84
+	int m_nTag;	// 0x104
+	int m_nType;	// 0x108
+	int m_nAmmoType;	// 0x10c
+	int m_nAmmoCost;	// 0x110
+	int m_nAmmoFired;	// 0x114
+	char m_szDmg[0x80];	// 0x118
+	WeaponDmg_101a3eb0 m_Dmg;	// 0x198
+	char m_unk199[0x1dc - 0x199];
+	char m_szBotch[0x80];	// 0x1dc
+	int m_nBotch;	// 0x25c
+	float m_flAttackRate;	// 0x260
+	float m_flNPCAttackRateMin;	// 0x264
+	float m_flNPCAttackRateMax;	// 0x268
+	float m_flNPCAttackRateBaseRange;	// 0x26c
+	int m_nRange;	// 0x270
+	char m_DestFX[0x384 - 0x274];	// 0x274
+	float m_flKickPitchMin;	// 0x384
+	float m_flKickPitchMax;
+	float m_flKickPitchDeviationMin;
+	float m_flKickPitchDeviationMax;
+	float m_flKickYawMin;	// 0x394
+	float m_flKickYawMax;
+	float m_flKickYawDeviationMin;
+	float m_flKickYawDeviationMax;	// 0x3a0
+	int m_nBurstMin;	// 0x3a4
+	int m_nBurstMax;	// 0x3a8
+	Vector m_vecSpread;	// 0x3ac
+	float m_flImpactForceMin;	// 0x3b8
+	float m_flImpactForceMax;	// 0x3bc
+	int m_nFlags;	// 0x3c0
+	int m_nCriminalLevel;	// 0x3c4
+	int m_nAccuracy;	// 0x3c8
+	int m_nCrosshairMinSize;	// 0x3cc
+	int m_nCrosshairFireSizeMin;	// 0x3d0
+	int m_nCrosshairFireSize;	// 0x3d4
+	int m_nCrosshairWalkSizeMin;	// 0x3d8
+	int m_nCrosshairWalkSizeMax;
+	int m_nCrosshairRunSizeMin;
+	int m_nCrosshairRunSizeMax;
+	int m_nCrosshairIncSpeedMin;	// 0x3e8
+	int m_nCrosshairIncSpeedMax;
+	int m_nCrosshairDecSpeedMin;
+	int m_nCrosshairDecSpeedMax;
+	int m_nBaseLethality;	// 0x3f8
+	int m_nSkillRequirement;	// 0x3fc
+	float m_flCrosshairFirePercent;	// 0x400
+	float m_flMajorKnockbackDist;	// 0x404
+	float m_flMinorKnockbackDist;	// 0x408
+	int m_nExplodesOnHit;	// 0x40c
+	char m_szExplodeParticle[0x80];	// 0x410
+	char m_SoundData[0xec34 - 0x490];	// 0x490
+	int m_nRanges[10];	// 0xec34
+	int m_nGrossPointBlank[10];	// 0xec5c
+};
+
+bool sub_101a3de0(SKeyValues *pKV, char *pszOut, const char *pszKey);
+void sub_101a39f0(SKeyValues *pKV, void *pOut, const char *pszName);
+
+bool sub_101a3eb0(SKeyValues *pKV, char *pData, const char *pszName)
+{
+	int nTagStrings = g_105f93c0.sub_1015f160("TagStrings");
+	int nMode = 0;
+	for (SKeyValues *pMode = pKV->FindFirst("Activation"); pMode; )
+	{
+		if (nMode > 3)
+			return false;
+
+		WeaponMode_101a3eb0 *p = (WeaponMode_101a3eb0 *)(pData + 0x238e0) + nMode;
+		strcpy(p->m_szTag, pMode->GetString("Tag", ""));
+		strcpy(p->m_szType, pMode->GetString("Type", ""));
+		p->m_nTag = 0;
+		if (nTagStrings != -1)
+			p->m_nTag = g_105f93c0.sub_1015f270(nTagStrings)->sub_1015ed00(p->m_szTag);
+
+		const char *pszAmmo = pMode->GetString("Ammo_Type", "");
+		if (*pszAmmo && _strcmpi(pszAmmo, "None"))
+		{
+			char *pszAmmoName = pData + 0x267c;
+			int i;
+			for (i = 0; i < 2; i++, pszAmmoName += 0x1093c)
+			{
+				if (!_strcmpi(pszAmmoName, pszAmmo))
+				{
+					p->m_nAmmoType = i;
+					break;
+				}
+			}
+			if (i >= 2)
+				return false;
+		}
+
+		p->m_nAmmoCost = pMode->GetInt("Ammo_Cost", 0);
+		p->m_nAmmoFired = pMode->GetInt("Ammo_Fired", p->m_nAmmoCost > 1 ? p->m_nAmmoCost : 1);
+		strcpy(p->m_szDmg, pMode->GetString("Dmg", ""));
+		strcpy(p->m_szBotch, pMode->GetString("Botch_Table", ""));
+		p->m_flAttackRate = pMode->GetFloat("Attack_Rate", 1.0f);
+		p->m_flNPCAttackRateMin = pMode->GetFloat("NPC_Attack_Rate_Min", p->m_flAttackRate * 2);
+		p->m_flNPCAttackRateMax = pMode->GetFloat("NPC_Attack_Rate_Max", p->m_flAttackRate * 3.0f);
+		p->m_flNPCAttackRateBaseRange = pMode->GetFloat("NPC_Attack_Rate_Base_Range", 120.0f);
+		p->m_nRange = pMode->GetInt("Range", 0);
+		p->m_flKickPitchMin = pMode->GetFloat("KickPitchMin", -0.75f);
+		p->m_flKickPitchMax = pMode->GetFloat("KickPitchMax", -10.0f);
+		p->m_flKickPitchDeviationMin = pMode->GetFloat("KickPitchDeviationMin", 0.2f);
+		p->m_flKickPitchDeviationMax = pMode->GetFloat("KickPitchDeviationMax", 3.0f);
+		p->m_flKickYawMin = pMode->GetFloat("KickYawMin", -0.2f);
+		p->m_flKickYawMax = pMode->GetFloat("KickYawMax", -1.5f);
+		p->m_flKickYawDeviationMin = pMode->GetFloat("KickYawDeviationMin", 0.1f);
+		p->m_flKickYawDeviationMax = pMode->GetFloat("KickYawDeviationMax", 1.0f);
+		p->m_nAccuracy = pMode->GetInt("Accuracy", 1);
+		p->m_nCrosshairMinSize = pMode->GetInt("CrosshairMinSize", 0);
+		p->m_nCrosshairFireSize = pMode->GetInt("CrosshairFireSize", 85);
+		p->m_nCrosshairFireSizeMin = pMode->GetInt("CrosshairFireSizeMin", 0);
+		p->m_nCrosshairWalkSizeMin = pMode->GetInt("CrosshairWalkSizeMin", 50);
+		p->m_nCrosshairWalkSizeMax = pMode->GetInt("CrosshairWalkSizeMax", 70);
+		p->m_nCrosshairRunSizeMin = pMode->GetInt("CrosshairRunSizeMin", 70);
+		p->m_nCrosshairRunSizeMax = pMode->GetInt("CrosshairRunSizeMax", 90);
+		p->m_nCrosshairIncSpeedMin = pMode->GetInt("CrosshairIncSpeedMin", 50);
+		p->m_nCrosshairIncSpeedMax = pMode->GetInt("CrosshairIncSpeedMax", 80);
+		p->m_nCrosshairDecSpeedMin = pMode->GetInt("CrosshairDecSpeedMin", 3);
+		p->m_nCrosshairDecSpeedMax = pMode->GetInt("CrosshairDecSpeedMax", 99);
+		p->m_nBaseLethality = pMode->GetInt("BaseLethality", 5);
+		p->m_nSkillRequirement = pMode->GetInt("SkillRequirement", 1);
+		p->m_flCrosshairFirePercent = pMode->GetFloat("CrosshairFirePercent", 1.0f);
+		p->m_flMajorKnockbackDist = pMode->GetFloat("MajorKnockbackDist", 0);
+		p->m_flMinorKnockbackDist = pMode->GetFloat("MinorKnockbackDist", 0);
+		p->m_nBurstMin = pMode->GetInt("BurstMin", 1);
+		p->m_nBurstMax = pMode->GetInt("BurstMax", 1);
+		p->m_nExplodesOnHit = pMode->GetInt("ExplodesOnHit", 0);
+		strcpy(p->m_szExplodeParticle, pMode->GetString("ExplodeParticle", ""));
+		if (p->m_nBurstMin > p->m_nBurstMax)
+		{
+			g_101e311c("%s has a BurstMin (%d) larger than BurstMax (%d).  Setting BurstMin to %d.\n", pData + 8, p->m_nBurstMin, p->m_nBurstMax, p->m_nBurstMax);
+			p->m_nBurstMin = p->m_nBurstMax;
+		}
+		if (pMode->GetInt("allow_autofire", 0))
+			p->m_nFlags |= 1;
+		p->m_vecSpread = VECTOR_CONE_10DEGREES * (pMode->GetFloat("SpreadAngle", 3.0f) * 0.1f);
+		p->m_flImpactForceMin = pMode->GetFloat("ImpactForceMin", 0);
+		p->m_flImpactForceMax = pMode->GetFloat("ImpactForceMax", 0);
+		p->m_nCriminalLevel = (int)pMode->GetFloat("CriminalLevel", 0);
+		if (!sub_101a3de0(pMode, p->m_DestFX, "DestFX"))
+			return false;
+		sub_101a39f0(pMode, p->m_SoundData, pszName);
+
+		p->m_nType = g_105e8630.Find(p->m_szType);
+		p->m_Dmg.sub_10158ef0(p->m_szDmg);
+		p->m_nBotch = g_105e85a4.Find(p->m_szBotch);
+
+		SKeyValues *pTables = pMode->FindKey("Tables");
+		WeaponStatTable_101a3eb0 table;
+		table.sub_10160330();
+		table.sub_101604b0(pTables, 0);
+		int idx = table.sub_10160500("WeaponRanges");
+		int i;
+		if (idx > -1)
+		{
+			StatRow_101a3eb0 *pRow = (StatRow_101a3eb0 *)table.sub_10160590(idx);
+			for (i = 0; i < 9; i++)
+			{
+				int r = pRow->sub_10160230(i);
+				p->m_nRanges[i] = r * r;
+			}
+			p->m_nRanges[9] = 900000000;
+		}
+		else
+		{
+			int *pr = p->m_nRanges;
+			for (i = 0; i < 5; i++)
+				*pr++ = 0;
+			for (i = 0; i < 5; i++)
+				*pr++ = 30000;
+		}
+		idx = table.sub_10160500("GrossPointBlank");
+		if (idx > -1)
+		{
+			StatRow_101a3eb0 *pRow = (StatRow_101a3eb0 *)table.sub_10160590(idx);
+			for (i = 0; i < 10; i++)
+				p->m_nGrossPointBlank[i] = pRow->sub_10160230(i);
+		}
+		else
+		{
+			for (i = 0; i < 10; i++)
+				p->m_nGrossPointBlank[i] = 50;
+		}
+		pMode = pMode->FindNext();
+		nMode++;
+		table.sub_10160340();
+	}
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a4770 size=0x26
 extern char g_10619980[];
 extern char *g_1061993c;
