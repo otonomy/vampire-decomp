@@ -25,5 +25,8 @@ public:
 	void sub_10049f90(unsigned short idx);
 	void sub_10059af0(const float *rgb);
 	void sub_100428d0(const float *rgba);
-	void sub_1004afc0(float r, float g, float b, float a);
+	void sub_1004afc0(float r, float g, float b, float a);	// Color4f
+	void sub_100319d0(float x, float y, float z);	// Position3f
+	void sub_10031a20(int stage, float s, float t);	// TexCoord2f
+	void sub_10042960(int r, int g, int b, int a);	// Color4ub
 };
