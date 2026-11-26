@@ -93075,6 +93075,133 @@ CUnknown10131f30::Links_t const &CUnknown10131f30::sub_10131f30(int i) const
 }
 // END FUNCTION
 
+// FUNCTION: 0x10131f80 size=0x4da
+#include "CUtlRBTree232.h"
+
+typedef CUtlRBTree232 Tree;
+
+static __forceinline CUtlRBTree232::Links_t &LinksW(Tree *t, int i) { return t->m_pElements[i].m_Links; }
+static __forceinline int LeftChild(Tree *t, int i) { return t->sub_10131a70(i).m_Left; }
+static __forceinline int RightChild(Tree *t, int i) { return t->sub_10131a70(i).m_Right; }
+static __forceinline int Parent(Tree *t, int i) { return t->sub_10131a70(i).m_Parent; }
+static __forceinline int Color(Tree *t, int i) { return t->sub_10131a70(i).m_Tag; }
+static __forceinline bool IsRoot(Tree *t, int i) { return i == t->m_Root; }
+static __forceinline bool IsRed(Tree *t, int i) { return Color(t, i) == 0; }
+static __forceinline bool IsLeftChild(Tree *t, int i) { return LeftChild(t, Parent(t, i)) == i; }
+static __forceinline bool IsRightChild(Tree *t, int i) { return RightChild(t, Parent(t, i)) == i; }
+static __forceinline void SetLeftChild(Tree *t, int i, int child) { LinksW(t, i).m_Left = child; }
+static __forceinline void SetRightChild(Tree *t, int i, int child) { LinksW(t, i).m_Right = child; }
+static __forceinline void SetParent(Tree *t, int i, int parent) { LinksW(t, i).m_Parent = parent; }
+static __forceinline void SetColor(Tree *t, int i, int c) { LinksW(t, i).m_Tag = c; }
+
+static __forceinline void RotateLeftInline(Tree *t, int elem)
+{
+	int rightchild = RightChild(t, elem);
+	SetRightChild(t, elem, LeftChild(t, rightchild));
+	if (LeftChild(t, rightchild) != Tree::InvalidIndex())
+		SetParent(t, LeftChild(t, rightchild), elem);
+
+	if (rightchild != Tree::InvalidIndex())
+		SetParent(t, rightchild, Parent(t, elem));
+	if (!IsRoot(t, elem))
+	{
+		if (IsLeftChild(t, elem))
+			SetLeftChild(t, Parent(t, elem), rightchild);
+		else
+			SetRightChild(t, Parent(t, elem), rightchild);
+	}
+	else
+		t->m_Root = rightchild;
+
+	SetLeftChild(t, rightchild, elem);
+	if (elem != Tree::InvalidIndex())
+		SetParent(t, elem, rightchild);
+}
+
+static __forceinline void RotateRightInline(Tree *t, int elem)
+{
+	int leftchild = LeftChild(t, elem);
+	SetLeftChild(t, elem, RightChild(t, leftchild));
+	if (RightChild(t, leftchild) != Tree::InvalidIndex())
+		SetParent(t, RightChild(t, leftchild), elem);
+
+	if (leftchild != Tree::InvalidIndex())
+		SetParent(t, leftchild, Parent(t, elem));
+	if (!IsRoot(t, elem))
+	{
+		if (IsRightChild(t, elem))
+			SetRightChild(t, Parent(t, elem), leftchild);
+		else
+			SetLeftChild(t, Parent(t, elem), leftchild);
+	}
+	else
+		t->m_Root = leftchild;
+
+	SetRightChild(t, leftchild, elem);
+	if (elem != Tree::InvalidIndex())
+		SetParent(t, elem, leftchild);
+}
+
+void CUtlRBTree232::sub_10131f80(int elem)
+{
+	while (!IsRoot(this, elem) && Color(this, Parent(this, elem)) == 0)
+	{
+		int parent = Parent(this, elem);
+		int grandparent = Parent(this, parent);
+
+		if (IsLeftChild(this, parent))
+		{
+			int uncle = RightChild(this, grandparent);
+			if (IsRed(this, uncle))
+			{
+				SetColor(this, parent, 1);
+				SetColor(this, uncle, 1);
+				SetColor(this, grandparent, 0);
+				elem = grandparent;
+			}
+			else
+			{
+				if (IsRightChild(this, elem))
+				{
+					elem = parent;
+					RotateLeftInline(this, elem);
+					parent = Parent(this, elem);
+					grandparent = Parent(this, parent);
+				}
+				SetColor(this, parent, 1);
+				SetColor(this, grandparent, 0);
+				RotateRightInline(this, grandparent);
+			}
+		}
+		else
+		{
+			int uncle = LeftChild(this, grandparent);
+			if (IsRed(this, uncle))
+			{
+				SetColor(this, parent, 1);
+				SetColor(this, uncle, 1);
+				SetColor(this, grandparent, 0);
+				elem = grandparent;
+			}
+			else
+			{
+				if (IsLeftChild(this, elem))
+				{
+					elem = parent;
+					RotateRightInline(this, parent);
+					parent = Parent(this, elem);
+					grandparent = Parent(this, parent);
+				}
+				SetColor(this, parent, 1);
+				SetColor(this, grandparent, 0);
+				sub_10132e80(grandparent);
+			}
+		}
+	}
+	SetColor(this, m_Root, 1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10132d30 size=0x7c
 #include "CUnknown101b90a0.h"
 
