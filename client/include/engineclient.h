@@ -669,6 +669,8 @@ public:
 	virtual bool vfunc1();	// slot 1; seen as IsX 1
 	virtual void vfunc2();
 	virtual bool vfunc3(void *);	// slot 3
+	virtual void vfunc4();
+	virtual void vfunc5(const Vector &start, const Vector &pos, int hitbox, int decal, bool, CGameTrace &tr, int);	// slot 5: AddDecalToStaticProp (TE_Decal 0x10035d30)
 };
 extern IStaticPropMgrClient *g_104a5814;
 
