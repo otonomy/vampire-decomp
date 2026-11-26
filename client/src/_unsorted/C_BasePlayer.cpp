@@ -192,6 +192,43 @@ struct V { virtual void v0(); virtual void v1(); virtual void v2(); virtual void
 void __fastcall sub_100a5900(char *self, int edx) { ((V *)(self + 4))->v11(); }
 // END FUNCTION
 
+// FUNCTION: 0x100a5ad0 size=0x55
+#include "C_BasePlayer.h"
+#include "C_BaseAnimating.h"
+
+extern int g_104a0d4c;
+
+struct PlayerPre_100a5ad0
+{
+	void sub_100a99d0();
+	int sub_10097f80(int i);
+};
+
+struct PlayerData_100a5ad0
+{
+	char m_pad0[0x16f4];
+	int m_n16f4;	// 0x16f4
+	char m_pad16f8[0x19c8 - 0x16f8];
+	char m_b19c8;	// 0x19c8
+	char m_b19c9;	// 0x19c9
+	char m_pad19ca[0x1a28 - 0x19ca];
+	int m_nOldStats[32];	// 0x1a28: compared by OnDataChanged
+};
+
+#define SELF ((PlayerData_100a5ad0 *)this)
+
+void C_BasePlayer::OnPreDataChanged(int updateType)
+{
+	((PlayerPre_100a5ad0 *)this)->sub_100a99d0();
+	g_104a0d4c = SELF->m_n16f4;
+	for (int i = 0; i < 32; i++)
+		SELF->m_nOldStats[i] = ((PlayerPre_100a5ad0 *)this)->sub_10097f80(i);
+	SELF->m_b19c9 = SELF->m_b19c8;
+	// BaseClass::OnPreDataChanged: C_BaseAnimating's slot-4 override, called with the networkable part
+	((C_BaseAnimating *)((char *)this + 8))->sub_100948d0(updateType);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a5b60 size=0x451
 #include "C_BasePlayer.h"
 #include "ehandle.h"
