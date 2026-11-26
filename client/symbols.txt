@@ -16836,6 +16836,7 @@
 0x102b80e8 data   ??_R0?AVC_World@@@8 ??_R0?AVC_World@@@8
 0x102b82e0 data   ??_R0?AVCCamoTextureRegen@@@8 ??_R0?AVCCamoTextureRegen@@@8
 0x102b8300 data   ??_R0?AVCCamoMaterialProxy@@@8 ??_R0?AVCCamoMaterialProxy@@@8
+0x102b8494 data   ?gpGlobals@@3PAVCGlobalVarsBase@@A gpGlobals
 0x102b84e0 data   ??_R0?AVIConCommandBaseAccessor@@@8 ??_R0?AVIConCommandBaseAccessor@@@8
 0x102b8508 data   ??_R0?AVCDLL_ConVarAccessor@@@8 ??_R0?AVCDLL_ConVarAccessor@@@8
 0x102b8538 data   ??_R0?AVIBaseClientDLL@@@8 ??_R0?AVIBaseClientDLL@@@8
