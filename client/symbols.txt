@@ -805,6 +805,7 @@
 0x10011b30 func   ?_C_ResearchBook_HG_MELEE_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ResearchBook_HG_MELEE_CreateObject
 0x10011bf0 func   ?ClientClassInit@@YAHPAUignored@DT_ResearchBook_HG_MELEE@@@Z ClientClassInit
 0x10011c80 func   ?vfunc17@C_ResearchBook_HG_DODGE@@UAEHXZ C_ResearchBook_HG_DODGE::vfunc17
+0x10011cc0 func   ?sub_10011cc0@@YAHXZ sub_10011cc0
 0x10011d10 func   ??_GC_ResearchBook_HG_DODGE@@UAEPAXI@Z ??_GC_ResearchBook_HG_DODGE@@UAEPAXI@Z
 0x10011d30 func   ?vfunc16@C_ResearchBook_HG_DODGE@@UAEHXZ C_ResearchBook_HG_DODGE::vfunc16
 0x10011d40 func   ?vfunc15@C_ResearchBook_HG_DODGE@@UAEHXZ C_ResearchBook_HG_DODGE::vfunc15
