@@ -63207,6 +63207,126 @@ int CChatLineGroupView::sub_100f1ee0(int width, const char *text, int len)
 #pragma optimize("", on)
 // END FUNCTION
 
+// FUNCTION: 0x100f2060 size=0x3a6
+#include "CChatLineGroupView.h"
+#include "vgui2__Panel.h"
+extern "C" unsigned int strlen(const char *);
+extern "C" char *strcpy(char *, const char *);
+#pragma intrinsic(strlen, strcpy)
+extern "C" char *strstr(const char *, const char *);
+
+#define PCD_V10(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7(); virtual void n##8(); virtual void n##9();
+
+struct Line_100f24e0;
+struct Chat_100f24e0 { Line_100f24e0 *sub_100f24e0(); };
+struct ChatLineView { void sub_100f1780(); };
+struct CUnknown100f14a0 { int sub_100f14a0(int, int, int); };
+struct LineSlots_100f2060
+{
+    PCD_V10(va) PCD_V10(vb)
+    virtual void vf20();
+    virtual void vfunc21(int);
+    virtual void vf22(); virtual void vf23(); virtual void vf24(); virtual void vf25();
+    virtual void vf26(); virtual void vf27(); virtual void vf28(); virtual void vf29();
+    PCD_V10(vc) PCD_V10(vd) PCD_V10(ve) PCD_V10(vf) PCD_V10(vg) PCD_V10(vh) PCD_V10(vi)
+    virtual void vf100(); virtual void vf101(); virtual void vf102(); virtual void vf103();
+    virtual void vf104(); virtual void vf105(); virtual void vf106(); virtual void vf107();
+    virtual void vfunc108(const char *);
+    PCD_V10(vj) PCD_V10(vk)
+    virtual void vfunc129();
+};
+struct SurfaceSlots_100f2060
+{
+    PCD_V10(va) PCD_V10(vb) PCD_V10(vc) PCD_V10(vd) PCD_V10(ve) PCD_V10(vf)
+    virtual void vf60(); virtual void vf61(); virtual void vf62(); virtual void vf63(); virtual void vf64(); virtual void vf65();
+    virtual int vfunc66(int);
+};
+
+int sub_101ac8d0();
+char *sub_100f2410(const char *);
+void sub_100f1fb0(CChatLineGroupView *, const char *, ...);
+extern int g_104d0f54;
+
+#pragma optimize("", off)
+void CChatLineGroupView::sub_100f2060(int q, int r, int s, char *str)
+{
+    Line_100f24e0 *d;
+    int e;
+    int f;
+    char *g;
+    int i;
+    int j;
+    int k;
+    char *l;
+
+    if (strlen(str) > 0 && str[strlen(str) - 1] == '\n')
+        str[strlen(str) - 1] = 0;
+
+    g = str;
+    while (*g && (*g == '\n' || *g == 1 || *g == 2))
+        g++;
+    if (!*g)
+        return;
+
+    l = strstr(g, "\n");
+    if (l)
+    {
+        int m;
+        char o[8192];
+        strcpy(o, g);
+        m = l - g;
+        o[m] = 0;
+        sub_100f1fb0(this, o);
+        sub_100f1fb0(this, &o[m + 1]);
+        return;
+    }
+
+    i = strlen(g);
+    ((vgui2::Panel *)((char *)this + 0x10))->sub_101a9920(&e, &k);
+    j = ((SurfaceSlots_100f2060 *)sub_101ac8d0())->vfunc66(g_104d0f54);
+    f = sub_100f1ee0(e - j, g, i);
+    if (f > 0 && f < i)
+    {
+        int u;
+        char v[8192];
+        char y;
+        strcpy(v, g);
+        u = f;
+        y = v[u];
+        v[u] = 0;
+        sub_100f1fb0(this, v);
+        if (y > ' ')
+        {
+            v[u] = y;
+            sub_100f1fb0(this, &v[u]);
+        }
+        else
+        {
+            sub_100f1fb0(this, &v[u + 1]);
+        }
+        return;
+    }
+
+    m_b80 = true;
+    m_b81 = true;
+    d = ((Chat_100f24e0 *)this)->sub_100f24e0();
+    if (!d)
+    {
+        sub_100f2510();
+        d = ((Chat_100f24e0 *)this)->sub_100f24e0();
+        if (!d)
+            return;
+    }
+    g = sub_100f2410(g);
+    ((ChatLineView *)d)->sub_100f1780();
+    ((LineSlots_100f2060 *)d)->vfunc108(g);
+    ((LineSlots_100f2060 *)d)->vfunc21(1);
+    ((CUnknown100f14a0 *)d)->sub_100f14a0(q, r, s);
+    ((LineSlots_100f2060 *)d)->vfunc129();
+}
+#pragma optimize("", on)
+// END FUNCTION
+
 // FUNCTION: 0x100f2410 size=0x75
 extern char g_104cff48[];
 
