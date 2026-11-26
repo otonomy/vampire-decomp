@@ -5152,6 +5152,7 @@
 0x100d0c90 func   ?sub_100d0c90@CUnknown100d0c90@@QAEHH@Z CUnknown100d0c90::sub_100d0c90
 0x100d0ca0 func   ?sub_100d0ca0@CUnknown100d0ca0@@QAEHXZ CUnknown100d0ca0::sub_100d0ca0
 0x100d0cb0 func   ?sub_100d0cb0@CUnknown100d0cb0@@QAEHXZ CUnknown100d0cb0::sub_100d0cb0
+0x100d0d30 func   ?sub_100d0d30@List_100d0d30@@QAEHVCBaseHandle@@@Z List_100d0d30::sub_100d0d30
 0x100d0d60 func   ?sub_100d0d60@List_100d0d60@@QAEHVCBaseHandle@@@Z List_100d0d60::sub_100d0d60
 0x100d0d90 func   ?sub_100d0d90@CClientEntityList@@QAEHVCBaseHandle@@@Z CClientEntityList::sub_100d0d90
 0x100d0df0 func   ?sub_100d0df0@VList@@QAEHVCBaseHandle@@@Z VList::sub_100d0df0

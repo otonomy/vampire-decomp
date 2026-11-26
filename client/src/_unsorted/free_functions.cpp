@@ -64708,6 +64708,29 @@ int CUnknown100d0cb0::sub_100d0cb0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d0d30 size=0x21
+#include "CBaseHandle.h"
+struct Ent_100d0d30
+{
+	virtual void v0(); virtual void v1(); virtual void v2();
+	virtual int v3();
+};
+struct List_100d0d30
+{
+	virtual void v0(); virtual void v1();
+	virtual Ent_100d0d30 *v2(CBaseHandle h);
+	int sub_100d0d30(CBaseHandle h);
+};
+// TARGET: List_100d0d30::sub_100d0d30
+int List_100d0d30::sub_100d0d30(CBaseHandle h)
+{
+	Ent_100d0d30 *p = v2(h);
+	if (p)
+		return p->v3();
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d0d60 size=0x21
 #include "CBaseHandle.h"
 struct Ent_100d0d60
