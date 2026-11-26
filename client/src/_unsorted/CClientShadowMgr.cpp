@@ -166,6 +166,140 @@ void CClientShadowMgr::vfunc14(const void *pDirection)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d5d70 size=0x330
+#include "engineclient.h"
+#include "CClientShadowMgr.h"
+
+struct MeshView_100d5d70
+{
+	virtual void LockMesh(int numVerts, int numIndices, void *desc);
+	virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void SetPrimitiveType(int type);
+	virtual void v11();
+	virtual void Draw(int firstIndex, int numIndices);
+};
+
+struct MeshBuilder_100d5d70
+{
+	int m_VertexSize_Position;	// 0x00
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;	// 0x0c
+	int m_VertexSize_Color;	// 0x10
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];	// 0x18
+	int m_unk28[(0x80 - 0x28) / 4];
+	MeshView_100d5d70 *m_pMesh;	// 0x80
+	bool m_b84;
+	int m_NumVerts;	// 0x88
+	int m_NumIndices;	// 0x8c
+	int m_NumVertices;	// 0x90
+	int m_n94;
+	int m_CurrentVertex;	// 0x98
+	int m_n9c;
+	int m_Type;	// 0xa0
+	bool m_GenerateIndices;	// 0xa4
+	float *m_pCurrPosition;	// 0xa8
+	float *m_pCurrNormal;	// 0xac
+	float *m_pCurrTexCoord[4];	// 0xb0
+	unsigned char *m_pCurrColor;	// 0xc0
+
+	MeshBuilder_100d5d70()
+	{
+		m_pMesh = 0;
+		m_NumVerts = 0; m_NumIndices = 0; m_NumVertices = 0; m_n94 = 0; m_CurrentVertex = 0; m_n9c = 0;
+		m_GenerateIndices = false;
+	}
+
+	void sub_100421f0(int type, int numPrimitives);	// ComputeNumVertsAndIndices
+	void sub_100422e0();
+	void sub_100319d0(float x, float y, float z);
+	void sub_10031a20(int stage, float s, float t);
+	void sub_10042960(int r, int g, int b, int a);
+	void sub_10005230();
+	void sub_10041c90(int a, int b);
+
+	void Begin(MeshView_100d5d70 *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_b84 = false;
+		sub_100421f0(type, numPrimitives);
+		m_n94 = 0;
+		m_NumVertices = 0;
+		m_GenerateIndices = true;
+		m_Type = type;
+		m_pMesh->SetPrimitiveType(2);
+		m_pMesh->LockMesh(m_NumVerts, m_NumIndices, this);
+		sub_100422e0();
+	}
+	void Position3f(float x, float y, float z)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = x;
+		*pDst++ = y;
+		*pDst = z;
+	}
+	void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+	void Color4ub(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+	{
+		*(int *)m_pCurrColor = (a << 24) | (r << 16) | (g << 8) | b;
+	}
+	void AdvanceVertex()
+	{
+		if (++m_CurrentVertex > m_NumVertices)
+			m_NumVertices = m_CurrentVertex;
+		m_pCurrPosition = (float *)((char *)m_pCurrPosition + m_VertexSize_Position);
+		m_pCurrNormal = (float *)((char *)m_pCurrNormal + m_VertexSize_Normal);
+		m_pCurrTexCoord[0] = (float *)((char *)m_pCurrTexCoord[0] + m_VertexSize_TexCoord[0]);
+		m_pCurrTexCoord[1] = (float *)((char *)m_pCurrTexCoord[1] + m_VertexSize_TexCoord[1]);
+		m_pCurrTexCoord[2] = (float *)((char *)m_pCurrTexCoord[2] + m_VertexSize_TexCoord[2]);
+		m_pCurrTexCoord[3] = (float *)((char *)m_pCurrTexCoord[3] + m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+};
+
+void CClientShadowMgr::vfunc13(int w, int h)
+{
+	if (!*((bool *)this + 0xd8))
+		return;
+
+	materials->Bind((const void *)m_unk1c, 0);
+	MeshView_100d5d70 *pMesh = (MeshView_100d5d70 *)materials->GetDynamicMesh(true, 0, 0, 0);
+
+	MeshBuilder_100d5d70 meshBuilder;
+	meshBuilder.Begin(pMesh, 7, 1);
+
+	meshBuilder.Position3f(0.0f, 0.0f, 0.0f);
+	meshBuilder.TexCoord2f(0, 0.0f, 0.0f);
+	meshBuilder.Color4ub(0, 0, 0, 0);
+	meshBuilder.AdvanceVertex();
+
+	meshBuilder.Position3f(w, 0.0f, 0.0f);
+	meshBuilder.TexCoord2f(0, 1.0f, 0.0f);
+	meshBuilder.Color4ub(0, 0, 0, 0);
+	meshBuilder.AdvanceVertex();
+
+	meshBuilder.sub_100319d0(w, h, 0.0f);
+	meshBuilder.sub_10031a20(0, 1.0f, 1.0f);
+	meshBuilder.sub_10042960(0, 0, 0, 0);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_100319d0(0.0f, h, 0.0f);
+	meshBuilder.sub_10031a20(0, 0.0f, 1.0f);
+	meshBuilder.sub_10042960(0, 0, 0, 0);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10041c90(0, 0);
+	pMesh->Draw(-1, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d71d0 size=0x3c3
 #include "engineclient.h"
 #include "CClientShadowMgr.h"
