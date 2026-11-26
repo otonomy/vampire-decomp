@@ -1005,6 +1005,7 @@
 0x100159b0 func   ?_C_WeaponIArmor_Lt_Leather_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponIArmor_Lt_Leather_CreateObject
 0x10015a70 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponIArmor_Lt_Leather@@@Z ClientClassInit
 0x10015b00 func   ?vfunc17@C_WeaponIArmor_Hvy_Leather@@UAEHXZ C_WeaponIArmor_Hvy_Leather::vfunc17
+0x10015b40 func   ?sub_10015b40@@YAHXZ sub_10015b40
 0x10015b90 func   ??_GC_WeaponIArmor_Hvy_Leather@@UAEPAXI@Z ??_GC_WeaponIArmor_Hvy_Leather@@UAEPAXI@Z
 0x10015bb0 func   ?vfunc16@C_WeaponIArmor_Hvy_Leather@@UAEHXZ C_WeaponIArmor_Hvy_Leather::vfunc16
 0x10015bc0 func   ?vfunc15@C_WeaponIArmor_Hvy_Leather@@UAEHXZ C_WeaponIArmor_Hvy_Leather::vfunc15
