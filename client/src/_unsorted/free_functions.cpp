@@ -6754,6 +6754,32 @@ template <> int ClientClassInit<DT_ResearchBook_MG_BRAWL::ignored>(DT_ResearchBo
 }
 // END FUNCTION
 
+// FUNCTION: 0x100117c0 size=0x45
+namespace lifted {
+extern char g_101fa834;
+extern char g_101fa848;
+extern char g_101fa884;
+extern char g_101fa8bc;
+extern char g_101fa914;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100117c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101fa914;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101fa8bc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101fa884;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101fa848;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101fa834;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10011850 size=0x6
 namespace lifted {
 extern char g_102e1bb8;

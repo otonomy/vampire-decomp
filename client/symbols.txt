@@ -789,6 +789,7 @@
 0x10011630 func   ?_C_ResearchBook_MG_BRAWL_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ResearchBook_MG_BRAWL_CreateObject
 0x100116f0 func   ?ClientClassInit@@YAHPAUignored@DT_ResearchBook_MG_BRAWL@@@Z ClientClassInit
 0x10011780 func   ?vfunc17@C_ResearchBook_LG_DODGE@@UAEHXZ C_ResearchBook_LG_DODGE::vfunc17
+0x100117c0 func   ?sub_100117c0@@YAHXZ sub_100117c0
 0x10011810 func   ??_GC_ResearchBook_LG_DODGE@@UAEPAXI@Z ??_GC_ResearchBook_LG_DODGE@@UAEPAXI@Z
 0x10011830 func   ?vfunc16@C_ResearchBook_LG_DODGE@@UAEHXZ C_ResearchBook_LG_DODGE::vfunc16
 0x10011840 func   ?vfunc15@C_ResearchBook_LG_DODGE@@UAEHXZ C_ResearchBook_LG_DODGE::vfunc15
