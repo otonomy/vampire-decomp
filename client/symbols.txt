@@ -3930,6 +3930,7 @@
 0x1009b210 func   ?sub_1009b210@@YAHXZ sub_1009b210
 0x1009b270 func   ?sub_1009b270@CUnknown1009b270@@QAEHH@Z CUnknown1009b270::sub_1009b270
 0x1009b2a0 func   ?sub_1009b2a0@CUnknown1009b2a0@@QAEHH@Z CUnknown1009b2a0::sub_1009b2a0
+0x1009b2c0 func   ?OnDataChanged@C_BaseCombatWeapon@@UAEXH@Z C_BaseCombatWeapon::OnDataChanged
 0x1009b990 func   ?vfunc86@C_BaseCombatWeapon@@UAEHXZ C_BaseCombatWeapon::vfunc86
 0x1009b9a0 func   ?vfunc235@C_BaseCombatWeapon@@UAEHH@Z C_BaseCombatWeapon::vfunc235
 0x1009b9e0 func   ?vfunc237@C_BaseCombatWeapon@@UAEXH@Z C_BaseCombatWeapon::vfunc237
