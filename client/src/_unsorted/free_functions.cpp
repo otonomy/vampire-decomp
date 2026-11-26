@@ -10974,6 +10974,32 @@ template <> int ClientClassInit<DT_ItemGBachJournal::ignored>(DT_ItemGBachJourna
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001ab40 size=0x45
+namespace lifted {
+extern char g_1020c424;
+extern char g_1020c438;
+extern char g_1020c474;
+extern char g_1020c4ac;
+extern char g_1020c504;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001ab40()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1020c504;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020c4ac;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1020c474;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1020c438;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1020c424;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001abd0 size=0x6
 namespace lifted {
 extern char g_102e2620;

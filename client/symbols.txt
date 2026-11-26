@@ -1261,6 +1261,7 @@
 0x1001a9b0 func   ?_C_ItemGBachJournal_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGBachJournal_CreateObject
 0x1001aa70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGBachJournal@@@Z ClientClassInit
 0x1001ab00 func   ?vfunc17@C_ItemGVampyrApocrypha@@UAEHXZ C_ItemGVampyrApocrypha::vfunc17
+0x1001ab40 func   ?sub_1001ab40@@YAHXZ sub_1001ab40
 0x1001ab90 func   ??_GC_ItemGVampyrApocrypha@@UAEPAXI@Z ??_GC_ItemGVampyrApocrypha@@UAEPAXI@Z
 0x1001abb0 func   ?vfunc16@C_ItemGVampyrApocrypha@@UAEHXZ C_ItemGVampyrApocrypha::vfunc16
 0x1001abc0 func   ?vfunc15@C_ItemGVampyrApocrypha@@UAEHXZ C_ItemGVampyrApocrypha::vfunc15
