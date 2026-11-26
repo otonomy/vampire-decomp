@@ -120828,6 +120828,36 @@ int sub_1015f490(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015f4a0 size=0x76
+#include "CUnknown10150220.h"
+
+extern int g_105e8614;
+extern CUnknown10150220 **g_105e8618;
+extern char g_102de300[];
+
+static inline CUnknown10150220 *Find_1015f4a0(int id)
+{
+	for (int i = 0; i < g_105e8614; i++)
+	{
+		if (g_105e8618[i]->m_nId == id)
+			return g_105e8618[i];
+	}
+	static CUnknown10150220 s_default(-1);
+	return &s_default;
+}
+
+const char *sub_1015f4a0(int id)
+{
+	if (id >= 0 && id < g_105e8614)
+	{
+		const char *psz = Find_1015f4a0(id)->m_psz08;
+		if (psz)
+			return psz;
+	}
+	return g_102de300;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015f520 size=0x53
 #include <string.h>
 extern char g_102de300[];

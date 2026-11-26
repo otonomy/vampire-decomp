@@ -8219,6 +8219,7 @@
 0x1015f450 func   ?sub_1015f450@@YAHH@Z sub_1015f450
 0x1015f460 func   ?sub_1015f460@@YAHH@Z sub_1015f460
 0x1015f490 func   ?sub_1015f490@@YAHH@Z sub_1015f490
+0x1015f4a0 func   ?sub_1015f4a0@@YAPBDH@Z sub_1015f4a0
 0x1015f520 func   ?sub_1015f520@@YAHPBD@Z sub_1015f520
 0x1015f600 func   ?sub_1015f600@@YAHPBD@Z sub_1015f600
 0x1015f660 func   ?sub_1015f660@@YAXH@Z sub_1015f660
