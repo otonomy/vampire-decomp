@@ -25,7 +25,9 @@ public:
     int m_unk20;
     int m_unk24;
     void *m_unk28;
-    int m_unk2c[(0x54 - 0x2c) / 4];
+    int m_unk2c[(0x40 - 0x2c) / 4];
+    int m_nJoystickFlags;	// 0x40
+    int m_unk44[(0x54 - 0x44) / 4];
     int sub_10100f10();
     int m_unk54;
     int m_unk58;
@@ -34,6 +36,7 @@ public:
     int m_unk64[(0x7c - 0x64) / 4];
     struct joy_axis_t { int m_unk00; int AxisMap; int ControlMap; unsigned long *pdwRawValue; };
     joy_axis_t m_rgAxes[6];	// 0x7c
+    unsigned long *RawValuePointer(int axis);	// 0x10100b40; defined in in_joystick.cpp before its callers (VC6 then keeps edx live across the call)
     void sub_10100f80(float frametime, class CUserCmd *cmd);
     struct CInputKey { char name[0x20]; int value; CInputKey *next; };
     CInputKey *m_pKeys;
