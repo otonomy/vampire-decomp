@@ -397,7 +397,7 @@ public:
 	virtual void vfunc60();
 	virtual void vfunc61(int);	// slot 61
 	virtual void vfunc62(int, int);	// slot 62; shapes differ
-	virtual void vfunc63();
+	virtual int vfunc63(int);	// slot 63: GetFrameBufferCopyTexture (CViewRender::DrawHelper saves it, then hands it back to slot 62)
 	virtual int vfunc64(int);	// slot 64; shapes differ
 	virtual void vfunc65(int);	// slot 65; shapes differ
 	virtual void vfunc66();
@@ -426,7 +426,7 @@ public:
 	virtual void vfunc89(int x, int y, int w, int h);	// slot 89: Viewport
 	virtual void vfunc90(int *x, int *y, int *w, int *h);	// slot 90: GetViewport
 	virtual void vfunc91();
-	virtual void vfunc92();
+	virtual void vfunc92(int);	// slot 92: SetHeightClipMode (CViewRender::DrawHelper)
 	virtual void vfunc93();
 	virtual void vfunc94(int);	// slot 94; seen as FogMode 1
 	virtual void vfunc95(float);	// slot 95; seen as FogStart 1
