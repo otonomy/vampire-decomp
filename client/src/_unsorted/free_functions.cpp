@@ -114178,6 +114178,113 @@ int sub_10183b60()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10183b90 size=0x2f4
+#include "CHotkeyWindow.h"
+#include "VHotkeysUI.h"
+#include "CHud.h"
+#include "engineclient.h"
+
+extern "C" unsigned int strlen(const char *);
+#pragma intrinsic(strlen)
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+extern "C" int __cdecl sprintf(char *, const char *, ...);
+
+void sub_100cdb40(int *pCRC);
+void sub_100cdb50(int *pCRC);
+void sub_100cdb90(int *pCRC, const char *pBuffer, int nLength);
+
+#define V(n) virtual void v##n();
+#define V10(p) V(p##0) V(p##1) V(p##2) V(p##3) V(p##4) V(p##5) V(p##6) V(p##7) V(p##8) V(p##9)
+struct SHotkeyPanelV
+{
+	V10(0) V10(1) V10(2) V10(3) V10(4) V10(5) V10(6) V10(7) V10(8) V10(9)
+	V(100) V(101) V(102) V(103) V(104) V(105) V(106) V(107)
+	virtual void SetText(const char *psz);
+	virtual void GetText(char *pBuf, int nMax);
+};
+
+// OKClicked: reads the ten rows back into (type, value) pairs and sends them as "sethotkeys"
+void CHotkeyWindow::sub_10183b90()
+{
+	int values[10];
+	int types[10];
+
+	for (int i = 0; i < 10; i++)
+	{
+		if (!m_Rows[i].m_pLabel)
+			continue;
+
+		char szLabel[0x40];
+		((SHotkeyPanelV *)m_Rows[i].m_pLabel)->GetText(szLabel, 0x40);
+
+		for (int j = 0; j < m_nItems; j++)
+		{
+			if (_strcmpi(szLabel, m_Items[j].m_szText))
+				continue;
+
+			types[i] = m_Items[j].m_nType;
+			switch (types[i])
+			{
+			case 1:
+			{
+				values[i] = m_Items[j].m_nRecord;
+				if (!m_Items[j].m_nCount)
+					break;
+				char szValue[0x40];
+				((SHotkeyPanelV *)m_Rows[i].m_pValue)->GetText(szValue, 0x40);
+				for (int k = m_Items[j].m_nFirst; k < m_Items[j].m_nFirst + m_Items[j].m_nCount; k++)
+				{
+					if (!_strcmpi(szValue, m_Records[k].m_szName))
+						values[i] = ((k - m_Items[j].m_nFirst + 1) << 16) | m_Items[j].m_nRecord;
+				}
+				break;
+			}
+			case 2:
+			case 3:
+			{
+				if (!m_Items[j].m_nCount)
+					break;
+				char szValue[0x40];
+				((SHotkeyPanelV *)m_Rows[i].m_pValue)->GetText(szValue, 0x40);
+				for (int k = m_Items[j].m_nFirst; k < m_Items[j].m_nFirst + m_Items[j].m_nCount; k++)
+				{
+					if (!_strcmpi(szValue, m_Records[k].m_szName))
+					{
+						const char *pszCommand = m_Records[k].m_szCommand;
+						int len = strlen(pszCommand);
+						sub_100cdb40(&values[i]);
+						sub_100cdb90(&values[i], pszCommand, len);
+						sub_100cdb50(&values[i]);
+					}
+				}
+				break;
+			}
+			case 0:
+			case 4:
+			case 5:
+			case 6:
+				values[i] = 0;
+				break;
+			}
+			break;
+		}
+	}
+
+	char szCmd[256];
+	sprintf(szCmd, "sethotkeys");
+	int len = strlen(szCmd);
+	for (int n = 0; n < 10; n++)
+	{
+		sprintf(szCmd + len, " %d %d", types[n], values[n]);
+		len += strlen(szCmd + len);
+	}
+	engine->ClientCmd(szCmd);
+
+	VHotkeysUI *pUI = static_cast<VHotkeysUI *>(gHUD.FindElement("VHotkeysUI"));
+	pUI->sub_10183aa0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10184360 size=0x70
 #include "CHud.h"
 #include "VHotkeysUI.h"

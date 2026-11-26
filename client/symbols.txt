@@ -8396,6 +8396,7 @@
 0x10183af0 func   ?sub_10183af0@CUnknown10183af0@@QAEHXZ CUnknown10183af0::sub_10183af0
 0x10183b10 func   ?vfunc78@VHotkeysUI@@UAEXH@Z VHotkeysUI::vfunc78
 0x10183b60 func   ?sub_10183b60@@YAHXZ sub_10183b60
+0x10183b90 func   ?sub_10183b90@CHotkeyWindow@@QAEXXZ CHotkeyWindow::sub_10183b90
 0x10184360 func   ?sub_10184360@@YAXXZ sub_10184360
 0x10184420 func   ?sub_10184420@@YAXXZ sub_10184420
 0x10184500 func   ?sub_10184500@@YAHXZ sub_10184500
