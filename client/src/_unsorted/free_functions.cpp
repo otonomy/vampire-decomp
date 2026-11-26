@@ -77379,6 +77379,170 @@ void CInput_101030c0::sub_101030c0( int a1, FrameData_101030c0 *pFrame )
 }
 // END FUNCTION
 
+// FUNCTION: 0x10103c60 size=0x6b4
+#include "bf_write.h"
+#include "CUserCmd.h"
+
+struct VecCompare_10103c60
+{
+	bool sub_10104320(const Vector &v) const;	// operator!=, where the game did not inline it
+};
+
+inline void WriteOneBit_10103c60(bf_write *buf, int nValue)
+{
+	if (!buf->sub_10104360(1))
+		buf->sub_10104380(nValue);
+}
+
+void sub_10103c60(bf_write *buf, CUserCmd *to, CUserCmd *from)
+{
+	if (to->command_number != from->command_number + 1)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->WriteUBitLongIndexed(to->command_number, 32);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->viewangles.x != from->viewangles.x)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_10086f10(to->viewangles.x, 16);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->viewangles.y != from->viewangles.y)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_10086f10(to->viewangles.y, 16);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->viewangles.z != from->viewangles.z)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_10086f10(to->viewangles.z, 8);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->forwardmove != from->forwardmove)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_100866b0((int)(to->forwardmove + 0.01f), 16);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->sidemove != from->sidemove)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_100866b0((int)(to->sidemove + 0.01f), 16);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->upmove != from->upmove)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_100866b0((int)(to->upmove + 0.01f), 16);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->buttons != from->buttons)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->WriteUBitLongIndexed(to->buttons, 32);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->impulse != from->impulse)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->WriteUBitLongIndexed(to->impulse, 8);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	buf->WriteUBitLongIndexed(to->m_b2c, 8);
+	buf->WriteUBitLongIndexed(to->msec, 8);
+	WriteOneBit_10103c60(buf, to->m_b44);
+	WriteOneBit_10103c60(buf, to->m_b45);
+
+	if (to->m_n4c != from->m_n4c)
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087210(to->m_n4c, 5, true);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+
+	if (((const VecCompare_10103c60 *)&to->m_vec50)->sub_10104320(from->m_vec50))
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087380(to->m_vec50);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+
+	if (to->m_fl08 != from->m_fl08)
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087210((int)to->m_fl08, 8, true);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+
+	if (to->m_b47 != from->m_b47)
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087210(to->m_b47, 8, true);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+
+	if (to->m_b46 != from->m_b46)
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087210(to->m_b46, 8, true);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10104320 size=0x36
 #include "Vector.h"
 struct VH : Vector {

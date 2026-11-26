@@ -6045,6 +6045,7 @@
 0x10103a60 func   ?EncodeUserCmdToBuffer@CInput@@UAEXHHH@Z CInput::EncodeUserCmdToBuffer
 0x10103b00 func   ?DecodeUserCmdFromBuffer@CInput@@UAEXHHH@Z CInput::DecodeUserCmdFromBuffer
 0x10103ba0 func   ?WriteUsercmdDeltaToBuffer@CInput@@UAEXPAXHH_N@Z CInput::WriteUsercmdDeltaToBuffer
+0x10103c60 func   ?sub_10103c60@@YAXPAVbf_write@@PAVCUserCmd@@1@Z sub_10103c60
 0x10104320 func   ?sub_10104320@VH@@QBEHABVVector@@@Z VH::sub_10104320
 0x10104360 func   ?sub_10104360@CUnk1011d310@@QAEDH@Z CUnk1011d310::sub_10104360
 0x10104380 func   ?sub_10104380@CUnknown10104380@@QAEPAXH@Z CUnknown10104380::sub_10104380
