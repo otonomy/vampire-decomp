@@ -317,6 +317,7 @@
 0x100082b0 func   ?_C_WeaponMelee_BushHook_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_BushHook_CreateObject
 0x10008370 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_BushHook@@@Z ClientClassInit
 0x10008400 func   ?vfunc17@C_WeaponMelee_Claws@@UAEHXZ C_WeaponMelee_Claws::vfunc17
+0x10008440 func   ?sub_10008440@@YAHXZ sub_10008440
 0x10008490 func   ??_GC_WeaponMelee_Claws@@UAEPAXI@Z ??_GC_WeaponMelee_Claws@@UAEPAXI@Z
 0x100084b0 func   ?vfunc16@C_WeaponMelee_Claws@@UAEHXZ C_WeaponMelee_Claws::vfunc16
 0x100084c0 func   ?vfunc15@C_WeaponMelee_Claws@@UAEHXZ C_WeaponMelee_Claws::vfunc15
