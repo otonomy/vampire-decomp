@@ -2532,6 +2532,7 @@
 0x1004a0a0 func   ?vfunc3@CGodLight@@UAEXXZ CGodLight::vfunc3
 0x1004a140 func   ??0?$CUtlMemory@ULightRay_t@@@@QAE@HH@Z CUtlMemory<LightRay_t>::CUtlMemory
 0x1004a180 func   ?InsertMultipleBefore@?$CUtlVector@ULightRay_t@@V?$CUtlMemory@ULightRay_t@@@@@@QAEHHHPBULightRay_t@@@Z CUtlVector<LightRay_t,CUtlMemory<LightRay_t> >::InsertMultipleBefore
+0x1004a240 func   ?GrowVector@?$CUtlVector@ULightRay_t@@V?$CUtlMemory@ULightRay_t@@@@@@QAEXH@Z CUtlVector<LightRay_t,CUtlMemory<LightRay_t> >::GrowVector
 0x1004a330 func   ?sub_1004a330@@YAXPAUS44_1004a330@@PBU1@@Z sub_1004a330
 0x1004a3c0 func   ?vfunc0@CTextureTransformProxy@@UAE_NPAX0@Z CTextureTransformProxy::vfunc0
 0x1004a630 func   ?sub_1004a630@@YAHXZ sub_1004a630
