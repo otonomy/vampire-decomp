@@ -613,6 +613,7 @@
 0x1000df30 func   ?_C_WeaponRanged_Pistol_DesertEagle_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponRanged_Pistol_DesertEagle_CreateObject
 0x1000dff0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponRanged_Pistol_DesertEagle@@@Z ClientClassInit
 0x1000e080 func   ?vfunc17@C_WeaponRanged_Pistol_Glock@@UAEHXZ C_WeaponRanged_Pistol_Glock::vfunc17
+0x1000e0c0 func   ?sub_1000e0c0@@YAHXZ sub_1000e0c0
 0x1000e110 func   ??_GC_WeaponRanged_Pistol_Glock@@UAEPAXI@Z ??_GC_WeaponRanged_Pistol_Glock@@UAEPAXI@Z
 0x1000e130 func   ?vfunc16@C_WeaponRanged_Pistol_Glock@@UAEHXZ C_WeaponRanged_Pistol_Glock::vfunc16
 0x1000e140 func   ?vfunc15@C_WeaponRanged_Pistol_Glock@@UAEHXZ C_WeaponRanged_Pistol_Glock::vfunc15
