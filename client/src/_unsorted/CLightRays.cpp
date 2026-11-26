@@ -49,3 +49,39 @@ CLightRays::~CLightRays()
 {
 }
 // END FUNCTION
+
+// FUNCTION: 0x100492b0 size=0x241
+#include "CLightRays.h"
+#include "engineclient.h"
+extern "C" double floor(double);
+
+void CLightRays::vfunc1()
+{
+	if (m_Rays.Count()) {
+		float dt = engine->vfunc41(0);
+		for (int i = 0; i < m_Rays.Count(); i++)
+			m_Rays[i].f00 += dt * m_Rays[i].f04;
+		sub_100491c0();
+		bool bChanged = false;
+		while (m_Rays[0].f00 < 0.0f) {
+			LightRay_t t = m_Rays[0];
+			t.f00 = t.f00 - floor(t.f00 * 0.0027777778f) * 360.0;
+			m_Rays.Remove(0);
+			m_Rays.AddToTail(t);
+			bChanged = true;
+		}
+		if (bChanged)
+			sub_100491c0();
+		bChanged = false;
+		while (m_Rays[m_Rays.Count() - 1].f00 >= 360.0f) {
+			LightRay_t t = m_Rays[m_Rays.Count() - 1];
+			t.f00 = t.f00 - floor(t.f00 * 0.0027777778f) * 360.0;
+			m_Rays.Remove(m_Rays.Count() - 1);
+			m_Rays.AddToHead(t);
+			bChanged = true;
+		}
+		if (bChanged)
+			sub_100491c0();
+	}
+}
+// END FUNCTION
