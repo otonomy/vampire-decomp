@@ -9423,6 +9423,7 @@
 0x101aa780 func   ?vfunc95@Panel@vgui2@@UAEXXZ vgui2::Panel::vfunc95
 0x101aa7a0 func   ?vfunc96@Panel@vgui2@@UAEXXZ vgui2::Panel::vfunc96
 0x101aa7c0 func   ?vfunc25@Panel@vgui2@@UAE_NHH@Z vgui2::Panel::vfunc25
+0x101aaaa0 func   ?vfunc28@Panel@vgui2@@UAEHH@Z vgui2::Panel::vfunc28
 0x101aaad0 func   ?vfunc54@Panel@vgui2@@UAEHH@Z vgui2::Panel::vfunc54
 0x101aaae0 func   ?vfunc55@Panel@vgui2@@UAEHXZ vgui2::Panel::vfunc55
 0x101aab50 func   ?sub_101aab50@CUnknown101aab50@@QAEHXZ CUnknown101aab50::sub_101aab50
