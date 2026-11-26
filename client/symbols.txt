@@ -917,6 +917,7 @@
 0x10013e30 func   ?_C_OccultDodge_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_OccultDodge_CreateObject
 0x10013ef0 func   ?ClientClassInit@@YAHPAUignored@DT_OccultDodge@@@Z ClientClassInit
 0x10013f80 func   ?vfunc17@C_OccultThaumDamage@@UAEHXZ C_OccultThaumDamage::vfunc17
+0x10013fc0 func   ?sub_10013fc0@@YAHXZ sub_10013fc0
 0x10014010 func   ??_GC_OccultThaumDamage@@UAEPAXI@Z ??_GC_OccultThaumDamage@@UAEPAXI@Z
 0x10014030 func   ?vfunc16@C_OccultThaumDamage@@UAEHXZ C_OccultThaumDamage::vfunc16
 0x10014040 func   ?vfunc15@C_OccultThaumDamage@@UAEHXZ C_OccultThaumDamage::vfunc15
