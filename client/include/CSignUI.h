@@ -30,6 +30,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the slots CSignUI adds to its base's vtable: 114-114, vfuncK at slot K
 	virtual void vfunc114(int, int, int);
 	void sub_10060c30();
+	void sub_10061f60(CKeyValuesX *pData);	// one "Text" block: a new CSignLabel (text, font, alignment, position, colours, image) appended to m_vecA
+	const char *sub_10061c40(CKeyValuesX *pData);	// the "Font_<screen width>" key of the data, else "Font" (default "Default")
 	void sub_100617b0(CKeyValuesX *pData);
 	void sub_10061830(CKeyValuesX *pData);	// the "BackgroundImage" block: image name / tiled, position and size scaled from 1024 x 768 (centred when XPos and YPos are 0)
 	CSignUI(int a);
