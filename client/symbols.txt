@@ -3209,6 +3209,7 @@
 0x1007c220 func   ?vfunc203@C_BaseCombatWeapon@@UAEHXZ C_BaseCombatWeapon::vfunc203
 0x1007c230 func   ?vfunc204@C_BaseCombatWeapon@@UAEHXZ C_BaseCombatWeapon::vfunc204
 0x1007c290 func   ?vfunc205@C_BaseCombatWeapon@@UAEMXZ C_BaseCombatWeapon::vfunc205
+0x1007c2a0 func   ?vfunc206@C_BaseCombatWeapon@@UAEXHHMHMH@Z C_BaseCombatWeapon::vfunc206
 0x1007c650 func   ??_GCSingleUserRecipientFilter@@UAEPAXI@Z ??_GCSingleUserRecipientFilter@@UAEPAXI@Z
 0x1007c6c0 func   ??_GCPASFilter@@UAEPAXI@Z ??_GCPASFilter@@UAEPAXI@Z
 0x1007c730 func   ?vfunc0@CPASAttenuationFilter@@QAEPAXH@Z CPASAttenuationFilter::vfunc0

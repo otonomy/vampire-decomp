@@ -1064,6 +1064,91 @@ float C_BaseCombatWeapon::vfunc205()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007c2a0 size=0x3a2
+#include "C_BaseCombatWeapon.h"
+#include "C_RecipientFilter.h"
+#include "engineclient.h"
+
+struct WeaponSoundData
+{
+    char m_szName[0x80];
+    int m_nPitch;          // 0x80
+    int m_nPitchMin;       // 0x84
+    int m_nPitchMax;       // 0x88
+    float m_flVolume;      // 0x8c
+    bool m_bLocal;         // 0x90
+};
+
+struct WeaponOwnerView
+{
+    char pad[0x3f8];
+    int m_n3f8;
+};
+
+void C_BaseCombatWeapon::vfunc206(int sound_type, int channel, float flVolume, int iPitch, float flAttenuation, int iFlagsOverride)
+{
+    if (vfunc222(sound_type) <= 0)
+        return;
+
+    float attn;
+    int iFlags;
+    int idx = enginerandom->RandomInt(0, vfunc222(sound_type) - 1);
+    attn = 0.27f;
+    iFlags = 0;
+    WeaponSoundData *snd = (WeaponSoundData *)sub_1007ba10(sound_type, idx);
+
+    float volume;
+    if (flVolume == 0.0f)
+    {
+        volume = 1.0f;
+        if (snd->m_flVolume != 0.0f)
+            volume = snd->m_flVolume;
+    }
+    else
+        volume = flVolume;
+    if (iPitch == 0)
+    {
+        iPitch = 100;
+        if (snd->m_nPitch)
+            iPitch = snd->m_nPitch;
+        if (snd->m_nPitchMin && snd->m_nPitchMax)
+            iPitch = enginerandom->RandomInt(snd->m_nPitchMin, snd->m_nPitchMax);
+    }
+    if (flAttenuation != 0.0f)
+        attn = flAttenuation;
+    if (iFlagsOverride)
+        iFlags = iFlagsOverride;
+
+    if (snd->m_bLocal)
+    {
+        if (!sub_1007bab0())
+            return;
+        if (!((WeaponOwnerView *)sub_1007bab0())->m_n3f8)
+            return;
+        enginesound->vfunc0(snd->m_szName, 0);
+        WeaponOwnerView *owner = (WeaponOwnerView *)sub_1007bab0();
+        CSingleUserRecipientFilter filter(owner ? owner->m_n3f8 : 0);
+        if (vfunc168())
+            filter.sub_100be0d0();
+        enginesound->EmitSound(filter, ((C_BaseEntity *)sub_1007bab0())->entindex(), 6, snd->m_szName, volume, *(int *)&attn, 0, iPitch, 0, 0, 1, 0);
+    }
+    else if (sub_1007bab0())
+    {
+        CPASAttenuationFilter filter(((C_BaseEntity *)sub_1007bab0())->GetAbsOrigin());
+        if (vfunc168())
+            filter.sub_100be0d0();
+        enginesound->EmitSound(filter, ((C_BaseEntity *)sub_1007bab0())->entindex(), channel, snd->m_szName, volume, *(int *)&attn, iFlags, iPitch, 0, 0, 1, 0);
+    }
+    else
+    {
+        CPASAttenuationFilter filter(GetAbsOrigin());
+        if (vfunc168())
+            filter.sub_100be0d0();
+        enginesound->EmitSound(filter, entindex(), channel, snd->m_szName, volume, *(int *)&attn, iFlags, iPitch, 0, 0, 1, 0);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007c8f0 size=0xb
 #include "C_BaseCombatWeapon.h"
 namespace lifted {
