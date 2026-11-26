@@ -86503,6 +86503,21 @@ void sub_10120660(int a, int b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10120690 size=0x20
+namespace lifted {
+extern int g_104e0c9c;
+}
+struct CUnknown10120690 { void * sub_10120690(int, int); };
+void * CUnknown10120690::sub_10120690(int a0, int a1)
+{
+    *(int *)this = a0;
+    *(int *)((char *)this + 4) = a1;
+    *(int *)((char *)this + 8) = lifted::g_104e0c9c;
+    lifted::g_104e0c9c = (int)this;
+    return this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101206d0 size=0x5
 namespace lifted {
 int sub_100cd9a0();
