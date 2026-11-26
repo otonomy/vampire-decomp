@@ -279,6 +279,8 @@ of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call th
 - **The local player** (0x104a0d50, read directly by 267 functions) is the 2004 SDK's `g_pLocalPlayer`:
   `#include "C_BasePlayer.h"` and write `C_BasePlayer::GetLocalPlayer()` (inline, the same load); never declare
   `g_104a0d50` yourself. Cast for a member the header does not declare yet, or give C_BasePlayer.h the member.
+- **gpGlobals** (0x102b8494) is the SDK's `CGlobalVarsBase *gpGlobals`: `#include "CGlobalVarsBase.h"` and read
+  `gpGlobals->curtime` (+0xc), `->frametime` (+0x10), `->framecount`, `->maxClients`, ...; never a view of your own.
 - **Two functions in one row.** When the game's bytes end with `ret` / padding and go on with a second function
   (another `ret N`, its own callers), the import merged two rows; note "merged row: second function at 0x..." and
   move on (`pcdecomp split` cuts it), do not write both into one source.
