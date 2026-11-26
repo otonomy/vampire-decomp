@@ -119357,6 +119357,19 @@ int CUnknown10184540::sub_10184540()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10184690 size=0x16
+namespace lifted {
+extern char g_102bbe88;
+extern char g_104cfe38;
+struct C100f0ed0 { int sub_100f0ed0(int); };
+struct C10186a00 { int sub_10186a00(); };
+}
+int sub_10184690()
+{
+    return ((lifted::C10186a00 *)(((lifted::C100f0ed0 *)((int)&lifted::g_104cfe38))->sub_100f0ed0((int)&lifted::g_102bbe88)))->sub_10186a00();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10184860 size=0x335
 #include "VItemInfoUI.h"
 #include "CStudiomodelPanel.h"
