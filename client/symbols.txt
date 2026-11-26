@@ -797,6 +797,7 @@
 0x100118b0 func   ?_C_ResearchBook_LG_DODGE_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ResearchBook_LG_DODGE_CreateObject
 0x10011970 func   ?ClientClassInit@@YAHPAUignored@DT_ResearchBook_LG_DODGE@@@Z ClientClassInit
 0x10011a00 func   ?vfunc17@C_ResearchBook_HG_MELEE@@UAEHXZ C_ResearchBook_HG_MELEE::vfunc17
+0x10011a40 func   ?sub_10011a40@@YAHXZ sub_10011a40
 0x10011a90 func   ??_GC_ResearchBook_HG_MELEE@@UAEPAXI@Z ??_GC_ResearchBook_HG_MELEE@@UAEPAXI@Z
 0x10011ab0 func   ?vfunc16@C_ResearchBook_HG_MELEE@@UAEHXZ C_ResearchBook_HG_MELEE::vfunc16
 0x10011ac0 func   ?vfunc15@C_ResearchBook_HG_MELEE@@UAEHXZ C_ResearchBook_HG_MELEE::vfunc15
