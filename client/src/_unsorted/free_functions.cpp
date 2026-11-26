@@ -13134,6 +13134,32 @@ template <> int ClientClassInit<DT_ItemGGarysCD::ignored>(DT_ItemGGarysCD::ignor
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001f640 size=0x45
+namespace lifted {
+extern char g_10215484;
+extern char g_10215498;
+extern char g_102154d4;
+extern char g_1021550c;
+extern char g_10215564;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001f640()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10215564;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1021550c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_102154d4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10215498;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10215484;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001f6d0 size=0x6
 namespace lifted {
 extern char g_102e5c88;
