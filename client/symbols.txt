@@ -1897,6 +1897,7 @@
 0x10027020 func   ?sub_10027020@CUnknown10027020@@QAEPAXXZ CUnknown10027020::sub_10027020
 0x10027060 func   ??_GC_WeaponMelee_Torch@@UAEPAXI@Z ??_GC_WeaponMelee_Torch@@UAEPAXI@Z
 0x10027080 func   ?sub_10027080@CUnknown10027080@@QAEHHH@Z CUnknown10027080::sub_10027080
+0x100272a0 func   ?sub_100272a0@CUnknown100272a0@@QAEXXZ CUnknown100272a0::sub_100272a0
 0x10027530 func   ?vfunc17@C_WeaponRanged_FlameThrower@@UAEHXZ C_WeaponRanged_FlameThrower::vfunc17
 0x10027570 func   ?sub_10027570@@YAHXZ sub_10027570
 0x10027590 func   ?vfunc16@C_WeaponRanged_FlameThrower@@UAEHXZ C_WeaponRanged_FlameThrower::vfunc16

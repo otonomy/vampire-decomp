@@ -16750,6 +16750,88 @@ int CUnknown10027080::sub_10027080(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100272a0 size=0x290
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "C_BaseEntity.h"
+#include "ConVar.h"
+#include "engineclient.h"
+
+extern "C" double __cdecl sin(double);
+#pragma intrinsic(sin)
+
+struct dlight_t
+{
+	int flags;
+	Vector origin;	// 0x04
+	float radius;	// 0x10
+	unsigned char r, g, b;	// 0x14
+	signed char exponent;	// 0x17
+	float die;	// 0x18
+	float decay;	// 0x1c
+	float minlight;	// 0x20
+	int key;	// 0x24
+};
+
+extern ConVar g_102e26c8;
+extern ConVar g_105fb298;
+extern ConVar g_102e32e0;
+extern ConVar g_102e0ed0;
+extern ConVar g_102e71d8;
+extern ConVar g_102e7220;
+extern ConVar g_102e0048;
+
+struct CUnknown100272a0 : public C_BaseEntity
+{
+	int m_unk14[(0x44 - 0x14) / 4];
+	int m_index44;	// 0x44
+	char m_pad48[0x978 - 0x48];
+	bool m_bLightOn;	// 0x978
+	dlight_t *m_pDLight;	// 0x97c
+	int m_nLastFrame;	// 0x980
+
+	void sub_100272a0();
+};
+
+inline float SinWave(double x)
+{
+	return (sin(x) + 1.0) * 0.5;
+}
+
+void CUnknown100272a0::sub_100272a0()
+{
+	if (!(m_nLastFrame == engine->vfunc44())) { if (m_bLightOn && g_102e26c8.GetInt() && g_105fb298.GetInt())
+	{
+		if (!m_pDLight || m_pDLight->key != m_index44)
+			m_pDLight = (dlight_t *)effects->CL_AllocDlight(m_index44);
+
+		float flRadiusMin = g_102e32e0.GetFloat();
+		float flRadiusMax = g_102e0ed0.GetFloat();
+		float flSpeed2 = g_102e71d8.GetFloat();
+		float flSpeed1 = g_102e7220.GetFloat();
+		unsigned int nExponent; nExponent = g_102e0048.GetInt();
+
+		float t = pcd_stage(engine->Time(0));
+		float f; float t0 = flSpeed1 * t; f = SinWave((t0)) * 0.5f;
+		float t1 = SinWave((flSpeed2 * t)) * 0.5f; f = (t1) + f;
+
+		Vector origin;
+		QAngle angles;
+		vfunc57(1, (int)&origin, (int)&angles);
+
+		m_pDLight->r = (unsigned char)(192.0f + (f * 64.0f));
+		m_pDLight->g = (unsigned char)(96.0f + (f * 32.0f));
+		m_pDLight->b = (f * 16.0f + 48.0f);
+		m_pDLight->exponent = nExponent;
+		m_pDLight->origin = origin;
+		m_pDLight->radius = (flRadiusMax - flRadiusMin) * f + flRadiusMin;
+		m_pDLight->die = engine->Time(0) + 0.1;
+		m_pDLight->decay = 100.0;
+	}
+
+	m_nLastFrame = engine->vfunc44(); } else return;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10027570 size=0x1b
 namespace lifted {
 struct C100277b0 { int sub_100277b0(); };
