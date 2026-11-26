@@ -85973,6 +85973,151 @@ int sub_10111ac0(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10111ae0 size=0x2e5
+#include "CUtlRBTree16.h"
+
+extern void *(__cdecl *g_101e3100)(unsigned int);
+extern void *(__cdecl *g_101e3104)(void *, unsigned int);
+
+inline void *operator new(unsigned int, void *p) { return p; }
+
+struct CUtlMemoryNode16
+{
+	CUtlRBTree16::Node_t *m_pMemory;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+
+	int NumAllocated() const { return m_nAllocationCount; }
+	CUtlRBTree16::Node_t &operator[](int i) { return m_pMemory[i]; }
+	__forceinline void Grow(int num)
+	{
+		if (m_nGrowSize == -1)
+			return;
+		int nAllocationRequested = m_nAllocationCount + num;
+		while (m_nAllocationCount < nAllocationRequested)
+		{
+			if (m_nAllocationCount)
+			{
+				if (m_nGrowSize)
+					m_nAllocationCount += m_nGrowSize;
+				else
+					m_nAllocationCount += m_nAllocationCount;
+			}
+			else
+			{
+				m_nAllocationCount = (31 + sizeof(CUtlRBTree16::Node_t)) / sizeof(CUtlRBTree16::Node_t);
+			}
+		}
+		if (m_pMemory)
+			m_pMemory = (CUtlRBTree16::Node_t *)g_101e3104(m_pMemory, m_nAllocationCount * sizeof(CUtlRBTree16::Node_t));
+		else
+			m_pMemory = (CUtlRBTree16::Node_t *)g_101e3100(m_nAllocationCount * sizeof(CUtlRBTree16::Node_t));
+	}
+};
+
+struct Elem16 { unsigned short m_a; unsigned short m_b; int m_c; Elem16() { m_a = 0xffff; } };
+
+static __forceinline unsigned short NewNode16(CUtlRBTree16 *t)
+{
+	unsigned short newElem;
+	if (t->m_FirstFree == CUtlRBTree16::InvalidIndex())
+	{
+		if (((CUtlMemoryNode16 *)&t->m_pElements)->NumAllocated() == t->m_TotalElements)
+			((CUtlMemoryNode16 *)&t->m_pElements)->Grow(1);
+		newElem = t->m_TotalElements++;
+	}
+	else
+	{
+		newElem = t->m_FirstFree;
+		t->m_FirstFree = t->sub_10113190(t->m_FirstFree).m_Right;
+	}
+	new ((void *)t->m_pElements[newElem].m_Data) Elem16;
+	return newElem;
+}
+
+unsigned short CUtlRBTree16::sub_10111ae0(unsigned short parent, bool leftchild)
+{
+	unsigned short i = NewNode16(this);
+
+	Links_t &elem = m_pElements[i].m_Links;
+	elem.m_Parent = parent;
+	elem.m_Left = elem.m_Right = InvalidIndex();
+	elem.m_Tag = 0;
+
+	if (parent != InvalidIndex())
+	{
+		if (leftchild)
+			m_pElements[parent].m_Links.m_Left = i;
+		else
+			m_pElements[parent].m_Links.m_Right = i;
+	}
+	else
+	{
+		m_Root = i;
+	}
+
+	unsigned short e = i;
+	while (e != m_Root && sub_10113190(sub_10113190(e).m_Parent).m_Tag == 0)
+	{
+		unsigned short p = sub_10113190(e).m_Parent;
+		unsigned short gp = sub_10113190(p).m_Parent;
+
+		if (sub_101130d0(p))
+		{
+			unsigned short uncle = sub_10113190(gp).m_Right;
+			if (sub_10113190(uncle).m_Tag == 0)
+			{
+				m_pElements[p].m_Links.m_Tag = 1;
+				m_pElements[uncle].m_Links.m_Tag = 1;
+				m_pElements[gp].m_Links.m_Tag = 0;
+				e = gp;
+			}
+			else
+			{
+				if (sub_10114560(e))
+				{
+					e = p;
+					sub_10113da0(e);
+					p = sub_10113190(e).m_Parent;
+					gp = sub_10113190(p).m_Parent;
+				}
+				m_pElements[p].m_Links.m_Tag = 1;
+				m_pElements[gp].m_Links.m_Tag = 0;
+				sub_10113f60(gp);
+			}
+		}
+		else
+		{
+			unsigned short uncle = sub_10113190(gp).m_Left;
+			if (sub_10113190(uncle).m_Tag == 0)
+			{
+				m_pElements[p].m_Links.m_Tag = 1;
+				m_pElements[uncle].m_Links.m_Tag = 1;
+				m_pElements[gp].m_Links.m_Tag = 0;
+				e = gp;
+			}
+			else
+			{
+				if (sub_101130d0(e))
+				{
+					e = p;
+					sub_10113f60(p);
+					p = sub_10113190(e).m_Parent;
+					gp = sub_10113190(p).m_Parent;
+				}
+				m_pElements[p].m_Links.m_Tag = 1;
+				m_pElements[gp].m_Links.m_Tag = 0;
+				sub_10113da0(gp);
+			}
+		}
+	}
+	m_pElements[m_Root].m_Links.m_Tag = 1;
+
+	++m_NumElements;
+	return i;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10111ee0 size=0x366
 #include "CUtlRBTree16.h"
 
