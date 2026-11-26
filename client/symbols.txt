@@ -5667,6 +5667,7 @@
 0x10104360 func   ?sub_10104360@CUnk1011d310@@QAEDH@Z CUnk1011d310::sub_10104360
 0x10104380 func   ?sub_10104380@CUnknown10104380@@QAEPAXH@Z CUnknown10104380::sub_10104380
 0x101043d0 func   ?sub_101043d0@bf_write@@QAEXH@Z bf_write::sub_101043d0
+0x10104440 func   ?GetUsercmd@CInput@@UAEPADH@Z CInput::GetUsercmd
 0x10104440 func   ?vfunc7@CInput@@UAEPADH@Z CInput::vfunc7
 0x10104460 func   ?GetButtonBits@CInput@@UAEHH@Z CInput::GetButtonBits
 0x10104460 func   ?vfunc2@CInput@@UAEHH@Z CInput::vfunc2
