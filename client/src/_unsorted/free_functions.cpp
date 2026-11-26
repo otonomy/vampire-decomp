@@ -20272,6 +20272,64 @@ void sub_1004c520()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004c780 size=0x240
+#include "CBloodBar.h"
+extern int sub_100cd100();
+extern int sub_100cd0f0();
+// TARGET: CBloodBar::sub_1004c780
+void CBloodBar::sub_1004c780()
+{
+	int w = sub_100cd100();
+	int h = sub_100cd0f0();
+	switch (w) {
+	case 640:
+		m_n17c = 2;
+		m_n180 = 5;
+		m_n184 = 10;
+		m_n188 = 40;
+		m_n18c = m_n178 = 20;
+		break;
+	case 800:
+		m_n178 = 25;
+		m_n17c = 2;
+		m_n180 = 6;
+		m_n184 = 12;
+		m_n188 = 48;
+		m_n18c = 24;
+		break;
+	case 1024:
+		m_n17c = 3;
+		m_n180 = 8;
+		m_n184 = 16;
+		m_n188 = 64;
+		m_n18c = m_n178 = 32;
+		break;
+	case 1280:
+		m_n17c = 4;
+		m_n180 = 10;
+		m_n184 = 20;
+		m_n188 = 80;
+		m_n18c = m_n178 = 40;
+		break;
+	case 1600:
+		m_n17c = 5;
+		m_n180 = 12;
+		m_n184 = 25;
+		m_n188 = 100;
+		m_n18c = m_n178 = 50;
+		break;
+	default:
+		m_n178 = w * 3125 / 100000;
+		m_n17c = w * 29296 / 10000000;
+		m_n180 = w * 78125 / 10000000;
+		m_n184 = h * 20830 / 1000000;
+		m_n188 = m_n184 * 4;
+		m_n18c = m_n184 * 2;
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004d410 size=0x3
 void __stdcall sub_1004d410(int a0, int a1)
 {
