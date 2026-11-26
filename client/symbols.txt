@@ -9824,6 +9824,7 @@
 0x101b8300 func   ?vfunc87@FrameButton@vgui2@@UAEXH@Z vgui2::FrameButton::vfunc87
 0x101b8360 func   ??_GFrameButton@vgui2@@UAEPAXI@Z ??_GFrameButton@vgui2@@UAEPAXI@Z
 0x101b8420 func   ?vfunc164@FrameSystemButton@vgui2@@UAEHHHHH@Z vgui2::FrameSystemButton::vfunc164
+0x101b8430 func   ?vfunc46@FrameSystemButton@vgui2@@UAEHH@Z vgui2::FrameSystemButton::vfunc46
 0x101b8540 func   ?vfunc88@FrameSystemButton@vgui2@@UAEXH@Z vgui2::FrameSystemButton::vfunc88
 0x101b8590 func   ??_GFrameSystemButton@vgui2@@UAEPAXI@Z ??_GFrameSystemButton@vgui2@@UAEPAXI@Z
 0x101b85b0 func   ??_GFrame@vgui2@@UAEPAXI@Z ??_GFrame@vgui2@@UAEPAXI@Z
