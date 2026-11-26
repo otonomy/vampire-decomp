@@ -15,6 +15,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_1005aeb0(int, int, int, int, int, int, int, int);
 	void sub_10059b70(int, int, int, int, int);
 	void sub_1005c3b0(int, int, int, int, int);
+	void sub_100594b0(float *s0, float *s1, float *t0, float *t1, int *w, int *h, void *rect);
+	void sub_1005d280(int x, int y, int w, int h);
 	void sub_1005c430(int, int, int, int, int, int);
 	int m_unk04;
 	int m_unk08;
