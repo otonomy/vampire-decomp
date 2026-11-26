@@ -285,6 +285,8 @@ of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call th
   `cl_entitylist` (0x102b8e9c, `CClientEntityList *`, CClientEntityList.h, with `ClientEntityList()`); both point at
   one object. A handle lookup is `CBaseHandle::Get()` (ehandle.h). Never declare `g_102b8e98` / `g_102b8e9c`: a
   second name for the same global keeps VC6 from merging the loads, and the function stops matching.
+- **The HUD** (0x104cfe38) is the SDK's `CHud gHUD;` object (CHud.h): `gHUD.FindElement("CHudX")` (0x100f0ed0),
+  `gHUD.GetIcon("name")` (0x100f11d0); never declare `g_104cfe38` yourself.
 - **Two functions in one row.** When the game's bytes end with `ret` / padding and go on with a second function
   (another `ret N`, its own callers), the import merged two rows; note "merged row: second function at 0x..." and
   move on (`pcdecomp split` cuts it), do not write both into one source.
