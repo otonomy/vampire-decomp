@@ -46,7 +46,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc18(BeamInfo_t &beamInfo);
 	virtual void vfunc19();
 	virtual Beam_t *vfunc20(struct InfoView101942b0 *info);
-	void sub_10194830(Beam_t *pBeam, int a);
+	void sub_10194830(Beam_t *pBeam, float frametime);
+	bool sub_10195d00(Beam_t *pBeam);
 	virtual void vfunc21();
 	void sub_10193790(BeamV *, BeamInfoV *);
 	void sub_101934d0(void *pBeam);
