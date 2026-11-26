@@ -10,5 +10,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the base slots the game's vtable fills with C_Func_LOD's own function
     virtual int vfunc15();
     virtual int vfunc16();
-    char m_pad0014[0x420 - 0x14];
+    virtual bool LODTest();	// IClientRenderable slot 14: distance fade with a transition zone
+    char m_pad0014[0x410 - 0x14];
+    volatile bool m_bLastDrawn;	// 0x410: read back after each store (the game reloads it for the return), so volatile here
+    int m_LastRenderState;	// 0x414
+    float m_fDisappearDist;	// 0x418
+    int m_unk41c;
 };
