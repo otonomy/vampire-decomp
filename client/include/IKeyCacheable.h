@@ -9,4 +9,5 @@ public:
 	virtual void vfunc0() = 0;
 	virtual void vfunc1() = 0;
 	virtual ~IKeyCacheable() {}
+	void * vfunc2(char);	// as in IParticleEffect (transplant)
 };
