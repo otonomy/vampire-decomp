@@ -24455,6 +24455,46 @@ void CStealth::sub_10062610()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10063210 size=0x36c
+#include "CStealth.h"
+#include "CHUDSprite.h"
+#include <stdio.h>
+
+extern const char *g_10287cc0[4];
+
+#define SPR(p) (*(CHUDSprite **)&(p))
+
+void CStealth::sub_10063210()
+{
+	if (!m_p1d0)
+	{
+		SPR(m_p1d0) = new CHUDSprite("hud/HealthSneak_Backing", 0, 0, 0x80, 0x80, 0x80, 0x80);
+		SPR(m_p1d4) = new CHUDSprite("hud/HealthSneak_Frame", 0, 0, 0x80, 0x80, 0x80, 0x80);
+		SPR(m_p1d8) = new CHUDSprite("hud/Light_Level", 0, 0, 0x80, 0x80, 0x80, 0x80);
+		SPR(m_p1dc) = new CHUDSprite("hud/Sneak_Icon_Obfuscated", 0, 0, 0x40, 0x40, 0x40, 0x40);
+		SPR(m_p1e0) = new CHUDSprite("hud/Sneak_Icon_Sneaking", 0, 0, 0x40, 0x40, 0x40, 0x40);
+		SPR(m_p1e4) = new CHUDSprite("hud/Sneak_Icon_Spotted", 0, 0, 0x40, 0x40, 0x40, 0x40);
+		SPR(m_p1fc) = new CHUDSprite("hud/new_ui/stealthfillbg", 0, 0, 0x40, 0x194, 0x40, 0x194);
+		SPR(m_p200) = new CHUDSprite("hud/new_ui/stealthfillfull", 0, 0, 0x40, 0x200, 0x40, 0x194);
+		SPR(m_p204) = new CHUDSprite("hud/new_ui/stealthframe", 0, 0, 0x40, 0x200, 0x40, 0x200);
+		for (int i = 0; i < 4; i++)
+			SPR(m_arr1e8[i]) = new CHUDSprite(g_10287cc0[i], 0, 0, 0x40, 0x40, 0x40, 0x40);
+	}
+	if (!m_p1b0)
+	{
+		SPR(m_p1b0) = new CHUDSprite("hud/lightgauge_frame", 0, 0, 0x100, 0x80, 0x100, 0x80);
+		for (int i = 0; i < 5; i++)
+		{
+			char buf[32];
+			sprintf(buf, "hud/lightgauge_%d", i);
+			SPR(m_arr1b4[i]) = new CHUDSprite(buf, 0, 0, 0x80, 0x80, 0x80, 0x80);
+		}
+		SPR(m_p1c8) = new CHUDSprite("hud/lightgauge_Obfu", 0, 0, 0x80, 0x80, 0x80, 0x80);
+		SPR(m_unk1cc) = new CHUDSprite("hud/lightgauge_ObfuDefeated", 0, 0, 0x80, 0x80, 0x80, 0x80);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10063590 size=0x32
 struct XKey14
 {

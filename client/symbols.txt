@@ -2980,6 +2980,7 @@
 0x10062500 func   ??1CStealth@@UAE@XZ CStealth::~CStealth
 0x10062610 func   ?sub_10062610@CStealth@@QAEXXZ CStealth::sub_10062610
 0x10062660 func   ?vfunc107@CStealth@@UAE_NXZ CStealth::vfunc107
+0x10063210 func   ?sub_10063210@CStealth@@QAEXXZ CStealth::sub_10063210
 0x10063580 func   ?vfunc97@CStealth@@UAEXXZ CStealth::vfunc97
 0x10063590 func   ?sub_10063590@XKey14@@QAEXD@Z XKey14::sub_10063590
 0x10063750 func   ??0CTargeted@@QAE@H@Z CTargeted::CTargeted
