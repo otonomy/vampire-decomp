@@ -2,6 +2,7 @@
 #pragma once
 #include "C_BaseEntity.h"
 #include "CUtlMemory12.h"
+#include "Vector.h"
 
 struct HairVec36 { char *m_pMemory; int m_alloc; int m_grow; int m_Size; char *m_pElements;
 	int sub_1002d4a0(int where, int num, const void *p); };
