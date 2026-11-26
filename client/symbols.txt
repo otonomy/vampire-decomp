@@ -973,6 +973,7 @@
 0x10014fb0 func   ?_C_ElderVitaePack_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ElderVitaePack_CreateObject
 0x10015070 func   ?ClientClassInit@@YAHPAUignored@DT_ElderVitaePack@@@Z ClientClassInit
 0x10015100 func   ?vfunc17@C_WeaponIArmor@@UAEHXZ C_WeaponIArmor::vfunc17
+0x10015140 func   ?sub_10015140@@YAHXZ sub_10015140
 0x10015190 func   ??_GC_WeaponIArmor@@UAEPAXI@Z ??_GC_WeaponIArmor@@UAEPAXI@Z
 0x100151b0 func   ?vfunc16@C_WeaponIArmor@@UAEHXZ C_WeaponIArmor::vfunc16
 0x100151c0 func   ?vfunc15@C_WeaponIArmor@@UAEHXZ C_WeaponIArmor::vfunc15

@@ -8410,6 +8410,32 @@ template <> int ClientClassInit<DT_ElderVitaePack::ignored>(DT_ElderVitaePack::i
 }
 // END FUNCTION
 
+// FUNCTION: 0x10015140 size=0x45
+namespace lifted {
+extern char g_102016e4;
+extern char g_102016f8;
+extern char g_10201734;
+extern char g_1020176c;
+extern char g_102017c4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10015140()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_102017c4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1020176c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10201734;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_102016f8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_102016e4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100151d0 size=0x6
 namespace lifted {
 extern char g_102e2ed0;
