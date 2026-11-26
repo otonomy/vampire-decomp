@@ -89,6 +89,7 @@ public:
 	float sub_100ee720();	// compares the float at the player's +0xb4 with the global time (+0xc of 0x1070b228) minus the player's +0xb8, returns one of two constants (0x104454c0 / 0x104454c4)
 		// movement speed scale: 0.8 * a tuning value chosen by the player's state at +0xc0 (0 for other states)
 	void sub_100e9390();
+	void sub_100ea260();	// "CGameMovement::FullNoClipMove" (convars 0x104df8ac speed, 0x104dfdbc accelerate, 0x104df9cc friction)
 	void sub_100e9430(Vector &wishdir, float wishspeed, float accel);
 	void sub_100e8170();
 	void sub_100eb7a0();
