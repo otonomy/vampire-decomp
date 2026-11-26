@@ -1021,6 +1021,7 @@
 0x10015eb0 func   ?_C_WeaponIArmor_Body_Armor_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponIArmor_Body_Armor_CreateObject
 0x10015f70 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponIArmor_Body_Armor@@@Z ClientClassInit
 0x10016000 func   ?vfunc17@C_WeaponIThrown@@UAEHXZ C_WeaponIThrown::vfunc17
+0x10016040 func   ?sub_10016040@@YAHXZ sub_10016040
 0x10016090 func   ??_GC_WeaponIThrown@@UAEPAXI@Z ??_GC_WeaponIThrown@@UAEPAXI@Z
 0x100160b0 func   ?vfunc16@C_WeaponIThrown@@UAEHXZ C_WeaponIThrown::vfunc16
 0x100160c0 func   ?vfunc15@C_WeaponIThrown@@UAEHXZ C_WeaponIThrown::vfunc15
