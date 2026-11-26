@@ -9270,6 +9270,7 @@
 0x101a1470 func   ?sub_101a1470@@YA_NABUSPlane@@00AAVVector@@@Z sub_101a1470
 0x101a1550 func   ?sub_101a1550@VMatrix@@QBE?AUVPlane@@ABU2@@Z VMatrix::sub_101a1550
 0x101a1650 func   ?sub_101a1650@CBlock64_t@@QAEPAU1@PBU1@@Z CBlock64_t::sub_101a1650
+0x101a16c0 func   ?sub_101a16c0@VMatrix@@QBEXABV1@AAV1@@Z VMatrix::sub_101a16c0
 0x101a1950 func   ?sub_101a1950@CUnknown101a1950@@QAEHH@Z CUnknown101a1950::sub_101a1950
 0x101a1b20 func   ?sub_101a1b20@VMatrix@@QBEXAAV1@@Z VMatrix::sub_101a1b20
 0x101a1be0 func   ?sub_101a1be0@VMatrix@@QBE?AV1@XZ VMatrix::sub_101a1be0
