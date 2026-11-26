@@ -43231,6 +43231,143 @@ int CUnknown100a5b30::sub_100a5b30(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a5fc0 size=0x409
+#include "C_BasePlayer.h"
+#include "C_BaseAnimating.h"
+#include "CStatusFlagList.h"
+#include "ehandle.h"
+#include "engineclient.h"
+
+struct CHudStatSound
+{
+	void sub_1004f0c0(int a, float f, int v, int b);
+	void sub_1004f1b0(int a, float f, int v, int b);
+	void sub_1004eff0(int a, int b);
+};
+extern CHudStatSound *g_103ede78;
+extern CStatusFlagList g_105e80d0;
+
+struct Obj_100a99d0 { char sub_100a99d0(); };
+struct PlrView14d8 { const char *sub_100a6420(); };
+struct CUnknown100af100 { void sub_100af100(C_BasePlayer *p); };
+struct CUnknown100aeed0 { void sub_100aeed0(); };
+struct CUnknown100af0d0 { void sub_100af0d0(C_BasePlayer *p); };
+struct CUnknown100af150 { void sub_100af150(); };
+
+void sub_10171390();
+C_BaseEntity *sub_100a2a90(int index);
+C_BaseEntity *sub_100b47b0(const char *name, const Vector *org, const QAngle *ang, C_BaseEntity *p, int a, int bone, float f0, float f1, float f2, float f3);
+
+void C_BasePlayer::sub_100a5fc0()
+{
+	if (m_StatListManager.sub_1015e580(entindex()))
+		sub_10171390();
+	if (((Obj_100a99d0 *)this)->sub_100a99d0())
+		sub_100a6450();
+	if (engine->Time(0) < m_fl1634)
+		return;
+	m_fl1634 = engine->Time(0) + 0.1f;
+	if (!((Obj_100a99d0 *)this)->sub_100a99d0())
+		return;
+
+	int n = m_StatListManager.Find(3)->sub_1015dbd0(10);
+	if (n > 0)
+	{
+		int target = n * 5 + 95;
+		if (m_unk162c < target)
+		{
+			m_unk162c++;
+			g_103ede78->sub_1004f0c0(10, 1.0f, m_unk162c, 2);
+		}
+		else if (m_unk162c > target)
+		{
+			m_unk162c--;
+			g_103ede78->sub_1004f0c0(10, 1.0f, m_unk162c, 2);
+		}
+	}
+	else
+	{
+		m_unk162c = 95;
+	}
+
+	static unsigned int s_mask = g_105e80d0.sub_1014a020(10);
+	if (s_mask & m_unk10b8)
+	{
+		int level = 1;
+		static unsigned int s_first = g_105e80d0.sub_10149f70(10, 0);
+		unsigned int mask = s_first;
+		for (int i = 0; i < 5; mask <<= 1, i++)
+		{
+			if (mask & m_unk10b8)
+			{
+				level = i;
+				break;
+			}
+		}
+		if (m_unk1630 < level * 5 + 95)
+		{
+			m_unk1630++;
+			g_103ede78->sub_1004f1b0(10, m_unk1630 * 0.008333334f, m_unk1630, 3);
+		}
+	}
+	else
+	{
+		if (m_unk1630 > 100)
+		{
+			m_unk1630--;
+			if (m_unk1630 == 100)
+				g_103ede78->sub_1004eff0(10, 0);
+			else
+				g_103ede78->sub_1004f1b0(10, m_unk1630 * 0.008333334f, m_unk1630, 3);
+		}
+		else
+		{
+			m_unk1630 = 95;
+		}
+	}
+
+	if (m_unk16b0 == m_unk14e4)
+		return;
+
+	if (m_unk14e4 > 0)
+	{
+		C_BaseEntity *pOld = sub_100a2a90(m_unk14e4);
+		if (pOld && *(C_BaseAnimating **)((char *)pOld + 0x3f0) && m_h14e8.Get())
+		{
+			((CUnknown100af100 *)m_h14e8.Get())->sub_100af100(this);
+			((CUnknown100aeed0 *)m_h14e8.Get())->sub_100aeed0();
+			m_h14e8.m_Index = 0xffffffff;
+		}
+	}
+	if (m_unk16b0 > 0)
+	{
+		C_BaseEntity *pEnt = sub_100a2a90(m_unk16b0);
+		if (pEnt)
+		{
+			C_BaseAnimating *pAnim = *(C_BaseAnimating **)((char *)pEnt + 0x3f0);
+			if (pAnim)
+			{
+				const char *name = ((PlrView14d8 *)this)->sub_100a6420();
+				if (name)
+				{
+					int bone = pAnim->LookupBone("Bip01 Head");
+					Vector org = *(const Vector *)pEnt->vfunc43();
+					QAngle ang = *(const QAngle *)pEnt->vfunc45();
+					C_BaseEntity *pNew = sub_100b47b0(name, &org, &ang, pEnt, 2, bone, 1.0f, 1.0f, 1.0f, 1.0f);
+					if (pNew)
+					{
+						((CUnknown100af150 *)pNew)->sub_100af150();
+						m_h14e8.m_Index = *pNew->vfunc1();
+						((CUnknown100af0d0 *)m_h14e8.Get())->sub_100af0d0(this);
+					}
+				}
+			}
+		}
+	}
+	m_unk14e4 = m_unk16b0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a63d0 size=0x49
 #include "CUnknown101e0f00.h"
 extern CUnknown101e0f00 g_105e80d0;

@@ -3994,6 +3994,7 @@
 0x100a5a40 func   ?sub_100a5a40@@YAHXZ sub_100a5a40
 0x100a5a50 func   ?sub_100a5a50@CUnknown100a5a50@@QAEHXZ CUnknown100a5a50::sub_100a5a50
 0x100a5b30 func   ?sub_100a5b30@CUnknown100a5b30@@QAEHH@Z CUnknown100a5b30::sub_100a5b30
+0x100a5fc0 func   ?sub_100a5fc0@C_BasePlayer@@QAEXXZ C_BasePlayer::sub_100a5fc0
 0x100a63d0 func   ?sub_100a63d0@PlrView14d8@@QAEHXZ PlrView14d8::sub_100a63d0
 0x100a6420 func   ?sub_100a6420@PlrView14d8@@QAEPBDXZ PlrView14d8::sub_100a6420
 0x100a6740 func   ?sub_100a6740@CUnknown100a6740@@QAEHH@Z CUnknown100a6740::sub_100a6740
