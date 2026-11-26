@@ -10,6 +10,8 @@ class CViewRender : public IViewRender
 {
 public:
     void sub_1019ac50(bool, int, int);
+    char sub_10198e70();
+    void sub_101997e0(struct VWInfo *, struct VRList *, bool);
     bool sub_1019f140(int arg);
     void sub_1019e530(int, int, float, float, int, int, int, int);
     void sub_1019af80(bool, int);

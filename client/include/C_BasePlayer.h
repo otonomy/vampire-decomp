@@ -14,6 +14,7 @@ class C_BasePlayer : public C_BaseVCombatCharacter
 public:
 	static C_BasePlayer *GetLocalPlayer();
 	bool sub_100a5910();
+	float sub_100aa6d0();	// GetFOVDistanceAdjustFactor-like
 	virtual ~C_BasePlayer();
 	virtual void OnDataChanged(int updateType);
 	virtual void OnPreDataChanged(int updateType);
