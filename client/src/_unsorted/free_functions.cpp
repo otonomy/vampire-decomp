@@ -55969,6 +55969,105 @@ char CUnknown100b7bb0::sub_100b7bb0(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b7bf0 size=0x26f
+#include "C_BreakableSurface.h"
+#include "Vector.h"
+#include "QAngle.h"
+#include "engineclient.h"
+
+class IBrushSurface;
+struct IMesh;
+
+void sub_10109340(const Vector &forward, QAngle &angles);	// VectorAngles
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);	// AngleVectors
+
+struct EdgeRenderInfo_b7bf0
+{
+	char m_nWidth;	// 0
+	char m_nHeight;	// 1
+	char m_nSide;	// 2
+	char m_nEdgeType;	// 3
+	char m_nStyle;	// 4
+	char m_pad5;
+	unsigned short m_Previous;	// 6
+	unsigned short m_Next;	// 8
+};
+
+class MeshBuilder_b7bf0
+{
+public:
+	int m_unk00[0x80 / 4];
+	void *m_pMesh;	// 0x80
+	bool m_bModify;	// 0x84
+	int m_nMaxVertexCount;	// 0x88
+	int m_nMaxIndexCount;	// 0x8c
+	int m_nVertexCount;	// 0x90
+	int m_nIndexCount;	// 0x94
+	int m_nCurrentVertex;	// 0x98
+	int m_nCurrentIndex;	// 0x9c
+	int m_Type;	// 0xa0
+	bool m_bGenerateIndices;	// 0xa4
+	float *m_pCurrPosition;	// 0xa8
+	float *m_pCurrNormal;	// 0xac
+	float *m_pCurrTexCoord[4];	// 0xb0
+	unsigned char *m_pCurrColor;	// 0xc0
+
+	MeshBuilder_b7bf0()
+	{
+		m_pMesh = 0;
+		m_nMaxVertexCount = 0;
+		m_nMaxIndexCount = 0;
+		m_nVertexCount = 0;
+		m_nIndexCount = 0;
+		m_nCurrentVertex = 0;
+		m_nCurrentIndex = 0;
+		m_bGenerateIndices = false;
+	}
+};
+
+struct RenderList_b7bf0
+{
+	EdgeRenderInfo_b7bf0 *m_pMemory;
+	EdgeRenderInfo_b7bf0 &operator[](unsigned short i) { return m_pMemory[i]; }
+	unsigned short Next(unsigned short i) { return m_pMemory[i].m_Next; }
+};
+
+#define m_RenderList (*(RenderList_b7bf0 *)&m_pArray)
+
+void C_BreakableSurface::sub_100b7bf0(IBrushSurface *pBrushSurface)
+{
+	QAngle vAngles;
+	{
+		Vector vNormal = m_vNormal.sub_10004d80(-1.0f);
+		sub_10109340(vNormal, vAngles);
+	}
+	Vector vWidthStep, vHeightStep;
+	sub_101090a0(vAngles, 0, &vWidthStep, &vHeightStep);
+	vWidthStep *= m_flPanelWidth;
+	vHeightStep *= m_flPanelHeight;
+
+	MeshBuilder_b7bf0 meshBuilder;
+	IMesh *pMesh = 0;
+	int nCurStyle = -1;
+	int nCurEdgeType = -1;
+	for (unsigned short i = m_n454; i != 0xffff; i = m_RenderList.Next(i))
+	{
+		if (nCurStyle != m_RenderList[i].m_nStyle || nCurEdgeType != m_RenderList[i].m_nEdgeType)
+		{
+			nCurEdgeType = m_RenderList[i].m_nEdgeType;
+			nCurStyle = m_RenderList[i].m_nStyle;
+			m_pCurrentDetailTexture = m_EdgeTextures[nCurEdgeType * 3 + nCurStyle].m_pTexture;
+			materials->vfunc65(0);
+			materials->Bind(m_pMaterialEdge, (char *)this + 4);
+			pMesh = (IMesh *)materials->GetDynamicMesh(true, 0, 0, 0);
+		}
+
+		Vector vRenderPos = m_vCorner + (m_RenderList[i].m_nWidth * vWidthStep) + (m_RenderList[i].m_nHeight * vHeightStep);
+		sub_100b8f30(pBrushSurface, pMesh, (CMeshBuilder *)&meshBuilder, vRenderPos, vWidthStep, vHeightStep, m_RenderList[i].m_nSide);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b80f0 size=0x3d
 #include "C_BreakableSurface.h"
 bool C_BreakableSurface::sub_100b80f0(int x, int y)
