@@ -13,5 +13,6 @@ public:
 	virtual ~CHudChat();
 	virtual void vfunc13(int, int);
 	void sub_100f24b0(int, int, int);
+	void sub_100f2670(const char *name);
 	static void operator delete(void *pMem) { CHudElement::operator delete(pMem); }
 };
