@@ -203,7 +203,7 @@ class IEngineTrace
 {
 public:
 	virtual int GetPointContents(const Vector &, void *);	// slot 0
-	virtual void vfunc1();
+	virtual int vfunc1(const void *pCollide, const Vector &pos);	// slot 1: GetPointContents_Collideable (C_Func_Dust::sub_100babb0)
 	virtual void vfunc2(Ray_t *, unsigned int, const void *, CGameTrace *);	// slot 2
 	virtual void vfunc3();
 	virtual void vfunc4(int, int, const void *, int);	// slot 4; seen as Slot4 1; shapes differ
