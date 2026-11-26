@@ -77041,6 +77041,67 @@ void sub_100f9e40(unsigned short *dest, const unsigned char *src, int width, con
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fa090 size=0x244
+struct BGRA8888_100fa090
+{
+	unsigned char b, g, r, a;
+};
+struct BGRA4444_100fa090
+{
+	unsigned short b : 4;
+	unsigned short g : 4;
+	unsigned short r : 4;
+	unsigned short a : 4;
+	inline BGRA4444_100fa090 &operator=(const BGRA8888_100fa090 &in)
+	{
+		r = in.r >> 4;
+		g = in.g >> 4;
+		b = in.b >> 4;
+		a = in.a >> 4;
+		return *this;
+	}
+};
+struct DXTColBlock_100fa090
+{
+	unsigned short col0;
+	unsigned short col1;
+	unsigned char row[4];
+};
+
+// TARGET: sub_100fa090
+void sub_100fa090(BGRA4444_100fa090 *pOutBuffer, DXTColBlock_100fa090 *pColorBlock, int width,
+	BGRA8888_100fa090 *col0, BGRA8888_100fa090 *col1, BGRA8888_100fa090 *col2, BGRA8888_100fa090 *col3)
+{
+	unsigned int masks[] = { 3, 12, 3 << 4, 3 << 6 };
+	unsigned int shift[] = { 0, 2, 4, 6 };
+
+	for (int r = 0; r < 4; r++, pOutBuffer += width - 4)
+	{
+		for (int n = 0; n < 4; n++)
+		{
+			unsigned int bits = pColorBlock->row[r] & masks[n];
+			bits >>= shift[n];
+			switch (bits)
+			{
+			case 0:
+				*pOutBuffer = *col0;
+				break;
+			case 1:
+				*pOutBuffer = *col1;
+				break;
+			case 2:
+				*pOutBuffer = *col2;
+				break;
+			case 3:
+				*pOutBuffer = *col3;
+				break;
+			}
+			pOutBuffer++;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fa2e0 size=0x2bc
 typedef unsigned char BYTE;
 typedef unsigned long DWORD;
