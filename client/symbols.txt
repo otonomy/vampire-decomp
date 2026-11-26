@@ -2633,6 +2633,7 @@
 0x1004ec90 func   ?sub_1004ec90@S_1004ec90@@QAEHH@Z S_1004ec90::sub_1004ec90
 0x1004ecb0 func   ?sub_1004ecb0@CDiscipline@@QAEHH@Z CDiscipline::sub_1004ecb0
 0x1004ed00 func   ?sub_1004ed00@CDiscipline@@QAEXH@Z CDiscipline::sub_1004ed00
+0x1004ed80 func   ?sub_1004ed80@CHudStatSound@@QAEXH_N0@Z CHudStatSound::sub_1004ed80
 0x1004eff0 func   ?sub_1004eff0@@YGXH_N@Z sub_1004eff0
 0x1004f0c0 func   ?sub_1004f0c0@CHudStatSound@@QAEXHMHH@Z CHudStatSound::sub_1004f0c0
 0x1004f270 func   ?vfunc114@CDiscipline@@UAEXHH@Z CDiscipline::vfunc114

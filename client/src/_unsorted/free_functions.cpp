@@ -20646,6 +20646,94 @@ void CDiscipline::sub_1004ed00(int id)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004ed80 size=0x268
+#define PCD_LPF_CTOR
+#include "C_RecipientFilter.h"
+#include "CVStatInfoList_t.h"
+
+extern CVStatInfoList_t g_105f8c60;
+
+struct IEngineSound_1004ed80
+{
+	virtual void v0();
+	virtual void v1();
+	virtual void v2();
+	virtual void EmitSound(IRecipientFilter &filter, int iEntIndex, int iChannel, const char *pSample, float flVolume, int iSoundLevel, int iFlags, int iPitch, const void *pOrigin, const void *pDirection, bool bUpdatePositions, float soundtime);
+	virtual void v4();
+	virtual void v5();
+	virtual void v6();
+	virtual void StopSound(int iEntIndex, int iChannel, const char *pSample);
+};
+
+extern IEngineSound_1004ed80 *g_104a5818;
+
+struct SoundStr_1004ed80
+{
+	const char *psz;
+	const char *ToCStr() const { return psz ? psz : ""; }
+};
+
+struct StatSoundEntry_1004ed80
+{
+	int id;
+	int unk;
+	bool enabled;
+};
+
+class CHudStatSound
+{
+public:
+	char pad[0x1ac];
+	StatSoundEntry_1004ed80 entries[6];
+
+	int sub_1004ec90(int stat);
+	void sub_1004ed80(int stat, bool bActivate, bool bAlt);
+};
+
+#define STATSND(stat, i) (*(SoundStr_1004ed80 *)&g_105f8c60.sub_1015cfe0(stat)->m_apszSound[i])
+
+// TARGET: CHudStatSound::sub_1004ed80
+void CHudStatSound::sub_1004ed80(int stat, bool bActivate, bool bAlt)
+{
+	int idx = sub_1004ec90(stat);
+	if (idx == -1)
+		return;
+	if (bActivate)
+	{
+		if (entries[idx].enabled)
+			return;
+		const char *sound = (!bAlt ? STATSND(stat, 0) : STATSND(stat, 3)).ToCStr();
+		if (sound[0])
+		{
+			CLocalPlayerFilter filter;
+			g_104a5818->EmitSound(filter, -1, stat * 2 + 0x87, sound, 1.0f, 0, 0x800, 100, 0, 0, true, 0);
+		}
+		sound = STATSND(stat, 1).ToCStr();
+		if (sound[0])
+		{
+			CLocalPlayerFilter filter;
+			g_104a5818->EmitSound(filter, -1, stat * 2 + 0x88, sound, 0.2f, 0, 0x900, 100, 0, 0, true, 0);
+		}
+		entries[idx].enabled = true;
+	}
+	else
+	{
+		if (!entries[idx].enabled)
+			return;
+		const char *sound = STATSND(stat, 1).ToCStr();
+		if (sound[0])
+			g_104a5818->StopSound(-1, stat * 2 + 0x88, sound);
+		sound = (!bAlt ? STATSND(stat, 2) : STATSND(stat, 3)).ToCStr();
+		if (sound[0])
+		{
+			CLocalPlayerFilter filter;
+			g_104a5818->EmitSound(filter, -1, stat * 2 + 0x87, sound, 1.0f, 0, 0x800, 100, 0, 0, true, 0);
+		}
+		entries[idx].enabled = false;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004eff0 size=0xc7
 #define PCD_LPF_CTOR
 #include "C_RecipientFilter.h"
