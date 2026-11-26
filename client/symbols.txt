@@ -6194,6 +6194,7 @@
 0x1011c520 func   ?vfunc102@C_BaseEntity@@UAEHXZ C_BaseEntity::vfunc102
 0x1011c5c0 func   ?sub_1011c5c0@C_BaseEntity@@QAE_NXZ C_BaseEntity::sub_1011c5c0
 0x1011c7f0 func   ?sub_1011c7f0@C_BaseEntity@@QAEXXZ C_BaseEntity::sub_1011c7f0
+0x1011cbd0 func   ?sub_1011cbd0@C_BaseEntity@@QAEXAAUCGameTrace@@AAVVector@@@Z C_BaseEntity::sub_1011cbd0
 0x1011d190 func   ?sub_1011d190@C_BaseEntity@@QAEXM@Z C_BaseEntity::sub_1011d190
 0x1011d590 func   ?sub_1011d590@@YAXXZ sub_1011d590
 0x1011d5a0 func   ?sub_1011d5a0@@YAXXZ sub_1011d5a0

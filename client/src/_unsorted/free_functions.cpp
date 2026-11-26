@@ -75136,6 +75136,124 @@ void C_BaseEntity::sub_1011c7f0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011cbd0 size=0x36b
+#include "C_BaseEntity.h"
+#include "CGameTrace.h"
+#include "ConVar.h"
+#include "CGlobalVarsBase.h"
+#include "Vector.h"
+#include "QAngle.h"
+
+struct FlyTraceEntry
+{
+	const char *name;
+	const void *file;
+	const void *line;
+};
+extern int *g_101e3128;
+extern FlyTraceEntry *g_101e3124;
+extern char g_102de300[];
+
+extern Vector g_104d4970;
+extern QAngle g_104d5190;
+void sub_10108fd0(const float *start, float scale, const float *direction, float *dest);
+
+struct CFlyPlaneView
+{
+	Vector normal;
+	float dist;
+	unsigned char type;
+	unsigned char signbits;
+	unsigned char pad[2];
+};
+
+struct CFlySurfaceView
+{
+	const char *name;
+	short surfaceProps;
+	unsigned short flags;
+};
+
+struct CFlyTraceView
+{
+	Vector startpos;
+	Vector endpos;
+	CFlyPlaneView plane;
+	float fraction;
+	int contents;
+	unsigned short dispFlags;
+	bool allsolid;
+	bool startsolid;
+	float fractionleftsolid;
+	CFlySurfaceView surface;
+	int hitgroup;
+	short physicsbone;
+	C_BaseEntity *m_pEnt;
+	int hitbox;
+};
+
+struct CFlyEntView
+{
+	char m_pad0000[0x9c];
+	float m_flElasticity;	// 0x9c
+	char m_pad00a0[0xa8 - 0xa0];
+	Vector m_vecVelocity;	// 0xa8
+	char m_pad00b4[0xc0 - 0xb4];
+	QAngle m_vecAngVelocity;	// 0xc0
+	char m_pad00cc[0x154 - 0xcc];
+	Vector m_vecBaseVelocity;	// 0x154
+};
+
+#define FLY ((CFlyEntView *)this)
+
+void C_BaseEntity::sub_1011cbd0(CGameTrace &trace, Vector &move)
+{
+	const char *ename = this ? "clientside entity" : "NULL CLIENT ENTITY";
+	g_101e3124[*g_101e3128].name = "CBaseEntity::PerformFlyCollisionResolution";
+	g_101e3124[*g_101e3128].file = ename;
+	g_101e3124[*g_101e3128].line = g_102de300;
+	(*g_101e3128)++;
+
+	int moveCollide = GetSolidFlags();
+	if (moveCollide >= 0 && moveCollide <= 1) {
+		float backoff;
+		if (GetSolidFlags() == 1)
+			backoff = 2.0 - FLY->m_flElasticity;
+		else
+			backoff = 1.0f;
+		sub_1011cac0(FLY->m_vecVelocity, *(Vector *)trace.m_planeNormal, FLY->m_vecVelocity, backoff);
+	}
+
+	if (trace.m_planeNormal[2] > 0.7) {
+		VectorAdd(FLY->m_vecVelocity, FLY->m_vecBaseVelocity, move);
+		float speed = DotProduct(move, move);
+		C_BaseEntity *pEntity = (C_BaseEntity *)trace.m_pEnt;
+		if (move.z < (g_104dfce4->vfunc1() ? 0.0f : g_104dfce4->m_fValue) * gpGlobals->frametime) {
+			if (!(pEntity->sub_100a2450() & 0x8002080)) {
+				sub_100a23f0(1);
+				vfunc103((int)pEntity);
+			}
+			FLY->m_vecVelocity.z = 0;
+		}
+		if (!(speed < 900.0f) && GetSolidFlags() == 1) {
+			VectorScale(FLY->m_vecVelocity, (1.0 - trace.m_fraction) * gpGlobals->frametime * 0.9, move);
+			sub_10108fd0((float *)&move, (1.0 - trace.m_fraction) * gpGlobals->frametime * 0.9, (float *)&FLY->m_vecBaseVelocity, (float *)&move);
+			*(CFlyTraceView *)&trace = *(const CFlyTraceView *)&vfunc105(move);
+		} else {
+			if (!(pEntity->sub_100a2450() & 0x8002080)) {
+				sub_100a23f0(1);
+				vfunc103((int)pEntity);
+			}
+			if (GetSolidFlags() != 2) {
+				FLY->m_vecVelocity = g_104d4970;
+				FLY->m_vecAngVelocity = g_104d5190;
+			}
+		}
+	}
+	(*g_101e3128)--;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011d190 size=0xba
 #include "C_BaseEntity.h"
 #include "ScopeTrace.h"
