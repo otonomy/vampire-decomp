@@ -20,5 +20,6 @@ public:
 	const char *sub_10174470(int nStat);
 	const char *sub_10186a90(int nStat);
 	const char *sub_10186620(int nStat);
+	void sub_1015ee00();	// dumps the record (StatOwner2::sub_1015f390)
 	int sub_1015ed00(const char *pszName);	// the value this record holds for the stat named pszName (stub 0x1001197d)
 };
