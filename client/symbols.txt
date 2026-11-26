@@ -709,6 +709,7 @@
 0x1000fd30 func   ?_C_WeaponUnarmed_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponUnarmed_CreateObject
 0x1000fdf0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponUnarmed@@@Z ClientClassInit
 0x1000fe80 func   ?vfunc17@C_WeaponWallet@@UAEHXZ C_WeaponWallet::vfunc17
+0x1000fec0 func   ?sub_1000fec0@@YAHXZ sub_1000fec0
 0x1000ff10 func   ??_GC_WeaponWallet@@UAEPAXI@Z ??_GC_WeaponWallet@@UAEPAXI@Z
 0x1000ff30 func   ?vfunc16@C_WeaponWallet@@UAEHXZ C_WeaponWallet::vfunc16
 0x1000ff40 func   ?vfunc15@C_WeaponWallet@@UAEHXZ C_WeaponWallet::vfunc15
