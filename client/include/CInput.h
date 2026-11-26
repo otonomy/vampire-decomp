@@ -7,6 +7,7 @@ class CInput : public IInput
 {
 public:
     void sub_10106880(int);
+    void sub_10106560(float *, float *, int, int);
     void sub_10106860(int *, int *);
     void sub_10101df0();
     void sub_10102800(struct Vector *);
