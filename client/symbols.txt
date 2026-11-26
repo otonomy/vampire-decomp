@@ -5050,6 +5050,7 @@
 0x100dc610 func   ?sub_100dc610@@YAXPAUCObjY@@PBVVector@@111HH@Z sub_100dc610
 0x100dc730 func   ?sub_100dc730@@YAXPBMPAM@Z sub_100dc730
 0x100dc800 func   ?sub_100dc800@@YAHPAVVector@@0M0M0AAUSegT2@@@Z sub_100dc800
+0x100dc9b0 func   ?sub_100dc9b0@@YAXNNVVector@@00000HAAN1@Z sub_100dc9b0
 0x100dd3a0 func   ?sub_100dd3a0@@YAXABVVector@@000ABUS2D@@AAV1@@Z sub_100dd3a0
 0x100dd460 func   ?sub_100dd460@@YAXABUVector2D@@0000AAU1@@Z sub_100dd460
 0x100dd4f0 func   ?sub_100dd4f0@@YAXABVVector@@00HHPAV1@@Z sub_100dd4f0
