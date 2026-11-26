@@ -8258,6 +8258,7 @@
 0x1017f1d0 func   ?sub_1017f1d0@ScoreV@@QAEXXZ ScoreV::sub_1017f1d0
 0x1017f290 func   ?sub_1017f290@CUnknown1017f290@@QAEHXZ CUnknown1017f290::sub_1017f290
 0x1017f610 func   ?sub_1017f610@ZPanel@@QAEXXZ ZPanel::sub_1017f610
+0x1017f640 func   ?sub_1017f640@CharEditStatsPanel@@QAEXXZ CharEditStatsPanel::sub_1017f640
 0x1017f850 func   ?sub_1017f850@CUnknown1017f850@@QAEPAXXZ CUnknown1017f850::sub_1017f850
 0x1017f870 func   ?sub_1017f870@CStatPageX@@QAEHH@Z CStatPageX::sub_1017f870
 0x101805e0 func   ?sub_101805e0@CPanelCleanup101805e0@@QAEXXZ CPanelCleanup101805e0::sub_101805e0

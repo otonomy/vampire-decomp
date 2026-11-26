@@ -110667,6 +110667,45 @@ void ZPanel::sub_1017f610()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017f640 size=0x209
+#include "CharEditStatsPanel.h"
+#define P(o) (*(vgui2::Panel **)((char *)this + (o)))
+struct CPanelCleanup101805e0 { void sub_101805e0(); };
+void CharEditStatsPanel::sub_1017f640()
+{
+	delete P(0x2d8); P(0x2d8) = 0;
+	delete P(0x2dc); P(0x2dc) = 0;
+	delete P(0x2d0); P(0x2d0) = 0;
+	delete P(0x2d4); P(0x2d4) = 0;
+	delete P(0x2bc); P(0x2bc) = 0;
+	delete P(0x2c0); P(0x2c0) = 0;
+	delete P(0x2c4); P(0x2c4) = 0;
+	delete P(0x2c8); P(0x2c8) = 0;
+	delete P(0x2a8); P(0x2a8) = 0;
+	delete P(0x29c); P(0x29c) = 0;
+	delete P(0x2a0); P(0x2a0) = 0;
+	delete P(0x2a4); P(0x2a4) = 0;
+	delete P(0x2ac); P(0x2ac) = 0;
+	delete P(0x2b0); P(0x2b0) = 0;
+	delete P(0x2b4); P(0x2b4) = 0;
+	delete P(0x2b8); P(0x2b8) = 0;
+	for (int i = 0; i < 16; i++)
+	{
+		delete P(0x20c + i * 4);
+		P(0x20c + i * 4) = 0;
+	}
+	delete P(0x204); P(0x204) = 0;
+	delete P(0x208); P(0x208) = 0;
+	((CPanelCleanup101805e0 *)((char *)this + 0xc0))->sub_101805e0();
+	((CPanelCleanup101805e0 *)((char *)this + 0x10c))->sub_101805e0();
+	((CPanelCleanup101805e0 *)((char *)this + 0x158))->sub_101805e0();
+	((CPanelCleanup101805e0 *)((char *)this + 0x1a4))->sub_101805e0();
+	*(int *)((char *)this + 0x1f0) = 0;
+	*(int *)((char *)this + 0x1fc) = 0;
+	*(int *)((char *)this + 0x200) = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017f850 size=0xb
 struct CUnknown1017f850 { void * sub_1017f850(); };
 void * CUnknown1017f850::sub_1017f850()
