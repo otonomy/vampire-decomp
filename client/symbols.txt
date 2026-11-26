@@ -773,6 +773,7 @@
 0x10011130 func   ?_C_ResearchBook_MG_FIN_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ResearchBook_MG_FIN_CreateObject
 0x100111f0 func   ?ClientClassInit@@YAHPAUignored@DT_ResearchBook_MG_FIN@@@Z ClientClassInit
 0x10011280 func   ?vfunc17@C_ResearchBook_HG_FIRE@@UAEHXZ C_ResearchBook_HG_FIRE::vfunc17
+0x100112c0 func   ?sub_100112c0@@YAHXZ sub_100112c0
 0x10011310 func   ??_GC_ResearchBook_HG_FIRE@@UAEPAXI@Z ??_GC_ResearchBook_HG_FIRE@@UAEPAXI@Z
 0x10011330 func   ?vfunc16@C_ResearchBook_HG_FIRE@@UAEHXZ C_ResearchBook_HG_FIRE::vfunc16
 0x10011340 func   ?vfunc15@C_ResearchBook_HG_FIRE@@UAEHXZ C_ResearchBook_HG_FIRE::vfunc15
