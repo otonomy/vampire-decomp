@@ -15438,6 +15438,32 @@ template <> int ClientClassInit<DT_ItemKMalkavianRefrigeratorKey::ignored>(DT_It
 }
 // END FUNCTION
 
+// FUNCTION: 0x10024640 size=0x45
+namespace lifted {
+extern char g_1021ee84;
+extern char g_1021ee98;
+extern char g_1021eed4;
+extern char g_1021ef0c;
+extern char g_1021ef64;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10024640()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_1021ef64;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_1021ef0c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_1021eed4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_1021ee98;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_1021ee84;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100246d0 size=0x6
 namespace lifted {
 extern char g_102dffac;
