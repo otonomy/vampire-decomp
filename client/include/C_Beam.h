@@ -30,11 +30,13 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the slots C_Beam adds to its base's vtable: 120-121, vfuncK at slot K
 	virtual void vfunc120(const char *szModelName);
 	virtual int vfunc121();
-	int m_unk0014[(0x424 - 0x14) / 4];
-	int m_nBeamType;
-	CBaseHandle m_hStart;
-	int m_unk042c[(0x450 - 0x42c) / 4];
-	int m_nAttach;
+	int m_unk0014[(0x41c - 0x14) / 4];
+	int m_nNumBeamEnts;	// 0x41c
+	int m_unk0420;
+	int m_nBeamType;	// 0x424: the type in the low 4 bits
+	CBaseHandle m_hStart;	// 0x428: m_hAttachEntity[0] of the SDK's CBaseHandle m_hAttachEntity[10]
+	int m_unk042c[(0x450 - 0x42c) / 4];	// m_hAttachEntity[1..9]
+	int m_nAttach;	// 0x450: m_nAttachIndex[0] of int m_nAttachIndex[10]
 	int m_unk0454[(0x4b8 - 0x454) / 4];
 	const Vector &sub_10080650();
 };
