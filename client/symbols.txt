@@ -5540,6 +5540,7 @@
 0x100fcca0 func   ?sub_100fcca0@@YGXHH@Z sub_100fcca0
 0x100fccf0 func   ?sub_100fccf0@CHelper_100fccf0@@QAEXABVVector@@ABVQAngle@@@Z CHelper_100fccf0::sub_100fccf0
 0x100fdb30 func   ?sub_100fdb30@@YAMM@Z sub_100fdb30
+0x100fdb50 func   ?sub_100fdb50@@YAMPBVVector@@0MPAUCGameTrace@@@Z sub_100fdb50
 0x100ff030 func   ?sub_100ff030@@YA?AVVector@@ABV1@M@Z sub_100ff030
 0x100ff0a0 func   ?sub_100ff0a0@CInput@@QAEDPAUCUnkPlayer@@@Z CInput::sub_100ff0a0
 0x100ff7c0 func   ?vfunc34@CInput@@UAEHXZ CInput::vfunc34

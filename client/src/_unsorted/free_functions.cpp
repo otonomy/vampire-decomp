@@ -63503,6 +63503,65 @@ float sub_100fdb30(float value)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fdb50 size=0x221
+#include "Vector.h"
+#include "CGameTrace.h"
+#include "Ray_t.h"
+#include "ConVar.h"
+#include "ScopeTrace.h"
+#include "CUnknown1070b254.h"
+
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+#define S1(a) virtual void a();
+#define S5(a) S1(a##0) S1(a##1) S1(a##2) S1(a##3) S1(a##4)
+#define S10(a) S5(a##A) S5(a##B)
+struct EngPad { S10(a) S5(b) S1(c0) S1(c1) S1(c2) S1(c3) };
+struct EngC : EngPad { virtual int PointContentsV(int a, const Vector *p); };
+
+extern ConVar *g_104d17b4;
+extern ConVar *g_104d220c;
+extern ConVar *g_103edd9c;
+extern EngC *g_104a57d4;
+extern char g_104d2644;
+void sub_100da050(const Vector *, const Vector &, CGameTrace *);
+void sub_101659b0(CGameTrace *, float *, int, int, int, int, float);
+
+inline void TraceHullInl(const Vector &start, const Vector &end, const Vector &mins, const Vector &maxs, unsigned int mask, CGameTrace *tr)
+{
+	ScopeTrace scope("UTIL_TraceHull", g_102de300);
+	Ray_t ray;
+	ray.sub_100e91e0(start, end, &mins.x, &maxs.x, 0, 0);
+	g_104a582c->vfunc4(&ray, mask, (CTraceFilterNoCharacterCollide *)&g_104d2644, tr);
+	if (!g_103edd9c->vfunc1() && g_103edd9c->m_nValue)
+		sub_101659b0(tr, tr->m_endpos, 0xff, 0xff, 0, 1, -1.0f);
+}
+
+// TARGET: sub_100fdb50
+float sub_100fdb50(const Vector *start, const Vector *dir, float dist, CGameTrace *tr)
+{
+	if (g_104d17b4->vfunc1() || !g_104d17b4->m_nValue)
+	{
+		memset(tr, 0, sizeof(CGameTrace));
+		sub_100da050(start, *dir * dist, tr);
+		return dist;
+	}
+	float f;
+	if (g_104d220c->vfunc1())
+		f = 0.0f;
+	else
+		f = g_104d220c->m_fValue;
+	Vector mins(-f, -f, -f);
+	Vector maxs(f, f, f);
+	unsigned int mask = 0x601400b;
+	if (!(g_104a57d4->PointContentsV(0, start) & 0x4030))
+		mask = 0x601403b;
+	TraceHullInl(*start, *start + *dir * dist, mins, maxs, mask, tr);
+	return dist * tr->m_fraction;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ff030 size=0x68
 #include "Vector.h"
 
