@@ -2843,6 +2843,7 @@
 0x1004d820 func   ?vfunc107@CBossHealthBar@@UAE_NXZ CBossHealthBar::vfunc107
 0x1004d850 func   ?vfunc112@CBossHealthBar@@UAEXXZ CBossHealthBar::vfunc112
 0x1004d880 func   ?vfunc113@CBossHealthBar@@UAEXXZ CBossHealthBar::vfunc113
+0x1004d890 func   ?vfunc98@CBossHealthBar@@UAEXXZ CBossHealthBar::vfunc98
 0x1004dbd0 func   ?vfunc97@CBossHealthBar@@UAEXXZ CBossHealthBar::vfunc97
 0x1004dbe0 func   ?sub_1004dbe0@CUnkFade@@QAEX_N@Z CUnkFade::sub_1004dbe0
 0x1004dc30 func   ?sub_1004dc30@@YAHXZ sub_1004dc30
