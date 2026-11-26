@@ -7773,6 +7773,7 @@
 0x1015ed50 func   ?sub_1015ed50@CUnknown10202ba0@@QAE_NPAH@Z CUnknown10202ba0::sub_1015ed50
 0x1015ed90 func   ?sub_1015ed90@CUnknown10202b10@@QAE_NHH@Z CUnknown10202b10::sub_1015ed90
 0x1015ee00 func   ?sub_1015ee00@CUnknown10202ba0@@QAEXXZ CUnknown10202ba0::sub_1015ee00
+0x1015ee90 func   ?sub_1015ee90@@YAHXZ sub_1015ee90
 0x1015eea0 func   ?sub_1015eea0@CUnknown10202c80@@QAEXXZ CUnknown10202c80::sub_1015eea0
 0x1015ef10 func   ?sub_1015ef10@CUnknown10202d10@@QAEPAVCUnknown102029c0@@XZ CUnknown10202d10::sub_1015ef10
 0x1015f010 func   ?sub_1015f010@CUnknown10202d10@@QAEHHPBDHD@Z CUnknown10202d10::sub_1015f010
