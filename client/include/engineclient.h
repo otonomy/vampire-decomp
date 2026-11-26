@@ -66,7 +66,7 @@ public:
 	virtual void vfunc40();
 	virtual float vfunc41(int);	// slot 41; seen as GetFrameTime 1, Time 1
 	virtual float vfunc42();	// slot 42
-	virtual void vfunc43();
+	virtual void vfunc43(float);	// slot 43: C_BasePlayer::OnDataChanged hands it 1 / +0x1078 (0.2f when dead)
 	virtual int vfunc44();	// slot 44; seen as FrameCount 1
 	virtual void vfunc45();
 	virtual int vfunc46();	// slot 46; seen as GetX 1; shapes differ
@@ -300,7 +300,7 @@ public:
 	virtual int vfunc38();	// slot 38
 	virtual int vfunc39();	// slot 39
 	virtual void vfunc40();
-	virtual void vfunc41();
+	virtual unsigned char **vfunc41();	// slot 41: where the area bits pointer lives (C_BasePlayer::OnDataChanged stores the player's +0x166c)
 	virtual double vfunc42();	// slot 42
 	virtual void vfunc43(int, int);	// slot 43; shapes differ
 	virtual float vfunc44(int);	// slot 44

@@ -15,6 +15,7 @@ public:
 	static C_BasePlayer *GetLocalPlayer();
 	bool sub_100a5910();
 	virtual ~C_BasePlayer();
+	virtual void OnDataChanged(int updateType);
 	int sub_100a2450();
 	int sub_100a93e0();
 	int sub_100a96a0(int iStat);
