@@ -71909,6 +71909,92 @@ void S10032fb0::sub_1011a3c0(int num)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011a950 size=0x26c
+#include "Vector.h"
+#include "QAngle.h"
+#include "C_BaseEntity.h"
+#include "CGameTrace.h"
+
+struct EntityV_1007df80 { bool sub_1007df80(); };
+struct SCopy { SCopy &sub_1010f390(const SCopy &o); float m_f[4]; char m_c[4]; };
+struct TraceSurf { const char *name; int props; };
+struct TraceView
+{
+	Vector startpos;
+	Vector endpos;
+	SCopy plane;
+	float fraction;
+	int contents;
+	short dispFlags;
+	bool allsolid;
+	bool startsolid;
+	float fractionleftsolid;
+	TraceSurf surface;
+	int hitgroup;
+	short physicsbone;
+	void *ent;
+	int hitbox;
+
+	TraceView &operator=(const TraceView &src)
+	{
+		startpos = src.startpos;
+		endpos.sub_10039080(src.endpos);
+		plane.sub_1010f390(src.plane);
+		fraction = src.fraction;
+		contents = src.contents;
+		dispFlags = src.dispFlags;
+		allsolid = src.allsolid;
+		startsolid = src.startsolid;
+		fractionleftsolid = src.fractionleftsolid;
+		surface = src.surface;
+		hitgroup = src.hitgroup;
+		physicsbone = src.physicsbone;
+		ent = src.ent;
+		hitbox = src.hitbox;
+		return *this;
+	}
+};
+
+extern Vector g_104d4970;
+extern QAngle g_104d5190;
+
+#define ENT_VEL(e) (*(Vector *)((char *)(e) + 0xa8))
+#define ENT_AVEL(e) (*(QAngle *)((char *)(e) + 0xc0))
+
+void C_BaseEntity::sub_1011a950()
+{
+	sub_1011c5c0();
+	if (!sub_100a29b0(0))
+		return;
+
+	if (ENT_VEL(this).z > 0.0f || !vfunc104() || !((EntityV_1007df80 *)vfunc104())->sub_1007df80())
+		vfunc103(0);
+
+	Vector origin = GetAbsOrigin();
+	Vector vel = ENT_VEL(this);
+	QAngle angles = GetAbsAngles();
+	QAngle avel = ENT_AVEL(this);
+	vfunc96((int)&origin, (int)&vel, (int)&angles, (int)&avel);
+	ENT_VEL(this) = vel;
+	sub_100a2100(angles);
+	ENT_AVEL(this) = avel;
+
+	Vector move;
+	VectorSubtract(origin, GetAbsOrigin(), move);
+	TraceView trace;
+	trace = (const TraceView &)vfunc105(move);
+	sub_1011c7f0();
+
+	if (trace.allsolid)
+	{
+		ENT_VEL(this) = g_104d4970;
+		ENT_AVEL(this) = g_104d5190;
+		return;
+	}
+	sub_1011cf40();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011abc0 size=0x15
 namespace lifted {
 struct C100a29b0 { int sub_100a29b0(int); };
