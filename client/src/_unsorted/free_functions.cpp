@@ -65915,6 +65915,185 @@ char CUnknown100f86a0::sub_100f86a0(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f86c0 size=0x3d8
+#include <malloc.h>
+#include "imageformat.h"
+
+struct CUnknown100f8aa0
+{
+	void sub_100f8aa0(const BGRA8888_t &in);
+};
+
+struct DXTColBlock
+{
+	unsigned short col0;
+	unsigned short col1;
+	unsigned char row[4];
+};
+
+struct DXTAlphaBlock3BitLinear
+{
+	unsigned char alpha0;
+	unsigned char alpha1;
+	unsigned char stuff[6];
+};
+
+struct Color565
+{
+	unsigned short nBlue : 5;
+	unsigned short nGreen : 6;
+	unsigned short nRed : 5;
+};
+
+static inline void GetColorBlockColors(DXTColBlock *pBlock, BGRA8888_t *col_0, BGRA8888_t *col_1,
+	BGRA8888_t *col_2, BGRA8888_t *col_3, unsigned short &wrd)
+{
+	Color565 *pCol;
+
+	pCol = (Color565 *)&(pBlock->col0);
+	col_0->a = 0xff;
+	col_0->r = pCol->nRed;
+	col_0->r <<= 3;
+	col_0->g = pCol->nGreen;
+	col_0->g <<= 2;
+	col_0->b = pCol->nBlue;
+	col_0->b <<= 3;
+
+	pCol = (Color565 *)&(pBlock->col1);
+	col_1->a = 0xff;
+	col_1->r = pCol->nRed;
+	col_1->r <<= 3;
+	col_1->g = pCol->nGreen;
+	col_1->g <<= 2;
+	col_1->b = pCol->nBlue;
+	col_1->b <<= 3;
+
+	if (pBlock->col0 > pBlock->col1)
+	{
+		wrd = ((unsigned short)col_0->r * 2 + (unsigned short)col_1->r) / 3;
+		col_2->r = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->g * 2 + (unsigned short)col_1->g) / 3;
+		col_2->g = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->b * 2 + (unsigned short)col_1->b) / 3;
+		col_2->b = (unsigned char)wrd;
+		col_2->a = 0xff;
+
+		wrd = ((unsigned short)col_0->r + (unsigned short)col_1->r * 2) / 3;
+		col_3->r = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->g + (unsigned short)col_1->g * 2) / 3;
+		col_3->g = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->b + (unsigned short)col_1->b * 2) / 3;
+		col_3->b = (unsigned char)wrd;
+		col_3->a = 0xff;
+	}
+	else
+	{
+		wrd = ((unsigned short)col_0->r + (unsigned short)col_1->r) / 2;
+		col_2->r = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->g + (unsigned short)col_1->g) / 2;
+		col_2->g = (unsigned char)wrd;
+		wrd = ((unsigned short)col_0->b + (unsigned short)col_1->b) / 2;
+		col_2->b = (unsigned char)wrd;
+		col_2->a = 0xff;
+
+		col_3->r = 0x00;
+		col_3->g = 0xff;
+		col_3->b = 0xff;
+		col_3->a = 0x00;
+	}
+}
+
+static inline void DecodeColorBlock(BGR888_t *pImPos, DXTColBlock *pColorBlock, int width,
+	BGRA8888_t *col_0, BGRA8888_t *col_1, BGRA8888_t *col_2, BGRA8888_t *col_3)
+{
+	unsigned int masks[] = { 3, 12, 3 << 4, 3 << 6 };
+	int shift[] = { 0, 2, 4, 6 };
+	int r, n;
+	unsigned int bits;
+
+	for (r = 0; r < 4; r++, pImPos += width - 4)
+	{
+		for (n = 0; n < 4; n++)
+		{
+			bits = pColorBlock->row[r] & masks[n];
+			bits >>= shift[n];
+
+			switch (bits)
+			{
+			case 0:
+				pImPos->r = col_0->r; pImPos->g = col_0->g; pImPos->b = col_0->b;
+				pImPos++;
+				break;
+			case 1:
+				pImPos->r = col_1->r; pImPos->g = col_1->g; pImPos->b = col_1->b;
+				pImPos++;
+				break;
+			case 2:
+				pImPos->r = col_2->r; pImPos->g = col_2->g; pImPos->b = col_2->b;
+				pImPos++;
+				break;
+			case 3:
+				((CUnknown100f8aa0 *)pImPos)->sub_100f8aa0(*col_3);
+				pImPos++;
+				break;
+			default:
+				pImPos++;
+				break;
+			}
+		}
+	}
+}
+
+void sub_100f86c0(const unsigned char *src, unsigned char *dst, int width, int height)
+{
+	int realWidth = 0;
+	int realHeight = 0;
+	unsigned char *realDst = 0;
+
+	if (width < 4 || height < 4)
+	{
+		realWidth = width;
+		realHeight = height;
+		width = (width + 3) & ~3;
+		height = (height + 3) & ~3;
+		realDst = dst;
+		dst = (unsigned char *)_alloca(width * height * sizeof(BGR888_t));
+	}
+
+	int xblocks, yblocks;
+	xblocks = width >> 2;
+	yblocks = height >> 2;
+	BGR888_t *pDstScan = (BGR888_t *)dst;
+	DXTColBlock *pBlock;
+	BGRA8888_t col_0, col_1, col_2, col_3;
+	unsigned short wrd;
+	int i, j;
+
+	for (j = 0; j < yblocks; j++)
+	{
+		pBlock = (DXTColBlock *)((unsigned char *)src + j * xblocks * 16);
+		for (i = 0; i < xblocks; i++, pBlock++)
+		{
+			pBlock = (DXTColBlock *)((DXTAlphaBlock3BitLinear *)pBlock + 1);
+			GetColorBlockColors(pBlock, &col_0, &col_1, &col_2, &col_3, wrd);
+			BGR888_t *pImPos = pDstScan + j * 4 * width + i * 4;
+			DecodeColorBlock(pImPos, pBlock, width, &col_0, &col_1, &col_2, &col_3);
+		}
+	}
+
+	if (realDst)
+	{
+		for (int y = 0; y < realHeight; y++)
+		{
+			for (int x = 0; x < realWidth; x++)
+			{
+				((BGR888_t *)realDst)[x + y * realWidth] = ((BGR888_t *)dst)[x + y * width];
+			}
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100f8aa0 size=0x17
 struct CUnknown100f8aa0 { char sub_100f8aa0(int); };
 char CUnknown100f8aa0::sub_100f8aa0(int a0)

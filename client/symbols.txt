@@ -5621,6 +5621,7 @@
 0x100f82c0 func   ?sub_100f82c0@@YAXPBEPAEHH@Z sub_100f82c0
 0x100f86a0 func   ??4RGB888_t@@QAEAAU0@ABUBGRA8888_t@@@Z ??4RGB888_t@@QAEAAU0@ABUBGRA8888_t@@@Z
 0x100f86a0 func   ?sub_100f86a0@CUnknown100f86a0@@QAEDH@Z CUnknown100f86a0::sub_100f86a0
+0x100f86c0 func   ?sub_100f86c0@@YAXPBEPAEHH@Z sub_100f86c0
 0x100f8aa0 func   ?sub_100f8aa0@CUnknown100f8aa0@@QAEDH@Z CUnknown100f8aa0::sub_100f8aa0
 0x100f8ec0 func   ?sub_100f8ec0@Pix565@@QAEXPAE@Z Pix565::sub_100f8ec0
 0x100f9310 func   ?sub_100f9310@CColor16V@@QAEXPBE@Z CColor16V::sub_100f9310
