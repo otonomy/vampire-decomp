@@ -86084,6 +86084,117 @@ unsigned short CUtlRBTree16::sub_10139340()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10139460 size=0x381
+#include "CUtlRBTree16.h"
+
+static inline unsigned short LeftChild(CUtlRBTree16 *t, unsigned short i) { return t->sub_101397f0(i).m_Left; }
+static inline unsigned short RightChild(CUtlRBTree16 *t, unsigned short i) { return t->sub_101397f0(i).m_Right; }
+static inline unsigned short Parent(CUtlRBTree16 *t, unsigned short i) { return t->sub_101397f0(i).m_Parent; }
+static inline bool IsRed(CUtlRBTree16 *t, unsigned short i) { return t->sub_101397f0(i).m_Tag == 0; }
+static inline void SetParent(CUtlRBTree16 *t, unsigned short i, unsigned short v) { t->m_pElements[i].m_Links.m_Parent = v; }
+static inline void SetLeftChild(CUtlRBTree16 *t, unsigned short i, unsigned short v) { t->m_pElements[i].m_Links.m_Left = v; }
+static inline void SetRightChild(CUtlRBTree16 *t, unsigned short i, unsigned short v) { t->m_pElements[i].m_Links.m_Right = v; }
+static inline void SetColor(CUtlRBTree16 *t, unsigned short i, int v) { t->m_pElements[i].m_Links.m_Tag = (unsigned short)v; }
+
+// RotateLeft, inlined once by LinkToParent (out of line at 0x10139910)
+static inline void RotateLeft(CUtlRBTree16 *t, unsigned short elem)
+{
+	unsigned short rightchild = RightChild(t, elem);
+	SetRightChild(t, elem, LeftChild(t, rightchild));
+	if (LeftChild(t, rightchild) != CUtlRBTree16::InvalidIndex())
+		SetParent(t, LeftChild(t, rightchild), elem);
+	if (rightchild != CUtlRBTree16::InvalidIndex())
+		SetParent(t, rightchild, Parent(t, elem));
+	if (elem != t->m_Root)
+	{
+		if (t->sub_10139850(elem))
+			SetLeftChild(t, Parent(t, elem), rightchild);
+		else
+			SetRightChild(t, Parent(t, elem), rightchild);
+	}
+	else
+		t->m_Root = rightchild;
+	SetLeftChild(t, rightchild, elem);
+	if (elem != CUtlRBTree16::InvalidIndex())
+		SetParent(t, elem, rightchild);
+}
+
+void CUtlRBTree16::sub_10139460(unsigned short i, unsigned short parent, bool isLeft)
+{
+	Links_t &elem = m_pElements[i].m_Links;
+	elem.m_Parent = parent;
+	elem.m_Left = elem.m_Right = InvalidIndex();
+	elem.m_Tag = 0;
+
+	if (parent != InvalidIndex())
+	{
+		if (isLeft)
+			m_pElements[parent].m_Links.m_Left = i;
+		else
+			m_pElements[parent].m_Links.m_Right = i;
+	}
+	else
+		m_Root = i;
+
+	unsigned short x = i;
+	while (x != m_Root && IsRed(this, Parent(this, x)))
+	{
+		unsigned short p = Parent(this, x);
+		unsigned short gp = Parent(this, p);
+
+		if (LeftChild(this, Parent(this, p)) == p)
+		{
+			unsigned short uncle = RightChild(this, gp);
+			if (IsRed(this, uncle))
+			{
+				SetColor(this, p, 1);
+				SetColor(this, uncle, 1);
+				SetColor(this, gp, 0);
+				x = gp;
+			}
+			else
+			{
+				if (RightChild(this, Parent(this, x)) == x)
+				{
+					x = p;
+					RotateLeft(this, x);
+					p = Parent(this, x);
+					gp = Parent(this, p);
+				}
+				SetColor(this, p, 1);
+				SetColor(this, gp, 0);
+				sub_10139ad0(gp);
+			}
+		}
+		else
+		{
+			unsigned short uncle = LeftChild(this, gp);
+			if (IsRed(this, uncle))
+			{
+				SetColor(this, p, 1);
+				SetColor(this, uncle, 1);
+				SetColor(this, gp, 0);
+				x = gp;
+			}
+			else
+			{
+				if (LeftChild(this, Parent(this, x)) == x)
+				{
+					x = p;
+					sub_10139ad0(p);
+					p = Parent(this, x);
+					gp = Parent(this, p);
+				}
+				SetColor(this, p, 1);
+				SetColor(this, gp, 0);
+				sub_10139910(gp);
+			}
+		}
+	}
+	SetColor(this, m_Root, 1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101397f0 size=0x57
 #include "CUtlRBTree16.h"
 
