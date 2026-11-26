@@ -2828,6 +2828,7 @@
 0x1004c2b0 func   ?sub_1004c2b0@XKey@@QAEXD@Z XKey::sub_1004c2b0
 0x1004c500 func   ?sub_1004c500@@YAXXZ sub_1004c500
 0x1004c520 func   ?sub_1004c520@@YAXXZ sub_1004c520
+0x1004c550 func   ??0CBloodBar@@QAE@H@Z CBloodBar::CBloodBar
 0x1004c690 func   ??_GCBloodBar@@UAEPAXI@Z ??_GCBloodBar@@UAEPAXI@Z
 0x1004c6b0 func   ??1CBloodBar@@UAE@XZ CBloodBar::~CBloodBar
 0x1004c770 func   ?vfunc112@CBloodBar@@UAEXXZ CBloodBar::vfunc112
