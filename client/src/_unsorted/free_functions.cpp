@@ -109036,6 +109036,97 @@ void VCharWizardUI::sub_10175b30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10175b90 size=0x208
+#define F(T,o) (*(T*)((char*)this + o))
+struct Action_t { bool sub_10141ac0(); int sub_10141b70(); void sub_10141d60(int *); char m_pad[0x17]; char m_b17; char m_pad2[0x48 - 0x18]; };
+struct BigV_10142340 {
+	char m_pad0[4]; const char *m_pszName; char m_pad8[0x54 - 8];
+	Action_t m_acts[4];
+	BigV_10142340 *sub_10142340(int);
+};
+struct Slot_t { void *p; int m4, m8, mc, m10; };
+#define V10(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7(); virtual void n##8(); virtual void n##9();
+struct IObj { V10(a) V10(b) V10(c) V10(d) V10(e) V10(f) V10(g) V10(h) V10(i) V10(j) V10(k) V10(l) V10(m) virtual void n0(); virtual void n1(); virtual void n2(); virtual void n3(); virtual void n4(); virtual void n5(); virtual void n6(); virtual void n7(); virtual void n8(); virtual void n9(); virtual bool Check(); };
+struct PanelX {
+	char m_pad[0x360];
+	Slot_t m_slots[4];
+	void sub_10174d10();
+	void sub_10175050(const char *);
+	void sub_101750a0(BigV_10142340 *);
+	void sub_10175b90(int idx);
+};
+extern int g_105e77d8;
+extern BigV_10142340 **g_105e77dc;
+extern char g_105fb200;
+extern BigV_10142340 g_10680ae0;
+extern unsigned char g_10680ac4;
+extern "C" int atexit(void (__cdecl *)(void));
+void __cdecl sub_10144cb0(void);
+__declspec(dllimport) void DevMsg(int, const char *, ...);
+inline BigV_10142340 *GetNode(int i)
+{
+	if (i >= 0 && i < g_105e77d8)
+		return g_105e77dc[i];
+	if (!(g_10680ac4 & 1))
+	{
+		g_10680ac4 |= 1;
+		g_10680ae0.sub_10142340(-1);
+		atexit(sub_10144cb0);
+	}
+	return &g_10680ae0;
+}
+// TARGET: PanelX::sub_10175b90
+void PanelX::sub_10175b90(int idx)
+{
+	if (idx < 0 || idx >= 4)
+		return;
+	BigV_10142340 *pNode = GetNode(F(int, 0x3b0));
+	if (!pNode)
+	{
+		DevMsg(1, "ERROR: CharGenWizard: ProcessPopUp: Couldn't Match PopUp: %d!\n", F(int, 0x3b0));
+		sub_10174d10();
+		return;
+	}
+	if (g_105fb200)
+	{
+		F(int, 0x3b0)++;
+		if (F(int, 0x3b0) < g_105e77d8)
+		{
+			sub_101750a0(GetNode(F(int, 0x3b0)));
+			return;
+		}
+		F(int, 0x3b0) = 0;
+		g_105fb200 = 0;
+		sub_10174d10();
+		return;
+	}
+	Action_t *act = &pNode->m_acts[idx];
+	if (act->sub_10141ac0())
+	{
+		int str = act->sub_10141b70();
+		act->sub_10141d60(&str);
+		for (int i = 0; i < 4; i++)
+		{
+			Action_t *a2 = &pNode->m_acts[i];
+			if (i != idx && a2->sub_10141ac0() && m_slots[i].p && a2->m_b17 && ((IObj *)m_slots[i].p)->Check())
+				a2->sub_10141d60(&str);
+		}
+		if (str && *(char *)str)
+			sub_10175050((const char *)str);
+		else
+			sub_10174d10();
+	}
+	else
+	{
+		const char *name = pNode->m_pszName;
+		if (!name)
+			name = "";
+		DevMsg(1, "ERROR: CharGenWizard: ProcessPopUp: Action was Invalid:  %s -- %d!\n", name, idx);
+		sub_10174d10();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10175da0 size=0x63
 #include <string.h>
 #include <stdlib.h>
