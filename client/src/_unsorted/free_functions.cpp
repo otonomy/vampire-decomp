@@ -1039,6 +1039,115 @@ char sub_10004560()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10004610 size=0x2ac
+#include "Vector.h"
+#include "C_BaseEntity.h"
+#include "CParticleSource.h"
+#include <stdlib.h>
+
+struct SmokeParticle_10004610
+{
+	int m_unk00;
+	int m_unk04;
+	int m_unk08;
+	Vector m_Pos;
+	Vector m_Velocity;
+	float m_flLifetime;
+};
+
+struct CEmitterBinding_10004610
+{
+	SmokeParticle_10004610 *sub_101165f0(int size, unsigned char material);
+};
+
+inline Vector RandomVector(float minVal, float maxVal)
+{
+	Vector random;
+	random.sub_10004ce0(minVal, maxVal);
+	return random;
+}
+
+struct TimedEvent_10004610
+{
+	float m_TimeBetweenEvents;
+	float m_fNextEvent;
+	bool NextEvent(float &curDelta)
+	{
+		if (curDelta >= m_fNextEvent)
+		{
+			curDelta -= m_fNextEvent;
+			m_fNextEvent = m_TimeBetweenEvents;
+			return true;
+		}
+		else
+		{
+			m_fNextEvent -= curDelta;
+			return false;
+		}
+	}
+};
+
+struct CUnknown10004610
+{
+	int m_unk00;
+	CEmitterBinding_10004610 m_Binding;	// 0x04
+	int m_unk08[21];
+	CParticleSource m_Source;	// 0x5c
+	int m_unk_c0[4];
+	Vector m_vColor;	// 0xd0
+	int m_unk_dc[5];
+	float m_flSpread;	// 0xf0
+	int m_unk_f4[6];
+	bool m_bEmit;	// 0x10c
+	int m_unk_110[4];
+	float m_flFade;	// 0x120
+	int m_unk_124;
+	unsigned char m_iMaterial;	// 0x128
+	TimedEvent_10004610 m_ParticleSpawn;	// 0x12c
+	Vector m_vPos;	// 0x134
+	Vector m_vLastPos;	// 0x140
+	CParticleMgr *m_pParticleMgr;	// 0x14c
+
+	C_BaseEntity *GetOuter() { return (C_BaseEntity *)((char *)this - 0x410); }
+	void sub_10004610(float fTimeDelta);
+};
+
+void CUnknown10004610::sub_10004610(float fTimeDelta)
+{
+	if (!m_pParticleMgr)
+		return;
+	m_vPos = GetOuter()->GetAbsOrigin();
+	if (m_bEmit)
+	{
+		float tempDelta = fTimeDelta;
+		while (m_ParticleSpawn.NextEvent(tempDelta))
+		{
+			SmokeParticle_10004610 *pParticle = m_Binding.sub_101165f0(0x30, m_iMaterial);
+			if (!pParticle)
+				continue;
+			pParticle->m_Pos = (m_vLastPos - m_vPos) * (rand() * (1.0f / 32767.0f)) + m_vPos + RandomVector(-m_flSpread, m_flSpread);
+			pParticle->m_Velocity = m_vPos - pParticle->m_Pos;
+			pParticle->m_flLifetime = 0;
+			if (pParticle->m_Pos.z < m_vPos.z)
+				pParticle->m_Pos.z = m_vPos.z;
+		}
+	}
+	m_vLastPos = m_vPos;
+	m_Source.m_pos = m_vPos;
+	if (m_flFade > 0)
+	{
+		m_Source.m_t = 0;
+	}
+	else
+	{
+		*(Vector *)&m_Source.m_cr = m_vColor * 2;
+		m_Source.m_t = 2000.0f;
+		m_flFade = 1.0f;
+	}
+	m_Source.sub_1004a8b0(m_pParticleMgr);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10004ce0 size=0x62
 #include "Vector.h"
 #include <stdlib.h>
