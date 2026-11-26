@@ -13998,6 +13998,32 @@ template <> int ClientClassInit<DT_ItemKMuriettaKey::ignored>(DT_ItemKMuriettaKe
 }
 // END FUNCTION
 
+// FUNCTION: 0x10021440 size=0x45
+namespace lifted {
+extern char g_10218e44;
+extern char g_10218e58;
+extern char g_10218e94;
+extern char g_10218ecc;
+extern char g_10218f24;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10021440()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10218f24;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10218ecc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10218e94;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10218e58;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10218e44;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100214d0 size=0x6
 namespace lifted {
 extern char g_102e56e4;

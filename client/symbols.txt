@@ -1597,6 +1597,7 @@
 0x100212b0 func   ?_C_ItemKMuriettaKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKMuriettaKey_CreateObject
 0x10021370 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKMuriettaKey@@@Z ClientClassInit
 0x10021400 func   ?vfunc17@C_ItemKOceanHouseSewerKey@@UAEHXZ C_ItemKOceanHouseSewerKey::vfunc17
+0x10021440 func   ?sub_10021440@@YAHXZ sub_10021440
 0x10021490 func   ??_GC_ItemKOceanHouseSewerKey@@UAEPAXI@Z ??_GC_ItemKOceanHouseSewerKey@@UAEPAXI@Z
 0x100214b0 func   ?vfunc16@C_ItemKOceanHouseSewerKey@@UAEHXZ C_ItemKOceanHouseSewerKey::vfunc16
 0x100214c0 func   ?vfunc15@C_ItemKOceanHouseSewerKey@@UAEHXZ C_ItemKOceanHouseSewerKey::vfunc15
