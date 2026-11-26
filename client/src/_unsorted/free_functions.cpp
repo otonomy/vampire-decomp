@@ -126409,6 +126409,19 @@ void CHudWeaponSelection::sub_101a7f20(const char *str, int x, int y, int w, int
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a8b30 size=0x16
+namespace lifted {
+extern char g_10272378;
+extern char g_104cfe38;
+struct C100f0ed0 { int sub_100f0ed0(int); };
+struct C101a8b20 { int sub_101a8b20(); };
+}
+int sub_101a8b30()
+{
+    return ((lifted::C101a8b20 *)(((lifted::C100f0ed0 *)((int)&lifted::g_104cfe38))->sub_100f0ed0((int)&lifted::g_10272378)))->sub_101a8b20();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a8c60 size=0x9
 struct CUnknown101a8c60 { void * sub_101a8c60(); };
 void * CUnknown101a8c60::sub_101a8c60()
