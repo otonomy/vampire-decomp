@@ -176,6 +176,7 @@
 0x10004e30 func   ?vfunc0@IParticleEffect@@QAEPAXD@Z IParticleEffect::vfunc0
 0x10004e50 func   ?vfunc2@IPrototypeAppEffect@@UAE_NHH@Z IPrototypeAppEffect::vfunc2
 0x10004e60 func   ?vfunc0@IPrototypeAppEffect@@UAEPAXD@Z IPrototypeAppEffect::vfunc0
+0x10004e80 func   ?sub_10004e80@@YAXPAUParticleDraw@@ABVVector@@1MMPBEM@Z sub_10004e80
 0x10005230 func   ?sub_10005230@CMeshBuilder@@QAEXXZ CMeshBuilder::sub_10005230
 0x100052c0 func   ?sub_100052c0@CIC@@QAEXPBE@Z CIC::sub_100052c0
 0x100052f0 func   ?sub_100052f0@PixW@@QAEXPAE@Z PixW::sub_100052f0

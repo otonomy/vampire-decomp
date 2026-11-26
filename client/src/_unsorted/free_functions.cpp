@@ -1180,6 +1180,114 @@ Vector Vector::sub_10004d80(float fl) const
 }
 // END FUNCTION
 
+// FUNCTION: 0x10004e80 size=0x3af
+#include "CMeshBuilder.h"
+#include "Vector.h"
+
+struct ParticleDraw
+{
+    CMeshBuilder *m_pMeshBuilder;
+    CMeshBuilder *GetMeshBuilder() { return m_pMeshBuilder; }
+};
+
+inline int RoundFloatToInt(float f)
+{
+	int nResult;
+	__asm
+	{
+		fld f
+		fistp nResult
+	}
+	return nResult;
+}
+
+static inline void IncrementPointer(int &pBufferPointer, int vertexSize)
+{
+    pBufferPointer = pBufferPointer + vertexSize;
+}
+
+static inline void MB_Position3f(CMeshBuilder *p, float x, float y, float z)
+{
+    float *pDst = (float *)p->m_a8;
+    *pDst++ = x;
+    *pDst++ = y;
+    *pDst = z;
+}
+
+static inline void MB_Color4ubv(CMeshBuilder *p, const unsigned char *rgba)
+{
+    int col = rgba[2] | (rgba[1] << 8) | (rgba[0] << 16) | (rgba[3] << 24);
+    *(int *)p->m_pCurrColor = col;
+}
+
+static inline void MB_TexCoord3f(CMeshBuilder *p, int stage, float s, float t, float u)
+{
+    float *pDst = (float *)p->m_b0;
+    *pDst++ = s;
+    *pDst++ = t;
+    *pDst = u;
+}
+
+static inline void MB_Specular3ubv(CMeshBuilder *p, const unsigned char *rgb)
+{
+    int col = rgb[2] | (rgb[1] << 8) | (rgb[0] << 16) | 0xFF000000;
+    *(int *)(*(unsigned char **)((char *)p + 0x58) + p->m_i98 * p->m_unk14) = col;
+}
+
+static inline void MB_AdvanceVertex(CMeshBuilder *p)
+{
+    if (++p->m_i98 > p->m_n90)
+        p->m_n90 = p->m_i98;
+    IncrementPointer(p->m_a8, p->m_i0);
+    IncrementPointer(p->m_ac, p->m_ic);
+    IncrementPointer(p->m_b0, p->m_i18);
+    IncrementPointer(p->m_b4, p->m_i1c);
+    IncrementPointer(p->m_b8, p->m_i20);
+    IncrementPointer(p->m_bc, p->m_i24);
+    p->m_pCurrColor += p->m_i10;
+}
+
+void sub_10004e80(ParticleDraw *pDraw, const Vector &pos, const Vector &color, const float alpha, const float size, const unsigned char *pLighting, float flR)
+{
+    if (alpha < 0.5f)
+        return;
+
+    CMeshBuilder *pBuilder = pDraw->GetMeshBuilder();
+    if (!pBuilder)
+        return;
+
+    unsigned char ubColor[4];
+    ubColor[0] = (unsigned char)RoundFloatToInt(color.x);
+    ubColor[1] = (unsigned char)RoundFloatToInt(color.y);
+    ubColor[2] = (unsigned char)RoundFloatToInt(color.z);
+    ubColor[3] = (unsigned char)RoundFloatToInt(alpha);
+
+    MB_Position3f(pBuilder, pos.x - size, pos.y - size, pos.z);
+    MB_Color4ubv(pBuilder, ubColor);
+    MB_TexCoord3f(pBuilder, 0, 0, 1.0f, flR);
+    MB_Specular3ubv(pBuilder, pLighting);
+    MB_AdvanceVertex(pBuilder);
+
+    MB_Position3f(pBuilder, pos.x - size, pos.y + size, pos.z);
+    MB_Color4ubv(pBuilder, ubColor);
+    MB_TexCoord3f(pBuilder, 0, 0, 0, flR);
+    MB_Specular3ubv(pBuilder, pLighting);
+    MB_AdvanceVertex(pBuilder);
+
+    MB_Position3f(pBuilder, pos.x + size, pos.y + size, pos.z);
+    pBuilder->sub_100052c0(ubColor);
+    pBuilder->sub_10005330(0, 1.0f, 0, flR);
+    pBuilder->sub_100052f0(pLighting);
+    pBuilder->sub_10005230();
+
+    MB_Position3f(pBuilder, pos.x + size, pos.y - size, pos.z);
+    pBuilder->sub_100052c0(ubColor);
+    pBuilder->sub_10005330(0, 1.0f, 1.0f, flR);
+    pBuilder->sub_100052f0(pLighting);
+    pBuilder->sub_10005230();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10005230 size=0x8c
 #include "CMeshBuilder.h"
 static inline void Adv(int &p, const int &s)
