@@ -957,6 +957,7 @@
 0x10014ab0 func   ?_C_BloodPack_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_BloodPack_CreateObject
 0x10014b70 func   ?ClientClassInit@@YAHPAUignored@DT_BloodPack@@@Z ClientClassInit
 0x10014c00 func   ?vfunc17@C_BlueBloodPack@@UAEHXZ C_BlueBloodPack::vfunc17
+0x10014c40 func   ?sub_10014c40@@YAHXZ sub_10014c40
 0x10014c90 func   ??_GC_BlueBloodPack@@UAEPAXI@Z ??_GC_BlueBloodPack@@UAEPAXI@Z
 0x10014cb0 func   ?vfunc16@C_BlueBloodPack@@UAEHXZ C_BlueBloodPack::vfunc16
 0x10014cc0 func   ?vfunc15@C_BlueBloodPack@@UAEHXZ C_BlueBloodPack::vfunc15
