@@ -46830,6 +46830,100 @@ char sub_100b56b0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b56c0 size=0x25d
+#include "C_FireSmoke.h"
+#include "CFireOverlay.h"
+#include "QAngle.h"
+
+struct FireRandomView
+{
+	virtual void v0();
+	virtual void v1();
+	virtual int RandomInt(int lo, int hi);
+};
+extern FireRandomView *g_104a5738;
+
+struct FireModelInfoView
+{
+	virtual void v0();
+	virtual void v1();
+	virtual void *GetModel(int index);
+	virtual void v3();
+	virtual void v4();
+	virtual int GetModelFrameCount(void *pModel);
+};
+extern FireModelInfoView *g_104a57f8;
+
+struct CUnknown1009fbb0 { void sub_100a06f0(int nModelIndex); };
+struct CUnknown101365a0 { void sub_101365a0(float flScale, float flTime); };
+struct CUnknown10136580 { void sub_10136580(int nBrightness, float flTime); };
+
+float sub_10117b00(float flMin, float flMax);
+int sub_10117b20(int nMin, int nMax);
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
+
+inline CFireOverlay::CFireOverlay(C_FireSmoke *pOwner)
+{
+	m_pOwner = pOwner;
+	m_flScaleLast = 0;
+	m_nSeed = g_104a5738->RandomInt(-999999, 999999);
+}
+
+void C_FireSmoke::sub_100b56c0()
+{
+	int i;
+	for (i = 0; i < 8; i++)
+		m_entFlames[i].sub_100a1a70(2);
+
+	m_flChildFlameSpread = 0.1f;
+	m_nUnk27fc = 0;
+
+	for (i = 0; i < 8; i++)
+	{
+		QAngle offset;
+		offset.x = 0;
+		offset.y = sub_10117b00(0, 360.0f);
+		offset.z = 0;
+		Vector forward;
+		sub_101090a0(offset, &forward, 0, 0);
+		m_entFlames[i].sub_100a2100(*(QAngle *)&forward);
+
+		g_104a57f8->GetModel(m_nFlameModelIndex);
+		int maxFrames = g_104a57f8->GetModelFrameCount(*(void **)((char *)this + 0x40));
+		((CUnknown1009fbb0 *)&m_entFlames[i])->sub_100a06f0(m_nFlameModelIndex);
+		m_entFlames[i].sub_100a2030(&GetAbsOrigin());
+		*(float *)((char *)&m_entFlames[i] + 0x434) = (float)sub_10117b20(0, maxFrames);
+		*(float *)((char *)&m_entFlames[i] + 0x430) = (float)sub_10117b20(24, 30);
+		((CUnknown101365a0 *)&m_entFlames[i])->sub_101365a0(m_flStartScale, 0);
+		*(int *)((char *)&m_entFlames[i] + 0x48) = 5;
+		*(int *)((char *)&m_entFlames[i] + 0x4c) = 0;
+		*((unsigned char *)&m_entFlames[i] + 0x50) = 255;
+		*((unsigned char *)&m_entFlames[i] + 0x51) = 255;
+		*((unsigned char *)&m_entFlames[i] + 0x52) = 255;
+		*((unsigned char *)&m_entFlames[i] + 0x53) = 255;
+		((CUnknown10136580 *)&m_entFlames[i])->sub_10136580(255, 0);
+		*(int *)((char *)&m_entFlames[i] + 0x44) = -1;
+
+		if (i == 0)
+			m_flFlameScales[i] = 1.0f;
+		else
+			m_flFlameScales[i] = 1.0f - (i * 0.125f);
+	}
+
+	if (m_nFlags & 8)
+	{
+		m_p2800 = (CFireSmokeOwned *)new CFireOverlay(this);
+		if (m_p2800)
+		{
+			((CFireOverlay *)m_p2800)->m_vPos = GetAbsOrigin();
+			((CFireOverlay *)m_p2800)->m_nSprites = 1;
+			((CFireOverlay *)m_p2800)->m_BaseColors[0].Init(0.4f, 0.2f, 0.05f);
+			((CFireOverlay *)m_p2800)->sub_100efd40();
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b5b40 size=0x6b
 struct CFlameElement {
 	int m_nModelIndex;

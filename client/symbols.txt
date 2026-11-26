@@ -4202,6 +4202,7 @@
 0x100b5610 func   ?sub_100b5610@CUnknown100b5610@@QAEXH@Z CUnknown100b5610::sub_100b5610
 0x100b5640 func   ?sub_100b5640@FireView@@QAEXXZ FireView::sub_100b5640
 0x100b56b0 func   ?sub_100b56b0@@YADXZ sub_100b56b0
+0x100b56c0 func   ?sub_100b56c0@C_FireSmoke@@QAEXXZ C_FireSmoke::sub_100b56c0
 0x100b5b20 func   ??_GCFireOverlay@@UAEPAXI@Z ??_GCFireOverlay@@UAEPAXI@Z
 0x100b5b40 func   ?sub_100b5b40@@YIXPAUC_FireSmokeView@@H@Z sub_100b5b40
 0x100b5d00 func   ?sub_100b5d00@C_FireSmoke@@QAEXXZ C_FireSmoke::sub_100b5d00
