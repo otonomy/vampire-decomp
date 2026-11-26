@@ -20,10 +20,17 @@ struct CHotkeyRow	// 0x14 bytes, at +0x1d4c
 	void *m_pValue;	// 0x10: the value panel
 };
 
+struct CHotkeyRecord	// 0x90 bytes, at +0x180
+{
+	char m_szName[0x51];	// 0x00: shown in the value panel
+	char m_szCommand[0x3f];	// 0x51: its CRC32 is the value of a type 2/3 row
+};
+
 class CHotkeyWindow
 {
 public:
-	char m_pad0000[0x1800];
+	char m_pad0000[0x180];
+	CHotkeyRecord m_Records[40];	// 0x180
 	CHotkeyItem m_Items[12];	// 0x1800
 	int m_nRecords;	// 0x1c80
 	int m_nItems;	// 0x1c84
@@ -32,4 +39,5 @@ public:
 
 	void sub_10183e90();	// refresh the rows from the local player's two ten-entry tables (+0x1834 types, +0x185c values)
 	void sub_10183690(int nRow, int nItem);
+	void sub_10183b90();	// OKClicked: the rows back into (type, value) pairs, sent as "sethotkeys"
 };
