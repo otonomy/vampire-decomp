@@ -10,6 +10,7 @@ public:
 	C_EnvParticle();
 	int sub_100aeea0(int, int);
 	void sub_100af150();
+	bool sub_100af0b0();
 	void sub_100b0460();
 	void sub_100b02c0();
 	void sub_100af810();

@@ -292,7 +292,7 @@ public:
 	virtual int vfunc30();	// slot 30
 	virtual int vfunc31();	// slot 31
 	virtual void vfunc32(unsigned char *, void *);	// slot 32; shapes differ
-	virtual int vfunc33();	// slot 33
+	virtual void vfunc33(float, float, float);	// slot 33: SetProjectionMatrix(fov, zNear, zFar) (CViewRender::DrawViewModels)
 	virtual int vfunc34();	// slot 34
 	virtual bool vfunc35();	// slot 35; shapes differ
 	virtual int vfunc36();	// slot 36
@@ -388,7 +388,7 @@ public:
 	virtual void vfunc52();
 	virtual void Bind(const void *, void *);	// slot 53; shapes differ
 	virtual void vfunc54();
-	virtual void vfunc55();
+	virtual void vfunc55(float, float);	// slot 55: DepthRange
 	virtual void vfunc56();
 	virtual void vfunc57();
 	virtual void vfunc58();
@@ -414,12 +414,12 @@ public:
 	virtual void vfunc78();
 	virtual void vfunc79();
 	virtual void vfunc80();
-	virtual void vfunc81();
+	virtual void vfunc81();	// slot 81: LoadIdentity
 	virtual void vfunc82();
 	virtual void vfunc83();
 	virtual void vfunc84();
 	virtual void vfunc85();
-	virtual void vfunc86();
+	virtual void vfunc86(float, float, float, float);	// slot 86: Rotate(angle, x, y, z)
 	virtual void vfunc87();
 	virtual void vfunc88();
 	virtual void vfunc89();
