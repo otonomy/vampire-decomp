@@ -40553,6 +40553,185 @@ void sub_10082200(IClientEntity *baseentity, CSpriteHandle *psprite, const Vecto
 }
 // END FUNCTION
 
+// FUNCTION: 0x10082a50 size=0x57c
+#include "engineclient.h"
+#include "Vector.h"
+
+struct color32
+{
+	unsigned char r, g, b, a;
+};
+
+const Vector &sub_10198d30();	// CurrentViewOrigin
+const Vector &sub_10198d60();	// CurrentViewRight
+const Vector &sub_10198d70();	// CurrentViewUp
+void sub_10108fd0(const Vector &start, float scale, const Vector &direction, Vector &dest);	// VectorMA
+
+struct IMesh_10082a50
+{
+	virtual void LockMesh(int numVerts, int numIndices, void *desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+struct MeshBuilder_10082a50
+{
+	int m_VertexSize_Position;	// 0x00
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;	// 0x0c
+	int m_VertexSize_Color;	// 0x10
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];	// 0x18
+	int m_unk28[(0x80 - 0x28) / 4];
+	IMesh_10082a50 *m_pMesh;	// 0x80
+	bool m_bModify;		// 0x84
+	int m_NumVertices;	// 0x88
+	int m_NumIndices;	// 0x8c
+	int m_MaxVertex;	// 0x90
+	int m_MaxIndex;		// 0x94
+	int m_CurrentVertex;	// 0x98
+	int m_CurrentIndex;	// 0x9c
+	int m_Type;		// 0xa0
+	bool m_GenerateIndices;	// 0xa4
+	float *m_pCurrPosition;	// 0xa8
+	float *m_pCurrNormal;	// 0xac
+	float *m_pCurrTexCoord[4];	// 0xb0
+	unsigned char *m_pCurrColor;	// 0xc0
+
+	MeshBuilder_10082a50()
+		: m_pMesh(0), m_NumVertices(0), m_NumIndices(0), m_MaxVertex(0), m_MaxIndex(0),
+		  m_CurrentVertex(0), m_CurrentIndex(0), m_GenerateIndices(false)
+	{
+	}
+
+	void sub_100421f0(int type, int numPrimitives);	// ComputeNumVertsAndIndices
+	void sub_100422e0();	// Reset
+	void sub_10031a20(int stage, float s, float t);	// TexCoord2f
+	void sub_100052c0(const unsigned char *rgba);	// Color4ubv
+	void sub_10041e00(const float *v);	// Position3fv
+	void sub_10005230();	// AdvanceVertex
+	void sub_10041c90(bool bSpewData, bool bDraw);	// End
+
+	__forceinline void Begin(IMesh_10082a50 *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_MaxIndex = 0;
+		m_MaxVertex = 0;
+		m_GenerateIndices = true;
+		m_Type = type;
+		m_pMesh->SetPrimitiveType(2);
+		m_pMesh->LockMesh(m_NumVertices, m_NumIndices, this);
+		sub_100422e0();
+	}
+	__forceinline void Color4ub(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+	{
+		*(int *)m_pCurrColor = (((((a << 8) | r) << 8) | g) << 8) | b;
+	}
+	__forceinline void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+	__forceinline void Position3fv(const float *v)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = *v++;
+		*pDst++ = *v++;
+		*pDst = *v;
+	}
+	__forceinline void AdvanceVertex()
+	{
+		if (++m_CurrentVertex > m_MaxVertex)
+			m_MaxVertex = m_CurrentVertex;
+		m_pCurrPosition = (float *)((unsigned char *)m_pCurrPosition + m_VertexSize_Position);
+		m_pCurrNormal = (float *)((unsigned char *)m_pCurrNormal + m_VertexSize_Normal);
+		m_pCurrTexCoord[0] = (float *)((unsigned char *)m_pCurrTexCoord[0] + m_VertexSize_TexCoord[0]);
+		m_pCurrTexCoord[1] = (float *)((unsigned char *)m_pCurrTexCoord[1] + m_VertexSize_TexCoord[1]);
+		m_pCurrTexCoord[2] = (float *)((unsigned char *)m_pCurrTexCoord[2] + m_VertexSize_TexCoord[2]);
+		m_pCurrTexCoord[3] = (float *)((unsigned char *)m_pCurrTexCoord[3] + m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+};
+
+void sub_10082a50(const Vector &vecOrigin, float flWidth, float flHeight, color32 color)
+{
+	unsigned char pColor[4] = { color.r, color.g, color.b, color.a };
+
+	flWidth *= 0.5f;
+	flHeight *= 0.5f;
+
+	Vector fwd, right(1, 0, 0), up(0, 1, 0);
+	VectorSubtract(sub_10198d30(), vecOrigin, fwd);
+	float flDist = VectorNormalize(fwd);
+	if (flDist >= 1e-3)
+	{
+		CrossProduct(sub_10198d70(), fwd, right);
+		flDist = VectorNormalize(right);
+		if (flDist >= 1e-3)
+		{
+			CrossProduct(fwd, right, up);
+		}
+		else
+		{
+			CrossProduct(fwd, sub_10198d60(), up);
+			VectorNormalize(up);
+			CrossProduct(up, fwd, right);
+		}
+	}
+
+	MeshBuilder_10082a50 meshBuilder;
+	Vector point;
+	IMesh_10082a50 *pMesh = (IMesh_10082a50 *)materials->GetDynamicMesh(true, 0, 0, 0);
+
+	meshBuilder.Begin(pMesh, 7, 1);
+
+	meshBuilder.Color4ub(color.r, color.g, color.b, color.a);
+	meshBuilder.TexCoord2f(0, 0, 1);
+	sub_10108fd0(vecOrigin, -flHeight, up, point);
+	sub_10108fd0(point, -flWidth, right, point);
+	meshBuilder.Position3fv(point.Base());
+	meshBuilder.AdvanceVertex();
+
+	meshBuilder.Color4ub(color.r, color.g, color.b, color.a);
+	meshBuilder.TexCoord2f(0, 0, 0);
+	sub_10108fd0(vecOrigin, flHeight, up, point);
+	sub_10108fd0(point, -flWidth, right, point);
+	meshBuilder.Position3fv(point.Base());
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_100052c0(pColor);
+	meshBuilder.sub_10031a20(0, 1, 0);
+	sub_10108fd0(vecOrigin, flHeight, up, point);
+	sub_10108fd0(point, flWidth, right, point);
+	meshBuilder.sub_10041e00(point.Base());
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_100052c0(pColor);
+	meshBuilder.sub_10031a20(0, 1, 1);
+	sub_10108fd0(vecOrigin, -flHeight, up, point);
+	sub_10108fd0(point, flWidth, right, point);
+	meshBuilder.sub_10041e00(point.Base());
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10041c90(false, false);
+	pMesh->Draw();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100835e0 size=0x71
 #include "Vector.h"
 
