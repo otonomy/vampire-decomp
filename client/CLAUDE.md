@@ -287,6 +287,9 @@ of the SDK's cl_dll/cdll_client_int.cpp. `#include "engineclient.h"` and call th
   second name for the same global keeps VC6 from merging the loads, and the function stops matching.
 - **The HUD** (0x104cfe38) is the SDK's `CHud gHUD;` object (CHud.h): `gHUD.FindElement("CHudX")` (0x100f0ed0),
   `gHUD.GetIcon("name")` (0x100f11d0); never declare `g_104cfe38` yourself.
+- **The string tables** (0x105f93c0) are one `StatOwner2` object, the list of VStringTable records (StatOwner2.h,
+  no real name known): `g_105f93c0.sub_1015f2f0("MiscStrs")->sub_1015ecd0(i)` by name, `.sub_1015f270(id)` by id;
+  include StatOwner2.h instead of declaring it with a view type of your own.
 - **Two functions in one row.** When the game's bytes end with `ret` / padding and go on with a second function
   (another `ret N`, its own callers), the import merged two rows; note "merged row: second function at 0x..." and
   move on (`pcdecomp split` cuts it), do not write both into one source.
