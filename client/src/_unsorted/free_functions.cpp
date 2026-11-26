@@ -27430,6 +27430,133 @@ void CHudDialog::sub_10053200()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10053c70 size=0x292
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+#include "UtlMem.h"
+#include "CUtlVector4.h"
+#include "UtlVec8.h"
+#include <string.h>
+#include <stdlib.h>
+
+extern "C" __declspec(dllimport) int Q_snprintf(char *pDest, int maxLen, const char *pFormat, ...);
+extern "C" __declspec(dllimport) void Plat_Free(void *pMem);
+extern "C" unsigned char *__cdecl _mbsdup(const unsigned char *);
+void sub_1002c110(char **pMemory, char *const *src);
+
+struct LineVector
+{
+	char **m_pMemory;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+	int m_Size;
+	char **m_pElements;
+
+	LineVector()
+	{
+		((UtlMem *)this)->sub_100557c0(0, 0);
+		m_Size = 0;
+		m_pElements = m_pMemory;
+	}
+	~LineVector()
+	{
+		Purge();
+		if (m_nGrowSize != -1)
+		{
+			if (m_pMemory)
+			{
+				Plat_Free(m_pMemory);
+				m_pMemory = 0;
+			}
+			m_nAllocationCount = 0;
+		}
+	}
+	void Purge()
+	{
+		m_Size = 0;
+		((UtlMem *)this)->sub_100558d0();
+		m_pElements = m_pMemory;
+	}
+	int Count() const { return m_Size; }
+	char *&operator[](int i) { return m_pMemory[i]; }
+	int InsertBefore(int elem, char *const &src)
+	{
+		((CUtlVector4 *)this)->sub_10055800(1);
+		((UtlVec8 *)this)->sub_10055890(elem, 1);
+		sub_1002c110(&m_pMemory[elem], &src);
+		return elem;
+	}
+	int AddToTail(char *const &src) { return InsertBefore(m_Size, src); }
+	void ShiftElementsLeft(int elem, int num = 1)
+	{
+		int numToMove = m_Size - elem - num;
+		if (numToMove > 0 && num > 0)
+			memmove(&m_pMemory[elem], &m_pMemory[elem + num], numToMove * sizeof(char *));
+	}
+	void Remove(int elem)
+	{
+		ShiftElementsLeft(elem);
+		--m_Size;
+	}
+};
+
+void CHudDialog::sub_10053c70(bool bDraw, int nIndex, const char *pszText, int nFlags, int nType, int *pY)
+{
+	ScopeTrace st("CHudDialog::PaintResponse", g_102de300);
+	if (nIndex < 0)
+		return;
+
+	int nFont = sub_10053f10(nFlags, nType);
+	char buf[0x800];
+	Q_snprintf(buf, sizeof(buf), "%d. %s", nIndex + 1, pszText);
+	int nLen = strlen(buf);
+
+	int i = 0;
+	int nStart = 0;
+	int nLastSpace = 0;
+	LineVector lines;
+	char *pszLine = 0;
+	int nMax = sub_100556d0(nFont, buf);
+	while (i < nLen)
+	{
+		if (i - nStart >= nMax)
+		{
+			buf[nLastSpace] = 0;
+			pszLine = (char *)_mbsdup((unsigned char *)&buf[nStart]);
+			lines.AddToTail(pszLine);
+			nStart = nLastSpace + 1;
+			i = nStart;
+			nMax = sub_100556d0(nFont, &buf[nStart]);
+		}
+		else
+		{
+			if (buf[i] == ' ')
+				nLastSpace = i;
+			i++;
+		}
+	}
+
+	if (strlen(&buf[nStart]))
+	{
+		pszLine = (char *)_mbsdup((unsigned char *)&buf[nStart]);
+		lines.AddToTail(pszLine);
+	}
+
+	for (int j = lines.Count() - 1; j >= 0; j--)
+	{
+		pszLine = lines[j];
+		sub_10053ff0(bDraw, pszLine, nFlags, nType, pY);
+	}
+
+	while (lines.Count())
+	{
+		pszLine = lines[0];
+		free(pszLine);
+		lines.Remove(0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10053f10 size=0xd3
 #include "CHudDialog.h"
 #include "ScopeTrace.h"
