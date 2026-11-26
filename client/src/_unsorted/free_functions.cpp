@@ -94908,6 +94908,143 @@ int CUnknown10136ff0::sub_10136ff0(int a0, int a1, int a2, int a3)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10137020 size=0x4f2
+#include "engineclient.h"
+#include "CMeshBuilder.h"
+
+struct wrect_10137020 { int left, right, top, bottom; };
+
+struct IMesh_10137020
+{
+	virtual void LockMesh(int numVerts, int numIndices, CMeshBuilder &desc) = 0;
+	virtual void v1() = 0; virtual void v2() = 0; virtual void v3() = 0; virtual void v4() = 0;
+	virtual void v5() = 0; virtual void v6() = 0; virtual void v7() = 0; virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+struct CUnknown10136f40 { void sub_10136f40(float *color); };
+struct MeshDim { void sub_100421f0(int type, int numPrimitives); };
+struct Obj_100319d0 { void sub_100319d0(float x, float y, float z); };
+
+void sub_101376e0(void *pSprite, int frame, float *pLeft, float *pRight, float *pTop, float *pBottom, int *pWide, int *pTall, const wrect_10137020 *prcSubRect);
+bool sub_10137520(int *x, int *y, int *w, int *h, float *left, float *top, float *right, float *bottom);
+extern bool g_105e5d80;
+
+static __forceinline unsigned char FastFToC(float c)
+{
+	volatile float dc;
+	dc = c * 255.0f + (float)(1 << 23);
+	return *(unsigned char *)&dc;
+}
+
+static __forceinline void MB_AdvanceVertex(CMeshBuilder &mb)
+{
+	if (++mb.m_i98 > mb.m_n90)
+		mb.m_n90 = mb.m_i98;
+	mb.m_a8 += mb.m_i0;
+	mb.m_ac += mb.m_ic;
+	mb.m_b0 += mb.m_i18;
+	mb.m_b4 += mb.m_i1c;
+	mb.m_b8 += mb.m_i20;
+	mb.m_bc += mb.m_i24;
+	mb.m_c0 += mb.m_i10;
+}
+
+static __forceinline void MB_Color3fv(CMeshBuilder &mb, const float *rgb)
+{
+	int col = (FastFToC(rgb[2])) | (FastFToC(rgb[1]) << 8) | (FastFToC(rgb[0]) << 16) | 0xFF000000;
+	*(int *)mb.m_pCurrColor = col;
+}
+
+static __forceinline void MB_TexCoord2f(CMeshBuilder &mb, int stage, float s, float t)
+{
+	float *pDst = (float *)(&mb.m_b0)[stage];
+	*pDst++ = s;
+	*pDst = t;
+}
+
+static __forceinline void MB_Position3f(CMeshBuilder &mb, float x, float y, float z)
+{
+	float *pDst = (float *)mb.m_a8;
+	*pDst++ = x;
+	*pDst++ = y;
+	*pDst = z;
+}
+
+struct CUnknown10136f80
+{
+	int m_width;
+	int m_height;
+	int m_numFrames;
+	void *m_material;
+	int sub_10136f80(float frame);
+	void *GetMaterial() { return m_material; }
+	void sub_10137020(int frame, int x, int y, int iWidth, int iHeight, const wrect_10137020 *prcSubRect);
+};
+
+void CUnknown10136f80::sub_10137020(int frame, int x, int y, int iWidth, int iHeight, const wrect_10137020 *prcSubRect)
+{
+	float fLeft = 0;
+	float fRight = 1;
+	float fTop = 0;
+	float fBottom = 1;
+	if (prcSubRect)
+		sub_101376e0(this, frame, &fLeft, &fRight, &fTop, &fBottom, &iWidth, &iHeight, prcSubRect);
+	if (g_105e5d80 && !sub_10137520(&x, &y, &iWidth, &iHeight, &fLeft, &fTop, &fRight, &fBottom))
+		return;
+	sub_10136f80(frame);
+	IMesh_10137020 *pMesh = (IMesh_10137020 *)materials->GetDynamicMesh(true, 0, 0, GetMaterial());
+	CMeshBuilder meshBuilder;
+	int *mb = (int *)&meshBuilder;
+	mb[0x88 / 4] = 0;
+	mb[0x8c / 4] = 0;
+	mb[0x90 / 4] = 0;
+	mb[0x94 / 4] = 0;
+	mb[0x98 / 4] = 0;
+	mb[0x9c / 4] = 0;
+	*(bool *)&mb[0xa4 / 4] = false;
+	mb[0x80 / 4] = (int)pMesh;
+	*(bool *)&mb[0x84 / 4] = false;
+	((MeshDim *)&meshBuilder)->sub_100421f0(7, 1);
+	mb[0x94 / 4] = 0;
+	mb[0x90 / 4] = 0;
+	*(bool *)&mb[0xa4 / 4] = true;
+	mb[0xa0 / 4] = 7;
+	((IMesh_10137020 *)mb[0x80 / 4])->SetPrimitiveType(2);
+	((IMesh_10137020 *)mb[0x80 / 4])->LockMesh(mb[0x88 / 4], mb[0x8c / 4], meshBuilder);
+	meshBuilder.sub_100422e0();
+
+	float color[3];
+	((CUnknown10136f40 *)this)->sub_10136f40(color);
+
+	MB_Color3fv(meshBuilder, color);
+	MB_TexCoord2f(meshBuilder, 0, fLeft, fTop);
+	MB_Position3f(meshBuilder, x, y, 0.0f);
+	MB_AdvanceVertex(meshBuilder);
+
+	MB_Color3fv(meshBuilder, color);
+	MB_TexCoord2f(meshBuilder, 0, fRight, fTop);
+	MB_Position3f(meshBuilder, x + iWidth, y, 0.0f);
+	meshBuilder.sub_10005230();
+
+	MB_Color3fv(meshBuilder, color);
+	MB_TexCoord2f(meshBuilder, 0, fRight, fBottom);
+	((Obj_100319d0 *)&meshBuilder)->sub_100319d0(x + iWidth, y + iHeight, 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10059af0(color);
+	meshBuilder.sub_10031a20(0, fLeft, fBottom);
+	((Obj_100319d0 *)&meshBuilder)->sub_100319d0(x, y + iHeight, 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10041c90(false, false);
+	pMesh->Draw();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101377b0 size=0x24
 int sub_101377b0(int a0)
 {
