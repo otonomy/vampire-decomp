@@ -74134,6 +74134,39 @@ int __stdcall sub_100f2650(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f2670 size=0x90
+#include "CHudChat.h"
+#define D8(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); virtual void p##5(); virtual void p##6(); virtual void p##7();
+struct CLine100f2670 {
+	D8(a) D8(b)
+	virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5();
+	virtual bool v22();
+	D8(e) D8(f) D8(g) D8(h) D8(i) D8(j) D8(k) D8(l) D8(m) D8(n)
+	virtual void q0(); virtual void q1(); virtual void q2(); virtual void q3(); virtual void q4(); virtual void q5();
+	virtual void v109(char *buf, int n);
+	void sub_100f1860();
+};
+extern "C" __declspec(dllimport) int Q_strnicmp(const char *a, const char *b, int n);
+struct CHudChatV100f2670 { char pad[0x68]; CLine100f2670 *m_Lines[6]; };
+void CHudChat::sub_100f2670(const char *name)
+{
+	CHudChatV100f2670 *c = (CHudChatV100f2670 *)this;
+	for (int i = 0; i < 6; i++) {
+		CLine100f2670 *line = c->m_Lines[i];
+		if (line && line->v22()) {
+			char buf[256];
+			line->v109(buf, 256);
+			if (!Q_strnicmp(buf, name, 256)) {
+				line->sub_100f1860();
+				*((char *)this + 0x80) = 1;
+				*((char *)this + 0x81) = 1;
+				return;
+			}
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100f2720 size=0x19
 namespace lifted {
 extern int g_104d0f58;

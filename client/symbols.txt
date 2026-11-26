@@ -5810,6 +5810,7 @@
 0x100f25e0 func   ?sub_100f25e0@CUnknown100f25e0@@QAEDD@Z CUnknown100f25e0::sub_100f25e0
 0x100f2600 func   ?sub_100f2600@@YIXPAUView@@@Z sub_100f2600
 0x100f2650 func   ?sub_100f2650@@YGHH@Z sub_100f2650
+0x100f2670 func   ?sub_100f2670@CHudChat@@QAEXPBD@Z CHudChat::sub_100f2670
 0x100f2720 func   ?sub_100f2720@CUnknown100f2720@@QAEPAXH@Z CUnknown100f2720::sub_100f2720
 0x100f2740 func   ?sub_100f2740@CUnknown100f2740@@QAEHXZ CUnknown100f2740::sub_100f2740
 0x100f2750 func   ?sub_100f2750@@YAXXZ sub_100f2750
