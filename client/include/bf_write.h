@@ -30,7 +30,9 @@ public:
 	void sub_10087530(float f);	// \"WriteBitNormal\": a sign bit (f <= -1/2047), then |(int)(f * 2047)| clamped to 2047 in 11 bits (WriteOneBit and WriteUBitLong inlined)
 	void sub_100865a0();	// default constructor body (stub 0x1000cd24): data 0, sizes 0, bits -1, current bit 0, no overflow, assert on overflow, no name
 	void sub_10087a30();
-	void sub_101043d0(int nValue);
+	void sub_101043d0(int nValue);	// WriteOneBit, where the game did not inline it
+	bool sub_10104360(int nBits);	// CheckForOverflow
+	void sub_10104380(int nValue);	// WriteOneBitNoCheck
 	void sub_100879b0(int val);
 	void sub_10086620(void *pData, int nBytes, int iStartBit, int nBits);	// \"StartWriting\" (stub 0x10001a28): nBits -1 means nBytes * 8
 	void sub_10087ab0(void *pData, int nBytes, int iStartBit, int nBits);
