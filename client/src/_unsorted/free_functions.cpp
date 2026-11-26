@@ -89442,6 +89442,104 @@ void TraitListV::sub_101447c0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10144840 size=0x271
+#include "CVStatInfo_t.h"
+#include "CUnknown10144490.h"
+#include "StatOwner2.h"
+#include "CUnknown10202ba0.h"
+#include "Tier1.h"
+#include <stdio.h>
+
+struct KVFileBase_10144840
+{
+	virtual void a0();
+	virtual void Release();
+};
+struct KVFile_10144840 : virtual KVFileBase_10144840
+{
+	virtual void b0();
+	virtual void b1();
+	virtual CVStatKV *FindKey(const char *pszName);
+};
+extern void *g_104a580c;
+KVFile_10144840 *sub_101545c0(const char *pszFile, void *pFS);
+extern StatOwner2 g_105f93c0;
+extern int g_102c6ef0;
+void *__cdecl operator new(unsigned int);
+void __cdecl operator delete(void *);
+
+struct CUnknown10144840
+{
+	int m_nGrow;	// 0x00
+	int m_nAlloc;	// 0x04
+	int m_nCount;	// 0x08
+	CUnknown10144490 **m_pClans;	// 0x0c
+	int m_nScores[3][3];	// 0x10
+
+	bool sub_10144840();
+};
+
+bool CUnknown10144840::sub_10144840()
+{
+	char szFile[260];
+	sprintf(szFile, "%s%s.txt", "vdata\\system\\", "CharCreateWizard");
+	KVFile_10144840 *pFile = sub_101545c0(szFile, g_104a580c);
+	if (!pFile) {
+		g_101e3108("Unable to open data file for: %s\n", szFile);
+		return false;
+	}
+	CVStatKV *pTables = pFile->FindKey("Clan_Tables");
+	if (pTables) {
+		for (CVStatKV *pNode = pTables->vfunc2("ClanNode"); pNode; pNode = pNode->vfunc3()) {
+			if (m_nAlloc == m_nCount) {
+				m_nAlloc += m_nGrow;
+				if (m_pClans) {
+					CUnknown10144490 **pNew = (CUnknown10144490 **)operator new(m_nAlloc * 4);
+					int i;
+					for (i = 0; i < m_nCount; i++)
+						pNew[i] = m_pClans[i];
+					for (; i < m_nAlloc; i++)
+						pNew[i] = 0;
+					operator delete(m_pClans);
+					m_pClans = pNew;
+					m_nCount++;
+				} else {
+					m_pClans = (CUnknown10144490 **)operator new(m_nAlloc * 4);
+					for (int i = 0; i < m_nAlloc; i++)
+						m_pClans[i] = 0;
+					m_nCount++;
+				}
+			} else {
+				m_nCount++;
+			}
+			if (!m_pClans[m_nCount - 1]) {
+				CUnknown10144490 *p = (CUnknown10144490 *)operator new(0x24);
+				m_pClans[m_nCount - 1] = p ? (CUnknown10144490 *)p->sub_10144490(m_nCount - 1) : 0;
+			}
+			if (!m_pClans[m_nCount - 1]) {
+				g_101e3108("Unable to parse data file for: %s.  Memory allocation ERROR!\n", szFile);
+				pFile->Release();
+				return false;
+			}
+			m_pClans[m_nCount - 1]->sub_101444c0(pNode);
+		}
+	}
+	CVStatKV *pScores = pTables->vfunc2("ConnectionScores");
+	if (pScores) {
+		int nRow = 0;
+		CVStatKV *pSel = pScores->vfunc2("Selection");
+		while (pSel && nRow < 3) {
+			for (int k = 0; k < 3; k++)
+				m_nScores[nRow][k] = pSel->vfunc10(((CUnknown10202ba0 *)g_105f93c0.sub_1015f270(g_102c6ef0))->sub_1015ecd0(k), 0);
+			nRow++;
+			pSel = pSel->vfunc3();
+		}
+	}
+	pFile->Release();
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10144af0 size=0x35
 struct FItem { int m_0; int m_key; };
 struct FList {
