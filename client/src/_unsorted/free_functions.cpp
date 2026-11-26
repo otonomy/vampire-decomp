@@ -115879,6 +115879,25 @@ bool CUnknown101f4c80::sub_10155990(void *pKeyValues, CUnknown101f5d60 *pOwner, 
 }
 // END FUNCTION
 
+// FUNCTION: 0x10155ac0 size=0x80
+#include "CUnknown101f4c80.h"
+#include <stdio.h>
+
+extern "C" __declspec(dllimport) void DevMsg(int level, const char *fmt, ...);
+int sub_10068200(int);
+
+void CUnknown101f4c80::sub_10155ac0()
+{
+	char buf[128];
+	sprintf(buf, "[%d]: %s\n", m_nId, m_folder.Get());
+	DevMsg(0, buf);
+	for (int i = 0; i < m_unk0c; i++) {
+		sprintf(buf, "\t\t   (%d): %s\n", i, (const char *)sub_10068200(((int *)m_unk10)[i]));
+		DevMsg(0, buf);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10155b40 size=0x1d
 struct S9 {
 	int a, b, c, d, e, f, g, h, i;
