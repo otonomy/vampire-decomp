@@ -295,6 +295,109 @@ void CTempEnts::vfunc8(const Vector &mins, const Vector &maxs, float height, int
 }
 // END FUNCTION
 
+// FUNCTION: 0x1003bca0 size=0x38b
+#include "CTempEnts.h"
+#include "engineclient.h"
+#include "Vector.h"
+
+#define SHARD_VOLUME 12.0
+
+struct CBreakTempView
+{
+	char m_pad0000[0x48];
+	int m_nRenderMode;	// 0x48
+	char m_pad004c[0x53 - 0x4c];
+	unsigned char m_nRenderAlpha;	// 0x53
+	char m_pad0054[0x560 - 0x54];
+	int m_nBody;	// 0x560
+	char m_pad0564[0x7ac - 0x564];
+	int flags;	// 0x7ac
+	float die;	// 0x7b0
+	char m_pad07b4[0x7c8 - 0x7b4];
+	int hitSound;	// 0x7c8
+	char m_pad07cc[0x7e0 - 0x7cc];
+	float m_vecTempEntAngVelocity[3];	// 0x7e0
+	int tempent_renderamt;	// 0x7ec
+	char m_pad07f0[0x7fc - 0x7f0];
+	float m_flFrame;	// 0x7fc
+
+	void sub_1003a840(float x, float y, float z);	// SetVelocity: the vector's three floats by value
+};
+
+void CTempEnts::vfunc7(const Vector &pos, const Vector &size, const Vector &dir, float randRange, float life, int count, int modelIndex, char flags)
+{
+	if (!modelIndex)
+		return;
+
+	char type = flags & 0x4f;
+
+	void *pModel = modelinfo->GetModel(modelIndex);
+	if (!pModel)
+		return;
+
+	int frameCount = modelinfo->GetModelFrameCount(pModel);
+
+	if (count == 0)
+		count = (int)(((size[1] + size[0]) * size[2] + size[1] * size[0]) / (3 * SHARD_VOLUME * SHARD_VOLUME));
+
+	if (count > 100)
+		count = 100;
+
+	for (int i = 0; i < count; i++) {
+		Vector vecSpot;
+		vecSpot[0] = pos[0] + enginerandom->RandomFloat(-0.5f, 0.5f) * size[0];
+		vecSpot[1] = pos[1] + enginerandom->RandomFloat(-0.5f, 0.5f) * size[1];
+		vecSpot[2] = pos[2] + enginerandom->RandomFloat(-0.5f, 0.5f) * size[2];
+
+		CBreakTempView *pTemp = (CBreakTempView *)sub_1003cdd0(&vecSpot, pModel);
+		if (!pTemp)
+			return;
+
+		pTemp->hitSound = type;
+
+		if (modelinfo->GetModelType(pModel) == 2) {
+			pTemp->m_flFrame = enginerandom->RandomInt(0, frameCount - 1);
+		} else if (modelinfo->GetModelType(pModel) == 3) {
+			if (i < 33)
+				pTemp->m_nBody = 0;
+			else if (i < 66)
+				pTemp->m_nBody = 1;
+			else
+				pTemp->m_nBody = 2;
+			if (pTemp->m_nBody > frameCount)
+				pTemp->m_nBody = frameCount;
+		}
+
+		pTemp->flags |= 0xa8;
+
+		if (enginerandom->RandomInt(0, 255) < 200) {
+			pTemp->flags |= 4;
+			pTemp->m_vecTempEntAngVelocity[0] = enginerandom->RandomFloat(-256, 255);
+			pTemp->m_vecTempEntAngVelocity[1] = enginerandom->RandomFloat(-256, 255);
+			pTemp->m_vecTempEntAngVelocity[2] = enginerandom->RandomFloat(-256, 255);
+		}
+
+		if (enginerandom->RandomInt(0, 255) < 100 && (flags & 0x10))
+			pTemp->flags |= 0x10;
+
+		if (type == 1 || (flags & 0x20)) {
+			pTemp->m_nRenderMode = 2;
+			pTemp->m_nRenderAlpha = 128;
+			pTemp->tempent_renderamt = 128;
+		} else {
+			pTemp->m_nRenderMode = 0;
+			pTemp->tempent_renderamt = 255;
+		}
+
+		pTemp->sub_1003a840(dir[0] + enginerandom->RandomFloat(-randRange, randRange),
+			dir[1] + enginerandom->RandomFloat(-randRange, randRange),
+			dir[2] + enginerandom->RandomFloat(0, randRange));
+
+		pTemp->die = engine->Time(0) + enginerandom->RandomFloat(0, 2) + life;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1003c3e0 size=0x1e3
 #include "CClientEntityList.h"
 #include "CTempEnts.h"
