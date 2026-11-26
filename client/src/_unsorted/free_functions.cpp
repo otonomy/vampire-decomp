@@ -65969,6 +65969,126 @@ int sub_100fbde0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fc900 size=0x394
+#include "CInput.h"
+#include "C_BasePlayer.h"
+#include "engineclient.h"
+#include "CClientEntityList.h"
+
+struct PredDataView
+{
+    char pad[0x70];
+    int m_70;
+    int m_74;
+    int m_78;
+    char pad7c[0x9c - 0x7c];
+    int m_9c;
+    char padA0[0x114 - 0xa0];
+    float m_114;
+    float m_118;
+};
+
+struct PlayerView
+{
+    float sub_1009f6b0(int);
+};
+
+class CAngleSource
+{
+public:
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+    virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+    virtual void vfunc10(QAngle &);
+};
+extern CAngleSource *g_1027bbf4;
+
+struct EntListView
+{
+    void sub_100d0cf0(int);
+};
+
+#define F(off) (*(float *)((char *)this + (off)))
+#define I(off) (*(int *)((char *)this + (off)))
+#define B(off) (*(char *)((char *)this + (off)))
+#define clamp(val, min, max) (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)))
+
+void CInput::sub_100fc900()
+{
+    C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
+    PredDataView *pred = 0;
+    QAngle angles;
+    float frametime = engine->vfunc41(0);
+    float curtime = engine->Time(0);
+
+    if (player)
+    {
+        frametime *= *(float *)((char *)player + 0x1078);
+        pred = (PredDataView *)((char *)player + 0x1658);
+    }
+
+    if (pred && !pred->m_78 && (pred->m_74 || (pred->m_9c & 0x10) || (pred->m_9c & 0x400)))
+    {
+        if (m_f138 == 0.0f)
+        {
+            F(0x13c) = engine->Time(0);
+            g_1027bbf4->vfunc10(angles);
+            F(0x140) = angles.y;
+        }
+        m_f138 += frametime;
+        if (pred->m_9c & 0x20)
+            m_f138 = frametime + frametime + m_f138;
+        B(0x144) = 0;
+    }
+    else
+    {
+        m_f138 -= frametime;
+        if (!B(0x144))
+        {
+            engine->GetViewAngles(angles);
+            if (player)
+            {
+                angles.y = ((PlayerView *)player)->sub_1009f6b0(1);
+                engine->SetViewAngles(angles);
+            }
+            I(0x150) = 0;
+            F(0x148) = angles.y;
+        }
+        B(0x144) = 1;
+    }
+
+    m_f138 = clamp(m_f138, 0.0f, 1.0f);
+
+    if (player && pred->m_70 && !pred->m_78)
+        ((EntListView *)cl_entitylist)->sub_100d0cf0(pred->m_70);
+
+    F(0x108) -= frametime * 0.5f;
+    F(0x108) = clamp(F(0x108), 0.0f, 1.0f);
+
+    if (B(0xf8) || m_f138 > 0.0f)
+        m_f0fc += frametime + frametime;
+    else if (B(0xf9))
+        m_f0fc -= frametime + frametime;
+    else if (!B(0xf0))
+        m_f0fc -= frametime + frametime;
+    else
+        m_f0fc += frametime + frametime;
+
+    m_f0fc = clamp(m_f0fc, 0.0f, 1.0f);
+
+    if (pred->m_114 > 0.0f)
+    {
+        m_f100 = 1.0f;
+        if (pred->m_118 > 0.01f)
+            m_f100 = (curtime - pred->m_114) / pred->m_118;
+        else if (pred->m_118 < -0.01f)
+            m_f100 = 1.0f - -((curtime - pred->m_114) / pred->m_118);
+        m_f100 = clamp(m_f100, 0.0f, 1.0f);
+        return;
+    }
+    m_f100 = 0.0f;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fcca0 size=0x48
 #include "C_BasePlayer.h"
 namespace lifted {
