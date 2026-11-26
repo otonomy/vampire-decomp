@@ -67068,6 +67068,18 @@ int sub_101024e0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101024f0 size=0xa
+namespace lifted {
+int sub_10102140();
+int sub_10102260();
+}
+int sub_101024f0()
+{
+    lifted::sub_10102260();
+    return lifted::sub_10102140();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101025b0 size=0x3b
 struct ObjX { virtual int vfunc0(); virtual bool vfunc1(); char pad[0x24]; float m_f28; };
 extern ObjX *g_104d3d9c;
