@@ -7723,6 +7723,7 @@
 0x10161dd0 func   ?sub_10161dd0@CPtrArray10206430@@QAEXXZ CPtrArray10206430::sub_10161dd0
 0x10161e30 func   ?sub_10161e30@CUnknown102064b0@@QAE_NPAVCUnknown102064b0Keys@@@Z CUnknown102064b0::sub_10161e30
 0x10161fc0 func   ?sub_10161fc0@@YAXXZ sub_10161fc0
+0x10161fd0 func   ?sub_10161fd0@VendorList7@@QAE_NXZ VendorList7::sub_10161fd0
 0x101621f0 func   ?sub_101621f0@NameSet@@QAEXPBD@Z NameSet::sub_101621f0
 0x10162290 func   ?vfunc0@VStdAllocator@@UAEHH@Z VStdAllocator::vfunc0
 0x10162310 func   ?sub_10162310@CUnknown10162310@@QAEPAXXZ CUnknown10162310::sub_10162310

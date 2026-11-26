@@ -104939,6 +104939,108 @@ void sub_10161fc0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10161fd0 size=0x21b
+#include "CUnknown102064b0.h"
+struct CPtrArray10206430 { void sub_10161dd0(); };
+struct CUnknown10206400 { void *sub_10161db0(int); };
+extern "C" int sprintf(char *, const char *, ...);
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern void *g_104a580c;
+struct Q7_VB { virtual void vfunc0(); virtual void vfunc1(); };
+struct Q7_Keys : virtual Q7_VB
+{
+	virtual void kv0();
+	virtual void kv1();
+	virtual Q7_Keys *vfunc2(const char *);
+	virtual Q7_Keys *vfunc3();
+};
+struct Q7_Val { int v; Q7_Val(const Q7_Val &o) { v = o.v; } };
+Q7_Keys *sub_101545c0(const char *, void *);
+Q7_Val sub_1015f810(void *);
+Q7_Val sub_1015f7e0(void *, const char *);
+struct VendorList7
+{
+	int m_growSize;
+	int m_nNextId;
+	int m_field0008;
+	int m_field000c;
+	int m_allocationCount;
+	int m_size;
+	CUnknown102064b0 **m_ppItems;
+	bool sub_10161fd0();
+};
+// TARGET: VendorList7::sub_10161fd0
+bool VendorList7::sub_10161fd0()
+{
+	if (m_ppItems)
+	{
+		for (int i = 0; i < m_size; i++)
+		{
+			CUnknown102064b0 *p = m_ppItems[i];
+			if (p)
+			{
+				((CPtrArray10206430 *)p)->sub_10161dd0();
+				delete p;
+			}
+			m_ppItems[i] = 0;
+		}
+		delete [] m_ppItems;
+		m_ppItems = 0;
+	}
+	m_nNextId = 0;
+	m_size = 0;
+	m_allocationCount = 0;
+	char szFile[128];
+	sprintf(szFile, "%s%s.txt", "vdata\\system\\", "vendors");
+	Q7_Keys *pKeys = sub_101545c0(szFile, g_104a580c);
+	if (pKeys)
+	{
+		m_field000c = sub_1015f810(pKeys).v;
+		m_field0008 = sub_1015f7e0(pKeys, "InternalName").v;
+		Q7_Keys *pVendor = pKeys->vfunc2("Vendor");
+		while (pVendor)
+		{
+			if (m_allocationCount == m_size)
+			{
+				m_allocationCount += m_growSize;
+				if (m_ppItems)
+				{
+					CUnknown102064b0 **pNew = (CUnknown102064b0 **)operator new(m_allocationCount * 4);
+					int i = 0;
+					for (; i < m_size; i++)
+						pNew[i] = m_ppItems[i];
+					for (; i < m_allocationCount; i++)
+						pNew[i] = 0;
+					delete [] m_ppItems;
+					m_ppItems = pNew;
+					m_size++;
+				}
+				else
+				{
+					m_ppItems = (CUnknown102064b0 **)operator new(m_allocationCount * 4);
+					for (int j = 0; j < m_allocationCount; j++)
+						m_ppItems[j] = 0;
+					m_size++;
+				}
+			}
+			else
+				m_size++;
+			if (!m_ppItems[m_size - 1])
+			{
+				void *pNewItem = operator new(0x24);
+				m_ppItems[m_size - 1] = pNewItem ? (CUnknown102064b0 *)((CUnknown10206400 *)pNewItem)->sub_10161db0(m_nNextId++) : 0;
+			}
+			m_ppItems[m_size - 1]->sub_10161e30((CUnknown102064b0Keys *)pVendor);
+			pVendor = pVendor->vfunc3();
+		}
+		((Q7_VB *)pKeys)->vfunc1();
+	}
+	else
+		Msg("Unable to load data for: %s\n", szFile);
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101621f0 size=0x7a
 extern "C" int sprintf(char *, const char *, ...);
 extern "C" int _strcmpi(const char *, const char *);
