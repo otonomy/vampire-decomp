@@ -8607,6 +8607,7 @@
 0x10186d70 func   ?sub_10186d70@@YAXH@Z sub_10186d70
 0x10186dd0 func   ?sub_10186dd0@@YAHHH@Z sub_10186dd0
 0x10186e00 func   ?sub_10186e00@@YAXH@Z sub_10186e00
+0x10186f60 func   ?sub_10186f60@@YAHXZ sub_10186f60
 0x10186fa0 func   ?sub_10186fa0@CUnknown10186fa0@@QAEPAXHHH@Z CUnknown10186fa0::sub_10186fa0
 0x10187000 func   ??_GVMapIconButton@@UAEPAXI@Z ??_GVMapIconButton@@UAEPAXI@Z
 0x10187020 func   ??1VMapIconButton@@UAE@XZ VMapIconButton::~VMapIconButton
