@@ -52647,6 +52647,86 @@ const char *PlrView14d8::sub_100a6420()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a6450 size=0x271
+#define PCD_LPF_CTOR
+#include "C_BasePlayer.h"
+#include "C_RecipientFilter.h"
+#include "CVStatList_t.h"
+#include "ConVar.h"
+
+struct PlayerSoundView	// g_104a5818: engine sound
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void vfunc8(IRecipientFilter &filter, int value);
+	virtual void vfunc9(IRecipientFilter &filter, int value);
+	virtual void v10(); virtual void v11(); virtual void v12();
+	virtual void vfunc13(int value);
+};
+extern PlayerSoundView *g_104a5818;
+
+struct PlayerEngineView	// g_104a57d4: engine client
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual void vfunc9(float value);
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38();
+	virtual float vfunc39(int a);
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50();
+	virtual int vfunc51();
+};
+extern PlayerEngineView *g_104a57d4;
+
+extern ConVar *g_104a0ca4;
+extern ConVar *g_1049fe0c;
+extern const float g_1022e4d8;
+extern "C" float sub_100cd9e0(float cur, float target, float dt, float rate);
+
+void C_BasePlayer::sub_100a6450()
+{
+	static CLocalPlayerFilter filter;
+
+	if ((g_104a0ca4->vfunc1() ? 0 : g_104a0ca4->m_nValue) != -1)
+		g_104a5818->vfunc9(filter, g_104a0ca4->vfunc1() ? 0 : g_104a0ca4->m_nValue);
+	else
+		g_104a5818->vfunc9(filter, *(int *)((char *)this + 0x17a0));
+
+	if ((g_1049fe0c->vfunc1() ? 0 : g_1049fe0c->m_nValue) != -1)
+		g_104a5818->vfunc8(filter, g_1049fe0c->vfunc1() ? 0 : g_1049fe0c->m_nValue);
+	else
+		g_104a5818->vfunc8(filter, *(int *)((char *)this + 0x179c));
+
+	g_104a5818->vfunc13(*(int *)((char *)this + 0x16f0));
+
+	static float s_flPerLevel = g_1022e4d8 * 0.2f;
+	static float s_flRate = g_1022e4d8 * 1.3333334f;
+	static float s_flLastTime = g_104a57d4->vfunc39(0);
+
+	float flNow = g_104a57d4->vfunc39(0);
+	if (g_104a57d4->vfunc51() == 1)
+	{
+		float dt = flNow - s_flLastTime;
+		double d = dt;
+		dt = (d < 0.001) ? dt : 0.15;
+		s_flLastTime = flNow;
+
+		CVStatList_t *pList = ((CVStatListSet *)((char *)this + 0x1164))->Find(3);
+		float flTarget = 1.0f - pList->sub_1015dbd0(3) * s_flPerLevel;
+		float &flValue = *(float *)((char *)this + 0x1648);
+		float f = sub_100cd9e0(flValue, flTarget, dt, s_flRate);
+		flValue = f;
+		g_104a57d4->vfunc9(f);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a6740 size=0x13
 namespace lifted {
 extern char g_105f8b98;
