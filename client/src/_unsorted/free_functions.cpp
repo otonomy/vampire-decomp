@@ -110133,6 +110133,16 @@ void CUnk_1006ca50::sub_101601f0(int a)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10160240 size=0x5
+namespace lifted {
+int sub_10160160();
+}
+int sub_10160240()
+{
+    return lifted::sub_10160160();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10160250 size=0x30
 #include "StatDefault.h"
 int StatDefault::sub_10160250(int arg)
