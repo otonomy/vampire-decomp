@@ -1,11 +1,10 @@
 // CVProfile / CVProfNode: the engine's VPROF profiler as client.dll sees it (layout read off C_BaseAnimating::DrawModel's inlined scope code).
-// EnterScope / ExitScope are imported (slots 0x101e3134 / 0x101e313c). CCycleCountX::Sample (rdtsc) is defined in the source of the function that needs it.
+// EnterScope / ExitScope are imported (slots 0x101e3134 / 0x101e313c). The rdtsc Sample is written in the source of the function that needs it.
 #pragma once
 
 struct CCycleCountX
 {
 	unsigned __int64 v;
-	void Sample();
 	void operator+=(const CCycleCountX &o) { v += o.v; }
 };
 
