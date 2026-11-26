@@ -365,6 +365,7 @@
 0x100091b0 func   ?_C_WeaponMelee_OccultBlade_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_OccultBlade_CreateObject
 0x10009270 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_OccultBlade@@@Z ClientClassInit
 0x10009300 func   ?vfunc17@C_WeaponMelee_Stake@@UAEHXZ C_WeaponMelee_Stake::vfunc17
+0x10009340 func   ?sub_10009340@@YAHXZ sub_10009340
 0x10009390 func   ??_GC_WeaponMelee_Stake@@UAEPAXI@Z ??_GC_WeaponMelee_Stake@@UAEPAXI@Z
 0x100093b0 func   ?vfunc16@C_WeaponMelee_Stake@@UAEHXZ C_WeaponMelee_Stake::vfunc16
 0x100093c0 func   ?vfunc15@C_WeaponMelee_Stake@@UAEHXZ C_WeaponMelee_Stake::vfunc15
