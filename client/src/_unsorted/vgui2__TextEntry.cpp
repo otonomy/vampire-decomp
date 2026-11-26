@@ -175,6 +175,176 @@ bool TextEntry::vfunc155(int a, int b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101adb60 size=0x621
+#include "vgui2__TextEntry.h"
+
+#define F(T, off) (*(T *)((char *)this + (off)))
+
+template <class T> struct DarV
+{
+	int m_count;
+	int m_capacity;
+	T *m_data;
+	T Get(int i) { if (i >= 0 && i < m_count) return m_data[i]; return 0; }
+};
+
+struct SurfV
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void DrawSetColor(int col);
+	virtual void DrawSetColorRGBA(int r, int g, int b, int a);
+	virtual void DrawFilledRect(int x0, int y0, int x1, int y1);
+	virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16();
+	virtual void DrawSetTextFont(int font);
+	virtual void DrawSetTextColor(int col);
+};
+SurfV *sub_101ac8d0();
+int sub_101ad550(int font, char ch);
+struct TV { int sub_101ae190(int); };
+
+#define TEXT F(DarV<char>, 0x58)
+#define IMAGES F(DarV<vgui2::Panel *>, 0xe0)
+
+void vgui2::TextEntry::vfunc97()
+{
+	int col;
+	if (vfunc47())
+	{
+		int tmp;
+		col = *(int *)vfunc52((int)&tmp);
+	}
+	else
+		col = F(int, 0xc0);
+	sub_101ac8d0()->DrawSetColor(col);
+	int wide, tall;
+	sub_101a9920(&wide, &tall);
+	sub_101ac8d0()->DrawFilledRect(0, 0, wide, tall);
+	sub_101ac8d0()->DrawSetTextFont(F(int, 0x124));
+	if (vfunc47())
+	{
+		int tmp;
+		col = *(int *)vfunc53((int)&tmp);
+	}
+	else
+		col = F(int, 0xbc);
+	sub_101ac8d0()->DrawSetTextColor(col);
+	F(int, 0xd5) = col;
+	F(int, 0xa4) = 0;
+	F(char, 0xd9) = 0;
+	for (int k = 0; k < IMAGES.m_count; k++)
+		IMAGES.Get(k)->vfunc21(0);
+
+	bool highlight = false;
+	int lineBreakIndexIndex = 0;
+	int startIndex = vfunc172(&lineBreakIndexIndex);
+	F(int, 0xec) = ((TV *)this)->sub_101ae190(startIndex);
+	if (F(char, 0x100) && F(char, 0x8b))
+		vfunc166(startIndex);
+	if (F(char, 0x8b))
+	{
+		sub_101ac8d0()->DrawSetTextColor(F(int, 0x101));
+		F(int, 0xa4) = F(int, 0x108);
+		highlight = F(bool, 0xd9) = F(bool, 0x10c);
+	}
+
+	int x = F(int, 0xa4) + 3;
+	int y = vfunc162();
+	if (!F(char, 0xb1) && !F(char, 0x8b) && !F(char, 0xd4))
+	{
+		int endIndex = TEXT.m_count;
+		int pixels = 3;
+		if ((!vfunc56() && vfunc135()) || !vfunc135())
+		{
+			for (int n = 0; n < TEXT.m_count; n++)
+			{
+				pixels += sub_101ad550(F(int, 0x124), TEXT.Get(n));
+				if (pixels > F(int, 0xf8))
+				{
+					int dotsWidth = sub_101ad550(F(int, 0x124), '.') * 3;
+					while (dotsWidth > 0 && n >= 0)
+					{
+						dotsWidth -= sub_101ad550(F(int, 0x124), TEXT.Get(n));
+						n--;
+					}
+					endIndex = n + 1;
+					break;
+				}
+			}
+			if (TEXT.m_count - endIndex < 3 && TEXT.m_count - endIndex > 0)
+				endIndex = TEXT.m_count - 3;
+		}
+		int i;
+		for (i = startIndex; i < endIndex; i++)
+		{
+			char ch = TEXT.Get(i);
+			if (F(char, 0x89))
+				ch = '*';
+			x += vfunc153(ch, F(int, 0x124), i, x, y);
+		}
+		if (endIndex < TEXT.m_count)
+		{
+			x += vfunc153('.', F(int, 0x124), i, x, y);
+			i++;
+			x += vfunc153('.', F(int, 0x124), i, x, y);
+			i++;
+			x += vfunc153('.', F(int, 0x124), i, x, y);
+		}
+	}
+	else
+	{
+		for (int i = 0; i < startIndex; i++)
+			vfunc164(TEXT.Get(i), (int)&i, (int)&x, (int)&y);
+		for (int j = startIndex; j < TEXT.m_count; j++)
+		{
+			char ch = TEXT.Get(j);
+			if (vfunc164(ch, (int)&j, (int)&x, (int)&y))
+			{
+				sub_101ac8d0()->DrawSetTextFont(F(int, 0x124));
+				if (highlight != F(bool, 0xd9))
+				{
+					if (F(char, 0xd9))
+					{
+						vgui2::Panel *p = IMAGES.Get(++F(int, 0xec));
+						if (p)
+							p->sub_101a9890(x, y);
+					}
+					else
+						vfunc154(x, y);
+					highlight = F(bool, 0xd9);
+				}
+				continue;
+			}
+			if (F(char, 0x89))
+				ch = '*';
+			if (F(char, 0xb1) && F(DarV<int>, 0x64).Get(lineBreakIndexIndex) == j)
+			{
+				if (F(char, 0xd9))
+					vfunc154(x, y);
+				vfunc161(&x, &y);
+				if (sub_101ae650(x, y))
+					break;
+				lineBreakIndexIndex++;
+				if (F(char, 0xd9))
+				{
+					vgui2::Panel *p = IMAGES.Get(++F(int, 0xec));
+					if (p)
+						p->sub_101a9890(x, y);
+				}
+			}
+			x += vfunc153(ch, F(int, 0x124), j, x, y);
+		}
+	}
+
+	sub_101ac8d0()->DrawSetColorRGBA(50, 50, 50, 255);
+	if (vfunc47() && vfunc135() && vfunc56())
+	{
+		sub_101ac8d0()->DrawSetColorRGBA(0, 0, 0, 255);
+		vfunc155(x, y);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ae1e0 size=0xc1
 #include "vgui2__TextEntry.h"
 #define V4(n) virtual void n##a(); virtual void n##b(); virtual void n##c(); virtual void n##d();
