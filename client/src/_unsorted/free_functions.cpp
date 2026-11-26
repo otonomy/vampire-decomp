@@ -9462,6 +9462,32 @@ template <> int ClientClassInit<DT_ItemGDrugsDrugBox::ignored>(DT_ItemGDrugsDrug
 }
 // END FUNCTION
 
+// FUNCTION: 0x100176c0 size=0x45
+namespace lifted {
+extern char g_10205f14;
+extern char g_10205f28;
+extern char g_10205f64;
+extern char g_10205f9c;
+extern char g_10205ff4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100176c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10205ff4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10205f9c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10205f64;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10205f28;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10205f14;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10017750 size=0x6
 namespace lifted {
 extern char g_102e053c;
