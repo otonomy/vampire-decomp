@@ -91531,6 +91531,16 @@ const char * __stdcall sub_1012f8c0(float value)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012f960 size=0x10
+namespace lifted {
+int sub_1012dbf0(int);
+}
+int __stdcall sub_1012f960(int a0)
+{
+    return lifted::sub_1012dbf0(a0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012f9c0 size=0x1b
 #include "CUnknown1024b2d0.h"
 
