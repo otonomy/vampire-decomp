@@ -1133,6 +1133,7 @@
 0x100181b0 func   ?_C_ItemGRing03_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGRing03_CreateObject
 0x10018270 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGRing03@@@Z ClientClassInit
 0x10018300 func   ?vfunc17@C_ItemGRingGold@@UAEHXZ C_ItemGRingGold::vfunc17
+0x10018340 func   ?sub_10018340@@YAHXZ sub_10018340
 0x10018390 func   ??_GC_ItemGRingGold@@UAEPAXI@Z ??_GC_ItemGRingGold@@UAEPAXI@Z
 0x100183b0 func   ?vfunc16@C_ItemGRingGold@@UAEHXZ C_ItemGRingGold::vfunc16
 0x100183c0 func   ?vfunc15@C_ItemGRingGold@@UAEHXZ C_ItemGRingGold::vfunc15
