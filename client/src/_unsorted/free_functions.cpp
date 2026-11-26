@@ -117299,6 +117299,81 @@ CViewModelInfo *CViewModelInfo::sub_10198a00()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10198a90 size=0x293
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+struct CViewModelInfo { CViewModelInfo *sub_10198a00(); };
+struct CUnknown100cd1c0 { void *sub_100cd1c0(int name); };
+
+extern char vt_1024fc14[];
+extern char vt_1024f984[];
+
+#define VR_AT(type, off) (*(type *)((char *)this + (off)))
+#define VR_MATREF(off) (&VR_AT(CUnknown100cd1c0, off))
+
+CViewRender *CViewRender::sub_10198a90()
+{
+	*(void **)this = vt_1024fc14;
+	VR_AT(bool, 0xa0) = false;
+	int i;
+	for (i = 0; i < 2; i++)
+		(&VR_AT(CViewModelInfo, 0x2b8 + i * 0x2c))->sub_10198a00();
+	VR_MATREF(0x388)->sub_100cd1c0(0);
+	VR_MATREF(0x38c)->sub_100cd1c0(0);
+	for (i = 0; i < 8; i++)
+		VR_MATREF(0x390 + i * 4)->sub_100cd1c0(0);
+	VR_MATREF(0x3b0)->sub_100cd1c0(0);
+	VR_MATREF(0x3b4)->sub_100cd1c0(0);
+	VR_MATREF(0x3b8)->sub_100cd1c0(0);
+	VR_MATREF(0x3bc)->sub_100cd1c0(0);
+	VR_MATREF(0x3c0)->sub_100cd1c0(0);
+	VR_MATREF(0x3c4)->sub_100cd1c0(0);
+	VR_MATREF(0x3c8)->sub_100cd1c0(0);
+	VR_MATREF(0x3cc)->sub_100cd1c0(0);
+	VR_MATREF(0x3d0)->sub_100cd1c0(0);
+	VR_MATREF(0x3d4)->sub_100cd1c0(0);
+	VR_MATREF(0x3d8)->sub_100cd1c0(0);
+	VR_MATREF(0x3dc)->sub_100cd1c0(0);
+	VR_MATREF(0x3e0)->sub_100cd1c0(0);
+	VR_MATREF(0x3e4)->sub_100cd1c0(0);
+	VR_MATREF(0x3e8)->sub_100cd1c0(0);
+	VR_MATREF(0x3ec)->sub_100cd1c0(0);
+	VR_MATREF(0x3f0)->sub_100cd1c0(0);
+	VR_MATREF(0x3f4)->sub_100cd1c0(0);
+	VR_MATREF(0x3f8)->sub_100cd1c0(0);
+	VR_MATREF(0x3fc)->sub_100cd1c0(0);
+	VR_MATREF(0x400)->sub_100cd1c0(0);
+	VR_MATREF(0x404)->sub_100cd1c0(0);
+	VR_MATREF(0x408)->sub_100cd1c0(0);
+	VR_MATREF(0x40c)->sub_100cd1c0(0);
+	VR_MATREF(0x410)->sub_100cd1c0(0);
+	VR_MATREF(0x424)->sub_100cd1c0(0);
+	VR_MATREF(0x428)->sub_100cd1c0(0);
+	VR_MATREF(0x42c)->sub_100cd1c0(0);
+	VR_MATREF(0x430)->sub_100cd1c0(0);
+	VR_MATREF(0x434)->sub_100cd1c0(0);
+	VR_MATREF(0x438)->sub_100cd1c0(0);
+	VR_MATREF(0x43c)->sub_100cd1c0(0);
+	VR_MATREF(0x440)->sub_100cd1c0(0);
+	VR_MATREF(0x444)->sub_100cd1c0(0);
+	VR_AT(int, 0x464) = 0;
+	VR_AT(int, 0x468) = 0;
+	VR_AT(int, 0x46c) = 0;
+	VR_AT(int, 0x470) = 0;
+	VR_AT(int, 0x474) = 0;
+	*(void **)this = vt_1024f984;
+
+	ScopeTrace st("CViewRender::CViewRender", g_102de300);
+	VR_AT(int, 0x370) = 0;
+	memset(&VR_AT(int, 0x310), 0, 0x60);
+	VR_AT(int, 0x450) = 0;
+	return this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10198d30 size=0x6
 namespace lifted {
 extern char g_10618f7c;
