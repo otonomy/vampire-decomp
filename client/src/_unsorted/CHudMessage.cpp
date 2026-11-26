@@ -61,3 +61,111 @@ void CHudMessage::vfunc7()
 	p->m_dc = 0;
 }
 // END FUNCTION
+
+// FUNCTION: 0x1010ed40 size=0x2af
+#include "CHudMessage.h"
+#include <string.h>
+
+typedef struct client_textmessage_s
+{
+	int effect;
+	unsigned char r1, g1, b1, a1;
+	unsigned char r2, g2, b2, a2;
+	float x;
+	float y;
+	float fadein;
+	float fadeout;
+	float holdtime;
+	float fxtime;
+	const char *pName;
+	const char *pMessage;
+} client_textmessage_t;
+
+extern float g_104cfe3c;
+int sub_100ccdc0(int sprite);
+int sub_100ccde0(int sprite);
+void sub_100ccd10(int x, int y, int sprite, int r, int g, int b);
+
+void CHudMessage::vfunc5(float fTime)
+{
+	int i, drawn;
+	client_textmessage_t *pMessage;
+	float endTime;
+
+	drawn = 0;
+
+	if (m_gameTitleTime > 0)
+	{
+		float localTime = g_104cfe3c - m_gameTitleTime;
+		float brightness;
+
+		if (m_gameTitleTime > g_104cfe3c)
+			m_gameTitleTime = g_104cfe3c;
+
+		if (localTime > (m_pGameTitle->fadein + m_pGameTitle->holdtime + m_pGameTitle->fadeout))
+			m_gameTitleTime = 0;
+		else
+		{
+			brightness = sub_1010e600(m_pGameTitle->fadein, m_pGameTitle->fadeout, m_pGameTitle->holdtime, localTime);
+
+			int halfWidth = sub_100ccdc0(m_HUD_title_half);
+			int fullWidth = halfWidth + sub_100ccdc0(m_HUD_title_life);
+			int fullHeight = sub_100ccde0(m_HUD_title_half);
+
+			int x = sub_1010e6a0(m_pGameTitle->x, fullWidth, fullWidth);
+			int y = sub_1010e740(m_pGameTitle->y, fullHeight);
+
+			sub_100ccd10(x, y, m_HUD_title_half, m_pGameTitle->r1 * brightness, m_pGameTitle->g1 * brightness, m_pGameTitle->b1 * brightness);
+			sub_100ccd10(x + halfWidth, y, m_HUD_title_life, m_pGameTitle->r1 * brightness, m_pGameTitle->g1 * brightness, m_pGameTitle->b1 * brightness);
+
+			drawn = 1;
+		}
+	}
+
+	for (i = 0; i < 16; i++)
+	{
+		if (m_pMessages[i])
+		{
+			if (m_startTime[i] > g_104cfe3c)
+				m_startTime[i] = g_104cfe3c + m_time - m_startTime[i] + 0.2;
+		}
+	}
+
+	for (i = 0; i < 16; i++)
+	{
+		if (m_pMessages[i])
+		{
+			pMessage = m_pMessages[i];
+
+			switch (pMessage->effect)
+			{
+			case 0:
+			case 1:
+				endTime = m_startTime[i] + pMessage->fadein + pMessage->fadeout + pMessage->holdtime;
+				break;
+			case 2:
+				endTime = m_startTime[i] + (pMessage->fadein * strlen(pMessage->pMessage)) + pMessage->fadeout + pMessage->holdtime;
+				break;
+			default:
+				endTime = 0;
+				break;
+			}
+
+			if (fTime <= endTime)
+			{
+				float messageTime = fTime - m_startTime[i];
+				sub_1010eb20(pMessage, messageTime);
+				drawn++;
+			}
+			else
+			{
+				m_pMessages[i] = NULL;
+			}
+		}
+	}
+
+	*(int *)&m_time = *(int *)&g_104cfe3c;
+	if (!drawn)
+		m_bHaveMessage = false;
+}
+// END FUNCTION
