@@ -29846,6 +29846,30 @@ void CItemInfo::sub_1005eef0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1005f040 size=0x40
+struct CUnkFade {
+	char m_pad[0x18];
+	int m_n20;
+	bool m_bOn;
+	bool m_b25;
+	bool m_b26;
+	void sub_1005f040(bool on);
+};
+void CUnkFade::sub_1005f040(bool on)
+{
+	if (!m_bOn && on) {
+		m_n20 = 0;
+		m_b25 = true;
+		m_b26 = false;
+	} else if (m_bOn && !on) {
+		m_n20 = 255;
+		m_b26 = true;
+		m_b25 = on;
+	}
+	m_bOn = on;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1005f080 size=0x4
 struct CUnknown1005f080 { char sub_1005f080(); };
 char CUnknown1005f080::sub_1005f080()

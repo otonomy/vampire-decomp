@@ -3136,6 +3136,7 @@
 0x1005eef0 func   ?sub_1005eef0@CItemInfo@@QAEXXZ CItemInfo::sub_1005eef0
 0x1005ef50 func   ?vfunc98@CItemInfo@@UAEXXZ CItemInfo::vfunc98
 0x1005f030 func   ?vfunc97@CItemInfo@@UAEXXZ CItemInfo::vfunc97
+0x1005f040 func   ?sub_1005f040@CUnkFade@@QAEX_N@Z CUnkFade::sub_1005f040
 0x1005f080 func   ?sub_1005f080@CUnknown1005f080@@QAEDXZ CUnknown1005f080::sub_1005f080
 0x1005f0a0 func   ??0CManagedHudElement@@QAE@HH@Z CManagedHudElement::CManagedHudElement
 0x1005f0f0 func   ?vfunc0@IManagedHudElement@@QAEPAXD@Z IManagedHudElement::vfunc0
