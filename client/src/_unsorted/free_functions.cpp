@@ -61477,6 +61477,142 @@ void CGameMovement::sub_100ed4d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ed9a0 size=0x342
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+
+class CUnknown100a2450
+{
+public:
+	int sub_100a2450();
+};
+
+class CView
+{
+public:
+	char sub_100e7850();
+};
+
+struct CDuckMove
+{
+	char m_pad0000[0x90];
+	int m_n90;
+	char m_pad0094[0x160d - 0x94];
+	char m_b160d;
+	char m_pad160e[0x16f9 - 0x160e];
+	char m_bDucked;	// 0x16f9
+	char m_bDucking;	// 0x16fa
+	char m_pad16fb;
+	float m_flDucktime;	// 0x16fc
+	char m_pad1700[0x1744 - 0x1700];
+	char m_b1744;
+};
+
+struct CDuckMv
+{
+	char m_pad0000[0x24];
+	int m_nButtons;
+	int m_nOldButtons;
+	char m_pad002c[0xc0 - 0x2c];
+	int m_n00c0;
+};
+
+#define DPLAYER ((CDuckMove *)m_pMove)
+#define DMV ((CDuckMv *)m_pPlayer)
+#define DFLAGS() (((CUnknown100a2450 *)m_pMove)->sub_100a2450())
+#define GROUND() (((CMoveDataView *)m_pMove)->g104())
+
+inline float DuckSpline(float value)
+{
+	float valueSquared = value * value;
+	return (3 * valueSquared - 2 * valueSquared * value);
+}
+
+inline float DuckMax(float a, float b) { return a > b ? a : b; }
+
+void CGameMovement::sub_100ed9a0()
+{
+	int buttonsChanged = DMV->m_nOldButtons ^ DMV->m_nButtons;
+	int buttonsPressed = buttonsChanged & DMV->m_nButtons;
+	bool bDuck, bUnduck;
+
+	if (DPLAYER->m_n90 == 3 || (DPLAYER->m_n90 > 0 && !GROUND() && DMV->m_n00c0 == 0)) {
+		if (sub_100ed190())
+			goto unduck_now;
+	}
+
+	if (DMV->m_nButtons & 4)
+		DMV->m_nOldButtons |= 4;
+	else
+		DMV->m_nOldButtons &= ~4;
+	if (DMV->m_nButtons & 4)
+		DMV->m_nOldButtons |= 4;
+	else
+		DMV->m_nOldButtons &= ~4;
+
+	bDuck = false;
+	bUnduck = false;
+	if (!DPLAYER->m_b160d && (buttonsPressed & 4) && !DPLAYER->m_bDucking) {
+		if (!(DFLAGS() & 2))
+			bDuck = true;
+		else if (sub_100ed190())
+			bUnduck = true;
+	}
+
+	if (((CView *)this)->sub_100e7850())
+		goto unduck_now;
+
+	if (!bDuck && !bUnduck) {
+		if (!DPLAYER->m_bDucking && !(DFLAGS() & 2))
+			return;
+	}
+
+	if ((bDuck && !bUnduck) || (!bDuck && !bUnduck && (((DFLAGS() & 2) && !DPLAYER->m_bDucking) || (!(DFLAGS() & 2) && DPLAYER->m_bDucking)))) {
+		bool bInDuck = (DFLAGS() & 2) ? true : false;
+		if (bDuck && !(DFLAGS() & 2)) {
+			DPLAYER->m_flDucktime = 1000.0f;
+			DPLAYER->m_bDucking = 1;
+		}
+		float duckmilliseconds = DuckMax(0.0f, 1000.0f - DPLAYER->m_flDucktime);
+		float duckseconds = duckmilliseconds / 1000.0f;
+		if (DPLAYER->m_bDucking) {
+			if (duckseconds > 0.4f || !GROUND() || bInDuck) {
+				sub_100ed720();
+			} else {
+				float duckFraction = DuckSpline(duckseconds / 0.4f);
+				sub_100ed850(duckFraction);
+			}
+		}
+	} else {
+		if (!DPLAYER->m_b1744 && GROUND())
+			return;
+		if (bUnduck) {
+			DPLAYER->m_flDucktime = 1000.0f;
+			DPLAYER->m_bDucking = 1;
+		}
+		float duckmilliseconds = DuckMax(0.0f, 1000.0f - DPLAYER->m_flDucktime);
+		float duckseconds = duckmilliseconds / 1000.0f;
+		if (sub_100ed190()) {
+			if (DPLAYER->m_bDucking || DPLAYER->m_bDucked) {
+				if (duckseconds > 0.2 || !GROUND()) {
+					sub_100ed4d0();
+				} else {
+					float duckFraction = DuckSpline(1.0 - duckseconds / 0.2);
+					sub_100ed850(duckFraction);
+				}
+			}
+		} else {
+			DPLAYER->m_flDucktime = 1000.0f;
+		}
+	}
+	return;
+
+unduck_now:
+	if (DFLAGS() & 2)
+		sub_100ed4d0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100edcf0 size=0x8c
 const char *sub_100edcf0(int state)
 {
