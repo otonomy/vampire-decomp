@@ -628,8 +628,8 @@ public:
 	virtual void vfunc19();
 	virtual char *vfunc20(char *, int, int);	// slot 20; seen as ReadLine 1
 	virtual int vfunc21(void *, const char *, ...);	// slot 21; seen as FPrintf 1
-	virtual int FindFirst(const char *, int *);	// slot 22; shapes differ
-	virtual int FindNext(int);	// slot 23; shapes differ
+	virtual const char *FindFirst(const char *, int *);	// slot 22; shapes differ
+	virtual const char *FindNext(int);	// slot 23; shapes differ
 	virtual void vfunc24();
 	virtual void FindClose(int);	// slot 25
 };

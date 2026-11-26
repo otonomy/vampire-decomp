@@ -12451,7 +12451,7 @@ int sub_1002b780(const char *pszPath)
 	int findHandle;
 	const char *skip[2] = { "sp_genesisdevice_1", 0 };
 	char szName[128];
-	const char *pFile = ((const char *)filesystem->FindFirst(pszPath, &findHandle));
+	const char *pFile = filesystem->FindFirst(pszPath, &findHandle);
 	while (pFile)
 	{
 		g_101e3198(pFile, szName, 128);
@@ -12505,7 +12505,7 @@ int sub_1002b780(const char *pszPath)
 			nAdded++;
 		}
 next:
-		pFile = ((const char *)filesystem->FindNext(findHandle));
+		pFile = filesystem->FindNext(findHandle);
 	}
 	filesystem->FindClose(findHandle);
 	return nAdded;
@@ -89022,18 +89022,18 @@ void Loader::sub_1013fb80(const char *dir)
 	int count = 0;
 	if (dir) {
 		sprintf(path, "%s%s*.txt", "vdata\\system\\", dir);
-		if (((const char *)filesystem->FindFirst(path, &handle))) {
+		if (filesystem->FindFirst(path, &handle)) {
 			do {
 				count++;
 			} while (filesystem->FindNext(handle));
 			filesystem->FindClose(handle);
 			if (count > 0) {
-				const char *name = ((const char *)filesystem->FindFirst(path, &handle));
+				const char *name = filesystem->FindFirst(path, &handle);
 				do {
 					sprintf(path, "%s%s", "vdata\\system\\", name);
 					if (!sub_1013fa20(path))
 						Msg("Unable to open Character Template List data file for: %s\n", path);
-					name = (const char *)filesystem->FindNext(handle);
+					name = filesystem->FindNext(handle);
 				} while (name);
 				filesystem->FindClose(handle);
 			}
