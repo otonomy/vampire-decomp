@@ -61408,6 +61408,255 @@ void CUnknown100c7680::sub_100c7680()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c77f0 size=0x665
+#include "C_BaseTerminal.h"
+#include <string.h>
+#pragma intrinsic(memset, memcpy)
+
+extern "C" __declspec(dllimport) void Msg(const char *pMsg, ...);
+
+class ITexture { public: virtual void v0(); virtual void v1(); virtual void v2(); virtual int GetActualHeight(); virtual int GetActualWidth(); };
+class IVTFTexture
+{
+public:
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual int Width(); virtual int Height(); virtual void v13(); virtual int RowSizeInBytes(int mip); virtual int Format();
+	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25();
+	virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual unsigned char *ImageData(int frame, int face, int mip);
+};
+
+struct TerminalPalette_t { int c0, c1, c2, c3, blur; };
+extern TerminalPalette_t g_10233378[4];
+extern unsigned char g_10232ee8[];	// 8x8 glyphs
+extern unsigned char g_102b7110[45];	// the extra characters (high byte of a wide char)
+
+#define clamp(val, min, max) (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)))
+#define ARRAYSIZE(p) (sizeof(p) / sizeof(p[0]))
+
+class CPixelWriter
+{
+public:
+	void SetPixelMemory(int format, void *pMemory, int stride);
+	void WritePixel(int r, int g, int b, int a);
+
+	unsigned char *m_pBase;
+	unsigned char *m_pBits;
+	unsigned short m_BytesPerRow;
+	unsigned char m_Size;
+	signed char m_RShift;
+	signed char m_GShift;
+	signed char m_BShift;
+	signed char m_AShift;
+	unsigned char m_RMask;
+	unsigned char m_GMask;
+	unsigned char m_BMask;
+	unsigned char m_AMask;
+};
+
+inline void CPixelWriter::SetPixelMemory(int format, void *pMemory, int stride)
+{
+	m_pBits = (unsigned char *)pMemory;
+	m_pBase = m_pBits;
+	m_BytesPerRow = (unsigned short)stride;
+	switch (format)
+	{
+	case 12:	// BGRA8888
+		m_Size = 4; m_RShift = 16; m_GShift = 8; m_BShift = 0; m_AShift = 24;
+		m_RMask = 0xFF; m_GMask = 0xFF; m_BMask = 0xFF; m_AMask = 0xFF;
+		break;
+	case 16:	// BGRX8888
+		m_Size = 4; m_RShift = 16; m_GShift = 8; m_BShift = 0; m_AShift = 24;
+		m_RMask = 0xFF; m_GMask = 0xFF; m_BMask = 0xFF; m_AMask = 0x00;
+		break;
+	case 19:	// BGRA4444
+		m_Size = 2; m_RShift = 4; m_GShift = 0; m_BShift = -4; m_AShift = 8;
+		m_RMask = 0xF0; m_GMask = 0xF0; m_BMask = 0xF0; m_AMask = 0xF0;
+		break;
+	case 3:	// BGR888
+		m_Size = 3; m_RShift = 16; m_GShift = 8; m_BShift = 0; m_AShift = 0;
+		m_RMask = 0xFF; m_GMask = 0xFF; m_BMask = 0xFF; m_AMask = 0x00;
+		break;
+	case 17:	// BGR565
+		m_Size = 2; m_RShift = 8; m_GShift = 3; m_BShift = -3; m_AShift = 0;
+		m_RMask = 0xF8; m_GMask = 0xFC; m_BMask = 0xF8; m_AMask = 0x00;
+		break;
+	case 18:	// BGRA5551
+	case 21:	// BGRX5551
+		m_Size = 2; m_RShift = 7; m_GShift = 2; m_BShift = -3; m_AShift = 8;
+		m_RMask = 0xF8; m_GMask = 0xF8; m_BMask = 0xF8; m_AMask = 0x80;
+		break;
+	case 8:	// A8
+		m_Size = 1; m_RShift = 0; m_GShift = 0; m_BShift = 0; m_AShift = 0;
+		m_RMask = 0x00; m_GMask = 0x00; m_BMask = 0x00; m_AMask = 0xFF;
+		break;
+	case 23:	// UVWQ8888
+		m_Size = 4; m_RShift = 0; m_GShift = 8; m_BShift = 16; m_AShift = 24;
+		m_RMask = 0xFF; m_GMask = 0xFF; m_BMask = 0xFF; m_AMask = 0xFF;
+		break;
+	default:
+		{
+			static bool format_error_printed[32];
+			if (!format_error_printed[format])
+			{
+				Msg("CPixelWriter::SetPixelMemory:  Unsupported image format %i\n", format);
+				format_error_printed[format] = true;
+			}
+			m_Size = 0;
+		}
+		break;
+	}
+}
+
+inline void CPixelWriter::WritePixel(int r, int g, int b, int a)
+{
+	int val = (r & m_RMask) << m_RShift;
+	val |= (g & m_GMask) << m_GShift;
+	val |= (m_BShift > 0) ? ((b & m_BMask) << m_BShift) : ((b & m_BMask) >> -m_BShift);
+	val |= (a & m_AMask) << m_AShift;
+
+	m_pBits[0] = (unsigned char)(val & 0xff);
+	m_pBits[1] = (unsigned char)((val >> 8) & 0xff);
+	if (m_Size > 1)
+	{
+		m_pBits[1] = (unsigned char)((val >> 8) & 0xff);
+		if (m_Size > 2)
+		{
+			m_pBits[2] = (unsigned char)((val >> 16) & 0xff);
+			if (m_Size > 3)
+				m_pBits[3] = (unsigned char)((val >> 24) & 0xff);
+		}
+	}
+	m_pBits += m_Size;
+}
+
+#define TEXT ((unsigned short (*)[36])m_rgData)
+
+void C_BaseTerminal::sub_100c77f0(ITexture *pTexture, IVTFTexture *pVTFTexture, Rect_t *pRect)
+{
+	if (pTexture->GetActualWidth() != 512 || pTexture->GetActualHeight() != 512)
+		return;
+
+	unsigned int *buf = new unsigned int[512 * 512];
+	if (!buf)
+		return;
+
+	int top = (pVTFTexture->Height() - m_nMax * 16) / 2;
+	int cols = m_nStride;
+	int textWidth = cols * 14;
+	int left = (pVTFTexture->Width() - textWidth) / 2;
+	int rows = m_nMax;
+	int height = rows * 16;
+
+	int cursorX = -1;
+	int cursorY = -1;
+	if (!(m_nF10 & 1) && m_bE88 && (*(int *)((char *)this + 0xf00) & 1))
+	{
+		cursorX = clamp(m_nE78, 0, cols - 1);
+		cursorY = clamp(m_nE7c, 0, rows - 1);
+	}
+
+	int idx = *(int *)((char *)this + 0xf08);
+	TerminalPalette_t *pal = &g_10233378[clamp(idx, 0, ARRAYSIZE(g_10233378) - 1)];
+	int xorA = pal->c2 ^ pal->c0;
+	int xorB = pal->c3 ^ pal->c1;
+
+	memset(buf, 0, 512 * 512 * sizeof(unsigned int));
+
+	for (int y = 0; y < height; y += 2)
+	{
+		int row = y >> 4;
+		int pal0 = pal->c0;
+		int pal1 = pal->c1;
+		unsigned int *pix = &buf[(top + y) * 512 + left];
+		int fontRow = (y >> 1) & 7;
+		int col = 0;
+		int nCols = m_nStride;
+		for (; col < nCols; col++)
+		{
+			int ch = TEXT[row][col];
+			int inv = ((ch >> 7) & 1) - 1;
+			int glyph;
+			if (ch > 0xff && ch != 0xa0a0)
+			{
+				unsigned char hi = ch >> 8;
+				int i;
+				for (i = 0; i < 45; i++)
+				{
+					if (g_102b7110[i] == hi)
+						break;
+				}
+				if (i < 45)
+					glyph = i + 0x65;
+				else
+					glyph = 0;
+			}
+			else
+			{
+				glyph = (ch & 0x7f) - 0x1b;
+			}
+			if (glyph < 0)
+				glyph += 0x40;
+
+			if (row == cursorY && col == cursorX)
+			{
+				glyph = 0x44;
+				inv = 0;
+			}
+
+			int bits = g_10232ee8[glyph * 8 + fontRow] ^ inv;
+			int n = 7;
+			do
+			{
+				if (bits & 0x80)
+				{
+					pix[-1] += pal0;
+					pix[0] += pal1;
+					pix[1] = pal1;
+					pix[2] = pal0;
+				}
+				bits <<= 1;
+				pal0 ^= xorA;
+				pal1 ^= xorB;
+				pix += 2;
+			} while (--n);
+			nCols = m_nStride;
+		}
+
+		int n = textWidth + 3;
+		unsigned int *p = &buf[(top + y - 1) * 512 + left - 1];
+		int blur = pal->blur;
+		if (blur)
+		{
+			do
+			{
+				p[0] = ((p[512] >> 2) & 0x3f3f3f) + ((p[-512] >> 2) & 0x3f3f3f);
+				p[-512] += blur;
+				p++;
+			} while (--n);
+		}
+		else
+		{
+			do
+			{
+				p[0] = ((p[-512] >> 2) & 0x3f3f3f) + ((p[512] >> 2) & 0x3f3f3f);
+				p++;
+			} while (--n);
+		}
+
+		memcpy(&buf[(top + y + 1) * 512], &buf[(top + y) * 512], 512 * sizeof(unsigned int));
+	}
+
+	CPixelWriter pixelWriter;
+	pixelWriter.SetPixelMemory(pVTFTexture->Format(), pVTFTexture->ImageData(0, 0, 0), pVTFTexture->RowSizeInBytes(0));
+
+	unsigned char *src = (unsigned char *)buf;
+	for (int i = 0; i < 512 * 512; i++, src += 4)
+		pixelWriter.WritePixel(src[2], src[1], src[0], 255);
+
+	delete[] buf;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c7e60 size=0x5a
 class CClampX
 {

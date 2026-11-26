@@ -4898,6 +4898,7 @@
 0x100c75b0 func   ?sub_100c75b0@C_BaseTerminal@@QAEXXZ C_BaseTerminal::sub_100c75b0
 0x100c7620 func   ?vfunc29@C_BaseTerminal@@UAEXD@Z C_BaseTerminal::vfunc29
 0x100c7680 func   ?sub_100c7680@CUnknown100c7680@@QAEXXZ CUnknown100c7680::sub_100c7680
+0x100c77f0 func   ?sub_100c77f0@C_BaseTerminal@@QAEXPAVITexture@@PAVIVTFTexture@@PAURect_t@@@Z C_BaseTerminal::sub_100c77f0
 0x100c7e60 func   ?sub_100c7e60@CClampX@@QAEXHH@Z CClampX::sub_100c7e60
 0x100c7ec0 func   ?sub_100c7ec0@C_BaseTerminal@@QAEXHH@Z C_BaseTerminal::sub_100c7ec0
 0x100c7f30 func   ?sub_100c7f30@CUnknown100c7f30@@QAEXXZ CUnknown100c7f30::sub_100c7f30
