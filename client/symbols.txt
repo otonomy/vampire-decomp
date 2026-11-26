@@ -3106,6 +3106,7 @@
 0x100593e0 func   ?sub_100593e0@CHUDSprite@@QAEHPBUwrect_100593e0@@0PAU2@@Z CHUDSprite::sub_100593e0
 0x10059af0 func   ?sub_10059af0@CMeshBuilder@@QAEXPBM@Z CMeshBuilder::sub_10059af0
 0x1005b380 func   ?sub_1005b380@@YGXPAM0MMM@Z sub_1005b380
+0x1005bad0 func   ?sub_1005bad0@CHUDSprite@@QAEXHHHH@Z CHUDSprite::sub_1005bad0
 0x1005c3b0 func   ?sub_1005c3b0@CHUDSprite@@QAEXHHHHH@Z CHUDSprite::sub_1005c3b0
 0x1005d280 func   ?sub_1005d280@CHUDSprite@@QAEXHHHH@Z CHUDSprite::sub_1005d280
 0x1005d6e0 func   ?sub_1005d6e0@CVStatInfo_t@@QAE_NXZ CVStatInfo_t::sub_1005d6e0

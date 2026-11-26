@@ -29606,6 +29606,299 @@ void __stdcall sub_1005b380(float *px, float *py, float flAngle, float a, float 
 }
 // END FUNCTION
 
+// FUNCTION: 0x1005bad0 size=0x457
+#include "CHUDSprite.h"
+#include "ScopeTrace.h"
+#include "Vector.h"
+
+#define Assert(_exp) ((void)(_exp))
+
+struct MeshDesc_local
+{
+	int m_VertexSize_Position;
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;
+	int m_VertexSize_Color;
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];
+	int m_VertexSize_TangentS;
+	int m_VertexSize_TangentT;
+	int m_VertexSize_TangentSxT;
+	int m_VertexSize_UserData;
+	int m_ActualVertexSize;
+	int m_FirstVertex;
+	int m_NumBoneWeights;
+	float *m_pPosition;
+	float *m_pBoneWeight;
+	unsigned char *m_pBoneMatrixIndex;
+	float *m_pNormal;
+	unsigned char *m_pColor;
+	unsigned char *m_pSpecular;
+	float *m_pTexCoord[4];
+	float *m_pTangentS;
+	float *m_pTangentT;
+	float *m_pTangentSxT;
+	float *m_pUserData;
+	unsigned short *m_pIndices;
+};
+
+struct IMesh
+{
+	virtual void LockMesh(int numVerts, int numIndices, MeshDesc_local &desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+struct IMaterialSystem
+{
+	virtual void v0() = 0; virtual void v1() = 0; virtual void v2() = 0; virtual void v3() = 0;
+	virtual void v4() = 0; virtual void v5() = 0; virtual void v6() = 0; virtual void v7() = 0;
+	virtual void v8() = 0; virtual void v9() = 0; virtual void v10() = 0; virtual void v11() = 0;
+	virtual void v12() = 0; virtual void v13() = 0; virtual void v14() = 0; virtual void v15() = 0;
+	virtual void v16() = 0; virtual void v17() = 0; virtual void v18() = 0; virtual void v19() = 0;
+	virtual void v20() = 0; virtual void v21() = 0; virtual void v22() = 0; virtual void v23() = 0;
+	virtual void v24() = 0; virtual void v25() = 0; virtual void v26() = 0; virtual void v27() = 0;
+	virtual void v28() = 0; virtual void v29() = 0; virtual void v30() = 0; virtual void v31() = 0;
+	virtual void v32() = 0; virtual void v33() = 0; virtual void v34() = 0; virtual void v35() = 0;
+	virtual void v36() = 0; virtual void v37() = 0; virtual void v38() = 0; virtual void v39() = 0;
+	virtual void v40() = 0; virtual void v41() = 0; virtual void v42() = 0; virtual void v43() = 0;
+	virtual void v44() = 0; virtual void v45() = 0; virtual void v46() = 0; virtual void v47() = 0;
+	virtual void v48() = 0; virtual void v49() = 0; virtual void v50() = 0; virtual void v51() = 0;
+	virtual void v52() = 0;
+	virtual void Bind(void *material, void *proxyData = 0) = 0;
+	virtual void v54() = 0; virtual void v55() = 0; virtual void v56() = 0; virtual void v57() = 0;
+	virtual void v58() = 0; virtual void v59() = 0; virtual void v60() = 0; virtual void v61() = 0;
+	virtual void v62() = 0; virtual void v63() = 0; virtual void v64() = 0; virtual void v65() = 0;
+	virtual void v66() = 0; virtual void v67() = 0; virtual void v68() = 0; virtual void v69() = 0;
+	virtual void v70() = 0; virtual void v71() = 0; virtual void v72() = 0; virtual void v73() = 0;
+	virtual void v74() = 0; virtual void v75() = 0; virtual void v76() = 0; virtual void v77() = 0;
+	virtual void v78() = 0; virtual void v79() = 0; virtual void v80() = 0; virtual void v81() = 0;
+	virtual void v82() = 0; virtual void v83() = 0; virtual void v84() = 0; virtual void v85() = 0;
+	virtual void v86() = 0; virtual void v87() = 0; virtual void v88() = 0; virtual void v89() = 0;
+	virtual void v90() = 0; virtual void v91() = 0; virtual void v92() = 0; virtual void v93() = 0;
+	virtual void v94() = 0; virtual void v95() = 0; virtual void v96() = 0; virtual void v97() = 0;
+	virtual void v98() = 0; virtual void v99() = 0; virtual void v100() = 0; virtual void v101() = 0;
+	virtual void v102() = 0; virtual void v103() = 0; virtual void v104() = 0; virtual void v105() = 0;
+	virtual void v106() = 0; virtual void v107() = 0; virtual void v108() = 0; virtual void v109() = 0;
+	virtual void v110() = 0;
+	virtual IMesh *GetDynamicMesh(bool buffered = true, IMesh *pVertexOverride = 0, IMesh *pIndexOverride = 0, void *pAutoBind = 0) = 0;
+};
+
+extern IMaterialSystem *g_104a57ec;
+
+inline unsigned char FastFToC(float c)
+{
+	volatile float dc;
+	dc = c * 255.0f + (float)(1 << 23);
+	return *(unsigned char *)&dc;
+}
+
+class MeshBuilderLocal : private MeshDesc_local
+{
+public:
+	inline MeshBuilderLocal()
+		: m_pMesh(0), m_NumIndices(0), m_NumVertices(0),
+		  m_CurrentVertex(0), m_CurrentIndex(0), m_MaxVertices(0),
+		  m_MaxIndices(0), m_GenerateIndices(false)
+	{
+	}
+
+	inline void Begin(IMesh *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_NumIndices = 0; m_NumVertices = 0;
+		m_GenerateIndices = true;
+		m_Type = type;
+		if ((type == 7) || (type == 6))
+			m_pMesh->SetPrimitiveType(2);
+		else if ((type == 4) || (type == 5))
+			m_pMesh->SetPrimitiveType(1);
+		else
+			m_pMesh->SetPrimitiveType(type);
+		m_pMesh->LockMesh(m_MaxVertices, m_MaxIndices, *this);
+		sub_100422e0();
+	}
+
+	inline void sub_100421f0(int type, int numPrimitives)
+	{
+		switch (type)
+		{
+		case 0: m_MaxVertices = m_MaxIndices = numPrimitives; break;
+		case 1: m_MaxVertices = m_MaxIndices = numPrimitives * 2; break;
+		case 4: m_MaxVertices = numPrimitives + 1; m_MaxIndices = numPrimitives * 2; break;
+		case 5: m_MaxVertices = numPrimitives; m_MaxIndices = numPrimitives * 2; break;
+		case 2: m_MaxVertices = m_MaxIndices = numPrimitives * 3; break;
+		case 3: m_MaxVertices = m_MaxIndices = numPrimitives + 2; break;
+		case 7: m_MaxVertices = numPrimitives * 4; m_MaxIndices = numPrimitives * 6; break;
+		case 6: m_MaxVertices = numPrimitives; m_MaxIndices = (numPrimitives - 2) * 3; break;
+		default: break;
+		}
+	}
+	inline void sub_100422e0()
+	{
+		m_CurrentVertex = 0;
+		m_CurrentIndex = 0;
+		m_pCurrPosition = m_pPosition;
+		m_pCurrNormal = m_pNormal;
+		m_pCurrTexCoord[0] = m_pTexCoord[0];
+		m_pCurrTexCoord[1] = m_pTexCoord[1];
+		m_pCurrTexCoord[2] = m_pTexCoord[2];
+		m_pCurrTexCoord[3] = m_pTexCoord[3];
+		m_pCurrColor = m_pColor;
+	}
+	void sub_10041c90(bool spewData = false, bool bDraw = false);
+
+	inline void IncrementFloatPointer(float *&pBufferPointer, int vertexSize)
+	{
+		pBufferPointer = reinterpret_cast<float *>(reinterpret_cast<unsigned char *>(pBufferPointer) + vertexSize);
+	}
+
+	inline void sub_100319d0(float x, float y, float z)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = x;
+		*pDst++ = y;
+		*pDst = z;
+	}
+
+	inline void sub_10031a20(int stage, float s, float t)
+	{
+		Assert(m_pTexCoord[stage] && m_pCurrTexCoord[stage]);
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+
+	inline void sub_10059af0(const float *rgb)
+	{
+		int col = (FastFToC(rgb[2])) | (FastFToC(rgb[1]) << 8) | (FastFToC(rgb[0]) << 16) | 0xFF000000;
+		*(int *)m_pCurrColor = col;
+	}
+
+	inline void sub_10005230()
+	{
+		if (++m_CurrentVertex > m_NumVertices)
+			m_NumVertices = m_CurrentVertex;
+		IncrementFloatPointer(m_pCurrPosition, m_VertexSize_Position);
+		IncrementFloatPointer(m_pCurrNormal, m_VertexSize_Normal);
+		IncrementFloatPointer(m_pCurrTexCoord[0], m_VertexSize_TexCoord[0]);
+		IncrementFloatPointer(m_pCurrTexCoord[1], m_VertexSize_TexCoord[1]);
+		IncrementFloatPointer(m_pCurrTexCoord[2], m_VertexSize_TexCoord[2]);
+		IncrementFloatPointer(m_pCurrTexCoord[3], m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+
+private:
+	IMesh *m_pMesh;
+	bool m_bModify;
+	int m_MaxVertices;
+	int m_MaxIndices;
+	int m_NumVertices;
+	int m_NumIndices;
+	mutable int m_CurrentVertex;
+	mutable int m_CurrentIndex;
+	int m_Type;
+	bool m_GenerateIndices;
+	mutable float *m_pCurrPosition;
+	mutable float *m_pCurrNormal;
+	mutable float *m_pCurrTexCoord[4];
+	mutable unsigned char *m_pCurrColor;
+};
+
+struct IMaterialWH
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual int GetMappingWidth();
+	virtual int GetMappingHeight();
+};
+
+void CHUDSprite::sub_100594b0(float *s0, float *s1, float *t0, float *t1, int *w, int *h, void *rect)
+{
+	ScopeTrace trace("CHUDSprite::AdjustSubRect", g_102de300, g_102de300);
+	int x0 = m_unk08;
+	int x1 = m_unk08 + *w;
+	int y0 = m_unk0c;
+	int y1 = m_unk0c + *h;
+	*w = x1 - x0;
+	*h = y1 - y0;
+	if (m_unk18 < 0)
+		m_unk18 = ((IMaterialWH *)m_unk04)->GetMappingWidth();
+	double iw = 1.0 / m_unk18;
+	*s0 = (float)((x0 + 0.5) * iw);
+	*s1 = (float)((x1 - 0.5) * iw);
+	if (m_unk1c < 0)
+		m_unk1c = ((IMaterialWH *)m_unk04)->GetMappingHeight();
+	double ih = 1.0 / m_unk1c;
+	*t0 = (float)((y0 + 0.5) * ih);
+	*t1 = (float)((y1 - 0.5) * ih);
+}
+
+typedef void (MeshBuilderLocal::*Color3fvFn)(const float *);
+Color3fvFn pcd_force_emit_color3fv() { return &MeshBuilderLocal::sub_10059af0; }
+
+// TARGET: CHUDSprite::sub_1005bad0
+void CHUDSprite::sub_1005bad0(int x, int y, int w, int h)
+{
+	ScopeTrace trace("CHUDSprite::drawVertFlip", g_102de300, g_102de300);
+	if (!m_unk04)
+		return;
+
+	float color[3];
+	int subh, subw;
+	subw = m_unk10;
+	subh = m_unk14;
+	float v1, u1, u0, v0;
+	u0 = 0.0f; u1 = 1.0f; v0 = 0.0f; v1 = 1.0f;
+	sub_100594b0(&u0, &u1, &v0, &v1, &subw, &subh, 0);
+
+	g_104a57ec->Bind((void *)m_unk04);
+	IMesh *pMesh = g_104a57ec->GetDynamicMesh(true);
+
+	color[0] = 1.0f;
+	color[1] = 1.0f;
+	color[2] = 1.0f;
+
+	MeshBuilderLocal meshBuilder;
+	meshBuilder.Begin(pMesh, 7, 1);
+
+	meshBuilder.sub_10059af0(color);
+	meshBuilder.sub_10031a20(0, u1, v0);
+	meshBuilder.sub_100319d0((float)x, (float)y, 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10059af0(color);
+	meshBuilder.sub_10031a20(0, u0, v0);
+	meshBuilder.sub_100319d0((float)(x + w), (float)y, 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10059af0(color);
+	meshBuilder.sub_10031a20(0, u0, v1);
+	meshBuilder.sub_100319d0((float)(x + w), (float)(y + h), 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10059af0(color);
+	meshBuilder.sub_10031a20(0, u1, v1);
+	meshBuilder.sub_100319d0((float)x, (float)(y + h), 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10041c90();
+	pMesh->Draw();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1005c3b0 size=0x7d
 #include "CHUDSprite.h"
 #include "ScopeTrace.h"
