@@ -73666,6 +73666,17 @@ char CInput::sub_100ff0a0(CUnkPlayer *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ff700 size=0x10
+namespace lifted {
+extern char g_104d24e4;
+int sub_10101e20(int, int);
+}
+int sub_100ff700()
+{
+    return lifted::sub_10101e20((int)&lifted::g_104d24e4, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ff710 size=0x10
 namespace lifted {
 extern char g_104d24e4;
