@@ -74,5 +74,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual void vfunc44();
     virtual float vfunc45();
     CViewRender *sub_1018e9b0(unsigned flags);
+    CViewRender *sub_10198a90();	// the constructor ("CViewRender::CViewRender" scope trace), written as a plain member
     void sub_1019aed0(bool, int);	// provisional, like sub_1019af80 (transplant)
 };
