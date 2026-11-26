@@ -533,6 +533,7 @@
 0x1000c630 func   ?_C_WeaponMelee_MingXiaoTentacle_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_MingXiaoTentacle_CreateObject
 0x1000c6f0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_MingXiaoTentacle@@@Z ClientClassInit
 0x1000c780 func   ?vfunc17@C_WeaponMelee_ZombieFists@@UAEHXZ C_WeaponMelee_ZombieFists::vfunc17
+0x1000c7c0 func   ?sub_1000c7c0@@YAHXZ sub_1000c7c0
 0x1000c810 func   ??_GC_WeaponMelee_ZombieFists@@UAEPAXI@Z ??_GC_WeaponMelee_ZombieFists@@UAEPAXI@Z
 0x1000c830 func   ?vfunc16@C_WeaponMelee_ZombieFists@@UAEHXZ C_WeaponMelee_ZombieFists::vfunc16
 0x1000c840 func   ?vfunc15@C_WeaponMelee_ZombieFists@@UAEHXZ C_WeaponMelee_ZombieFists::vfunc15
