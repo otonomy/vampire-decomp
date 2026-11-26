@@ -40436,6 +40436,123 @@ CSpriteHandle *sub_10081cd0(const char *name, int a, int b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10082200 size=0x3aa
+#include "IClientEntity.h"
+#include "CSpriteHandle.h"
+#include "CMeshBuilder.h"
+#include "ConVar.h"
+#include "engineclient.h"
+
+struct IMeshView
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void Draw(int firstIndex, int numIndices);
+};
+
+struct CIC
+{
+	void sub_100052c0(const unsigned char *rgba);
+};
+
+struct S10041e00
+{
+	void sub_10041e00(const float *v);
+};
+
+struct CMeshBuilderLocal : public CMeshBuilder
+{
+	CMeshBuilderLocal()
+	{
+		m_unk80[0] = 0;
+		m_unk80[2] = 0;
+		m_unk80[3] = 0;
+		m_n90 = 0;
+		m_nCurrentIndex = 0;
+		m_i98 = 0;
+		m_nIndexCount = 0;
+		*(bool *)&m_unka0[1] = false;
+	}
+};
+
+extern ConVar g_106192f0;	// mat_wireframe
+void sub_10108fd0(const Vector &start, float scale, const Vector &direction, Vector &dest);
+void sub_100825b0(CSpriteHandle *psprite, const Vector &origin, float scale, int r, int g, int b, int a,
+	const Vector &forward, const Vector &right, const Vector &up);
+
+void sub_10082200(IClientEntity *baseentity, CSpriteHandle *psprite, const Vector &origin, float fscale, float frame,
+	int rendermode, int r, int g, int b, int a, const Vector &forward, const Vector &right, const Vector &up)
+{
+	float scale;
+	if (fscale > 0)
+		scale = fscale;
+	else
+		scale = 1.0f;
+
+	if (rendermode == 0)
+		render->vfunc6(1.0f);
+
+	void *material = psprite->m_pMaterial;
+	if (!material)
+		return;
+	psprite->sub_10136f90(rendermode);
+	psprite->sub_10136f80(frame);
+
+	materials->Bind(material, (IClientRenderable *)baseentity);
+
+	{
+		unsigned char color[4];
+		Vector point;
+		IMeshView *pMesh = (IMeshView *)materials->GetDynamicMesh(true, 0, 0, 0);
+		CMeshBuilderLocal meshBuilder;
+		meshBuilder.sub_10041b10(pMesh, 7, 1);
+
+		color[0] = r;
+		color[1] = g;
+		color[2] = b;
+		color[3] = a;
+
+		((CIC *)&meshBuilder)->sub_100052c0(color);
+		meshBuilder.sub_10031a20(0, 0, 1);
+		sub_10108fd0(origin, psprite->GetDown() * scale, up, point);
+		sub_10108fd0(point, psprite->GetLeft() * scale, right, point);
+		((S10041e00 *)&meshBuilder)->sub_10041e00(point.Base());
+		meshBuilder.sub_10005230();
+
+		((CIC *)&meshBuilder)->sub_100052c0(color);
+		meshBuilder.sub_10031a20(0, 0, 0);
+		sub_10108fd0(origin, psprite->GetUp() * scale, up, point);
+		sub_10108fd0(point, psprite->GetLeft() * scale, right, point);
+		((S10041e00 *)&meshBuilder)->sub_10041e00(point.Base());
+		meshBuilder.sub_10005230();
+
+		((CIC *)&meshBuilder)->sub_100052c0(color);
+		meshBuilder.sub_10031a20(0, 1, 0);
+		sub_10108fd0(origin, psprite->GetUp() * scale, up, point);
+		sub_10108fd0(point, psprite->GetRight() * scale, right, point);
+		((S10041e00 *)&meshBuilder)->sub_10041e00(point.Base());
+		meshBuilder.sub_10005230();
+
+		((CIC *)&meshBuilder)->sub_100052c0(color);
+		meshBuilder.sub_10031a20(0, 1, 1);
+		sub_10108fd0(origin, psprite->GetDown() * scale, up, point);
+		sub_10108fd0(point, psprite->GetRight() * scale, right, point);
+		((S10041e00 *)&meshBuilder)->sub_10041e00(point.Base());
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_10041c90(false, false);
+		pMesh->Draw(-1, 0);
+	}
+
+	if (g_106192f0.GetBool())
+	{
+		void *pMaterial = materials->FindMaterial("debug/debugspritewireframe", 0, true);
+		materials->Bind(pMaterial, 0);
+		sub_100825b0(psprite, origin, scale, r, g, b, a, forward, right, up);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100835e0 size=0x71
 #include "Vector.h"
 
