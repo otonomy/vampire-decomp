@@ -15870,6 +15870,32 @@ template <> int ClientClassInit<DT_ItemKKikiKey::ignored>(DT_ItemKKikiKey::ignor
 }
 // END FUNCTION
 
+// FUNCTION: 0x10025540 size=0x45
+namespace lifted {
+extern char g_10220b64;
+extern char g_10220b78;
+extern char g_10220bb4;
+extern char g_10220bec;
+extern char g_10220c44;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_10025540()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10220c44;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10220bec;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10220bb4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10220b78;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10220b64;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100255d0 size=0x6
 namespace lifted {
 extern char g_102e0554;
