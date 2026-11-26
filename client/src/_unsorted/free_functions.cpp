@@ -55924,6 +55924,102 @@ float sub_100d9750(const Vector &vLineA, const Vector &vLineB, const Vector &P, 
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d9830 size=0x2b6
+#include "Vector.h"
+#include "CVProfile.h"
+#include "CFXStaticLine.h"
+#include "engineclient.h"
+
+extern CVProfile *g_101e3138;
+__declspec(dllimport) void vtune(bool resume);
+
+class CCycleCount
+{
+public:
+	CCycleCount() { m_Int64 = 0; }
+	void Sample();
+	unsigned __int64 m_Int64;
+};
+
+inline void CCycleCount::Sample()
+{
+	unsigned long* pSample = (unsigned long *)&m_Int64;
+	__asm
+	{
+		// force the cpu to synchronize the instruction queue
+		// NJS: CPUID can really impact performance in tight loops.
+		//cpuid
+		//cpuid
+		//cpuid
+		mov		ecx, pSample
+		rdtsc
+		mov		[ecx],     eax
+		mov		[ecx+4],   edx
+	}
+}
+
+inline bool CVProfNode::ExitScope()
+{
+	if (--m_nRecursions == 0 && m_nCurFrameCalls != 0)
+	{
+		CCycleCount cnt;
+		cnt.Sample();
+		m_CurFrameTime.v = cnt.m_Int64 - m_CurFrameTime.v;
+		m_TotalTime += m_CurFrameTime;
+		CVProfile *prof = g_101e3138;
+		prof->m_nDepth--;
+		if (prof->m_Stack[prof->m_nDepth] != prof->m_Stack[prof->m_nDepth + 1] && prof->m_bEnabled && prof->m_Stack[prof->m_nDepth + 1] == prof->m_nCurBudget)
+			vtune(false);
+	}
+	return (m_nRecursions == 0);
+}
+
+inline void CVProfile::ExitScope()
+{
+	if (!m_fAtRoot || m_nPause)
+	{
+		if (m_pCurNode->ExitScope())
+			m_pCurNode = m_pCurNode->m_pParent;
+		m_fAtRoot = (m_pCurNode == m_pRoot);
+	}
+}
+
+struct CVProfScope
+{
+	CVProfScope(const char *pszName, int detailLevel, const char *pBudgetGroupName, bool bAssertAccounted)
+	{
+		g_101e3138->EnterScope(pszName, detailLevel, pBudgetGroupName, bAssertAccounted);
+	}
+	~CVProfScope() { g_101e3138->ExitScope(); }
+};
+
+struct IClientEffects_102b9850
+{
+	virtual void v0();
+	virtual void AddEffect(CClientSideEffect *pEffect);
+};
+extern IClientEffects_102b9850 *g_102b9850;
+
+void sub_100d9830(Vector &start, Vector &end)
+{
+	CVProfScope VProf_("FX_PlayerTracer", 0, "Particle/Effect Rendering", false);
+	Vector shotDir, dStart, dEnd;
+	float length;
+
+	VectorSubtract(end, start, shotDir);
+	length = VectorNormalize(shotDir);
+
+	if (length < 256)
+		return;
+
+	dStart = shotDir * enginerandom->RandomFloat(0.0f, 64.0f) + start;
+	dEnd = shotDir * (length * enginerandom->RandomFloat(0.1f, 0.6f)) + dStart;
+
+	CFXStaticLine *t = new CFXStaticLine((int)"Tracer", &dStart, &dEnd, enginerandom->RandomFloat(0.5f, 0.75f), 0.01f, "effects/spark", 0);
+	g_102b9850->AddEffect(t);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d9ba0 size=0x1fc
 #include "CGlobalVarsBase.h"
 #include "Vector.h"

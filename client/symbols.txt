@@ -5010,6 +5010,7 @@
 0x100d9600 func   ?sub_100d9600@@YAXPBH@Z sub_100d9600
 0x100d9740 func   ?sub_100d9740@@YAXXZ sub_100d9740
 0x100d9750 func   ?sub_100d9750@@YAMABVVector@@00AAV1@@Z sub_100d9750
+0x100d9830 func   ?sub_100d9830@@YAXAAVVector@@0@Z sub_100d9830
 0x100d9b20 func   ?vfunc0@CAutoGameSystem@@UAE_NXZ CAutoGameSystem::vfunc0
 0x100d9b30 func   ?vfunc1@CAutoGameSystem@@UAEXXZ CAutoGameSystem::vfunc1
 0x100d9b40 func   ?vfunc5@CAutoGameSystem@@UAEXXZ CAutoGameSystem::vfunc5
