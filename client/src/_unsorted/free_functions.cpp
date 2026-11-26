@@ -92886,6 +92886,74 @@ int CFeatWeight1014b::sub_1014b6b0(CFeatChar1014b *pChar)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1014b870 size=0x238
+#include "CFeatList.h"
+#include "CUnknown1014ada0.h"
+#include "IKeyValues.h"
+#include "FileSystemViews.h"
+#include "Tier1.h"
+extern "C" int sprintf(char *, const char *, ...);
+struct SVFeat { void sub_1014ae20(IKeyValues *kv); };
+struct SStr { const char *p; SStr() {} SStr(const SStr &o) : p(o.p) {} };
+extern IKeyValues *sub_101545c0(const char *path, IFileSystemView *fs);
+extern SStr sub_1015f7e0(IKeyValues *kv, const char *key);
+extern SStr sub_1015fc40(const char *s);
+// TARGET: CFeatList::sub_1014b870
+void CFeatList::sub_1014b870()
+{
+	char path[0x80];
+	if (m_ppData) {
+		for (int i = 0; i < m_nCount; i++) {
+			CUnknown1014ada0 *p = (CUnknown1014ada0 *)m_ppData[i];
+			if (p)
+				delete p;
+			m_ppData[i] = 0;
+		}
+		delete m_ppData;
+		m_ppData = 0;
+	}
+	m_nNextId = 0;
+	m_nCount = 0;
+	m_nAllocated = 0;
+	sprintf(path, "%s%s.txt", "vdata\\system\\", "feats");
+	IKeyValues *kv = sub_101545c0(path, g_104a580c);
+	if (kv) {
+		IKeyValues *feats = kv->kv2("Feats");
+		m_pszInternalName = sub_1015f7e0(feats, "InternalName").p;
+		m_pszName = sub_1015fc40(feats->kv13("Name", "")).p;
+		for (IKeyValues *feat = feats->kv2("Feat"); feat; feat = feat->kv3()) {
+			if (m_nAllocated == m_nCount) {
+				m_nAllocated += m_nGrowSize;
+				if (m_ppData) {
+					void **p = (void **)new char[m_nAllocated * 4];
+					int i;
+					for (i = 0; i < m_nCount; i++)
+						p[i] = m_ppData[i];
+					for (; i < m_nAllocated; i++)
+						p[i] = 0;
+					delete m_ppData;
+					m_ppData = p;
+					m_nCount++;
+				} else {
+					m_ppData = (void **)new char[m_nAllocated * 4];
+					for (int i = 0; i < m_nAllocated; i++)
+						m_ppData[i] = 0;
+					m_nCount++;
+				}
+			} else {
+				m_nCount++;
+			}
+			if (!m_ppData[m_nCount - 1])
+				m_ppData[m_nCount - 1] = new CUnknown1014ada0(m_nNextId++);
+			((SVFeat *)m_ppData[m_nCount - 1])->sub_1014ae20(feat);
+		}
+		kv->vfunc1();
+	} else {
+		g_101e3108("Unable to open [%s] data file for: Feats\n", path);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1014cee0 size=0x8e
 #include "CUnknown101e7c50.h"
 

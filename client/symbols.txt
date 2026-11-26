@@ -7155,6 +7155,7 @@
 0x1014b580 func   ?sub_1014b580@@YGHH@Z sub_1014b580
 0x1014b590 func   ?sub_1014b590@S1014b590@@QAEHPAUCharStatView@@@Z S1014b590::sub_1014b590
 0x1014b6b0 func   ?sub_1014b6b0@CFeatWeight1014b@@QAEHPAUCFeatChar1014b@@@Z CFeatWeight1014b::sub_1014b6b0
+0x1014b870 func   ?sub_1014b870@CFeatList@@QAEXXZ CFeatList::sub_1014b870
 0x1014cee0 func   ?sub_1014cee0@CUnknown101e7c50@@QAEPAUCVDmgBlock16_t@@PBD@Z CUnknown101e7c50::sub_1014cee0
 0x1014cf80 func   ?sub_1014cf80@CUnknown1014cf80@@QAEMXZ CUnknown1014cf80::sub_1014cf80
 0x1014cf90 func   ?sub_1014cf90@CUnknown1014cf90@@QAEMXZ CUnknown1014cf90::sub_1014cf90
