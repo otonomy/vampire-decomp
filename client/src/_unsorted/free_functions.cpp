@@ -115574,6 +115574,59 @@ void * CUnknown10155950::sub_10155950(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10155990 size=0x130
+#include "CUnknown101f4c80.h"
+#include "CUnknown101f5f00.h"
+#include "VKeyValues.h"
+#include <string.h>
+extern CUnknown101f5f00 g_105eb5c8;
+int sub_1015f810(int, int);
+int sub_100681e0(int);
+bool CUnknown101f4c80::sub_10155990(void *pKeyValues, CUnknown101f5d60 *pOwner, int arg3)
+{
+    VKeyValuesInterface *pKV = (VKeyValuesInterface *)pKeyValues;
+    if (pKV)
+    {
+        const char *name;
+        m_name.m_psz = m_folder.m_psz = *(const char **)sub_1015f810((int)&name, (int)pKV);
+        VKeyValuesInterface *p;
+        for (p = pKV->vfunc4(); p; p = p->vfunc5())
+        {
+            if (!_strcmpi(p->vfunc0(), "Activity"))
+            {
+                const char *s = p->vfunc13(0, g_102de300);
+                if (*s && sub_100681e0((int)s) != -1)
+                    m_unk0c++;
+            }
+            m_nMaxRange = pKV->vfunc10("MaxRange", 3);
+        }
+        if (m_unk0c > 0)
+        {
+            m_unk10 = (int)new int[m_unk0c];
+            int i = 0;
+            for (p = pKV->vfunc4(); p; p = p->vfunc5())
+            {
+                if (!_strcmpi(p->vfunc0(), "Activity"))
+                {
+                    const char *s = p->vfunc13(0, g_102de300);
+                    if (*s)
+                    {
+                        ((int *)m_unk10)[i] = sub_100681e0((int)s);
+                        if (((int *)m_unk10)[i] != -1)
+                        {
+                            g_105eb5c8.sub_10156180((int)pOwner, ((int *)m_unk10)[i], arg3);
+                            i++;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10155b40 size=0x1d
 struct S9 {
 	int a, b, c, d, e, f, g, h, i;
