@@ -23821,6 +23821,69 @@ void CSignUI::sub_100617b0(CKeyValuesX *pData)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10061830 size=0x26f
+#include "CSignUI.h"
+#include "CKeyValuesX.h"
+#include <string.h>
+
+int sub_100cd100();	// ScreenWidth
+int sub_100cd0f0();	// ScreenHeight
+
+#define SV10(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); virtual void p##5(); virtual void p##6(); virtual void p##7(); virtual void p##8(); virtual void p##9();
+struct SignPanelView
+{
+	SV10(a) SV10(b)
+	virtual void v20();
+	virtual void vfunc21(bool b);
+	virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	SV10(d) SV10(e) SV10(f)
+	virtual void v60(); virtual void v61();
+	virtual void vfunc62(bool b);
+	virtual void vfunc63(bool b);
+	virtual void vfunc64(bool b);
+	virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
+	SV10(h) SV10(i) SV10(j)
+	virtual void v100(); virtual void v101(); virtual void v102(); virtual void v103(); virtual void v104(); virtual void v105(); virtual void v106(); virtual void v107();
+	virtual void vfunc108(const char *pszImage, bool bTiled);
+	virtual void vfunc109(bool b);
+};
+#undef SV10
+
+void CSignUI::sub_10061830(CKeyValuesX *pData)
+{
+	if (!pData)
+		return;
+	const char *pszName = pData->sub_10128590("Name", "");
+	if (!pszName || !strlen(pszName))
+		return;
+
+	bool bTiled = pData->sub_101284c0("Tiled", 0) != 0;
+	((SignPanelView *)this)->vfunc108(pszName, bTiled);
+	m_nXPos = pData->sub_101284c0("XPos", 0);
+	m_nYPos = pData->sub_101284c0("YPos", 0);
+	m_nWide = pData->sub_101284c0("Wide", sub_100cd100());
+	m_nTall = pData->sub_101284c0("Tall", sub_100cd0f0());
+
+	if (m_nYPos + m_nXPos)
+	{
+		sub_101a9950((int)((sub_100cd100() / 1024.0) * m_nXPos), (int)((sub_100cd0f0() / 768.0) * m_nYPos),
+			(int)((sub_100cd100() / 1024.0) * m_nWide), (int)((sub_100cd0f0() / 768.0) * m_nTall));
+	}
+	else
+	{
+		int x = (int)(sub_100cd100() / 2 - (sub_100cd100() / 1024.0) * (m_nWide / 2));
+		int y = (int)(sub_100cd0f0() / 2 - (sub_100cd0f0() / 768.0) * (m_nTall / 2));
+		sub_101a9950(x, y, (int)((sub_100cd100() / 1024.0) * m_nWide), (int)((sub_100cd0f0() / 768.0) * m_nTall));
+	}
+
+	((SignPanelView *)this)->vfunc63(true);
+	((SignPanelView *)this)->vfunc62(false);
+	((SignPanelView *)this)->vfunc64(true);
+	((SignPanelView *)this)->vfunc21(true);
+	((SignPanelView *)this)->vfunc109(false);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10061c40 size=0x78
 #include "CKeyValuesX.h"
 
