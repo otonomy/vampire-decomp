@@ -322,6 +322,117 @@ int C_BaseAnimating::sub_10092810()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10093370 size=0x22f
+#include "C_BaseAnimating.h"
+#include "ConVar.h"
+#include "engineclient.h"
+
+extern ConVar g_105fb298;
+
+struct CUnknown1009f160 { void sub_1009f160(int, char); };
+struct V_100a2ed0;
+bool __fastcall sub_100a2ed0(V_100a2ed0 *);
+
+struct dlight_10093370
+{
+	int flags;
+	Vector origin;
+	float radius;
+	unsigned char r, g, b, exponent;
+	float die;
+	float decay;
+};
+struct mstudioevent_10093370
+{
+	float cycle;
+	int event;
+	int type;
+	char options[64];
+};
+struct mstudioseqdesc_10093370
+{
+	int m00, m04, m08, m0c, m10;
+	int numevents;
+	int eventindex;
+	mstudioevent_10093370 *pEvent(int i) { return (mstudioevent_10093370 *)((char *)this + eventindex) + i; }
+};
+struct AnimCycle_10093370
+{
+	int m_nSequence;	// 0x63c
+	int m_unk640, m_unk644, m_unk648, m_unk64c;
+	float m_flPrevEventCycle;	// 0x650
+	float m_flCycle;	// 0x654
+	int m_nPrevSequence;	// 0x658
+};
+
+inline mstudioseqdesc_10093370 *GetSeqDesc_10093370(C_BaseAnimating *p)
+{
+	return (mstudioseqdesc_10093370 *)p->sub_10096830(*(int *)((char *)p + 0x63c));
+}
+
+#define F(type, off) (*(type *)((char *)this + (off)))
+
+void C_BaseAnimating::DoAnimationEvents()
+{
+	if (engine->Time(0) == engine->vfunc40())
+		return;
+
+	if (!vfunc71())
+		return;
+
+	if (sub_1009f140(2) && F(int, 0x77c) > 0 && g_105fb298.GetInt())
+	{
+		Vector attachOrigin;
+		QAngle attachAngles;
+		vfunc57(1, (int)&attachOrigin, (int)&attachAngles);
+
+		dlight_10093370 *el = (dlight_10093370 *)effects->CL_AllocDlight(F(int, 0x44) + 0x40000000);
+		el->origin = attachOrigin;
+		el->radius = 100.0f;
+		el->decay = 2000.0f;
+		el->die = engine->Time(0) + 0.05f;
+		el->r = 255;
+		el->g = 192;
+		el->b = 64;
+		el->exponent = 10;
+		((CUnknown1009f160 *)this)->sub_1009f160(2, 0);
+	}
+
+	mstudioseqdesc_10093370 *pseqdesc = GetSeqDesc_10093370(this);
+	if (!pseqdesc || !pseqdesc->numevents)
+		return;
+
+	mstudioevent_10093370 *pevent = pseqdesc->pEvent(0);
+
+	AnimCycle_10093370 *a = (AnimCycle_10093370 *)((char *)this + 0x63c);
+	if (a->m_nPrevSequence != a->m_nSequence || sub_1009f140(0x200))
+	{
+		((CUnknown1009f160 *)this)->sub_1009f160(0x200, 0);
+		a->m_nPrevSequence = a->m_nSequence;
+		if (!sub_100a2ed0((V_100a2ed0 *)this))
+			a->m_flPrevEventCycle = -0.01f;
+	}
+
+	for (int i = 0; i < pseqdesc->numevents; i++)
+	{
+		if (pevent[i].event < 5000)
+			continue;
+		if (a->m_flCycle < a->m_flPrevEventCycle)
+		{
+			if (pevent[i].cycle > a->m_flPrevEventCycle && pevent[i].cycle <= a->m_flCycle)
+				vfunc127(GetAbsOrigin(), GetAbsAngles(), pevent[i].event, pevent[i].options);
+		}
+		else
+		{
+			if (pevent[i].cycle > a->m_flPrevEventCycle && pevent[i].cycle <= a->m_flCycle)
+				vfunc127(GetAbsOrigin(), GetAbsAngles(), pevent[i].event, pevent[i].options);
+		}
+	}
+
+	a->m_flPrevEventCycle = a->m_flCycle;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10093f00 size=0x34
 #include "C_BaseAnimating.h"
 #include "IClientCollideable.h"
