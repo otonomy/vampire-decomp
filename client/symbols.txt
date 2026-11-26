@@ -8356,6 +8356,7 @@
 0x10165fd0 func   ?sub_10165fd0@CUnknown10165fd0@@QAEHXZ CUnknown10165fd0::sub_10165fd0
 0x10165fe0 func   ?vfunc74@CFPSPanel@@UAEHH@Z CFPSPanel::vfunc74
 0x10166010 func   ?vfunc2@CFPSPanel@@UAEXXZ CFPSPanel::vfunc2
+0x10166090 func   ?vfunc98@CFPSPanel@@UAEXXZ CFPSPanel::vfunc98
 0x10166560 func   ?vfunc0@CFPS@@UAEHH@Z CFPS::vfunc0
 0x10166590 func   ?vfunc1@CFPS@@UAEXXZ CFPS::vfunc1
 0x101665e0 func   ?vfunc0@CViewportClientSystem@@UAE_NXZ CViewportClientSystem::vfunc0
