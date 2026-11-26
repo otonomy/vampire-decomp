@@ -1461,6 +1461,7 @@
 0x1001e830 func   ?_C_ItemGJunkyardBusinesscard_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGJunkyardBusinesscard_CreateObject
 0x1001e8f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGJunkyardBusinesscard@@@Z ClientClassInit
 0x1001e980 func   ?vfunc17@C_ItemGIdolCat@@UAEHXZ C_ItemGIdolCat::vfunc17
+0x1001e9c0 func   ?sub_1001e9c0@@YAHXZ sub_1001e9c0
 0x1001ea10 func   ??_GC_ItemGIdolCat@@UAEPAXI@Z ??_GC_ItemGIdolCat@@UAEPAXI@Z
 0x1001ea30 func   ?vfunc16@C_ItemGIdolCat@@UAEHXZ C_ItemGIdolCat::vfunc16
 0x1001ea40 func   ?vfunc15@C_ItemGIdolCat@@UAEHXZ C_ItemGIdolCat::vfunc15
