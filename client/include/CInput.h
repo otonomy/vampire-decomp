@@ -44,7 +44,7 @@ public:
     // the slots CInput adds to its base's vtable: 0-56, vfuncK at slot K
     virtual void vfunc0();
     virtual void vfunc1();
-    virtual void vfunc2();
+    virtual int vfunc2(int bResetState);	// GetButtonBits
     virtual void vfunc3();
     virtual void vfunc4(void *, int, int, int);
     virtual void vfunc5(int, int, int);
