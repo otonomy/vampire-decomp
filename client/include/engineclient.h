@@ -332,7 +332,7 @@ public:
 	virtual void __cdecl vfunc8(int, float, int, int, int, int, int, const char *, ...);	// slot 8: a text overlay (C_BaseFlex::RunFlexRules: 0, (float)line, 0, r, g, b, a, fmt, ...)
 	void vfunc8(int a, int b, int c, int d, int e, int f, int g, int h) { ((IVDebugOverlaySlot8Ints *)this)->vfunc8(a, b, c, d, e, f, g, h); }	// the all-dword form sub_100dfd20 forwards
 	virtual void vfunc9();
-	virtual void vfunc10();
+	virtual int vfunc10(const Vector &point, Vector &screen);	// slot 10: ScreenPosition (DrawBeamFollow)
 	virtual int vfunc11();	// slot 11
 };
 extern IVDebugOverlay *g_104a57e8;
