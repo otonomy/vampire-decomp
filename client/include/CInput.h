@@ -31,7 +31,10 @@ public:
     int m_unk58;
     int m_unk5c;
     int m_unk60;
-    int m_unk64[(0xdc - 0x64) / 4];
+    int m_unk64[(0x7c - 0x64) / 4];
+    struct joy_axis_t { int m_unk00; int AxisMap; int ControlMap; unsigned long *pdwRawValue; };
+    joy_axis_t m_rgAxes[6];	// 0x7c
+    void sub_10100f80(float frametime, class CUserCmd *cmd);
     struct CInputKey { char name[0x20]; int value; CInputKey *next; };
     CInputKey *m_pKeys;
     int m_unke0; int m_unke4; int m_unke8; int m_unkec; int m_unkf0; int m_unkf4; int m_unkf8;
