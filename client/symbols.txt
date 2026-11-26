@@ -2191,6 +2191,7 @@
 0x10039c40 func   ?sub_10039c40@@YAHXZ sub_10039c40
 0x10039ce0 func   ?sub_10039ce0@@YAHXZ sub_10039ce0
 0x10039d50 func   ?ClientClassInit@@YAHPAUignored@DT_TEExplosiveGunshotDecal@@@Z ClientClassInit
+0x10039e60 func   ?Purge@?$CUtlMemory@H@@QAEXXZ CUtlMemory<int>::Purge
 0x10039e60 func   ?sub_10039e60@UtlMem@@QAEXXZ UtlMem::sub_10039e60
 0x10039e90 func   ??0C_TEImpact@@QAE@XZ C_TEImpact::C_TEImpact
 0x10039ed0 func   ??_GC_TEImpact@@UAEPAXI@Z ??_GC_TEImpact@@UAEPAXI@Z
