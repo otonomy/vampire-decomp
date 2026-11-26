@@ -95756,6 +95756,84 @@ void sub_1012cea0(int entindex, const char *soundname)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012cf50 size=0x24d
+#include "CSoundEmitterSystemBase.h"
+#include "string_t.h"
+__declspec(dllimport) const char *Q_stristr(const char *, const char *);
+extern int (*g_101e31dc)(const char *, const char *, int);
+__declspec(dllimport) void DevMsg(const char *pMsg, ...);
+struct IRecipientFilter;
+struct CSndEnt {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual string_t GetModelName();
+};
+struct IEngSnd {
+	virtual void v0();
+	virtual float GetSoundDuration(const char *name);
+	virtual void EmitSound(IRecipientFilter &filter, int ent, int chan, const char *name, float vol, int level, int flags, int pitch, const void *origin, const void *dir, bool upd, float soundtime);
+	virtual void EmitSound3(IRecipientFilter &filter, int ent, int chan, const char *name, float vol, int level, int flags, int pitch, const void *origin, const void *dir, bool upd, float soundtime);
+};
+struct ITraceSys { virtual void v0(); virtual void v1(); virtual void v2(); virtual void TraceEmitSound(const char *fmt, ...); };
+extern IEngSnd *g_104a5818;
+CSndEnt *sub_100a2a90(int ent);
+
+struct EmitSound_t
+{
+	int m_nChannel;
+	const char *m_pSoundName;
+	float m_flVolume;
+	int m_SoundLevel;
+	int m_nFlags;
+	int m_nPitch;
+	const void *m_pOrigin;
+	float m_flSoundTime;
+	float *m_pflSoundDuration;
+};
+
+// TARGET: sub_1012cf50
+void sub_1012cf50(IRecipientFilter &filter, int entindex, EmitSound_t ep)
+{
+	if (ep.m_pSoundName && (Q_stristr(ep.m_pSoundName, ".wav") || Q_stristr(ep.m_pSoundName, ".mp3") || ep.m_pSoundName[0] == '!'))
+	{
+		g_104a5818->EmitSound3(filter, entindex, ep.m_nChannel, ep.m_pSoundName, ep.m_flVolume, ep.m_SoundLevel, ep.m_nFlags, ep.m_nPitch, ep.m_pOrigin, 0, true, ep.m_flSoundTime);
+		if (ep.m_pflSoundDuration)
+			*ep.m_pflSoundDuration = g_104a5818->GetSoundDuration(ep.m_pSoundName);
+		((ITraceSys *)&g_105e5540)->TraceEmitSound("EmitSound:  Raw wave emitted '%s' (ent %i)\n", ep.m_pSoundName, entindex);
+		return;
+	}
+	CSoundParameters params;
+	CSndEnt *ent = sub_100a2a90(entindex);
+	if (ent)
+	{
+		const char *model = ent->GetModelName().pszValue;
+		g_105e5540.sub_1012ec90(model ? model : "");
+	}
+	if (!g_105e5540.sub_1012e6d0(ep.m_pSoundName, params))
+		return;
+	if (!params.soundname[0])
+		return;
+	if (!g_101e31dc(params.soundname, "vo", 2) && !(params.channel == 5 || params.channel == 2))
+		DevMsg("EmitSound:  Voice .wav file %s doesn't specify CHAN_VOICE or CHAN_STREAM for sound %s\n", params.soundname, ep.m_pSoundName);
+	if (ep.m_nFlags & 2)
+		params.pitch = ep.m_nPitch;
+	if (ep.m_nFlags & 1)
+		params.volume = ep.m_flVolume;
+	g_104a5818->EmitSound(filter, entindex, params.channel, params.soundname, params.volume, params.soundlevel, ep.m_nFlags, params.pitch, ep.m_pOrigin, 0, true, ep.m_flSoundTime);
+	if (ep.m_pflSoundDuration)
+		*ep.m_pflSoundDuration = g_104a5818->GetSoundDuration(params.soundname);
+	((ITraceSys *)&g_105e5540)->TraceEmitSound("EmitSound:  '%s' emitted as '%s' (ent %i)\n", ep.m_pSoundName, params.soundname, entindex);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012d1a0 size=0x24d
 #include "CSoundEmitterSystemBase.h"
 #include "string_t.h"
