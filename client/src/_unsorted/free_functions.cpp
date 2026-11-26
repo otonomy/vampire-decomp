@@ -120620,6 +120620,19 @@ CUnknown102029c0 *CUnknown10203240::sub_1015f2f0(const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015f3e0 size=0x40
+#include <stdio.h>
+extern char g_105f9408[2][12];
+extern int g_105f9820;
+char *sub_1015f3e0(int n)
+{
+    sprintf(g_105f9408[g_105f9820], "%d", n);
+    char *result = g_105f9408[g_105f9820];
+    g_105f9820 = 1 - g_105f9820;
+    return result;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015f420 size=0x22
 namespace lifted {
 extern char g_102de300;
