@@ -135254,6 +135254,107 @@ void sub_10190f30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10191710 size=0x230
+#include "CViewRender.h"
+#include "CViewSetup.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include "ConVar.h"
+#include "IClientMode.h"
+#include "C_BasePlayer.h"
+#include "CInput.h"
+
+class IViewEffects_102d5238
+{
+public:
+	virtual void vfunc0();
+	virtual void vfunc1();
+	virtual void vfunc2();
+	virtual void vfunc3();
+	virtual void vfunc4();
+	virtual void vfunc5();
+	virtual void vfunc6();
+	virtual void vfunc7();
+	virtual void vfunc8();
+	virtual void vfunc9();
+	virtual void vfunc10();
+	virtual void vfunc11();
+	virtual bool vfunc12();
+};
+
+extern IClientMode *g_105f99d8;
+extern IViewEffects_102d5238 *g_102d5238;
+extern ConVar g_105fc718;
+extern ConVar g_105fbef0;
+extern ConVar g_105fc9a0;
+extern ConVar g_105fca30;
+extern ConVar g_105fc9e8;
+
+void sub_100923c0(int, int);
+
+void CViewRender::sub_10191710()
+{
+	ScopeTrace st("CViewRender::SetUpView", g_102de300);
+
+	View().zFar = 28400.0f;
+	View().zFarViewmodel = 28400.0f;
+
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (pPlayer && *(int *)((char *)pPlayer + 0x17b4) != 0xff)
+	{
+		int nFar = *(int *)((char *)pPlayer + 0x17a4);
+		if (nFar > 0)
+			View().zFar = nFar * 28400.0f;
+	}
+
+	View().zNear = 8.0f;
+	View().zNearViewmodel = 1.0f;
+	View().fovViewmodel = g_105fc718.GetFloat();
+	View().fov = render->vfunc40();
+	View().m_unk00 = 0;
+	View().clearColor = g_105fbef0.GetBool();
+	View().clearDepth = true;
+	View().m_bOrtho = false;
+
+	if (engine->GetMaxClients() > 1)
+	{
+		g_105fc9a0.sub_100dfa90(0);
+		g_105fca30.sub_100dfa90(0);
+		g_105fc9e8.sub_100dfa90(0);
+	}
+
+	if (render->vfunc37())
+	{
+		sub_10190a70();
+	}
+	else if (!render->vfunc38())
+	{
+		sub_10191200();
+	}
+
+	pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (pPlayer)
+	{
+		int nFov = *(int *)((char *)pPlayer + 0x16a4);
+		if (nFov)
+			View().fovViewmodel = nFov;
+	}
+
+	sub_100923c0(1, 0);
+
+	if ((pPlayer && pPlayer->sub_100a7890()) ||
+		(!render->vfunc38() && input->vfunc29() && !g_102d5238->vfunc12()))
+	{
+		g_105f99d8->vfunc15((int)&View());
+	}
+
+	engine->vfunc99(View().origin, View().angles);
+	CopyViewModelInfoToEntities();
+	sub_100923c0(1, 1);
+	View().m_vUnreflectedOrigin = View().origin;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101919e0 size=0x31a
 #include "CViewRender.h"
 #include "CViewSetup.h"

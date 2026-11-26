@@ -9186,6 +9186,7 @@
 0x10191610 func   ?vfunc14@CViewRender@@UAEPAXXZ CViewRender::vfunc14
 0x10191670 func   ?vfunc15@CViewRender@@UAEXABVVector@@@Z CViewRender::vfunc15
 0x10191700 func   ?vfunc16@CViewRender@@UAEXXZ CViewRender::vfunc16
+0x10191710 func   ?sub_10191710@CViewRender@@QAEXXZ CViewRender::sub_10191710
 0x10191940 func   ?CopyViewModelInfoToEntities@CViewRender@@QAEXXZ CViewRender::CopyViewModelInfoToEntities
 0x101919e0 func   ?sub_101919e0@CViewRender@@QAEXUCViewSetup@@@Z CViewRender::sub_101919e0
 0x10192550 func   ?SetupCrossfadeView@CViewRender@@QAEXABUCViewSetup@@_N@Z CViewRender::SetupCrossfadeView
