@@ -7,6 +7,8 @@ class CFireOverlay : public CGlowOverlay
 {
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the base slots the game's vtable fills with CFireOverlay's own function
+    CFireOverlay() {}
+    CFireOverlay(class C_FireSmoke *pOwner);	// inline in c_fire_smoke.cpp: owner, scale 0, a random seed
     virtual bool vfunc1();
     void *m_pOwner;	// 0x90
     Vector m_BaseColors[4];	// 0x94

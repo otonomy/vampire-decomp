@@ -22,6 +22,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 
 	void sub_100b55b0();
 	void sub_100b5d00();
+	void sub_100b56c0();	// "Start": the child flames (render mode, random yaw, model, frame, scale, brightness) and the fire overlay when flag 8 is set
 	char m_pad0014[0x410 - 0x14];
 	float m_flStartScale;
 	float m_flScale;
@@ -39,7 +40,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	CSmartPtr<CParticleEffect> m_pEmberEmitter;
 	CSmartPtr<CParticleEffect> m_pSmokeEmitter;
 	C_Sprite m_entFlames[8];
-	char m_pad27d8[0x27f8 - 0x27d8];
+	float m_flFlameScales[8];	// 0x27d8
 	float m_flChildFlameSpread;
 	int m_nUnk27fc;
 	class CFireSmokeOwned *m_p2800;
