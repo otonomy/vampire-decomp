@@ -5641,6 +5641,7 @@
 0x100fdb50 func   ?sub_100fdb50@@YAMPBVVector@@0MPAUCGameTrace@@@Z sub_100fdb50
 0x100ff030 func   ?sub_100ff030@@YA?AVVector@@ABV1@M@Z sub_100ff030
 0x100ff0a0 func   ?sub_100ff0a0@CInput@@QAEDPAUCUnkPlayer@@@Z CInput::sub_100ff0a0
+0x100ff710 func   ?sub_100ff710@@YAHXZ sub_100ff710
 0x100ff7c0 func   ?vfunc34@CInput@@UAEHXZ CInput::vfunc34
 0x100ff7e0 func   ?vfunc35@CInput@@UAEHXZ CInput::vfunc35
 0x100ff800 func   ?vfunc36@CInput@@UAEXXZ CInput::vfunc36

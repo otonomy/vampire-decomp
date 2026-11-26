@@ -66749,6 +66749,17 @@ char CInput::sub_100ff0a0(CUnkPlayer *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ff710 size=0x10
+namespace lifted {
+extern char g_104d24e4;
+int sub_10101ea0(int, int);
+}
+int sub_100ff710()
+{
+    return lifted::sub_10101ea0((int)&lifted::g_104d24e4, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101003b0 size=0x9b
 #include "CInput.h"
 struct CvarV { virtual void v0(); virtual char IsNoValue(); char m_pad[0x28]; int m_nValue; };
