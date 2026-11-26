@@ -63910,6 +63910,22 @@ void sub_100f1870(int a0, int a1, int a2)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f18c0 size=0x23
+namespace lifted {
+extern char g_102b931c;
+struct C100f18f0 { int sub_100f18f0(int); };
+int sub_101d270e(int, int);
+}
+int sub_100f18c0()
+{
+    int t0 = lifted::sub_101d270e(1, 0xa0);
+    if (t0 != 0) {
+        return ((lifted::C100f18f0 *)t0)->sub_100f18f0((int)&lifted::g_102b931c);
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100f1e20 size=0xbc
 #pragma auto_inline(off)
 struct CUnknown100f1850 { char pad[0xbc]; float m_bc; float sub_100f1850(); };

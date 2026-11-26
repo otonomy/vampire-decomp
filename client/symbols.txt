@@ -5501,6 +5501,7 @@
 0x100f1850 func   ?sub_100f1850@CUnknown100f1850@@QAEMXZ CUnknown100f1850::sub_100f1850
 0x100f1860 func   ?sub_100f1860@CUnknown100f1860@@QAEHXZ CUnknown100f1860::sub_100f1860
 0x100f1870 func   ?sub_100f1870@@YAXHHH@Z sub_100f1870
+0x100f18c0 func   ?sub_100f18c0@@YAHXZ sub_100f18c0
 0x100f18f0 func   ??0CHudChat@@QAE@H@Z CHudChat::CHudChat
 0x100f19d0 func   ??_GCHudChat@@UAEPAXI@Z ??_GCHudChat@@UAEPAXI@Z
 0x100f19f0 func   ??1CHudChat@@UAE@XZ CHudChat::~CHudChat
