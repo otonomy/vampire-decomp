@@ -5445,6 +5445,7 @@
 0x100efee0 func   ?sub_100efee0@CUtlLinkedList8@@QAEXG@Z CUtlLinkedList8::sub_100efee0
 0x100eff70 func   ?sub_100eff70@CMem8b_t@@QAEXH@Z CMem8b_t::sub_100eff70
 0x100effe0 func   ?sub_100effe0@MeshView@@QAEXMMM@Z MeshView::sub_100effe0
+0x100f0080 func   ?sub_100f0080@@YAHXZ sub_100f0080
 0x100f00b0 func   ?sub_100f00b0@@YAXHHH@Z sub_100f00b0
 0x100f00e0 func   ??0CHudHistoryResource@@QAE@H@Z CHudHistoryResource::CHudHistoryResource
 0x100f0110 func   ??_GCHudHistoryResource@@UAEPAXI@Z ??_GCHudHistoryResource@@UAEPAXI@Z

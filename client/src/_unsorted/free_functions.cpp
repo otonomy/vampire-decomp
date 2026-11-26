@@ -63036,6 +63036,22 @@ void MeshView::sub_100effe0(float r, float g, float b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f0080 size=0x23
+namespace lifted {
+extern char g_102af2e8;
+struct C100f00e0 { int sub_100f00e0(int); };
+int sub_101d270e(int, int);
+}
+int sub_100f0080()
+{
+    int t0 = lifted::sub_101d270e(1, 0x138);
+    if (t0 != 0) {
+        return ((lifted::C100f00e0 *)t0)->sub_100f00e0((int)&lifted::g_102af2e8);
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100f00b0 size=0x2a
 namespace lifted {
 extern char g_102af2e8;
