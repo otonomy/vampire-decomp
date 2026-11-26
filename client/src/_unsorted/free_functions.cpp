@@ -104136,6 +104136,17 @@ void *sub_10154720(int n)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10154750 size=0x8
+namespace lifted {
+struct C10153c10 { int sub_10153c10(); };
+}
+struct CUnknown10154750 { int sub_10154750(); };
+int CUnknown10154750::sub_10154750()
+{
+    return ((lifted::C10153c10 *)((int)this - (*(int *)((char *)this + -4))))->sub_10153c10();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101547d0 size=0x8
 namespace lifted {
 struct C10153ef0 { int sub_10153ef0(); };
