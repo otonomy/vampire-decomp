@@ -416,6 +416,154 @@ char CGameMovement::vfunc21(void *pTrace)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100eb240 size=0x4fc
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "IClientCollideable.h"
+#include "CBaseEntityList.h"
+#include "CUnknown100290c0.h"
+#include "CGlobalVarsBase.h"
+#include "CVProfile.h"
+#include "Ray_t.h"
+#include "engineclient.h"
+
+struct CUnknown1009fc60 { void sub_1009fc60(int a, int b); };
+struct CUnknown1009fc90 { int sub_1009fc90(int a); };
+struct CUnknown1014cf80 { float sub_1014cf80(); };
+struct CUnknown1014cf90 { float sub_1014cf90(); };
+struct MoveEnt_100eb240
+{
+	char m_pad0000[0x160];
+	float m_flGravity;	// 0x160
+	char m_pad0164[0x19ac - 0x164];
+	Vector m_vecLadderNormal;	// 0x19ac
+};
+extern CUnknown1014cf80 g_105e8120;
+extern CVProfile *g_101e3138;
+extern Vector g_104d4970;
+void sub_10108fd0(const float *start, float scale, const float *direction, float *dest);
+void sub_100e7380(int pRay, int fMask, int pIgnore, int collisionGroup, int pTrace);
+
+struct VProfScope_100eb240
+{
+	VProfScope_100eb240(const char *pszName, int detailLevel, const char *pszBudgetGroupName, bool bAssertAccounted)
+	{
+		g_101e3138->EnterScope(pszName, detailLevel, pszBudgetGroupName, bAssertAccounted);
+	}
+	~VProfScope_100eb240() { g_101e3138->ExitScope(); }
+};
+
+#define PLAYER ((CMovePlayerView *)m_pPlayer)
+#define MOVEENT ((MoveEnt_100eb240 *)m_pMove)
+#define COLL ((IClientCollideable *)((char *)m_pMove + 0xc))
+
+char CGameMovement::vfunc20()
+{
+	CGameTrace pm;
+	bool onFloor;
+	Vector floor;
+	Vector wishdir;
+	Vector end;
+
+	if (COLL->GetSolid() == 9)
+		return 0;
+
+	if (COLL->GetSolid() == 10)
+	{
+		wishdir = -MOVEENT->m_vecLadderNormal;
+	}
+	else
+	{
+		if (PLAYER->m_flForwardMove || PLAYER->m_flSideMove)
+		{
+			for (int i = 0; i < 3; i++)
+				wishdir[i] = PLAYER->m_flForwardMove * m_vecForward[i] + m_vecRight[i] * PLAYER->m_flSideMove;
+			VectorNormalize(wishdir);
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	sub_10108fd0(&PLAYER->m_vecOrigin.x, 2.0f, &wishdir.x, &end.x);
+	{
+		const Vector &start = PLAYER->m_vecOrigin;
+		VProfScope_100eb240 vprof("CGameMovement::TracePlayerBBox", 0, "Unaccounted", false);
+		Ray_t ray;
+		ray.sub_100e91e0(start, end, sub_100e6ef0(), &sub_100e6f20()->x, ((unsigned int)COLL->Collideable_vfunc7() >> 6) & 1, 0);
+		sub_100e7380((int)&ray, 0x201400b, (int)((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0(&PLAYER->m_hRef), 6, (int)&pm);
+	}
+
+	if (pm.m_fraction == 1.0f || !vfunc21(&pm))
+		return 0;
+
+	((CUnknown1009fc60 *)m_pMove)->sub_1009fc60(10, 0);
+	((CUnknown1009fc90 *)m_pMove)->sub_1009fc90(0);
+
+	MOVEENT->m_vecLadderNormal = *(Vector *)pm.m_planeNormal;
+
+	floor = PLAYER->m_vecOrigin;
+	floor[2] += (sub_100e6ef0()[2] - 1);
+
+	if (enginetrace->GetPointContents(floor, 0) == 1)
+		onFloor = true;
+	else
+		onFloor = false;
+
+	MOVEENT->m_flGravity = 0;
+
+	float forward = 0, right = 0;
+	if (PLAYER->m_fFlags24 & 0x10)
+		forward = -g_105e8120.sub_1014cf80();
+	if (PLAYER->m_fFlags24 & 8)
+		forward = g_105e8120.sub_1014cf80();
+	if (PLAYER->m_fFlags24 & 0x200)
+		right = -((CUnknown1014cf90 *)&g_105e8120)->sub_1014cf90();
+	if (PLAYER->m_fFlags24 & 0x400)
+		right = ((CUnknown1014cf90 *)&g_105e8120)->sub_1014cf90();
+
+	if (2 & PLAYER->m_fFlags24)
+	{
+		((CUnknown1009fc60 *)m_pMove)->sub_1009fc60(3, 0);
+		PLAYER->m_n00c0 = 7;
+		PLAYER->m_flB8 = gpGlobals->curtime;
+		((CUnknown1009fc90 *)m_pMove)->sub_1009fc90(0);
+		VectorScale(*(Vector *)pm.m_planeNormal, 270, PLAYER->m_vecVelocity);
+		PLAYER->m_vecVelocity.z = 0;
+	}
+	else if (forward != 0 || right != 0)
+	{
+		Vector velocity, perp, cross, lateral, tmp;
+		float normal;
+		Vector &n = *(Vector *)pm.m_planeNormal;
+
+		VectorScale(m_vecForward, forward, velocity);
+		sub_10108fd0(&velocity.x, right, &m_vecRight.x, &velocity.x);
+
+		tmp = g_104d4970;
+		tmp[2] = 1;
+		CrossProduct(tmp, n, perp);
+		VectorNormalize(perp);
+
+		normal = DotProduct(velocity, n);
+		VectorScale(n, normal, cross);
+		VectorSubtract(velocity, cross, lateral);
+
+		CrossProduct(n, perp, tmp);
+		sub_10108fd0(&lateral.x, -normal, &tmp.x, &PLAYER->m_vecVelocity.x);
+
+		if (onFloor && normal > 0)
+			sub_10108fd0(&PLAYER->m_vecVelocity.x, g_105e8120.sub_1014cf80(), &n.x, &PLAYER->m_vecVelocity.x);
+	}
+	else
+	{
+		PLAYER->m_vecVelocity.Init();
+	}
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ebc00 size=0x8d
 #include "CGameMovement.h"
 #include <math.h>
