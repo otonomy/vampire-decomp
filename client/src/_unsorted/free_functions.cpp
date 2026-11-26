@@ -5242,6 +5242,32 @@ template <> int ClientClassInit<DT_WeaponRanged_Pistol_Glock::ignored>(DT_Weapon
 }
 // END FUNCTION
 
+// FUNCTION: 0x1000e340 size=0x45
+namespace lifted {
+extern char g_101f4324;
+extern char g_101f4338;
+extern char g_101f4374;
+extern char g_101f43ac;
+extern char g_101f4404;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1000e340()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101f4404;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101f43ac;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101f4374;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101f4338;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101f4324;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1000e3d0 size=0x6
 namespace lifted {
 extern char g_102e13b8;
