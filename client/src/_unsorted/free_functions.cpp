@@ -3874,6 +3874,32 @@ template <> int ClientClassInit<DT_WeaponMelee_AVampBlade::ignored>(DT_WeaponMel
 }
 // END FUNCTION
 
+// FUNCTION: 0x1000b3c0 size=0x45
+namespace lifted {
+extern char g_101ee7b4;
+extern char g_101ee7c8;
+extern char g_101ee804;
+extern char g_101ee83c;
+extern char g_101ee894;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1000b3c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101ee894;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101ee83c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101ee804;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101ee7c8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101ee7b4;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1000b450 size=0x6
 namespace lifted {
 extern char g_102e5db0;
