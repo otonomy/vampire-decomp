@@ -138348,6 +138348,83 @@ void CViewRender_101997e0::sub_101997e0(WorldListInfo_t &info, CRenderList &rend
 }
 // END FUNCTION
 
+// FUNCTION: 0x10199910 size=0x22f
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+
+struct VPTimer { virtual double Get(); };
+struct VPObj { char p0[0xf8]; double d0f8; char p1[0x108 - 0x100]; double d108; char p2[0x1d0 - 0x110]; double d1d0; char p3[0x1e0 - 0x1d8]; double d1e0; char p4[0x308 - 0x1e8]; VPTimer *m308; };
+VPObj *sub_100ad7a0();
+struct VEnt { virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual void g7(); virtual int g8(); virtual void g9(); virtual void g10(); virtual void g11(); virtual void g12(); virtual void g13(); virtual char g14(); };
+struct VWInfo { int a0; int a4; int a8; int ac; };
+struct VRList { VEnt *p; int a; int b; char pad[0x48000 - 12]; int count; };
+struct VRender18 { virtual void g0(); virtual void g1(int); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual void g7(); virtual void g8(); virtual void g9(); virtual void g10(); virtual void g11(); virtual void g12(); virtual void g13(); virtual void g14(); virtual void g15(); virtual void g16(); virtual void g17(); virtual void g18(VWInfo *, bool, bool); };
+struct V102b9470 { virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual void g7(); virtual void g8(); virtual void g9(); virtual void g10(); virtual void g11(); virtual void g12(int, int); };
+struct V102b9060 { virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual void g7(); virtual void g8(); virtual void g9(); virtual void g10(); virtual void g11(); virtual void g12(int, int, int, int); };
+struct VSPM { virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(const Vector &, float); };
+struct V100dfdf0 { virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual void g7(); virtual void g8(); virtual void g9(); virtual void g10(); };
+extern V102b9470 *g_102b9470;
+extern V102b9060 *g_102b9060;
+extern Vector g_10618f7c;
+V100dfdf0 *sub_100dfdf0();
+
+const Vector &sub_10198d30()
+{
+	return g_10618f7c;
+}
+
+// TARGET: CViewRender::sub_10199910
+void CViewRender::sub_10199910(void *pInfo, void *pRenderList, bool arg2, bool bFlag)
+{
+	VWInfo *info = (VWInfo *)pInfo;
+	VRList *list = (VRList *)pRenderList;
+	ScopeTrace trace("CViewRender::BuildWorldRenderLists", g_102de300);
+	VPObj *p = sub_100ad7a0();
+	if (p->m308)
+		p->d1d0 = p->m308->Get();
+	++*(int *)((char *)this + 0x378);
+	((VRender18 *)render)->g18(info, arg2, bFlag);
+	p = sub_100ad7a0();
+	if (p->m308)
+		p->d0f8 += p->m308->Get() - p->d1d0;
+	if (!bFlag)
+	{
+		g_102b9470->g12(info->a4, info->a8);
+		float fadeScale = 1.0f;
+		if (C_BasePlayer::GetLocalPlayer())
+			fadeScale = C_BasePlayer::GetLocalPlayer()->sub_100aa6d0();
+		((VSPM *)staticpropmgr)->g4(sub_10198d30(), fadeScale);
+		sub_100dfdf0()->g10();
+	}
+	p = sub_100ad7a0();
+	if (p->m308)
+		p->d1e0 = p->m308->Get();
+	if (sub_10198e70())
+		g_102b9060->g12(info->a4, info->a8, info->ac, *(int *)((char *)this + 0x378));
+	sub_101997e0(info, list, bFlag);
+	p = sub_100ad7a0();
+	if (p->m308)
+		p->d108 += p->m308->Get() - p->d1e0;
+	p = sub_100ad7a0();
+	if (p->m308)
+		p->d1d0 = p->m308->Get();
+	if (sub_10198e70() && vfunc13())
+	{
+		for (int i = 0; i < list->count; i++)
+		{
+			VEnt *e = (&list->p)[i * 3];
+			if (e->g14())
+				((VRender18 *)render)->g1(e->g8());
+		}
+	}
+	p = sub_100ad7a0();
+	if (p->m308)
+		p->d0f8 += p->m308->Get() - p->d1d0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019a950 size=0x22b
 #include "CViewRender.h"
 #include "ScopeTrace.h"
