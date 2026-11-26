@@ -6530,6 +6530,7 @@
 0x1012dd00 func   ?sub_1012dd00@CUnknown101b2570@@QAEXPBD@Z CUnknown101b2570::sub_1012dd00
 0x1012dd70 func   ?sub_1012dd70@CSoundEmitterSystemBase@@QAEPAV1@XZ CSoundEmitterSystemBase::sub_1012dd70
 0x1012de10 func   ?sub_1012de10@CUnknown101b2790@@QAEXXZ CUnknown101b2790::sub_1012de10
+0x1012dec0 func   ?sub_1012dec0@SndOwnerX@@QAEHH@Z SndOwnerX::sub_1012dec0
 0x1012e0d0 func   ?sub_1012e0d0@@YAHXZ sub_1012e0d0
 0x1012e0e0 func   ?sub_1012e0e0@CSoundEmitterSystemBase@@QAEXPBDPAVUtlMem2@@@Z CSoundEmitterSystemBase::sub_1012e0e0
 0x1012e300 func   ?sub_1012e300@CSoundEmitterUnit_1012e300@@QAEXXZ CSoundEmitterUnit_1012e300::sub_1012e300

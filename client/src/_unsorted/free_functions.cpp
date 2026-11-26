@@ -78599,6 +78599,38 @@ void CUnknown101b2790::sub_1012de10()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012dec0 size=0x207
+#include "CUtlRBTree232.h"
+struct SndOwnerX
+{
+	char pad[0x50];
+	CUtlRBTree232 m_Tree;
+	int sub_1012dec0(int i);
+};
+
+int SndOwnerX::sub_1012dec0(int i)
+{
+	const CUtlRBTree232At<0x105e5a20> *t = (const CUtlRBTree232At<0x105e5a20> *)&m_Tree;
+	int node = i;
+	if (m_Tree.sub_10131a70(i).m_Right != -1)
+	{
+		i = t->Links(i).m_Right;
+		while (t->Links(i).m_Left != -1)
+			i = t->Links(i).m_Left;
+		return i;
+	}
+	int parent = t->Links(node).m_Parent;
+	while (t->Links(m_Tree.sub_10131a70(node).m_Parent).m_Right == node)
+	{
+		node = parent;
+		if (node == -1)
+			break;
+		parent = t->Links(node).m_Parent;
+	}
+	return parent;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012e0d0 size=0x4
 int sub_1012e0d0()
 {
