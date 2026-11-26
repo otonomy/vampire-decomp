@@ -78545,6 +78545,26 @@ int sub_101023d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101023f0 size=0x61
+#include "engineclient.h"
+extern "C" int __cdecl atoi(const char *);
+extern "C" int __cdecl sprintf(char *, const char *, ...);
+
+void sub_101023f0()
+{
+	if (engine->vfunc63() == 2)
+	{
+		char szCmd[64];
+		sprintf(szCmd, "inven_drop %d", atoi(engine->Cmd_Argv(1)));
+		engine->vfunc27(szCmd, 1);
+	}
+	else
+	{
+		engine->vfunc27("inven_drop_curr", 1);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10102460 size=0x16
 namespace lifted {
 extern char g_1027b3c4;
