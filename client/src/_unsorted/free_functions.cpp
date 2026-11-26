@@ -54849,6 +54849,78 @@ bool sub_100b3640(Vector vec, int type)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b3b00 size=0x627
+#include <string.h>
+
+int sub_100b3b00(const char *name)
+{
+	if (!_strcmpi(name, "DECAL_GUNSHOT1_C")) return 0;
+	if (!_strcmpi(name, "DECAL_GUNSHOT2_C")) return 1;
+	if (!_strcmpi(name, "DECAL_GUNSHOT3_C")) return 2;
+	if (!_strcmpi(name, "DECAL_GUNSHOT4_C")) return 3;
+	if (!_strcmpi(name, "DECAL_GUNSHOT5_C")) return 4;
+	if (!_strcmpi(name, "DECAL_GUNSHOT1_M")) return 5;
+	if (!_strcmpi(name, "DECAL_GUNSHOT2_M")) return 6;
+	if (!_strcmpi(name, "DECAL_GUNSHOT3_M")) return 7;
+	if (!_strcmpi(name, "DECAL_GUNSHOT4_M")) return 8;
+	if (!_strcmpi(name, "DECAL_GUNSHOT5_M")) return 9;
+	if (!_strcmpi(name, "DECAL_GUNSHOT1_W")) return 10;
+	if (!_strcmpi(name, "DECAL_GUNSHOT2_W")) return 11;
+	if (!_strcmpi(name, "DECAL_GUNSHOT3_W")) return 12;
+	if (!_strcmpi(name, "DECAL_GUNSHOT4_W")) return 13;
+	if (!_strcmpi(name, "DECAL_GUNSHOT5_W")) return 14;
+	if (!_strcmpi(name, "DECAL_GUNSHOT1_G")) return 15;
+	if (!_strcmpi(name, "DECAL_GUNSHOT2_G")) return 16;
+	if (!_strcmpi(name, "DECAL_GUNSHOT3_G")) return 17;
+	if (!_strcmpi(name, "DECAL_GUNSHOT4_G")) return 18;
+	if (!_strcmpi(name, "DECAL_GUNSHOT5_G")) return 19;
+	if (!_strcmpi(name, "DECAL_GUNSHOT1_F")) return 20;
+	if (!_strcmpi(name, "DECAL_GUNSHOT2_F")) return 21;
+	if (!_strcmpi(name, "DECAL_GUNSHOT3_F")) return 22;
+	if (!_strcmpi(name, "DECAL_GUNSHOT4_F")) return 23;
+	if (!_strcmpi(name, "DECAL_GUNSHOT5_F")) return 24;
+	if (!_strcmpi(name, "DECAL_SCORCH1")) return 30;
+	if (!_strcmpi(name, "DECAL_SCORCH2")) return 31;
+	if (!_strcmpi(name, "DECAL_BLOOD1")) return 32;
+	if (!_strcmpi(name, "DECAL_BLOOD2")) return 33;
+	if (!_strcmpi(name, "DECAL_BLOOD3")) return 34;
+	if (!_strcmpi(name, "DECAL_BLOOD4")) return 35;
+	if (!_strcmpi(name, "DECAL_BLOOD5")) return 36;
+	if (!_strcmpi(name, "DECAL_BLOOD6")) return 37;
+	if (!_strcmpi(name, "DECAL_YBLOOD1")) return 38;
+	if (!_strcmpi(name, "DECAL_YBLOOD2")) return 39;
+	if (!_strcmpi(name, "DECAL_YBLOOD3")) return 40;
+	if (!_strcmpi(name, "DECAL_YBLOOD4")) return 41;
+	if (!_strcmpi(name, "DECAL_YBLOOD5")) return 42;
+	if (!_strcmpi(name, "DECAL_YBLOOD6")) return 43;
+	if (!_strcmpi(name, "DECAL_GLASSBREAK1")) return 44;
+	if (!_strcmpi(name, "DECAL_GLASSBREAK2")) return 45;
+	if (!_strcmpi(name, "DECAL_GLASSBREAK3")) return 46;
+	if (!_strcmpi(name, "DECAL_BIGSHOT1")) return 47;
+	if (!_strcmpi(name, "DECAL_BIGSHOT2")) return 48;
+	if (!_strcmpi(name, "DECAL_BIGSHOT3")) return 49;
+	if (!_strcmpi(name, "DECAL_BIGSHOT4")) return 50;
+	if (!_strcmpi(name, "DECAL_BIGSHOT5")) return 51;
+	if (!_strcmpi(name, "DECAL_BPROOF1")) return 52;
+	if (!_strcmpi(name, "DECAL_SMALLSCORCH1")) return 53;
+	if (!_strcmpi(name, "DECAL_SMALLSCORCH2")) return 54;
+	if (!_strcmpi(name, "DECAL_SMALLSCORCH3")) return 55;
+	if (!_strcmpi(name, "DECAL_FADINGSCORCH")) return 56;
+	if (!_strcmpi(name, "DECAL_BEERSPLASH")) return 57;
+	if (!_strcmpi(name, "DECAL_DARKCUT1")) return 58;
+	if (!_strcmpi(name, "DECAL_DARKCUT2")) return 59;
+	if (!_strcmpi(name, "DECAL_DARKCUT3")) return 60;
+	if (!_strcmpi(name, "DECAL_FOOTPRINT_WET")) return 61;
+	if (!_strcmpi(name, "DECAL_FOOTPRINT_DIRT")) return 62;
+	if (!_strcmpi(name, "DECAL_REDGLOWFADE")) return 63;
+	if (!_strcmpi(name, "DECAL_PLASMAGLOWFADE")) return 64;
+	if (!_strcmpi(name, "DECAL_SPLASH")) return 65;
+	if (!_strcmpi(name, "DECAL_GUNSHOT_EXPLOSIVE")) return 66;
+	if (!_strcmpi(name, "DECAL_FIRE")) return 67;
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b4150 size=0x72
 #include "Vector.h"
 
