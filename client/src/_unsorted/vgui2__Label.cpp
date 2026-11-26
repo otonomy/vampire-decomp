@@ -188,6 +188,143 @@ void vgui2::Label::vfunc112(int w, int h)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b2610 size=0x26e
+#include "vgui2__Label.h"
+
+struct IImage_101b2610
+{
+	virtual void Paint();
+	virtual void SetPos(int x, int y);
+	virtual void GetSize(int &wide, int &tall);
+	virtual void SetColor(int col);
+};
+
+struct TextImage_101b2610 : public IImage_101b2610
+{
+	char m_pad04[0x30 - 4];
+	bool m_b30;
+};
+
+struct ISurface_101b2610
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22();
+	virtual void DrawFlushText();
+};
+ISurface_101b2610 *sub_101ac8d0();
+
+extern int (*g_102d8860[])[2];
+extern int g_10250470[];
+
+#pragma pack(push, 1)
+struct LabelView_101b2610
+{
+	char m_pad00[0x5c];
+	TextImage_101b2610 *_textImage;	// 0x5c
+	IImage_101b2610 **_images;	// 0x60
+	int m_i64;
+	int m_i68;
+	int _imageCount;	// 0x6c
+	int m_i70;
+	short *_offsets;	// 0x74
+	char m_pad78[0x88 - 0x78];
+	int _textInset[2];	// 0x88
+	int _disabledFgColor1;	// 0x90
+	int _disabledFgColor2;	// 0x94
+	int _associateColor;	// 0x98
+	char m_pad9c[0xa4 - 0x9c];
+	vgui2::Panel *_associate;	// 0xa4
+	char *_associateName;	// 0xa8
+	char m_padac[2];
+	int m_shadowColor;	// 0xae
+	char m_padb2[2];
+	int m_nShadow;	// 0xb4
+};
+#pragma pack(pop)
+
+void vgui2::Label::vfunc98()
+{
+	LabelView_101b2610 *v = (LabelView_101b2610 *)this;
+	int tx0, ty0, tx1, ty1;
+	vfunc131(&tx0, &ty0, &tx1, &ty1);
+
+	if (v->_associateName)
+	{
+		vfunc121((int)((vgui2::Panel *)vfunc31())->vfunc38((int)v->_associateName, 0));
+		delete v->_associateName;
+		v->_associateName = 0;
+	}
+
+	int labelWide, labelTall;
+	sub_101a9920(&labelWide, &labelTall);
+	int x = v->_textInset[0] + tx0;
+	int y = v->_textInset[1] + ty0;
+
+	for (int i = 0; i < v->_imageCount; i++)
+	{
+		IImage_101b2610 *image = v->_images[i];
+		if (!image)
+			continue;
+		x += v->_offsets[i];
+		image->SetPos(x, y);
+		if (image == v->_textImage)
+		{
+			if (vfunc47())
+			{
+				if (v->m_nShadow > 0)
+				{
+					int n = v->m_nShadow;
+					if (n > 3)
+						n = 3;
+					int (*offs)[2] = g_102d8860[n];
+					int count = g_10250470[n];
+					v->_textImage->SetColor(v->m_shadowColor);
+					bool bSave = v->_textImage->m_b30;
+					v->_textImage->m_b30 = false;
+					for (int j = 0; j < count; j++)
+					{
+						v->_textImage->SetPos(offs[j][0] + x, offs[j][1] + y);
+						v->_textImage->Paint();
+					}
+					v->_textImage->m_b30 = bSave;
+				}
+				if (v->_associate && v->_associate->vfunc56())
+				{
+					v->_textImage->SetColor(v->_associateColor);
+				}
+				else
+				{
+					int col;
+					v->_textImage->SetColor(*(int *)vfunc53((int)&col));
+				}
+				v->_textImage->SetPos(x, y);
+				v->_textImage->Paint();
+			}
+			else
+			{
+				v->_textImage->SetPos(x + 1, y + 1);
+				v->_textImage->SetColor(v->_disabledFgColor1);
+				v->_textImage->Paint();
+				sub_101ac8d0()->DrawFlushText();
+				v->_textImage->SetPos(x, y);
+				v->_textImage->SetColor(v->_disabledFgColor2);
+				v->_textImage->Paint();
+			}
+		}
+		else
+		{
+			image->Paint();
+		}
+		int wide, tall;
+		image->GetSize(wide, tall);
+		x += wide;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b2880 size=0xc6
 #include "vgui2__Label.h"
 struct ISurfV
