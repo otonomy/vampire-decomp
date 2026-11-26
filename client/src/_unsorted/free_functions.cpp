@@ -80871,6 +80871,31 @@ void sub_101076c0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101076d0 size=0x40
+// mathlib 3dnow.cpp: _3DNow_InvRSquared
+float sub_101076d0(const float* v)
+{
+	float r2 = 1.f;
+	_asm { // AMD 3DNow only routine
+		mov			eax, v
+		femms
+		movq		mm0, QWORD PTR [eax]
+		movd		mm1, DWORD PTR [eax+8]
+		movd		mm2, r2
+		pfmul		mm0, mm0
+		pfmul		mm1, mm1
+		pfacc		mm0, mm0
+		pfadd		mm1, mm0
+		pfmax		mm1, mm2
+		pfrcp		mm0, mm1
+		movd		r2, mm0
+		femms
+	}
+
+	return r2;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10107710 size=0x1b
 float sub_10107710(float x)
 {
