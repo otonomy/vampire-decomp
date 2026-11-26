@@ -12249,6 +12249,95 @@ void sub_1002b710()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1002b780 size=0x20f
+#include "CUtlLinkedList8.h"
+#include "Tier1.h"
+extern "C" char *_mbsdup(const char *);
+extern "C" unsigned int strlen(const char *);
+extern int (*g_101e3194)(const char *, const char *, int);
+extern void (*g_101e3198)(const char *pIn, char *pOut, int nMax);
+extern void (*g_101e310c)(const char *pMsg, ...);
+struct FS_2b78
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void a5(); virtual void a6(); virtual void a7(); virtual void a8(); virtual void a9();
+	virtual void b0(); virtual void b1();
+	virtual const char *FindFirst(const char *pWildCard, int *pHandle);
+	virtual const char *FindNext(int handle);
+	virtual void b4();
+	virtual void FindClose(int handle);
+};
+struct Mem_2b78 { void sub_1002c130(int n); };
+extern FS_2b78 *g_104a580c;
+extern CUtlLinkedList8 g_102eacb4;
+// TARGET: sub_1002b780
+int sub_1002b780(const char *pszPath)
+{
+	int nAdded = 0;
+	int findHandle;
+	const char *skip[2] = { "sp_genesisdevice_1", 0 };
+	char szName[128];
+	const char *pFile = g_104a580c->FindFirst(pszPath, &findHandle);
+	while (pFile)
+	{
+		g_101e3198(pFile, szName, 128);
+		int len = strlen(szName);
+		int (*pfn)(const char *, const char *, int);
+		int i;
+		for (i = 0; skip[i]; i++)
+		{
+			pfn = g_101e3194;
+			if (!pfn(skip[i], szName, len))
+				goto next;
+		}
+		for (i = 0; i < g_102eacb4.m_ElementCount; i++)
+		{
+			if (!pfn((const char *)g_102eacb4.m_pMemory[(unsigned short)i].m_Data, szName, len))
+				goto next;
+		}
+		g_101e3108("Adding %s to the map list, it is not in the loadorder.txt\n", szName);
+		{
+			int str = (int)_mbsdup(szName);
+			unsigned short newNode;
+			if (g_102eacb4.m_FirstFree == 0xffff)
+			{
+				if (g_102eacb4.m_NumAlloced == g_102eacb4.m_allocationCount)
+					((Mem_2b78 *)&g_102eacb4)->sub_1002c130(1);
+				newNode = g_102eacb4.m_NumAlloced++;
+				if (newNode == 0xffff)
+					g_101e310c("CUtlLinkedList overflow!\n");
+			}
+			else
+			{
+				newNode = g_102eacb4.m_FirstFree;
+				g_102eacb4.m_FirstFree = g_102eacb4.m_pMemory[g_102eacb4.m_FirstFree].m_Next;
+			}
+			g_102eacb4.m_pMemory[newNode].m_Previous = newNode;
+			g_102eacb4.m_pMemory[newNode].m_Next = newNode;
+			g_102eacb4.m_pElements = g_102eacb4.m_pMemory;
+			g_102eacb4.sub_1002c080(newNode);
+			CUtlLinkedList8Node &n = g_102eacb4.m_pMemory[newNode];
+			n.m_Next = 0xffff;
+			n.m_Previous = g_102eacb4.m_Tail;
+			g_102eacb4.m_Tail = newNode;
+			if (n.m_Previous == 0xffff)
+				g_102eacb4.m_Head = newNode;
+			else
+				g_102eacb4.m_pMemory[n.m_Previous].m_Next = newNode;
+			g_102eacb4.m_ElementCount++;
+			int *pElem = &g_102eacb4.m_pMemory[newNode].m_Data;
+			if (pElem)
+				*pElem = str;
+			nAdded++;
+		}
+next:
+		pFile = g_104a580c->FindNext(findHandle);
+	}
+	g_104a580c->FindClose(findHandle);
+	return nAdded;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1002bfb0 size=0x63
 class IEngine_1002bfb0
 {
