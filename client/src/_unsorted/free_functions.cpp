@@ -92715,6 +92715,224 @@ void PC::sub_10123f90(int mode, int *dst, const int *src, int n)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10124070 size=0x374
+#include "CPredictionCopy.h"
+#include "datamap.h"
+#include "Vector.h"
+
+extern "C" void *__cdecl memcpy(void *, const void *, unsigned int);
+extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
+extern "C" unsigned int __cdecl strlen(const char *);
+#pragma intrinsic(memcpy, memcmp, strlen)
+
+__declspec(dllimport) void Warning(const char *pMsg, ...);
+
+char CPredictionCopy::sub_10123470()
+{
+	return !(m_pCurrentField->m_Flags & 0x400);
+}
+
+int CPredictionCopy::sub_10123480(int size, const void *outdata, const void *indata)
+{
+	if (!m_bErrorCheck)
+		return 0;
+	if (!sub_10123470())
+		return 1;
+	return memcmp(outdata, indata, size) == 0;
+}
+
+void CPredictionCopy::sub_10123a60(int dt, int *outvalue, const int *invalue, int count)
+{
+	if (!m_bPerformCopy || dt == 1)
+		return;
+	memcpy(outvalue, invalue, count * sizeof(int));
+}
+
+void CPredictionCopy::sub_10123b20(int dt, bool *outvalue, const bool *invalue, unsigned int count)
+{
+	if (!m_bPerformCopy || dt == 1)
+		return;
+	memcpy(outvalue, invalue, count * sizeof(bool));
+}
+
+void CPredictionCopy::sub_10123ba0(int dt, float *outvalue, const float *invalue, int count)
+{
+	if (!m_bPerformCopy || dt == 1)
+		return;
+	memcpy(outvalue, invalue, count * sizeof(float));
+}
+
+void CPredictionCopy::sub_10123c90(int dt, char *outstring, const char *instring)
+{
+	if (!m_bPerformCopy || dt == 1)
+		return;
+	memcpy(outstring, instring, strlen(instring) + 1);
+}
+
+void CPredictionCopy::sub_10123e30(int dt, Vector *outValue, const Vector *inValue, int count)
+{
+	if (!m_bPerformCopy || dt == 1)
+		return;
+	memcpy(outValue, inValue, count * sizeof(Vector));
+}
+
+// TARGET: ?sub_10124070@CPredictionCopy@@QAEHHPAUdatamap_t@@PAUtypedescription_t@@H@Z
+int CPredictionCopy::sub_10124070(int nChainCount, datamap_t *dmap, typedescription_t *pFields, int fieldCount)
+{
+	m_pCurrentMap = dmap;
+	if (!m_pCurrentClassName)
+		m_pCurrentClassName = dmap->dataClassName;
+
+	for (int i = 0; i < fieldCount; i++)
+	{
+		m_pCurrentField = (tdesc_t *)&*(pFields + i);
+		unsigned int flags = pFields[i].flags;
+
+		if (pFields[i].override_field)
+			pFields[i].override_field->override_count = nChainCount;
+
+		typedescription_t *pField = (typedescription_t *)m_pCurrentField;
+		if (pField->override_count == nChainCount)
+			continue;
+
+		if (pField->fieldType != 9)
+		{
+			if (flags & 0x200)
+				continue;
+			if (m_nType == 1 && (flags & 0x100))
+				continue;
+			if (2 == m_nType && !(flags & 0x100))
+				continue;
+		}
+
+		unsigned int t0 = pField->fieldSize; unsigned int fieldSize = (short)t0;
+		char *pOutputData = (char *)m_pDest + m_nDestOffsetIndex[pField->fieldOffset];
+		char const *pInputData = pField->fieldOffset[m_nSrcOffsetIndex] + (char const *)m_pSrc;
+
+		m_bShouldReport = true;
+		m_bReport = true;
+
+		int difftype;
+		switch (pField->fieldType)
+		{
+		case 9:
+			{
+				typedescription_t *save = pField;
+				void *saveDest = m_pDest;
+				void const *saveSrc = m_pSrc;
+				const char *saveName = m_pCurrentClassName;
+
+				m_pCurrentClassName = pField->td->dataClassName;
+
+				m_pSrc = pInputData;
+				if ((flags & 0x40) && m_nSrcOffsetIndex == 0)
+					m_pSrc = *((void **)m_pSrc);
+
+				m_pDest = pOutputData;
+				if ((flags & 0x40) && 0 == m_nDestOffsetIndex)
+					m_pDest = *((void **)m_pDest);
+
+				sub_10124070(nChainCount, dmap, pField->td->dataDesc, pField->td->dataNumFields);
+
+				m_pCurrentClassName = saveName;
+				m_pCurrentField = (tdesc_t *)save;
+				m_pDest = saveDest;
+				m_pSrc = saveSrc;
+			}
+			break;
+		case 1:
+			difftype = sub_10123bd0((float *)pOutputData, (const float *)pInputData, fieldSize);
+			sub_10123ba0(difftype, (float *)pOutputData, (const float *)pInputData, fieldSize);
+			sub_101236b0(difftype, (float *)pOutputData, (const float *)pInputData, fieldSize);
+			break;
+		case 2:
+			difftype = sub_10123cd0((char *)pOutputData, (const char *)pInputData);
+			sub_10123c90(difftype, (char *)pOutputData, (const char *)pInputData);
+			sub_10123710(difftype, (char *)pOutputData, (const char *)pInputData);
+			break;
+		case 3:
+			difftype = sub_10123e70((Vector *)pOutputData, (const Vector *)pInputData, fieldSize);
+			sub_10123e30(difftype, (Vector *)pOutputData, (const Vector *)pInputData, fieldSize);
+			sub_10123800(difftype, (Vector *)pOutputData, (const Vector *)pInputData, fieldSize);
+			break;
+		case 8:
+			difftype = sub_10123480(fieldSize * 4, pOutputData, pInputData);
+			if (m_bPerformCopy && difftype != 1)
+				memcpy(pOutputData, pInputData, 4 * fieldSize);
+			sub_101234c0(difftype, fieldSize * 4, pOutputData, pInputData);
+			break;
+		case 5:
+			difftype = sub_10123b50((bool *)pOutputData, (const bool *)pInputData, fieldSize);
+			sub_10123b20(difftype, (bool *)pOutputData, (const bool *)pInputData, fieldSize);
+			sub_10123630(difftype, (bool *)pOutputData, (const bool *)pInputData, fieldSize);
+			break;
+		case 4:
+			difftype = sub_10123a90((int *)pOutputData, (const int *)pInputData, fieldSize);
+			sub_10123a60(difftype, (int *)pOutputData, (const int *)pInputData, fieldSize);
+			sub_10123550(difftype, (int *)pOutputData, (const int *)pInputData, fieldSize);
+			break;
+		case 6:
+			difftype = sub_10123a10((short *)pOutputData, (const short *)pInputData, fieldSize);
+			sub_101239d0(difftype, (short *)pOutputData, (const short *)pInputData, fieldSize);
+			sub_10123500(difftype, (short *)pOutputData, (const short *)pInputData, fieldSize);
+			break;
+		case 7:
+			difftype = sub_10123480(fieldSize, pOutputData, pInputData);
+			if (m_bPerformCopy && difftype != 1)
+				memcpy(pOutputData, pInputData, fieldSize);
+			sub_101234c0(difftype, fieldSize, pOutputData, pInputData);
+			break;
+		case 12:
+			difftype = sub_10123fc0((int *)pOutputData, (const int *)pInputData, fieldSize);
+			sub_10123f90(difftype, (int *)pOutputData, (const int *)pInputData, fieldSize);
+			sub_101238a0(difftype, (int *)pOutputData, (const int *)pInputData, fieldSize);
+			break;
+		case 0:
+		case 10:
+		case 11:
+		case 13:
+		case 14:
+		case 15:
+		case 16:
+		case 17:
+		case 19:
+			break;
+		default:
+			Warning("Bad field type\n");
+			break;
+		}
+	}
+
+	m_pCurrentClassName = 0;
+	return m_nErrorCount;
+}
+
+/* judged with these header patches (not saved):
+[
+ {
+  "path": "CPredictionCopy.h",
+  "old": "\tchar m_u0[0x14];",
+  "new": "\tint m_nType;\t// 0x00: 1 non-networked only, 2 networked only\n\tvoid *m_pDest;\t// 0x04\n\tvoid const *m_pSrc;\t// 0x08\n\tint m_nDestOffsetIndex;\t// 0x0c\n\tint m_nSrcOffsetIndex;\t// 0x10"
+ },
+ {
+  "path": "CPredictionCopy.h",
+  "old": "\tchar m_u20[4];",
+  "new": "\tstruct datamap_t *m_pCurrentMap;\t// 0x20"
+ },
+ {
+  "path": "CPredictionCopy.h",
+  "old": "\tchar m_u2c[4];",
+  "new": "\tbool m_bPerformCopy;\t// 0x2c\n\tchar m_u2d[3];"
+ },
+ {
+  "path": "CPredictionCopy.h",
+  "old": "\tvoid sub_10123800(int dt, struct Vector *outValue, const struct Vector *inValue, int count);",
+  "new": "\tvoid sub_10123800(int dt, struct Vector *outValue, const struct Vector *inValue, int count);\n\tint sub_10123480(int size, const void *outdata, const void *indata);\t// CompareData\n\tvoid sub_101234c0(int dt, int size, void *outdata, const void *indata);\t// DescribeData\n\tvoid sub_10123a60(int dt, int *outvalue, const int *invalue, int count);\t// CopyInt\n\tint sub_10123a90(int *outvalue, const int *invalue, int count);\t// CompareInt\n\tvoid sub_10123b20(int dt, bool *outvalue, const bool *invalue, unsigned int count);\t// CopyBool\n\tint sub_10123b50(bool *outvalue, const bool *invalue, int count);\t// CompareBool\n\tvoid sub_10123ba0(int dt, float *outvalue, const float *invalue, int count);\t// CopyFloat\n\tvoid sub_101236b0(int dt, float *outvalue, const float *invalue, int count);\t// DescribeFloat\n\tvoid sub_10123c90(int dt, char *outstring, const char *instring);\t// CopyString\n\tvoid sub_10123710(int dt, char *outstring, const char *instring);\t// DescribeString\n\tvoid sub_10123e30(int dt, struct Vector *outValue, const struct Vector *inValue, int count);\t// CopyVector\n\tint sub_10123e70(struct Vector *outValue, const struct Vector *inValue, int count);\t// CompareVector\n\tint sub_10123a10(short *outvalue, const short *invalue, int count);\t// CompareShort\n\tvoid sub_101239d0(int dt, short *outvalue, const short *invalue, int count);\t// CopyShort\n\tvoid sub_10123500(int dt, short *outvalue, const short *invalue, int count);\t// DescribeShort\n\tint sub_10123fc0(int *outvalue, const int *invalue, int count);\n\tvoid sub_10123f90(int dt, int *outvalue, const int *invalue, int count);\n\tvoid sub_101238a0(int dt, int *outvalue, const int *invalue, int count);\n\tint sub_10124070(int nChainCount, struct datamap_t *dmap, struct typedescription_t *pFields, int fieldCount);\t// \"TransferData\""
+ }
+]
+*/
+// END FUNCTION
+
 // FUNCTION: 0x101243f0 size=0x42
 struct SUnk101243f0 { int m_n0; int m_n4; int m_n8; SUnk101243f0 *m_pNext; };
 struct CUnk101243f0

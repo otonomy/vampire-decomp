@@ -6802,6 +6802,7 @@
 0x10123e30 func   ?sub_10123e30@PCV@@QAEXHPAX0H@Z PCV::sub_10123e30
 0x10123e70 func   ?sub_10123e70@PredCopyLocal@@QAEHPAVVector@@PBV2@H@Z PredCopyLocal::sub_10123e70
 0x10123f90 func   ?sub_10123f90@PC@@QAEXHPAHPBHH@Z PC::sub_10123f90
+0x10124070 func   ?sub_10124070@CPredictionCopy@@QAEHHPAUdatamap_t@@PAUtypedescription_t@@H@Z CPredictionCopy::sub_10124070
 0x101243f0 func   ?sub_101243f0@CUnk101243f0@@QAEHHPAUSUnk101243f0@@HH@Z CUnk101243f0::sub_101243f0
 0x10124440 func   ?sub_10124440@CUnknown10124440@@QAEHHHH@Z CUnknown10124440::sub_10124440
 0x101245d0 func   ?sub_101245d0@@YAXPAUCPredDescData@@PBDZZ sub_101245d0
