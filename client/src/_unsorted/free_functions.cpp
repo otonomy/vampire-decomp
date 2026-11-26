@@ -72094,6 +72094,150 @@ const char *sub_100edcf0(int state)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ee370 size=0x3a7
+#include "CGameMovement.h"
+#include "C_BaseEntity.h"
+#include "CGlobalVarsBase.h"
+#include "ConVar.h"
+
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);	// AngleVectors
+extern Vector g_104d4970;	// vec3_origin
+extern ConVar g_104dfc98;	// sv_accelerate
+
+struct cplaneWM
+{
+    Vector normal;
+    float dist;
+    unsigned char type;
+    unsigned char signbits;
+    unsigned char pad[2];
+};
+struct csurfaceWM
+{
+    const char *name;
+    short surfaceProps;
+    unsigned short flags;
+};
+struct CBaseTraceWM
+{
+    Vector startpos;
+    Vector endpos;
+    cplaneWM plane;
+    float fraction;
+    int contents;
+    unsigned short dispFlags;
+    bool allsolid;
+    bool startsolid;
+};
+struct CGameTraceWM : public CBaseTraceWM
+{
+    float fractionleftsolid;
+    csurfaceWM surface;
+    int hitgroup;
+    short physicsbone;
+    C_BaseEntity *m_pEnt;
+    int hitbox;
+};
+
+struct GMMoveDataWM
+{
+    int m_n0; int m_n4; int m_n8;
+    QAngle m_vecViewAngles;	// 0x0c
+    int m_n18; int m_n1c; int m_n20; int m_n24; int m_n28;
+    float m_flForwardMove;	// 0x2c
+    float m_flSideMove;	// 0x30
+    float m_flUpMove;	// 0x34
+    float m_flMaxSpeed;	// 0x38
+    int m_n3c;
+    Vector m_vecVelocity;	// 0x40
+};
+struct GMPlayerWM
+{
+    char m_pad0[0x154];
+    Vector m_vecBaseVelocity;	// 0x154
+};
+
+class CGameMovementWM : public CGameMovement
+{
+public:
+    void sub_100eb8f0();
+    CGameTraceWM sub_100eb9d0(const Vector &dest);
+    void sub_100ee140(CGameTraceWM &pm, Vector &dest);
+    void sub_100ee370();
+};
+
+#define MV ((GMMoveDataWM *)m_pPlayer)
+#define PL ((GMPlayerWM *)m_pMove)
+#define PLENT ((C_BaseEntity *)m_pMove)
+
+// TARGET: CGameMovementWM::sub_100ee370
+void CGameMovementWM::sub_100ee370()
+{
+    sub_100ec450();
+
+    if (MV->m_flForwardMove != 0 || MV->m_flSideMove != 0 || MV->m_flUpMove != 0)
+    {
+        Vector forward, right, up;
+        sub_101090a0(MV->m_vecViewAngles, &forward, &right, &up);
+
+        float fmove = MV->m_flForwardMove;
+        float smove = MV->m_flSideMove;
+
+        VectorNormalize(forward);
+        VectorNormalize(right);
+
+        Vector wishvel;
+        for (int i = 0; i < 3; i++)
+            wishvel[i] = forward[i] * fmove + right[i] * smove;
+
+        Vector wishdir;
+        wishdir.z = wishvel.z + MV->m_flUpMove;
+        wishdir.x = wishvel.x;
+        wishdir.y = wishvel.y;
+        float wishspeed = VectorNormalize(wishdir);
+        if (wishspeed > MV->m_flMaxSpeed)
+            wishspeed = MV->m_flMaxSpeed;
+
+        vfunc10(wishdir, wishspeed, g_104dfc98.GetFloat());
+    }
+
+    if (MV->m_vecVelocity.z > 0)
+        sub_100ec660(0);
+
+    if (PLENT->vfunc104() && PL->m_vecBaseVelocity == g_104d4970 && MV->m_vecVelocity == g_104d4970)
+        return;
+
+    sub_100eb7a0();
+    if (PLENT->GetSolid() == 6)
+        sub_100eb8f0();
+
+    VectorAdd(PL->m_vecBaseVelocity, MV->m_vecVelocity, MV->m_vecVelocity);
+    sub_100eb7a0();
+
+    {
+        Vector dest;
+        VectorScale(MV->m_vecVelocity, gpGlobals->frametime, dest);
+        VectorSubtract(MV->m_vecVelocity, PL->m_vecBaseVelocity, MV->m_vecVelocity);
+
+        CGameTraceWM pm;
+        pm = sub_100eb9d0(dest);
+        sub_100eb7a0();
+
+        if (pm.allsolid)
+        {
+            sub_100ec660(pm.m_pEnt);
+            MV->m_vecVelocity.Init();
+            return;
+        }
+
+        if (pm.fraction != 1.0f)
+            sub_100ee140(pm, dest);
+    }
+
+    sub_100ec450();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ee720 size=0x2f
 #include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
