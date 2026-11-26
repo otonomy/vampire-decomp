@@ -14,6 +14,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc15();
 	virtual int vfunc16();
 	bool sub_100019a0();
+	bool sub_10001970();
+	void sub_100019d0(QAngle *pAngles, Vector *pOrigin);	// the camera's angles (+0x474) and origin (+0x468)
 	char m_pad0014[0x4a4 - 0x14];
 	float m_f4a4;
 	float m_af4a8[6];

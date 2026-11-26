@@ -74,6 +74,9 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the slots CViewRender adds to its base's vtable: 44-45, vfuncK at slot K
     virtual void vfunc44();
     virtual float vfunc45();
+    void *sub_10190ba0(int nIndex, int nModel, const Vector &eyeOrigin, const QAngle &eyeAngles, const Vector &offset, float flZ, int unused);	// "CViewRender::CalcViewModelView": the view model record of slot 6, placed at the cine camera or the eye (+offset), nudged by the convar at +0x37c and by the offset vector at +0x4
+    void sub_1018fcb0(int nIndex);
+    void sub_1018fb70(int nIndex);
     CViewRender *sub_1018e9b0(unsigned flags);
     CViewRender *sub_10198a90();	// the constructor ("CViewRender::CViewRender" scope trace), written as a plain member
     void sub_1019aed0(bool, int);	// provisional, like sub_1019af80 (transplant)
