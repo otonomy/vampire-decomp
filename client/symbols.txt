@@ -3470,6 +3470,7 @@
 0x1008b850 func   ?sub_1008b850@@YAXXZ sub_1008b850
 0x1008b890 func   ?sub_1008b890@@YAHHHMHHHH@Z sub_1008b890
 0x1008b8a0 func   ?sub_1008b8a0@@YA_NABURay_t@@PAUStudioHdr@@PAUStudioHitboxSet@@PAPAUmatrix3x4_t@@HPAUCGameTrace@@@Z sub_1008b8a0
+0x1008bb10 func   ?sub_1008bb10@@YA_NABURay_t@@PAUStudioHdr@@PAUStudioHitboxSet@@PAPAUmatrix3x4_t@@HAAUCGameTrace@@@Z sub_1008bb10
 0x1008bd50 func   ?sub_1008bd50@@YAHABURay_t@@PAUHitboxBBox@@AAUHitboxMatrix@@AAUCGameTrace@@@Z sub_1008bd50
 0x1008c060 func   ?sub_1008c060@@YAXPAUStudioHdr@@HPBMPAPAXPAM@Z sub_1008c060
 0x1008c1f0 func   ?sub_1008c1f0@@YAHHHH@Z sub_1008c1f0

@@ -36518,6 +36518,76 @@ bool sub_1008b8a0(const Ray_t &ray, StudioHdr *pStudioHdr, StudioHitboxSet *set,
 }
 // END FUNCTION
 
+// FUNCTION: 0x1008bb10 size=0x240
+#include "StudioHdr.h"
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "ScopeTrace.h"
+#include "matrix3x4_t.h"
+
+struct HitboxBBox;
+struct HitboxMatrix;
+
+bool sub_1008b8a0(const Ray_t &ray, StudioHdr *pStudioHdr, StudioHitboxSet *set, matrix3x4_t **hitboxbones, int fContentsMask, CGameTrace &tr);
+int sub_1008bd50(const Ray_t &ray, HitboxBBox *pbox, HitboxMatrix &matrix, CGameTrace &tr);
+void sub_10108fd0(const float *start, float scale, const float *direction, float *dest);
+
+bool sub_1008bb10(const Ray_t &ray, StudioHdr *pStudioHdr, StudioHitboxSet *set, matrix3x4_t **hitboxbones, int fContentsMask, CGameTrace &tr)
+{
+	ScopeTrace st("bone_setup.cpp TraceToStudio()", g_102de300);
+	if (!ray.m_IsRay)
+		return sub_1008b8a0(ray, pStudioHdr, set, hitboxbones, fContentsMask, tr);
+
+	tr.m_fraction = 1.0f;
+	tr.m_startsolid = false;
+
+	int hitbox = -1;
+	int hitside = -1;
+	for (int i = 0; i < set->m_nHitboxes; i++)
+	{
+		StudioHitbox *pbox = set->Hitbox(i);
+		if ((pStudioHdr->Bone(pbox->m_iBone)->m_nFlags9c & fContentsMask) == 0)
+			continue;
+		HitboxMatrix &matrix = *(HitboxMatrix *)hitboxbones[pbox->m_iBone];
+		int side = sub_1008bd50(ray, (HitboxBBox *)pbox, matrix, tr);
+		if (side >= 0)
+		{
+			hitbox = i;
+			hitside = side;
+		}
+	}
+
+	if (hitbox >= 0)
+	{
+		StudioHitbox *pbox = set->Hitbox(hitbox);
+		sub_10108fd0(ray.m_Start, tr.m_fraction, ray.m_Delta, tr.m_endpos);
+		tr.m_hitgroup = set->Hitbox(hitbox)->m_iGroup;
+		tr.m_hitbox = hitbox;
+		tr.m_contents = pStudioHdr->Bone(pbox->m_iBone)->m_nFlags9c | 0x40000000;
+		tr.m_physicsbone = pStudioHdr->Bone(pbox->m_iBone)->m_nPhysicsBone94;
+
+		matrix3x4_t &hitboxToWorld = *hitboxbones[pbox->m_iBone];
+		if (hitside >= 3)
+		{
+			hitside -= 3;
+			tr.m_planeNormal[0] = hitboxToWorld[0][hitside];
+			tr.m_planeNormal[1] = hitboxToWorld[1][hitside];
+			tr.m_planeNormal[2] = hitboxToWorld[2][hitside];
+		}
+		else
+		{
+			tr.m_planeNormal[0] = -hitboxToWorld[0][hitside];
+			tr.m_planeNormal[1] = -hitboxToWorld[1][hitside];
+			tr.m_planeNormal[2] = -hitboxToWorld[2][hitside];
+		}
+		tr.m_planeDist = DotProduct(*(Vector *)tr.m_endpos, *(Vector *)tr.m_planeNormal);
+		tr.m_planeType = 3;
+		return true;
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1008bd50 size=0x308
 #include "Vector.h"
 #include "Ray_t.h"
