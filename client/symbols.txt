@@ -6906,6 +6906,7 @@
 0x1013d730 func   ?sub_1013d730@CUnknown1024b370@@QAEXXZ CUnknown1024b370::sub_1013d730
 0x1013d7c0 func   ?sub_1013d7c0@CUnknown1024b370@@QAEXXZ CUnknown1024b370::sub_1013d7c0
 0x1013d820 func   ?sub_1013d820@@YIHPAUCSelf1013d820@@@Z sub_1013d820
+0x1013d930 func   ?LinkToParent@?$CUtlRBTree@UCRBTree12Entry_10194f30@@G@@QAEXGG_N@Z CUtlRBTree<CRBTree12Entry_10194f30,unsigned short>::LinkToParent
 0x1013dcb0 func   ?Links@?$CUtlRBTree@UCRBTree12Entry_10194f30@@G@@QBEABULinks_t@1@G@Z CUtlRBTree<CRBTree12Entry_10194f30,unsigned short>::Links
 0x1013dd10 func   ?sub_1013dd10@UtlVec8@@QAEXHH@Z UtlVec8::sub_1013dd10
 0x1013dd50 func   ?sub_1013dd50@UtlMem@@QAEXH@Z UtlMem::sub_1013dd50
