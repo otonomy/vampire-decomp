@@ -373,6 +373,7 @@
 0x10009430 func   ?_C_WeaponMelee_Stake_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_Stake_CreateObject
 0x100094f0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_Stake@@@Z ClientClassInit
 0x10009580 func   ?vfunc17@C_WeaponMelee_Sledgehammer@@UAEHXZ C_WeaponMelee_Sledgehammer::vfunc17
+0x100095c0 func   ?sub_100095c0@@YAHXZ sub_100095c0
 0x10009610 func   ??_GC_WeaponMelee_Sledgehammer@@UAEPAXI@Z ??_GC_WeaponMelee_Sledgehammer@@UAEPAXI@Z
 0x10009630 func   ?vfunc16@C_WeaponMelee_Sledgehammer@@UAEHXZ C_WeaponMelee_Sledgehammer::vfunc16
 0x10009640 func   ?vfunc15@C_WeaponMelee_Sledgehammer@@UAEHXZ C_WeaponMelee_Sledgehammer::vfunc15
