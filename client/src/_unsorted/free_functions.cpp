@@ -76735,6 +76735,161 @@ void CUnknown10126770::sub_10126770(int updateType)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101267c0 size=0x269
+#include "Vector.h"
+
+struct matrix3x4_t;
+void sub_10107f80(const float *in, const matrix3x4_t &m, float *out);
+
+struct IMesh_101267c0
+{
+	virtual void LockMesh(int numVerts, int numIndices, void *desc);
+	virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4();
+	virtual void g5(); virtual void g6(); virtual void g7(); virtual void g8(); virtual void g9();
+	virtual void SetPrimitiveType(int type);
+	virtual void g11();
+	virtual void Draw(int firstIndex, int numIndices);
+};
+
+struct IPhysCollision_101267c0
+{
+	virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4();
+	virtual void g5(); virtual void g6(); virtual void g7(); virtual void g8(); virtual void g9();
+	virtual void g10(); virtual void g11(); virtual void g12(); virtual void g13(); virtual void g14();
+	virtual void g15(); virtual void g16(); virtual void g17(); virtual void g18(); virtual void g19();
+	virtual void g20(); virtual void g21(); virtual void g22(); virtual void g23(); virtual void g24();
+	virtual void g25(); virtual void g26(); virtual void g27();
+	virtual int CreateDebugMesh(const void *pCollide, Vector **outVerts);	// 28
+	virtual void DestroyDebugMesh(int vertCount, Vector *outVerts);	// 29
+};
+extern IPhysCollision_101267c0 *g_104e0c8c;
+
+#define MS_PAD10(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); virtual void p##5(); virtual void p##6(); virtual void p##7(); virtual void p##8(); virtual void p##9();
+struct IMatSys_101267c0
+{
+	MS_PAD10(a) MS_PAD10(b)
+	virtual void c0(); virtual void c1(); virtual void c2(); virtual void c3(); virtual void c4();
+	virtual void *FindMaterial(const char *name, const char *group, bool complain);	// 25
+	virtual void c6(); virtual void c7(); virtual void c8(); virtual void c9();
+	MS_PAD10(d) MS_PAD10(e) MS_PAD10(f) MS_PAD10(g) MS_PAD10(h) MS_PAD10(i) MS_PAD10(j) MS_PAD10(k)
+	virtual void l0();
+	virtual IMesh_101267c0 *GetDynamicMesh(bool buffered, IMesh_101267c0 *pVertexOverride, IMesh_101267c0 *pIndexOverride, void *pMaterial);	// 111
+};
+extern IMatSys_101267c0 *g_104a57ec;
+
+struct MeshDim
+{
+	void sub_100421f0(int type, int numPrimitives);
+};
+
+struct MeshBuilder_101267c0
+{
+	int m_VertexSize_Position;	// 0x00
+	int m_VertexSize_BoneWeight;	// 0x04
+	int m_VertexSize_BoneMatrixIndex;	// 0x08
+	int m_VertexSize_Normal;	// 0x0c
+	int m_VertexSize_Color;	// 0x10
+	int m_VertexSize_Specular;	// 0x14
+	int m_VertexSize_TexCoord[4];	// 0x18
+	int m_unk28[(0x80 - 0x28) / 4];
+	IMesh_101267c0 *m_pMesh;	// 0x80
+	bool m_bGenerateIndices;	// 0x84
+	int m_nMaxVertices;	// 0x88
+	int m_nMaxIndices;	// 0x8c
+	int m_nVertexCount;	// 0x90
+	int m_nIndexCount;	// 0x94
+	int m_nCurrentVertex;	// 0x98
+	int m_nCurrentIndex;	// 0x9c
+	int m_Type;	// 0xa0
+	bool m_bA4;	// 0xa4
+	float *m_pCurrPosition;	// 0xa8
+	float *m_pCurrNormal;	// 0xac
+	float *m_pCurrTexCoord[4];	// 0xb0
+	unsigned char *m_pCurrColor;	// 0xc0
+
+	MeshBuilder_101267c0()
+	{
+		m_nMaxVertices = 0;
+		m_nMaxIndices = 0;
+		m_nVertexCount = 0;
+		m_nIndexCount = 0;
+		m_nCurrentVertex = 0;
+		m_nCurrentIndex = 0;
+		m_bA4 = false;
+	}
+	void sub_100422e0();
+	void sub_10041c90(bool a, int b);
+	void Begin(IMesh_101267c0 *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bGenerateIndices = false;
+		((MeshDim *)this)->sub_100421f0(type, numPrimitives);
+		m_nIndexCount = 0;
+		m_nVertexCount = 0;
+		m_bA4 = true;
+		m_Type = type;
+		m_pMesh->SetPrimitiveType(type);
+		m_pMesh->LockMesh(m_nMaxVertices, m_nMaxIndices, this);
+		sub_100422e0();
+	}
+	void Position3fv(const float *v)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = *v++;
+		*pDst++ = *v++;
+		*pDst = *v;
+	}
+	void Color4ub(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+	{
+		int col = b | (g << 8) | (r << 16) | (a << 24);
+		*(int *)m_pCurrColor = col;
+	}
+	void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+	void AdvanceVertex()
+	{
+		if (++m_nCurrentVertex > m_nVertexCount)
+			m_nVertexCount = m_nCurrentVertex;
+		m_pCurrPosition = (float *)((char *)m_pCurrPosition + m_VertexSize_Position);
+		m_pCurrNormal = (float *)((char *)m_pCurrNormal + m_VertexSize_Normal);
+		m_pCurrTexCoord[0] = (float *)((char *)m_pCurrTexCoord[0] + m_VertexSize_TexCoord[0]);
+		m_pCurrTexCoord[1] = (float *)((char *)m_pCurrTexCoord[1] + m_VertexSize_TexCoord[1]);
+		m_pCurrTexCoord[2] = (float *)((char *)m_pCurrTexCoord[2] + m_VertexSize_TexCoord[2]);
+		m_pCurrTexCoord[3] = (float *)((char *)m_pCurrTexCoord[3] + m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+	void End() { sub_10041c90(false, 0); }
+};
+
+void sub_101267c0(const void *pCollide, void *pMaterial, const matrix3x4_t &transform)
+{
+	if (!pMaterial)
+		pMaterial = g_104a57ec->FindMaterial("shadertest/wireframevertexcolor", 0, true);
+	Vector *outVerts;
+	int vertCount = g_104e0c8c->CreateDebugMesh(pCollide, &outVerts);
+	if (vertCount) {
+		IMesh_101267c0 *pMesh = g_104a57ec->GetDynamicMesh(true, 0, 0, pMaterial);
+		MeshBuilder_101267c0 meshBuilder;
+		meshBuilder.Begin(pMesh, 2, vertCount / 3);
+		for (int j = 0; j < vertCount; j++) {
+			Vector out;
+			sub_10107f80(outVerts[j].Base(), transform, out.Base());
+			meshBuilder.Position3fv(out.Base());
+			meshBuilder.Color4ub(0, 255, 255, 255);
+			meshBuilder.TexCoord2f(0, 0, 0);
+			meshBuilder.AdvanceVertex();
+		}
+		meshBuilder.End();
+		pMesh->Draw(-1, 0);
+	}
+	g_104e0c8c->DestroyDebugMesh(vertCount, outVerts);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10126a30 size=0x39
 void sub_10120660(int a, int b);
 
