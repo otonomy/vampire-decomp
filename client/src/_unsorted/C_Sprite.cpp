@@ -69,3 +69,84 @@ int C_Sprite::vfunc122()
 	return s->m43c;
 }
 // END FUNCTION
+
+// FUNCTION: 0x10136970 size=0x2d5
+#include "C_Sprite.h"
+#include "CSpriteHandle.h"
+#include "engineclient.h"
+#include <math.h>
+#include <float.h>
+
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
+
+#define SV1(n) virtual void v##n();
+#define SV10(p) SV1(p##0) SV1(p##1) SV1(p##2) SV1(p##3) SV1(p##4) SV1(p##5) SV1(p##6) SV1(p##7) SV1(p##8) SV1(p##9)
+struct C_SpriteScaleView	// C_Sprite's primary vtable: slot 121 is the render scale
+{
+	SV10(0) SV10(1) SV10(2) SV10(3) SV10(4) SV10(5) SV10(6) SV10(7) SV10(8) SV10(9)
+	SV10(10) SV10(11) SV1(120)
+	virtual float GetRenderScale();
+};
+
+#define max_L(a, b) (((a) > (b)) ? (a) : (b))
+
+void C_Sprite::GetRenderBounds(Vector &vecMins, Vector &vecMaxs)
+{
+	CSpriteHandle *pSprite = modelinfo->vfunc7(GetModel());
+	if (!pSprite)
+	{
+		vecMins.Init();
+		vecMaxs.Init();
+		return;
+	}
+
+	float flScale = ((C_SpriteScaleView *)this)->GetRenderScale();
+	int nOrientation = pSprite->sub_10136fc0();
+	float flRight = pSprite->GetRight() * flScale;
+	float flLeft = pSprite->GetLeft() * flScale;
+	float flUp = pSprite->GetUp() * flScale;
+	flScale = pSprite->GetDown() * flScale;
+
+	switch (nOrientation)
+	{
+	case 3:
+		{
+			Vector forward, right, up;
+			sub_101090a0(GetRenderAngles(), &forward, &right, &up);
+			vecMins.Init(FLT_MAX, FLT_MAX, FLT_MAX);
+			vecMaxs.Init(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+			for (int i = 0; i < 4; ++i)
+			{
+				Vector vecPos = right * ((i & 1) ? flLeft : flRight);
+				vecPos += up * ((i & 2) ? flScale : flUp);
+				VectorMin(vecMins, vecPos, vecMins);
+				VectorMax(vecMaxs, vecPos, vecMaxs);
+			}
+		}
+		break;
+
+	case 0:
+	case 1:
+		{
+			float flMaxWidth = max_L(-flLeft, flRight);
+			vecMins.x = vecMins.y = -flMaxWidth;
+			vecMaxs.x = vecMaxs.y = flMaxWidth;
+			vecMins.z = flScale;
+			vecMaxs.z = flUp;
+		}
+		break;
+
+	default:
+		{
+			flLeft = -flLeft;
+			flScale = -flScale;
+			float flWidth = max_L(flLeft, flRight);
+			float flHeight = max_L(flUp, flScale);
+			float flMaxDim = sqrt(flHeight * flHeight + flWidth * flWidth);
+			vecMins.x = vecMins.y = vecMins.z = -flMaxDim;
+			vecMaxs.x = vecMaxs.y = vecMaxs.z = flMaxDim;
+		}
+		break;
+	}
+}
+// END FUNCTION
