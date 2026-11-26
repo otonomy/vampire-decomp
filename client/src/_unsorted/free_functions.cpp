@@ -108498,6 +108498,24 @@ CUnknown102029c0 *CUnknown10203240::sub_1015f2f0(const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015f420 size=0x22
+namespace lifted {
+extern char g_102de300;
+extern char g_105e74fc;
+extern int g_105e7500;
+struct C1013ffa0 { int sub_1013ffa0(int); };
+}
+int sub_1015f420(int a0)
+{
+    if (a0 >= 0) {
+        if (a0 < lifted::g_105e7500) {
+            return ((lifted::C1013ffa0 *)((int)&lifted::g_105e74fc))->sub_1013ffa0(a0);
+        }
+    }
+    return (int)&lifted::g_102de300;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015f520 size=0x53
 #include <string.h>
 extern char g_102de300[];
