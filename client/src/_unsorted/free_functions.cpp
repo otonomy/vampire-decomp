@@ -90317,6 +90317,17 @@ void sub_1012d3f0(int a, int b, const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012d500 size=0x10
+namespace lifted {
+extern char g_105e5540;
+struct C100c1060 { int sub_1012f130(int); };
+}
+int sub_1012d500(int a0)
+{
+    return ((lifted::C100c1060 *)((int)&lifted::g_105e5540))->sub_1012f130(a0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012d510 size=0x15
 namespace lifted {
 extern int g_104a57d4;
