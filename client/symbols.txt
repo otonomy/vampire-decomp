@@ -3469,6 +3469,7 @@
 0x1008b810 func   ?sub_1008b810@@YAXPAUCUnknownFreeList100c4980@@@Z sub_1008b810
 0x1008b850 func   ?sub_1008b850@@YAXXZ sub_1008b850
 0x1008b890 func   ?sub_1008b890@@YAHHHMHHHH@Z sub_1008b890
+0x1008b8a0 func   ?SweepBoxToStudio@@YA_NABURay_t@@PAUStudioHdr@@PAUStudioHitboxSet@@PAPAUmatrix3x4_t@@HPAUCGameTrace@@@Z SweepBoxToStudio
 0x1008b8a0 func   ?sub_1008b8a0@@YA_NABURay_t@@PAUStudioHdr@@PAUStudioHitboxSet@@PAPAUmatrix3x4_t@@HPAUCGameTrace@@@Z sub_1008b8a0
 0x1008bb10 func   ?TraceToStudio@@YA_NABURay_t@@PAUStudioHdr@@PAUStudioHitboxSet@@PAPAUmatrix3x4_t@@HAAUCGameTrace@@@Z TraceToStudio
 0x1008bb10 func   ?sub_1008bb10@@YA_NABURay_t@@PAUStudioHdr@@PAUStudioHitboxSet@@PAPAUmatrix3x4_t@@HAAUCGameTrace@@@Z sub_1008bb10
