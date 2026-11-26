@@ -22066,6 +22066,130 @@ void CHudInfoBar::sub_10056860()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10056bc0 size=0x340
+#include "CHudInfoBar.h"
+#include "CHud.h"
+#include "engineclient.h"
+
+__declspec(dllimport) void DevMsg(int level, const char *pMsg, ...);
+
+struct CUnknown1013a130 { int sub_1013a130(int, int, int, int); };
+
+struct Mem
+{
+	char *m_pMemory; int m_nAllocationCount; int m_nGrowSize;
+	void sub_10057470(int num);
+};
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+extern "C" void *__cdecl memmove(void *, const void *, unsigned int);
+
+struct InfoType { int m0; char m4; char m5; char m6; char m7; char m8; char m9; char ma; char mb; int mc; int m10; int m14; int m18; };
+extern InfoType g_103ee160[];
+
+struct InfoMsg { int type; int b; char text[128]; };
+
+inline void *operator new(unsigned int, void *p) { return p; }
+
+struct InfoVec
+{
+	Mem m_Memory;
+	int m_Size;
+	InfoMsg *m_pElements;
+	int Count() const { return m_Size; }
+	InfoMsg &Element(int i) { return ((InfoMsg *)m_Memory.m_pMemory)[i]; }
+	InfoMsg &operator[](int i) { return ((InfoMsg *)m_Memory.m_pMemory)[i]; }
+	void GrowVector(int num)
+	{
+		if (m_Size + num > m_Memory.m_nAllocationCount)
+			m_Memory.sub_10057470(m_Size + num - m_Memory.m_nAllocationCount);
+		m_Size += num;
+		m_pElements = (InfoMsg *)m_Memory.m_pMemory;
+	}
+	void ShiftElementsRight(int elem, int num)
+	{
+		int numToMove = m_Size - elem - num;
+		if (numToMove > 0)
+			memmove(&Element(elem + num), &Element(elem), numToMove * sizeof(InfoMsg));
+	}
+	int InsertBefore(int elem, const InfoMsg &src)
+	{
+		GrowVector(1);
+		ShiftElementsRight(elem, 1);
+		new (&Element(elem)) InfoMsg(src);
+		return elem;
+	}
+	int AddToTail(const InfoMsg &src) { return InsertBefore(m_Size, src); }
+};
+
+#define V1 (*(InfoVec *)&self->m_unk1ac)
+#define V2 (*(InfoVec *)&self->m_unk1c0)
+
+static __forceinline void AddInfoMessage(CHudInfoBar *self, int type, int b, const char *s)
+{
+	if (type < 0 || type >= 0x53)
+		return;
+	InfoType *e = &g_103ee160[type];
+	if (e->m8)
+		return;
+	int i;
+	if (e->m6)
+	{
+		for (i = 0; i < V1.Count(); i++)
+		{
+			if (V1[i].type == type)
+			{
+				if (i == 0 && b == V1[0].b)
+					self->m_unk17c = engine->Time(1);
+				return;
+			}
+		}
+		for (i = 0; i < V2.Count(); i++)
+		{
+			if (V2[i].type == type)
+				return;
+		}
+	}
+	if (e->m7)
+	{
+		if (V1.Count() > 0 && V1[0].type == type && V1[0].b == b && (!s || !_strcmpi(V1[0].text, s)))
+		{
+			self->m_unk17c = engine->Time(1);
+			return;
+		}
+		if (V2.Count() > 0 && V2[0].type == type && V2[0].b == b && (!s || !_strcmpi(V2[0].text, s)))
+			return;
+	}
+	InfoMsg msg;
+	self->sub_10056fd0(&msg, type, b, s, 1);
+	if (!msg.text[0])
+	{
+		DevMsg(2, "Error: InfoBar Message couldn't be completed: Type: %d.\n", type);
+		return;
+	}
+	if (e->m5)
+	{
+		CUnknown1013a130 *p = (CUnknown1013a130 *)gHUD.FindElement("CHudTextMessage");
+		if (p)
+			p->sub_1013a130(e->m10, e->m14, e->m18, (int)msg.text);
+		V2.AddToTail(msg);
+		self->m_unk180 = engine->Time(1) + 12.0;
+		self->sub_10056f30(msg.type);
+	}
+	else
+	{
+		V1.AddToTail(msg);
+		if (V1.Count() == 1)
+			self->sub_10056860();
+	}
+}
+
+#pragma warning(disable: 4716)
+int CHudInfoBar::sub_10056bc0(int type, int b, const char *s)
+{
+	AddInfoMessage(this, type, b, s);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10056f00 size=0x28
 namespace lifted {
 extern char g_102864ec;

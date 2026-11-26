@@ -2748,6 +2748,7 @@
 0x10056b20 func   ?vfunc116@CHudInfoBar@@UAEHHH@Z CHudInfoBar::vfunc116
 0x10056b40 func   ?vfunc115@CHudInfoBar@@UAEHHH@Z CHudInfoBar::vfunc115
 0x10056b60 func   ?vfunc114@CHudInfoBar@@UAEHHHH@Z CHudInfoBar::vfunc114
+0x10056bc0 func   ?sub_10056bc0@CHudInfoBar@@QAEHHHPBD@Z CHudInfoBar::sub_10056bc0
 0x10056f00 func   ?sub_10056f00@@YGHH@Z sub_10056f00
 0x10057470 func   ?sub_10057470@@YIXPAUMem@@HH@Z sub_10057470
 0x10057500 func   ?sub_10057500@@YGXH@Z sub_10057500
