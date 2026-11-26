@@ -4030,6 +4030,7 @@
 0x100a4a70 func   ?_C_BasePlayer_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_BasePlayer_CreateObject
 0x100a4b10 func   ?ClientClassInit@@YAHPAUignored@DT_BasePlayer@@@Z ClientClassInit
 0x100a5220 func   ?vfunc17@C_BasePlayer@@UAEHXZ C_BasePlayer::vfunc17
+0x100a5260 func   ?sub_100a5260@@YAHXZ sub_100a5260
 0x100a5280 func   ?sub_100a5280@CUnknown100a5280@@QAEHH@Z CUnknown100a5280::sub_100a5280
 0x100a5290 func   ?sub_100a5290@CUnknown100a5290@@QAEHH@Z CUnknown100a5290::sub_100a5290
 0x100a52a0 func   ??0C_BasePlayer@@QAE@XZ C_BasePlayer::C_BasePlayer

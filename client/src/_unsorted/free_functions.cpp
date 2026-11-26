@@ -44775,6 +44775,21 @@ template <> int ClientClassInit<DT_BasePlayer::ignored>(DT_BasePlayer::ignored *
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a5260 size=0x1b
+namespace lifted {
+int sub_100a1eb0(int);
+struct C100a52a0 { int sub_100a52a0(); };
+}
+int sub_100a5260()
+{
+    int t0 = lifted::sub_100a1eb0(0x1b10);
+    if (t0 != 0) {
+        return ((lifted::C100a52a0 *)t0)->sub_100a52a0();
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a5280 size=0x9
 struct CUnknown100a5280 { int sub_100a5280(int); };
 int CUnknown100a5280::sub_100a5280(int a0)
