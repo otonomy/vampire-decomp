@@ -125704,6 +125704,70 @@ void sub_1016ef00()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1016f0c0 size=0xe9
+#include "VBarterUI.h"
+#include "C_BasePlayer.h"
+#include "engineclient.h"
+#include "CHud.h"
+
+#define VS10(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); virtual void p##5(); virtual void p##6(); virtual void p##7(); virtual void p##8(); virtual void p##9();
+struct SlotView21 {
+    VS10(a) VS10(b) virtual void c0(); virtual void SetVisible(bool);
+};
+struct PlayerSlotView {
+    VS10(a) VS10(b) VS10(c) VS10(d) VS10(e) VS10(f) VS10(g) VS10(h) VS10(i) VS10(j) VS10(k) VS10(l) VS10(m) VS10(n) VS10(o) VS10(p)
+    virtual void vfunc160(int);
+};
+struct Slot113View {
+    VS10(a) VS10(b) VS10(c) VS10(d) VS10(e) VS10(f) VS10(g) VS10(h) VS10(i) VS10(j) VS10(k)
+    virtual void q0(); virtual void q1(); virtual void q2();
+    virtual void vfunc113(int);
+};
+struct Slot49View {
+    VS10(a) VS10(b) VS10(c) VS10(d) virtual void e0(); virtual void e1(); virtual void e2(); virtual void e3(); virtual void e4(); virtual void e5(); virtual void e6(); virtual void e7(); virtual void e8();
+    virtual void vfunc49();
+};
+struct HudItemInfo { void sub_101869c0(); };
+
+void sub_1018ccf0(int);
+void sub_10186810(int);
+Slot113View *sub_10058080();
+
+struct VBarterView {
+    void sub_1016d150();
+    void sub_1016f3a0(const char *);
+    void sub_1016f4a0();
+    void sub_1016f0c0();
+};
+
+// TARGET: VBarterView::sub_1016f0c0
+void VBarterView::sub_1016f0c0()
+{
+    C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+    if (!pPlayer)
+        return;
+    sub_1018ccf0(5);
+    *((char *)this + 0x181) = 0;
+    ((PlayerSlotView *)pPlayer)->vfunc160(1);
+    engine->ClientCmd("inven_holster dontunholster");
+    *((char *)this + 0x4d8) = 1;
+    sub_10186810(0);
+    sub_1016f4a0();
+    char *p = *(char **)((char *)this + 0x2a8);
+    if (p)
+        p[0xba] = 1;
+    (*(SlotView21 **)((char *)this + 0x444))->SetVisible(true);
+    (*(SlotView21 **)((char *)this + 0x448))->SetVisible(true);
+    sub_1016d150();
+    engine->ClientCmd("vsetmove");
+    if (sub_10058080())
+        sub_10058080()->vfunc113(0xa06d);
+    sub_1016f3a0("hud/barter_loot/bart_icon_loot");
+    ((Slot49View *)((char *)this + 0x10))->vfunc49();
+    ((HudItemInfo *)gHUD.FindElement("VItemInfoUI"))->sub_101869c0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1016f380 size=0x1e
 #include "CInput.h"
 struct SubObj_1016f380
