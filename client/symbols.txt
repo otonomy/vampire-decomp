@@ -7996,6 +7996,7 @@
 0x10156700 func   ??0CVModInfo_t@@QAE@HHH@Z CVModInfo_t::CVModInfo_t
 0x10156770 func   ?sub_10156770@@YIHPAUCUnknownStat101f69a0@@@Z sub_10156770
 0x101567b0 func   ??0CVTraitEffect_t@@QAE@XZ CVTraitEffect_t::CVTraitEffect_t
+0x101568f0 func   ?sub_101568f0@CUnknown101568f0@@QAEHH@Z CUnknown101568f0::sub_101568f0
 0x10156970 func   ?sub_10156970@CUnknown10156970@@QAE_NXZ CUnknown10156970::sub_10156970
 0x10156980 func   ?sub_10156980@CUnknown101f6c50@@QAEXPAUCTraitStatBlock@@@Z CUnknown101f6c50::sub_10156980
 0x10156af0 func   ?sub_10156af0@CVTraitEffect_t@@QAEXPAVCVModInfo_t@@PAH@Z CVTraitEffect_t::sub_10156af0

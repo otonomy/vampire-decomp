@@ -114566,6 +114566,39 @@ int __fastcall sub_10156770(CUnknownStat101f69a0 *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101568f0 size=0x7b
+extern "C" __declspec(dllimport) void Msg(const char *pszFormat, ...);
+namespace lifted {
+extern char g_102c7040;
+extern char g_102ca338;
+extern char g_102cac78;
+extern char g_102cac88;
+extern char g_102de300;
+struct C101567e0 { int sub_101567e0(int); };
+struct C10159d10 { bool sub_10159d10(int); };
+struct C101608a0 { int sub_101608a0(int); };
+struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual int f10(int, int); virtual void u11(); virtual void u12(); virtual int f13(int, int); };
+}
+struct CUnknown101568f0 { int sub_101568f0(int); };
+int CUnknown101568f0::sub_101568f0(int a0)
+{
+    ((lifted::C101608a0 *)this)->sub_101608a0(((lifted::V *)a0)->f13((int)&lifted::g_102c7040, (int)&lifted::g_102de300));
+    int t0 = ((lifted::V *)a0)->f13((int)&lifted::g_102ca338, (int)&lifted::g_102de300);
+    if ((*(char *)((char *)t0)) != 0) {
+        ((lifted::C101567e0 *)this)->sub_101567e0(t0);
+    } else {
+        bool t1 = ((lifted::C10159d10 *)((char *)this + 0x18))->sub_10159d10(a0);
+        if (t1 != 0) {
+            *(int *)((char *)this + 0x10) = 7;
+        } else {
+            Msg((const char *)((int)&lifted::g_102cac88));
+        }
+    }
+    *(int *)((char *)this + 0x40) = ((lifted::V *)a0)->f10((int)&lifted::g_102cac78, -1);
+    return *(int *)((char *)this + 0x40);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10156970 size=0x9
 struct CUnknown10156970 { int a[4]; int m; bool sub_10156970(); };
 bool CUnknown10156970::sub_10156970() { if (m) return false; return true; }
