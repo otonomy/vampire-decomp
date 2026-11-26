@@ -68,6 +68,8 @@ public:
 	void sub_1011a950();
 	void sub_1011cf40();
 	void sub_1011cbd0(CGameTrace &trace, Vector &move);
+	void sub_1011d250();
+	void sub_1011c9a0(Vector &move);
 	int sub_1011cac0(Vector &in, const Vector &normal, Vector &out, float overbounce);
 	void sub_100a23f0(int flag);
 	virtual ICollideable *GetClientCollideable();	// IClientUnknown slot 2
