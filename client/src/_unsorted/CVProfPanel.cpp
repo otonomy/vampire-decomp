@@ -11,6 +11,21 @@ CVProfPanel *pcd_emit_1018da50(const CVProfPanel &other) { return new CVProfPane
 // TARGET: ??_GCVProfPanel@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x1018da70 size=0x40
+#include "CVProfPanel.h"
+#include "vgui2__Label.h"
+#include "vgui2__TreeView.h"
+extern int g_105fbd28;
+typedef vgui2::Label VLabel;
+typedef vgui2::TreeView VTreeView;
+CVProfPanel::~CVProfPanel()
+{
+	g_105fbd28 = 0;
+	((VTreeView *)((char *)this + 0x124))->VTreeView::~VTreeView();
+	((VLabel *)((char *)this + 0x6c))->VLabel::~VLabel();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018dab0 size=0xaa
 #include "CVProfPanel.h"
 #include "vgui2__Label.h"
