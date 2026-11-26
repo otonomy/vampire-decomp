@@ -3314,6 +3314,7 @@
 0x1007e230 func   ?sub_1007e230@@YAHXZ sub_1007e230
 0x1007e290 func   ?_C_BaseGrenade_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_BaseGrenade_CreateObject
 0x1007e330 func   ?ClientClassInit@@YAHPAUignored@DT_BaseGrenade@@@Z ClientClassInit
+0x1007e4b0 func   ?sub_1007e4b0@@YAHXZ sub_1007e4b0
 0x1007e4d0 func   ?vfunc17@C_BaseGrenade@@UAEHXZ C_BaseGrenade::vfunc17
 0x1007e4e0 func   ?vfunc149@C_BaseGrenade@@UAEXHH@Z C_BaseGrenade::vfunc149
 0x1007e690 func   ?vfunc153@C_BaseGrenade@@UAEHH@Z C_BaseGrenade::vfunc153

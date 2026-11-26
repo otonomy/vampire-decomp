@@ -33476,6 +33476,21 @@ template <> int ClientClassInit<DT_BaseGrenade::ignored>(DT_BaseGrenade::ignored
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007e4b0 size=0x1b
+namespace lifted {
+struct C1007f200 { int sub_1007f200(); };
+int sub_100a1eb0(int);
+}
+int sub_1007e4b0()
+{
+    int t0 = lifted::sub_100a1eb0(0x10f8);
+    if (t0 != 0) {
+        return ((lifted::C1007f200 *)t0)->sub_1007f200();
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007eb60 size=0x7b
 #include "CGlobalVarsBase.h"
 #include "C_BaseEntity.h"
