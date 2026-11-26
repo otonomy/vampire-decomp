@@ -21022,6 +21022,57 @@ char *sub_1004e3d0(const char *s)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004e420 size=0x3d3
+void sub_1004e800(const char **p);
+extern "C" int __cdecl isdigit(int);
+
+static inline void ParseNumber(const char **pp, int *out)
+{
+    sub_1004e800(pp);
+    const char *s = *pp;
+    bool neg = false;
+    if (*s == '-')
+    {
+        neg = true;
+        s++;
+    }
+    else if (*s == '+')
+    {
+        s++;
+    }
+    int val = 0;
+    while (isdigit(*s))
+    {
+        val = (int)(val * 10.0 + (*s - '0'));
+        s++;
+    }
+    if (*s == '.')
+    {
+        s++;
+        double decimal = 1.0;
+        while (isdigit(*s))
+        {
+            decimal *= 0.1;
+            val = (int)(val + (*s - '0') * decimal);
+            s++;
+        }
+    }
+    *pp = s;
+    sub_1004e800(pp);
+    if (neg)
+        val = -val;
+    *out = val;
+}
+
+void sub_1004e420(const char *str, int *a, int *b, int *c, int *d)
+{
+    ParseNumber(&str, a);
+    ParseNumber(&str, b);
+    ParseNumber(&str, c);
+    ParseNumber(&str, d);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004e800 size=0x2c
 extern "C" int isspace(int);
 void sub_1004e800(const char **pp)

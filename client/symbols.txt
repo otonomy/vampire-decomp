@@ -2641,6 +2641,7 @@
 0x1004e330 func   ?sub_1004e330@@YAHXZ sub_1004e330
 0x1004e340 func   ?vfunc115@CCredits@@UAEXXZ CCredits::vfunc115
 0x1004e3d0 func   ?sub_1004e3d0@@YAPADPBD@Z sub_1004e3d0
+0x1004e420 func   ?sub_1004e420@@YAXPBDPAH111@Z sub_1004e420
 0x1004e800 func   ?sub_1004e800@@YAXPAPBD@Z sub_1004e800
 0x1004e830 func   ?sub_1004e830@UtlMem@@QAEXH@Z UtlMem::sub_1004e830
 0x1004ea40 func   ?vfunc112@CManagedHudElement@@UAEXXZ CManagedHudElement::vfunc112
