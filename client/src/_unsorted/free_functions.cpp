@@ -132730,6 +132730,32 @@ void sub_10184420()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101844a0 size=0x30
+#include "CHud.h"
+
+#define HH(n) virtual void h##n() = 0;
+struct HotkeyEntity
+{
+    HH(0) HH(1) HH(2) HH(3) HH(4) HH(5) HH(6) HH(7) HH(8) HH(9)
+    HH(10) HH(11) HH(12) HH(13) HH(14) HH(15) HH(16) HH(17) HH(18) HH(19)
+    HH(20) HH(21)
+    virtual bool vfunc22() = 0;
+};
+
+void sub_10184360();
+void sub_10184420();
+
+void sub_101844a0()
+{
+    CHudElement *raw = gHUD.FindElement("VHotkeysUI");
+    HotkeyEntity *ent = raw ? (HotkeyEntity *)((char *)raw - 0x170) : 0;
+    if (ent->vfunc22())
+        sub_10184420();
+    else
+        sub_10184360();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101844d0 size=0x25
 namespace lifted {
 extern char g_1027b3a8;
