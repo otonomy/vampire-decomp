@@ -1637,6 +1637,7 @@
 0x10021f30 func   ?_C_ItemKClinicStairsKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKClinicStairsKey_CreateObject
 0x10021ff0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKClinicStairsKey@@@Z ClientClassInit
 0x10022080 func   ?vfunc17@C_ItemKClinicCSKey@@UAEHXZ C_ItemKClinicCSKey::vfunc17
+0x100220c0 func   ?sub_100220c0@@YAHXZ sub_100220c0
 0x10022110 func   ??_GC_ItemKClinicCSKey@@UAEPAXI@Z ??_GC_ItemKClinicCSKey@@UAEPAXI@Z
 0x10022130 func   ?vfunc16@C_ItemKClinicCSKey@@UAEHXZ C_ItemKClinicCSKey::vfunc16
 0x10022140 func   ?vfunc15@C_ItemKClinicCSKey@@UAEHXZ C_ItemKClinicCSKey::vfunc15
