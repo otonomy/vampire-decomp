@@ -112438,6 +112438,93 @@ int CUnknown1017d660::sub_1017d660()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017d930 size=0x26a
+#include "C_BasePlayer.h"
+
+struct StatPoolValue_1017d930
+{
+	int sub_10160230(int level);
+};
+
+struct StatOwner_1017d930
+{
+	int sub_10160500(const char *pszName);
+	StatPoolValue_1017d930 *sub_10160590(int idx);
+};
+
+extern StatOwner_1017d930 g_105f985c;
+extern C_BasePlayer *g_104a0d50;
+
+struct StatPool_1017d930
+{
+	int m_0;
+	int m_nPoints;
+	void sub_1017c720();
+	void SetPoints(int n) { m_nPoints = n; sub_1017c720(); }
+	void AddPoints(int n) { m_nPoints += n; sub_1017c720(); }
+};
+
+class CUnknown1017d930
+{
+public:
+	char m_pad0000[0x7c];
+	StatPool_1017d930 m_pools[7];	// 0x7c
+	char m_pad00b4[0x2e4 - 0xb4];
+	int m_n2e4;	// 0x2e4
+
+	void sub_1017d930(int level);
+};
+
+// TARGET: CUnknown1017d930::sub_1017d930
+void CUnknown1017d930::sub_1017d930(int level)
+{
+	C_BasePlayer *pPlayer = g_104a0d50;
+	if (!pPlayer)
+		return;
+	if (level < 0)
+		level = pPlayer->sub_1008ebb0();
+
+	int idx;
+	idx = g_105f985c.sub_10160500("Subpool_Physical");
+	m_pools[0].SetPoints(g_105f985c.sub_10160590(idx)->sub_10160230(level));
+	idx = g_105f985c.sub_10160500("Subpool_Social");
+	m_pools[1].SetPoints(g_105f985c.sub_10160590(idx)->sub_10160230(level));
+	idx = g_105f985c.sub_10160500("Subpool_Mental");
+	m_pools[2].SetPoints(g_105f985c.sub_10160590(idx)->sub_10160230(level));
+	idx = g_105f985c.sub_10160500("Subpool_Talents");
+	m_pools[3].SetPoints(g_105f985c.sub_10160590(idx)->sub_10160230(level));
+	idx = g_105f985c.sub_10160500("Subpool_Skills");
+	m_pools[4].SetPoints(g_105f985c.sub_10160590(idx)->sub_10160230(level));
+	idx = g_105f985c.sub_10160500("Subpool_Knowledges");
+	m_pools[5].SetPoints(g_105f985c.sub_10160590(idx)->sub_10160230(level));
+	idx = g_105f985c.sub_10160500("Subpool_Disciplines");
+	m_pools[6].SetPoints(g_105f985c.sub_10160590(idx)->sub_10160230(level));
+
+	m_n2e4 = 0;
+
+	if (pPlayer->sub_1008eb70())
+		idx = g_105f985c.sub_10160500("Subpool_Attribute_Primary_Secondary_Tertiary");
+	else
+		idx = g_105f985c.sub_10160500("Subpool_Attribute_Primary_Secondary_Tertiary_Kine");
+	int i;
+	for (i = 0; i < 3; i++)
+	{
+		int k = pPlayer->sub_100a6780(i, level);
+		m_pools[k].AddPoints(g_105f985c.sub_10160590(idx)->sub_10160230(i));
+	}
+
+	if (pPlayer->sub_1008eb70())
+		idx = g_105f985c.sub_10160500("Subpool_Ability_Primary_Secondary_Tertiary");
+	else
+		idx = g_105f985c.sub_10160500("Subpool_Ability_Primary_Secondary_Tertiary_Kine");
+	for (i = 0; i < 3; i++)
+	{
+		int k = pPlayer->sub_100a6850(i, level);
+		m_pools[k + 3].AddPoints(g_105f985c.sub_10160590(idx)->sub_10160230(i));
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017dc00 size=0x1a
 struct E1017 { int a; int b; };
 struct V1017 { char pad[0x80]; E1017 e[7]; int sub_1017dc00(); };
