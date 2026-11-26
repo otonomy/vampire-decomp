@@ -37,6 +37,93 @@ void C_TEGunshotDecal::vfunc13()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10038c40 size=0x2dd
+#define PCD_LPF_CTOR
+#include "C_TEGunshotDecal.h"
+#include "C_RecipientFilter.h"
+#include "CSoundParameters.h"
+#include "CGameTrace.h"
+#include "engineclient.h"
+#include "Tier1.h"
+
+extern "C" int __cdecl sprintf(char *, const char *, ...);
+__declspec(dllimport) void DevMsg(int level, const char *pMsg, ...);
+__declspec(dllimport) void Q_strncpy(char *pDest, const char *pSrc, int maxLen);
+extern void (*g_101e310c)(const char *pMsg, ...);	// Warning
+bool sub_1012d7f0(const char *pName, CSoundParameters &params);	// soundemitter GetParametersForSound(name, params)
+
+struct CImpactSurfaceData	// the surface record physprops slot 5 returns: its impact sounds
+{
+	char m_pad00[0x3e];
+	unsigned short m_nImpactSound;	// 0x3e
+	unsigned short m_unk40;
+	unsigned short m_nImpactSounds[6][3];	// 0x42
+};
+
+#define GD_TYPE (*(int *)&m_v4.y)	// 0x44
+#define GD_VARIANT (*(int *)&m_v4.z)	// 0x48
+
+void C_TEGunshotDecal::vfunc18(CGameTrace *pTrace)
+{
+	CImpactSurfaceData *psurf = (CImpactSurfaceData *)physprops->vfunc5(pTrace->m_surfaceProps);
+	if (GD_TYPE == -1 || GD_TYPE >= 6)
+	{
+		const char *pName = physprops->vfunc6(psurf->m_nImpactSound);
+		if (pName && *pName)
+		{
+			enginesound->vfunc0(pName, 0);
+			float vol = enginerandom->RandomFloat(0.75f, 1.0f);
+			int pitch = enginerandom->RandomInt(94, 106);
+			CSoundParameters params;
+			if (!sub_1012d7f0(pName, params))
+			{
+				params.channel = 0;
+				params.volume = 1.0f;
+				params.pitch = 100;
+				params.pitchlow = 100;
+				params.pitchhigh = 100;
+				params.soundlevel = 75;
+				params.play_to_owner_only = false;
+				params.count = 0;
+				Q_strncpy(params.soundname, pName, sizeof(params.soundname));
+			}
+			CLocalPlayerFilter filter;
+			enginesound->vfunc2(filter, 0, 3, pName, vol, 75, 0, pitch, (const Vector *)pTrace->m_endpos, 0, 1, 0);
+		}
+	}
+	else
+	{
+		unsigned short sound = psurf->m_nImpactSounds[GD_TYPE][GD_VARIANT];
+		if (sound > 0)
+		{
+			const char *pName;
+			if (!(m_unk4c & 1))
+				pName = physprops->vfunc6(sound);
+			else
+			{
+				char buf[64];
+				sprintf(buf, "Disciplines/Thaumaturgy/Blood Shield/Hit_%d", g_101e31a4(1, 3));
+				pName = buf;
+			}
+
+			DevMsg(3, "impactType: %s\n", pName);
+			if (pName && *pName)
+			{
+				enginesound->vfunc0(pName, 0);
+				CLocalPlayerFilter filter;
+				float vol = enginerandom->RandomFloat(0.75f, 1.0f);
+				int pitch = enginerandom->RandomInt(94, 106);
+				enginesound->vfunc2(filter, 0, 3, pName, vol, 75, 0, pitch, (const Vector *)pTrace->m_endpos, 0, 1, 0);
+			}
+			else
+			{
+				g_101e310c("Empty sound name in C_TEGunshotDecal::PlayImpactSound()\n  Props - %d, Group - %d, Type - %d\n", pTrace->m_surfaceProps, GD_TYPE, GD_VARIANT);
+			}
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10039620 size=0xba
 #include "engineclient.h"
 #include "C_TEGunshotDecal.h"
