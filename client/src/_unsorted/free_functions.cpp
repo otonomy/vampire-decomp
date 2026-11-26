@@ -30926,12 +30926,7 @@ int __cdecl sub_1007a030(int a, int b)
 // END FUNCTION
 
 // FUNCTION: 0x1007a050 size=0xe1
-struct GView
-{
-	char m_pad0[0xc];
-	float m_flc;
-};
-extern GView *g_102b8494;
+#include "CGlobalVarsBase.h"
 
 struct SeqDescV
 {
@@ -30996,7 +30991,7 @@ int sub_1007a050(void *hdr, int seq, OutV *out, float f1, float f2, int idx)
 found:
 	out->m_n10 = 0;
 	out->m_fl8 = arr[i].m_fl0;
-	out->m_flc = g_102b8494->m_flc;
+	out->m_flc = gpGlobals->curtime;
 	out->m_n0 = arr[i].m_n4;
 	out->m_p4 = (char *)&arr[i] + 0xc;
 	return i + 1;
@@ -31484,15 +31479,14 @@ int HV::sub_1007bb30()
 // END FUNCTION
 
 // FUNCTION: 0x1007bb70 size=0x2c
-struct CGlobals_102b8494 { float a; float b; float c; float curtime; };
-extern CGlobals_102b8494 *g_102b8494;
+#include "CGlobalVarsBase.h"
 struct WV {
 	char pad[0x790]; float m_t[3];
 	bool sub_1007bb70(int i);
 };
 bool WV::sub_1007bb70(int i)
 {
-	if (i <= 2 && g_102b8494->curtime >= m_t[i])
+	if (i <= 2 && gpGlobals->curtime >= m_t[i])
 		return true;
 	return false;
 }
@@ -32319,14 +32313,13 @@ template <> int ClientClassInit<DT_BaseGrenade::ignored>(DT_BaseGrenade::ignored
 // END FUNCTION
 
 // FUNCTION: 0x1007eb60 size=0x7b
+#include "CGlobalVarsBase.h"
 #include "C_BaseEntity.h"
 #include "Vector.h"
-struct GlobalsV { float a; float b; float c; float curtime; };
-extern GlobalsV *g_102b8494;
 // TARGET: ?sub_1007eb60@C_BaseEntity@@QAEXXZ
 void C_BaseEntity::sub_1007eb60()
 {
-	*(float *)((char *)this + 0x78) = g_102b8494->curtime + 0.2;
+	*(float *)((char *)this + 0x78) = gpGlobals->curtime + 0.2;
 	if (*(void **)((char *)this + 0x90))
 	{
 		sub_1009fa70();
@@ -38726,13 +38719,8 @@ bool C_BaseAnimating::sub_10095d00(Vector *pVecWorldMins, Vector *pVecWorldMaxs)
 // END FUNCTION
 
 // FUNCTION: 0x10095f30 size=0x58
-struct CGlobalVarsBase_10095f30
-{
-    char pad[0x0c];
-    float curtime;
-};
+#include "CGlobalVarsBase.h"
 
-extern CGlobalVarsBase_10095f30 *g_102b8494;
 
 struct IBasePrimary_10095f30
 {
@@ -38808,7 +38796,7 @@ void LocalBaseAnimating_10095f30::sub_10095f30()
     StudioFrameAdvance();
     if (m_pRagdoll)
     {
-        SetupBones(0, 0, 0xfffc, g_102b8494->curtime, 0);
+        SetupBones(0, 0, 0xfffc, gpGlobals->curtime, 0);
         m_nField6dc = 0;
     }
     else
@@ -43202,11 +43190,10 @@ void * CUnknown100a5480::sub_100a5480(char a0)
 // END FUNCTION
 
 // FUNCTION: 0x100a54c0 size=0x56
+#include "CGlobalVarsBase.h"
 #include "C_BasePlayer.h"
 #include "CUnknown101e0f00.h"
 
-class CGlobalsView100a54c0 { public: char m_pad0[0xc]; float curtime; };
-extern CGlobalsView100a54c0 *g_102b8494;
 extern CUnknown101e0f00 g_105e80d0;
 
 // TARGET: C_BasePlayer::sub_100a54c0
@@ -43216,7 +43203,7 @@ bool C_BasePlayer::sub_100a54c0(int a, int b)
 	if ( idx != -1 )
 	{
 		CUnknown101e0f00Entry *pEntry = g_105e80d0.sub_10149ce0(idx);
-		float flElapsed = g_102b8494->curtime - *(float *)((char *)this + 0x14f0 + idx * 4);
+		float flElapsed = gpGlobals->curtime - *(float *)((char *)this + 0x14f0 + idx * 4);
 		float flRecovery = pEntry->m_flRecoveryTime;
 		if ( flElapsed < flRecovery )
 			return false;
@@ -44357,14 +44344,10 @@ float __fastcall sub_100aa6d0(C_BasePlayer *pThis)
 // END FUNCTION
 
 // FUNCTION: 0x100aabb0 size=0xdb
+#include "CGlobalVarsBase.h"
 #include "CVDmg_t.h"
 #include "Tier1.h"
 
-struct GlobalsV
-{
-	char pad[0xc];
-	float curtime;
-};
 
 struct CVDmgEntry
 {
@@ -44379,7 +44362,6 @@ extern int g_1049fdc8[];
 extern int g_104a0bd0[];
 extern char g_1049fb50[];
 extern float g_104a0d5c;
-extern GlobalsV *g_102b8494;
 
 // TARGET: sub_100aabb0
 void sub_100aabb0(CVDmgEntry *entry, int id, char *name)
@@ -44405,7 +44387,7 @@ void sub_100aabb0(CVDmgEntry *entry, int id, char *name)
 		g_101e3188(&g_1049fb50[n * 0x20], name, 0x20);
 
 	g_104a0d60++;
-	g_104a0d5c = g_102b8494->curtime + 0.1;
+	g_104a0d5c = gpGlobals->curtime + 0.1;
 }
 // END FUNCTION
 
@@ -55834,16 +55816,10 @@ float sub_100d9750(const Vector &vLineA, const Vector &vLineB, const Vector &P, 
 // END FUNCTION
 
 // FUNCTION: 0x100d9ba0 size=0x1fc
+#include "CGlobalVarsBase.h"
 #include "Vector.h"
 #include "utlvector.h"
 
-struct CGlobalVarsBase_100d9ba0
-{
-	float realtime;
-	int framecount;
-	float absoluteframetime;
-	float curtime;
-};
 
 struct IRandom_100d9ba0
 {
@@ -55918,7 +55894,6 @@ struct CSoundParameters_100d9ba0
 	char soundname[128];
 };
 
-extern CGlobalVarsBase_100d9ba0 *g_102b8494;
 extern float g_104cf3d0;
 extern IEngineSound_100d9ba0 *g_104a5818;
 extern IRandom_100d9ba0 *g_104a5738;
@@ -55957,7 +55932,7 @@ void sub_100d9ba0(const Vector &start, const Vector &end, int iTracerType)
 		VectorSubtract(end, start, shotDir);
 		VectorNormalize(shotDir);
 
-		float dt = g_104cf3d0 - g_102b8494->curtime;
+		float dt = g_104cf3d0 - gpGlobals->curtime;
 		if (dt <= 0.0f)
 		{
 			Vector vNear;
@@ -55973,7 +55948,7 @@ void sub_100d9ba0(const Vector &start, const Vector &end, int iTracerType)
 					g_104a5818->EmitSound(&filter, 0, 6, params.soundname, params.volume, (float)SNDLVL_TO_ATTN(params.soundlevel), 0, params.pitch, &start, &shotDir, false);
 				}
 
-				g_104cf3d0 = g_102b8494->curtime + g_104a5738->RandomFloat(0.1f, 0.1f);
+				g_104cf3d0 = gpGlobals->curtime + g_104a5738->RandomFloat(0.1f, 0.1f);
 			}
 		}
 	}
@@ -59180,11 +59155,10 @@ void CUnknown100e7e90::sub_100e7e90()
 // END FUNCTION
 
 // FUNCTION: 0x100e8170 size=0x9a
+#include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
 struct GravVarV { virtual void v0(); virtual char IsNoGravity(); char m_pad[0x24]; float m_flValue; };
-struct GlobalsV { char m_pad[0x10]; float frametime; };
 extern GravVarV *g_104dfce4;
-extern GlobalsV *g_102b8494;
 // TARGET: CGameMovement::sub_100e8170
 void CGameMovement::sub_100e8170()
 {
@@ -59195,23 +59169,18 @@ void CGameMovement::sub_100e8170()
 		ent_gravity = 1.0f;
 	float *pvz = (float *)((char *)m_pPlayer + 0x48);
 	float grav = g_104dfce4->IsNoGravity() ? 0.0f : g_104dfce4->m_flValue;
-	*pvz -= ent_gravity * grav * 0.5 * g_102b8494->frametime;
-	*(float *)((char *)m_pPlayer + 0x48) += *(float *)((char *)m_pPlayer + 0x54) * g_102b8494->frametime;
+	*pvz -= ent_gravity * grav * 0.5 * gpGlobals->frametime;
+	*(float *)((char *)m_pPlayer + 0x48) += *(float *)((char *)m_pPlayer + 0x54) * gpGlobals->frametime;
 	*(float *)((char *)m_pPlayer + 0x54) = 0.0f;
 	sub_100eb7a0();
 }
 // END FUNCTION
 
 // FUNCTION: 0x100e85b0 size=0xa9
+#include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
 #include "CGameMovementViews.h"
 
-struct Globals_100e85b0
-{
-	char pad[0x10];
-	float frametime;
-};
-extern Globals_100e85b0 *g_102b8494;
 
 struct Mv_100e85b0
 {
@@ -59233,7 +59202,7 @@ void CGameMovement::sub_100e85b0()
 		MV->m_flWaterJump = 10000.0f;
 	if (MV->m_flWaterJump != 0)
 	{
-		MV->m_flWaterJump -= g_102b8494->frametime * 1000.0f;
+		MV->m_flWaterJump -= gpGlobals->frametime * 1000.0f;
 		if (MV->m_flWaterJump <= 0 || !MV->m_nWaterLevel)
 		{
 			MV->m_flWaterJump = 0;
@@ -59288,15 +59257,14 @@ void Ray_t::sub_100e91e0(const Vector &start, const float *pEnd, const float *pM
 // END FUNCTION
 
 // FUNCTION: 0x100e9390 size=0x91
+#include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
-struct GlobalsV_100e9390 { char m_pad[0x10]; float m_flFrameTime; };
 struct GravObj_100e9390 {
 	virtual void v0();
 	virtual bool IsNoGravity();
 	int m_pad[9];
 	float m_flGravity;
 };
-extern GlobalsV_100e9390 *g_102b8494;
 extern GravObj_100e9390 *g_104dfce4;
 
 void CGameMovement::sub_100e9390()
@@ -59306,21 +59274,16 @@ void CGameMovement::sub_100e9390()
 		float scale = *(float *)(move + 0x160) != 0.0f ? *(float *)(move + 0x160) : 1.0f;
 		float *pz = (float *)((char *)m_pPlayer + 0x48);
 		float g = g_104dfce4->IsNoGravity() ? 0.0f : g_104dfce4->m_flGravity;
-		*pz = *pz - g * g_102b8494->m_flFrameTime * scale * 0.5;
+		*pz = *pz - g * gpGlobals->frametime * scale * 0.5;
 		sub_100eb7a0();
 	}
 }
 // END FUNCTION
 
 // FUNCTION: 0x100e9430 size=0xe0
+#include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
 
-struct GlobalsV
-{
-	char m_pad0[0x10];
-	float m_frametime;
-};
-extern GlobalsV *g_102b8494;
 
 struct MoveV
 {
@@ -59355,7 +59318,7 @@ void CGameMovement::sub_100e9430(Vector &wishdir, float wishspeed, float accel)
 	if ( addspeed <= 0.0f )
 		return;
 
-	float accelspeed = g_102b8494->m_frametime * m_fieldA0 * wishspeed * accel;
+	float accelspeed = gpGlobals->frametime * m_fieldA0 * wishspeed * accel;
 	if ( accelspeed > addspeed )
 		accelspeed = addspeed;
 
@@ -59384,13 +59347,12 @@ void * CUnknown100e9e40::sub_100e9e40(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x100e9e70 size=0x24
+#include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
-struct CGlobals_102b8494 { float m_f0; float m_f4; float m_f8; float curtime; };
-extern CGlobals_102b8494 *g_102b8494;
 struct CPlayerView_bc { char m_pad[0xbc]; float m_flBc; };
 int CGameMovement::sub_100e9e70()
 {
-	return ((CPlayerView_bc *)m_pPlayer)->m_flBc > g_102b8494->curtime;
+	return ((CPlayerView_bc *)m_pPlayer)->m_flBc > gpGlobals->curtime;
 }
 // END FUNCTION
 
@@ -59767,14 +59729,13 @@ const char *sub_100edcf0(int state)
 // END FUNCTION
 
 // FUNCTION: 0x100ee720 size=0x2f
+#include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
-struct XGlobals { char u[0xc]; float curtime; };
-extern XGlobals *g_102b8494;
 struct XPl { char u[0xb4]; float m_fb4; float m_fb8; };
 float CGameMovement::sub_100ee720()
 {
 	XPl *p = (XPl *)m_pPlayer;
-	if (g_102b8494->curtime - p->m_fb8 >= p->m_fb4)
+	if (gpGlobals->curtime - p->m_fb8 >= p->m_fb4)
 		return 0.0f;
 	return 1.0f;
 }
@@ -74890,13 +74851,7 @@ int __stdcall sub_101223b0(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x101223c0 size=0x63
-struct CGlobals_102b8494 {
-    int m_unk0;
-    int m_unk4;
-    int m_unk8;
-    float curtime;
-};
-extern CGlobals_102b8494 *g_102b8494;
+#include "CGlobalVarsBase.h"
 
 struct P101223c0
 {
@@ -74938,7 +74893,7 @@ void __stdcall sub_101223c0(P101223c0 *player, double flDelta)
     {
         if (flTime < *(volatile float *)&player->m_f19f0)
             flTime = *(volatile float *)&player->m_f19f0;
-        g_102b8494->curtime = flTime;
+        gpGlobals->curtime = flTime;
         player->m_f78 = 0;
         player->v95();
     }
@@ -76204,15 +76159,10 @@ template <> int ClientClassInit<DT_Ragdoll_Attached::ignored>(DT_Ragdoll_Attache
 // END FUNCTION
 
 // FUNCTION: 0x10126770 size=0x49
+#include "CGlobalVarsBase.h"
 #include "C_BaseEntity.h"
 
-struct CGlobals_102b8494
-{
-	char m_pad0[0xc];
-	float curtime;	// 0x0c
-};
 
-extern CGlobals_102b8494 *g_102b8494;
 
 class CUnknown10126770
 {
@@ -76231,7 +76181,7 @@ void CUnknown10126770::sub_10126770(int updateType)
 	if ( following != pEntity->sub_100a1140() )
 	{
 		if ( following )
-			*((float *)((char *)this + 0xb14)) = g_102b8494->curtime;
+			*((float *)((char *)this + 0xb14)) = gpGlobals->curtime;
 
 		*((bool *)((char *)this + 0xb18)) = pEntity->sub_100a1140();
 	}
@@ -82309,12 +82259,7 @@ int sub_10136350(int a0, int a1, int a2, int a3, char a4)
 // END FUNCTION
 
 // FUNCTION: 0x101363c0 size=0x3c
-struct CGlobalsView
-{
-    char m_pad00[0xc];
-    float curtime;
-};
-extern CGlobalsView *g_102b8494;
+#include "CGlobalVarsBase.h"
 
 struct CSpriteView
 {
@@ -82329,19 +82274,14 @@ struct CSpriteView
 
 void __fastcall sub_101363c0(CSpriteView *p, int)
 {
-    p->sub_10136520((g_102b8494->curtime - p->m_fl44c) * p->m_fl430);
-    p->m_fl78 = g_102b8494->curtime;
-    p->m_fl44c = g_102b8494->curtime;
+    p->sub_10136520((gpGlobals->curtime - p->m_fl44c) * p->m_fl430);
+    p->m_fl78 = gpGlobals->curtime;
+    p->m_fl44c = gpGlobals->curtime;
 }
 // END FUNCTION
 
 // FUNCTION: 0x10136400 size=0x33
-struct CGlobalsView
-{
-    char m_pad00[0xc];
-    float curtime;
-};
-extern CGlobalsView *g_102b8494;
+#include "CGlobalVarsBase.h"
 
 struct CSpriteView
 {
@@ -82355,25 +82295,24 @@ struct CSpriteView
 
 void __fastcall sub_10136400(CSpriteView *p, int)
 {
-    if (g_102b8494->curtime > p->m_fl438) {
+    if (gpGlobals->curtime > p->m_fl438) {
         p->sub_100a2930();
         return;
     }
     p->sub_101363c0();
-    p->m_fl78 = g_102b8494->curtime;
+    p->m_fl78 = gpGlobals->curtime;
 }
 // END FUNCTION
 
 // FUNCTION: 0x101364b0 size=0x70
+#include "CGlobalVarsBase.h"
 #include "C_BaseAnimating.h"
 
-struct CGlobalVars101364b0 { char pad[0xc]; float frametime; };
-extern CGlobalVars101364b0 *g_102b8494;
 
 // TARGET: sub_101364b0
 void C_BaseAnimating::sub_101364b0()
 {
-	float delta = g_102b8494->frametime - *(float *)((char *)this + 0x44c);
+	float delta = gpGlobals->curtime - *(float *)((char *)this + 0x44c);
 	*(float *)((char *)this + 0x444) += delta * *(float *)((char *)this + 0xa0);
 	int n = (int)((float)*(int *)((char *)this + 0x8c) * delta);
 	if ( n > (int)*(unsigned char *)((char *)this + 0x53) )
@@ -82384,8 +82323,8 @@ void C_BaseAnimating::sub_101364b0()
 	else
 	{
 		*(unsigned char *)((char *)this + 0x53) -= n;
-		*(float *)((char *)this + 0x78) = g_102b8494->frametime;
-		*(float *)((char *)this + 0x44c) = g_102b8494->frametime;
+		*(float *)((char *)this + 0x78) = gpGlobals->curtime;
+		*(float *)((char *)this + 0x44c) = gpGlobals->curtime;
 	}
 }
 // END FUNCTION
@@ -116699,6 +116638,7 @@ void CViewRenderBeams::sub_101934d0(void *pBeamV)
 // END FUNCTION
 
 // FUNCTION: 0x101935e0 size=0x1a9
+#include "CGlobalVarsBase.h"
 #include "Vector.h"
 
 struct model_t;
@@ -116713,11 +116653,6 @@ struct IVModelInfo_101935e0
 	virtual int GetModelFrameCount(const model_t *model);
 };
 
-struct CGlobals_101935e0
-{
-	char m_pad0[0xc];
-	float curtime;
-};
 
 struct BeamInfo_t_101935e0
 {
@@ -116772,7 +116707,6 @@ struct Beam_t_101935e0
 };
 
 extern IVModelInfo_101935e0 *g_104a57f8;
-extern CGlobals_101935e0 *g_102b8494;
 
 struct CUnknown101935e0
 {
@@ -116792,8 +116726,8 @@ void CUnknown101935e0::sub_101935e0(Beam_t_101935e0 *pBeam, const BeamInfo_t_101
 	pBeam->frameRate = 0.0f;
 	pBeam->frame = 0.0f;
 	pBeam->frameCount = g_104a57f8->GetModelFrameCount(pSprite);
-	pBeam->t = g_102b8494->curtime * beamInfo.m_flSpeed;
-	pBeam->die = g_102b8494->curtime + beamInfo.m_flLife;
+	pBeam->t = gpGlobals->curtime * beamInfo.m_flSpeed;
+	pBeam->die = gpGlobals->curtime + beamInfo.m_flLife;
 	pBeam->width = beamInfo.m_flWidth;
 	pBeam->endWidth = beamInfo.m_flEndWidth;
 	pBeam->fadeLength = beamInfo.m_flFadeLength;
@@ -116883,6 +116817,7 @@ Beam_t *CViewRenderBeams::sub_101938a0(void *pInfo)
 // END FUNCTION
 
 // FUNCTION: 0x101947b0 size=0x75
+#include "CGlobalVarsBase.h"
 #include "CViewRenderBeams.h"
 
 struct BeamNodeV
@@ -116890,12 +116825,6 @@ struct BeamNodeV
 	BeamNodeV *next;	// 0x00
 	float m_flDie;		// 0x04
 };
-struct GlobalsV
-{
-	char m_pad00[0xc];
-	float m_flCurtime;	// 0x0c
-};
-extern GlobalsV *g_102b8494;
 
 struct BeamsView
 {
@@ -116908,7 +116837,7 @@ void CViewRenderBeams::sub_101947b0(void **ppList)
 {
 	BeamsView *v = (BeamsView *)this;
 	BeamNodeV **pp = (BeamNodeV **)ppList;
-	while (*pp && (*pp)->m_flDie < g_102b8494->m_flCurtime)
+	while (*pp && (*pp)->m_flDie < gpGlobals->curtime)
 	{
 		BeamNodeV *p = *pp;
 		*pp = p->next;
@@ -116917,7 +116846,7 @@ void CViewRenderBeams::sub_101947b0(void **ppList)
 	}
 	for (BeamNodeV *prev = *pp; prev != 0; prev = prev->next)
 	{
-		while (prev->next != 0 && prev->next->m_flDie < g_102b8494->m_flCurtime)
+		while (prev->next != 0 && prev->next->m_flDie < gpGlobals->curtime)
 		{
 			BeamNodeV *q = prev->next;
 			prev->next = q->next;

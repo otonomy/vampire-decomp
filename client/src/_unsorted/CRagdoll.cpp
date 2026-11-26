@@ -54,15 +54,10 @@ void CRagdoll::vfunc3(Vector &mins, Vector &maxs)
 // END FUNCTION
 
 // FUNCTION: 0x10125510 size=0x107
+#include "CGlobalVarsBase.h"
 #include "Vector.h"
 
-struct CGlobals_10125510
-{
-	char pad_0[0x0c];
-	float curtime;
-};
 
-extern CGlobals_10125510 *g_102b8494;
 extern bool sub_101274d0(void *pRagdoll);
 extern void sub_101273b0(void *pRagdoll, const Vector &origin, Vector &mins, Vector &maxs);
 
@@ -86,10 +81,10 @@ struct Ragdoll_10125510
 // TARGET: Ragdoll_10125510::sub_10125510
 void Ragdoll_10125510::sub_10125510(int pEnt)
 {
-	if (m_lastUpdate == g_102b8494->curtime)
+	if (m_lastUpdate == gpGlobals->curtime)
 		return;
 
-	m_lastUpdate = g_102b8494->curtime;
+	m_lastUpdate = gpGlobals->curtime;
 	m_allAsleep = sub_101274d0(&m_ragdoll);
 
 	if (m_allAsleep)

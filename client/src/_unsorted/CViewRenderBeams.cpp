@@ -350,10 +350,9 @@ Beam_t *CViewRenderBeams::vfunc16(BeamInfoV *info)
 // END FUNCTION
 
 // FUNCTION: 0x10194d70 size=0xa2
+#include "CGlobalVarsBase.h"
 #include "CViewRenderBeams.h"
 
-struct CGlobalVarsV { char pad[0xc]; float curtime; float frametime; };
-extern CGlobalVarsV *g_102b8494;
 
 struct ILeafSystemV
 {
@@ -402,13 +401,13 @@ void CViewRenderBeams::vfunc3()
 	CViewRenderBeamsView *v = (CViewRenderBeamsView *)this;
 	if (!v->m_pFirst)
 		return;
-	float frametime = g_102b8494->frametime;
+	float frametime = gpGlobals->frametime;
 	BeamTrailV *prev = 0;
 	BeamTrailV *p = v->m_pFirst;
 	while (p)
 	{
 		BeamTrailV *next = p->m_pNext;
-		if ((p->m_nFlags & 0x80000000) == 0 && p->m_flDie <= g_102b8494->curtime)
+		if ((p->m_nFlags & 0x80000000) == 0 && p->m_flDie <= gpGlobals->curtime)
 		{
 			if (prev)
 				prev->m_pNext = next;

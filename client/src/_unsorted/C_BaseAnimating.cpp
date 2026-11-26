@@ -467,14 +467,9 @@ float C_BaseAnimating::vfunc138(int iSequence)
 // END FUNCTION
 
 // FUNCTION: 0x100954d0 size=0x117
+#include "CGlobalVarsBase.h"
 #include "C_BaseAnimating.h"
 
-struct CGlobalVars_100954d0
-{
-	char pad[0xc];
-	float curtime;
-};
-extern CGlobalVars_100954d0 *g_102b8494;
 
 struct C_BaseAnimating_Fields
 {
@@ -502,7 +497,7 @@ float C_BaseAnimating::vfunc136(float flInterval)
 		flInterval = 0.1f;
 	}
 
-	flInterval = (flInterval + g_102b8494->curtime) - f->m_flAnimTime;
+	flInterval = (flInterval + gpGlobals->curtime) - f->m_flAnimTime;
 	if (flInterval <= 0.001)
 	{
 		return 0.0f;
