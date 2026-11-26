@@ -74,7 +74,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc120(float *, float);
 	virtual void vfunc121();
 	virtual float vfunc122();
-	virtual void vfunc123();
+	virtual void vfunc123(const Vector *pos, const Quaternion *q, const matrix3x4_t &cameraTransform, const struct StudioBoneMask *pBoneComputed);	// BuildTransformations
 	virtual void vfunc124(int, int);
 	virtual int vfunc125(int, int);
 	virtual int vfunc126();

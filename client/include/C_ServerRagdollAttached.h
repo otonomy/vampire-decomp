@@ -9,6 +9,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the base slots the game's vtable fills with C_ServerRagdollAttached's own function
     virtual int vfunc15();
     virtual int vfunc16();
-    virtual void vfunc123();
-    char m_pad0014[0xb28 - 0x14];
+    virtual void vfunc123(const Vector *pos, const Quaternion *q, const matrix3x4_t &cameraTransform, const struct StudioBoneMask *pBoneComputed);	// BuildTransformations
+    char m_pad0adc[0xb28 - 0xadc];
 };
