@@ -2934,6 +2934,7 @@
 0x10051d10 func   ?sub_10051d10@CUnknown10051d10@@QAEDXZ CUnknown10051d10::sub_10051d10
 0x10051d20 func   ??_GCHudAreaIcon@@UAEPAXI@Z ??_GCHudAreaIcon@@UAEPAXI@Z
 0x10051d40 func   ??1CHudAreaIcon@@UAE@XZ CHudAreaIcon::~CHudAreaIcon
+0x100524a0 func   ?vfunc98@CHudAreaIcon@@UAEXXZ CHudAreaIcon::vfunc98
 0x10052760 func   ?vfunc107@CHudAreaIcon@@UAE_NXZ CHudAreaIcon::vfunc107
 0x100527a0 func   ?sub_100527a0@CUnknown100527a0@@QAEXD@Z CUnknown100527a0::sub_100527a0
 0x10052980 func   ??0CHudDialog@@QAE@H@Z CHudDialog::CHudDialog

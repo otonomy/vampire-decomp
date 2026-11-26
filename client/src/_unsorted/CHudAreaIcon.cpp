@@ -52,6 +52,53 @@ CHudAreaIcon::~CHudAreaIcon()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100524a0 size=0x2ba
+#include "CHudAreaIcon.h"
+#include "CHUDSprite.h"
+#include "ConVar.h"
+
+int sub_100cd100();
+int sub_100cd0f0();
+
+#define XRES(x) ((int)((x) * (sub_100cd100() / 1024.0)))
+#define YRES(y) ((int)((y) * (sub_100cd0f0() / 768.0)))
+#define ANGLE2SHORT(x) ((int)((x) * (65536.0f / 360.0f)) & 65535)
+#define SHORT2ANGLE(x) ((x) * (360.0f / 65536.0f))
+
+extern ConVar g_103edee8;
+extern ConVar g_103edea0;
+extern ConVar g_103ee050;
+extern ConVar g_103ee008;
+
+void CHudAreaIcon::vfunc98()
+{
+	if (!vfunc107())
+		return;
+
+	sub_10051df0();
+
+	if (m_p178)
+		((CHUDSprite *)m_p178)->sub_10059b70(m_unk188, m_unk18c, m_unk180, m_unk184, (int)m_unk194);
+
+	if (m_p19c && m_p1a0 && m_p1a4)
+	{
+		int w = XRES(128);
+		int h = YRES(128);
+		int x = XRES(g_103edee8.GetInt());
+		int y = YRES(g_103edea0.GetInt() + 64);
+		((CHUDSprite *)m_p19c)->sub_1005b420(x, y, w, h, 255, 255, 255, (int)m_unk1ac,
+			SHORT2ANGLE(ANGLE2SHORT(180.0f - m_unk1b0)) * 0.017453292f);
+
+		w = XRES(128);
+		h = YRES(128);
+		x = XRES(g_103ee050.GetInt());
+		y = YRES(g_103ee008.GetInt());
+		((CHUDSprite *)m_p1a0)->sub_10059b70(x, y, w, h, (int)m_unk1a8);
+		((CHUDSprite *)m_p1a4)->sub_10059b70(x, y, w, h, (int)m_unk1a8);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10052760 size=0x37
 #include "CHudAreaIcon.h"
 struct IUnkG286860 { virtual void v0(); virtual void v1(); virtual bool Check(int); };
