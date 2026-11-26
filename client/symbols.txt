@@ -853,6 +853,7 @@
 0x10012a30 func   ?_C_OccultFrenzy_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_OccultFrenzy_CreateObject
 0x10012af0 func   ?ClientClassInit@@YAHPAUignored@DT_OccultFrenzy@@@Z ClientClassInit
 0x10012b80 func   ?vfunc17@C_OccultLockpicking@@UAEHXZ C_OccultLockpicking::vfunc17
+0x10012bc0 func   ?sub_10012bc0@@YAHXZ sub_10012bc0
 0x10012c10 func   ??_GC_OccultLockpicking@@UAEPAXI@Z ??_GC_OccultLockpicking@@UAEPAXI@Z
 0x10012c30 func   ?vfunc16@C_OccultLockpicking@@UAEHXZ C_OccultLockpicking::vfunc16
 0x10012c40 func   ?vfunc15@C_OccultLockpicking@@UAEHXZ C_OccultLockpicking::vfunc15
