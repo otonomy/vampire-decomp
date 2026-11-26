@@ -118313,6 +118313,48 @@ void CParsedValue::sub_101615d0(CVStatKV *pKV, const char *pszKey)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10161600 size=0xaf
+namespace lifted {
+extern char g_105f985c;
+struct C10160500 { int sub_10160500(int); };
+struct C10160660 { bool sub_10160660(); };
+struct C101608a0 { int sub_101608a0(int); };
+struct C10161370 { int sub_10161370(); };
+struct C10161430 { int sub_10161430(); };
+struct C10161590 { int sub_10161590(int); };
+struct C101615a0 { int sub_101615a0(int); };
+struct C101615b0 { int sub_101615b0(int); };
+int sub_101d180e(int);
+int sub_101d21d3(int);
+struct B16 { int d[4]; };
+}
+struct CUnknown10161600 { int sub_10161600(int); };
+int CUnknown10161600::sub_10161600(int a0)
+{
+    lifted::B16 l0;
+    if ((*(char *)((char *)a0)) == 0) {
+        return ((lifted::C10161430 *)this)->sub_10161430();
+    }
+    int t0 = lifted::sub_101d180e(*(char *)((char *)a0));
+    if (t0 == 0) {
+        if ((*(char *)((char *)a0)) != 0x2d) {
+            ((lifted::C10161370 *)((char *)&l0))->sub_10161370();
+            ((lifted::C101608a0 *)((char *)&l0))->sub_101608a0(a0);
+            bool t1 = ((lifted::C10160660 *)((char *)&l0))->sub_10160660();
+            if (t1 == 0) {
+                return ((lifted::C101615a0 *)this)->sub_101615a0((int)((char *)&l0));
+            }
+            int t2 = ((lifted::C10160500 *)((int)&lifted::g_105f985c))->sub_10160500(a0);
+            if (t2 != -1) {
+                return ((lifted::C101615b0 *)this)->sub_101615b0(t2);
+            }
+            return ((lifted::C10161590 *)this)->sub_10161590(-1);
+        }
+    }
+    return ((lifted::C10161590 *)this)->sub_10161590(lifted::sub_101d21d3(a0));
+}
+// END FUNCTION
+
 // FUNCTION: 0x101616b0 size=0xab
 #include "CVDmg_t.h"
 
