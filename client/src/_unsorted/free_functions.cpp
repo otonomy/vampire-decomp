@@ -61082,6 +61082,118 @@ void CGameMovement::sub_100e8170()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100e8210 size=0x399
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "CGameTrace.h"
+#include "Ray_t.h"
+#include "CTraceFilterSimple.h"
+#include "ehandle.h"
+#include "ConVar.h"
+#include "engineclient.h"
+#include "Vector.h"
+#include "QAngle.h"
+
+class CUnknown100a23f0
+{
+public:
+	void sub_100a23f0(int flag);
+};
+
+struct CWaterJumpPlayerView
+{
+	char m_pad0000[0x16f8];
+	char m_b16f8;
+	char m_bDucked;	// 0x16f9
+	char m_pad16fa[0x199c - 0x16fa];
+	float m_flWaterJumpTime;	// 0x199c
+	Vector m_vecWaterJumpVel;	// 0x19a0
+};
+
+extern ConVar g_103edd98;	// r_visualizetraces
+extern Vector g_104d4970;	// vec3_origin
+void sub_10109010(const QAngle &angles, Vector *forward);	// AngleVectors
+void sub_10108fd0(const float *start, float scale, const float *direction, float *dest);	// VectorMA
+void sub_101659b0(const Vector &start, const Vector &end, int r, int g, int b, int noDepthTest, float duration);	// DebugDrawLine
+
+inline void WaterJumpTraceLine(const Vector &vecAbsStart, const Vector &vecAbsEnd, unsigned int mask, const void *ignore, int collisionGroup, CGameTrace *ptr)
+{
+	Ray_t ray;
+	ray.sub_10005e00((const float *)&vecAbsStart, (const float *)&vecAbsEnd);
+	CTraceFilterSimple traceFilter;
+	traceFilter.sub_1004b5c0(ignore, collisionGroup);
+	enginetrace->vfunc4((int)&ray, mask, &traceFilter, (int)ptr);
+	if (g_103edd98.GetBool())
+		sub_101659b0(*(Vector *)ptr->m_startpos, *(Vector *)ptr->m_endpos, 255, 0, 0, 1, -1.0f);
+}
+
+#define MV ((CMovePlayerView *)m_pPlayer)
+#define PL ((CWaterJumpPlayerView *)m_pMove)
+
+void CGameMovement::sub_100e8210()
+{
+	Vector flatforward;
+	Vector forward;
+	Vector flatvelocity;
+	float curspeed;
+
+	sub_10109010(MV->m_vecViewAngles0c, &forward);
+
+	if (PL->m_flWaterJumpTime)
+		return;
+
+	if (MV->m_vecVelocity[2] < -180.0f)
+		return;
+
+	flatvelocity[0] = MV->m_vecVelocity[0];
+	flatvelocity[1] = MV->m_vecVelocity[1];
+	flatvelocity[2] = 0;
+
+	curspeed = VectorNormalize(flatvelocity);
+
+	flatforward[0] = forward[0];
+	flatforward[1] = forward[1];
+	flatforward[2] = 0;
+	VectorNormalize(flatforward);
+
+	if (curspeed != 0.0 && (DotProduct(flatvelocity, flatforward) < 0.0))
+		return;
+
+	Vector vecStart;
+	Vector t0 = (*(Vector *)sub_100e6ef0() + *sub_100e6f20()) * 0.5f; vecStart = (t0) + MV->m_vecOrigin;
+	vecStart.z += 8.0f;
+
+	Vector vecEnd;
+	sub_10108fd0((float *)&vecStart, 24.0f, (float *)&flatforward, (float *)&vecEnd);
+
+	CGameTrace tr;
+	WaterJumpTraceLine(vecStart, vecEnd, 0x1400b, ((CBaseHandle *)&MV->m_hRef)->Get(), 0, &tr);
+	if (tr.m_fraction < 1.0) {
+		vecStart.z += (slot3(PL->m_bDucked, PL->m_b16f8)[2] - 8.0f);
+		sub_10108fd0((float *)&vecStart, 24.0f, (float *)&flatforward, (float *)&vecEnd);
+		sub_10108fd0((float *)&g_104d4970, -50.0f, tr.m_planeNormal, (float *)&PL->m_vecWaterJumpVel);
+
+		WaterJumpTraceLine(vecStart, vecEnd, 0x1400b, ((CBaseHandle *)&MV->m_hRef)->Get(), 0, &tr);
+		if (1.0 == tr.m_fraction) {
+			MV->m_vecVelocity[2] = 260.0f;
+			MV->m_n0028 |= 2;
+			((CUnknown100a23f0 *)m_pMove)->sub_100a23f0(4);
+			PL->m_flWaterJumpTime = 2000.0f;
+		}
+	}
+}
+
+/* judged with these header patches (not saved):
+[
+ {
+  "path": "CGameMovement.h",
+  "old": "\tvoid sub_100ed9a0();",
+  "new": "\tvoid sub_100ed9a0();\n\tvoid sub_100e8210();\t// \"CheckWaterJump\""
+ }
+]
+*/
+// END FUNCTION
+
 // FUNCTION: 0x100e85b0 size=0xa9
 #include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
