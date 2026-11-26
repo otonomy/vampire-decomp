@@ -118157,6 +118157,66 @@ void CViewRender::sub_1019c970()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019ca60 size=0x23c
+#include "ConVar.h"
+#include "ScopeTrace.h"
+#include "Vector.h"
+#include "QAngle.h"
+extern "C" int sscanf(const char *, const char *, ...);
+struct SFogPlayer
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual QAngle *EyeAngles();
+	char pad[0x17d9 - 4];
+	unsigned char m_bBlend;
+	char pad2[2];
+	Vector m_dirPrimary;
+	unsigned char m_pr, m_pg, m_pb, m_pa;
+	unsigned char m_sr, m_sg, m_sb, m_sa;
+};
+extern SFogPlayer *g_104a0d50;
+extern ConVar g_10618908;
+extern ConVar g_106193c8;
+extern void sub_101090a0(const QAngle &angles, Vector *fwd, Vector *right, Vector *up);
+// TARGET: sub_1019ca60
+void sub_1019ca60(float *pColor)
+{
+	ScopeTrace scope("::GetFogColor", "", "");
+	SFogPlayer *pbp = g_104a0d50;
+	if (!pbp)
+		return;
+	const char *fogColorString;
+	if (g_10618908.m_pParent->vfunc1())
+		fogColorString = "";
+	else if (g_10618908.m_nFlags & 0x1000)
+		fogColorString = "FCVAR_NEVER_AS_STRING";
+	else
+		fogColorString = g_10618908.m_pParent->m_pszString ? g_10618908.m_pParent->m_pszString : "";
+	if (g_106193c8.GetInt() && fogColorString) {
+		sscanf(fogColorString, "%f%f%f", pColor, pColor + 1, pColor + 2);
+	} else {
+		if (pbp->m_bBlend) {
+			Vector vForward;
+			sub_101090a0(*pbp->EyeAngles(), &vForward, 0, 0);
+			Vector &dir = pbp->m_dirPrimary;
+			VectorNormalize(dir);
+			float flBlendFactor = 0.5 * (vForward.y * dir.y + vForward.z * dir.z + vForward.x * dir.x + 1.0);
+			pColor[0] = pbp->m_pr * flBlendFactor + pbp->m_sr * (1.0f - flBlendFactor);
+			pColor[1] = pbp->m_pg * flBlendFactor + pbp->m_sg * (1.0f - flBlendFactor);
+			pColor[2] = pbp->m_pb * flBlendFactor + pbp->m_sb * (1.0f - flBlendFactor);
+		} else {
+			pColor[0] = pbp->m_pr;
+			pColor[1] = pbp->m_pg;
+			pColor[2] = pbp->m_pb;
+		}
+	}
+	pColor[0] *= 0.003921569f;
+	pColor[1] *= 0.003921569f;
+	pColor[2] *= 0.003921569f;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019cca0 size=0xe5
 #include "ScopeTrace.h"
 
