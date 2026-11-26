@@ -5858,6 +5858,7 @@
 0x100f6ca0 func   ?sub_100f6ca0@@YA_NHHIHHHH@Z sub_100f6ca0
 0x100f6ce0 func   ?sub_100f6ce0@@YAXPBHPAHH@Z sub_100f6ce0
 0x100f6d00 func   ?sub_100f6d00@@YAXPAE0H@Z sub_100f6d00
+0x100f6d70 func   ?sub_100f6d70@@YAXPAE0H@Z sub_100f6d70
 0x100f6db0 func   ?sub_100f6db0@@YAXPAE0H@Z sub_100f6db0
 0x100f6e20 func   ?sub_100f6e20@@YAXPBEPAEH@Z sub_100f6e20
 0x100f6e90 func   ?sub_100f6e90@@YAXPAE0H@Z sub_100f6e90
