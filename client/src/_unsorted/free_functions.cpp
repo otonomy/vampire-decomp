@@ -67177,6 +67177,17 @@ void sub_10101ea0(kbutton_t *b, bool bDown)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10101f20 size=0x10
+namespace lifted {
+extern char g_104d36d4;
+int sub_10101e20(int, int);
+}
+int sub_10101f20()
+{
+    return lifted::sub_10101e20((int)&lifted::g_104d36d4, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101022c0 size=0xb
 namespace lifted {
 extern int g_104d3e40;

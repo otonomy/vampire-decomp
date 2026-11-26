@@ -5690,6 +5690,7 @@
 0x10101df0 func   ?sub_10101df0@CInput@@QAEXXZ CInput::sub_10101df0
 0x10101e20 func   ?sub_10101e20@@YAXPAUkbutton_t@@_N@Z sub_10101e20
 0x10101ea0 func   ?sub_10101ea0@@YAXPAUkbutton_t@@_N@Z sub_10101ea0
+0x10101f20 func   ?sub_10101f20@@YAHXZ sub_10101f20
 0x101022c0 func   ?sub_101022c0@@YAXXZ sub_101022c0
 0x101024e0 func   ?sub_101024e0@@YAHXZ sub_101024e0
 0x101024f0 func   ?sub_101024f0@@YAHXZ sub_101024f0
