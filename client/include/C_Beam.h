@@ -26,7 +26,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc21();
 	virtual void vfunc37();
 	virtual const Vector &vfunc56();
-	virtual int vfunc113(int, int);
+	virtual bool vfunc113(bool isbeingremoved, C_BaseEntity *predicted);
 	// the slots C_Beam adds to its base's vtable: 120-121, vfuncK at slot K
 	virtual void vfunc120(const char *szModelName);
 	virtual int vfunc121();

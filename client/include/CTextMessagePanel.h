@@ -21,4 +21,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc111();
 	virtual void vfunc112();
 	virtual int vfunc113(struct ABC *, int);
+	int vfunc113(int a, int b) { return vfunc113((struct ABC *)a, b); }	// CTextMessage::vfunc5 forwards ints
 };

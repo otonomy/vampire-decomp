@@ -237,7 +237,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc110(int);
 	virtual void vfunc111();
 	virtual void vfunc112();
-	virtual int vfunc113(int, int);
+	virtual bool vfunc113(bool isbeingremoved, C_BaseEntity *predicted);	// OnPredictedEntityRemove
 	virtual char*vfunc114();
 	virtual bool vfunc115();
 	virtual bool vfunc116(int, int);
