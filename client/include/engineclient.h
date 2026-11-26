@@ -183,7 +183,7 @@ public:
 	virtual int Draw_DecalIndex(int);	// slot 0
 	virtual void vfunc1();
 	virtual void DecalShoot(int, int, int, const Vector &, const QAngle &, const Vector &, const Vector *, int);	// slot 2
-	virtual void vfunc3();
+	virtual void vfunc3(int, int, const void *, const Vector &, const QAngle &, const Vector &, const Vector *, int, const void *);	// slot 3: DecalColorShoot (..., flags, const color32 *)
 	virtual void *CL_AllocDlight(int);	// slot 4
 };
 extern IVEfx *g_104a57dc;
