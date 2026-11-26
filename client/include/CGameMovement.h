@@ -83,6 +83,7 @@ public:
 	char m_bDc;	// 0xdc: set once the +0x2c vector was scaled down
 
 	Vector *sub_100e6f20();
+	void sub_100ed4d0();
 	int sub_100e9e70();	// true while the player's float at +0xbc is above the global time
 	float sub_100ee720();	// compares the float at the player's +0xb4 with the global time (+0xc of 0x1070b228) minus the player's +0xb8, returns one of two constants (0x104454c0 / 0x104454c4)
 		// movement speed scale: 0.8 * a tuning value chosen by the player's state at +0xc0 (0 for other states)

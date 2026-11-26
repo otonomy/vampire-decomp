@@ -35,5 +35,6 @@ public:
 	char m_pad2[3];
 	CVProfNode *m_pCurNode;
 	CVProfNode *m_pRoot;
+	__declspec(dllimport) void ExitScope();
 	__declspec(dllimport) void EnterScope(const char *pszName, int detailLevel, const char *pBudgetGroupName, bool bAssertAccounted);
 };
