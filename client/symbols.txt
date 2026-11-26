@@ -4718,6 +4718,7 @@
 0x100cbba0 func   ?vfunc18@CHLClient@@UAEHXZ CHLClient::vfunc18
 0x100cbbb0 func   ?IN_KeyEvent@CHLClient@@UAEHHHPBD@Z CHLClient::IN_KeyEvent
 0x100cbbb0 func   ?vfunc19@CHLClient@@UAEHXZ CHLClient::vfunc19
+0x100cbbc0 func   ?CreateMove@CHLClient@@UAEXHHMMHM@Z CHLClient::CreateMove
 0x100cbbc0 func   ?vfunc20@CHLClient@@UAEXHHHHHH@Z CHLClient::vfunc20
 0x100cbc40 func   ?vfunc21@CHLClient@@UAEHHHHM@Z CHLClient::vfunc21
 0x100cbc60 func   ?sub_100cbc60@@YGXH@Z sub_100cbc60
