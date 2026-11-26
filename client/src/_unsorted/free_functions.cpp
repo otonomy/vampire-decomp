@@ -115765,6 +115765,17 @@ int sub_1015f460(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015f490 size=0x10
+namespace lifted {
+extern char g_105e74fc;
+struct C100c1060 { int sub_1013fdf0(int); };
+}
+int sub_1015f490(int a0)
+{
+    return ((lifted::C100c1060 *)((int)&lifted::g_105e74fc))->sub_1013fdf0(a0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015f520 size=0x53
 #include <string.h>
 extern char g_102de300[];
