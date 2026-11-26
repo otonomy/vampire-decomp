@@ -66848,6 +66848,17 @@ int sub_100ff790()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ff7a0 size=0x10
+namespace lifted {
+extern char g_104d2494;
+int sub_10101e20(int, int);
+}
+int sub_100ff7a0()
+{
+    return lifted::sub_10101e20((int)&lifted::g_104d2494, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101003b0 size=0x9b
 #include "CInput.h"
 struct CvarV { virtual void v0(); virtual char IsNoValue(); char m_pad[0x28]; int m_nValue; };
