@@ -2,14 +2,14 @@
 #include "client.h"
 
 // FUNCTION: 0x1007f6a0 size=0x2d
+#include "CBaseEntityList.h"
 #include "C_BaseViewModel.h"
 #include "CBaseEntityList.h"
-extern CBaseEntityList *g_102b8e98;
 void *C_BaseViewModel::vfunc145()
 {
 	unsigned int h = *(unsigned int *)((char *)this + 0x7d8);
 	if (h != 0xffffffff) {
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e->m_SerialNumber == (int)(h >> 13))
 			return e->m_pEntity;
 	}
@@ -84,10 +84,9 @@ void C_BaseViewModel::vfunc19()
 // END FUNCTION
 
 // FUNCTION: 0x1007f890 size=0x53
+#include "CGlobalVarsBase.h"
 #include "Vector.h"
 #include "C_BaseViewModel.h"
-struct GV { char p[0xc]; float curtime; };
-extern GV *g_102b8494;
 #define F(T, off) (*(T *)((char *)this + off))
 // TARGET: C_BaseViewModel::vfunc143
 void C_BaseViewModel::vfunc143(int a)
@@ -97,7 +96,7 @@ void C_BaseViewModel::vfunc143(int a)
 		F(int, 0x63c) = a;
 		F(int, 0x7e4) = (F(int, 0x7e4) + 1) & 7;
 		F(int, 0x7f0) = F(int, 0x7e4);
-		F(float, 0x6c) = F(float, 0x70) = g_102b8494->curtime;
+		F(float, 0x6c) = F(float, 0x70) = gpGlobals->curtime;
 		F(int, 0x648) = 0;
 		sub_10095880();
 	}
@@ -153,6 +152,89 @@ int C_BaseViewModel::vfunc139(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ab530 size=0x2aa
+#include "Vector.h"
+#include "QAngle.h"
+#include "C_BaseViewModel.h"
+#include "C_BasePlayer.h"
+#include "C_BaseCombatWeapon.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+struct ITempEnts_1028073c
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+	virtual void v16(); virtual void v17(); virtual void v18();
+	virtual void EjectBrass(const Vector &pos, const QAngle &angles, const QAngle &gunAngles, int type, void *p);
+};
+extern ITempEnts_1028073c *g_1028073c;
+C_BaseCombatWeapon *sub_1009b210();
+extern "C" __declspec(dllimport) void Msg(const char *fmt, ...);
+
+void C_BaseViewModel::vfunc127(const Vector &origin, const QAngle &angles, int event, const char *options)
+{
+	if (m_fl650 < 0.0f && m_fl654 >= 0.9)
+	{
+		Vector attachOrigin;
+		QAngle attachAngles;
+		switch (event)
+		{
+		case 6001: case 6002: case 6003: case 6004:
+		{
+			int iAttachment = event - 6001;
+			if (iAttachment > -1 && iAttachment < 4)
+			{
+				C_BasePlayer *pOwner = sub_100ac070();
+				if (pOwner && !pOwner->sub_100a5910())
+				{
+					int type, count;
+					type = count = 1;
+					sscanf(options, "%d %d", &type, &count);
+					if (!vfunc57(iAttachment + 1, (int)&attachOrigin, (int)&attachAngles))
+					{
+						Msg("weapon does not have attachment for shell ejection!\n");
+						attachOrigin = *(const Vector *)vfunc43();
+						attachAngles = *(const QAngle *)vfunc45();
+					}
+					for (int i = 0; i < count; i++)
+						g_1028073c->EjectBrass(attachOrigin, attachAngles, GetAbsAngles(), type, &m_unka8);
+					return;
+				}
+			}
+			break;
+		}
+		case 6011: case 6012: case 6013: case 6014:
+		{
+			int iAttachment = event - 6011;
+			if (iAttachment > -1 && iAttachment < 4)
+			{
+				int type = atoi(options);
+				C_BasePlayer *pOwner = sub_100ac070();
+				if (pOwner && !pOwner->sub_100a5910())
+				{
+					if (!vfunc57(iAttachment + 1, (int)&attachOrigin, (int)&attachAngles))
+					{
+						Msg("weapon does not have attachment for clip ejection!\n");
+						attachOrigin = *(const Vector *)vfunc43();
+						attachAngles = *(const QAngle *)vfunc45();
+					}
+					g_1028073c->EjectBrass(attachOrigin, attachAngles, GetAbsAngles(), type, &m_unka8);
+					return;
+				}
+			}
+			break;
+		}
+		}
+	}
+	C_BaseCombatWeapon *pWeapon = sub_1009b210();
+	if (pWeapon && !pWeapon->vfunc234(this, origin, angles, event, options))
+		sub_100935a0(origin, angles, event, options);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ab850 size=0x37
 #include "C_BaseViewModel.h"
 namespace lifted {
@@ -175,65 +257,22 @@ void C_BaseViewModel::vfunc118(int a0)
 
 // FUNCTION: 0x100abe30 size=0x4f
 #include "C_BasePlayer.h"
+#include "engineclient.h"
+#include "C_BasePlayer.h"
 #include "C_BaseViewModel.h"
 
-struct CEngV39
-{
-	virtual void v0();
-	virtual void v1();
-	virtual void v2();
-	virtual void v3();
-	virtual void v4();
-	virtual void v5();
-	virtual void v6();
-	virtual void v7();
-	virtual void v8();
-	virtual void v9();
-	virtual void v10();
-	virtual void v11();
-	virtual void v12();
-	virtual void v13();
-	virtual void v14();
-	virtual void v15();
-	virtual void v16();
-	virtual void v17();
-	virtual void v18();
-	virtual void v19();
-	virtual void v20();
-	virtual void v21();
-	virtual void v22();
-	virtual void v23();
-	virtual void v24();
-	virtual void v25();
-	virtual void v26();
-	virtual void v27();
-	virtual void v28();
-	virtual void v29();
-	virtual void v30();
-	virtual void v31();
-	virtual void v32();
-	virtual void v33();
-	virtual void v34();
-	virtual void v35();
-	virtual void v36();
-	virtual void v37();
-	virtual void v38();
-	virtual float vfunc39(int);
-};
 
 struct CUnknown100a9de0
 {
 	float sub_100a9de0();
 };
 
-extern CEngV39 *g_104a57d4;
-extern C_BasePlayer *g_104a0d50;
 
 float C_BaseViewModel::vfunc122()
 {
 	float scale = 1.0f;
-	float result = g_104a57d4->vfunc39(0);
-	C_BasePlayer *p = g_104a0d50;
+	float result = engine->Time(0);
+	C_BasePlayer *p = C_BasePlayer::GetLocalPlayer();
 	if (p)
 	{
 		scale = p->vfunc176();

@@ -8,6 +8,9 @@ class CRagdollExplosionEnumerator : public IPartitionEnumerator
 {
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the slots CRagdollExplosionEnumerator adds to its base's vtable: 0-0, vfuncK at slot K
-    virtual void vfunc0();
+    virtual int vfunc0(void *pHandleEntity);
+	Vector m_vecOrigin;
+	float m_flMagnitude;
+	float m_flRadius;
 	void sub_100367b0(Vector v, float a, float b);
 };

@@ -20,6 +20,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the slots C_TEGunshotDecal adds to its base's vtable: 16-18, vfuncK at slot K
 	virtual void vfunc16(int a, int b);
 	virtual void vfunc17();
-	virtual void vfunc18();
+	virtual void vfunc18(struct CGameTrace *pTrace);	// "C_TEGunshotDecal::PlayImpact"
 	bool sub_10038f20();
 };

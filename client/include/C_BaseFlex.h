@@ -17,6 +17,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc70();
 	// the slots C_BaseFlex adds to its base's vtable: 143-145, vfuncK at slot K
 	virtual int vfunc143();
-	virtual void vfunc144();
+	virtual void vfunc144(float *dest);
 	virtual void vfunc145();
 };

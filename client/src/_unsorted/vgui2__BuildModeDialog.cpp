@@ -1,6 +1,163 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101c32c0 size=0x777
+#include "vgui2__BuildModeDialog.h"
+#define D1(a) virtual void a();
+#define D4(a) virtual void a##_0(); virtual void a##_1(); virtual void a##_2(); virtual void a##_3();
+#define D16(a) D4(a##_a) D4(a##_b) D4(a##_c) D4(a##_d)
+struct PV {
+	D4(a1) D4(a2) D4(a3) D1(a4) D1(a5)
+	virtual void SetString(const char *k, const char *v);
+	D1(b1) D1(b2) D1(b3)
+	virtual PV *MakeCopy();
+	D1(c1) D1(c2)
+	virtual void v21(int);
+	D4(d1) D1(d2) D1(d3)
+	virtual void v28(int);
+	D4(e1) D4(e2) D4(e3)
+	virtual void SetParent(PV *);
+	D4(f1)
+	virtual void v46(int);
+	D16(g1) D16(g2) D16(g3) D4(g4) D4(g5) D4(g6) D1(g7) D1(g8) D1(g9)
+	virtual void AddMenuItem(const char *, PV *, PV *);
+	D16(h1) D1(h2) D1(h3)
+	virtual void v129();
+	D16(i1) D16(i2)
+	virtual void SetText(const char *);
+	D4(j1) D4(j2) D4(j3) D1(j4)
+	virtual int AddItem(const char *, int);
+	D4(k1)
+	virtual void v181(int);
+	void sub_101a9950(int, int, int, int);
+	PV *sub_101b5670(const char *);
+	PV *sub_101b1fc0(PV *, const char *, const char *);
+	PV *sub_101b3630(PV *, const char *, const char *);
+	PV *sub_101ba810(PV *, const char *, const char *);
+	PV *sub_101c7820(PV *, const char *, int, int);
+	PV *sub_101bf420(PV *, const char *);
+	PV *sub_101ca6a0(PV *, const char *);
+};
+struct SV {
+	D16(m1) D16(m2) D4(m3) D1(m4) D1(m5) D1(m6)
+	virtual void GetScreenSize(int *, int *);
+};
+struct PanelList {
+	int a, b, c, d, e;
+	PV *m_pResourceData;
+	PV *m_pControls;
+	PanelList() { a = 0; b = 0; c = 0; d = 0; e = 0; }
+};
+SV *sub_101ac8d0();
+void *__cdecl sub_101b6840(unsigned int);
+void *__cdecl sub_101ac650(unsigned int);
+#define FLD(t, o) (*(t *)((char *)this + (o)))
+
+// TARGET: vgui2::BuildModeDialog::BuildModeDialog
+vgui2::BuildModeDialog::BuildModeDialog(void *pBuildGroup) : Frame(0, "BuildModeDialg", true)
+{
+	int tall;
+	int wide;
+	void *p;
+	sub_101ac8d0()->GetScreenSize(&wide, &tall);
+	((PV *)this)->sub_101a9950(0, 0, (int)(285.0 * (wide * 0.0009765625)), (int)(200.0 * (tall * 0.0013020833333333333)));
+	FLD(int, 0xe4) = 0;
+	FLD(void *, 0x120) = pBuildGroup;
+	FLD(PanelList *, 0xe8) = new PanelList;
+	p = sub_101b6840(0x1c);
+	FLD(PanelList *, 0xe8)->m_pResourceData = p ? ((PV *)p)->sub_101b5670("BuildDialog") : 0;
+	p = sub_101ac650(0x78);
+	FLD(PanelList *, 0xe8)->m_pControls = p ? ((PV *)p)->sub_101ca6a0((PV *)this, "BuildModeControls") : 0;
+	p = sub_101ac650(0xb8);
+	FLD(PV *, 0x118) = p ? ((PV *)p)->sub_101b1fc0((PV *)this, 0, "New Panel") : 0;
+	p = sub_101ac650(0x138);
+	FLD(PV *, 0x11c) = p ? ((PV *)p)->sub_101c7820((PV *)this, 0, 0xf, 0) : 0;
+	FLD(PV *, 0x11c)->sub_101a9950(0x3c, 0x1e, 0x8c, 0x18);
+	FLD(PV *, 0x11c)->SetParent((PV *)this);
+	FLD(PV *, 0x11c)->AddItem("None", -1);
+	FLD(PV *, 0x11c)->AddItem("Label", -1);
+	FLD(PV *, 0x11c)->AddItem("Button", -1);
+	FLD(PV *, 0x11c)->AddItem("CheckButton", -1);
+	FLD(PV *, 0x11c)->AddItem("ComboBox", -1);
+	FLD(PV *, 0x11c)->AddItem("ProgressBar", -1);
+	FLD(PV *, 0x11c)->AddItem("RadioButton", -1);
+	FLD(PV *, 0x11c)->AddItem("TextEntry", -1);
+	FLD(PV *, 0x11c)->AddItem("ToggleButton", -1);
+	FLD(PV *, 0x11c)->v181(0);
+	p = sub_101ac650(0xf0);
+	FLD(PV *, 0xec) = p ? ((PV *)p)->sub_101b3630((PV *)this, "SizeToTextButton", "S&ize to Text") : 0;
+	FLD(PV *, 0xec)->sub_101a9950(0x3c, 0x3c, 0x55, 0x19);
+	FLD(PV *, 0xec)->SetParent((PV *)this);
+	FLD(PV *, 0xec)->SetText("SizeToText");
+	p = sub_101ac650(0xfc);
+	FLD(PV *, 0x10c) = p ? ((PV *)p)->sub_101ba810((PV *)this, "AutoUpdatePanelCheck", "Auto Update") : 0;
+	FLD(PV *, 0x10c)->sub_101a9950(0x3c, 0x5a, 0x64, 0xd);
+	FLD(PV *, 0x10c)->v129();
+	FLD(PV *, 0x10c)->SetParent((PV *)this);
+	FLD(char, 0x110) = 0;
+	p = sub_101ac650(0xfc);
+	FLD(PV *, 0x114) = p ? ((PV *)p)->sub_101ba810((PV *)this, "RulerDisplayCheck", "Display Rulers") : 0;
+	FLD(PV *, 0x114)->sub_101a9950(0x3c, 0x5a, 0x64, 0xd);
+	FLD(PV *, 0x114)->v129();
+	FLD(PV *, 0x114)->SetParent((PV *)this);
+	p = sub_101ac650(0xf0);
+	FLD(PV *, 0xf8) = p ? ((PV *)p)->sub_101b3630((PV *)this, "ExitButton", "&Exit") : 0;
+	FLD(PV *, 0xf8)->sub_101a9950(0x3c, 0x78, 0x37, 0x19);
+	p = sub_101ac650(0xf0);
+	FLD(PV *, 0xf0) = p ? ((PV *)p)->sub_101b3630((PV *)this, "SaveButton", "&Save") : 0;
+	FLD(PV *, 0xf0)->sub_101a9950(0x78, 0x78, 0x37, 0x19);
+	FLD(PV *, 0xf0)->v46(0);
+	p = sub_101ac650(0xf0);
+	FLD(PV *, 0xf4) = p ? ((PV *)p)->sub_101b3630((PV *)this, "ApplyButton", "&Apply") : 0;
+	FLD(PV *, 0xf4)->sub_101a9950(0x3c, 0x78, 0x37, 0x19);
+	FLD(PV *, 0xf8)->SetText("Exit");
+	FLD(PV *, 0xf0)->SetText("Save");
+	FLD(PV *, 0xf4)->SetText("Apply");
+	FLD(PV *, 0xf0)->SetParent((PV *)this);
+	FLD(PV *, 0xf8)->SetParent((PV *)this);
+	FLD(PV *, 0xf4)->SetParent((PV *)this);
+	p = sub_101ac650(0xf0);
+	FLD(PV *, 0xfc) = p ? ((PV *)p)->sub_101b3630((PV *)this, "DeletePanelButton", "&Delete Panel") : 0;
+	FLD(PV *, 0xfc)->sub_101a9950(0x3c, 0x78, 0x64, 0x19);
+	FLD(PV *, 0xfc)->SetParent((PV *)this);
+	FLD(PV *, 0xfc)->SetText("DeletePanel");
+	p = sub_101ac650(0xf0);
+	FLD(PV *, 0x100) = p ? ((PV *)p)->sub_101b3630((PV *)this, "RevertToSavedButton", "&Revert To Saved") : 0;
+	FLD(PV *, 0x100)->sub_101a9950(0x3c, 0x82, 0x6e, 0x19);
+	FLD(PV *, 0x100)->SetParent((PV *)this);
+	FLD(PV *, 0x100)->SetText("RevertToSaved");
+	p = sub_101ac650(0xf0);
+	FLD(PV *, 0x104) = p ? ((PV *)p)->sub_101b3630((PV *)this, "ShowHelpButton", "S&how Help") : 0;
+	FLD(PV *, 0x104)->sub_101a9950(0x3c, 0x37, 0x64, 0x19);
+	FLD(PV *, 0x104)->SetParent((PV *)this);
+	FLD(PV *, 0x104)->SetText("ShowHelp");
+	Frame::vfunc121(0);
+	p = sub_101ac650(0x90);
+	FLD(PV *, 0x128) = p ? ((PV *)p)->sub_101bf420((PV *)this, "NewControlMenu") : 0;
+	FLD(PV *, 0x128)->v28(0);
+	p = sub_101b6840(0x1c);
+	PV *kv = p ? ((PV *)p)->sub_101b5670("NewControlFromDropDown") : 0;
+	kv->SetString("ControlName", "Label");
+	FLD(PV *, 0x128)->AddMenuItem("Label", kv->MakeCopy(), (PV *)this);
+	kv->SetString("ControlName", "Button");
+	FLD(PV *, 0x128)->AddMenuItem("Button", kv->MakeCopy(), (PV *)this);
+	kv->SetString("ControlName", "CheckButton");
+	FLD(PV *, 0x128)->AddMenuItem("CheckButton", kv->MakeCopy(), (PV *)this);
+	kv->SetString("ControlName", "ComboBox");
+	FLD(PV *, 0x128)->AddMenuItem("ComboBox", kv->MakeCopy(), (PV *)this);
+	kv->SetString("ControlName", "RadioButton");
+	FLD(PV *, 0x128)->AddMenuItem("RadioButton", kv->MakeCopy(), (PV *)this);
+	kv->SetString("ControlName", "TextEntry");
+	FLD(PV *, 0x128)->AddMenuItem("TextEntry", kv->MakeCopy(), (PV *)this);
+	kv->SetString("ControlName", "ToggleButton");
+	FLD(PV *, 0x128)->AddMenuItem("ToggleButton", kv->MakeCopy(), (PV *)this);
+	FLD(PV *, 0x128)->v21(0);
+	sub_101a9810("BuildDialog");
+	FLD(int, 0x12c) = 0;
+	FLD(int, 0x130) = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c3a40 size=0x1e
 #include "vgui2__BuildModeDialog.h"
 

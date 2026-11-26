@@ -34,26 +34,11 @@ bool CClientLeafSystem::vfunc16(char a0)
 // END FUNCTION
 
 // FUNCTION: 0x100d1c10 size=0x5d
+#include "engineclient.h"
 #include "CClientLeafSystem.h"
 #include "IClientRenderable.h"
 
-class IVModelInfo_100d1c10
-{
-public:
-	virtual void v0() = 0;
-	virtual void v1() = 0;
-	virtual void v2() = 0;
-	virtual void v3() = 0;
-	virtual void v4() = 0;
-	virtual void v5() = 0;
-	virtual void v6() = 0;
-	virtual void v7() = 0;
-	virtual void v8() = 0;
-	virtual void v9() = 0;
-	virtual bool IsModelTwoPass(const model_t *model) = 0;
-};
 
-extern IVModelInfo_100d1c10 *g_104a57f8;
 
 void CClientLeafSystem::vfunc0(IClientRenderable *pRenderable, bool bRenderWithViewModels)
 {
@@ -62,7 +47,7 @@ void CClientLeafSystem::vfunc0(IClientRenderable *pRenderable, bool bRenderWithV
 	bool bTwoPass = false;
 	if (group == 2)
 	{
-		bTwoPass = g_104a57f8->IsModelTwoPass(pRenderable->GetModel());
+		bTwoPass = modelinfo->vfunc10(pRenderable->GetModel());
 	}
 
 	int flags = bRenderWithViewModels ? 2 : 0;
@@ -303,6 +288,224 @@ void CClientLeafSystem::vfunc14(CUtlVector4 *out)
 		if (it->m_type == 4)
 			out->AddToTailNew(it->m_a0);
 		i = ((LeafItem *)*(void **)((char *)this + 0x20))[i].m_next;
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x100d2e00 size=0x506
+#include "CClientLeafSystem.h"
+class __declspec(dllimport) CVProfNode
+{
+public:
+	const char *m_pszName;
+	char m_pad[0x44];
+	CVProfNode *m_pParent;
+	CVProfNode *GetSubNode(const char *pszName, int detailLevel, const char *pBudgetGroupName);
+	void EnterScope();
+	bool ExitScope();
+};
+struct VProf_Cur {
+	char pad[0x100c];
+	int m_Enabled;
+	bool m_bAtRoot;
+	char pad1011[3];
+	CVProfNode *m_pCurNode;
+	CVProfNode *m_pRootNode;
+};
+extern VProf_Cur *g_101e3138;
+struct CV_13 {
+	virtual void v0();
+	virtual bool IsOff();
+	char m_pad[0x28];
+	int m_n2c;
+};
+extern CV_13 *g_104cef4c;
+struct IRend_13 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual bool vf4();
+	virtual void v5();
+	virtual bool vf6();
+	virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual int vf12();
+	virtual void v13();
+	virtual bool vf14();
+};
+struct RInfo_13 {
+	IRend_13 *m_pRenderable;
+	int m_u4;
+	int m_nFrame;
+	int m_uc;
+	short m_w10;
+	unsigned short m_w12;
+	unsigned char m_Flags;
+	unsigned char m_Group;
+	short m_w16;
+	float m_Mins[3];
+	float m_Maxs[3];
+	int m_u30;
+};
+struct RLEntry_13 { void *m_pRenderable; short m_iLeaf; short m_Handle; void *m_pBounds; };
+struct RList_13 { RLEntry_13 m_Groups[6][0x1000]; int m_Counts[6]; };
+struct SetupInfo_13 { RList_13 *m_pList; int m_n4; bool m_b8; bool m_b9; };
+struct A1_13 { char pad[0xc]; int *m_p; };
+struct Leaf_13 { int m_u0; unsigned short m_First; unsigned short m_Count; int m_u8; };
+struct EngT_13 { char pad[0xf0]; void (__cdecl *Con_NPrintf)(void *self, int i, const char *fmt, ...); };
+struct EngV_13 {
+	EngT_13 *t;
+};
+struct EngI_13 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void a5(); virtual void a6(); virtual void a7(); virtual void a8(); virtual void a9();
+	virtual void b0(); virtual void b1(); virtual void b2(); virtual void b3(); virtual void b4(); virtual void b5(); virtual void b6(); virtual void b7(); virtual void b8(); virtual void b9();
+	virtual void c0(); virtual void c1(); virtual void c2(); virtual void c3(); virtual void c4(); virtual void c5(); virtual void c6(); virtual void c7(); virtual void c8(); virtual void c9();
+	virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5(); virtual void d6(); virtual void d7(); virtual void d8(); virtual void d9();
+	virtual void e0(); virtual void e1(); virtual void e2(); virtual void e3(); virtual void e4(); virtual void e5(); virtual void e6(); virtual void e7(); virtual void e8(); virtual void e9();
+	virtual void f0(); virtual void f1(); virtual void f2(); virtual void f3(); virtual void f4(); virtual void f5(); virtual void f6(); virtual void f7(); virtual void f8(); virtual void f9();
+	virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual void g7(); virtual void g8(); virtual void g9();
+	virtual void h0(); virtual void h1(); virtual void h2(); virtual void h3(); virtual void h4(); virtual void h5(); virtual void h6(); virtual void h7(); virtual void h8(); virtual void h9();
+	virtual void i0(); virtual void i1(); virtual void i2(); virtual void i3(); virtual void i4(); virtual void i5(); virtual void i6(); virtual void i7();
+	virtual bool vf98(const float *mins, const float *maxs, int leaf);
+};
+extern EngV_13 *g_104a57d4;
+struct Detail_13 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual IRend_13 *vf9(unsigned int idx);
+	virtual void v10();
+	virtual void *vf11(unsigned int idx);
+};
+Detail_13 *sub_100dfdf0();
+struct CLS_13 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual bool vf9(int leaf, int frame);
+	int m_u4; int m_u8;
+	Leaf_13 *m_pLeafs;
+	char m_pad10[0x20 - 0x10];
+	char *m_pRends;
+	char m_pad24[0x58 - 0x24];
+	char *m_pNodes;
+	char m_pad5c[0x94 - 0x5c];
+	unsigned short *(__cdecl *m_pfnLeafList)(int leaf);
+	char m_pad98[0xd8 - 0x98];
+	bool m_bD8;
+	bool m_bD9;
+};
+static inline void AddToList_13(RList_13 &list, void *rend, int iLeaf, int group, int handle, void *bounds)
+{
+	int &curCount = list.m_Counts[group];
+	if (curCount < 0x1000)
+	{
+		RLEntry_13 *pEntry = &list.m_Groups[group][curCount];
+		pEntry->m_pRenderable = rend;
+		pEntry->m_iLeaf = iLeaf;
+		pEntry->m_Handle = handle;
+		pEntry->m_pBounds = bounds;
+		curCount++;
+	}
+	else
+	{
+		g_104a57d4->t->Con_NPrintf(g_104a57d4, 10, "Warning: overflowed CRenderList group %d", group);
+	}
+}
+static inline void ProfExit_13()
+{
+	VProf_Cur *g = g_101e3138;
+	if (!g->m_bAtRoot || g->m_Enabled)
+	{
+		if (g->m_pCurNode->ExitScope())
+			g->m_pCurNode = g->m_pCurNode->m_pParent;
+		g->m_bAtRoot = (g->m_pCurNode == g->m_pRootNode);
+	}
+}
+// TARGET: CClientLeafSystem::vfunc13
+void CClientLeafSystem::vfunc13(void *a1, int leaf, int a3, void *infoV)
+{
+	CLS_13 *self = (CLS_13 *)this;
+	SetupInfo_13 *info = (SetupInfo_13 *)infoV;
+	unsigned short idx = *self->m_pfnLeafList(leaf);
+	while (idx != 0xffff)
+	{
+		RInfo_13 *r = (RInfo_13 *)(self->m_pRends + *(unsigned short *)((int)idx * 8 + (int)self->m_pNodes) * 52);
+		if (!self->m_bD8 && (r->m_Flags & 2))
+			goto next;
+		if (!self->m_bD9 && (r->m_Maxs[0] - r->m_Mins[0] < 50.0f) && (r->m_Maxs[1] - r->m_Mins[1] < 50.0f))
+			goto next;
+		if (r->m_Group != 2)
+		{
+			if (r->m_nFrame == info->m_n4)
+				goto next;
+			r->m_nFrame = info->m_n4;
+		}
+		if (!g_104cef4c->IsOff() && g_104cef4c->m_n2c)
+		{
+			VProf_Cur *g = g_101e3138;
+			if (g->m_Enabled || !g->m_bAtRoot)
+			{
+				if (g->m_pCurNode->m_pszName != "r_PortalTestEnts")
+					g->m_pCurNode = g->m_pCurNode->GetSubNode("r_PortalTestEnts", 0, "Unaccounted");
+				g->m_pCurNode->EnterScope();
+				g->m_bAtRoot = false;
+			}
+			if (r->m_w16 != -1)
+			{
+				if (!((EngI_13 *)g_104a57d4)->vf98(r->m_Mins, r->m_Maxs, r->m_w16))
+				{
+					ProfExit_13();
+					goto next;
+				}
+			}
+			ProfExit_13();
+		}
+		if (info->m_b9)
+		{
+			if (!r->m_pRenderable->vf6())
+				goto next;
+		}
+		if (r->m_Group == 2)
+		{
+			if (r->m_w12 != leaf)
+				goto next;
+			if (r->m_pRenderable->vf14())
+			{
+				AddToList_13(*info->m_pList, r->m_pRenderable, a3, r->m_Group, r->m_Flags, r->m_Mins);
+				if (r->m_Flags & 1)
+					AddToList_13(*info->m_pList, r->m_pRenderable, a3, 1, r->m_Flags, r->m_Mins);
+			}
+		}
+		else
+		{
+			if (r->m_pRenderable->vf14())
+				AddToList_13(*info->m_pList, r->m_pRenderable, a3, r->m_Group, r->m_Flags, r->m_Mins);
+		}
+next:
+		idx = *(unsigned short *)((int)idx * 8 + (int)self->m_pNodes + 6);
+	}
+	if (info->m_b8 && self->vf9(leaf, info->m_n4))
+	{
+		Leaf_13 *pLeaf = &self->m_pLeafs[leaf];
+		unsigned short first = pLeaf->m_First;
+		bool bSecond = ((A1_13 *)a1)->m_p[a3] == -1;
+		int handle = bSecond ? 16 : 8;
+		for (int i = pLeaf->m_Count - 1; i >= 0; i--)
+		{
+			IRend_13 *d = sub_100dfdf0()->vf9(first);
+			if (d)
+			{
+				if (d->vf4())
+				{
+					if (d->vf12() > 0)
+					{
+						void *b = sub_100dfdf0()->vf11(first);
+						AddToList_13(*info->m_pList, d, a3, 2, handle, b);
+					}
+				}
+				else
+				{
+					void *b = sub_100dfdf0()->vf11(first);
+					AddToList_13(*info->m_pList, d, a3, 1, handle, b);
+				}
+			}
+			first++;
+		}
 	}
 }
 // END FUNCTION

@@ -93,6 +93,7 @@ struct Ray_t
 	}
 
 	void sub_10042370();
+	void sub_100e91e0(const Vector &start, const Vector &end, const float *pMins, const float *pMaxs, char a, char b);
 	void sub_10005e00(const float *pStart, const float *pEnd);	// Ray_t::Init(start, end): delta = end - start, swept when the delta is not zero, the extents zeroed, IsRay set
 	void sub_100e91e0(const Vector &start, const float *pEnd, const float *pMins, const float *pMaxs, char a, char b);	// Ray_t::Init(start, end, mins, maxs) (stub 0x1000c725), thiscall with six stack arguments (the last two are bytes)
 };

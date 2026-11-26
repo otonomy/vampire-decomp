@@ -180,23 +180,10 @@ int C_PlayerResource::vfunc127(int idx)
 // END FUNCTION
 
 // FUNCTION: 0x100bd5b0 size=0x69
+#include "engineclient.h"
 #include "C_PlayerResource.h"
 
-class EngineView
-{
-public:
-	virtual void e0(); virtual void e1(); virtual void e2(); virtual void e3();
-	virtual void e4(); virtual void e5(); virtual void e6(); virtual void e7();
-	virtual void e8(); virtual void e9(); virtual void e10(); virtual void e11();
-	virtual void e12(); virtual void e13(); virtual void e14(); virtual void e15();
-	virtual void e16(); virtual void e17(); virtual void e18(); virtual void e19();
-	virtual void e20(); virtual void e21(); virtual void e22(); virtual void e23();
-	virtual void e24(); virtual void e25(); virtual void e26(); virtual void e27();
-	virtual void e28(); virtual void e29();
-	virtual void vfunc30(int, void *);
-};
 
-extern EngineView *g_104a57d4;
 extern char *(*g_101e3188)(char *, const char *, int);
 
 const char *C_PlayerResource::vfunc128(int index)
@@ -204,7 +191,7 @@ const char *C_PlayerResource::vfunc128(int index)
 	if ( !vfunc133(index) )
 		return "unconnected";
 	int info[3];
-	g_104a57d4->vfunc30(index, info);
+	engine->vfunc30(index, info);
 	char *name = (char *)info[1];
 	if ( name )
 		g_101e3188((char *)this + 0x728 + index * 32, name, 0x20);

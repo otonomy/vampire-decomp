@@ -108,21 +108,9 @@ int C_ServerRagdoll::vfunc125(int flags, int a1)
 // END FUNCTION
 
 // FUNCTION: 0x10125920 size=0xae
+#include "engineclient.h"
 #include "C_ServerRagdoll.h"
 #include "CCollisionProperty.h"
-struct EngVt
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
-	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
-	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
-	virtual void v70(); virtual void v71();
-	virtual bool IsBoxVisible(const Vector &mins, const Vector &maxs);
-};
-extern EngVt *g_104a57d4;
 // TARGET: C_ServerRagdoll::vfunc126
 int C_ServerRagdoll::vfunc126()
 {
@@ -137,14 +125,13 @@ int C_ServerRagdoll::vfunc126()
 	d.z = src.z - org.z;
 	VectorAdd(mins, d, mins);
 	VectorAdd(maxs, d, maxs);
-	return !g_104a57d4->IsBoxVisible(mins, maxs);
+	return !engine->vfunc72(mins, maxs);
 }
 // END FUNCTION
 
 // FUNCTION: 0x10125a70 size=0x38
+#include "CGlobalVarsBase.h"
 #include "C_ServerRagdoll.h"
-struct CGlobalsRag { float f0; float f4; float f8; float fc; float frametime; };
-extern CGlobalsRag *g_102b8494;
 float sub_1010c2e0(float target, float value, float speed);
 struct RagView : public C_ServerRagdoll { char pad[0xae0 - sizeof(C_ServerRagdoll)]; float m_fae0; float m_fae4; };
 // TARGET: C_ServerRagdoll::vfunc37
@@ -152,7 +139,7 @@ void C_ServerRagdoll::vfunc37()
 {
     C_BaseAnimating::vfunc37();
     RagView *r = (RagView *)this;
-    r->m_fae4 = sub_1010c2e0(r->m_fae0, r->m_fae4, g_102b8494->frametime * 5.0f);
+    r->m_fae4 = sub_1010c2e0(r->m_fae0, r->m_fae4, gpGlobals->frametime * 5.0f);
 }
 // END FUNCTION
 
@@ -193,6 +180,87 @@ void C_ServerRagdoll::vfunc131(int a1, int a2, int a3, int a4, int a5, int a6)
 		BoneList_10125ab0 boneList;
 		boneList.sub_1008e230(pHdr, a6);
 		sub_1008a110(pHdr, a2, a3, pSelf->m_nFieldAE8, pSelf->m_nField648, a4, &boneList, pSelf->m_flFieldAE4, a5);
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x10125b40 size=0x27d
+#include "C_ServerRagdoll.h"
+#include "StudioHdr.h"
+#include "matrix3x4_t.h"
+
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+void sub_101094b0(const QAngle &angles, const Vector &position, matrix3x4_t &matrix);
+bool sub_1008b180(StudioHdr *pHdr, int iBone, CBoneAccessor *pAccessor);
+void sub_1010a570(const Quaternion &q, matrix3x4_t &matrix);
+void sub_10108a50(const matrix3x4_t &in1, const matrix3x4_t &in2, matrix3x4_t &out);
+
+// the blend members behind C_ServerRagdoll's declared ones (C_ServerRagdoll::vfunc37's matched source views +0xae0 / +0xae4 from sizeof(C_ServerRagdoll))
+struct C_ServerRagdollBlendView : public C_ServerRagdoll
+{
+	int m_unkadc;
+	float m_unkae0;
+	float m_flBlendWeight;	// 0xae4
+	int m_iBlendSequence;	// 0xae8
+};
+
+void C_ServerRagdoll::vfunc123(const Vector *pos, const Quaternion *q, const matrix3x4_t &cameraTransform, const StudioBoneMask *pBoneComputed)
+{
+	StudioHdr *hdr = (StudioHdr *)sub_1008f900(-1);
+	if (!hdr)
+		return;
+
+	matrix3x4_t bonematrix;
+	bool boneSimulated[350];
+	memset(boneSimulated, 0, sizeof(boneSimulated));
+	StudioBone *pbones = hdr->Bone(0);
+
+	C_ServerRagdollBlendView *pThis = (C_ServerRagdollBlendView *)this;
+	StudioSeqDesc *pSeqDesc = 0;
+	if (pThis->m_iBlendSequence >= 0 && pThis->m_iBlendSequence < hdr->m_nLocalSeq)
+		pSeqDesc = hdr->pSeqdesc(pThis->m_iBlendSequence);
+
+	int i;
+	for (i = 0; i < m_elementCount; i++)
+	{
+		int index = m_boneIndex[i];
+		if (index >= 0 && (pBoneComputed->m_bits[index >> 5] & (1 << (index & 31))))
+		{
+			matrix3x4_t &matrix = m_BoneAccessor.m_pBones[index];
+			boneSimulated[index] = true;
+			if (pThis->m_flBlendWeight != 0.0f && pSeqDesc && pSeqDesc->weight(index) != 0.0f)
+			{
+				boneSimulated[index] = false;
+				continue;
+			}
+			sub_101094b0(m_ragAngles[i], m_ragPos[i], matrix);
+		}
+	}
+
+	for (i = 0; i < hdr->m_nBones; i++)
+	{
+		if (!(pBoneComputed->m_bits[i >> 5] & (1 << (i & 31))))
+			continue;
+		if (boneSimulated[i])
+			continue;
+		if (sub_1008b180(hdr, i, &m_BoneAccessor))
+			continue;
+
+		sub_1010a570(q[i], bonematrix);
+		bonematrix[0][3] = pos[i].x;
+		bonematrix[1][3] = pos[i].y;
+		bonematrix[2][3] = pos[i].z;
+
+		if (pbones[i].m_iParent == -1)
+		{
+			sub_10108a50(cameraTransform, bonematrix, m_BoneAccessor.m_pBones[i]);
+		}
+		else
+		{
+			sub_10108a50(m_BoneAccessor.m_pBones[pbones[i].m_iParent], bonematrix, m_BoneAccessor.m_pBones[i]);
+		}
 	}
 }
 // END FUNCTION

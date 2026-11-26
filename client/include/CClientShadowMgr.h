@@ -47,4 +47,5 @@ public:
 	void *vfunc16(unsigned short);
 	void vfunc14(const void *pDirection);
 	void vfunc15(int, int, int);
+	void vfunc13(int w, int h);	// "RenderShadowTexture": the shadow render target as a quad of w x h
 };

@@ -118,11 +118,10 @@ int C_BaseAnimating::vfunc86()
 // END FUNCTION
 
 // FUNCTION: 0x1008f8a0 size=0x52
+#include "engineclient.h"
 #include "C_BaseAnimating.h"
 #include "StudioHdr.h"
 
-struct ModelInfoView { virtual StudioHdr *GetStudiomodel(const void *); };
-extern ModelInfoView *g_104a57d8;
 
 // TARGET: C_BaseAnimating::vfunc71
 bool C_BaseAnimating::vfunc71()
@@ -131,7 +130,7 @@ bool C_BaseAnimating::vfunc71()
 	void *pModel = *(void **)((char *)this + 0x40);
 	if (!pModel)
 		return false;
-	StudioHdr *hdr = g_104a57d8->GetStudiomodel(pModel);
+	StudioHdr *hdr = modelrender->GetStudiomodel(pModel);
 	if (!hdr)
 		return false;
 	char *pName = hdr->m_name[0] ? hdr->m_name : 0;
@@ -417,21 +416,14 @@ void C_BaseAnimating::vfunc37()
 // END FUNCTION
 
 // FUNCTION: 0x10095030 size=0x39
+#include "engineclient.h"
 #include "C_BaseAnimating.h"
-struct IEng41 {
-  virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-  virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-  virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-  virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-  virtual void v40(); virtual float v41(int);
-};
-extern IEng41 *g_104a57d4;
 // TARGET: C_BaseAnimating::vfunc61
 void C_BaseAnimating::vfunc61()
 {
   if (*((char *)this + 0x6a8)) {
     vfunc70();
-    vfunc137(g_104a57d4->v41(0));
+    vfunc137(engine->vfunc41(0));
   }
 }
 // END FUNCTION
@@ -463,6 +455,130 @@ int C_BaseAnimating::vfunc133()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10095160 size=0x330
+#include "C_BaseAnimating.h"
+#include "CVProfile.h"
+#include "engineclient.h"
+#include "CGlobalVarsBase.h"
+#include "StudioHdr.h"
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "matrix3x4_t.h"
+
+extern CVProfile *g_101e3138;
+__declspec(dllimport) void vtune(bool);
+
+struct CCycleCountS
+{
+	unsigned __int64 m_Int64;
+	CCycleCountS() { m_Int64 = 0; }
+	void Sample()
+	{
+		unsigned long *pSample = (unsigned long *)&m_Int64;
+		__asm
+		{
+			mov ecx, pSample
+			rdtsc
+			mov [ecx], eax
+			mov [ecx+4], edx
+		}
+	}
+};
+
+struct CBaseAnimatingHitView
+{
+	char pad0[0x70];
+	float m_flAnimTime;
+	char pad1[0x564 - 0x74];
+	int m_nHitboxSet;
+	char pad2[0x63c - 0x568];
+	int m_nSequence;
+	char pad3[0x6b4 - 0x640];
+	int m_lastPhysicsBone;
+};
+
+bool sub_1008bb10(const Ray_t &ray, StudioHdr *pStudioHdr, StudioHitboxSet *set, matrix3x4_t **hitboxbones, int fContentsMask, CGameTrace &tr);
+void *sub_1008b5f0(StudioHdr *pStudioHdr, int sequence, float animtime, const QAngle &angles, const Vector &origin, int boneMask);
+void *sub_1008b890(StudioHdr *pStudioHdr, int sequence, float animtime, const QAngle &angles, const Vector &origin, int boneMask, matrix3x4_t *bonetoworld);
+void sub_1008b560(matrix3x4_t **hitboxbones, void *pcache, StudioHdr *pStudioHdr, StudioHitboxSet *set);
+
+static inline void VProfExitOOL()
+{
+	CVProfile *p = g_101e3138;
+	if (!p->m_fAtRoot || p->m_nPause != 0)
+	{
+		if (p->m_pCurNode->ExitScope())
+			p->m_pCurNode = p->m_pCurNode->m_pParent;
+		p->m_fAtRoot = (p->m_pCurNode == p->m_pRoot);
+	}
+}
+
+// TestHitboxes(const Ray_t &ray, unsigned int fContentsMask, trace_t &tr): the slot is still declared (int, int, int) on C_BaseEntity
+bool C_BaseAnimating::vfunc27(int pRay, int nMask, int pTrace)
+{
+	const Ray_t &ray = *(const Ray_t *)pRay;
+	CGameTrace &tr = *(CGameTrace *)pTrace;
+	g_101e3138->EnterScope("C_BaseAnimating::TestCollision", 0, "Unaccounted", false);
+
+	StudioHdr *pStudioHdr = (StudioHdr *)modelinfo->vfunc20(GetModel());
+	if (!pStudioHdr)
+	{
+		VProfExitOOL();
+		return false;
+	}
+
+	CBaseAnimatingHitView *v = (CBaseAnimatingHitView *)this;
+	StudioHitboxSet *set = pStudioHdr->HitboxSet(v->m_nHitboxSet);
+	if (!set || !set->m_nHitboxes || !ray.m_IsRay)
+	{
+		VProfExitOOL();
+		return false;
+	}
+
+	int boneMask = 0xc;
+	void *pcache = sub_1008b5f0(pStudioHdr, v->m_nSequence, v->m_flAnimTime, GetAbsAngles(), GetAbsOrigin(), boneMask);
+	if (!pcache)
+	{
+		matrix3x4_t bonetoworld[350];
+		SetupBones(bonetoworld, 350, boneMask, gpGlobals->curtime, 0);
+		pcache = sub_1008b890(pStudioHdr, v->m_nSequence, v->m_flAnimTime, GetAbsAngles(), GetAbsOrigin(), boneMask, bonetoworld);
+	}
+	matrix3x4_t *hitboxbones[350];
+	sub_1008b560(hitboxbones, pcache, pStudioHdr, set);
+
+	if (sub_1008bb10(ray, pStudioHdr, set, hitboxbones, nMask, tr))
+	{
+		StudioHitbox *pbox = set->Hitbox(tr.m_hitbox);
+		StudioBone *pBone = pStudioHdr->Bone(pbox->m_iBone);
+		tr.m_surfaceName = "**studio**";
+		tr.m_surfaceFlags = 0x8000;
+		tr.m_surfaceProps = physprops->vfunc3((char *)pBone + *(int *)((char *)pBone + 0x98));
+		v->m_lastPhysicsBone = tr.m_physicsbone;
+	}
+
+	CVProfile *p = g_101e3138;
+	if (!p->m_fAtRoot || p->m_nPause != 0)
+	{
+		CVProfNode *node = p->m_pCurNode;
+		if (--node->m_nRecursions == 0 && node->m_nCurFrameCalls != 0)
+		{
+			CCycleCountS cnt;
+			cnt.Sample();
+			node->m_CurFrameTime.v = cnt.m_Int64 - node->m_CurFrameTime.v;
+			node->m_TotalTime += node->m_CurFrameTime;
+			CVProfile *q = g_101e3138;
+			q->m_nDepth--;
+			if (q->m_Stack[q->m_nDepth] != q->m_Stack[q->m_nDepth + 1] && q->m_bEnabled && q->m_Stack[q->m_nDepth + 1] == q->m_nCurBudget)
+				vtune(false);
+		}
+		if (node->m_nRecursions == 0)
+			p->m_pCurNode = p->m_pCurNode->m_pParent;
+		p->m_fAtRoot = (p->m_pCurNode == p->m_pRoot);
+	}
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10095490 size=0x34
 #include "C_BaseAnimating.h"
 float C_BaseAnimating::vfunc138(int iSequence)
@@ -475,14 +591,9 @@ float C_BaseAnimating::vfunc138(int iSequence)
 // END FUNCTION
 
 // FUNCTION: 0x100954d0 size=0x117
+#include "CGlobalVarsBase.h"
 #include "C_BaseAnimating.h"
 
-struct CGlobalVars_100954d0
-{
-	char pad[0xc];
-	float curtime;
-};
-extern CGlobalVars_100954d0 *g_102b8494;
 
 struct C_BaseAnimating_Fields
 {
@@ -510,7 +621,7 @@ float C_BaseAnimating::vfunc136(float flInterval)
 		flInterval = 0.1f;
 	}
 
-	flInterval = (flInterval + g_102b8494->curtime) - f->m_flAnimTime;
+	flInterval = (flInterval + gpGlobals->curtime) - f->m_flAnimTime;
 	if (flInterval <= 0.001)
 	{
 		return 0.0f;

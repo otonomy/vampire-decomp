@@ -25,18 +25,18 @@ void QuestLogPanel::vfunc101()
 // END FUNCTION
 
 // FUNCTION: 0x10189380 size=0x9e
+#include "C_BasePlayer.h"
 #include "QuestLogPanel.h"
 #include "CHud.h"
 #include "CharEditPanel.h"
 extern "C" int _strcmpi(const char *, const char *);
 extern "C" char *strstr(const char *, const char *);
 extern "C" int atoi(const char *);
-extern void *g_104a0d50;
 extern CHud g_104cfe38;
 struct QLView { void sub_10189600(); };
 void QuestLogPanel::vfunc78(int command)
 {
-	if (g_104a0d50) {
+	if (C_BasePlayer::GetLocalPlayer()) {
 		const char *pszCommand = (const char *)command;
 		if (!_strcmpi(pszCommand, "refresh")) {
 			((QLView *)this)->sub_10189600();

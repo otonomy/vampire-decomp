@@ -2,14 +2,14 @@
 #include "client.h"
 
 // FUNCTION: 0x1009d2c0 size=0x22
+#include "CClientEntityList.h"
 #include "CPredictableList.h"
 #include "CClientEntityList.h"
 #include "CBaseHandle.h"
 struct CIdxView100445d0 { CBaseHandle *sub_100445d0(int i); };
-extern CClientEntityList *g_102b8e9c;
 void CPredictableList::vfunc0(int i)
 {
-	g_102b8e9c->sub_100d0dc0(*((CIdxView100445d0 *)((char *)this + 4))->sub_100445d0(i));
+	cl_entitylist->sub_100d0dc0(*((CIdxView100445d0 *)((char *)this + 4))->sub_100445d0(i));
 }
 // END FUNCTION
 

@@ -11,6 +11,115 @@ vgui2::PropertySheet *pcd_emit_101c84a0(const vgui2::PropertySheet &other) { ret
 // TARGET: ??_GPropertySheet@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101c84f0 size=0x285
+#include "vgui2__PropertySheet.h"
+#include "vgui2__Button.h"
+
+extern "C" __declspec(noreturn) void exit(int);
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+void *sub_101b6840(unsigned int size);
+struct CUnknown101b5670 { CUnknown101b5670 *sub_101b5670(const char *name); };
+struct Button_101b3630 { Button_101b3630 *sub_101b3630(void *parent, const char *name, const char *text); };
+extern void *vt_102551e4;
+
+struct TabColor
+{
+	unsigned char _color[4];
+	void Init() { _color[0] = 0; _color[1] = 0; _color[2] = 0; _color[3] = 0; }
+};
+struct PageTabMem
+{
+	void *vtable;
+	char pad4[0xf0 - 4];
+	bool _active;	// 0xf0
+	TabColor _textColor;	// 0xf1
+	TabColor _dimTextColor;	// 0xf5
+};
+
+struct PanelDar
+{
+	int _count;
+	int _capacity;
+	vgui2::Panel **_data;
+
+	int Find(vgui2::Panel *elem)
+	{
+		for (int i = 0; i < _count; i++)
+		{
+			if (_data[i] == elem)
+				return i;
+		}
+		return -1;
+	}
+	void EnsureCapacity(int wantedCapacity)
+	{
+		if (wantedCapacity <= _capacity)
+			return;
+		int newCapacity = _capacity;
+		if (newCapacity == 0)
+			newCapacity = 1;
+		while (newCapacity < wantedCapacity)
+			newCapacity *= 2;
+		vgui2::Panel **newData = new vgui2::Panel *[newCapacity];
+		if (newData == 0)
+			exit(0);
+		memset(newData, 0, sizeof(vgui2::Panel *) * newCapacity);
+		_capacity = newCapacity;
+		for (int i = 0; i < _count; i++)
+			newData[i] = _data[i];
+		delete[] _data;
+		_data = newData;
+	}
+	void AddElement(vgui2::Panel *elem)
+	{
+		EnsureCapacity(_count + 1);
+		_data[_count] = elem;
+		_count++;
+	}
+};
+
+void vgui2::PropertySheet::vfunc107(vgui2::Panel *page, const char *title, int unused)
+{
+	PanelDar &pages = *(PanelDar *)((char *)this + 0x58);
+	PanelDar &pageTabs = *(PanelDar *)((char *)this + 0x64);
+	if (pages.Find(page) >= 0)
+		return;
+
+	vgui2::Panel *tab;
+	PageTabMem *mem = (PageTabMem *)vgui2::Panel::operator new(0xfc);
+	if (mem)
+	{
+		((Button_101b3630 *)mem)->sub_101b3630(this, "tab", title);
+		mem->_textColor.Init();
+		mem->_dimTextColor.Init();
+		mem->vtable = &vt_102551e4;
+		void *kvmem = sub_101b6840(0x1c);
+		((Button *)mem)->Button::vfunc161((int)(kvmem ? ((CUnknown101b5670 *)kvmem)->sub_101b5670("TabPressed") : 0));
+		mem->_active = false;
+		tab = (vgui2::Panel *)mem;
+	}
+	else
+		tab = 0;
+
+	tab->vfunc41((int)this);
+	int wide, tall;
+	tab->sub_101a9920(&wide, &tall);
+	tab->sub_101a98f0(m_unk78, tall);
+	int x, y;
+	tab->sub_101a98c0(&x, &y);
+	tab->sub_101a9890(x, y + m_h80);
+	tab->vfunc63(0);
+
+	pageTabs.AddElement(tab);
+	pages.AddElement(page);
+
+	page->vfunc33((int)this);
+	page->vfunc21(0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c8780 size=0x35
 #include "vgui2__PropertySheet.h"
 struct PSView { char pad[0x58]; int m_n; int m_unk5c; int *m_data; };
@@ -110,6 +219,111 @@ int vgui2::PropertySheet::vfunc120()
 int vgui2::PropertySheet::vfunc15(int x) { vgui2::Panel *p = *(vgui2::Panel **)((char *)this + 0x70); if (p) return p->vfunc15(x); }
 // END FUNCTION
 
+// FUNCTION: 0x101c8ab0 size=0x245
+#include "vgui2__PropertySheet.h"
+#define VV(n) virtual void n();
+#define V5(p) VV(p##0) VV(p##1) VV(p##2) VV(p##3) VV(p##4)
+#define V10(p) V5(p##a) V5(p##b)
+struct SChild
+{
+	V5(a) VV(a5)
+	virtual void vfunc6();
+	V10(b) VV(c0) VV(c1) VV(c2) VV(c3)
+	virtual void SetVisible(int b);
+	V10(d) V10(e) V5(f) VV(g0) VV(g1)
+	virtual void vfunc49();
+	V10(h) VV(i0) VV(i1) VV(i2)
+	virtual void vfunc63(bool b);
+	V10(j) V10(k) V10(l) V10(m) V5(n) VV(o0) VV(o1)
+	virtual void vfunc111(int n);
+	V5(p) VV(q0)
+	virtual void vfunc118(int n);
+	void sub_101a9950(int x, int y, int w, int h);
+};
+struct SSurface
+{
+	V10(a) V10(b) V10(c) V5(d) VV(e0) VV(e1) VV(e2) VV(e3)
+	virtual void GetScreenSize(int *w, int *h);
+};
+struct SColorB { VV(a0) VV(a1) VV(a2) VV(a3) virtual int vfunc4(const char *psz); };
+struct SColorA { VV(a0) VV(a1) VV(a2) VV(a3) virtual SColorB *vfunc4(int a); };
+struct SPS
+{
+	V10(a) V10(b) V10(c) V10(d) V10(e) V10(f) V10(g) V10(h) V10(i) V10(j) V10(k) V10(l) V5(m) VV(n0) VV(n1)
+	virtual void vfunc127(int a);
+	char pad[0x64 - 0x4];
+	int m_nPanels;
+	char pad2[4];
+	SChild **m_ppPanels;
+	SChild *m_pPage;
+	SChild *m_pActive;
+	int m_nTabWide;
+	char pad3[4];
+	int m_nGap;
+	int m_nFont;
+	char m_szScheme[0x20];
+	bool m_bFlag;
+	void sub_101a9980(int *x, int *y, int *w, int *h);
+	int sub_101aa220();
+};
+extern SSurface *sub_101ac8d0();
+extern SColorA *sub_101ac8c0();
+#define PANEL(i) ((i) >= 0 && (i) < ps->m_nPanels ? ps->m_ppPanels[i] : (SChild *)0)
+// TARGET: vgui2::PropertySheet::vfunc101
+void vgui2::PropertySheet::vfunc101()
+{
+	SPS *ps = (SPS *)this;
+	Panel::vfunc101();
+	if (!ps->m_pPage)
+		ps->vfunc127(0);
+	int sw, sh;
+	sub_101ac8d0()->GetScreenSize(&sw, &sh);
+	int x, y, wide, tall;
+	ps->sub_101a9980(&x, &y, &wide, &tall);
+	if (ps->m_pPage) {
+		double s = sh * 0.0013020833333333333;
+		double v = s * 28.0 + ps->m_nGap;
+		ps->m_pPage->sub_101a9950(0, (int)v, wide, (int)(tall - v));
+	}
+	int n = ps->m_nPanels;
+	int xpos = 0;
+	int color;
+	if (ps->m_szScheme[0])
+		color = sub_101ac8c0()->vfunc4(ps->sub_101aa220())->vfunc4(ps->m_szScheme);
+	else
+		color = -1;
+	for (int i = 0; i < n; i++) {
+		SChild *c = PANEL(i);
+		c->vfunc111(ps->m_nFont);
+		if (color != -1) {
+			c = PANEL(i);
+			c->vfunc118(color);
+		}
+		c = PANEL(i);
+		c->vfunc63(ps->m_bFlag);
+		if (PANEL(i) == ps->m_pActive) {
+			double s = sh * 0.0013020833333333333;
+			ps->m_pActive->sub_101a9950(xpos, (int)(s * 2.0 + ps->m_nGap), ps->m_nTabWide, (int)(s * 27.0));
+		} else {
+			c = PANEL(i);
+			double s = sh * 0.0013020833333333333;
+			c->sub_101a9950(xpos, (int)(s * 4.0 + ps->m_nGap), ps->m_nTabWide, (int)(s * 25.0));
+		}
+		c = PANEL(i);
+		c->SetVisible(1);
+		xpos += ps->m_nTabWide + 1;
+	}
+	if (ps->m_pPage) {
+		ps->m_pPage->vfunc49();
+		ps->m_pPage->vfunc6();
+	}
+	if (ps->m_pActive) {
+		ps->m_pActive->vfunc49();
+		ps->m_pActive->vfunc6();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c8d00 size=0x3e
 #include "vgui2__PropertySheet.h"
 struct VecView
@@ -192,6 +406,108 @@ void vgui2::PropertySheet::vfunc129(const char *pszName, int a1)
 		if (!_strnicmp(pszName, szTitle, n))
 			((CPageVec *)((char *)this + 0x60))->Get(i)->vfunc46(a1);
 	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x101c90f0 size=0x295
+#include "vgui2__PropertySheet.h"
+#include "vgui2__PageTab.h"
+
+extern void *sub_101b6840(unsigned int size);
+
+struct KV_101c90f0 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16();
+	virtual void SetPtr(const char *key, void *value);
+	KV_101c90f0 *sub_101b5670(const char *name);
+};
+
+struct IVGui_101c90f0 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void PostMessage(int target, void *params, int from, float delaySeconds);
+};
+extern IVGui_101c90f0 *sub_101ac8f0();
+
+static inline KV_101c90f0 *NewKV(const char *name)
+{
+	KV_101c90f0 *kv = (KV_101c90f0 *)sub_101b6840(0x1c);
+	return kv ? kv->sub_101b5670(name) : 0;
+}
+
+struct PageDar_101c90f0
+{
+	int _count;
+	int _capacity;
+	vgui2::Panel **_data;
+	vgui2::Panel *Get(int i) { return (i >= 0 && i < _count) ? _data[i] : 0; }
+};
+
+struct SheetFields_101c90f0
+{
+	char pad0[0x58];
+	PageDar_101c90f0 _pages;	// 0x58
+	PageDar_101c90f0 _pageTabs;	// 0x64
+	vgui2::Panel *_activePage;	// 0x70
+	vgui2::Panel *_activeTab;	// 0x74
+	int m_78;
+	int _activeTabIndex;	// 0x7c
+};
+
+void vgui2::PropertySheet::vfunc127(int index)
+{
+	SheetFields_101c90f0 *f = (SheetFields_101c90f0 *)this;
+	if (index != -1)
+	{
+		if (f->_pages.Get(index) == f->_activePage)
+			return;
+		if (!f->_pages.Get(index))
+			return;
+	}
+
+	if (f->_activePage)
+	{
+		sub_101ac8f0()->PostMessage(f->_activePage->vfunc0(), NewKV("PageHide"), vfunc0(), 0.0f);
+		KV_101c90f0 *msg = NewKV("PageTabActivated");
+		msg->SetPtr("panel", 0);
+		sub_101ac8f0()->PostMessage(f->_activePage->vfunc0(), msg, vfunc0(), 0.0f);
+		f->_activePage->vfunc21(0);
+	}
+	if (f->_activeTab)
+		((vgui2::PageTab *)f->_activeTab)->vfunc166(0);
+
+	if (index != -1)
+	{
+		f->_activePage = f->_pages.Get(index);
+		f->_activeTab = f->_pageTabs.Get(index);
+		f->_activeTabIndex = index;
+
+		f->_activePage->vfunc21(1);
+		f->_activePage->vfunc49();
+		f->_activeTab->vfunc21(1);
+		f->_activeTab->vfunc49();
+		((vgui2::PageTab *)f->_activeTab)->vfunc166(1);
+		f->_activeTab->vfunc15(0);
+
+		sub_101ac8f0()->PostMessage(f->_activePage->vfunc0(), NewKV("PageShow"), vfunc0(), 0.0f);
+		KV_101c90f0 *msg = NewKV("PageTabActivated");
+		msg->SetPtr("panel", f->_activeTab);
+		sub_101ac8f0()->PostMessage(f->_activePage->vfunc0(), msg, vfunc0(), 0.0f);
+	}
+	else
+	{
+		f->_activePage = 0;
+		f->_activeTab = 0;
+		f->_activeTabIndex = 0;
+	}
+
+	vfunc43(NewKV("PageChanged"));
+	vfunc57(0, 0);
+	vfunc6();
 }
 // END FUNCTION
 

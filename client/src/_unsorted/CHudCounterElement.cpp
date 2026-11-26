@@ -6,7 +6,6 @@
 #include "CHud.h"
 struct ISurf6 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(int, int, int, int); };
 extern ISurf6 *g_102bc800;
-extern CHud g_104cfe38;
 int sub_100cd0f0();
 int sub_100cd100();
 void CHudCounterElement::vfunc5(int a)
@@ -20,7 +19,7 @@ void CHudCounterElement::vfunc5(int a)
 	int flags = 5;
 	if (m_pDef->m_bFlag)
 		flags = 0xd;
-	g_104cfe38.sub_100f2e80(y, x, flags, m_pDef->m_unk418, r, g, b, -1, -1);
+	gHUD.sub_100f2e80(y, x, flags, m_pDef->m_unk418, r, g, b, -1, -1);
 }
 // END FUNCTION
 

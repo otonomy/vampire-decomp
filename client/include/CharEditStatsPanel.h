@@ -4,16 +4,23 @@
 #pragma once
 #include <stdlib.h>
 #include "vgui2__PropertyPage.h"
+#include "vgui2__Label.h"
 
 struct CStatsSub1017f860 { void sub_1017f860(); };
 class CharEditStatsPanel : public vgui2::PropertyPage
 {
 public:
 	void sub_1017f640();
+	void sub_10181cc0();
+	void sub_1017dc20();
+	void sub_10181f80();
+	void sub_1017f610();
 	void sub_10182460();
 	int sub_10182450();
 	int sub_1017f290();
-	char m_pad0[0x2bc - sizeof(vgui2::PropertyPage)];
+	char m_pad0[0x20c - sizeof(vgui2::PropertyPage)];
+	class vgui2::Label *m_pFeatLabels[16];
+	char m_pad24c[0x2bc - 0x24c];
 	vgui2::Panel *m_p2bc;
 	vgui2::Panel *m_p2c0;
 	vgui2::Panel *m_p2c4;

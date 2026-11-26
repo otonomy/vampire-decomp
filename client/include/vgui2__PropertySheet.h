@@ -17,7 +17,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc101();
 	virtual int vfunc102();
 	// the slots PropertySheet adds to its base's vtable: 107-129, vfuncK at slot K
-	virtual void vfunc107();
+	virtual void vfunc107(vgui2::Panel *page, const char *title, int);	// AddPage
 	virtual void vfunc108(int);
 	virtual int vfunc109(int);
 	virtual int vfunc110(int);

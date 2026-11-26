@@ -24,6 +24,7 @@ public:
 	CVStatInfoList_t *sub_1015c2f0(const char *name, int a, int b);	// "CVStatInfoList_t::CVStatInfoList_t": scope trace, nulls the cost, stores b at +0, zeroes the list, a at +0x2c and copies name to +0xc
 	void sub_1015c3a0();	// "CVStatInfoList_t::~CVStatInfoList_t"-like: scope trace, delete[]s the records and zeroes the count
 		// "CVStatInfoList_t::PreCache": scope trace, frees the records, opens "vdata\\system\\stats.txt", finds the block named like the list (+0xc), reads its display text (+0x24) and "InternalName" (+0x28), counts and allocates the records of its "Stat" keys and pre-loads each; DevMsg when the count differs from the one the list was made with (+0)
+	void sub_1015c4b0();	// "CVStatInfoList_t::PreCache"
 	int sub_1015c8f0(const char *name);	// "CVStatInfoList_t::Lookup(char*)": scope trace, index of the stat whose name equals the argument (case-insensitive, null name counts as ""), -1 when none
 	int sub_1015c9b0(const char *name);
 	CVDmgBlock16_t *sub_1015cf10(const char *name);

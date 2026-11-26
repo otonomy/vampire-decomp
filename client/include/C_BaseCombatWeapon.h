@@ -125,7 +125,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc231();
 	virtual int vfunc232();
 	virtual int vfunc233();
-	virtual void vfunc234();
+	virtual bool vfunc234(C_BaseAnimating *pViewModel, const Vector &origin, const QAngle &angles, int event, const char *options);
 	virtual int vfunc235(int);
 	virtual void vfunc236(int);
 	virtual void vfunc237();

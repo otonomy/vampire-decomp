@@ -9,6 +9,7 @@ namespace vgui2
 class Frame : public vgui2::EditablePanel
 {
 public:
+	Frame(vgui2::Panel *parent, const char *name, bool bPrimary);
 	virtual ~Frame();
 	void sub_101b88c0();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables

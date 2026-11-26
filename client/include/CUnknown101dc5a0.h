@@ -11,6 +11,16 @@ struct CUnknown101dc5a0Keys	// the KeyValues-like block: slot 2 finds a sub bloc
 	virtual void vfunc1();
 	virtual CUnknown101dc5a0Keys *vfunc2(const char *pszName);
 	virtual CUnknown101dc5a0Keys *vfunc3();
+	virtual void vfunc4();
+	virtual void vfunc5();
+	virtual void vfunc6();
+	virtual void vfunc7();
+	virtual void vfunc8();
+	virtual void vfunc9();
+	virtual int vfunc10(const char *pszKey, int nDefault);	// GetInt
+	virtual float vfunc11(const char *pszKey, float flDefault);	// GetFloat
+	virtual bool vfunc12(const char *pszKey, bool bDefault);	// GetBool
+	virtual const char *vfunc13(const char *pszKey, const char *pszDefault);	// GetString
 };
 
 class CUnknown101dc5a0

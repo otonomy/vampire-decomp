@@ -344,6 +344,88 @@ void vgui2::EditablePanel::vfunc114(const char *name, char *dest, int len, const
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b5230 size=0x3ae
+#include "vgui2__EditablePanel.h"
+extern "C" int strcmp(const char *, const char *);
+#pragma intrinsic(strcmp)
+void *__cdecl sub_101ac650(unsigned int);
+
+struct VP {
+	void *sub_101b1fc0(vgui2::Panel *, const char *, const char *);
+	void *sub_101b3630(vgui2::Panel *, const char *, const char *);
+	void *sub_101ba810(vgui2::Panel *, const char *, const char *);
+	void *sub_101c7820(vgui2::Panel *, const char *, int, int);
+	void *sub_101bf420(vgui2::Panel *, const char *);
+	void *sub_101c6c10(vgui2::Panel *, const char *, const char *, int, int);
+	void *sub_101c6780(const char *, const char *, int);
+	void *sub_101c6500(vgui2::Panel *, const char *);
+	void *sub_101c5b80(vgui2::Panel *, const char *, const char *);
+	void *sub_101beb90(vgui2::Panel *, const char *, int);
+	void *sub_101acaa0(vgui2::Panel *, const char *);
+	void *sub_101bc310(vgui2::Panel *, const char *, const char *);
+	void *sub_101c5920(vgui2::Panel *, const char *);
+	void *sub_101c5500(vgui2::Panel *, const char *);
+	void *sub_101a9530(vgui2::Panel *, const char *);
+	void *sub_101b4660(vgui2::Panel *, const char *);
+};
+
+// TARGET: vgui2::EditablePanel::sub_101b5230
+vgui2::Panel *vgui2::EditablePanel::sub_101b5230(vgui2::Panel *parent, const char *controlName)
+{
+	void *p;
+	if (!strcmp(controlName, "Label")) {
+		p = sub_101ac650(0xb8);
+		return p ? (Panel *)((VP *)p)->sub_101b1fc0(parent, 0, "Label") : 0;
+	} else if (!strcmp(controlName, "Button")) {
+		p = sub_101ac650(0xf0);
+		return p ? (Panel *)((VP *)p)->sub_101b3630(parent, 0, "Button") : 0;
+	} else if (!strcmp(controlName, "CheckButton")) {
+		p = sub_101ac650(0xfc);
+		return p ? (Panel *)((VP *)p)->sub_101ba810(parent, 0, "CheckButton") : 0;
+	} else if (!strcmp(controlName, "ComboBox")) {
+		p = sub_101ac650(0x138);
+		return p ? (Panel *)((VP *)p)->sub_101c7820(parent, 0, 5, 1) : 0;
+	} else if (!strcmp(controlName, "Menu")) {
+		p = sub_101ac650(0x90);
+		return p ? (Panel *)((VP *)p)->sub_101bf420(parent, "Menu") : 0;
+	} else if (!strcmp(controlName, "MenuItem")) {
+		p = sub_101ac650(0x104);
+		return p ? (Panel *)((VP *)p)->sub_101c6c10(parent, 0, "MenuItem", 0, 0) : 0;
+	} else if (!strcmp(controlName, "MessageBox")) {
+		p = sub_101ac650(0xf0);
+		return p ? (Panel *)((VP *)p)->sub_101c6780("MessageBox", "MessageBoxText", 0) : 0;
+	} else if (!strcmp(controlName, "ProgressBar")) {
+		p = sub_101ac650(0x60);
+		return p ? (Panel *)((VP *)p)->sub_101c6500(parent, 0) : 0;
+	} else if (!strcmp(controlName, "RadioButton")) {
+		p = sub_101ac650(0x104);
+		return p ? (Panel *)((VP *)p)->sub_101c5b80(parent, 0, "RadioButton") : 0;
+	} else if (!strcmp(controlName, "ScrollBar")) {
+		p = sub_101ac650(0x70);
+		return p ? (Panel *)((VP *)p)->sub_101beb90(parent, 0, 0) : 0;
+	} else if (!strcmp(controlName, "TextEntry")) {
+		p = sub_101ac650(0x128);
+		return p ? (Panel *)((VP *)p)->sub_101acaa0(parent, 0) : 0;
+	} else if (!strcmp(controlName, "ToggleButton")) {
+		p = sub_101ac650(0xf4);
+		return p ? (Panel *)((VP *)p)->sub_101bc310(parent, 0, "ToggleButton") : 0;
+	} else if (!strcmp(controlName, "ImagePanel")) {
+		p = sub_101ac650(0x60);
+		return p ? (Panel *)((VP *)p)->sub_101c5920(parent, "ResourceImagePanel") : 0;
+	} else if (!strcmp(controlName, "AnimatingImagePanel")) {
+		p = sub_101ac650(0x7c);
+		return p ? (Panel *)((VP *)p)->sub_101c5500(parent, 0) : 0;
+	} else if (!strcmp(controlName, "Panel")) {
+		p = sub_101ac650(0x58);
+		return p ? (Panel *)((VP *)p)->sub_101a9530(parent, 0) : 0;
+	} else if (!strcmp(controlName, "EditablePanel")) {
+		p = sub_101ac650(0x78);
+		return p ? (Panel *)((VP *)p)->sub_101b4660(parent, 0) : 0;
+	}
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b5650 size=0x6
 #include "vgui2__EditablePanel.h"
 namespace lifted {

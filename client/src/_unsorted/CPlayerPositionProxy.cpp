@@ -14,6 +14,7 @@ bool CPlayerPositionProxy::vfunc0(void *pMaterial, void *pKeyValues)
 // END FUNCTION
 
 // FUNCTION: 0x10124f10 size=0x52
+#include "C_BasePlayer.h"
 #include "CPlayerPositionProxy.h"
 #include "C_BasePlayer.h"
 #include "Vector.h"
@@ -25,15 +26,14 @@ struct ResultVarView {
 	virtual void v12();
 	virtual void SetVecValue(const float *pVal, int nComps);
 };
-extern C_BasePlayer *g_104a0d50;
 
 // TARGET: CPlayerPositionProxy::vfunc1
 void CPlayerPositionProxy::vfunc1(int a)
 {
-	if (g_104a0d50) {
+	if (C_BasePlayer::GetLocalPlayer()) {
 		float scale = *(float *)((char *)this + 0xc);
 		Vector v;
-		VectorMultiply(g_104a0d50->GetAbsOrigin(), scale, v);
+		VectorMultiply(C_BasePlayer::GetLocalPlayer()->GetAbsOrigin(), scale, v);
 		((ResultVarView *)*(void **)((char *)this + 4))->SetVecValue(v.Base(), 3);
 	}
 }

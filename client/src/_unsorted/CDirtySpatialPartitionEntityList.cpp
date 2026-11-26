@@ -48,16 +48,9 @@ bool __fastcall sub_10042ca0(char *p)
 // END FUNCTION
 
 // FUNCTION: 0x10042cd0 size=0x23
+#include "engineclient.h"
 #include "CDirtySpatialPartitionEntityList.h"
 
-struct CSpatialV100dbc20
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10();
-	virtual void vfunc11(void *p);
-};
-extern CSpatialV100dbc20 *g_104a5808;
 
 struct CDirtyList100dbc20 { char pad[8]; int m_8; };
 
@@ -65,7 +58,7 @@ struct CDirtyList100dbc20 { char pad[8]; int m_8; };
 void CDirtySpatialPartitionEntityList::vfunc1()
 {
 	CDirtyList100dbc20 *p = (CDirtyList100dbc20 *)this;
-	g_104a5808->vfunc11(p ? &p->m_8 : 0);
+	partition->vfunc11(p ? &p->m_8 : 0);
 }
 // END FUNCTION
 

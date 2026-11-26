@@ -7,6 +7,7 @@ class CInput : public IInput
 {
 public:
     void sub_10106880(int);
+    void sub_10106560(float *, float *, int, int);
     void sub_10106860(int *, int *);
     void sub_10101df0();
     void sub_10102800(struct Vector *);
@@ -43,9 +44,9 @@ public:
     // the slots CInput adds to its base's vtable: 0-56, vfuncK at slot K
     virtual void vfunc0();
     virtual void vfunc1();
-    virtual void vfunc2();
-    virtual void vfunc3();
-    virtual void vfunc4(void *, int, int, int);
+    virtual int vfunc2(int bResetState);	// GetButtonBits
+    virtual void vfunc3(int sequence_number, int totalslots, float tick_frametime, float input_sample_frametime, int active, float packet_loss);	// SDK IInput::CreateMove, CHLClient::CreateMove forwards it
+    virtual void vfunc4(void *buf, int from, int to, bool isnewcommand);	// SDK IInput::WriteUsercmdDeltaToBuffer
     virtual void vfunc5(int, int, int);
     virtual void vfunc6(int, int, int);
     virtual char *vfunc7(int i);
@@ -56,7 +57,7 @@ public:
     virtual void vfunc12();
     virtual void vfunc13();
     virtual void vfunc14();
-    virtual void vfunc15();
+    virtual void vfunc15(int mstate, bool down);	// SDK IInput::MouseEvent, CHLClient::IN_MouseEvent forwards it
     virtual void vfunc16();
     virtual void vfunc17();
     virtual bool vfunc18();
@@ -68,7 +69,7 @@ public:
     virtual bool vfunc24();
     virtual void vfunc25();
     virtual bool vfunc26();
-    virtual void vfunc27();
+    virtual float vfunc27();	// CViewRender::sub_10190390 takes fabs() of it
     virtual void vfunc28();
     virtual int vfunc29();
     virtual float vfunc30();
@@ -99,3 +100,7 @@ public:
     virtual int vfunc55(int);
     virtual int vfunc56();
 };
+
+// the client's input object (SDK cl_dll/hl2_dll/hl_in_main.cpp: static CHLInput g_Input; IInput *input = &g_Input):
+// input->vfuncN(); declared as CInput * since the slots are declared here
+extern CInput *input;

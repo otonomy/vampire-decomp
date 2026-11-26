@@ -21,9 +21,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc114();
 	CFrenzyBar(int parent);
 	void sub_10050af0();
+	void sub_101a98c0(int *, int *);
 	void sub_10050ba0(int, int);
 	void sub_101a9890(int, int);
 	void sub_101a98f0(int, int);
-	int m_unk174; int m_unk178; int m_unk17c; int m_unk180; int m_unk184; int m_unk188; int m_unk18c; int m_unk190; char m_unk194; char m_unk195; char m_unk196; char m_unk197; int m_unk198; int m_unk19c;
+	int m_unk174; int m_unk178; int m_unk17c; int m_unk180; int m_unk184; int m_unk188; int m_unk18c; int m_unk190; char m_unk194; char m_unk195; char m_unk196; char m_unk197; int m_unk198; float m_unk19c;
 	CFrenzyBarOwned *m_pChild1; CFrenzyBarOwned *m_pChild2;
 };

@@ -12,21 +12,12 @@ CharEditCharPanel *pcd_emit_101766a0(const CharEditCharPanel &other) { return ne
 // END FUNCTION
 
 // FUNCTION: 0x10177370 size=0xb7
+#include "engineclient.h"
 #include "CharEditCharPanel.h"
 #include <string.h>
 
 extern void sub_10179840();
 
-struct IEngine_10177370
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-	virtual void v25(); virtual void v26();
-	virtual void v27(const char *cmd, int flag);
-};
 
 struct CCharEditPanel_10177370
 {
@@ -47,7 +38,6 @@ struct CCharEditCharPanel_10177370
 };
 
 extern CHud_10177370 g_104cfe38;
-extern IEngine_10177370 *g_104a57d4;
 
 // TARGET: ?vfunc78@CharEditCharPanel@@UAEXH@Z
 void CharEditCharPanel::vfunc78(int command)
@@ -63,7 +53,7 @@ void CharEditCharPanel::vfunc78(int command)
 		CCharEditPanel_10177370 *pPanel = g_104cfe38.sub_100f0ed0("CharEditPanel");
 		pPanel->sub_101733d0(0);
 		pPanel->m_unk274 = 0;
-		g_104a57d4->v27("vclan teamchoose done", 1);
+		engine->vfunc27("vclan teamchoose done", 1);
 	}
 	else if (!_strcmpi(pszCommand, "next"))
 	{

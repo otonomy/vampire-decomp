@@ -18,7 +18,15 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the slots CBloodBar adds to its base's vtable: 114-115, vfuncK at slot K
 	virtual int vfunc114(int);
 	virtual int vfunc115(int);
-	char m_pad0174[0x1a4 - 0x174];
+	char m_pad0174[0x178 - 0x174];
+	int m_n178;
+	int m_n17c;
+	int m_n180;
+	int m_n184;
+	int m_n188;
+	int m_n18c;
+	char m_pad0190[0x1a4 - 0x190];
+	void sub_1004c780();
 	CBloodBarChild *m_p1a4;
 	int m_unk1a8;
 	CBloodBarChild *m_p1ac;

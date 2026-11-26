@@ -19,14 +19,14 @@ int C_BasePlayer::vfunc84()
 // END FUNCTION
 
 // FUNCTION: 0x10002b10 size=0x2d
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 #include "CBaseEntityList.h"
-extern CBaseEntityList *g_102b8e98;
 C_BaseCombatWeapon *C_BasePlayer::vfunc167()
 {
 	unsigned int h = *(unsigned int *)((char *)this + 0x1a08);
 	if (h != 0xffffffff) {
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e->m_SerialNumber == (int)(h >> 13))
 			return (C_BaseCombatWeapon *)e->m_pEntity;
 	}
@@ -35,17 +35,17 @@ C_BaseCombatWeapon *C_BasePlayer::vfunc167()
 // END FUNCTION
 
 // FUNCTION: 0x10002b40 size=0x2d
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 struct EntInfo_10002b40 { void *m_pEntity; int m_SerialNumber; EntInfo_10002b40 *m_pPrev; };
 struct EntList_10002b40 { int m_unk0; EntInfo_10002b40 m_Info[0x2000]; };
-extern EntList_10002b40 *g_102b8e98;
 struct View_10002b40 { char pad[0x1a0c]; unsigned long m_hHandle; void *sub_10002b40(); };
 void *View_10002b40::sub_10002b40()
 {
 	unsigned long h = m_hHandle;
 	if (h != 0xffffffff)
 	{
-		EntInfo_10002b40 *pInfo = &g_102b8e98->m_Info[h & 0x1fff];
+		EntInfo_10002b40 *pInfo = &((EntList_10002b40 *)g_pEntityList)->m_Info[h & 0x1fff];
 		if (pInfo->m_SerialNumber == (int)(h >> 13))
 			return pInfo->m_pEntity;
 	}
@@ -73,6 +73,7 @@ float C_BasePlayer::vfunc176()
 // END FUNCTION
 
 // FUNCTION: 0x1002a2f0 size=0xaf
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 #include "ehandle.h"
 #include "QAngle.h"
@@ -86,7 +87,7 @@ int C_BasePlayer::vfunc108()
 	unsigned long h = *(unsigned long *)((char *)this + 0x208);
 	CVehicleView *pVehicle = 0;
 	if (h != 0xffffffff) {
-		CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e.m_SerialNumber == (int)(h >> 13))
 			pVehicle = (CVehicleView *)e.m_pEntity;
 	}
@@ -168,9 +169,9 @@ void C_BasePlayer::vfunc177() { IsTransparent(); }
 // END FUNCTION
 
 // FUNCTION: 0x100a58b0 size=0x45
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 #include "CBaseEntityList.h"
-extern CBaseEntityList *g_102b8e98;
 // TARGET: C_BasePlayer::vfunc119
 void C_BasePlayer::vfunc119(int ent) {
 	unsigned int *ph = (unsigned int *)((char *)this + 0x14e8);
@@ -178,7 +179,7 @@ void C_BasePlayer::vfunc119(int ent) {
 	if (*ph == 0xffffffff)
 		p = 0;
 	else {
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[*ph & 0x1fff];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[*ph & 0x1fff];
 		p = (e->m_SerialNumber == (int)(*ph >> 13)) ? e->m_pEntity : 0;
 	}
 	if ((void *)ent == p)
@@ -192,43 +193,13 @@ void __fastcall sub_100a5900(char *self, int edx) { ((V *)(self + 4))->v11(); }
 // END FUNCTION
 
 // FUNCTION: 0x100a6b10 size=0x71
+#include "engineclient.h"
 #include "C_BasePlayer.h"
 #include "Vector.h"
 #include "QAngle.h"
 
-struct EngV
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
-	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
-	virtual void v36(); virtual void v37(); virtual void v38();
-	virtual double v39(int);
-};
 
-struct RenV
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
-	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
-	virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40(); virtual void v41();
-	virtual double v42();
-};
 
-extern EngV *g_104a57d4;
-extern RenV *g_104a57e4;
 
 bool __fastcall sub_100a99d0(void *self);
 
@@ -236,7 +207,7 @@ bool C_BasePlayer::sub_100a6b10()
 {
 	if (!sub_100a99d0(this))
 	{
-		float dt = g_104a57d4->v39(0) - g_104a57e4->v42();
+		float dt = engine->Time(0) - render->vfunc42();
 		Vector origin;
 		QAngle angles;
 		vfunc149(dt, &origin, &angles);
@@ -337,24 +308,13 @@ bool C_BasePlayer::vfunc174()
 // END FUNCTION
 
 // FUNCTION: 0x100a7b80 size=0xaf
+#include "engineclient.h"
 #include "C_BasePlayer.h"
 #include "C_BaseCombatWeapon.h"
 
 extern "C" __declspec(dllimport) int Q_snprintf(char *pDest, int maxLen, const char *pFormat, ...);
 
-struct IVEngineClient_100a7b80
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26();
-	virtual void ServerCmd(const char *szCmdString, bool bReliable);
-};
 
-extern IVEngineClient_100a7b80 *g_104a57d4;
 
 // TARGET: C_BasePlayer::vfunc158
 void C_BasePlayer::vfunc158()
@@ -363,11 +323,11 @@ void C_BasePlayer::vfunc158()
 	{
 		char szBuf[128];
 		Q_snprintf(szBuf, sizeof(szBuf), "%s %i", (const char *)vfunc167()->vfunc223(), vfunc167()->vfunc169());
-		g_104a57d4->ServerCmd(szBuf, true);
+		engine->vfunc27(szBuf, true);
 	}
 	else
 	{
-		g_104a57d4->ServerCmd((const char *)vfunc167()->vfunc223(), true);
+		engine->vfunc27((const char *)vfunc167()->vfunc223(), true);
 	}
 }
 // END FUNCTION
@@ -391,18 +351,18 @@ int C_BasePlayer::vfunc171()
 // END FUNCTION
 
 // FUNCTION: 0x100a8040 size=0x30
+#include "CInput.h"
+#include "C_BasePlayer.h"
 #include "C_BasePlayer.h"
 namespace lifted {
-extern int g_1027ba58;
-extern int g_104a0d50;
 struct C100a9af0 { int sub_100a9af0(int); };
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual int f29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual void u44(); virtual void u45(); virtual void u46(); virtual void u47(); virtual void u48(); virtual void u49(); virtual void u50(); virtual void u51(); virtual void u52(); virtual void u53(); virtual void u54(); virtual void u55(); virtual void u56(); virtual void u57(); virtual void u58(); virtual void u59(); virtual void u60(); virtual void u61(); virtual void u62(); virtual void u63(); virtual void u64(); virtual void u65(); virtual void u66(); virtual void u67(); virtual void u68(); virtual void u69(); virtual void u70(); virtual void u71(); virtual void u72(); virtual void u73(); virtual void u74(); virtual void u75(); virtual void u76(); virtual void u77(); virtual void u78(); virtual void u79(); virtual void u80(); virtual void u81(); virtual void u82(); virtual void u83(); virtual void u84(); virtual void u85(); virtual void u86(); virtual void u87(); virtual void u88(); virtual void u89(); virtual void u90(); virtual void u91(); virtual void u92(); virtual void u93(); virtual void u94(); virtual void u95(); virtual void u96(); virtual void u97(); virtual void u98(); virtual void u99(); virtual void u100(); virtual void u101(); virtual void u102(); virtual void u103(); virtual void u104(); virtual void u105(); virtual void u106(); virtual void u107(); virtual void u108(); virtual void u109(); virtual void u110(); virtual void u111(); virtual void u112(); virtual void u113(); virtual void u114(); virtual void u115(); virtual void u116(); virtual void u117(); virtual void u118(); virtual void u119(); virtual void u120(); virtual void u121(); virtual void u122(); virtual void u123(); virtual void u124(); virtual void u125(); virtual void u126(); virtual void u127(); virtual void u128(); virtual void u129(); virtual void u130(); virtual void u131(); virtual void u132(); virtual void u133(); virtual void u134(); virtual void u135(); virtual void u136(); virtual void u137(); virtual void u138(); virtual void u139(); virtual void u140(); virtual void u141(); virtual void u142(); virtual void u143(); virtual void u144(); virtual void u145(); virtual void u146(); virtual void u147(); virtual int f148(); };
 }
 int C_BasePlayer::vfunc173()
 {
-    int t0 = ((lifted::V *)lifted::g_1027ba58)->f29();
+    int t0 = input->vfunc29();
     if (t0 == 0) {
-        if (((int)this) == lifted::g_104a0d50) {
+        if (((int)this) == ((int)C_BasePlayer::GetLocalPlayer())) {
             return ((lifted::C100a9af0 *)this)->sub_100a9af0(0);
         }
     }
@@ -441,13 +401,13 @@ void C_BasePlayer::vfunc169(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x100a8920 size=0x100
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 #include "C_BaseCombatWeapon.h"
 #include "CBaseHandle.h"
 #include "CBaseEntityList.h"
 #include "utlvector.h"
 
-extern CBaseEntityList *g_102b8e98;
 extern CUtlVector<CBaseHandle> g_1049d8f8;
 extern CUtlVector<CBaseHandle> g_1049d978;
 
@@ -457,7 +417,7 @@ inline IHandleEntity *CBaseHandle::Get() const
 {
 	if (!IsValid())
 		return 0;
-	const CBaseEntityListEntry *pInfo = &g_102b8e98->m_EntPtrArray[GetEntryIndex()];
+	const CBaseEntityListEntry *pInfo = &g_pEntityList->m_EntPtrArray[GetEntryIndex()];
 	if (pInfo->m_SerialNumber != GetSerialNumber())
 		return 0;
 	return (IHandleEntity *)pInfo->m_pEntity;
@@ -495,15 +455,15 @@ C_BaseCombatWeapon *C_BasePlayer::vfunc165(int slot, int pos)
 // END FUNCTION
 
 // FUNCTION: 0x100a8bc0 size=0x87
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 struct CEntInfo8bc0 { void *m_pEntity; int m_Serial; int m_unk; };
 struct CEntList8bc0 { int m_unk; CEntInfo8bc0 m_Ent[0x2000]; };
-extern CEntList8bc0 *g_102b8e98;
 static inline void *HandleToEnt(unsigned long h)
 {
 	if (h != 0xffffffff)
 	{
-		CEntInfo8bc0 *e = &g_102b8e98->m_Ent[h & 0x1fff];
+		CEntInfo8bc0 *e = &((CEntList8bc0 *)g_pEntityList)->m_Ent[h & 0x1fff];
 		if (e->m_Serial == (int)(h >> 13))
 			return e->m_pEntity;
 	}
@@ -519,6 +479,7 @@ void C_BasePlayer::vfunc172(C_BaseCombatWeapon *pWeapon)
 // END FUNCTION
 
 // FUNCTION: 0x100a9920 size=0x86
+#include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
 #include "ehandle.h"
 #define V10(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7(); virtual void n##8(); virtual void n##9();
@@ -531,7 +492,7 @@ extern "C" int _strcmpi(const char *, const char *);
 static inline IName223 *ResolveH(const CBaseHandle &r)
 {
 	if (r.m_Index != 0xffffffff) {
-		CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[r.m_Index & 0x1fff];
+		CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[r.m_Index & 0x1fff];
 		if (e.m_SerialNumber == (int)(r.m_Index >> 13))
 			return (IName223 *)e.m_pEntity;
 	}
@@ -553,15 +514,14 @@ C_BaseEntity *C_BasePlayer::vfunc194(const char *pName)
 // END FUNCTION
 
 // FUNCTION: 0x100a99b0 size=0x1e
+#include "CInput.h"
 #include "C_BasePlayer.h"
 namespace lifted {
-extern int g_1027ba58;
 struct C1008f720 { int sub_1008f720(); };
-struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual int f29(); };
 }
 int C_BasePlayer::vfunc86()
 {
-    int t0 = ((lifted::V *)lifted::g_1027ba58)->f29();
+    int t0 = input->vfunc29();
     if (t0 != 0) {
         return ((lifted::C1008f720 *)this)->sub_1008f720();
     }
@@ -659,13 +619,13 @@ void C_BasePlayer::vfunc185(int a0)
 
 // FUNCTION: 0x100a9c40 size=0x44
 #include "C_BasePlayer.h"
-extern C_BasePlayer *g_104a0d50;
+#include "C_BasePlayer.h"
 
 bool C_BasePlayer::vfunc147(C_BaseCombatWeapon *pWeapon, int n)
 {
 	if (C_BaseCombatCharacter::vfunc147(pWeapon, n))
 	{
-		if (this == g_104a0d50)
+		if (this == C_BasePlayer::GetLocalPlayer())
 		{
 			char *p = sub_100a9af0(n);
 			if (p)
@@ -689,21 +649,16 @@ bool C_BasePlayer::vfunc94()
 // END FUNCTION
 
 // FUNCTION: 0x100a9cb0 size=0x53
+#include "CGlobalVarsBase.h"
 #include "C_BasePlayer.h"
 #include "C_BaseCombatWeapon.h"
 
-struct CGlobals_102b8494
-{
-	char m_pad0[0xc];
-	float curtime;	// 0x0c
-};
 
-extern CGlobals_102b8494 *g_102b8494;
 
 // TARGET: C_BasePlayer::vfunc181
 void C_BasePlayer::vfunc181()
 {
-	if ( g_102b8494->curtime < *(float *)((char *)this + 0xfd8) )
+	if ( gpGlobals->curtime < *(float *)((char *)this + 0xfd8) )
 		return;
 
 	if ( !vfunc148() )
@@ -743,55 +698,12 @@ int C_BasePlayer::vfunc196(int a0, int a1, int a2)
 // END FUNCTION
 
 // FUNCTION: 0x100aa280 size=0x93
+#include "engineclient.h"
 #include "C_BasePlayer.h"
 
 extern unsigned int g_104cfe50;
 
-struct Engine_100aa280
-{
-	virtual void v0();
-	virtual void v1();
-	virtual void v2();
-	virtual void v3();
-	virtual void v4();
-	virtual void v5();
-	virtual void v6();
-	virtual void v7();
-	virtual void v8();
-	virtual void v9();
-	virtual void v10();
-	virtual void v11();
-	virtual void v12();
-	virtual void v13();
-	virtual void v14();
-	virtual void v15();
-	virtual void v16();
-	virtual void v17();
-	virtual void v18();
-	virtual void v19();
-	virtual void v20();
-	virtual void v21();
-	virtual void v22();
-	virtual void v23();
-	virtual void v24();
-	virtual void v25();
-	virtual void v26();
-	virtual void v27();
-	virtual void v28();
-	virtual void v29();
-	virtual void v30();
-	virtual void v31();
-	virtual void v32();
-	virtual void v33();
-	virtual void v34();
-	virtual void v35();
-	virtual void v36();
-	virtual void v37();
-	virtual void v38();
-	virtual double v39(int);
-};
 
-extern Engine_100aa280 *g_104a57d4;
 
 struct Mode_100aa280
 {
@@ -821,9 +733,9 @@ void C_BasePlayer::vfunc191()
 		return;
 	}
 
-	if (self->m_flNextTime < g_104a57d4->v39(0))
+	if (self->m_flNextTime < engine->Time(0))
 	{
-		self->m_flNextTime = g_104a57d4->v39(0) + 0.01;
+		self->m_flNextTime = engine->Time(0) + 0.01;
 		self->m_Modes[self->m_iMode].sub_100a8f90(this);
 	}
 }

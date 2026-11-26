@@ -4,11 +4,13 @@
 #pragma once
 #include "IClientEntity.h"
 class IPhysicsObject;
+struct CGameTrace;
 
 class C_BaseEntity : public IClientEntity
 {
 public:
 	C_BaseEntity();
+	bool sub_1011c5c0();
 	void sub_100af040();
 	void sub_100a2580();
 	void sub_100a2610(bool flag, int a);
@@ -63,6 +65,8 @@ public:
 	bool sub_100a0710(const char *name);
 	void sub_1009f680(int i, float v);	// stores v in the float array at +0x23c (the absolute origin)
 	void sub_1009f2e0(int a, int b);
+	void sub_1011a950();
+	void sub_1011cf40();
 	virtual ICollideable *GetClientCollideable();	// IClientUnknown slot 2
 	virtual IClientNetworkable *GetClientNetworkable();	// IClientUnknown slot 3
 	virtual IClientRenderable *GetClientRenderable();	// IClientUnknown slot 4
@@ -219,8 +223,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc101(int);
 	virtual int vfunc102();
 	virtual void vfunc103(int);
-	virtual void vfunc104();
-	virtual void vfunc105();
+	virtual C_BaseEntity *vfunc104();
+	virtual CGameTrace vfunc105(const Vector &move);
 	virtual bool vfunc106();
 	virtual int vfunc107(int);
 	virtual int vfunc108();

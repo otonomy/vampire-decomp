@@ -668,6 +668,73 @@ void vgui2::Frame::vfunc107(int a)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b9740 size=0x226
+#include "vgui2__Frame.h"
+#include "vgui2__KeyValues.h"
+struct Q11_Input
+{
+	virtual void v0(); virtual void v1();
+	virtual int vfunc2(int, char *, int);
+	virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual bool vfunc12(int);
+};
+struct Q11_Surf { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual int vfunc6(); };
+struct Q11_Obj { virtual void v0(); virtual vgui2::Panel *vfunc1(); };
+struct Q11_IPanel { virtual void v0(); virtual Q11_Obj *vfunc1(int); };
+struct Q11_Scheme { virtual void v0(); virtual void v1(); virtual void vfunc2(); };
+struct Q11_Hot { virtual void v0(); virtual void v1(); virtual vgui2::Panel *vfunc2(); virtual vgui2::Panel *vfunc3(int); };
+Q11_Input *sub_101ac8b0();
+Q11_Scheme *sub_101ac8c0();
+Q11_Surf *sub_101ac8d0();
+Q11_IPanel *sub_101ac900();
+
+// TARGET: vgui2::Frame::vfunc92
+void vgui2::Frame::vfunc92(int code)
+{
+	bool shift = sub_101ac8b0()->vfunc12(0x4f) || sub_101ac8b0()->vfunc12(0x50);
+	bool ctrl = sub_101ac8b0()->vfunc12(0x53) || sub_101ac8b0()->vfunc12(0x54);
+	bool alt = sub_101ac8b0()->vfunc12(0x51) || sub_101ac8b0()->vfunc12(0x52);
+	if (ctrl && shift && alt && code == 0xc)
+	{
+		vfunc108();
+	}
+	else if (ctrl && shift && alt && code == 0x1c)
+	{
+		int top = sub_101ac8d0()->vfunc6();
+		if (top)
+		{
+			vgui2::Panel *pPanel = sub_101ac900()->vfunc1(top)->vfunc1();
+			if (pPanel)
+			{
+				sub_101ac8c0()->vfunc2();
+				pPanel->vfunc57(0, 1);
+			}
+		}
+	}
+	else if (alt && code == 0x5f)
+	{
+		vfunc23(this, new vgui2::KeyValues("Close"), 0);
+	}
+	else if (code == 0x40)
+	{
+		vgui2::Panel *pPanel = ((Q11_Hot *)vfunc116())->vfunc2();
+		if (pPanel)
+			vfunc23(pPanel, new vgui2::KeyValues("Hotkey"), 0);
+	}
+	else if (code != 0x43 && alt)
+	{
+		char buf[2];
+		sub_101ac8b0()->vfunc2(code, buf, 2);
+		if (buf[0])
+		{
+			vgui2::Panel *pPanel = ((Q11_Hot *)vfunc116())->vfunc3(code);
+			if (pPanel)
+				vfunc23(pPanel, new vgui2::KeyValues("Hotkey"), 0);
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b9970 size=0x3
 #include "vgui2__Frame.h"
 void vgui2::Frame::vfunc93(int a0)

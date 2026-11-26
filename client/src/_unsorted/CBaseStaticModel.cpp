@@ -10,34 +10,21 @@ CBaseStaticModel::CBaseStaticModel() : m_unk38(0), m_unk3e(0xff)
 // END FUNCTION
 
 // FUNCTION: 0x100dfe50 size=0x24
+#include "engineclient.h"
 #include "CBaseStaticModel.h"
-struct CLeafView
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void RemoveRenderable(unsigned short h);
-};
-extern CLeafView *g_104a57d8;
 CBaseStaticModel::~CBaseStaticModel()
 {
 	if (m_unk3c != 0xFFFF)
-		g_104a57d8->RemoveRenderable(m_unk3c);
+		modelrender->vfunc15(m_unk3c);
 }
 // END FUNCTION
 
 // FUNCTION: 0x100dff30 size=0x23
+#include "engineclient.h"
 #include "CBaseStaticModel.h"
-struct IModelInfo_ {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
-	virtual bool v9(int);
-};
-extern IModelInfo_ *g_104a57f8;
 bool CBaseStaticModel::IsTransparent()
 {
-	return m_unk3e < 255 || g_104a57f8->v9(m_unk38);
+	return m_unk3e < 255 || modelinfo->vfunc9(m_unk38);
 }
 // END FUNCTION
 
@@ -105,10 +92,10 @@ bool CBaseStaticModel::SetupBones(matrix3x4_t *pBoneToWorldOut, int nMaxBones, i
 // END FUNCTION
 
 // FUNCTION: 0x100e0120 size=0xe3
+#include "C_BasePlayer.h"
 #include "CBaseStaticModel.h"
 
 extern void *g_102d43d8;
-extern void *g_104a0d50;
 extern void *g_104a57ec;
 extern void *g_104a57d8;
 
@@ -163,9 +150,9 @@ int CBaseStaticModel::DrawModel(int flags, int a1)
 	bool bSkip;
 	bool bCheck = ((ILeaf39 *)g_102d43d8)->s39(0, &bSkip);
 	if (bCheck) {
-		if (g_104a0d50) {
+		if (C_BasePlayer::GetLocalPlayer()) {
 			Vector vA, vB;
-			((IColl16 *)((char *)g_104a0d50 + 0x190))->s15(&vB, &vA);
+			((IColl16 *)((char *)C_BasePlayer::GetLocalPlayer() + 0x190))->s15(&vB, &vA);
 			if (vA.z + 10.0f < m_vecMaxs.z)
 				bSkip = true;
 		}

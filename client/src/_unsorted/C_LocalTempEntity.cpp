@@ -36,25 +36,13 @@ void C_LocalTempEntity::vfunc143(int a, float b)
 // END FUNCTION
 
 // FUNCTION: 0x1003aa00 size=0x86
+#include "engineclient.h"
 #include "C_LocalTempEntity.h"
-struct EngTime144
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
-	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38();
-	virtual double Time(int a);
-};
-extern EngTime144 *g_104a57d4;
 // TARGET: C_LocalTempEntity::vfunc144
 bool C_LocalTempEntity::vfunc144()
 {
 	bool ret = true;
-	float timeLeft = *(float *)((char *)this + 0x7b0) - g_104a57d4->Time(0);
+	float timeLeft = *(float *)((char *)this + 0x7b0) - engine->Time(0);
 	if (timeLeft < 0.0f)
 	{
 		if (*(unsigned char *)((char *)this + 0x7ac) & 0x80)

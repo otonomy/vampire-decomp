@@ -30,9 +30,13 @@ struct StudioSeqDesc	// 0x2fc bytes each (the sequence lookups at 0x10427df0 rea
 	unsigned int m_flags;	// 0x08: bit 0x100 / 0x200 are the two exclusion flags the activity lookup's char arguments test
 	int m_nActivity;	// 0x0c: the activity the sequence plays
 	int m_nActivityWeight;	// 0x10: its weight (the lookup stores it next to the sequence index)
-	char m_pad14[0x2b8 - 0x14];
+	char m_pad14[0x29c - 0x14];
+	int m_weightlistindex;	// 0x29c: offset of the per-bone weights (floats)
+	char m_pad2a0[0x2b8 - 0x2a0];
 	int m_nMaxWeight;	// 0x2b8: compared with the lookup's last argument (the lookup keeps the sequence when either is negative or the argument <= it... i.e. rejects when 0 <= arg < this)
 	char m_pad2bc[0x2fc - 0x2bc];
+
+	float weight(int i) const { return *((float *)((char *)this + m_weightlistindex) + i); }
 };
 
 struct StudioBone	// 0xa0 bytes each (Studio_BuildMatrices 0x100c3600 reads these)
@@ -100,6 +104,7 @@ struct StudioHdr
 	StudioBone *Bone(int i) { return (StudioBone *)((char *)this + m_nBoneIndex) + i; }
 	StudioIncludeModel *IncludeModel(int i) { return (StudioIncludeModel *)((char *)this + m_nIncludeIndex) + i; }
 	StudioSeqDesc *LocalSeq(int i) { return (StudioSeqDesc *)((char *)this + m_nLocalSeqIndex) + i; }
+	StudioSeqDesc *pSeqdesc(int i) { if (i < 0) i = 0; return (StudioSeqDesc *)((char *)this + m_nLocalSeqIndex) + i; }	// the game's inline: a negative index reads sequence 0
 	StudioHitboxSet *HitboxSet(int i) { return (StudioHitboxSet *)((char *)this + m_nHitboxSetIndex) + i; }
 };
 

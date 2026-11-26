@@ -14,6 +14,7 @@ bool CPlayerSpeedProxy::vfunc0(void *pMaterial, void *pKeyValues)
 // END FUNCTION
 
 // FUNCTION: 0x10124e00 size=0x4f
+#include "C_BasePlayer.h"
 #include "CPlayerSpeedProxy.h"
 #include "Vector.h"
 
@@ -32,12 +33,11 @@ struct SpeedProxyView
 	void sub_100e33c0(float);
 };
 
-extern void *g_104a0d50;
 
 // TARGET: CPlayerSpeedProxy::vfunc1
 void CPlayerSpeedProxy::vfunc1(int)
 {
-	SpeedEntView *e = (SpeedEntView *)g_104a0d50;
+	SpeedEntView *e = (SpeedEntView *)C_BasePlayer::GetLocalPlayer();
 	SpeedProxyView *self = (SpeedProxyView *)this;
 	if (e)
 		self->sub_100e33c0(e->m_vecVelocity.Length() * self->m_flScale);

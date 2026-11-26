@@ -289,9 +289,8 @@ void C_BaseEntity::vfunc93(int a0, int a1, int a2)
 // END FUNCTION
 
 // FUNCTION: 0x1007de30 size=0x3c
+#include "engineclient.h"
 #include "C_BaseEntity.h"
-struct IGlobal104a5738 { virtual void v0(); virtual void v1(); virtual int v2(int, int); };
-extern IGlobal104a5738 *g_104a5738;
 // TARGET: C_BaseEntity::vfunc91
 int C_BaseEntity::vfunc91(int a, int b)
 {
@@ -300,7 +299,7 @@ int C_BaseEntity::vfunc91(int a, int b)
 		return -1;
 	if (v && b == 0x47)
 		return 0x34;
-	return g_104a5738->v2(0, 4);
+	return enginerandom->RandomInt(0, 4);
 }
 // END FUNCTION
 
@@ -429,15 +428,15 @@ void C_BaseEntity::vfunc21()
 // END FUNCTION
 
 // FUNCTION: 0x1009e070 size=0x3c
+#include "CClientEntityList.h"
 #include "C_BaseEntity.h"
 struct CUnknown100e2340 { int sub_100e2340(int a, int b, int c, int d); };
 struct CUnknown10044400 { short sub_10044400(); };
-extern CUnknown100e2340 *g_102b8e9c;
 struct EntHandleView { virtual int v0(); };
 // TARGET: ?Init@C_BaseEntity@@UAE_NHH@Z
 bool C_BaseEntity::Init(int entnum, int iSerialNum)
 {
-	g_102b8e9c->sub_100e2340((int)&iSerialNum, ((EntHandleView *)((char *)this + 4))->v0(), entnum, iSerialNum);
+	((CUnknown100e2340 *)cl_entitylist)->sub_100e2340((int)&iSerialNum, ((EntHandleView *)((char *)this + 4))->v0(), entnum, iSerialNum);
 	((CUnknown10044400 *)((char *)this + 0x190))->sub_10044400();
 	*(int *)((char *)this + 0x44) = entnum;
 	return true;
@@ -445,20 +444,14 @@ bool C_BaseEntity::Init(int entnum, int iSerialNum)
 // END FUNCTION
 
 // FUNCTION: 0x1009e0b0 size=0x3c
+#include "engineclient.h"
 #include "C_BaseEntity.h"
 
-struct ModelInfoView {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual int v12(const char *);
-};
-extern ModelInfoView *g_104a57f8;
 
 // TARGET: C_BaseEntity::vfunc60
 void C_BaseEntity::vfunc60(int a, int b)
 {
-	sub_1009e0f0(a ? g_104a57f8->v12((const char *)a) : -1, b);
+	sub_1009e0f0(a ? modelinfo->GetModelIndex((const char *)a) : -1, b);
 }
 // END FUNCTION
 
@@ -540,18 +533,11 @@ int C_BaseEntity::vfunc86()
 // END FUNCTION
 
 // FUNCTION: 0x1009f4d0 size=0xe9
+#include "engineclient.h"
 #include "C_BaseEntity.h"
 #include "QAngle.h"
 #include "matrix3x4_t.h"
 
-struct MIView
-{
-	virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3();
-	virtual void f4(void *, int, void *, void *);
-	virtual void u5();
-	virtual int f6(void *);
-};
-extern MIView *g_104a57f8;
 
 struct IRV
 {
@@ -575,10 +561,10 @@ extern void sub_1010b210(matrix3x4_t &, Vector &, Vector &, Vector &, Vector &);
 void C_BaseEntity::GetRenderBoundsWorldspace(Vector &absMins, Vector &absMaxs)
 {
 	char *r = (char *)this + 4;
-	int t = g_104a57f8->f6(*(void **)(r + 0x3c));
+	int t = modelinfo->GetModelType(*(void **)(r + 0x3c));
 	if (t == 3 || t == 1)
 	{
-		g_104a57f8->f4(((IRV *)r)->GetModel(), 0, &absMins, &absMaxs);
+		modelinfo->vfunc4(((IRV *)r)->GetModel(), 0, &absMins, &absMaxs);
 		QAngle &angles = ((IRV *)r)->GetRenderAngles();
 		Vector &origin = ((IRV *)r)->GetRenderOrigin();
 		if ((*(int *)&angles.x | *(int *)&angles.y | *(int *)&angles.z) != 0)
@@ -639,12 +625,11 @@ int C_BaseEntity::vfunc51()
 // END FUNCTION
 
 // FUNCTION: 0x1009fca0 size=0x28
+#include "engineclient.h"
 #include "C_BaseEntity.h"
-struct ModelInfoView { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual bool IsTranslucent(int idx); };
-extern ModelInfoView *g_104a57f8;
 bool C_BaseEntity::IsTransparent()
 {
-	return g_104a57f8->IsTranslucent(*(int *)((char *)this + 0x40)) || *(int *)((char *)this + 0x48);
+	return modelinfo->vfunc9(*(int *)((char *)this + 0x40)) || *(int *)((char *)this + 0x48);
 }
 // END FUNCTION
 
@@ -671,25 +656,13 @@ bool C_BaseEntity::vfunc57(int a1, int a2, int a3)
 // END FUNCTION
 
 // FUNCTION: 0x1009fd30 size=0xf7
+#include "engineclient.h"
 #include <math.h>
 #include "C_BaseEntity.h"
 #include "Vector.h"
 #include "QAngle.h"
 
-struct IVModelInfo_104a57f8
-{
-	virtual void v0() = 0;
-	virtual void v1() = 0;
-	virtual void v2() = 0;
-	virtual void v3() = 0;
-	virtual void v4() = 0;
-	virtual void v5() = 0;
-	virtual int GetModelType(const model_t *model) const = 0;
-	virtual void v7() = 0;
-	virtual bool IsTranslucent(const model_t *model) const = 0;
-};
 
-extern IVModelInfo_104a57f8 *g_104a57f8;
 
 struct CBaseEntityModelView
 {
@@ -699,7 +672,7 @@ struct CBaseEntityModelView
 
 bool C_BaseEntity::vfunc79()
 {
-	if (g_104a57f8->GetModelType(((CBaseEntityModelView *)this)->m_model) != 1)
+	if (modelinfo->GetModelType(((CBaseEntityModelView *)this)->m_model) != 1)
 		return false;
 
 	if (IsTransparent())
@@ -713,7 +686,7 @@ bool C_BaseEntity::vfunc79()
 		fmod(GetAbsAngles().z, 360.0) != 0.0)
 		return false;
 
-	if (g_104a57f8->IsTranslucent(((CBaseEntityModelView *)this)->m_model))
+	if (modelinfo->IsTranslucent(((CBaseEntityModelView *)this)->m_model))
 		return false;
 
 	return true;
@@ -721,6 +694,7 @@ bool C_BaseEntity::vfunc79()
 // END FUNCTION
 
 // FUNCTION: 0x1009fe30 size=0x7a
+#include "engineclient.h"
 #include "C_BaseEntity.h"
 
 class CClientStatsTime_1009fe30
@@ -755,19 +729,13 @@ struct CClientStats_1009fe30
 	}
 };
 
-class IRenderView_104a57e4
-{
-public:
-	virtual void DrawBrushModel(C_BaseEntity *baseentity, const model_t *model, const Vector &origin, const QAngle &angles, int flags) = 0;
-};
 
 int sub_100ad7a0();
-extern IRenderView_104a57e4 *g_104a57e4;
 
 int C_BaseEntity::vfunc80(int flags)
 {
 	((CClientStats_1009fe30 *)sub_100ad7a0())->BeginTimedStat();
-	g_104a57e4->DrawBrushModel(this, *(const model_t **)((char *)this + 0x40), GetAbsOrigin(), GetAbsAngles(), flags);
+	render->vfunc0(this, *(const model_t **)((char *)this + 0x40), GetAbsOrigin(), GetAbsAngles(), flags);
 	((CClientStats_1009fe30 *)sub_100ad7a0())->EndTimedStat();
 	return 1;
 }
@@ -860,6 +828,101 @@ bool C_BaseEntity::vfunc71()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a08f0 size=0x2b8
+#include "C_BaseEntity.h"
+#include "ConVar.h"
+#include "QAngle.h"
+#include "engineclient.h"
+
+struct InterpEntry_100a08f0
+{
+	float time;
+	Vector origin;
+	QAngle angles;
+};
+
+struct C_BaseEntityInterpView
+{
+	bool sub_100a2ba0();
+	void sub_100a1ef0(float t, InterpEntry_100a08f0 **pPrev, InterpEntry_100a08f0 **pNext);
+};
+
+extern ConVar g_1049e1a8;
+extern int g_104e16fc;
+extern int g_104e16f4;
+extern Vector g_104d4970;
+
+void sub_10108fd0(const Vector &start, float scale, const Vector &direction, Vector &dest);
+void sub_100ccf50(const QAngle &start, const QAngle &end, QAngle &output, float frac);
+
+bool C_BaseEntity::vfunc73()
+{
+	if (sub_100a2600())
+		return true;
+	if (((C_BaseEntityInterpView *)this)->sub_100a2ba0())
+		return true;
+
+	sub_100a2030((char *)this + 0x2b4);
+	sub_100a2100(*(QAngle *)((char *)this + 0x2c0));
+
+	if (!g_1049e1a8.GetInt())
+		return true;
+	if (!*(int *)((char *)this + 0x40))
+		return true;
+	IClientCollideable *pCollide = (IClientCollideable *)((char *)this + 0xc);
+	if (pCollide->GetSolid() == 11)
+		return true;
+	if (pCollide->GetSolid() == 12)
+		return true;
+	if (engine->GetMaxClients() == 1)
+		return true;
+	if (g_104e16fc && g_104e16f4 == *(int *)((char *)this + 0x44))
+		return true;
+
+	float t = engine->Time(0) - render->vfunc42();
+	InterpEntry_100a08f0 *a, *b;
+	((C_BaseEntityInterpView *)this)->sub_100a1ef0(t, &a, &b);
+	if (!a || !b)
+		return true;
+
+	float tb = b->time;
+	float ta = a->time;
+	float dt = t - tb;
+	if (dt < 0)
+	{
+		sub_100a2030(&b->origin);
+		sub_100a2100(b->angles);
+		return true;
+	}
+	if (tb == 0)
+		return true;
+	if (b->origin == g_104d4970 && a->origin != g_104d4970)
+	{
+		sub_100a2030(&a->origin);
+		sub_100a2100(a->angles);
+		return true;
+	}
+	if (ta == tb)
+		return true;
+
+	Vector delta;
+	VectorSubtract(a->origin, b->origin, delta);
+	float frac = dt / (ta - tb);
+	if (frac < 0.0)
+		return true;
+	if (frac > 1.0)
+		frac = 1.0f;
+
+	Vector newOrigin;
+	sub_10108fd0(b->origin, frac, delta, newOrigin);
+	sub_100a2030(&newOrigin);
+	QAngle newAngles;
+	sub_100ccf50(b->angles, a->angles, newAngles, frac);
+	sub_100a2100(newAngles);
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a0bb0 size=0xb
 #include "C_BaseEntity.h"
 namespace lifted {
@@ -922,6 +985,67 @@ void __stdcall sub_100a0df0(C_BaseEntity *ent, float *pos, float *ang)
 	pos[0] = o[0]; pos[1] = o[1]; pos[2] = o[2];
 	const float *a = (const float *)&ent->GetAbsAngles();
 	ang[0] = a[0]; ang[1] = a[1]; ang[2] = a[2];
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a0e30 size=0x272
+#include "CBaseEntityList.h"
+#include "Vector.h"
+#include "C_BaseEntity.h"
+#include "ehandle.h"
+#include "CUnknown100290c0.h"
+#include "QAngle.h"
+#include <math.h>
+
+struct C_BaseEntity_LocalView
+{
+	char m_pad[0x2b4];
+	Vector m_vecOrigin2b4;
+	QAngle m_angRotation2c0;
+};
+
+void C_BaseEntity::vfunc77()
+{
+	CBaseHandle &hParent = *(CBaseHandle *)((char *)this + 0x188);
+	if (!((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0((unsigned int *)&hParent))
+		return;
+	if (GetSolid() == 11) {
+		int pParent = ((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0((unsigned int *)&hParent);
+		if (!pParent)
+			return;
+		Vector unused;
+		QAngle angles;
+		Vector origin;
+		vfunc64(pParent, (int)&origin, (int)&angles);
+		sub_100a2030(&origin);
+		sub_100a2100(angles);
+		((C_BaseEntity_LocalView *)this)->m_vecOrigin2b4 = origin;
+		((C_BaseEntity_LocalView *)this)->m_angRotation2c0 = angles;
+	} else if (GetSolid() == 12) {
+		C_BaseEntity *pEnt = (C_BaseEntity *)hParent.Get();
+		if (!pEnt)
+			return;
+		Vector vOffset = pEnt->vfunc53();
+		QAngle angles;
+		float flYaw = pEnt->GetAbsAngles()[1] * 0.017453292f;
+		vOffset.x = sin(flYaw) * (vOffset.y * 0.6f);
+		vOffset.y = cos(flYaw) * (vOffset.y * -0.6f);
+		vOffset.z = vOffset.z * 0.9f;
+		{
+			Vector a = vOffset + pEnt->GetRenderOrigin();
+			sub_100a2030(&a);
+		}
+		{
+			Vector b = vOffset + pEnt->GetAbsOrigin();
+			vfunc44((int)&b);
+		}
+		angles = pEnt->GetAbsAngles();
+		angles.x += 90.0f;
+		vfunc46((int)&angles);
+		angles = pEnt->GetRenderAngles();
+		angles.x += 90.0f;
+		sub_100a2100(angles);
+	}
 }
 // END FUNCTION
 
@@ -1166,14 +1290,14 @@ void C_BaseEntity::vfunc103(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x100a2d70 size=0x2d
+#include "CBaseEntityList.h"
 #include "C_BaseEntity.h"
 #include "CBaseEntityList.h"
-extern CBaseEntityList *g_102b8e98;
 void *C_BaseEntity::sub_100a2d70()
 {
 	unsigned int h = *(unsigned int *)((char *)this + 0x98);
 	if (h != 0xffffffff) {
-		CBaseEntityListEntry *e = &g_102b8e98->m_EntPtrArray[h & 0x1fff];
+		CBaseEntityListEntry *e = &g_pEntityList->m_EntPtrArray[h & 0x1fff];
 		if (e->m_SerialNumber == (int)(h >> 13))
 			return e->m_pEntity;
 	}

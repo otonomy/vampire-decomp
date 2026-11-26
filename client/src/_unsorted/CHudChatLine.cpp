@@ -30,3 +30,116 @@ int CHudChatLine::vfunc74(int a0)
     return ((lifted::V *)this)->f118(*(int *)((char *)this + 0xc4));
 }
 // END FUNCTION
+
+// FUNCTION: 0x100f14d0 size=0x2aa
+#include "CHudChatLine.h"
+#include "engineclient.h"
+#include <math.h>
+#pragma intrinsic(cos)
+
+struct Color_100f14d0
+{
+	Color_100f14d0(int r, int g, int b, int a)
+	{
+		_color[0] = (unsigned char)r;
+		_color[1] = (unsigned char)g;
+		_color[2] = (unsigned char)b;
+		_color[3] = (unsigned char)a;
+	}
+	unsigned char _color[4];
+};
+
+struct HiddenSub_100f14d0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual bool vfunc6();
+};
+struct HiddenOwner_100f14d0
+{
+	char m_pad[0x170];
+	HiddenSub_100f14d0 m_sub;
+};
+HiddenOwner_100f14d0 *sub_1004dc30();
+
+struct Surface_100f14d0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16();
+	virtual void DrawSetTextFont(int font);
+	virtual void v18();
+	virtual void DrawSetTextColor(int r, int g, int b, int a);
+	virtual void DrawSetTextPos(int x, int y);
+	virtual void DrawPrintText(const unsigned short *text, int len);
+};
+Surface_100f14d0 *sub_101ac8d0();
+
+struct ChatLineFields_100f14d0
+{
+	char m_pad[0xb8];
+	float m_flExpireTime;	// 0xb8
+	float m_flStartTime;	// 0xbc
+	int m_unkc0;
+	int m_unkc4;
+	int m_hFont;		// 0xc8
+	int m_clrText[3];	// 0xcc
+	unsigned short m_text[1];	// 0xd8
+};
+
+#define CHATLINE_FLASH_TIME 5.0f
+#define CHATLINE_NUM_FLASHES 8.0f
+#define CHATLINE_FADE_TIME 1.0f
+#define PI_100f14d0 3.14159265358979323846
+
+void CHudChatLine::vfunc98()
+{
+	if (sub_1004dc30() && sub_1004dc30()->m_sub.vfunc6())
+		return;
+
+	ChatLineFields_100f14d0 *f = (ChatLineFields_100f14d0 *)this;
+	float curtime = engine->Time(0);
+	int r = f->m_clrText[0], g = f->m_clrText[1], b = f->m_clrText[2];
+
+	if (curtime >= f->m_flStartTime && curtime < f->m_flStartTime + CHATLINE_FLASH_TIME)
+	{
+		float frac1 = (curtime - f->m_flStartTime) * (1.0f / CHATLINE_FLASH_TIME);
+		float frac = frac1;
+		frac *= CHATLINE_NUM_FLASHES;
+		frac *= 2 * PI_100f14d0;
+		frac = cos(frac);
+		frac = (frac > 1.0f) ? 1.0f : ((frac < 0.0f) ? 0.0f : frac);
+		frac *= (1.0f - frac1);
+
+		r = r + (255 - r) * frac;
+		g = g + (255 - g) * frac;
+		b = b + (255 - b) * frac;
+
+		Color_100f14d0 c(r, g, b, 255);
+		vfunc51(*(int *)&c);
+
+		int alpha = 63 + 192 * (1.0f - frac1);
+		alpha = (alpha > 255) ? 255 : ((alpha < 0) ? 0 : alpha);
+
+		sub_101ac8d0()->DrawSetTextFont(f->m_hFont);
+		sub_101ac8d0()->DrawSetTextColor(alpha, 0, 0, alpha);
+		sub_101ac8d0()->DrawSetTextPos(0, 4);
+		sub_101ac8d0()->DrawPrintText(f->m_text, 1);
+	}
+	else if (curtime <= f->m_flExpireTime && curtime > f->m_flExpireTime - CHATLINE_FADE_TIME)
+	{
+		float frac = (f->m_flExpireTime - curtime) / CHATLINE_FADE_TIME;
+		int alpha = 255.0f * frac;
+		alpha = (alpha > 255) ? 255 : ((alpha < 0) ? 0 : alpha);
+		Color_100f14d0 c(r * frac, g * frac, b * frac, alpha);
+		vfunc51(*(int *)&c);
+	}
+	else
+	{
+		Color_100f14d0 c(r, g, b, 255);
+		vfunc51(*(int *)&c);
+	}
+
+	((vgui2::Label *)this)->Label::vfunc98();
+}
+// END FUNCTION

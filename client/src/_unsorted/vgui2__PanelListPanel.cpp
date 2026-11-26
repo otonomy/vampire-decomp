@@ -121,6 +121,134 @@ int vgui2::PanelListPanel::vfunc114(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101cacb0 size=0x27d
+#include "vgui2__PanelListPanel.h"
+
+struct ScrollBarView_101cacb0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20();
+	virtual void vfunc21(int);
+	virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45();
+	virtual void vfunc46(int);
+	virtual void v47(); virtual void v48(); virtual void v49(); virtual void v50();
+	virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55();
+	virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59(); virtual void v60();
+	virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65();
+	virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69(); virtual void v70();
+	virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74(); virtual void v75();
+	virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79(); virtual void v80();
+	virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84(); virtual void v85();
+	virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89(); virtual void v90();
+	virtual void v91(); virtual void v92(); virtual void v93(); virtual void v94(); virtual void v95();
+	virtual void v96(); virtual void v97(); virtual void v98(); virtual void v99(); virtual void v100();
+	virtual void v101(); virtual void v102(); virtual void v103(); virtual void v104(); virtual void v105();
+	virtual void v106();
+	virtual int vfunc107();
+	virtual int vfunc108();
+	virtual void vfunc109(int, int);
+	virtual void vfunc110(int);
+	virtual void v111(); virtual void v112(); virtual void v113(); virtual void v114(); virtual void v115();
+	virtual void v116(); virtual void v117();
+	virtual void vfunc118(int);
+};
+
+struct SurfaceView_101cacb0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38();
+	virtual void vfunc39(int &wide, int &tall);
+};
+SurfaceView_101cacb0 *sub_101ac8d0();
+
+struct ListItem_101cacb0 { vgui2::Panel *panel; };
+struct ItemVec_101cacb0
+{
+	int m_Size;
+	int m_unk;
+	ListItem_101cacb0 **m_pData;
+	int Count() const { return m_Size; }
+	ListItem_101cacb0 *Get(int i) const { return (i >= 0 && i < m_Size) ? m_pData[i] : 0; }
+};
+
+#define LP_ITEMS (*(ItemVec_101cacb0 *)((char *)this + 0x58))
+#define LP_VBAR (*(ScrollBarView_101cacb0 **)((char *)this + 0x64))
+#define LP_EMBEDDED (*(vgui2::Panel **)((char *)this + 0x68))
+#ifndef max
+#define max(a, b) (((a) > (b)) ? (a) : (b))
+#endif
+
+namespace vgui2
+{
+void PanelListPanel::vfunc101()
+{
+	int wide, tall;
+	sub_101a9920(&wide, &tall);
+
+	int vpixels = ((ScrollBarView_101cacb0 *)this)->vfunc107();
+
+	LP_VBAR->vfunc21(1);
+	LP_VBAR->vfunc46(0);
+	LP_VBAR->vfunc109(0, vpixels);
+	LP_VBAR->vfunc110(tall - 2);
+	LP_VBAR->vfunc118(0x18);
+	((Panel *)LP_VBAR)->sub_101a9890(wide - 0x12, 1);
+	((Panel *)LP_VBAR)->sub_101a98f0(0x12, tall - 2);
+
+	int top = LP_VBAR->vfunc108();
+
+	LP_EMBEDDED->sub_101a9890(1, -top);
+	LP_EMBEDDED->sub_101a98f0(wide - 0x14, vpixels);
+
+	top = LP_VBAR->vfunc108();
+
+	int y = 0;
+	int h = 0;
+	int totalh = 0;
+	int sw, sh;
+	sub_101ac8d0()->vfunc39(sw, sh);
+	for (int i = 0; i < LP_ITEMS.Count(); i += 2, y += h)
+	{
+		y += 5;
+		ListItem_101cacb0 *label = LP_ITEMS.Get(i);
+		ListItem_101cacb0 *item = LP_ITEMS.Get(i + 1);
+		if (!label)
+			continue;
+		Panel *pLabel = label->panel;
+		if (!pLabel || !item)
+			continue;
+		Panel *pItem = item->panel;
+		if (!pItem)
+			continue;
+
+		h = max(pLabel->sub_101ab1a0(), pItem->sub_101ab1a0());
+		if ((totalh += h) < top)
+			continue;
+
+		label->panel->sub_101a9950((int)(8.0 * (sw / 1024.0)), y, m_i74, pLabel->sub_101ab1a0());
+
+		item = LP_ITEMS.Get(i + 1);
+		int labelWide = m_i74;
+		item->panel->sub_101a9950((int)(labelWide + (8.0 * (sw / 1024.0)) + 5.0), y, (int)((wide - labelWide) - 36.0 * (sw / 1024.0)), pItem->sub_101ab1a0());
+	}
+}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101caf40 size=0x75
 #include "vgui2__PanelListPanel.h"
 

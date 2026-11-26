@@ -66,3 +66,6 @@ public:
 	~CBaseEntityList();
 	void sub_100e21f0();	// destructor body: stores the vtable, releases every live node, then RemoveAll + Purge of both linked lists
 };
+
+// the client's entity list seen as its base (SDK cl_dll/cliententitylist.cpp): g_pEntityList
+extern CBaseEntityList *g_pEntityList;

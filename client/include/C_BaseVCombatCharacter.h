@@ -30,7 +30,9 @@ public:
 	virtual ~C_BaseVCombatCharacter();
 	char m_pad0014[0xfd0 - 0x14];
 	int m_unkfd0;
-	char m_pad0fd4[0x10e0 - 0xfd4];
+	char m_pad0fd4[0x10b8 - 0xfd4];
+	unsigned int m_unk10b8;
+	char m_pad10bc[0x10e0 - 0x10bc];
 	CBaseVCombatUnk10e0 m_unk10e0;
 	CVStatListManager_t m_StatListManager;
 	int m_base0[35];
@@ -46,5 +48,6 @@ public:
 	int m_mod3[17];
 	VStatBindPair_t m_pair3;
 	int sub_1008ebb0();
+	bool sub_1008eb70();	// a flag of the character's clan record (0x105e74fc table, +0x8c)
 	int sub_1014db90(class C_BaseVCombatCharacter *pTarget, int a, int b);
 };

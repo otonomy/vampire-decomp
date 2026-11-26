@@ -97,9 +97,8 @@ int CHudElement::vfunc12(int a0)
 // FUNCTION: 0x100f05b0 size=0x14
 #include "CHudElement.h"
 #include "CHud.h"
-extern CHud g_104cfe38;
 bool CHudElement::sub_100f05b0()
 {
-	return !g_104cfe38.sub_100f10d0(m_unkc);
+	return !gHUD.sub_100f10d0(m_unkc);
 }
 // END FUNCTION

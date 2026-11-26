@@ -117,3 +117,87 @@ void CHudDialog::ScrollUp()
 		v->m18c++;
 }
 // END FUNCTION
+
+// FUNCTION: 0x100553f0 size=0x254
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+
+void sub_10114660(void *pbuf, int iSize);
+int sub_10114690();
+const char *sub_101146e0();
+extern "C" char *__cdecl strncat(char *, const char *, unsigned int);
+
+void CHudDialog::sub_100544d0(bool bEnabled)
+{
+	ScopeTrace trace("CHudDialog::SetResponsesEnabled", g_102de300);
+	bool bOld = *((bool *)this + 0x1b1);
+	*((bool *)this + 0x1b1) = bEnabled;
+	if (bOld != bEnabled)
+		*((bool *)this + 0x190) = true;
+}
+
+// TARGET: CHudDialog::vfunc115
+void CHudDialog::vfunc115(int pszName, int iSize, int pbuf)
+{
+	ScopeTrace trace("CHudDialog::DialogControl", g_102de300);
+	sub_10114660((void *)pbuf, iSize);
+	switch (sub_10114690())
+	{
+	case 8:
+	{
+		bool b = sub_10114690() != 0;
+		sub_10055360(b);
+		vfunc5_hud(b);
+		break;
+	}
+	case 0:
+		sub_10054670(sub_10114690());
+		break;
+	case 1:
+	{
+		int n = sub_10114690();
+		if (n)
+		{
+			if (n > 0 && n <= 4)
+			{
+				const char *s = sub_101146e0();
+				strncat(m_szOptions[n - 1], s, 0x800);
+			}
+		}
+		else
+			strncat(m_szText, sub_101146e0(), 0x800);
+		break;
+	}
+	case 2:
+	{
+		int i;
+		for (i = 0; i < m_nOptions; i++)
+			m_iOptionA[i] = sub_10114690();
+		for (i = 0; i < m_nOptions; i++)
+			m_iOptionB[i] = sub_10114690();
+		break;
+	}
+	case 5:
+		sub_10054f70(3, m_szItems[sub_10114690()]);
+		break;
+	case 6:
+	{
+		bool b = sub_10114690() != 0;
+		sub_10054bd0(b);
+		break;
+	}
+	case 7:
+	{
+		bool b = sub_10114690() != 0;
+		sub_100544d0(b);
+		SetDrawLastPickEnabled(!b);
+		break;
+	}
+	case 3:
+		sub_10054860();
+		break;
+	case 4:
+		break;
+	}
+}
+// END FUNCTION

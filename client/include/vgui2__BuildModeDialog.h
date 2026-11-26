@@ -10,10 +10,12 @@ class KeyValues;
 class BuildModeDialog : public vgui2::Frame
 {
 public:
+	BuildModeDialog(void *pBuildGroup);
 	void sub_101c3bb0();
 	void sub_101c4b30();
 	void sub_101c4a20();
 	void sub_101c45b0(void *, const char *);
+	bool sub_101c4810();
 	virtual ~BuildModeDialog();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with BuildModeDialog's own function

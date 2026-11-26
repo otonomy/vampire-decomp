@@ -29,17 +29,17 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc5();
 	virtual int vfunc6(int, int, int, int, char, int, int, int, int);
 	virtual void vfunc7();
-	virtual void vfunc8();
+	virtual void vfunc8(const Vector &mins, const Vector &maxs, float height, int modelIndex, int count, float speed);	// Bubbles
 	virtual void vfunc9();
 	virtual void vfunc10(C_LocalTempEntity *, int, int);
-	virtual void vfunc11();
+	virtual void vfunc11(class C_BaseEntity *pent, int modelIndex, int density);	// FizzEffect
 	virtual void vfunc12();
 	virtual void vfunc13(C_LocalTempEntity *, int);
 	virtual void vfunc14();
 	virtual void vfunc15(int, int, float, float);
 	virtual void vfunc16(int);
 	virtual void vfunc17(int, int, int, int, int, int);
-	virtual void vfunc18();
+	virtual void vfunc18(C_LocalTempEntity *pTemp, float damp);	// PlaySound: shell / shotgun shell / clip drop sounds (pitch 90..124 now and then), louder with the fall speed
 	virtual void vfunc19(const Vector &, const QAngle &, const QAngle &, int, const Vector &);
 	// the slots CTempEnts adds to its base's vtable: 20-26, vfuncK at slot K
 	virtual ~CTempEnts();

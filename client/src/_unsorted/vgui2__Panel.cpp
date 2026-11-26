@@ -1291,6 +1291,65 @@ int vgui2::Panel::vfunc74(int a)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101ab4e0 size=0x267
+#include "vgui2__Panel.h"
+struct KVView { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void *FindKey(const char *, int); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual int GetInt(const char *, int); virtual void v10(); virtual const char *GetString(const char *, const char *); };
+void *sub_101ac8d0();
+struct VA { void sub_101ab470(int); };
+struct VB { void sub_101ab450(int); };
+struct VC { void sub_101ac6f0(const char *); };
+struct SurfaceView { virtual void a0();virtual void a1();virtual void a2();virtual void a3();virtual void a4();virtual void a5();virtual void a6();virtual void a7();virtual void a8();virtual void a9();
+virtual void b0();virtual void b1();virtual void b2();virtual void b3();virtual void b4();virtual void b5();virtual void b6();virtual void b7();virtual void b8();virtual void b9();
+virtual void c0();virtual void c1();virtual void c2();virtual void c3();virtual void c4();virtual void c5();virtual void c6();virtual void c7();virtual void c8();virtual void c9();
+virtual void d0();virtual void d1();virtual void d2();virtual void d3();virtual void d4();virtual void d5();virtual void d6();virtual void d7();virtual void d8();
+virtual void GetScreenSize(int &, int &); };
+struct PV { virtual void a0();virtual void a1();virtual void a2();virtual void a3();virtual void a4();virtual void a5();virtual void a6();virtual void a7();virtual void a8();virtual void a9();
+virtual void b0();virtual void b1();virtual void b2();virtual void b3();virtual void b4();virtual void b5();virtual void b6();virtual void b7();virtual void b8();virtual void b9();
+virtual void c0();virtual void c1();virtual void c2();virtual void c3();virtual void c4();virtual void c5();virtual void c6();virtual void c7();virtual void c8();virtual void c9();
+virtual void d0();virtual void d1();virtual void d2();virtual void d3();virtual void d4();virtual void d5();
+virtual void e0();virtual void e1();virtual void e2();virtual void e3();virtual void e4();virtual void e5();virtual void e6();virtual void e7();virtual void e8();virtual void e9();
+virtual void SetEnabled(bool); };
+// TARGET: vgui2::Panel::vfunc75
+void vgui2::Panel::vfunc75(int p)
+{
+	KVView *kv = (KVView *)p;
+	int sw, sh, x, y, wide, tall;
+	((SurfaceView *)sub_101ac8d0())->GetScreenSize(sw, sh);
+	sub_101a98c0(&x, &y);
+	x = (int)(kv->GetInt("xpos", x) * (sw * (1.0 / 1024)));
+	y = (int)(kv->GetInt("ypos", y) * (sh * (1.0 / 768)));
+	sub_101a9890(x, y);
+	if (kv->FindKey("zpos", 0))
+		sub_101aa0a0(kv->GetInt("zpos", 0));
+	sub_101a9920(&wide, &tall);
+	wide = (int)(kv->GetInt("wide", wide) * (sw * (1.0 / 1024)));
+	tall = (int)(kv->GetInt("tall", tall) * (sh * (1.0 / 768)));
+	sub_101a98f0(wide, tall);
+	((VA *)this)->sub_101ab470(kv->GetInt("AutoResize", 0));
+	((VB *)this)->sub_101ab450(kv->GetInt("PinCorner", 0));
+	if (kv->GetInt("IgnoreScheme", 0))
+		sub_101a9af0();
+	int state = kv->GetInt("visible", 1);
+	if (state == 0)
+		vfunc21(0);
+	else if (state == 1)
+		vfunc21(1);
+	((PV *)this)->SetEnabled(kv->GetInt("enabled", 1));
+	vfunc29(kv->GetInt("tabPosition", 0));
+	((VC *)this)->sub_101ac6f0(kv->GetString("tooltiptext", 0));
+	int b = kv->GetInt("paintbackground", -1);
+	if (b >= 0)
+		vfunc63(b != 0);
+	int d = kv->GetInt("paintborder", -1);
+	if (d >= 0)
+		vfunc62(d != 0);
+	const char *n = kv->GetString("fieldName", 0);
+	if (n)
+		sub_101a9810(n);
+	vfunc68();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ab860 size=0x6
 #include "vgui2__Panel.h"
 namespace lifted {
@@ -1323,6 +1382,109 @@ extern char g_102d8128;
 int vgui2::Panel::vfunc102()
 {
     return (int)&lifted::g_102d8128;
+}
+// END FUNCTION
+
+// FUNCTION: 0x101abf70 size=0x4cc
+#include "vgui2__Panel.h"
+#pragma pointers_to_members(full_generality, virtual_inheritance)
+struct MMItem {
+	int p0; int id; int p8; int pc;
+	void (vgui2::Panel::*func)();
+	int numParams; int t1; const char *n1; int t2; const char *n2; int nameSymbol; int pad[2];
+};
+struct PMap { MMItem *items; int numFields; int p8; PMap *base; int processed; };
+struct KVV {
+	virtual const char *GetName(); virtual int GetNameSymbol();
+	virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7(); virtual void s8();
+	virtual int GetInt(const char *, int); virtual float GetFloat(const char *, float);
+	virtual const char *GetString(const char *, const char *); virtual void *GetPtr(const char *, void *);
+};
+struct IVG { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void DPrintf(const char *, ...); };
+IVG *sub_101ac8f0();
+typedef void (vgui2::Panel::*F_Void)();
+typedef void (vgui2::Panel::*F_II)(int, int);
+typedef void (vgui2::Panel::*F_PI)(void *, int);
+typedef void (vgui2::Panel::*F_SI)(const char *, int);
+typedef void (vgui2::Panel::*F_SS)(const char *, const char *);
+typedef void (vgui2::Panel::*F_IS)(int, const char *);
+typedef void (vgui2::Panel::*F_PS)(void *, const char *);
+typedef void (vgui2::Panel::*F_B)(bool);
+typedef void (vgui2::Panel::*F_S)(const char *);
+typedef void (vgui2::Panel::*F_I)(int);
+typedef void (vgui2::Panel::*F_F)(float);
+typedef void (vgui2::Panel::*F_P)(void *);
+// TARGET: vgui2::Panel::vfunc16
+void vgui2::Panel::vfunc16(void *pp, int from)
+{
+	KVV *params = (KVV *)pp;
+	int id = params->GetInt("_id", 0);
+	int iMessageName = params->GetNameSymbol();
+	PMap *panelMap = (PMap *)vfunc102();
+	if (!panelMap->processed)
+		sub_101ac570(panelMap);
+	for (; panelMap != 0; panelMap = panelMap->base)
+	{
+		MMItem *m = panelMap->items;
+		for (int i = 0; i < panelMap->numFields; i++)
+		{
+			if ((id && m[i].id == id) || (iMessageName == m[i].nameSymbol))
+			{
+				switch (m[i].numParams)
+				{
+				case 2:
+					if (m[i].t1 == 2 && m[i].t2 == 2)
+						(this->*((F_II)m[i].func))(params->GetInt(m[i].n1, 0), params->GetInt(m[i].n2, 0));
+					else if (m[i].t1 == 4 && m[i].t2 == 2)
+						(this->*((F_PI)m[i].func))(params->GetPtr(m[i].n1, 0), params->GetInt(m[i].n2, 0));
+					else if (m[i].t1 == 1 && m[i].t2 == 2)
+						(this->*((F_SI)m[i].func))(params->GetString(m[i].n1, ""), params->GetInt(m[i].n2, 0));
+					else if (m[i].t1 == 1 && m[i].t2 == 1)
+						(this->*((F_SS)m[i].func))(params->GetString(m[i].n1, ""), params->GetString(m[i].n2, ""));
+					else if (m[i].t1 == 2 && m[i].t2 == 1)
+						(this->*((F_IS)m[i].func))(params->GetInt(m[i].n1, 0), params->GetString(m[i].n2, ""));
+					else if (m[i].t1 == 4 && m[i].t2 == 1)
+						(this->*((F_PS)m[i].func))(params->GetPtr(m[i].n1, 0), params->GetString(m[i].n2, ""));
+					else
+						sub_101ac8f0()->DPrintf("Message '%s', sent to '%s', has invalid parameter types\n", params->GetName(), vfunc18());
+					break;
+				case 1:
+					switch (m[i].t1)
+					{
+					case 5:
+						(this->*((F_B)m[i].func))(params->GetInt(m[i].n1, 0) != 0);
+						break;
+					case 1:
+						(this->*((F_S)m[i].func))(params->GetString(m[i].n1, ""));
+						break;
+					case 2:
+						(this->*((F_I)m[i].func))(params->GetInt(m[i].n1, 0));
+						break;
+					case 3:
+						(this->*((F_F)m[i].func))(params->GetFloat(m[i].n1, 0));
+						break;
+					case 4:
+						(this->*((F_P)m[i].func))(params->GetPtr(m[i].n1, 0));
+						break;
+					case 6:
+						if (m[i].n1)
+							(this->*((F_P)m[i].func))(params->GetPtr(m[i].n1, 0));
+						else
+							(this->*((F_P)m[i].func))(params);
+						break;
+					default:
+						sub_101ac8f0()->DPrintf("Message '%s', sent to '%s', has an invalid parameter type\n", params->GetName(), vfunc18());
+						break;
+					}
+					break;
+				default:
+					(this->*(m[i].func))();
+					break;
+				}
+				break;
+			}
+		}
+	}
 }
 // END FUNCTION
 

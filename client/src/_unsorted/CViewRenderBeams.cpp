@@ -55,6 +55,7 @@ void CViewRenderBeams::vfunc1()
 // END FUNCTION
 
 // FUNCTION: 0x10193520 size=0xbb
+#include "CBaseEntityList.h"
 #include "CViewRenderBeams.h"
 #include "ehandle.h"
 struct TrailV10193520 { TrailV10193520 *next; float die; };
@@ -85,7 +86,7 @@ void CViewRenderBeams::vfunc6(IHandleEntity *pDeadEntity)
         IHandleEntity *pEnt;
         unsigned long h = pbeam->entity.m_Index;
         CBaseEntityListEntry *e;
-        if (h != 0xffffffff && (e = &g_102b8e98->m_EntPtrArray[h & 0x1fff], e->m_SerialNumber == (int)(h >> 13)))
+        if (h != 0xffffffff && (e = &g_pEntityList->m_EntPtrArray[h & 0x1fff], e->m_SerialNumber == (int)(h >> 13)))
             pEnt = (IHandleEntity *)e->m_pEntity;
         else
             pEnt = 0;
@@ -111,16 +112,9 @@ void CViewRenderBeams::vfunc6(IHandleEntity *pDeadEntity)
 // END FUNCTION
 
 // FUNCTION: 0x10193f90 size=0xa9
+#include "engineclient.h"
 #include "CViewRenderBeams.h"
 #include "Vector.h"
-struct IMI
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual int GetModelIndex(const char *name);
-};
-extern IMI *g_104a57f8;
 struct BeamInfoV
 {
 	int m_nType;
@@ -146,9 +140,9 @@ Beam_t *CViewRenderBeams::vfunc12(BeamInfoV *info)
 			return 0;
 	}
 	if (info->m_pszModelName && info->m_nModelIndex == -1)
-		info->m_nModelIndex = g_104a57f8->GetModelIndex(info->m_pszModelName);
+		info->m_nModelIndex = modelinfo->GetModelIndex(info->m_pszModelName);
 	if (info->m_pszHaloName && info->m_nHaloIndex == -1)
-		info->m_nHaloIndex = g_104a57f8->GetModelIndex(info->m_pszHaloName);
+		info->m_nHaloIndex = modelinfo->GetModelIndex(info->m_pszHaloName);
 	Beam_t *pBeam = sub_101938a0(info);
 	if (!pBeam)
 		return 0;
@@ -357,10 +351,9 @@ Beam_t *CViewRenderBeams::vfunc16(BeamInfoV *info)
 // END FUNCTION
 
 // FUNCTION: 0x10194d70 size=0xa2
+#include "CGlobalVarsBase.h"
 #include "CViewRenderBeams.h"
 
-struct CGlobalVarsV { char pad[0xc]; float curtime; float frametime; };
-extern CGlobalVarsV *g_102b8494;
 
 struct ILeafSystemV
 {
@@ -409,13 +402,13 @@ void CViewRenderBeams::vfunc3()
 	CViewRenderBeamsView *v = (CViewRenderBeamsView *)this;
 	if (!v->m_pFirst)
 		return;
-	float frametime = g_102b8494->frametime;
+	float frametime = gpGlobals->frametime;
 	BeamTrailV *prev = 0;
 	BeamTrailV *p = v->m_pFirst;
 	while (p)
 	{
 		BeamTrailV *next = p->m_pNext;
-		if ((p->m_nFlags & 0x80000000) == 0 && p->m_flDie <= g_102b8494->curtime)
+		if ((p->m_nFlags & 0x80000000) == 0 && p->m_flDie <= gpGlobals->curtime)
 		{
 			if (prev)
 				prev->m_pNext = next;

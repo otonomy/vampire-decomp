@@ -10,7 +10,7 @@ inline IHandleEntity *CBaseHandle::Get() const
 {
 	if ( m_Index != 0xffffffff )
 	{
-		CBaseEntityListEntry &e = g_102b8e98->m_EntPtrArray[m_Index & 0x1fff];
+		CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[m_Index & 0x1fff];
 		if ( e.m_SerialNumber != (int)(m_Index >> 13) )
 			return 0;
 		return (IHandleEntity *)e.m_pEntity;

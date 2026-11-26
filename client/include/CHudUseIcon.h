@@ -24,7 +24,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_1005e4a0(bool);
 	void sub_101a9890(int, int);
 	void sub_101a98f0(int, int);
-	int m_unk194; int m_unk198; int m_unk19c; int m_unk1a0; int m_unk1a4; float m_f1a8; char m_b1ac; char m_pad1ad[0x1c0 - 0x1ad];
+	int m_unk194; int m_unk198; int m_unk19c; int m_unk1a0; int m_unk1a4; float m_f1a8; char m_b1ac; char m_b1ad; char m_b1ae; char m_b1af; int m_unk1b0; int m_unk1b4; int m_unk1b8; int m_unk1bc;
 	int m_unk1c0; int m_unk1c4; char m_pad1c8; char m_arr1c9[0x40];
-	char m_pad209[0x218 - 0x209];
+	char m_pad209[0x20c - 0x209]; int m_unk20c; int m_unk210; int m_unk214;
 };

@@ -28,9 +28,9 @@ int CVampModeManager::vfunc0()
 // END FUNCTION
 
 // FUNCTION: 0x10162370 size=0x72
+#include "CInput.h"
 #include "CVampModeManager.h"
 namespace lifted {
-extern int g_1027ba58;
 extern int g_105f99d8;
 int sub_10029490();
 int sub_100429f0();
@@ -42,7 +42,7 @@ void CVampModeManager::vfunc1(char a0, int a1)
         int t0 = lifted::sub_100429f0();
         if (lifted::g_105f99d8 != t0) {
             ((lifted::V *)lifted::g_105f99d8)->f4();
-            ((lifted::V *)lifted::g_1027ba58)->f17();
+            input->vfunc17();
             lifted::g_105f99d8 = lifted::sub_100429f0();
             ((lifted::V *)lifted::g_105f99d8)->f3(); return;
         }
@@ -52,7 +52,7 @@ void CVampModeManager::vfunc1(char a0, int a1)
     if (lifted::g_105f99d8 != t1) {
         ((lifted::V *)lifted::g_105f99d8)->f4();
         lifted::g_105f99d8 = lifted::sub_10029490();
-        ((lifted::V *)lifted::g_1027ba58)->f16();
+        input->vfunc16();
         ((lifted::V *)lifted::g_105f99d8)->f3();
     }
 }

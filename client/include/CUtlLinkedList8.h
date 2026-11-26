@@ -19,6 +19,8 @@ public:
 	unsigned short m_FirstFree;	// 0x10
 	unsigned short m_ElementCount;	// 0x12
 	unsigned short m_NumAlloced;	// 0x14
+	short m_pad16;
+	void *m_pElements;	// 0x18
 
 	bool IsInList(unsigned short i) const { return i < m_NumAlloced && m_pMemory[i].m_Previous != i; }
 	CUtlLinkedList8Node &InternalElement(unsigned short i) { return m_pMemory[i]; }

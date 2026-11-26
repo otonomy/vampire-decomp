@@ -129,15 +129,12 @@ char CGameMovement::vfunc15(void *pSurface, float volume)
 // END FUNCTION
 
 // FUNCTION: 0x100e6fc0 size=0xee
+#include "CGlobalVarsBase.h"
+#include "engineclient.h"
 #include "CGameMovement.h"
 #include "CGameMovementViews.h"
 #include "ConVar.h"
 
-struct GlobalsView
-{
-	char m_pad0000[0x14];
-	int maxClients;	// 0x14
-};
 
 class ISoundEmitter
 {
@@ -156,22 +153,14 @@ public:
 	virtual ISoundEmitter *GetEmitter();	// slot 9
 };
 
-class IRandomView
-{
-public:
-	virtual void v0(); virtual void v1();
-	virtual int RandomInt(int nMin, int nMax);	// slot 2
-};
 
-extern GlobalsView *g_102b8494;
 extern ConVar *g_104dfaa4;
 extern ISoundSystem *g_104df784;
-extern IRandomView *g_104a5738;
 
 // TARGET: CGameMovement::vfunc16
 void CGameMovement::vfunc16(void *pSurface, float volume, char bForce)
 {
-	if ( g_102b8494->maxClients > 1 )
+	if ( gpGlobals->maxClients > 1 )
 	{
 		if ( g_104dfaa4->vfunc1() )
 			return;
@@ -199,7 +188,7 @@ void CGameMovement::vfunc16(void *pSurface, float volume, char bForce)
 		return;
 	int name = pEmitter->vfunc6(snd);
 	ISoundSystem *pSys = g_104df784;
-	pSys->vfunc5((char *)m_pPlayer + 0x70, 4, name, volume, 0x4b, 0, g_104a5738->RandomInt(0, 10) + 0x5f);
+	pSys->vfunc5((char *)m_pPlayer + 0x70, 4, name, volume, 0x4b, 0, enginerandom->RandomInt(0, 10) + 0x5f);
 }
 // END FUNCTION
 
@@ -215,6 +204,7 @@ float CGameMovement::vfunc23()
 // END FUNCTION
 
 // FUNCTION: 0x100e7d30 size=0xe6
+#include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
 
 struct MoveDataView {
@@ -225,17 +215,12 @@ struct MoveDataView {
     float m_fl1998;
 };
 
-struct GlobalsView {
-    char m_pad10[0x10];
-    float m_frametime;
-};
 
-extern GlobalsView *g_102b8494;
 
 // TARGET: CGameMovement::vfunc24
 void CGameMovement::vfunc24()
 {
-    float fDecay = g_102b8494->m_frametime * 1000.0f;
+    float fDecay = gpGlobals->frametime * 1000.0f;
     if (((MoveDataView *)m_pMove)->m_fl1994 > 0.0f)
     {
         ((MoveDataView *)m_pMove)->m_fl1994 -= fDecay;
@@ -258,14 +243,9 @@ void CGameMovement::vfunc24()
 // END FUNCTION
 
 // FUNCTION: 0x100e7e20 size=0x70
+#include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
 
-struct GlobalsView
-{
-	char pad0[0x10];
-	float frametime;	// 0x10
-};
-extern GlobalsView *g_102b8494;
 
 struct G104dfa5cV
 {
@@ -278,7 +258,7 @@ extern G104dfa5cV *g_104dfa5c;
 
 void CGameMovement::vfunc1(void *pMove, void *pPlayer)
 {
-	float savedTime = g_102b8494->frametime;
+	float savedTime = gpGlobals->frametime;
 	sub_100ec390();
 	m_bDc = 0;
 	m_pMove = pMove;
@@ -286,18 +266,14 @@ void CGameMovement::vfunc1(void *pMove, void *pPlayer)
 	*(float *)((char *)m_pPlayer + 0x38) = g_104dfa5c->vfunc1() ? 0.0f : g_104dfa5c->m_field28;
 	vfunc5();
 	sub_100e7e90();
-	g_102b8494->frametime = savedTime;
+	gpGlobals->frametime = savedTime;
 }
 // END FUNCTION
 
 // FUNCTION: 0x100e7ec0 size=0x2ac
+#include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
 
-struct CGlobals_100e7ec0
-{
-	char pad_0[0x10];
-	float frametime;
-};
 
 struct CMovePlayer_100e7ec0
 {
@@ -308,7 +284,6 @@ struct CMovePlayer_100e7ec0
 	Vector m_vecPunchAngleVel;  // 0x1724
 };
 
-extern CGlobals_100e7ec0 *g_102b8494;
 
 #define MV ((CMovePlayer_100e7ec0 *)m_pMove)
 #define CLAMP(v, lo, hi) ((v) > (hi) ? (hi) : ((v) < (lo) ? (lo) : (v)))
@@ -318,14 +293,14 @@ void CGameMovement::vfunc7()
 	if (MV->m_vecPunchAngle.LengthSqr() > 0.001 ||
 		MV->m_vecPunchAngleVel.LengthSqr() > 0.001)
 	{
-		*(QAngle *)&MV->m_vecPunchAngle += *(QAngle *)&MV->m_vecPunchAngleVel * g_102b8494->frametime * MV->m_fl1078;
+		*(QAngle *)&MV->m_vecPunchAngle += *(QAngle *)&MV->m_vecPunchAngleVel * gpGlobals->frametime * MV->m_fl1078;
 
-		float flDecay = 1.0f - MV->m_fl1078 * g_102b8494->frametime * 9.0f;
+		float flDecay = 1.0f - MV->m_fl1078 * gpGlobals->frametime * 9.0f;
 		if (flDecay < 0.0f)
 			flDecay = 0.0f;
 		MV->m_vecPunchAngleVel *= flDecay;
 
-		float flAngleDecay = MV->m_fl1078 * g_102b8494->frametime * 65.0f;
+		float flAngleDecay = MV->m_fl1078 * gpGlobals->frametime * 65.0f;
 		if (flAngleDecay > 2.0f)
 			flAngleDecay = 2.0f;
 		if (flAngleDecay < 0.0f)
@@ -356,10 +331,9 @@ char CGameMovement::vfunc9()
 // END FUNCTION
 
 // FUNCTION: 0x100e9670 size=0x98
+#include "CGlobalVarsBase.h"
 #include "CGameMovement.h"
 #include "CGameMovementViews.h"
-struct GlobalsX { char pad[0x10]; float frametime; };
-extern GlobalsX *g_102b8494;
 #define PLAYER ((CMovePlayerView *)m_pPlayer)
 // TARGET: CGameMovement::vfunc10
 void CGameMovement::vfunc10(Vector &wishdir, float wishspeed, float accel)
@@ -370,7 +344,7 @@ void CGameMovement::vfunc10(Vector &wishdir, float wishspeed, float accel)
     float t1 = wishdir.x; float addspeed = wishspeed - (vel.z * wishdir.z + vel.y * wishdir.y + t1 * vel.x);
     if (addspeed <= 0)
         return;
-    float t0 = g_102b8494->frametime * m_fieldA0 * wishspeed; float accelspeed = t0 * accel;
+    float t0 = gpGlobals->frametime * m_fieldA0 * wishspeed; float accelspeed = t0 * accel;
     if (accelspeed > addspeed)
         accelspeed = addspeed;
     for (int i = 0; i < 3; ++i)

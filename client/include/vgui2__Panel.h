@@ -14,8 +14,11 @@ class Panel : public vgui2::IClientPanel
 {
 public:
 	static void operator delete(void *pMem);
+	static void *operator new(unsigned int);
+	static void *operator new(unsigned int, void *p) { return p; }
 	Panel(Panel *parent, const char *name);
 	void sub_101ab300(bool, bool);
+	void sub_101ac570(void *);
 	void sub_101aab60(int);
 	void sub_101aab90(int);
 	void sub_101ab2d0();
@@ -93,7 +96,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc13(int);
 	virtual void vfunc14();
 	virtual int vfunc15(int);
-	virtual void vfunc16();
+	virtual void vfunc16(void *params, int from);
 	virtual int vfunc17();
 	virtual const char *vfunc18();
 	virtual int vfunc19();

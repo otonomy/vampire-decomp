@@ -2,28 +2,13 @@
 #include "client.h"
 
 // FUNCTION: 0x100be960 size=0x228
+#include "engineclient.h"
 #include <math.h>
 #include <stdlib.h>
 #include "C_RopeKeyframe.h"
 #include "ConVar.h"
 
-class IVEngineClient_100be960
-{
-public:
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
-	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
-	virtual void v36(); virtual void v37(); virtual void v38();
-	virtual float vfunc39(int a);
-};
 
-extern IVEngineClient_100be960 *g_104a57d4;
 extern ConVar *g_104a3a5c;
 extern float g_102b5c84;
 
@@ -47,7 +32,7 @@ void C_RopeKeyframe::CPhysicsDelegate::vfunc0(CRopeNode *pNodes, int iNode, Vect
 	if (!(m_pKeyframe->m_LockedPoints[iNode >> 5] & (1 << (iNode & 31))) && m_pKeyframe->m_bApplyWind)
 	{
 		Vector vWind;
-		sub_100e2fc0(g_104a57d4->vfunc39(0), vWind);
+		sub_100e2fc0(engine->Time(0), vWind);
 		if (vWind.LengthSqr() > 0.0f)
 		{
 			sub_10108fd0(pAccel->Base(), 10.0f, vWind.Base(), pAccel->Base());

@@ -54,15 +54,10 @@ void CRagdoll::vfunc3(Vector &mins, Vector &maxs)
 // END FUNCTION
 
 // FUNCTION: 0x10125510 size=0x107
+#include "CGlobalVarsBase.h"
 #include "Vector.h"
 
-struct CGlobals_10125510
-{
-	char pad_0[0x0c];
-	float curtime;
-};
 
-extern CGlobals_10125510 *g_102b8494;
 extern bool sub_101274d0(void *pRagdoll);
 extern void sub_101273b0(void *pRagdoll, const Vector &origin, Vector &mins, Vector &maxs);
 
@@ -86,10 +81,10 @@ struct Ragdoll_10125510
 // TARGET: Ragdoll_10125510::sub_10125510
 void Ragdoll_10125510::sub_10125510(int pEnt)
 {
-	if (m_lastUpdate == g_102b8494->curtime)
+	if (m_lastUpdate == gpGlobals->curtime)
 		return;
 
-	m_lastUpdate = g_102b8494->curtime;
+	m_lastUpdate = gpGlobals->curtime;
 	m_allAsleep = sub_101274d0(&m_ragdoll);
 
 	if (m_allAsleep)
@@ -108,6 +103,7 @@ void Ragdoll_10125510::sub_10125510(int pEnt)
 // END FUNCTION
 
 // FUNCTION: 0x10125620 size=0x66
+#include "engineclient.h"
 #include "CRagdoll.h"
 
 struct CPhysObjectV
@@ -126,15 +122,6 @@ struct CPhysObjectV
 	virtual int v49();
 };
 
-struct IMaterialSystemV
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-	virtual void *FindMaterial(const char *pName, const char *pTextureGroupName, bool complain);
-};
 
 struct RagdollBodyV
 {
@@ -142,14 +129,13 @@ struct RagdollBodyV
 	char m_pad[0x14];
 };
 
-extern IMaterialSystemV *g_104a57ec;
 
 void sub_101267c0(int a, void *pMaterial, void *pMatrix);
 
 // TARGET: CRagdoll::vfunc5
 void CRagdoll::vfunc5()
 {
-	void *pMaterial = g_104a57ec->FindMaterial("shadertest/wireframevertexcolor", 0, 1);
+	void *pMaterial = materials->FindMaterial("shadertest/wireframevertexcolor", 0, 1);
 	char mat[0x30];
 	for (int i = 0; i < m_n0004; i++)
 	{

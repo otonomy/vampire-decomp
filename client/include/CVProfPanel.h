@@ -11,4 +11,5 @@ public:
 	virtual ~CVProfPanel();
 	static void operator delete(void *pMem) { CHudElement::operator delete(pMem); }
 	bool CHudElement_vfunc9();	// as in CHudHistoryResource (transplant)
+	void sub_1018dda0(void *kv, void *node, int parent);
 };

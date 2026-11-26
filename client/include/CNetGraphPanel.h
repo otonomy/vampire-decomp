@@ -23,4 +23,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_10169c20(int, int);
 	int sub_10169c80(NGState *, int, unsigned char, unsigned char, unsigned char, int);
 	void sub_1016a550(NGState *, unsigned char *, int);
+	void sub_10168eb0(struct vrect_10168eb0 vrect, struct cmdinfo_10168eb0 *cmdinfo, int x, int w);
 };

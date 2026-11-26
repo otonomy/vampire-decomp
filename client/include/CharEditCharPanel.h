@@ -28,4 +28,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_10177000();
 	void sub_101766e0();
 	void sub_10177a20();
+	void sub_10177080(struct CharEditCtrl_10177080 *ctrl, int y, const char *title, int count, int first, const char *(*getstr)(int), int (*getdata)(int), bool (*filter)(int), int sel);
 };

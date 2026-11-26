@@ -1,6 +1,50 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x10196990 size=0x1ff
+#include "CViewEffects.h"
+#include "ScopeTrace.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+struct S56 { int d[14]; };
+extern float g_101e34f0;
+void sub_10109340(const Vector *v, QAngle *a);
+void sub_10108fd0(const Vector *start, float scale, const Vector *dir, Vector *dest);
+void CViewEffects::vfunc7(Vector &origin, QAngle &angles, float factor)
+{
+	ScopeTrace trace("CViewEffects::ApplyShake", g_102de300);
+	if (vfunc12()) {
+		QAngle saved = angles;
+		*(Vector *)&angles += m_vecHolyLight;
+		if (m_flHolyLightStrength > g_101e34f0) {
+			Vector v(-17.0f, -97.0f, 10.0f);
+			QAngle ang;
+			sub_10109340(&v, &ang);
+			for (int i = 0; i < 3; i++) {
+				int t = (int)((ang[i] - angles[i] + 180.0f) * 182.04445f) & 0xffff;
+				angles[i] += ((float)t * 0.005493164f - 180.0f) * m_flHolyLightStrength;
+				m_vecHolyLight[i] = angles[i] - saved[i];
+			}
+			m_flHolyLightStrength = 0.0f;
+		}
+	}
+	switch (m_unk18) {
+	case 0:
+		sub_10108fd0(&origin, factor, (Vector *)&m_unk40, &origin);
+		angles.z += factor * *(float *)&m_unk4c;
+		break;
+	case 1:
+		sub_10108fd0(&origin, factor, (Vector *)&m_unk40, &origin);
+		angles.x += factor * *(float *)&m_unk4c;
+		break;
+	default:
+		*(S56 *)&m_nState = *(S56 *)&m_unk18;
+		memset(&m_unk18, 0, sizeof(S56));
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10196b90 size=0xe7
 #include "CViewEffects.h"
 
@@ -69,6 +113,171 @@ void CViewEffects::vfunc9(Vector &origin, QAngle &angles, float factor)
 	m_vecAppliedOffset = m_vecShakeOffset * factor;
 	angles.z = 0;
 	origin -= m_vecAppliedOffset;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10197190 size=0x323
+#include "CViewEffects.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+
+struct screenfade_t
+{
+	float Speed;	// 0x00: alpha change per second
+	float End;	// 0x04: when the fade ends
+	float Reset;	// 0x08: when it is removed
+	unsigned char r, g, b, alpha;	// 0x0c
+	int Flags;	// 0x10
+};
+
+struct ScreenFade_t	// the message a fade starts from
+{
+	unsigned short duration;
+	unsigned short holdTime;
+	short fadeFlags;
+	unsigned char r, g, b, a;
+};
+
+struct FadeListView	// m_FadeList, a CUtlVector<screenfade_t *> at +4
+{
+	screenfade_t **m_pMemory;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+	int m_Size;
+	screenfade_t **m_pElements;
+
+	void sub_101979e0(int elem, int num);	// ShiftElementsLeft
+
+	screenfade_t *&operator[](int i) { return m_pMemory[i]; }
+	int Count() const { return m_Size; }
+	int Find(screenfade_t *const &src) const
+	{
+		for (int i = 0; i < Count(); ++i)
+		{
+			if (m_pMemory[i] == src)
+				return i;
+		}
+		return -1;
+	}
+	void Remove(int elem)
+	{
+		sub_101979e0(elem, 1);
+		--m_Size;
+	}
+	bool FindAndRemove(screenfade_t *const &src)
+	{
+		int elem = Find(src);
+		if (elem != -1)
+		{
+			Remove(elem);
+			return true;
+		}
+		return false;
+	}
+};
+
+#define m_FadeList (*(FadeListView *)&m_unk04)
+
+extern void (*g_106187fc)(int);	// s_pfnFadeDoneCallback
+extern int g_10618700;	// s_nCallbackParameter
+
+extern "C" void *__cdecl memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+// FadeCalculate
+void CViewEffects::vfunc16()
+{
+	ScopeTrace st("CViewEffects::FadeCalculate", g_102de300, g_102de300);
+
+	int i;
+	int iSize = m_FadeList.Count();
+	for (i = iSize - 1; i >= 0; i--)
+	{
+		screenfade_t *pFade = m_FadeList[i];
+
+		if (pFade->Flags & 8)
+			pFade->Reset = engine->Time(0) + 0.1;
+
+		if (engine->Time(0) > pFade->Reset && engine->Time(0) > pFade->End)
+		{
+			if (pFade->Flags & 0x20)
+			{
+				pFade->Flags = (pFade->Flags & ~0x22) | 1;
+				pFade->Reset = engine->Time(0);
+				pFade->Speed = -pFade->Speed;
+				if (pFade->Speed != 0.0f)
+				{
+					pFade->End = pFade->alpha / pFade->Speed;
+					pFade->End += engine->Time(0);
+				}
+				continue;
+			}
+
+			if (g_106187fc)
+			{
+				g_106187fc(g_10618700);
+				g_106187fc = 0;
+				g_10618700 = 0;
+			}
+
+			if (pFade->Flags & 0x40)
+			{
+				engine->ClientCmd("disconnect");
+				ScreenFade_t sf;
+				memset(&sf, 0, sizeof(sf));
+				sf.duration = 0xa00;
+				sf.r = 0;
+				sf.g = 0;
+				sf.b = 0;
+				sf.a = 255;
+				sf.holdTime = 0x200;
+				sf.fadeFlags = 1;
+				vfunc4(0, 0, &sf);
+			}
+
+			m_FadeList.FindAndRemove(pFade);
+			delete pFade;
+		}
+	}
+
+	*(unsigned char *)&m_unk98 = 0;
+	m_unk88 = m_unk8c = m_unk90 = m_unk94 = 0;
+
+	for (i = 0; i < m_unk10; i++)
+	{
+		screenfade_t *pFade = ((screenfade_t **)m_unk04)[i];
+
+		m_unk88 += pFade->r;
+		m_unk8c += pFade->g;
+		m_unk90 += pFade->b;
+
+		int iFadeAlpha;
+		if (pFade->Flags & 3)
+		{
+			iFadeAlpha = pFade->Speed * (pFade->End - engine->Time(0));
+			if (pFade->Flags & 2)
+				iFadeAlpha += pFade->alpha;
+			iFadeAlpha = iFadeAlpha < pFade->alpha ? iFadeAlpha : pFade->alpha;
+			iFadeAlpha = 0 > iFadeAlpha ? 0 : iFadeAlpha;
+		}
+		else
+		{
+			iFadeAlpha = pFade->alpha;
+		}
+
+		if (iFadeAlpha > m_unk94)
+			m_unk94 = iFadeAlpha;
+
+		if (pFade->Flags & 4)
+			*(unsigned char *)&m_unk98 = 1;
+	}
+
+	if (m_unk10)
+	{
+		m_unk88 /= m_unk10;
+		m_unk8c /= m_unk10;
+		m_unk90 /= m_unk10;
+	}
 }
 // END FUNCTION
 
@@ -213,22 +422,14 @@ bool CViewEffects::sub_101977a0()
 // END FUNCTION
 
 // FUNCTION: 0x10197800 size=0xb9
+#include "engineclient.h"
 #include "CViewEffects.h"
 #include "CGodLight.h"
 #include "ScopeTrace.h"
-struct IRenderView10197800 {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46();
-	virtual void v47(const char *name, float a, float b, float c);
-};
-extern IRenderView10197800 *g_104a57e4;
 void CViewEffects::vfunc13()
 {
 	ScopeTrace t("CViewEffects::RenderHolyLightBox", g_102de300);
-	g_104a57e4->v47("holylight", 1.0f, 1.0f, 1.0f);
+	render->vfunc47("holylight", 1.0f, 1.0f, 1.0f);
 	static CGodLight s_light;
 	s_light.vfunc1();
 	s_light.vfunc3();

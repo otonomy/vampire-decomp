@@ -39,32 +39,12 @@ C_EntityFlame::~C_EntityFlame()
 // END FUNCTION
 
 // FUNCTION: 0x100b6740 size=0x273
+#include "engineclient.h"
 #include <stdlib.h>
 #include "C_EntityFlame.h"
 #include "Vector.h"
 
-struct IEngine_100b6740
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
-	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
-	virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40();
-	virtual float GetFrameTime(int);
-};
 
-struct IRandom_100b6740
-{
-	virtual void v0();
-	virtual float RandomFloat(float flMin, float flMax);
-	virtual int RandomInt(int iMin, int iMax);
-};
 
 struct SimpleParticle_100b6740
 {
@@ -118,8 +98,6 @@ struct TimedEvent_100b6740
 	}
 };
 
-extern IEngine_100b6740 *g_104a57d4;
-extern IRandom_100b6740 *g_104a5738;
 
 inline void VectorRandom_100b6740(Vector &v, float minVal, float maxVal)
 {
@@ -134,7 +112,7 @@ void C_EntityFlame::vfunc37()
 	SmartEmitterPtr_100b6740 &pEmitter = *(SmartEmitterPtr_100b6740 *)&m_Effect;
 	pEmitter->sub_10118080(GetAbsOrigin());
 
-	float tempDelta = g_104a57d4->GetFrameTime(0);
+	float tempDelta = engine->vfunc41(0);
 	TimedEvent_100b6740 &event = *(TimedEvent_100b6740 *)((char *)this + 0x418);
 	float &flSize = *(float *)((char *)this + 0x410);
 	unsigned char *hMaterials = (unsigned char *)((char *)this + 0x420);
@@ -147,17 +125,17 @@ void C_EntityFlame::vfunc37()
 
 		SimpleParticle_100b6740 *pParticle = pEmitter->sub_101180c0(
 			sizeof(SimpleParticle_100b6740),
-			hMaterials[g_104a5738->RandomInt(0, 4)],
+			hMaterials[enginerandom->RandomInt(0, 4)],
 			pos);
 
 		if (pParticle)
 		{
 			pParticle->m_flDieTime = 0.4f;
 			pParticle->m_flLifetime = 0.0f;
-			pParticle->m_flRoll = (float)g_104a5738->RandomInt(0, 360);
-			pParticle->m_flRollDelta = g_104a5738->RandomFloat(-2.0f, 2.0f);
-			pParticle->m_uchStartSize = (unsigned char)g_104a5738->RandomInt(4, 6);
-			pParticle->m_uchEndSize = (unsigned char)g_104a5738->RandomInt(12, 16);
+			pParticle->m_flRoll = (float)enginerandom->RandomInt(0, 360);
+			pParticle->m_flRollDelta = enginerandom->RandomFloat(-2.0f, 2.0f);
+			pParticle->m_uchStartSize = (unsigned char)enginerandom->RandomInt(4, 6);
+			pParticle->m_uchEndSize = (unsigned char)enginerandom->RandomInt(12, 16);
 			pParticle->m_uchStartAlpha = 255;
 			pParticle->m_uchEndAlpha = 0;
 			pParticle->m_uchColor[0] = 255;
@@ -165,12 +143,12 @@ void C_EntityFlame::vfunc37()
 			pParticle->m_uchColor[2] = 255;
 
 			Vector dir;
-			dir.x = g_104a5738->RandomFloat(-1.0f, 1.0f);
-			dir.y = g_104a5738->RandomFloat(-1.0f, 1.0f);
-			dir.z = g_104a5738->RandomFloat(0.5f, 1.0f);
+			dir.x = enginerandom->RandomFloat(-1.0f, 1.0f);
+			dir.y = enginerandom->RandomFloat(-1.0f, 1.0f);
+			dir.z = enginerandom->RandomFloat(0.5f, 1.0f);
 
-			pParticle->m_vecVelocity = dir * (float)g_104a5738->RandomInt(4, 32);
-			pParticle->m_vecVelocity.z = (float)g_104a5738->RandomInt(32, 64);
+			pParticle->m_vecVelocity = dir * (float)enginerandom->RandomInt(4, 32);
+			pParticle->m_vecVelocity.z = (float)enginerandom->RandomInt(32, 64);
 		}
 	}
 }
