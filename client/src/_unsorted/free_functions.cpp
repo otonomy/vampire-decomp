@@ -51941,6 +51941,139 @@ void CUnknown100ad130::sub_100ad130( BoneHolder_100ad130 *pBones, float flUnused
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ad2c0 size=0x442
+#include "Vector.h"
+#include <math.h>
+
+struct matrix3x4_100ad2c0
+{
+	float m[3][4];
+};
+
+struct Quaternion_100ad2c0
+{
+	float x, y, z, w;
+};
+
+void sub_10108a50(const matrix3x4_100ad2c0 &in1, const matrix3x4_100ad2c0 &in2, matrix3x4_100ad2c0 &out);	// ConcatTransforms
+void sub_10108080(const Vector &in, const matrix3x4_100ad2c0 &m, Vector &out);	// VectorITransform
+void sub_10108430(const matrix3x4_100ad2c0 &in, matrix3x4_100ad2c0 &out);	// MatrixCopy
+void sub_1010a720(const Vector &axis, float angle, Quaternion_100ad2c0 &q);	// AxisAngleQuaternion
+void sub_1010a540(const Quaternion_100ad2c0 &q, const Vector &pos, matrix3x4_100ad2c0 &m);	// QuaternionMatrix
+void sub_10107f80(const float *in, const matrix3x4_100ad2c0 &m, float *out);	// VectorTransform
+
+#define RAD2DEG_100ad2c0(x) ((float)(x) * 57.29578f)
+
+// one bone of the chain (0x64 bytes)
+struct BoneChainLink_100ad2c0
+{
+	int iBone;			// 0x00
+	int iParentBone;		// 0x04
+	float flGroundOffset;		// 0x08
+	matrix3x4_100ad2c0 local;	// 0x0c
+	Vector vecAxis;			// 0x3c
+	float flLength;			// 0x48
+	Vector vecEnd;			// 0x4c
+	int m_unk58[3];
+};
+
+struct BoneArray_100ad2c0
+{
+	int m_unk0;
+	matrix3x4_100ad2c0 *m_pBones;	// +4
+};
+
+struct CUnknown100ad2c0
+{
+	int m_unk0[2];
+	float m_flMaxAngle;		// 0x08
+	float m_flDamping;		// 0x0c
+	int m_unk10[(0x24 - 0x10) / 4];
+	int m_nLinks;			// 0x24
+	BoneChainLink_100ad2c0 *m_pLinks;	// 0x28
+
+	void sub_100ad2c0(float flTime, BoneArray_100ad2c0 *pBones, float flGround);
+};
+
+void CUnknown100ad2c0::sub_100ad2c0(float flTime, BoneArray_100ad2c0 *pBones, float flGround)
+{
+	for (int i = 0; i < m_nLinks; ++i)
+	{
+		BoneChainLink_100ad2c0 *pLink = &m_pLinks[i];
+
+		matrix3x4_100ad2c0 m;
+		sub_10108a50(pBones->m_pBones[pLink->iParentBone], pLink->local, m);
+
+		Vector localEnd;
+		sub_10108080(pLink->vecEnd, m, localEnd);
+		Vector dir = localEnd;
+		VectorNormalize(dir);
+
+		Vector cross;
+		cross.sub_10049f20(pLink->vecAxis.z * dir.y - dir.z * pLink->vecAxis.y,
+			dir.z * pLink->vecAxis.x - dir.x * pLink->vecAxis.z,
+			dir.x * pLink->vecAxis.y - dir.y * pLink->vecAxis.x);
+
+		if (cross.LengthSqr() < 0.0001f)
+		{
+			sub_10108430(m, pBones->m_pBones[pLink->iBone]);
+		}
+		else
+		{
+			Vector fwd; fwd = localEnd;
+			VectorNormalize(fwd);
+			VectorNormalize(cross);
+			float flAngle; flAngle = acos(DotProduct(pLink->vecAxis, fwd));
+			float flRot = flAngle * pow(m_flDamping, flTime);
+			if (flRot > m_flMaxAngle)
+				flRot = m_flMaxAngle;
+
+			Quaternion_100ad2c0 q;
+			sub_1010a720(cross, RAD2DEG_100ad2c0(-flRot), q);
+			Vector zero(0, 0, 0);
+			matrix3x4_100ad2c0 rot;
+			sub_1010a540(q, zero, rot);
+			sub_10108a50(m, rot, pBones->m_pBones[pLink->iBone]);
+		}
+
+		localEnd = pLink->vecAxis * pLink->flLength;
+		sub_10107f80(&localEnd.x, pBones->m_pBones[pLink->iBone], &pLink->vecEnd.x);
+
+		float flFloor = flGround + m_pLinks[i].flGroundOffset;
+		if (flFloor > m_pLinks[i].vecEnd.z)
+		{
+			m_pLinks[i].vecEnd.z = flFloor;
+
+			sub_10108a50(pBones->m_pBones[pLink->iParentBone], pLink->local, m);
+			sub_10108080(pLink->vecEnd, m, localEnd);
+			dir = localEnd;
+			VectorNormalize(dir);
+
+			cross = Vector(dir.y * pLink->vecAxis.z - dir.z * pLink->vecAxis.y,
+				dir.z * pLink->vecAxis.x - dir.x * pLink->vecAxis.z,
+				dir.x * pLink->vecAxis.y - dir.y * pLink->vecAxis.x);
+
+			if (cross.LengthSqr() < 0.0001f)
+			{
+				sub_10108430(m, pBones->m_pBones[pLink->iBone]);
+			}
+			else
+			{
+				Vector fwd = localEnd;
+				VectorNormalize(fwd);
+				VectorNormalize(cross);
+				Quaternion_100ad2c0 q;
+				sub_1010a720(cross, RAD2DEG_100ad2c0(-acos(DotProduct(fwd, pLink->vecAxis))), q);
+				matrix3x4_100ad2c0 rot;
+				Vector zero(0, 0, 0);
+				sub_1010a540(q, zero, rot);
+				sub_10108a50(m, rot, pBones->m_pBones[pLink->iBone]);
+			}
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ad710 size=0x9
 namespace lifted {
 extern char g_1022e914;
