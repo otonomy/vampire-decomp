@@ -4457,6 +4457,7 @@
 0x100b1aa0 func   ?sub_100b1aa0@@YAXPAVVector@@HHPAMDHPAUEnt100b1aa0@@@Z sub_100b1aa0
 0x100b1b40 func   ?sub_100b1b40@@YAXPAVVector@@HHPAUParticle_100b1b40@@_NHPAUCEmitterReal_100b1b40@@@Z sub_100b1b40
 0x100b1f80 func   ?sub_100b1f80@@YAXPAUV3@@0HHHHPAUEPView@@@Z sub_100b1f80
+0x100b25e0 func   ?sub_100b25e0@@YAXAAVVector@@PAX1PAUFlareParticle@@_N1PAUFlareSource@@@Z sub_100b25e0
 0x100b28d0 func   ?sub_100b28d0@@YAXPAVVector@@HHPADDH1@Z sub_100b28d0
 0x100b2950 func   ?sub_100b2950@@YAXPAVVector@@HHPAUParticle@@_NHPAD@Z sub_100b2950
 0x100b2a20 func   ?vfunc16@C_ThaumaturgyParticle@@UAEHXZ C_ThaumaturgyParticle::vfunc16

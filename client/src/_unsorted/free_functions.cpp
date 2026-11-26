@@ -55101,6 +55101,71 @@ void sub_100b1f80(V3 *a, V3 *b, int c, int d, int e, int f, EPView *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b25e0 size=0x15a
+#include "Vector.h"
+extern float (*g_101e31a0)(float flMinVal, float flMaxVal);
+
+struct ViewInfo14 {
+    int m_n0; int m_n4; int m_n8;
+    int m_nX;	// 0x0c
+    int m_nW;	// 0x10
+    int m_n14; int m_n18; int m_n1c; int m_n20; int m_n24; int m_n28; int m_n2c; int m_n30;
+    float m_fl34;	// 0x34
+    int m_n38; int m_n3c; int m_n40; int m_n44; int m_n48; int m_n4c; int m_n50; int m_n54; int m_n58; int m_n5c; int m_n60;
+    float m_fl64;	// 0x64
+};
+struct IViewView {
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6();
+    virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13();
+    virtual ViewInfo14 *vfunc14();
+};
+extern IViewView *g_102d43d8;
+
+struct FlareParticle {
+    float m_fl0; float m_fl4; float m_fl8; int m_nC;
+    float m_fl10; int m_n14; int m_n18; int m_n1c;
+    int m_n20; int m_n24; int m_n28;
+    float m_fl2c;
+};
+struct FlareSource {
+    char pad[0x428];
+    int m_n428;
+    float m_fl42c; float m_fl430; float m_fl434; float m_fl438;
+    int m_n43c;
+};
+
+void sub_100b25e0(Vector &out, void *a2, void *a3, FlareParticle *p, bool bInit, void *a6, FlareSource *pSrc)
+{
+    if (bInit)
+    {
+        p->m_fl2c = g_101e31a0(0, 2.0f);
+        p->m_fl0 *= pSrc->m_fl42c;
+        p->m_fl4 *= pSrc->m_fl430;
+        p->m_fl8 *= pSrc->m_fl434;
+        p->m_fl10 *= pSrc->m_fl438;
+        p->m_n28 = pSrc->m_n428;
+        p->m_n20 = pSrc->m_n43c;
+    }
+    ViewInfo14 *pView = g_102d43d8->vfunc14();
+    float frac = (float)pView->m_nX / (float)(pView->m_nX + pView->m_nW);
+    float scale = pView->m_fl34;
+    float b = pView->m_nW * scale / pView->m_nX;
+    float t = p->m_fl2c;
+    if (t > 1.0f)
+    {
+        t -= 1.0f;
+        scale = -scale;
+        b = -b;
+    }
+    if (t < frac)
+        scale *= 2.0f / frac * t - 1.0f;
+    else
+        b *= (t - frac) * (2.0f / (1.0f - frac)) - 1.0f;
+    float k = pView->m_fl64 * 1.5;
+    out = Vector(1.0f, scale, b) * k;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b28d0 size=0x75
 #include "Vector.h"
 
