@@ -27469,6 +27469,117 @@ int CHudDialog::sub_10053f10(int flags, int n)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10053ff0 size=0x441
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+
+int sub_100cd0f0();
+int sub_100cd100();
+
+#define VS_SLOTS8(n) virtual void a##n##0(); virtual void a##n##1(); virtual void a##n##2(); virtual void a##n##3(); virtual void a##n##4(); virtual void a##n##5(); virtual void a##n##6(); virtual void a##n##7();
+struct VGuiSurfaceView
+{
+	VS_SLOTS8(0) VS_SLOTS8(1) VS_SLOTS8(2) VS_SLOTS8(3) VS_SLOTS8(4) VS_SLOTS8(5) VS_SLOTS8(6)
+	virtual void a70(); virtual void a71(); virtual void a72(); virtual void a73(); virtual void a74(); virtual void a75(); virtual void a76();
+	virtual int GetFontTall(unsigned long font);	// slot 63
+};
+VGuiSurfaceView *sub_101ac8d0();
+
+#define F(type, off) (*(type *)((char *)this + (off)))
+
+void CHudDialog::sub_10053ff0(bool bDraw, const char *pszText, int nFlags, int nType, int *pY)
+{
+	ScopeTrace st("CHudDialog::PaintResponseLine", g_102de300);
+
+	int nYOffset = (int)(25 * (sub_100cd0f0() * (1.0 / 768.0)));
+	int y = F(int, 0x198) - *pY - nYOffset;
+	int x = (int)(36 * (sub_100cd100() * (1.0 / 1024.0)));
+
+	if (nFlags == 0)
+	{
+		if (bDraw)
+			g_pMatSystemSurface->vfunc12(F(int, 0x9d0), x, y, F(unsigned char, 0x9e8), F(unsigned char, 0x9e9), F(unsigned char, 0x9ea), (int)F(float, 0x1a8), pszText);
+		*pY += sub_101ac8d0()->GetFontTall(F(int, 0x9d0)) * 1.33;
+	}
+	else if (nFlags & 1)
+	{
+		int *pFont;
+		unsigned char *pColor;
+		if (nType == 6)
+		{
+			pFont = &F(int, 0x9dc);
+			pColor = &F(unsigned char, 0x9f4);
+		}
+		else
+		{
+			pFont = &F(int, 0x9e0);
+			pColor = &F(unsigned char, 0x9f8);
+		}
+		if (bDraw)
+			g_pMatSystemSurface->vfunc12(*pFont, x, y, pColor[0], pColor[1], pColor[2], (int)F(float, 0x1a8), pszText);
+		*pY += sub_101ac8d0()->GetFontTall(*pFont) * 1.33;
+	}
+	else if (nFlags & 2)
+	{
+		int *pFont;
+		unsigned char *pColor;
+		if (nType == 7)
+		{
+			pFont = &F(int, 0x9d4);
+			pColor = &F(unsigned char, 0x9ec);
+		}
+		else if (nType == 6)
+		{
+			pFont = &F(int, 0x9e4);
+			pColor = &F(unsigned char, 0x9fc);
+		}
+		else if (nType == 8)
+		{
+			pFont = &F(int, 0x9d8);
+			pColor = &F(unsigned char, 0x9f0);
+		}
+		else
+		{
+			pFont = &F(int, 0x9d0);
+			pColor = &F(unsigned char, 0x9e8);
+		}
+		if (bDraw)
+			g_pMatSystemSurface->vfunc12(*pFont, x, y, pColor[0], pColor[1], pColor[2], (int)F(float, 0x1a8), pszText);
+		*pY += sub_101ac8d0()->GetFontTall(*pFont) * 1.33;
+	}
+	else if (nFlags == 0x10)
+	{
+		sub_100549f0(-1, 0);
+		((IManagedHudElement *)this)->vfunc5_hud(false);
+	}
+	else if (nFlags == 0x20)
+	{
+		static int s_nAlpha = (int)F(float, 0x1a4);
+		static bool s_bUp = true;
+		if (s_bUp)
+		{
+			if (s_nAlpha++ > 180)
+				s_bUp = false;
+		}
+		else
+		{
+			if (s_nAlpha-- < 80)
+				s_bUp = true;
+		}
+		if (bDraw)
+			g_pMatSystemSurface->vfunc12(F(int, 0x9d0), x, y, F(unsigned char, 0x9e8), F(unsigned char, 0x9e9), F(unsigned char, 0x9ea), s_nAlpha, "(press 1 to continue)");
+		*pY += sub_101ac8d0()->GetFontTall(F(int, 0x9d0)) * 1.5;
+	}
+	else
+	{
+		if (bDraw)
+			g_pMatSystemSurface->vfunc12(F(int, 0x9d0), x, y, F(unsigned char, 0xa00), F(unsigned char, 0xa01), F(unsigned char, 0xa02), (int)F(float, 0x1a8), pszText);
+		*pY += sub_101ac8d0()->GetFontTall(F(int, 0x9d0)) * 1.33;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10054450 size=0x7a
 #include "CHudDialog.h"
 #include "ScopeTrace.h"
