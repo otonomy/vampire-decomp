@@ -13278,6 +13278,32 @@ template <> int ClientClassInit<DT_ItemGGarysPhoto::ignored>(DT_ItemGGarysPhoto:
 }
 // END FUNCTION
 
+// FUNCTION: 0x1001fb40 size=0x45
+namespace lifted {
+extern char g_10215e24;
+extern char g_10215e38;
+extern char g_10215e74;
+extern char g_10215eac;
+extern char g_10215f04;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_1001fb40()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10215f04;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10215eac;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10215e74;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10215e38;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10215e24;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1001fbd0 size=0x6
 namespace lifted {
 extern char g_102e5154;

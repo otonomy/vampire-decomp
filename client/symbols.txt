@@ -1517,6 +1517,7 @@
 0x1001f9b0 func   ?_C_ItemGGarysPhoto_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGGarysPhoto_CreateObject
 0x1001fa70 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGGarysPhoto@@@Z ClientClassInit
 0x1001fb00 func   ?vfunc17@C_ItemGGarysTape@@UAEHXZ C_ItemGGarysTape::vfunc17
+0x1001fb40 func   ?sub_1001fb40@@YAHXZ sub_1001fb40
 0x1001fb90 func   ??_GC_ItemGGarysTape@@UAEPAXI@Z ??_GC_ItemGGarysTape@@UAEPAXI@Z
 0x1001fbb0 func   ?vfunc16@C_ItemGGarysTape@@UAEHXZ C_ItemGGarysTape::vfunc16
 0x1001fbc0 func   ?vfunc15@C_ItemGGarysTape@@UAEHXZ C_ItemGGarysTape::vfunc15
