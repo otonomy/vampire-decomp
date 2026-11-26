@@ -3161,6 +3161,7 @@
 0x1005f130 func   ??1CManagedHudElement@@UAE@XZ CManagedHudElement::~CManagedHudElement
 0x1005f150 func   ?sub_1005f150@CUnknown1005f150@@QAEHH@Z CUnknown1005f150::sub_1005f150
 0x1005f160 func   ?sub_1005f160@CUnknown1005f160@@QAEHXZ CUnknown1005f160::sub_1005f160
+0x1005f180 func   ??0CMoneyBar@@QAE@H@Z CMoneyBar::CMoneyBar
 0x1005f280 func   ?sub_1005f280@@YAHXZ sub_1005f280
 0x1005f290 func   ?sub_1005f290@CUnknown1005f290@@QAEDXZ CUnknown1005f290::sub_1005f290
 0x1005f2a0 func   ??_GCMoneyBar@@UAEPAXI@Z ??_GCMoneyBar@@UAEPAXI@Z
