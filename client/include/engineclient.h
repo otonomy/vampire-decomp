@@ -725,7 +725,7 @@ public:
 	virtual void vfunc9();
 	virtual void vfunc10();
 	virtual void vfunc11();
-	virtual void __cdecl vfunc12(int, int, int);	// slot 12; seen as Draw 1
+	virtual void __cdecl vfunc12(int, int, int, ...);	// slot 12; seen as Draw 1; DrawColoredText(font, x, y, r, g, b, a, fmt, ...)
 	virtual void vfunc13();
 	virtual void vfunc14();
 	virtual int vfunc15(int, const char *, ...);	// slot 15; seen as DrawTextLen 1
