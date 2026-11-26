@@ -63326,6 +63326,32 @@ void sub_100f9c40(Pix565 *dst, const unsigned char *src, int width, const unsign
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f9e40 size=0x248
+struct P1555 { unsigned short b : 5; unsigned short g : 5; unsigned short r : 5; unsigned short a : 1; };
+#define PUT(c) { P1555 *p = (P1555 *)dest; p->r = (c)[2] >> 3; p->g = (c)[1] >> 3; p->b = (c)[0] >> 3; p->a = (c)[3] >> 7; }
+// TARGET: sub_100f9e40
+void sub_100f9e40(unsigned short *dest, const unsigned char *src, int width, const unsigned char *c0, const unsigned char *c1, const unsigned char *c2, const unsigned char *c3)
+{
+	unsigned int masks[4] = { 3, 0xc, 0x30, 0xc0 };
+	unsigned int shifts[4] = { 0, 2, 4, 6 };
+	int pitch = width * 2 - 8;
+	const unsigned char *pIndex = src + 4;
+	for (int y = 4; y > 0; y--) {
+		for (int j = 0; j < 4; j++) {
+			switch ((*pIndex & masks[j]) >> shifts[j]) {
+			case 0: PUT(c0) break;
+			case 1: PUT(c1) break;
+			case 2: PUT(c2) break;
+			case 3: PUT(c3) break;
+			}
+			dest++;
+		}
+		pIndex++;
+		dest = (unsigned short *)((char *)dest + pitch);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fbd70 size=0xe
 namespace lifted {
 extern int g_1027ba58;
