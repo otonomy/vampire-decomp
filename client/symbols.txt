@@ -8711,6 +8711,7 @@
 0x1017c950 func   ??_GVHButton@@UAEPAXI@Z ??_GVHButton@@UAEPAXI@Z
 0x1017c970 func   ??1VHButton@@UAE@XZ VHButton::~VHButton
 0x1017c970 func   ?sub_1017c970@CUnknown1017c970@@QAEHXZ CUnknown1017c970::sub_1017c970
+0x1017c9e0 func   ?vfunc85@VHButton@@UAEXXZ VHButton::vfunc85
 0x1017ce10 func   ?sub_1017ce10@@YAHXZ sub_1017ce10
 0x1017ce20 func   ?vfunc86@VHButton@@UAEXXZ VHButton::vfunc86
 0x1017d0c0 func   ?vfunc143@VHButton@@UAEXD@Z VHButton::vfunc143
