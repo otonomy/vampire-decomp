@@ -63799,6 +63799,19 @@ void sub_100cd760(int a0, int a1, Vector v, QAngle ang)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100cd800 size=0x30
+const char *sub_1007ddc0(int, int);
+unsigned long sub_100cd830(const char *psz);
+extern void (__cdecl *g_101e31c8)(unsigned long);
+extern void (__cdecl *g_101e31a0)(int, int);
+
+void sub_100cd800(int a, int b, int c, int d)
+{
+	g_101e31c8(sub_100cd830(sub_1007ddc0(a, b)));
+	g_101e31a0(c, d);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100cd830 size=0x5e
 extern "C" unsigned int __cdecl strlen(const char *);
 #pragma intrinsic(strlen)
