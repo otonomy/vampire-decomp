@@ -11,6 +11,18 @@ int C_VGuiScreen::vfunc16()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c9060 size=0xa0
+#include "C_VGuiScreen.h"
+
+#pragma inline_depth(0)
+
+// TARGET: ??0C_VGuiScreen@@QAE@XZ
+C_VGuiScreen *pcd_emit_100c9060()
+{
+	return new C_VGuiScreen;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c9110 size=0x41
 #include "C_VGuiScreen.h"
 C_VGuiScreen *pcd_emit_100c9110() { return new C_VGuiScreen; }
