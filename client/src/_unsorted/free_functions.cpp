@@ -135682,6 +135682,30 @@ void sub_10198460()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10198520 size=0xc0
+#include "engineclient.h"
+#include "ScopeTrace.h"
+extern void *g_10619908;
+extern bool g_1061990c;
+extern float g_10618c1c;
+void sub_101985e0();
+void *sub_10198520()
+{
+    ScopeTrace st("::GetScreenDelayTexture", g_102de300, g_102de300);
+    if (!g_10619908)
+    {
+        g_10619908 = materials->vfunc128(0x200, 0x200, materials->vfunc64(0));
+        g_10618c1c = -10000.0f;
+        if (!g_1061990c)
+        {
+            materials->AddRestoreFunc((int)sub_101985e0);
+            g_1061990c = true;
+        }
+    }
+    return g_10619908;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101985e0 size=0x60
 #include "ScopeTrace.h"
 
