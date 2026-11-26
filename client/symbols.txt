@@ -2982,6 +2982,7 @@
 0x100622a0 func   ?sub_100622a0@@YAHXZ sub_100622a0
 0x100622b0 func   ?sub_100622b0@@YADXZ sub_100622b0
 0x100622c0 func   ??0CStealth@@QAE@H@Z CStealth::CStealth
+0x100624c0 func   ?sub_100624c0@@YAHXZ sub_100624c0
 0x100624d0 func   ?sub_100624d0@CUnknown100624d0@@QAEDXZ CUnknown100624d0::sub_100624d0
 0x100624e0 func   ??_GCStealth@@UAEPAXI@Z ??_GCStealth@@UAEPAXI@Z
 0x10062500 func   ??1CStealth@@UAE@XZ CStealth::~CStealth
