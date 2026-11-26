@@ -51374,6 +51374,87 @@ void NV_100c6cc0::sub_100c6cc0(int updateType)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c6d50 size=0x337
+#define PCD_LPF_CTOR
+#include "engineclient.h"
+#include "C_BaseTerminal.h"
+#include "C_RecipientFilter.h"
+
+extern "C" char *strcpy(char *, const char *);
+extern "C" unsigned int strlen(const char *);
+extern "C" void *memmove(void *, const void *, unsigned int);
+#pragma intrinsic(strcpy, strlen)
+
+extern float (*g_101e31a0)(float flMin, float flMax);
+extern int (*g_101e31a4)(int nMin, int nMax);
+
+struct TerminalLine_100c6d50 { int m_data[0x12]; };
+
+#define CLAMP_100c6d50(x, lo, hi) ((x) > (hi) ? (hi) : ((x) < (lo) ? (lo) : (x)))
+
+void C_BaseTerminal::sub_100c6d50(int key)
+{
+	if (key == 0x60 || !m_bF04 || !m_bE88 || key == 8 || key == 10 || key == 9 || key == 13 || key == 27)
+		return;
+
+	char buf[40];
+	strcpy(buf, m_szText);
+
+	int pos = CLAMP_100c6d50(m_nE78 - m_nE8c, 0, (int)strlen(buf));
+
+	if (m_bF0c && key == 'c')
+	{
+		m_bF0c = false;
+		engine->vfunc27("hackcmd break", 1);
+		return;
+	}
+	m_bF0c = false;
+
+	if (m_nF10 & 1)
+	{
+		if (key == 0xa9)
+			engine->vfunc27("hackcmd ", 1);
+		return;
+	}
+
+	if (m_nF14 && strlen(m_szText) >= (unsigned int)m_nF14)
+		return;
+
+	if ((m_nF10 & 2) && ((unsigned int)key < '0' || (unsigned int)key > '9'))
+		return;
+
+	memmove(buf + pos + 1, buf + pos, strlen(buf + pos) + 1);
+	buf[pos] = key;
+	pos++;
+
+	if ((int)strlen(buf) + m_nE8c >= m_nStride - m_nE84)
+		return;
+
+	if (m_nE7c >= 0 && m_nE7c < m_nMax)
+		((TerminalLine_100c6d50 *)m_rgData)[m_nE7c] = *(TerminalLine_100c6d50 *)m_aE90;
+
+	m_nE78 = m_nE8c;
+	for (const char *p = buf; *p; p++)
+		sub_100c8060(*p);
+
+	m_nE78 = m_nE8c + CLAMP_100c6d50(pos, 0, (int)strlen(buf));
+	strcpy(m_szText, buf);
+	m_b7a8 = true;
+
+	if (m_nF10 & 8)
+	{
+		const char *pszSound = engine->vfunc8(m_nF18);
+		if (pszSound && *pszSound)
+		{
+			float flVolume = g_101e31a0(0.85f, 1.0f);
+			int nPitch = g_101e31a4(95, 105);
+			CLocalPlayerFilter filter;
+			enginesound->vfunc2(filter, entindex(), 3, pszSound, flVolume, 75, 0, nPitch, 0, 0, 1, 0);
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c7550 size=0x5e
 #include "engineclient.h"
 #include "CTextConsoleProxy.h"
