@@ -6706,6 +6706,7 @@
 0x1012cc60 func   ?sub_1012cc60@CUnknown1012cc60@@QAEXPBD@Z CUnknown1012cc60::sub_1012cc60
 0x1012cd20 func   ?sub_1012cd20@V1012@@QAEXH@Z V1012::sub_1012cd20
 0x1012d3f0 func   ?sub_1012d3f0@@YAXHHPBD@Z sub_1012d3f0
+0x1012d510 func   ?sub_1012d510@@YAHH@Z sub_1012d510
 0x1012d530 func   ?sub_1012d530@@YAXPAVIClientEntity@@ABVVector@@PBDMHHHMPAM@Z sub_1012d530
 0x1012d7a0 func   ?sub_1012d7a0@@YAPADPADH@Z sub_1012d7a0
 0x1012d7f0 func   ?sub_1012d7f0@@YAHHH@Z sub_1012d7f0
