@@ -125718,6 +125718,27 @@ int CUnknown10174fe0::sub_10174fe0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10175050 size=0x43
+extern "C" __declspec(dllimport) void DevMsg(int level, const char *pszFormat, ...);
+namespace lifted {
+extern char g_102d04e8;
+extern char g_105e77d0;
+struct C10142d00 { int sub_10142d00(int, int); };
+struct C10174d10 { int sub_10174d10(); };
+struct C101750a0 { int sub_101750a0(int); };
+}
+struct CUnknown10175050 { int sub_10175050(int); };
+int CUnknown10175050::sub_10175050(int a0)
+{
+    int t0 = ((lifted::C10142d00 *)((int)&lifted::g_105e77d0))->sub_10142d00(a0, 1);
+    if (t0 == 0) {
+        DevMsg(1, (const char *)((int)&lifted::g_102d04e8), a0);
+        return ((lifted::C10174d10 *)this)->sub_10174d10();
+    }
+    return ((lifted::C101750a0 *)this)->sub_101750a0(t0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10175b30 size=0x60
 #include "VCharWizardUI.h"
 #include "vgui2__Panel.h"
