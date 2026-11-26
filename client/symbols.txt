@@ -389,6 +389,7 @@
 0x10009930 func   ?_C_WeaponMelee_TireIron_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_TireIron_CreateObject
 0x100099f0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_TireIron@@@Z ClientClassInit
 0x10009a80 func   ?vfunc17@C_WeaponMelee_Baton@@UAEHXZ C_WeaponMelee_Baton::vfunc17
+0x10009ac0 func   ?sub_10009ac0@@YAHXZ sub_10009ac0
 0x10009b10 func   ??_GC_WeaponMelee_Baton@@UAEPAXI@Z ??_GC_WeaponMelee_Baton@@UAEPAXI@Z
 0x10009b30 func   ?vfunc16@C_WeaponMelee_Baton@@UAEHXZ C_WeaponMelee_Baton::vfunc16
 0x10009b40 func   ?vfunc15@C_WeaponMelee_Baton@@UAEHXZ C_WeaponMelee_Baton::vfunc15
