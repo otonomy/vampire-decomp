@@ -4719,6 +4719,7 @@
 0x100be160 func   ??0CLocalPlayerFilter@@QAE@XZ CLocalPlayerFilter::CLocalPlayerFilter
 0x100be160 func   ?sub_100be160@CUnknown100be160@@QAEPAXXZ CUnknown100be160::sub_100be160
 0x100be190 func   ??_GCLocalPlayerFilter@@UAEPAXI@Z ??_GCLocalPlayerFilter@@UAEPAXI@Z
+0x100be200 func   ?Grow@?$CUtlMemory@H@@QAEXH@Z CUtlMemory<int>::Grow
 0x100be200 func   ?sub_100be200@UtlMem@@QAEXH@Z UtlMem::sub_100be200
 0x100be270 func   ?vfunc0@IPredictionSystem@@QAEPAXD@Z IPredictionSystem::vfunc0
 0x100be290 func   ?sub_100be290@@YAHHHH@Z sub_100be290
