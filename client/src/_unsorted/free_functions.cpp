@@ -51042,6 +51042,30 @@ int sub_100c87d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c8810 size=0x222
+#include "CUnknown10427700.h"
+void sub_100c8810(CUnknown10427700 *pDef)
+{
+	pDef->sub_10079160("MediumRound", 2, 1, "sk_plr_dmg_medium_round", "sk_npc_dmg_medium_round", "sk_max_medium_round");
+	pDef->sub_10079160("FragGrenade", 0x40, 0, "sk_plr_dmg_grenade", "sk_npc_dmg_grenade", "sk_max_grenade");
+	pDef->sub_10079160("AnacondaRound", 2, 1, "sk_plr_dmg_anaconda_round", "sk_npc_dmg_anaconda_round", "sk_max_anaconda_round");
+	pDef->sub_10079160("CrossbowBolt", 2, 1, "sk_plr_dmg_crossbow_bolt", "sk_npc_dmg_crossbow_bolt", "sk_max_crossbow_bolt");
+	pDef->sub_10079160("DesertEagle_Round", 2, 1, "sk_plr_dmg_deserteagle_round", "sk_npc_dmg_deserteagle_round", "sk_max_deserteagle_round");
+	pDef->sub_10079160("Glock_17cRound", 2, 1, "sk_plr_dmg_glock_17c_round", "sk_npc_dmg_glock_17c_round", "sk_max_glock_17c_round");
+	pDef->sub_10079160("Ithica_M37Round", 0x4000002, 1, "sk_plr_dmg_ithica_m37_round", "sk_npc_dmg_ithica_m37_round", "sk_max_ithica_m37_round");
+	pDef->sub_10079160("Mac_10Round", 2, 1, "sk_plr_dmg_mac10_round", "sk_npc_dmg_mac10_round", "sk_max_mac10_round");
+	pDef->sub_10079160("Remington_M_700Round", 0x2000002, 1, "sk_plr_dmg_remington_round", "sk_npc_dmg_remington_round", "sk_max_remington_round");
+	pDef->sub_10079160("Steyr_AugRound", 0x2000002, 1, "sk_plr_dmg_steyr_round", "sk_npc_dmg_steyr_round", "sk_max_steyr_round");
+	pDef->sub_10079160("Super_ShotgunRound", 0x4000002, 1, "sk_plr_dmg_supershotgun_round", "sk_npc_dmg_supershotgun_round", "sk_max_supershotgun_round");
+	pDef->sub_10079160("UziRound", 2, 1, "sk_plr_dmg_uzi_round", "sk_npc_dmg_uzi_round", "sk_max_uzi_round");
+	pDef->sub_10079160("FlameThrowerRound", 8, 1, "sk_plr_dmg_flamethrower_round", "sk_npc_dmg_flamethrower_round", "sk_max_flamethrower_round");
+	pDef->sub_10079160("ThirtyeightRound", 2, 1, "sk_plr_dmg_thirtyeight_round", "sk_npc_dmg_thirtyeight_round", "sk_max_thirtyeight_round");
+	pDef->sub_10079160("BloodRound", 0, 0, "sk_plr_dmg_bloodpack_round", "sk_npc_dmg_bloodpack_round", "sk_max_bloodpack_round");
+	pDef->sub_10079160("BlueBloodRound", 0, 0, "sk_plr_dmg_bluebloodpack_round", "sk_npc_dmg_bluebloodpack_round", "sk_max_bluebloodpack_round");
+	pDef->sub_10079160("VitaeRound", 0, 0, "sk_plr_dmg_eldervitaepack_round", "sk_npc_dmg_eldervitaepack_round", "sk_max_eldervitaepack_round");
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c8a40 size=0x12
 namespace lifted {
 extern char g_1023370c;

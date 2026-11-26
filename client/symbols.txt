@@ -4580,6 +4580,7 @@
 0x100c86f0 func   ?vfunc0@CTextConsoleProxy@@UAE_NPAX0@Z CTextConsoleProxy::vfunc0
 0x100c87b0 func   ?sub_100c87b0@@YAHXZ sub_100c87b0
 0x100c87d0 func   ?sub_100c87d0@@YAHXZ sub_100c87d0
+0x100c8810 func   ?sub_100c8810@@YAXPAVCUnknown10427700@@@Z sub_100c8810
 0x100c8a40 func   ?sub_100c8a40@CUnknown100c8a40@@QAEPAXXZ CUnknown100c8a40::sub_100c8a40
 0x100c8a60 func   ??_GC_VampSP_GameRules@@UAEPAXI@Z ??_GC_VampSP_GameRules@@UAEPAXI@Z
 0x100c8a80 func   ??1C_SingleplayRules@@UAE@XZ C_SingleplayRules::~C_SingleplayRules
