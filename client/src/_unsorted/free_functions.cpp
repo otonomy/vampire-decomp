@@ -119370,6 +119370,19 @@ int sub_10184690()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101846b0 size=0x16
+namespace lifted {
+extern char g_102bbe88;
+extern char g_104cfe38;
+struct C100f0ed0 { int sub_100f0ed0(int); };
+struct C10186a50 { int sub_10186a50(); };
+}
+int sub_101846b0()
+{
+    return ((lifted::C10186a50 *)(((lifted::C100f0ed0 *)((int)&lifted::g_104cfe38))->sub_100f0ed0((int)&lifted::g_102bbe88)))->sub_10186a50();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10184860 size=0x335
 #include "VItemInfoUI.h"
 #include "CStudiomodelPanel.h"
