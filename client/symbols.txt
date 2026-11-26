@@ -6086,6 +6086,7 @@
 0x1011ac60 func   ?sub_1011ac60@@YIXPAUS_1011ac60@@H_N@Z sub_1011ac60
 0x1011ac80 func   ?sub_1011ac80@CUnknown1011ac80@@QAEDXZ CUnknown1011ac80::sub_1011ac80
 0x1011ac90 func   ?sub_1011ac90@C_BaseEntity@@QAEXP81@AEXXZHH@Z C_BaseEntity::sub_1011ac90
+0x1011aea0 func   ?vfunc0@CDataObjectAccessSystem@@UAE_NXZ CDataObjectAccessSystem::vfunc0
 0x1011b0d0 func   ??0ScopeTrace@@QAE@PBD00@Z ScopeTrace::ScopeTrace
 0x1011b130 func   ?vfunc0@IEntityDataInstantiator@@QAEPAXD@Z IEntityDataInstantiator::vfunc0
 0x1011b150 func   ?sub_1011b150@@YIXPAUSys@@@Z sub_1011b150
