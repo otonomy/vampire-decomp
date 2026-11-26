@@ -8785,6 +8785,7 @@
 0x10179840 func   ?sub_10179840@@YAXXZ sub_10179840
 0x10179850 func   ?sub_10179850@CharEditEquipPanel@@QAEXXZ CharEditEquipPanel::sub_10179850
 0x10179c40 func   ?sub_10179c40@CharEditEquipPanel@@QAEXXZ CharEditEquipPanel::sub_10179c40
+0x1017a330 func   ?vfunc78@CharEditEquipPanel@@UAEXH@Z CharEditEquipPanel::vfunc78
 0x1017a5c0 func   ?sub_1017a5c0@@YAXXZ sub_1017a5c0
 0x1017a630 func   ?sub_1017a630@@YAXXZ sub_1017a630
 0x1017a690 func   ?vfunc124@CharEditEquipPanel@@UAEXH@Z CharEditEquipPanel::vfunc124
