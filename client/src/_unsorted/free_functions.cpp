@@ -90639,6 +90639,26 @@ void sub_10140150()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10140160 size=0x40
+namespace lifted {
+struct C101608a0 { int sub_101608a0(int); };
+struct V { virtual int f0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual int f4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual int f10(int, int); };
+}
+struct CUnknown10140160 { char sub_10140160(int); };
+char CUnknown10140160::sub_10140160(int a0)
+{
+    if (a0 != 0) {
+        int t0 = ((lifted::V *)a0)->f4();
+        if (t0 != 0) {
+            ((lifted::C101608a0 *)this)->sub_101608a0(((lifted::V *)t0)->f0());
+            *(int *)((char *)this + 0x10) = ((lifted::V *)t0)->f10(0, 0);
+        }
+        return 1;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101401e0 size=0x29
 #include "Vector.h"
 struct CUnknown101d61e0_Sub10 {
