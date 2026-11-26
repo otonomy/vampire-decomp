@@ -16374,6 +16374,32 @@ template <> int ClientClassInit<DT_ItemKHannahsSafeKey::ignored>(DT_ItemKHannahs
 }
 // END FUNCTION
 
+// FUNCTION: 0x100266c0 size=0x45
+namespace lifted {
+extern char g_10222d14;
+extern char g_10222d28;
+extern char g_10222d64;
+extern char g_10222d9c;
+extern char g_10222df4;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100266c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10222df4;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10222d9c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10222d64;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10222d28;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10222d14;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10026750 size=0x6
 namespace lifted {
 extern char g_102e7534;

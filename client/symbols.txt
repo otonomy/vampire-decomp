@@ -1861,6 +1861,7 @@
 0x10026530 func   ?_C_ItemKHannahsSafeKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKHannahsSafeKey_CreateObject
 0x100265f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKHannahsSafeKey@@@Z ClientClassInit
 0x10026680 func   ?vfunc17@C_ItemKSkylineHavenKey@@UAEHXZ C_ItemKSkylineHavenKey::vfunc17
+0x100266c0 func   ?sub_100266c0@@YAHXZ sub_100266c0
 0x10026710 func   ??_GC_ItemKSkylineHavenKey@@UAEPAXI@Z ??_GC_ItemKSkylineHavenKey@@UAEPAXI@Z
 0x10026730 func   ?vfunc16@C_ItemKSkylineHavenKey@@UAEHXZ C_ItemKSkylineHavenKey::vfunc16
 0x10026740 func   ?vfunc15@C_ItemKSkylineHavenKey@@UAEHXZ C_ItemKSkylineHavenKey::vfunc15
