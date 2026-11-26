@@ -227,6 +227,7 @@
 0x10006750 func   ?sub_10006750@@YAHXZ sub_10006750
 0x100067b0 func   ?_C_WeaponRanged_Domination_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponRanged_Domination_CreateObject
 0x10006850 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponRanged_Domination@@@Z ClientClassInit
+0x100069e0 func   ?sub_100069e0@@YAHXZ sub_100069e0
 0x10006a00 func   ?vfunc16@C_WeaponRanged_Thaumaturgy@@UAEHXZ C_WeaponRanged_Thaumaturgy::vfunc16
 0x10006a20 func   ?sub_10006a20@@YAHXZ sub_10006a20
 0x10006a80 func   ?_C_WeaponRanged_Thaumaturgy_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponRanged_Thaumaturgy_CreateObject
