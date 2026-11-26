@@ -19,6 +19,7 @@ public:
 		m_pObj = pObj;
 	}
 	operator T *() const { return m_pObj; }
+	T *operator->() const { return m_pObj; }
 
 	T *m_pObj;
 };
