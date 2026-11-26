@@ -94404,6 +94404,24 @@ void sub_1012cea0(int, int);
 void V1012::sub_1012cd20(int p) { sub_1012cea0(b.v9(), p); }
 // END FUNCTION
 
+// FUNCTION: 0x1012cea0 size=0xa1
+#include "CSoundEmitterSystemBase.h"
+#include "engineclient.h"
+
+typedef void (__cdecl *TraceEmitSoundFn)(CSoundEmitterSystemBase *, const char *, ...);
+
+void sub_1012cea0(int entindex, const char *soundname)
+{
+	CSoundParameters params;
+	if (!g_105e5540.sub_1012e6d0(soundname, params))
+		return;
+	if (!params.soundname[0])
+		return;
+	enginesound->vfunc7(entindex, params.channel, params.soundname);
+	((TraceEmitSoundFn *)g_105e5540.m_vtbl)[3](&g_105e5540, "StopSound:  '%s' stopped as '%s' (ent %i)\n", soundname, params.soundname, entindex);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012d3f0 size=0x10b
 #include "engineclient.h"
 struct SndInfo {
