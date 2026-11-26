@@ -60381,6 +60381,121 @@ void * CUnknown100c2450::sub_100c2450()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c31e0 size=0x294
+#include "C_SpriteRenderer.h"
+#include "Vector.h"
+#include "QAngle.h"
+
+extern "C" __declspec(dllimport) void Warning(const char *pMsg, ...);
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);	// AngleVectors
+const Vector &sub_10198d50();	// CurrentViewForward
+const Vector &sub_10198d60();	// CurrentViewRight
+const Vector &sub_10198d70();	// CurrentViewUp
+
+#define M_PI 3.14159265358979323846
+
+inline void SinCos(float radians, float *sine, float *cosine)
+{
+	_asm
+	{
+		fld		DWORD PTR [radians]
+		fsincos
+
+		mov edx, DWORD PTR [cosine]
+		mov eax, DWORD PTR [sine]
+
+		fstp DWORD PTR [edx]
+		fstp DWORD PTR [eax]
+	}
+}
+
+void C_SpriteRenderer::sub_100c31e0(int type, const Vector &origin, const QAngle &angles, Vector &forward, Vector &right, Vector &up)
+{
+	int i;
+	float dot, angle, sr, cr;
+	Vector tvec;
+
+	// Automatically roll parallel sprites if requested
+	if (angles[2] != 0 && type == 2)
+	{
+		type = 4;
+	}
+
+	switch (type)
+	{
+	case 1:
+		{
+			tvec[0] = -origin[0];
+			tvec[1] = -origin[1];
+			tvec[2] = -origin[2];
+			VectorNormalize(tvec);
+			dot = tvec[2];
+			if ((dot > 0.999848) || (dot < -0.999848))
+				return;
+			up[0] = 0;
+			up[1] = 0;
+			up[2] = 1;
+			right[0] = tvec[1];
+			right[1] = -tvec[0];
+			right[2] = 0;
+			VectorNormalize(right);
+			forward[0] = -right[1];
+			forward[1] = right[0];
+			forward[2] = 0;
+		}
+		break;
+	case 2:
+		{
+			for (i = 0; i < 3; i++)
+			{
+				up[i] = sub_10198d70()[i];
+				right[i] = sub_10198d60()[i];
+				forward[i] = sub_10198d50()[i];
+			}
+		}
+		break;
+	case 0:
+		{
+			dot = sub_10198d50()[2];
+			if ((dot > 0.999848) || (dot < -0.999848))
+				return;
+			up[0] = 0;
+			up[1] = 0;
+			up[2] = 1;
+			right[0] = sub_10198d50()[1];
+			right[1] = -sub_10198d50()[0];
+			right[2] = 0;
+			VectorNormalize(right);
+			forward[0] = -right[1];
+			forward[1] = right[0];
+			forward[2] = 0;
+		}
+		break;
+	case 3:
+		{
+			sub_101090a0(angles, &forward, &right, &up);
+		}
+		break;
+	case 4:
+		{
+			angle = angles[2] * (M_PI * 2 / 360);
+			SinCos(angle, &sr, &cr);
+
+			for (i = 0; i < 3; i++)
+			{
+				forward[i] = sub_10198d50()[i];
+				right[i] = sub_10198d60()[i] * cr + sub_10198d70()[i] * sr;
+				up[i] = sub_10198d60()[i] * -sr + sub_10198d70()[i] * cr;
+			}
+		}
+		break;
+	default:
+		Warning("GetSpriteAxes: Bad sprite type %d", type);
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c3680 size=0x6
 namespace lifted {
 extern char g_104a48dc;

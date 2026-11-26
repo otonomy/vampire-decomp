@@ -4803,6 +4803,7 @@
 0x100c2450 func   ??0C_SpriteRenderer@@QAE@XZ C_SpriteRenderer::C_SpriteRenderer
 0x100c2450 func   ?sub_100c2450@CUnknown100c2450@@QAEPAXXZ CUnknown100c2450::sub_100c2450
 0x100c2470 func   ??1C_SpriteRenderer@@QAE@XZ C_SpriteRenderer::~C_SpriteRenderer
+0x100c31e0 func   ?sub_100c31e0@C_SpriteRenderer@@QAEXHABVVector@@ABVQAngle@@AAV2@22@Z C_SpriteRenderer::sub_100c31e0
 0x100c3660 func   ?vfunc16@C_BaseFlex@@UAEHXZ C_BaseFlex::vfunc16
 0x100c3670 func   ?vfunc15@C_BaseFlex@@UAEHXZ C_BaseFlex::vfunc15
 0x100c3680 func   ?sub_100c3680@@YAHXZ sub_100c3680
