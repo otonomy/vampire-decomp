@@ -9,6 +9,7 @@ namespace vgui2
 class EditablePanel : public vgui2::Panel
 {
 public:
+	EditablePanel(vgui2::Panel *parent, const char *name);
 	virtual ~EditablePanel();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with EditablePanel's own function
