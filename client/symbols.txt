@@ -1125,6 +1125,7 @@
 0x10017f30 func   ?_C_ItemGGhostPendant_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGGhostPendant_CreateObject
 0x10017ff0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGGhostPendant@@@Z ClientClassInit
 0x10018080 func   ?vfunc17@C_ItemGRing03@@UAEHXZ C_ItemGRing03::vfunc17
+0x100180c0 func   ?sub_100180c0@@YAHXZ sub_100180c0
 0x10018110 func   ??_GC_ItemGRing03@@UAEPAXI@Z ??_GC_ItemGRing03@@UAEPAXI@Z
 0x10018130 func   ?vfunc16@C_ItemGRing03@@UAEHXZ C_ItemGRing03::vfunc16
 0x10018140 func   ?vfunc15@C_ItemGRing03@@UAEHXZ C_ItemGRing03::vfunc15
