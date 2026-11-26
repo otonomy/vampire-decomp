@@ -821,6 +821,7 @@
 0x10012030 func   ?_C_ResearchBook_MG_MELEE_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ResearchBook_MG_MELEE_CreateObject
 0x100120f0 func   ?ClientClassInit@@YAHPAUignored@DT_ResearchBook_MG_MELEE@@@Z ClientClassInit
 0x10012180 func   ?vfunc17@C_ResearchBook_LG_STEALTH@@UAEHXZ C_ResearchBook_LG_STEALTH::vfunc17
+0x100121c0 func   ?sub_100121c0@@YAHXZ sub_100121c0
 0x10012210 func   ??_GC_ResearchBook_LG_STEALTH@@UAEPAXI@Z ??_GC_ResearchBook_LG_STEALTH@@UAEPAXI@Z
 0x10012230 func   ?vfunc16@C_ResearchBook_LG_STEALTH@@UAEHXZ C_ResearchBook_LG_STEALTH::vfunc16
 0x10012240 func   ?vfunc15@C_ResearchBook_LG_STEALTH@@UAEHXZ C_ResearchBook_LG_STEALTH::vfunc15

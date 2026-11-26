@@ -7042,6 +7042,32 @@ template <> int ClientClassInit<DT_ResearchBook_MG_MELEE::ignored>(DT_ResearchBo
 }
 // END FUNCTION
 
+// FUNCTION: 0x100121c0 size=0x45
+namespace lifted {
+extern char g_101fbb74;
+extern char g_101fbb88;
+extern char g_101fbbc4;
+extern char g_101fbbfc;
+extern char g_101fbc54;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100121c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_101fbc54;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_101fbbfc;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_101fbbc4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_101fbb88;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_101fbb74;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10012250 size=0x6
 namespace lifted {
 extern char g_102e0f9c;
