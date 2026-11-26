@@ -10030,6 +10030,7 @@
 0x101c1210 func   ?vfunc14@BuildGroup@vgui2@@UAEPADXZ vgui2::BuildGroup::vfunc14
 0x101c1220 func   ?vfunc17@BuildGroup@vgui2@@UAE_NXZ vgui2::BuildGroup::vfunc17
 0x101c1330 func   ?vfunc16@BuildGroup@vgui2@@UAEHH@Z vgui2::BuildGroup::vfunc16
+0x101c1370 func   ?vfunc18@BuildGroup@vgui2@@UAEXXZ vgui2::BuildGroup::vfunc18
 0x101c1db0 func   ?vfunc13@BuildGroup@vgui2@@UAEHHH@Z vgui2::BuildGroup::vfunc13
 0x101c1dd0 func   ?vfunc20@BuildGroup@vgui2@@UAEXHH@Z vgui2::BuildGroup::vfunc20
 0x101c1de0 func   ?sub_101c1de0@BG@@QAEXHPAUPanelV@@@Z BG::sub_101c1de0
