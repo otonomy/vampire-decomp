@@ -4327,6 +4327,7 @@
 0x100a7ab0 func   ?vfunc174@C_BasePlayer@@UAE_NXZ C_BasePlayer::vfunc174
 0x100a7b80 func   ?vfunc158@C_BasePlayer@@UAEXXZ C_BasePlayer::vfunc158
 0x100a7c30 func   ?vfunc163@C_BasePlayer@@UAE_NXZ C_BasePlayer::vfunc163
+0x100a7c40 func   ?vfunc159@C_BasePlayer@@UAEXHHH@Z C_BasePlayer::vfunc159
 0x100a8030 func   ?vfunc171@C_BasePlayer@@UAEHXZ C_BasePlayer::vfunc171
 0x100a8040 func   ?vfunc173@C_BasePlayer@@UAEHXZ C_BasePlayer::vfunc173
 0x100a87e0 func   ?vfunc168@C_BasePlayer@@UAEXH@Z C_BasePlayer::vfunc168

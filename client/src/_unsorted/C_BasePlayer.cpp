@@ -669,6 +669,117 @@ bool sub_10050f60();
 bool C_BasePlayer::vfunc163() { if (sub_10050f60()) return false; return true; }
 // END FUNCTION
 
+// FUNCTION: 0x100a7c40 size=0x288
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#define PCD_LPF_CTOR
+#include "C_BasePlayer.h"
+#include "C_BaseCombatWeapon.h"
+#include "C_RecipientFilter.h"
+#include "engineclient.h"
+#include "CHud.h"
+#include "ConVar.h"
+
+extern ConVar g_1049e880;
+bool sub_1018c770();
+bool sub_10170bf0();
+void sub_10170c30(int slot);
+void sub_1004f810();
+void sub_10186e20(C_BasePlayer *pPlayer, int n);
+
+struct CView { int slot; int pos; char sub_100a8db0(); };
+struct CUnk100aa4a0 { void sub_100aa4a0(CView *p); };
+struct CUnknown101a79f0 { void sub_101a79f0(); };
+struct HudSelView
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual bool IsActive();	// 10
+};
+struct NetView
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8();
+	virtual int entindex();	// 9
+};
+struct PlayerSelView
+{
+	char pad0[0x1614];
+	CView m_sel[2];	// 0x1614
+	int m_iSel;	// 0x1624
+	CView *GetSel() { return &m_sel[m_iSel]; }
+	CView *sub_100a9000(int slot);
+	CView *sub_100a9190(int slot, int pos);
+};
+#define SELF ((PlayerSelView *)this)
+
+void C_BasePlayer::vfunc159(int slot, int a2, int a3)
+{
+	if (sub_1018c770())
+		return;
+	if (8 < slot)
+		return;
+	if (!(!vfunc163())) { if (sub_10170bf0())
+	{
+		if (slot == 0 || slot == 7)
+			return;
+		sub_10170c30(slot);
+		return;
+	}
+	HudSelView *pHud = (HudSelView *)gHUD.sub_100f0ed0("CHudWeaponSelection");
+	bool bWasActive = pHud->IsActive();
+	((CUnknown101a79f0 *)pHud)->sub_101a79f0();
+	if (pHud->IsActive() && SELF->GetSel() && SELF->GetSel()->slot == slot)
+	{
+		enginesound->vfunc0("common/wpn_moveselect.wav", 0);
+		CLocalPlayerFilter filter;
+		enginesound->EmitSound(filter, ((NetView *)((char *)this + 8))->entindex(), 3, "common/wpn_moveselect.wav", 1.0f, 0, 0, 100, 0, 0, 1, 0);
+		if (SELF->GetSel())
+		{
+			if (bWasActive)
+				((CUnk100aa4a0 *)this)->sub_100aa4a0(SELF->sub_100a9190(slot, pcd_stage(SELF->GetSel()->pos) + 1));
+			else
+			{
+				C_BaseCombatWeapon *pWeapon = (C_BaseCombatWeapon *)vfunc148();
+				if (!(pWeapon && pWeapon->vfunc220() == slot - 1 && pWeapon->vfunc176())) ((CUnk100aa4a0 *)this)->sub_100aa4a0(SELF->sub_100a9000(slot)); else vfunc168((int)pWeapon);
+			}
+		}
+		if (!SELF->GetSel())
+			((CUnk100aa4a0 *)this)->sub_100aa4a0(SELF->sub_100a9000(slot));
+	}
+	else
+	{
+		sub_1004f810();
+		vfunc168((int)vfunc164(slot - 1));
+		((CUnk100aa4a0 *)this)->sub_100aa4a0(SELF->sub_100a9000(slot));
+		if (SELF->GetSel() && g_1049e880.GetBool())
+		{
+			CView next = *SELF->sub_100a9190(slot, (1 + pcd_stage(SELF->GetSel()->pos)));
+			if (!next.sub_100a8db0())
+				((CUnk100aa4a0 *)this)->sub_100aa4a0(&next);
+		}
+	}
+	if (!SELF->GetSel()->sub_100a8db0())
+		sub_10186e20(this, 0);
+	else
+		sub_10170bf0(); }
+}
+
+/* judged with these header patches (not saved):
+[
+ {
+  "path": "C_BasePlayer.h",
+  "old": "\tvirtual void vfunc159();",
+  "new": "\tvirtual void vfunc159(int slot, int, int);"
+ },
+ {
+  "path": "C_BasePlayer.h",
+  "old": "\tvirtual void vfunc164();",
+  "new": "\tvirtual C_BaseCombatWeapon *vfunc164(int);"
+ }
+]
+*/
+// END FUNCTION
+
 // FUNCTION: 0x100a8030 size=0x8
 #include "C_BasePlayer.h"
 namespace lifted {
