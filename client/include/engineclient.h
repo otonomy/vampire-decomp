@@ -261,7 +261,7 @@ class IVRenderView
 public:
 	virtual void vfunc0(C_BaseEntity *, const void *, const Vector &, const QAngle &, int);	// slot 0; seen as DrawBrushModel 1; shapes differ
 	virtual int vfunc1();	// slot 1
-	virtual int vfunc2();	// slot 2
+	virtual void vfunc2(void *pLight);	// slot 2: TouchLight(dlight_t *)
 	virtual int vfunc3();	// slot 3
 	virtual int vfunc4();	// slot 4
 	virtual int vfunc5();	// slot 5
