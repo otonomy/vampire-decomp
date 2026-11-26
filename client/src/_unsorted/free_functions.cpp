@@ -72332,6 +72332,63 @@ trace21 *sub_1011c140(trace21 *out)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011c5c0 size=0x225
+#include "Vector.h"
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+struct CollV { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void WorldSpaceTriggerBounds(Vector *mins, Vector *maxs); };
+struct ITraceV { virtual int GetPointContents(const Vector &p, void *ent); };
+extern ITraceV *g_104a582c;
+void sub_10108fd0(const Vector &start, float scale, const Vector &dir, Vector &dest);
+struct EntV { char pad0[0x90]; int m_nWaterLevel; int m_nWaterType; char pad98[0x150 - 0x98]; float m_viewZ; Vector m_vecBaseVelocity; char pad15c[0x190 - 0x160]; CollV m_Collision; };
+// TARGET: C_BaseEntity::sub_1011c5c0
+bool C_BaseEntity::sub_1011c5c0()
+{
+	EntV *e = (EntV *)this;
+	ScopeTrace trace("CBaseEntity::PhysicsCheckWater", e ? "clientside entity" : "NULL CLIENT ENTITY");
+	Vector mins, maxs, point;
+	e->m_Collision.WorldSpaceTriggerBounds(&mins, &maxs);
+	point.x = (maxs.x + mins.x) * 0.5;
+	e->m_nWaterLevel = 0;
+	e->m_nWaterType = 0;
+	point.y = (maxs.y + mins.y) * 0.5;
+	point.z = mins.z + 1.0f;
+	int cont = g_104a582c->GetPointContents(point, 0);
+	if (cont & 0x4030)
+	{
+		e->m_nWaterType = cont;
+		e->m_nWaterLevel = 1;
+		if (mins.z == maxs.z)
+		{
+			e->m_nWaterLevel = 3;
+		}
+		else
+		{
+			point.z = (maxs.z + mins.z) * 0.5;
+			if (g_104a582c->GetPointContents(point, 0) & 0x4030)
+			{
+				const float &vz = e->m_viewZ;
+				e->m_nWaterLevel = 2;
+				point.z = point.z + vz;
+				if (g_104a582c->GetPointContents(point, 0) & 0x4030)
+					e->m_nWaterLevel = 3;
+			}
+		}
+		if (cont & 0x7c0000)
+		{
+			Vector v(0, 0, 0);
+			if (cont & 0x40000) v.x = 1.0f;
+			if (cont & 0x80000) v.y = 1.0f;
+			if (cont & 0x100000) v.x -= 1.0f;
+			if (cont & 0x200000) v.y -= 1.0f;
+			if (cont & 0x400000) v.z = 1.0f;
+			sub_10108fd0(e->m_vecBaseVelocity, 50.0 * e->m_nWaterLevel, v, e->m_vecBaseVelocity);
+		}
+	}
+	return e->m_nWaterLevel > 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011c7f0 size=0x1ab
 #include "C_BaseEntity.h"
 #include "ScopeTrace.h"
