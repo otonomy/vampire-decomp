@@ -5648,6 +5648,7 @@
 0x10103a60 func   ?vfunc5@CInput@@UAEXHHH@Z CInput::vfunc5
 0x10103b00 func   ?vfunc6@CInput@@UAEXHHH@Z CInput::vfunc6
 0x10103ba0 func   ?vfunc4@CInput@@UAEXPAXHHH@Z CInput::vfunc4
+0x10103ba0 func   ?vfunc4@CInput@@UAEXPAXHH_N@Z CInput::vfunc4
 0x10104320 func   ?sub_10104320@VH@@QBEHABVVector@@@Z VH::sub_10104320
 0x10104360 func   ?sub_10104360@CUnk1011d310@@QAEDH@Z CUnk1011d310::sub_10104360
 0x10104380 func   ?sub_10104380@CUnknown10104380@@QAEPAXH@Z CUnknown10104380::sub_10104380
