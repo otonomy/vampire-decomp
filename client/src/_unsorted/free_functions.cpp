@@ -95535,6 +95535,46 @@ int __stdcall sub_1012f960(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012f970 size=0x48
+struct Entry232_1012f970
+{
+	int m_unk00; int m_unk04; int m_unk08; int m_unk0c; int m_unk10; int m_unk14;
+	int m_nName;	// 0x18: index into the name list
+	char m_rest[232 - 0x1c];
+};
+
+struct Name130_1012f970
+{
+	short m_unk0;
+	char m_szName[128];
+};
+
+struct CUnknown1012f970
+{
+	char m_pad00[0x54];
+	Entry232_1012f970 *m_pEntries;	// 0x54
+	int m_unk58; int m_unk5c; int m_unk60;
+	int m_nEntries;	// 0x64
+	char m_pad68[0x9c - 0x68];
+	Name130_1012f970 *m_pNames;	// 0x9c
+	int m_unka0; int m_unka4;
+	int m_nNames;	// 0xa8
+
+	const char *sub_1012f970(int i);
+};
+
+const char *CUnknown1012f970::sub_1012f970(int i)
+{
+	if (i >= 0 && i < m_nEntries)
+	{
+		int n = m_pEntries[i].m_nName;
+		if (n >= 0 && n < m_nNames)
+			return m_pNames[n].m_szName;
+	}
+	return "";
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012f9c0 size=0x1b
 #include "CUnknown1024b2d0.h"
 
