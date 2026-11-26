@@ -101,7 +101,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	char m_pad1438[0x14d0 - 0x1438];
 	float m_fl14d0;
 	bool m_b14d4;
-	char m_pad14d5[0x14e4 - 0x14d5];
+	char m_c14d5; char m_c14d6; char m_c14d7;
+	int m_n14d8;	// 0x14d8: the active discipline ("discipline_%d" icon, 31 = none)
+	int m_n14dc;
+	int m_n14e0;
 	int m_unk14e4;
 	CBaseHandle m_h14e8;
 	char m_pad14ec[0x162c - 0x14ec];
