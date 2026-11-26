@@ -124745,6 +124745,160 @@ int sub_101825e0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10183280 size=0x409
+#include "VHotkeysUI.h"
+#include "VLabelComboBox.h"
+#include "vgui2__KeyValues.h"
+#include <stdio.h>
+
+struct Color_10183280
+{
+    Color_10183280() {}
+    unsigned char c[4];
+};
+
+struct Scheme_10183280
+{
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+    virtual int GetFont(const char *name);
+    virtual void v5();
+    virtual Color_10183280 GetColor(const char *name);
+};
+
+struct Obj_101ac830 { Scheme_10183280 *sub_101ac830(); };
+struct CUnknown101bb300 { int sub_101bb300(int); };
+struct CUnknown101764f0 { void sub_101764f0(char); };
+
+struct Combo_10183280
+{
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+    virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+    virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+    virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+    virtual void v20();
+    virtual void SetVisibleLike(int b);
+    virtual void v22(); virtual void v23(); virtual void v24();
+    virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+    virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+    virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+    virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+    virtual void v45();
+    virtual void SetEnabled(int b);
+    virtual void v47(); virtual void v48(); virtual void v49();
+    virtual void v50();
+    virtual void SetFgColor(Color_10183280 c);
+    virtual void v52(); virtual void v53(); virtual void v54();
+    virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+    virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64();
+    virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
+    virtual void v70(); virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74();
+    virtual void v75(); virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79();
+    virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84();
+    virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89();
+    virtual void v90(); virtual void v91(); virtual void v92(); virtual void v93(); virtual void v94();
+    virtual void v95(); virtual void v96(); virtual void v97(); virtual void v98(); virtual void v99();
+    virtual void v100(); virtual void v101(); virtual void v102(); virtual void v103(); virtual void v104();
+    virtual void v105(); virtual void v106(); virtual void v107();
+    virtual void SetText(const char *text);
+    virtual void v109(); virtual void v110(); virtual void v111(); virtual void v112(); virtual void v113();
+    virtual void v114(); virtual void v115(); virtual void v116(); virtual void v117();
+    virtual void SetFont(int font);
+    virtual void v119(); virtual void v120(); virtual void v121(); virtual void v122(); virtual void v123();
+    virtual void v124(); virtual void v125(); virtual void v126(); virtual void v127(); virtual void v128();
+    virtual void v129(); virtual void v130(); virtual void v131(); virtual void v132(); virtual void v133();
+    virtual void v134(); virtual void v135(); virtual void v136(); virtual void v137(); virtual void v138();
+    virtual void v139(); virtual void v140(); virtual void v141(); virtual void v142(); virtual void v143();
+    virtual void v144(); virtual void v145(); virtual void v146(); virtual void v147(); virtual void v148();
+    virtual void v149(); virtual void v150(); virtual void v151(); virtual void v152(); virtual void v153();
+    virtual void v154(); virtual void v155(); virtual void v156(); virtual void v157(); virtual void v158();
+    virtual void v159(); virtual void v160(); virtual void v161(); virtual void v162(); virtual void v163();
+    virtual void v164(); virtual void v165();
+    virtual int AddItem(const char *text, void *kv, void *target);
+    void sub_101a9950(int x, int y, int w, int h);
+};
+
+struct HotkeyRow_10183280
+{
+    void *m_pLeft;
+    void *m_pRight;
+    void *m_pLabel;
+    VLabelComboBox *m_pCombo;
+    VLabelComboBox *m_pCombo2;
+};
+
+const char *sub_1018c870(const char *name);
+int sub_100cd0f0();
+int sub_100cd100();
+void sub_1018c2a0(VHotkeysUI *panel, void **out, const char *text, int x, int y, int w, int h, const char *font);
+void sub_1018c560(vgui2::Panel *panel, vgui2::Label **out, vgui2::Panel *label, const char *name, int x, int y, int h);
+void sub_1018c710(VHotkeysUI *panel, void **out, void *label, const char *name, int x, int y, int h);
+void *sub_101b6840(unsigned int size);
+struct CUnknown101b5690 { void *sub_101b5690(const char *name, const char *key, const char *value); };
+
+#define XRES(x) ((int)((x) * (sub_100cd100() * (1.0 / 1024))))
+#define YRES(y) ((int)((y) * (sub_100cd0f0() * (1.0 / 768))))
+
+void VHotkeysUI::sub_10183280(HotkeyRow_10183280 *row, int y, const char *title, int unused, int index, bool bLeft)
+{
+    int font;
+    int x = 0;
+    if (bLeft)
+        x = -360;
+    x += 433;
+    y -= 103;
+    Scheme_10183280 *scheme = ((Obj_101ac830 *)this)->sub_101ac830();
+    char buf[48];
+    char item[64];
+
+    sprintf(buf, "%s", title);
+    if (bLeft)
+        sub_1018c2a0(this, &row->m_pLabel, buf, x - 50, y + 40, 50, 31, "PercolatorMedium");
+    else
+        sub_1018c2a0(this, &row->m_pLabel, buf, x + 360, y + 40, 50, 31, "PercolatorMedium");
+    sprintf(buf, "Left%d", index);
+    sub_1018c560(this, (vgui2::Label **)&row->m_pLeft, (vgui2::Panel *)row->m_pLabel, buf, x, y + 4, 31);
+    sprintf(buf, "Right%d", index);
+    sub_1018c710(this, &row->m_pRight, row->m_pLabel, buf, x + 0x200, y + 4, 31);
+    sprintf(buf, "szTitle%d", index);
+
+    VLabelComboBox *mem = (VLabelComboBox *)vgui2::Panel::operator new(0x104);
+    Combo_10183280 *combo = (Combo_10183280 *)(mem ? mem->sub_101763c0(this, buf) : 0);
+    row->m_pCombo = (VLabelComboBox *)combo;
+    font = scheme->GetFont(sub_1018c870("ParagraphText"));
+    combo->SetFont(font);
+    combo->SetFgColor(scheme->GetColor("BorderBright"));
+    combo->sub_101a9950(XRES(x), YRES(y + 36), XRES(350), YRES(26));
+    ((CUnknown101bb300 *)combo)->sub_101bb300((int)"interface/charactermaintenance/cm_DropdownButton_DWN");
+
+    if (*(int *)((char *)this + 0x1c84))
+    {
+        combo->SetEnabled(1);
+        for (int i = 0; i < *(int *)((char *)this + 0x1c84); i++)
+        {
+            sprintf(item, "*%d_%02d", index, i);
+            void *kvmem = sub_101b6840(0x1c);
+            void *kv = kvmem ? ((CUnknown101b5690 *)kvmem)->sub_101b5690("TextChanged", "text", item) : 0;
+            combo->AddItem((char *)this + 0x1810 + i * 0x60, kv, this);
+        }
+    }
+    else
+    {
+        combo->SetEnabled(0);
+    }
+
+    mem = (VLabelComboBox *)vgui2::Panel::operator new(0x104);
+    combo = (Combo_10183280 *)(mem ? mem->sub_101763c0(this, buf) : 0);
+    row->m_pCombo2 = (VLabelComboBox *)combo;
+    combo->SetFont(font);
+    combo->SetFgColor(scheme->GetColor("BorderBright"));
+    combo->sub_101a9950(XRES(x), YRES(y + 68), XRES(350), YRES(26));
+    combo->SetText("");
+    ((CUnknown101bb300 *)combo)->sub_101bb300((int)"interface/charactermaintenance/cm_DropdownButton_DWN");
+    ((CUnknown101764f0 *)combo)->sub_101764f0(0);
+    combo->SetVisibleLike(0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101837b0 size=0x60
 namespace lifted {
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual int f20(int); };
