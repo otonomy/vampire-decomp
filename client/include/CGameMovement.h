@@ -61,6 +61,7 @@ public:
 	Vector m_vecObsHullMin;	// 0x44
 	Vector m_vecObsHullMax;	// 0x50
 	float *sub_100e6ef0();
+	void sub_100e73c0();	// "UpdateStepSound": step sound timer (player +0x1994), surface from m_pSurface9c or the ladder / wade / water props, volume from the texture type (m_bA4) and the convar 0x104cf7cc, then slot 16
 	void sub_100ec660(C_BaseEntity *pNew);
 	void sub_100e85b0();
 	void sub_100e7a20();	// "CGameMovement::CheckParameters"
