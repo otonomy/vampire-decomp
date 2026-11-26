@@ -2291,6 +2291,7 @@
 0x10035d10 func   ?vfunc13@C_TEDecal@@UAEXXZ C_TEDecal::vfunc13
 0x10035d30 func   ?TE_Decal@@YAXAAVIRecipientFilter@@MPBVVector@@1HHH_N@Z TE_Decal
 0x10035d30 func   ?sub_10035d30@@YAXPAXMPBVVector@@1HHHH@Z sub_10035d30
+0x10035dd0 func   ?PostDataUpdate@C_TEDecal@@UAEXH@Z C_TEDecal::PostDataUpdate
 0x10035e70 func   ?vfunc9@C_TEDecal@@UAEHXZ C_TEDecal::vfunc9
 0x10035e80 func   ?vfunc8@C_TEDecal@@UAEHXZ C_TEDecal::vfunc8
 0x10035e90 func   ?sub_10035e90@@YAHXZ sub_10035e90
