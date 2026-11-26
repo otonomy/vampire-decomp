@@ -12,7 +12,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual void vfunc3();
     virtual void vfunc4();
     virtual void vfunc5();
-    virtual void vfunc6();
+    virtual void vfunc6(bool error_check, int commands_acknowledged);
     virtual int vfunc7();
     virtual void vfunc8(class Vector *);
     virtual void vfunc9(int);
@@ -27,5 +27,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual void vfunc17();
     virtual void vfunc18();
     virtual void vfunc19(const class Vector &origin, const class QAngle &angles, const class Vector &viewofs);
+	int m_unk04[(0x34 - 4) / 4];
+	bool m_bOldCLPredictValue;
 	void sub_10120ee0(int commands_acknowledged);
+	void sub_101219a0();
+	bool sub_10121b00(void *ent);
+	void sub_10121150(void *ent, int commands_acknowledged);
 };
