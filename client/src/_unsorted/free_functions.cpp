@@ -78552,6 +78552,25 @@ int sub_10102480()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101024a0 size=0x3c
+#include "CInput.h"
+#include "IViewRender.h"
+struct kbutton_t
+{
+    int down[2];
+    int state;
+};
+void sub_10101ea0(kbutton_t *b, bool flag);
+extern kbutton_t g_104d350c;
+extern IViewRender *g_102d43d8;
+void sub_101024a0()
+{
+    sub_10101ea0(&g_104d350c, false);
+    if (!(g_104d350c.state & 1) && input->GetLookSpring() != 0.0f)
+        g_102d43d8->vfunc8();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101024e0 size=0xa
 namespace lifted {
 int sub_10102130();
