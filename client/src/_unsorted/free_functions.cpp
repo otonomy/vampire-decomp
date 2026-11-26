@@ -85954,6 +85954,143 @@ int CParticleEffectBinding::sub_10116710()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10116720 size=0x470
+#define pmin(a, b) ((a) < (b) ? (a) : (b))
+#define pmax(a, b) ((a) > (b) ? (a) : (b))
+extern int g_104e0760;
+struct PVec { float x, y, z; };
+struct PNode { int p0; PNode *prev; PNode *next; int m0c; int m10; int m14; };
+struct PEffMat { PNode m_Particles; void *m_pMaterial; };
+struct PDrawX { void *builder; void *material; float dt; PDrawX() { material = 0; } void sub_10116b90(void *b, void *m, float d); };
+struct PBuilderX
+{
+	char pad0[0x80]; int m80; int m84; int m88; int m8c; int m90; int m94; int m98; int m9c; int ma0; char ma4; char pad1[0x1f];
+	PBuilderX() { m80 = 0; m88 = 0; m8c = 0; m90 = 0; m94 = 0; m98 = 0; m9c = 0; ma4 = 0; }
+	void sub_10041b10(void *mesh, int type, int n); void sub_10041c90(void *mesh, int a);
+};
+struct PMatSysX { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void *FindMaterial(const char *name, void *g, bool b);
+	virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52();
+	virtual void Bind(void *mat, void *proxy);
+	virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59(); virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69(); virtual void v70(); virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74(); virtual void v75(); virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79(); virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84(); virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89(); virtual void v90(); virtual void v91(); virtual void v92(); virtual void v93(); virtual void v94(); virtual void v95(); virtual void v96(); virtual void v97(); virtual void v98(); virtual void v99(); virtual void v100(); virtual void v101(); virtual void v102(); virtual void v103(); virtual void v104(); virtual void v105(); virtual void v106(); virtual void v107(); virtual void v108(); virtual void v109(); virtual void v110();
+	virtual void *GetDynamicMesh(bool a, void *b, void *c, void *d); };
+struct PMgrView { char pad[0x168]; PMatSysX *m_pMaterialSystem; };
+struct PEngX { virtual void v0(); virtual void v1(); virtual void v2(); virtual bool SimulateAndRender(PNode *p, PDrawX *draw, float *sortKey); virtual void v4(); virtual void v5(); virtual void v6(); virtual void GetPos(PNode *p, PVec *out); };
+struct PBindingX
+{
+	char pad[0x2c];
+	PEngX *m_pEng;
+	PMgrView *m_pMgr;
+	int sub_10116720(bool bBucket, bool bOnlySimulate, PEffMat *pMat, float dt, PVec *mins, PVec *maxs, bool *pbSet, bool bWireframe);
+	void sub_10116f00(PNode *p);
+	void sub_10116f40(bool bOnlySimulate, void *pMesh, PBuilderX *b, int *pCount);
+	void sub_10116d00(PEffMat *m, float *list, int n, float a, float b);
+};
+
+int PBindingX::sub_10116720(bool bBucket, bool bOnlySimulate, PEffMat *pMat, float dt, PVec *mins, PVec *maxs, bool *pbSet, bool bWireframe)
+{
+	float sortlist[0x4000];
+	PBuilderX builder;
+	PDrawX draw;
+	void *pMesh = 0;
+
+	if (bOnlySimulate)
+	{
+		draw.builder = 0;
+		draw.material = pMat;
+		draw.dt = dt;
+	}
+	else
+	{
+		if (bWireframe)
+		{
+			void *mat = m_pMgr->m_pMaterialSystem->FindMaterial("debug/debugparticlewireframe", 0, true);
+			m_pMgr->m_pMaterialSystem->Bind(mat, 0);
+		}
+		else
+		{
+			m_pMgr->m_pMaterialSystem->Bind(pMat->m_pMaterial, m_pMgr);
+		}
+		pMesh = m_pMgr->m_pMaterialSystem->GetDynamicMesh(true, 0, 0, 0);
+		builder.sub_10041b10(pMesh, 7, 0x320);
+		draw.sub_10116b90(&builder, pMat, dt);
+	}
+
+	int nSorted = 0;
+	float flMin = 1e24f;
+	float flMax = -1e24f;
+	int nBatch = 0;
+	int nDrawn = 0;
+	int i = 0;
+	float flLast = 0;
+	PNode *pNext;
+	for (PNode *pParticle = pMat->m_Particles.next; pParticle != &pMat->m_Particles; pParticle = pNext)
+	{
+		pNext = pParticle->next;
+		float dist;
+		if (m_pEng->SimulateAndRender(pParticle, &draw, &dist))
+		{
+			g_104e0760++;
+			if (bBucket)
+			{
+				flMin = pmin(dist, flMin);
+				flMax = pmax(dist, flMax);
+				if (nSorted < 0x4000)
+					sortlist[nSorted++] = dist;
+				PVec vB;
+				m_pEng->GetPos(pParticle, &vB);
+				mins->x = pmin(mins->x, vB.x);
+				mins->y = pmin(mins->y, vB.y);
+				mins->z = pmin(mins->z, vB.z);
+				maxs->x = pmax(maxs->x, vB.x);
+				maxs->y = pmax(maxs->y, vB.y);
+				maxs->z = pmax(maxs->z, vB.z);
+				*pbSet = true;
+			}
+			else
+			{
+				if ((i++ & 7) == 0)
+				{
+					PVec vA;
+					m_pEng->GetPos(pParticle, &vA);
+					mins->x = pmin(mins->x, vA.x);
+					mins->y = pmin(mins->y, vA.y);
+					mins->z = pmin(mins->z, vA.z);
+					maxs->x = pmax(maxs->x, vA.x);
+					maxs->y = pmax(maxs->y, vA.y);
+					maxs->z = pmax(maxs->z, vA.z);
+				}
+				if (pParticle != pMat->m_Particles.next && flLast > dist)
+				{
+					PNode *pPrev = pParticle->prev;
+					pParticle->prev->next = pParticle->next;
+					pParticle->next->prev = pParticle->prev;
+					pParticle->next = pPrev;
+					pParticle->prev = pPrev->prev;
+					pParticle->prev->next = pParticle;
+					pParticle->next->prev = pParticle;
+				}
+				else
+				{
+					flLast = dist;
+				}
+			}
+			nDrawn++;
+		}
+		else
+		{
+			sub_10116f00(pParticle);
+		}
+		sub_10116f40(bOnlySimulate, pMesh, &builder, &nBatch);
+	}
+	if (bBucket)
+		sub_10116d00(pMat, sortlist, nSorted, flMin, flMax);
+	if (!bOnlySimulate)
+		builder.sub_10041c90(0, 1);
+	return nDrawn;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10116b90 size=0x17
 struct CUnknown10116b90 { int sub_10116b90(int, int, int); };
 int CUnknown10116b90::sub_10116b90(int a0, int a1, int a2)

@@ -6489,6 +6489,7 @@
 0x10116680 func   ?sub_10116680@CL@@QAEXPAUCLNode@@H@Z CL::sub_10116680
 0x101166d0 func   ?sub_101166d0@@YIXPAUS@@HPBUV3@@1_N@Z sub_101166d0
 0x10116710 func   ?sub_10116710@CParticleEffectBinding@@QAEHXZ CParticleEffectBinding::sub_10116710
+0x10116720 func   ?sub_10116720@PBindingX@@QAEH_N0PAUPEffMat@@MPAUPVec@@2PA_N0@Z PBindingX::sub_10116720
 0x10116b90 func   ?sub_10116b90@CUnknown10116b90@@QAEHHHH@Z CUnknown10116b90::sub_10116b90
 0x10116bb0 func   ?sub_10116bb0@CParticleEffectBinding@@QAEXPAVVMatrix@@0@Z CParticleEffectBinding::sub_10116bb0
 0x10116ca0 func   ?sub_10116ca0@Obj@@QAEXHH@Z Obj::sub_10116ca0
