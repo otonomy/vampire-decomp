@@ -49,4 +49,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_100b8130(int nWidth, int nHeight);	// UpdateEdgeType: the eight neighbours' solidity picks each edge's style
 	void sub_100b84c0(int nWidth, int nHeight, int nEdge, int nStyle);	// SetupEdge-like
 	void sub_100b8a00(class IBrushSurface *pBrushSurface, struct IMesh *pMesh, class CMeshBuilder *pMeshBuilder, const Vector &vCurPos, const Vector &vWidthStep, const Vector &vHeightStep);	// DrawOneBlock
+	void sub_100b8f30(class IBrushSurface *pBrushSurface, struct IMesh *pMesh, class CMeshBuilder *pMeshBuilder, const Vector &vCurPos, const Vector &vEdgeStep, const Vector &vEdgeExtStep, int nEdgeType);	// DrawOneEdge
 };
