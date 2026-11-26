@@ -409,6 +409,108 @@ void vgui2::PropertySheet::vfunc129(const char *pszName, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c90f0 size=0x295
+#include "vgui2__PropertySheet.h"
+#include "vgui2__PageTab.h"
+
+extern void *sub_101b6840(unsigned int size);
+
+struct KV_101c90f0 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16();
+	virtual void SetPtr(const char *key, void *value);
+	KV_101c90f0 *sub_101b5670(const char *name);
+};
+
+struct IVGui_101c90f0 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void PostMessage(int target, void *params, int from, float delaySeconds);
+};
+extern IVGui_101c90f0 *sub_101ac8f0();
+
+static inline KV_101c90f0 *NewKV(const char *name)
+{
+	KV_101c90f0 *kv = (KV_101c90f0 *)sub_101b6840(0x1c);
+	return kv ? kv->sub_101b5670(name) : 0;
+}
+
+struct PageDar_101c90f0
+{
+	int _count;
+	int _capacity;
+	vgui2::Panel **_data;
+	vgui2::Panel *Get(int i) { return (i >= 0 && i < _count) ? _data[i] : 0; }
+};
+
+struct SheetFields_101c90f0
+{
+	char pad0[0x58];
+	PageDar_101c90f0 _pages;	// 0x58
+	PageDar_101c90f0 _pageTabs;	// 0x64
+	vgui2::Panel *_activePage;	// 0x70
+	vgui2::Panel *_activeTab;	// 0x74
+	int m_78;
+	int _activeTabIndex;	// 0x7c
+};
+
+void vgui2::PropertySheet::vfunc127(int index)
+{
+	SheetFields_101c90f0 *f = (SheetFields_101c90f0 *)this;
+	if (index != -1)
+	{
+		if (f->_pages.Get(index) == f->_activePage)
+			return;
+		if (!f->_pages.Get(index))
+			return;
+	}
+
+	if (f->_activePage)
+	{
+		sub_101ac8f0()->PostMessage(f->_activePage->vfunc0(), NewKV("PageHide"), vfunc0(), 0.0f);
+		KV_101c90f0 *msg = NewKV("PageTabActivated");
+		msg->SetPtr("panel", 0);
+		sub_101ac8f0()->PostMessage(f->_activePage->vfunc0(), msg, vfunc0(), 0.0f);
+		f->_activePage->vfunc21(0);
+	}
+	if (f->_activeTab)
+		((vgui2::PageTab *)f->_activeTab)->vfunc166(0);
+
+	if (index != -1)
+	{
+		f->_activePage = f->_pages.Get(index);
+		f->_activeTab = f->_pageTabs.Get(index);
+		f->_activeTabIndex = index;
+
+		f->_activePage->vfunc21(1);
+		f->_activePage->vfunc49();
+		f->_activeTab->vfunc21(1);
+		f->_activeTab->vfunc49();
+		((vgui2::PageTab *)f->_activeTab)->vfunc166(1);
+		f->_activeTab->vfunc15(0);
+
+		sub_101ac8f0()->PostMessage(f->_activePage->vfunc0(), NewKV("PageShow"), vfunc0(), 0.0f);
+		KV_101c90f0 *msg = NewKV("PageTabActivated");
+		msg->SetPtr("panel", f->_activeTab);
+		sub_101ac8f0()->PostMessage(f->_activePage->vfunc0(), msg, vfunc0(), 0.0f);
+	}
+	else
+	{
+		f->_activePage = 0;
+		f->_activeTab = 0;
+		f->_activeTabIndex = 0;
+	}
+
+	vfunc43(NewKV("PageChanged"));
+	vfunc57(0, 0);
+	vfunc6();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c9390 size=0x51
 #include "vgui2__PropertySheet.h"
 
