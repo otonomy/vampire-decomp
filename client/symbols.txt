@@ -1733,6 +1733,7 @@
 0x10023d30 func   ?_C_ItemKEmpireJezebelKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKEmpireJezebelKey_CreateObject
 0x10023df0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKEmpireJezebelKey@@@Z ClientClassInit
 0x10023e80 func   ?vfunc17@C_ItemKCarsonApartmentKey@@UAEHXZ C_ItemKCarsonApartmentKey::vfunc17
+0x10023ec0 func   ?sub_10023ec0@@YAHXZ sub_10023ec0
 0x10023f10 func   ??_GC_ItemKCarsonApartmentKey@@UAEPAXI@Z ??_GC_ItemKCarsonApartmentKey@@UAEPAXI@Z
 0x10023f30 func   ?vfunc16@C_ItemKCarsonApartmentKey@@UAEHXZ C_ItemKCarsonApartmentKey::vfunc16
 0x10023f40 func   ?vfunc15@C_ItemKCarsonApartmentKey@@UAEHXZ C_ItemKCarsonApartmentKey::vfunc15
