@@ -4081,6 +4081,7 @@
 0x100ab1e0 func   ?sub_100ab1e0@@YAPAVCUnknown1007f870@@H@Z sub_100ab1e0
 0x100ab500 func   ?vfunc142@C_BaseViewModel@@UAE_NXZ C_BaseViewModel::vfunc142
 0x100ab510 func   ?vfunc139@C_BaseViewModel@@UAEHH@Z C_BaseViewModel::vfunc139
+0x100ab530 func   ?vfunc127@C_BaseViewModel@@UAEXABVVector@@ABVQAngle@@HPBD@Z C_BaseViewModel::vfunc127
 0x100ab7e0 func   ?sub_100ab7e0@CUnknown100ab7e0@@QAEHHHHHD@Z CUnknown100ab7e0::sub_100ab7e0
 0x100ab850 func   ?vfunc118@C_BaseViewModel@@UAEXH@Z C_BaseViewModel::vfunc118
 0x100ab890 func   ?sub_100ab890@C_BaseViewModel@@QAEXPAX@Z C_BaseViewModel::sub_100ab890
