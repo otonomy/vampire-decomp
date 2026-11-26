@@ -40895,6 +40895,235 @@ void sub_10082a50(const Vector &vecOrigin, float flWidth, float flHeight, color3
 }
 // END FUNCTION
 
+// FUNCTION: 0x10082fd0 size=0x606
+#include <math.h>
+#include "Vector.h"
+#include "ConVar.h"
+
+#define M_PI 3.14159265358979323846
+#define FBEAM_SINENOISE 0x00000010
+#define FBEAM_SHADEIN 0x00000040
+#define FBEAM_SHADEOUT 0x00000080
+
+#define clamp(val, min, max) (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)))
+
+class CSpriteHandle;
+CSpriteHandle *sub_10081cd0(const char *model, int frame, int rendermode);	// Draw_SetSpriteTexture
+void sub_100835e0(Vector *pDelta, Vector *pViewDir, Vector *pPerp);	// ComputeBeamPerpendicular
+void sub_10108fd0(const Vector &start, float scale, const Vector &dir, Vector &dest);	// VectorMA
+const Vector &sub_10198d50();	// CurrentViewForward
+const Vector &sub_10198d60();	// CurrentViewRight
+const Vector &sub_10198d70();	// CurrentViewUp
+
+extern ConVar g_104870e0;
+extern Vector g_104d4970;
+
+inline void SinCos(float radians, float *sine, float *cosine)
+{
+	_asm
+	{
+		fld		DWORD PTR [radians]
+		fsincos
+
+		mov edx, DWORD PTR [cosine]
+		mov eax, DWORD PTR [sine]
+
+		fstp DWORD PTR [edx]
+		fstp DWORD PTR [eax]
+	}
+}
+
+struct BeamSeg_t
+{
+	Vector m_vPos;
+	Vector m_vColor;
+	float m_flTexCoord;
+	float m_flWidth;
+	float m_flAlpha;
+};
+
+class CBeamSegDraw
+{
+public:
+	CBeamSegDraw()
+	{
+		m_pMesh = 0;
+		m_nMaxVertexCount = 0;
+		m_nMaxIndexCount = 0;
+		m_nVertexCount = 0;
+		m_nIndexCount = 0;
+		m_nCurrentVertex = 0;
+		m_nCurrentIndex = 0;
+		m_bGenerateIndices = false;
+	}
+	void sub_100813c0(int nSegs, void *pMaterial);	// Start
+	void sub_100814e0(BeamSeg_t *pSeg);	// NextSeg
+	void sub_10081b90();	// End
+
+	int m_unk00[0x80 / 4];	// the mesh builder's MeshDesc_t
+	void *m_pMesh;	// 0x80
+	bool m_bModify;	// 0x84
+	int m_nMaxVertexCount;	// 0x88
+	int m_nMaxIndexCount;	// 0x8c
+	int m_nVertexCount;	// 0x90
+	int m_nIndexCount;	// 0x94
+	int m_nCurrentVertex;	// 0x98
+	int m_nCurrentIndex;	// 0x9c
+	int m_Type;	// 0xa0
+	bool m_bGenerateIndices;	// 0xa4
+	int m_unka8[(0xc4 - 0xa8) / 4];
+	int m_unkc4[(0xfc - 0xc4) / 4];
+};
+
+void sub_10082fd0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode,
+	const Vector &source, const Vector &delta, float startWidth, float endWidth, float scale, float freq, float speed,
+	int segments, int flags, float *color, float fadeLength, const Vector *pViewOrigin)
+{
+	int i, noiseIndex, noiseStep;
+	float div, length, fraction, factor, vLast, vStep, brightness;
+
+	if (!g_104870e0.GetInt())
+		return;
+
+	if (!sub_10081cd0(spritemodel, (int)frame, rendermode))
+		return;
+
+	if (segments < 2)
+		return;
+
+	length = delta.Length();
+	float flMaxWidth = ((startWidth > endWidth) ? startWidth : endWidth) * 0.5f;
+	div = 1.0 / (segments - 1);
+
+	if (length * div < flMaxWidth * 1.414)
+	{
+		segments = (int)(length / (flMaxWidth * 1.414)) + 1;
+		if (segments < 2)
+			segments = 2;
+	}
+
+	if (segments > noise_divisions)
+		segments = noise_divisions;
+
+	div = 1.0 / (segments - 1);
+	length *= 0.01;
+	vStep = div * length;
+
+	vLast = fmod(freq * speed, 1);
+
+	if (flags & FBEAM_SINENOISE)
+	{
+		if (segments < 16)
+		{
+			segments = 16;
+			div = 1.0 / (segments - 1);
+		}
+		scale *= 100;
+		length = segments * (1.0 / 10);
+	}
+	else
+	{
+		scale *= length;
+	}
+
+	noiseStep = (int)((float)(noise_divisions - 1) * div * 65536.0f);
+	noiseIndex = 0;
+
+	if (flags & FBEAM_SINENOISE)
+	{
+		noiseIndex = 0;
+	}
+
+	brightness = 1.0;
+	if (flags & FBEAM_SHADEIN)
+	{
+		brightness = 0;
+	}
+
+	float fadeFraction = fadeLength / delta.Length();
+	fadeFraction = clamp(fadeFraction, 1.e-6, 1.f);
+
+	CBeamSegDraw segDraw;
+	segDraw.sub_100813c0(segments, 0);
+
+	Vector perp1;
+	if (*pViewOrigin != g_104d4970)
+	{
+		Vector vecDir = delta * 0.5f + source - *pViewOrigin;
+		VectorNormalize(vecDir);
+		sub_100835e0((Vector *)&delta, &vecDir, &perp1);
+	}
+	else
+	{
+		sub_100835e0((Vector *)&delta, (Vector *)&sub_10198d50(), &perp1);
+	}
+
+	for (i = 0; i < segments; i++)
+	{
+		BeamSeg_t curSeg;
+		curSeg.m_flAlpha = 1;
+
+		fraction = i * div;
+
+		if ((flags & FBEAM_SHADEIN) && (flags & FBEAM_SHADEOUT))
+		{
+			if (fraction < 0.5)
+				brightness = 2 * (fraction / fadeFraction);
+			else
+				brightness = 2 * (1.0 - (fraction / fadeFraction));
+		}
+		else if (flags & FBEAM_SHADEIN)
+		{
+			brightness = fraction / fadeFraction;
+		}
+		else if (flags & FBEAM_SHADEOUT)
+		{
+			brightness = 1.0 - (fraction / fadeFraction);
+		}
+
+		if (brightness < 0)
+			brightness = 0;
+		else if (brightness > 1)
+			brightness = 1;
+
+		curSeg.m_vColor.x = brightness * color[0];
+		curSeg.m_vColor.y = brightness * color[1];
+		curSeg.m_vColor.z = brightness * color[2];
+
+		sub_10108fd0(source, fraction, delta, curSeg.m_vPos);
+
+		if (scale != 0)
+		{
+			factor = scale * prgNoise[noiseIndex >> 16];
+			if (flags & FBEAM_SINENOISE)
+			{
+				float s, c;
+				SinCos(fraction * length * M_PI + freq, &s, &c);
+				sub_10108fd0(curSeg.m_vPos, factor * s, sub_10198d70(), curSeg.m_vPos);
+				sub_10108fd0(curSeg.m_vPos, factor * c, sub_10198d60(), curSeg.m_vPos);
+			}
+			else
+			{
+				sub_10108fd0(curSeg.m_vPos, factor, perp1, curSeg.m_vPos);
+			}
+		}
+
+		if (endWidth == startWidth)
+			curSeg.m_flWidth = startWidth * 2;
+		else
+			curSeg.m_flWidth = ((endWidth - startWidth) * fraction + startWidth) * 2;
+
+		curSeg.m_flTexCoord = vLast;
+		segDraw.sub_100814e0(&curSeg);
+
+		vLast += vStep;
+		noiseIndex += noiseStep;
+	}
+
+	segDraw.sub_10081b90();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100835e0 size=0x71
 #include "Vector.h"
 
