@@ -521,14 +521,13 @@ void C_BaseEntity::vfunc38(int a0, int a1)
 // END FUNCTION
 
 // FUNCTION: 0x1009f300 size=0x26
+#include "engineclient.h"
 #include "C_BaseEntity.h"
-struct ModelInfoView { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual int GetModelType(int idx); };
-extern ModelInfoView *g_104a57f8;
 int C_BaseEntity::vfunc86()
 {
 	if (*(int *)((char *)this + 0x74) & 0x60)
 		return 0;
-	return g_104a57f8->GetModelType(*(int *)((char *)this + 0x40)) == 3 ? 2 : 0;
+	return modelinfo->GetModelType((const void *)(*(int *)((char *)this + 0x40))) == 3 ? 2 : 0;
 }
 // END FUNCTION
 
@@ -742,6 +741,7 @@ int C_BaseEntity::vfunc80(int flags)
 // END FUNCTION
 
 // FUNCTION: 0x1009feb0 size=0xb8
+#include "engineclient.h"
 #include "C_BaseEntity.h"
 #include "Tier1.h"
 
@@ -751,13 +751,6 @@ struct EntBrushView {
     V4(k) V4(l) V4(m) V4(n) V4(o) V4(p) V4(q) V4(r) V4(s) V4(t)
     virtual int DrawBrushModel(bool bTransparent);
 };
-struct ModelInfoView {
-    virtual void v0();
-    virtual const char *GetModelName(int model);
-    virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
-    virtual int GetModelType(int model);
-};
-extern ModelInfoView *g_104a57f8;
 extern void (*g_101e3114)(const char *, ...);
 struct ClientClassView { void *a; void *b; const char *m_pNetworkName; };
 
@@ -771,14 +764,14 @@ int C_BaseEntity::DrawModel(int flags, int a1)
     if (!*(int *)((char *)this + 0x40))
         return drawn;
 
-    int modelType = g_104a57f8->GetModelType(*(int *)((char *)this + 0x40));
+    int modelType = modelinfo->GetModelType((const void *)(*(int *)((char *)this + 0x40)));
     switch (modelType) {
     case 1:
         drawn = ((EntBrushView *)this)->DrawBrushModel(flags & 0x80000000 ? true : false);
         break;
     case 3:
         g_101e3114("ERROR:  Can't draw studio model %s because %s is not derived from C_BaseAnimating\n",
-            g_104a57f8->GetModelName(*(int *)((char *)this + 0x40)),
+            modelinfo->GetModelName((const void *)(*(int *)((char *)this + 0x40))),
             ((ClientClassView *)GetClientClass())->m_pNetworkName ? ((ClientClassView *)GetClientClass())->m_pNetworkName : "unknown");
         break;
     case 2:
@@ -1086,15 +1079,9 @@ int C_BaseEntity::vfunc62()
 // END FUNCTION
 
 // FUNCTION: 0x100a1aa0 size=0x73
+#include "engineclient.h"
 #include "C_BaseEntity.h"
 
-struct ModelInfoView
-{
-    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-    virtual void v4(); virtual void v5();
-    virtual int GetModelType(int modelindex);
-};
-extern ModelInfoView *g_104a57f8;
 
 int C_BaseEntity::vfunc66()
 {
@@ -1103,8 +1090,8 @@ int C_BaseEntity::vfunc66()
         *(int *)((char *)this + 0x1d0) &&
         !(*(int *)((char *)this + 0x1d4) & 4))
     {
-        if (g_104a57f8->GetModelType(*(int *)((char *)this + 0x40)) == 1 ||
-            g_104a57f8->GetModelType(*(int *)((char *)this + 0x40)) == 3)
+        if (modelinfo->GetModelType((const void *)(*(int *)((char *)this + 0x40))) == 1 ||
+            modelinfo->GetModelType((const void *)(*(int *)((char *)this + 0x40))) == 3)
         {
             if (*(int *)((char *)this + 0x80) == 1 ||
                 *(float *)((char *)this + 0x1d8) != 0.0f)

@@ -210,20 +210,17 @@ CViewRender *CViewRender::sub_1018e9b0(unsigned flags)
 // END FUNCTION
 
 // FUNCTION: 0x1018f630 size=0x37e
+#include "engineclient.h"
 #include "CViewRender.h"
 #include "ScopeTrace.h"
 extern "C" void *memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
 struct BeamsV { virtual void v0(); };
 struct TempV { virtual void v0(); };
-struct CvarV { virtual void v0(); virtual void v1(); virtual void *FindVar(const char *); };
-struct EngV2 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49(void *); };
 struct MH { int m_p; void sub_100cd1f0(const char *); };
-extern CvarV *g_104a57e0;
 extern BeamsV *g_102d5050;
 extern TempV *g_1028073c;
 extern char *g_102d4290[8];
-extern EngV2 *g_104a57d4;
 
 struct CVRView
 {
@@ -244,9 +241,9 @@ void CViewRender::vfunc0()
 {
 	CVRView *s = (CVRView *)this;
 	ScopeTrace trace("CViewRender::Init", g_102de300);
-	s->m_pViewSize = g_104a57e0->FindVar("viewsize");
-	s->m_pDrawEntities = g_104a57e0->FindVar("r_drawentities");
-	s->m_pDrawBrushModels = g_104a57e0->FindVar("r_drawbrushmodels");
+	s->m_pViewSize = ((void *)cvar->FindVar("viewsize"));
+	s->m_pDrawEntities = ((void *)cvar->FindVar("r_drawentities"));
+	s->m_pDrawBrushModels = ((void *)cvar->FindVar("r_drawbrushmodels"));
 	s->m_n28c = 0;
 	s->m_n290 = 0;
 	s->m_n294 = 0;
@@ -298,7 +295,7 @@ void CViewRender::vfunc0()
 	s->m_b44a = 0;
 	s->m_f44c = 1.0f;
 	s->m_b49c = 0;
-	g_104a57d4->v49(s->m_a458);
+	engine->GetViewAngles(*(QAngle *)(s->m_a458));
 }
 // END FUNCTION
 
@@ -575,24 +572,10 @@ float CViewRender::vfunc45()
 // END FUNCTION
 
 // FUNCTION: 0x101994c0 size=0xc9
+#include "engineclient.h"
 #include "CViewRender.h"
 #include "C_BaseEntity.h"
 
-struct IModelInfoView
-{
-	virtual void v0();
-	virtual void v1();
-	virtual void v2();
-	virtual void v3();
-	virtual void v4();
-	virtual void v5();
-	virtual void v6();
-	virtual void v7();
-	virtual bool IsTranslucent(const void *model);
-	virtual void v9();
-	virtual bool v10(const void *model);
-	virtual void v11(const void *model);
-};
 
 struct IClientLeafSystemView
 {
@@ -620,16 +603,15 @@ struct CBaseEntV
 	unsigned short m_hE8;	// 0xe8
 };
 
-extern IModelInfoView *g_104a57f8;
 extern IClientLeafSystemView *g_102b9060;
 
 int CViewRender::vfunc10(C_BaseEntity *pEntity)
 {
 	CBaseEntV *pView = (CBaseEntV *)pEntity;
 
-	if (g_104a57f8->IsTranslucent(pEntity->GetModel()))
+	if (modelinfo->IsTranslucent(pEntity->GetModel()))
 	{
-		g_104a57f8->v11(pEntity->GetModel());
+		modelinfo->vfunc11((void *)(pEntity->GetModel()));
 	}
 
 	int nRenderMode = 5;
@@ -645,7 +627,7 @@ int CViewRender::vfunc10(C_BaseEntity *pEntity)
 
 	if (pView->m_hE8 == 0xffff)
 	{
-		if (nRenderMode == 2 && g_104a57f8->v10(pView->m_pModel))
+		if (nRenderMode == 2 && modelinfo->vfunc10(pView->m_pModel))
 			nRenderMode = 3;
 		pEntity->sub_100a1a70(nRenderMode);
 	}

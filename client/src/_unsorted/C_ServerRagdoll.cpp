@@ -12,6 +12,7 @@ C_ServerRagdoll *pcd_emit_10125770(const C_ServerRagdoll &other) { return new C_
 // END FUNCTION
 
 // FUNCTION: 0x101257a0 size=0xc9
+#include "engineclient.h"
 #include "C_ServerRagdoll.h"
 #include "ConVar.h"
 #include "matrix3x4_t.h"
@@ -25,63 +26,8 @@ struct vcollide_t_101257a0
 	void **solids;
 };
 
-class IVModelInfo_101257a0
-{
-public:
-	virtual void v0() = 0;
-	virtual void v1() = 0;
-	virtual void v2() = 0;
-	virtual void v3() = 0;
-	virtual void v4() = 0;
-	virtual void v5() = 0;
-	virtual void v6() = 0;
-	virtual void v7() = 0;
-	virtual void v8() = 0;
-	virtual void v9() = 0;
-	virtual void v10() = 0;
-	virtual void v11() = 0;
-	virtual void v12() = 0;
-	virtual void v13() = 0;
-	virtual void v14() = 0;
-	virtual void v15() = 0;
-	virtual void v16() = 0;
-	virtual void v17() = 0;
-	virtual vcollide_t_101257a0 *GetVCollide(int modelindex) = 0;
-};
 
-class IMaterialSystem_101257a0
-{
-public:
-	virtual void v0() = 0;
-	virtual void v1() = 0;
-	virtual void v2() = 0;
-	virtual void v3() = 0;
-	virtual void v4() = 0;
-	virtual void v5() = 0;
-	virtual void v6() = 0;
-	virtual void v7() = 0;
-	virtual void v8() = 0;
-	virtual void v9() = 0;
-	virtual void v10() = 0;
-	virtual void v11() = 0;
-	virtual void v12() = 0;
-	virtual void v13() = 0;
-	virtual void v14() = 0;
-	virtual void v15() = 0;
-	virtual void v16() = 0;
-	virtual void v17() = 0;
-	virtual void v18() = 0;
-	virtual void v19() = 0;
-	virtual void v20() = 0;
-	virtual void v21() = 0;
-	virtual void v22() = 0;
-	virtual void v23() = 0;
-	virtual void v24() = 0;
-	virtual void *FindMaterial(const char *pMaterialName, bool *pFound, bool complain) = 0;
-};
 
-extern IVModelInfo_101257a0 *g_104a57f8;
-extern IMaterialSystem_101257a0 *g_104a57ec;
 
 void sub_101094b0(const QAngle &angles, const Vector &position, matrix3x4_t &matrix);
 void sub_101267c0(void *pCollide, void *pMaterial, const matrix3x4_t &matrix);
@@ -91,8 +37,8 @@ int C_ServerRagdoll::vfunc125(int flags, int a1)
 {
 	if (g_1049c448.GetBool())
 	{
-		vcollide_t_101257a0 *pCollide = g_104a57f8->GetVCollide(vfunc51());
-		void *pMaterial = g_104a57ec->FindMaterial("shadertest/wireframevertexcolor", 0, true);
+		vcollide_t_101257a0 *pCollide = ((vcollide_t_101257a0 *)modelinfo->vfunc18(vfunc51()));
+		void *pMaterial = materials->FindMaterial("shadertest/wireframevertexcolor", 0, true);
 		matrix3x4_t matrix;
 		for (int i = 0; i < *(int *)((char *)this + 0xa60); i++)
 		{

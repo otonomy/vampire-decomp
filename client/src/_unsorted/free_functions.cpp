@@ -12434,6 +12434,7 @@ void sub_1002b710()
 // END FUNCTION
 
 // FUNCTION: 0x1002b780 size=0x20f
+#include "engineclient.h"
 #include "CUtlLinkedList8.h"
 #include "Tier1.h"
 extern "C" char *_mbsdup(const char *);
@@ -12441,18 +12442,7 @@ extern "C" unsigned int strlen(const char *);
 extern int (*g_101e3194)(const char *, const char *, int);
 extern void (*g_101e3198)(const char *pIn, char *pOut, int nMax);
 extern void (*g_101e310c)(const char *pMsg, ...);
-struct FS_2b78
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void a5(); virtual void a6(); virtual void a7(); virtual void a8(); virtual void a9();
-	virtual void b0(); virtual void b1();
-	virtual const char *FindFirst(const char *pWildCard, int *pHandle);
-	virtual const char *FindNext(int handle);
-	virtual void b4();
-	virtual void FindClose(int handle);
-};
 struct Mem_2b78 { void sub_1002c130(int n); };
-extern FS_2b78 *g_104a580c;
 extern CUtlLinkedList8 g_102eacb4;
 // TARGET: sub_1002b780
 int sub_1002b780(const char *pszPath)
@@ -12461,7 +12451,7 @@ int sub_1002b780(const char *pszPath)
 	int findHandle;
 	const char *skip[2] = { "sp_genesisdevice_1", 0 };
 	char szName[128];
-	const char *pFile = g_104a580c->FindFirst(pszPath, &findHandle);
+	const char *pFile = ((const char *)filesystem->FindFirst(pszPath, &findHandle));
 	while (pFile)
 	{
 		g_101e3198(pFile, szName, 128);
@@ -12515,9 +12505,9 @@ int sub_1002b780(const char *pszPath)
 			nAdded++;
 		}
 next:
-		pFile = g_104a580c->FindNext(findHandle);
+		pFile = ((const char *)filesystem->FindNext(findHandle));
 	}
-	g_104a580c->FindClose(findHandle);
+	filesystem->FindClose(findHandle);
 	return nAdded;
 }
 // END FUNCTION
@@ -16293,6 +16283,7 @@ int CUnknown10038a20::sub_10038a20()
 // END FUNCTION
 
 // FUNCTION: 0x10038a60 size=0x1d5
+#include "engineclient.h"
 __declspec(dllimport) void DevMsg(const char *, ...);
 struct SurfDataView
 {
@@ -16316,25 +16307,15 @@ struct SurfDataView
 	char m_u71, m_u72;
 	unsigned char pad;	// 0x73
 };
-struct SurfPropsView
-{
-	virtual void v0();
-	virtual void v1();
-	virtual void v2();
-	virtual void v3();
-	virtual void v4();
-	virtual SurfDataView *GetSurfaceData(int index);
-};
-extern SurfPropsView *g_104e0c94;
 extern bool g_1027fda8;
 void sub_10038a60()
 {
 	if ( !g_1027fda8 )
 		return;
 	g_1027fda8 = false;
-	SurfDataView *pDefault = g_104e0c94->GetSurfaceData( 0 );
+	SurfDataView *pDefault = ((SurfDataView *)physprops->vfunc5(0));
 	int i = 1;
-	SurfDataView *pData = g_104e0c94->GetSurfaceData( 1 );
+	SurfDataView *pData = ((SurfDataView *)physprops->vfunc5(1));
 	while ( pData && pData != pDefault )
 	{
 		DevMsg( "///////////////////////\n" );
@@ -16363,7 +16344,7 @@ void sub_10038a60()
 		DevMsg( "  %-30s - %d\n", "maxSpeedFactor", pData->maxSpeedFactor );
 		DevMsg( "  %-30s - %d\n", "jumpFactor", pData->jumpFactor );
 		i++;
-		pData = g_104e0c94->GetSurfaceData( i );
+		pData = ((SurfDataView *)physprops->vfunc5(i));
 	}
 }
 // END FUNCTION
@@ -19884,13 +19865,8 @@ void * CUnknown10045eb0::sub_10045eb0(int a0)
 // END FUNCTION
 
 // FUNCTION: 0x100468f0 size=0x257
+#include "engineclient.h"
 #include "Vector.h"
-struct IRnd_100468f0 {
-	virtual void v0();
-	virtual float RandomFloat(float a, float b);
-	virtual int RandomInt(int a, int b);
-};
-extern IRnd_100468f0 *g_104a5738;
 struct TP_100468f0 {
 	char pad[0x18];
 	float m_flDieTime;
@@ -19937,7 +19913,7 @@ void sub_100468f0(Vector &position, Vector &normal)
 		return;
 	sparkEmitter->sub_10118080(offset);
 	sparkEmitter->Setup(offset, &normal, 0.3f, 128.0f, 512.0f, 800.0f, 0.4f, 1);
-	int numSparks = g_104a5738->RandomInt(4, 8);
+	int numSparks = enginerandom->RandomInt(4, 8);
 	MatHandle_100468f0 hMaterial;
 	hMaterial.c = (char)(int)sparkEmitter->sub_101180b0("effects/spark");
 	Vector dir;
@@ -19948,14 +19924,14 @@ void sub_100468f0(Vector &position, Vector &normal)
 		if (pParticle == 0)
 			return;
 		pParticle->m_flLifetime = 0.0f;
-		float spreadOfs = g_104a5738->RandomFloat(0.0f, 2.0f);
-		dir[0] = normal[0] + g_104a5738->RandomFloat(-(0.3f * spreadOfs), (0.3f * spreadOfs));
-		dir[1] = normal[1] + g_104a5738->RandomFloat(-(0.3f * spreadOfs), (0.3f * spreadOfs));
-		dir[2] = normal[2] + g_104a5738->RandomFloat(-(0.3f * spreadOfs), (0.3f * spreadOfs));
-		pParticle->m_flWidth = g_104a5738->RandomFloat(2.0f, 5.0f);
-		pParticle->m_flLength = g_104a5738->RandomFloat(length * 0.25f, length);
-		pParticle->m_flDieTime = g_104a5738->RandomFloat(2.0f, 2.0f);
-		pParticle->m_vecVelocity = dir * g_104a5738->RandomFloat((128.0f * (2.0f - spreadOfs)), (512.0f * (2.0f - spreadOfs)));
+		float spreadOfs = enginerandom->RandomFloat(0.0f, 2.0f);
+		dir[0] = normal[0] + enginerandom->RandomFloat(-(0.3f * spreadOfs), (0.3f * spreadOfs));
+		dir[1] = normal[1] + enginerandom->RandomFloat(-(0.3f * spreadOfs), (0.3f * spreadOfs));
+		dir[2] = normal[2] + enginerandom->RandomFloat(-(0.3f * spreadOfs), (0.3f * spreadOfs));
+		pParticle->m_flWidth = enginerandom->RandomFloat(2.0f, 5.0f);
+		pParticle->m_flLength = enginerandom->RandomFloat(length * 0.25f, length);
+		pParticle->m_flDieTime = enginerandom->RandomFloat(2.0f, 2.0f);
+		pParticle->m_vecVelocity = dir * enginerandom->RandomFloat((128.0f * (2.0f - spreadOfs)), (512.0f * (2.0f - spreadOfs)));
 		pParticle->m_flColor[0] = 1.0f;
 		pParticle->m_flColor[1] = 1.0f;
 		pParticle->m_flColor[2] = 1.0f;
@@ -38684,16 +38660,15 @@ template <> int ClientClassInit<DT_BaseAnimating::ignored>(DT_BaseAnimating::ign
 // END FUNCTION
 
 // FUNCTION: 0x1008f6f0 size=0x23
-struct I1008f6f0 { virtual struct R1008f6f0 *v0(int); };
+#include "engineclient.h"
 struct R1008f6f0 { char pad[0xe4]; unsigned m_flags; };
 struct S1008f6f0 {
 	char pad[0x3c]; int m_h;
 	bool sub_1008f6f0();
 };
-extern I1008f6f0 *g_104a57d8;
 bool S1008f6f0::sub_1008f6f0()
 {
-	R1008f6f0 *p = g_104a57d8->v0(m_h);
+	R1008f6f0 *p = ((R1008f6f0 *)modelrender->GetStudiomodel((void *)(m_h)));
 	if (!p)
 		return false;
 	return (p->m_flags & 0x20) >> 5;
@@ -38701,6 +38676,7 @@ bool S1008f6f0::sub_1008f6f0()
 // END FUNCTION
 
 // FUNCTION: 0x1008f900 size=0x56
+#include "engineclient.h"
 #include "C_BaseAnimating.h"
 
 struct AnimTailView
@@ -38711,19 +38687,7 @@ struct AnimTailView
     int m_6ac;                 // +0x6ac
 };
 
-struct ModelInfoIface
-{
-    virtual void mi0() = 0;
-    virtual void mi1() = 0;
-    virtual void *vfunc2(int handle) = 0;
-};
-struct ModelRenderIface
-{
-    virtual int vfunc0(void *model) = 0;
-};
 
-extern ModelInfoIface *g_104a57f8;
-extern ModelRenderIface *g_104a57d8;
 
 int C_BaseAnimating::sub_1008f900(int index)
 {
@@ -38738,10 +38702,10 @@ int C_BaseAnimating::sub_1008f900(int index)
     int h = v->m_420[index];
     if (h <= 0)
         return 0;
-    void *model = g_104a57f8->vfunc2(h);
+    void *model = modelinfo->GetModel(h);
     if (!model)
         return 0;
-    return g_104a57d8->vfunc0(model);
+    return ((int)modelrender->GetStudiomodel(model));
 }
 // END FUNCTION
 
@@ -39690,6 +39654,7 @@ void C_BaseAnimating::sub_10095c40()
 // END FUNCTION
 
 // FUNCTION: 0x10095d00 size=0x222
+#include "engineclient.h"
 #include <float.h>
 #include "C_BaseAnimating.h"
 #include "matrix3x4_t.h"
@@ -39720,15 +39685,6 @@ struct studiohdr_t
 	}
 };
 
-struct IVModelInfoView
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual studiohdr_t *GetStudiomodel(const model_t *mod);
-};
 
 struct CGlobalVarsView
 {
@@ -39736,7 +39692,6 @@ struct CGlobalVarsView
 	float curtime;
 };
 
-extern IVModelInfoView *g_104a57f8;
 extern CGlobalVarsView *g_102b8494;
 
 void *sub_1008b5f0(studiohdr_t *pStudioHdr, int sequence, float animtime, const QAngle &angles, const Vector &origin, int boneMask);
@@ -39758,7 +39713,7 @@ struct CBaseAnimatingView
 // TARGET: C_BaseAnimating::sub_10095d00
 bool C_BaseAnimating::sub_10095d00(Vector *pVecWorldMins, Vector *pVecWorldMaxs)
 {
-	studiohdr_t *pStudioHdr = g_104a57f8->GetStudiomodel(GetModel());
+	studiohdr_t *pStudioHdr = ((studiohdr_t *)modelinfo->vfunc20((const void *)(GetModel())));
 	if (!pStudioHdr)
 		return false;
 
@@ -42694,16 +42649,12 @@ void C_BaseEntity::sub_100a1a70(int a)
 // END FUNCTION
 
 // FUNCTION: 0x100a1b20 size=0x18
+#include "engineclient.h"
 #define V8(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7();
-struct IVModelInfo_104a57f8 {
-virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void a5();
-virtual int v6(int);
-};
-extern IVModelInfo_104a57f8 *g_104a57f8;
 struct CUnknown100a1b20 { int m_unk[16]; int m_nModel; bool sub_100a1b20(); };
 bool CUnknown100a1b20::sub_100a1b20()
 {
-	return g_104a57f8->v6(m_nModel) == 1;
+	return modelinfo->GetModelType((const void *)(m_nModel)) == 1;
 }
 // END FUNCTION
 
@@ -47795,28 +47746,12 @@ char sub_100b56b0()
 // END FUNCTION
 
 // FUNCTION: 0x100b56c0 size=0x25d
+#include "engineclient.h"
 #include "C_FireSmoke.h"
 #include "CFireOverlay.h"
 #include "QAngle.h"
 
-struct FireRandomView
-{
-	virtual void v0();
-	virtual void v1();
-	virtual int RandomInt(int lo, int hi);
-};
-extern FireRandomView *g_104a5738;
 
-struct FireModelInfoView
-{
-	virtual void v0();
-	virtual void v1();
-	virtual void *GetModel(int index);
-	virtual void v3();
-	virtual void v4();
-	virtual int GetModelFrameCount(void *pModel);
-};
-extern FireModelInfoView *g_104a57f8;
 
 struct CUnknown1009fbb0 { void sub_100a06f0(int nModelIndex); };
 struct CUnknown101365a0 { void sub_101365a0(float flScale, float flTime); };
@@ -47830,7 +47765,7 @@ inline CFireOverlay::CFireOverlay(C_FireSmoke *pOwner)
 {
 	m_pOwner = pOwner;
 	m_flScaleLast = 0;
-	m_nSeed = g_104a5738->RandomInt(-999999, 999999);
+	m_nSeed = enginerandom->RandomInt(-999999, 999999);
 }
 
 void C_FireSmoke::sub_100b56c0()
@@ -47852,8 +47787,8 @@ void C_FireSmoke::sub_100b56c0()
 		sub_101090a0(offset, &forward, 0, 0);
 		m_entFlames[i].sub_100a2100(*(QAngle *)&forward);
 
-		g_104a57f8->GetModel(m_nFlameModelIndex);
-		int maxFrames = g_104a57f8->GetModelFrameCount(*(void **)((char *)this + 0x40));
+		modelinfo->GetModel(m_nFlameModelIndex);
+		int maxFrames = modelinfo->GetModelFrameCount((const void *)(*(void **)((char *)this + 0x40)));
 		((CUnknown1009fbb0 *)&m_entFlames[i])->sub_100a06f0(m_nFlameModelIndex);
 		m_entFlames[i].sub_100a2030(&GetAbsOrigin());
 		*(float *)((char *)&m_entFlames[i] + 0x434) = (float)sub_10117b20(0, maxFrames);
@@ -47889,6 +47824,7 @@ void C_FireSmoke::sub_100b56c0()
 // END FUNCTION
 
 // FUNCTION: 0x100b5b40 size=0x6b
+#include "engineclient.h"
 struct CFlameElement {
 	int m_nModelIndex;
 	char m_pad004[0x3f0 - 4];
@@ -47902,15 +47838,6 @@ struct C_FireSmokeView {
 	CFlameElement m_Flames[8];
 };
 
-struct IModelInfoView {
-	virtual void d0();
-	virtual void d1();
-	virtual void d2();
-	virtual void d3();
-	virtual void d4();
-	virtual int GetModelFrameCount(int modelIndex);
-};
-extern IModelInfoView *g_104a57f8;
 
 extern float sub_10117b40();
 
@@ -47920,7 +47847,7 @@ void __fastcall sub_100b5b40(C_FireSmokeView *self, int edx)
 	for (int i = 0; i < 8; i++)
 	{
 		self->m_Flames[i].m_flFrame += flFrameTime * self->m_Flames[i].m_flRate;
-		int nFrames = g_104a57f8->GetModelFrameCount(self->m_Flames[i].m_nModelIndex);
+		int nFrames = modelinfo->GetModelFrameCount((const void *)(self->m_Flames[i].m_nModelIndex));
 		if (self->m_Flames[i].m_flFrame > nFrames)
 			self->m_Flames[i].m_flFrame -= (float)(int)self->m_Flames[i].m_flFrame;
 	}
@@ -50821,11 +50748,8 @@ void C_RopeKeyframe::sub_100c0850(float **pSubdivs, int *pSubdivCount)
 // END FUNCTION
 
 // FUNCTION: 0x100c08b0 size=0x63
+#include "engineclient.h"
 struct Vector3 { float x, y, z; };
-struct IFace { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual Vector3 *v23(Vector3 *pOut, int a, int b); };
-extern IFace *g_104a57d4;
 struct CUnknown100c08b0
 {
 	char m_pad0[0x460];
@@ -50843,7 +50767,7 @@ void CUnknown100c08b0::sub_100c08b0()
 	{
 		Vector3 tmp;
 		int idx = m_nBase + i * 0x24 + 0x18;
-		Vector3 *v = g_104a57d4->v23(&tmp, idx, 1);
+		Vector3 *v = ((Vector3 *)engine->vfunc23((Vector *)(&tmp), (void *)(idx), 1));
 		Vector3 &d = m_Pos[i];
 		d.x = v->x;
 		d.y = v->y;
@@ -52209,19 +52133,8 @@ void C_BaseTerminal::sub_100c8210(int n)
 // END FUNCTION
 
 // FUNCTION: 0x100c82e0 size=0xbb
+#include "engineclient.h"
 #include "C_BaseTerminal.h"
-struct IEng_100c82e0
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6();
-	virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10();
-	virtual void v11(void (*cb)(), void *arg);
-	virtual void v12(int a);
-	virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20();
-	virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
-	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual double Time(int a);
-};
-extern IEng_100c82e0 *g_104a57d4;
 extern void sub_100c6b10();
 struct Entry_100c82e0 { int d[18]; };
 void C_BaseTerminal::sub_100c82e0()
@@ -52232,9 +52145,9 @@ void C_BaseTerminal::sub_100c82e0()
 		m_nE8c = m_nE78;
 		m_bEd8 = false;
 		m_bE88 = true;
-		g_104a57d4->v12(0);
-		g_104a57d4->v11(sub_100c6b10, this);
-		vfunc83(g_104a57d4->Time(0) + 0.25);
+		engine->vfunc12((void *)(0));
+		engine->vfunc11((int)(sub_100c6b10), this);
+		vfunc83(engine->Time(0) + 0.25);
 	}
 }
 // END FUNCTION
@@ -62062,6 +61975,7 @@ int sub_100eea30()
 // END FUNCTION
 
 // FUNCTION: 0x100eee60 size=0x25b
+#include "engineclient.h"
 #include "CGlowOverlay.h"
 #include "CGameTrace.h"
 #include "Ray_t.h"
@@ -62073,20 +61987,6 @@ extern ConVar *g_103edd9c;
 extern float g_102bba84;
 const Vector &sub_10198d30();
 void sub_101659b0(const Vector &start, const Vector &end, int r, int g, int b, bool noDepthTest, float duration);
-struct IEngineClientGO
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
-	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40();
-	virtual float v41(int);
-};
-extern IEngineClientGO *g_104a57d4;
 
 static inline void UTIL_TraceLine(const Vector &vecAbsStart, const Vector &vecAbsEnd, unsigned int mask, const void *ignore, int collisionGroup, CGameTrace *ptr)
 {
@@ -62128,12 +62028,12 @@ void CGlowOverlay::sub_100eee60(const Vector &vToGlow)
 	}
 	else if (flVisible > m_flProxyRadius)
 	{
-		m_flProxyRadius += g_104a57d4->v41(0) / g_102bba84;
+		m_flProxyRadius += engine->vfunc41(0) / g_102bba84;
 		m_flProxyRadius = GO_MIN(m_flProxyRadius, flVisible);
 	}
 	else
 	{
-		m_flProxyRadius = (double)m_flProxyRadius - g_104a57d4->v41(0) / g_102bba84;
+		m_flProxyRadius = (double)m_flProxyRadius - engine->vfunc41(0) / g_102bba84;
 		m_flProxyRadius = GO_MAX(m_flProxyRadius, flVisible);
 	}
 }
@@ -66462,30 +66362,16 @@ int CInput::sub_10100f10()
 // END FUNCTION
 
 // FUNCTION: 0x10101b20 size=0x47
+#include "engineclient.h"
 #include "CInput.h"
 struct QA { float x, y, z; };
-struct IEng49 {
-    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-    virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-    virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-    virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-    virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-    virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-    virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
-    virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-    virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
-    virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48();
-    virtual void GetViewAngles(QA &);
-    virtual void SetViewAngles(QA &);
-};
-extern IEng49 *g_104a57d4;
 void sub_10101b20()
 {
     QA ang;
     if (!input->vfunc45()) {
-        g_104a57d4->GetViewAngles(ang);
+        engine->GetViewAngles(*(QAngle *)&(ang));
         ang.x = 0;
-        g_104a57d4->SetViewAngles(ang);
+        engine->SetViewAngles(*(QAngle *)&(ang));
     }
 }
 // END FUNCTION
@@ -74437,18 +74323,12 @@ bool sub_10118c80(CreateInterfaceFn factory)
 // END FUNCTION
 
 // FUNCTION: 0x10118cf0 size=0xdc
+#include "engineclient.h"
 #include "ConVar.h"
 #include "Vector.h"
 
 struct IPhysObjV;
 
-struct IPhysV
-{
-	virtual IPhysObjV *v0();
-	virtual void v1();
-	virtual void v2();
-	virtual int v3();
-};
 
 struct IPhysObjV
 {
@@ -74467,27 +74347,11 @@ struct IPhysObjV
 	virtual void v32(void *);
 };
 
-struct IModelInfoV
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17();
-	virtual void *v18(int);
-};
 
-struct IEngineV
-{
-	virtual void v0(IPhysObjV *, void *, int);
-};
 
-extern IPhysV *g_104e0c84;
 extern IPhysObjV *g_104e0c90;
 extern int g_104e0c98;
 extern int g_104e0c88;
-extern IModelInfoV *g_104a57f8;
-extern IEngineV *g_104a5814;
 extern char g_104e09f8[];
 extern char g_104e09fc[];
 extern char g_104e0c30[];
@@ -74499,8 +74363,8 @@ void *sub_10120230(void *, void *, void *);
 // TARGET: sub_10118cf0
 void sub_10118cf0()
 {
-	g_104e0c90 = g_104e0c84->v0();
-	g_104e0c98 = g_104e0c84->v3();
+	g_104e0c90 = ((IPhysObjV *)physics->vfunc0());
+	g_104e0c98 = physics->vfunc3();
 
 	float grav = g_104dfce4->vfunc1() ? 0.0f : g_104dfce4->m_fValue;
 	Vector v(0.0f, 0.0f, -grav);
@@ -74509,8 +74373,8 @@ void sub_10118cf0()
 	g_104e0c90->v32(g_104e09f8);
 	g_104e0c90->v25(g_104e09fc);
 
-	g_104e0c88 = (int)sub_10120230((void *)sub_100ca9c0(), g_104a57f8->v18(1), g_10235b5c);
-	g_104a5814->v0(g_104e0c90, g_104e0c30, 0);
+	g_104e0c88 = (int)sub_10120230((void *)sub_100ca9c0(), modelinfo->vfunc18(1), g_10235b5c);
+	staticpropmgr->vfunc0((const void *)(g_104e0c90), g_104e0c30, 0);
 }
 // END FUNCTION
 
@@ -79862,6 +79726,7 @@ void sub_101271e0(int *s)
 // END FUNCTION
 
 // FUNCTION: 0x10127260 size=0xb6
+#include "engineclient.h"
 extern "C" int __cdecl _strcmpi(const char *, const char *);
 
 struct KVIterator
@@ -79874,19 +79739,7 @@ struct KVIterator
 	virtual void vfunc9();
 };
 
-struct KVSource
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-	virtual void v25();
-	virtual KVIterator *vfunc26(int index);
-	virtual void vfunc27(KVIterator *pIter);
-};
 
-extern KVSource *g_104e0c8c;
 int sub_1008cdc0(int a, char *pBuf);
 
 int sub_10127260(int *pOut, int a, int *pInfo)
@@ -79894,7 +79747,7 @@ int sub_10127260(int *pOut, int a, int *pInfo)
 	char buf[0x63c];
 	int value;
 	int n = 0;
-	KVIterator *pIter = g_104e0c8c->vfunc26(pInfo[2]);
+	KVIterator *pIter = ((KVIterator *)physcollision->vfunc26(pInfo[2]));
 	while (!pIter->vfunc2()) {
 		const char *name = pIter->vfunc1();
 		if (_strcmpi(name, "solid") == 0) {
@@ -79907,7 +79760,7 @@ int sub_10127260(int *pOut, int a, int *pInfo)
 			pIter->vfunc9();
 		}
 	}
-	g_104e0c8c->vfunc27(pIter);
+	physcollision->vfunc27((const void *)(pIter));
 	return n;
 }
 // END FUNCTION
@@ -88949,24 +88802,13 @@ char CStatDefault3List::sub_1013fac0(const char *pszFile, int arg)
 // END FUNCTION
 
 // FUNCTION: 0x1013fb80 size=0xf7
+#include "engineclient.h"
 extern "C" __declspec(dllimport) void Msg(const char *fmt, ...);
 extern "C" int sprintf(char *buf, const char *fmt, ...);
-struct FileSystem {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21();
-	virtual const char *FindFirst(const char *pattern, int *handle);
-	virtual int FindNext(int handle);
-	virtual void v24();
-	virtual void FindClose(int handle);
-};
 struct Loader {
 	void sub_1013fb80(const char *dir);
 	bool sub_1013fa20(const char *file);
 };
-extern FileSystem *g_104a580c;
 // TARGET: Loader::sub_1013fb80
 void Loader::sub_1013fb80(const char *dir)
 {
@@ -88975,20 +88817,20 @@ void Loader::sub_1013fb80(const char *dir)
 	int count = 0;
 	if (dir) {
 		sprintf(path, "%s%s*.txt", "vdata\\system\\", dir);
-		if (g_104a580c->FindFirst(path, &handle)) {
+		if (((const char *)filesystem->FindFirst(path, &handle))) {
 			do {
 				count++;
-			} while (g_104a580c->FindNext(handle));
-			g_104a580c->FindClose(handle);
+			} while (filesystem->FindNext(handle));
+			filesystem->FindClose(handle);
 			if (count > 0) {
-				const char *name = g_104a580c->FindFirst(path, &handle);
+				const char *name = ((const char *)filesystem->FindFirst(path, &handle));
 				do {
 					sprintf(path, "%s%s", "vdata\\system\\", name);
 					if (!sub_1013fa20(path))
 						Msg("Unable to open Character Template List data file for: %s\n", path);
-					name = (const char *)g_104a580c->FindNext(handle);
+					name = (const char *)filesystem->FindNext(handle);
 				} while (name);
-				g_104a580c->FindClose(handle);
+				filesystem->FindClose(handle);
 			}
 		}
 	}
@@ -113239,17 +113081,12 @@ void CharEditPanel::sub_101740e0(bool bApply)
 // END FUNCTION
 
 // FUNCTION: 0x10174370 size=0x7a
+#include "engineclient.h"
 #include <string.h>
 
 #define V10(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7(); virtual void n##8(); virtual void n##9();
 
 struct ConV;
-struct ICvar {
-	virtual void a0();
-	virtual void a1();
-	virtual ConV *FindVar(const char *name);
-};
-extern ICvar *g_104a57e0;
 
 struct INamePanel {
 	V10(a) V10(b) V10(c) V10(d) V10(e) V10(f) V10(g) V10(h) V10(i) V10(j)
@@ -113262,7 +113099,7 @@ extern INamePanel *g_105fb120;
 // TARGET: sub_10174370
 bool sub_10174370()
 {
-	static ConV *pName = g_104a57e0->FindVar("name");
+	static ConV *pName = ((ConV *)cvar->FindVar("name"));
 	if (pName)
 	{
 		if (g_105fb120)
@@ -115005,13 +114842,8 @@ int CUnknown1017c660::sub_1017c660()
 // END FUNCTION
 
 // FUNCTION: 0x1017c680 size=0x9b
+#include "engineclient.h"
 #include "C_RecipientFilter.h"
-struct IEngSound1017c680 {
-	virtual void Precache(const char *name, int a);
-	virtual void s1(); virtual void s2();
-	virtual void EmitSound(IRecipientFilter *filter, int ent, int chan, const char *sample, float vol, int a, int flags, int pitch, int b, int c, int d, int e);
-};
-extern IEngSound1017c680 *g_104a5818;
 struct LPFV1017c680 {
 	void *vptr; bool m_bReliable; bool m_bInitMessage; int m_Recipients[sizeof(CUtlVector<int>) / 4]; int m_nBufSize; int m_unk20; int m_unk24; bool m_b1; bool m_b2;
 	LPFV1017c680 *sub_100be160();
@@ -115019,10 +114851,10 @@ struct LPFV1017c680 {
 };
 void sub_1017c680(const char *name)
 {
-	g_104a5818->Precache(name, 0);
+	enginesound->vfunc0(name, 0);
 	LPFV1017c680 filter;
 	filter.sub_100be160();
-	g_104a5818->EmitSound((IRecipientFilter *)&filter, -1, 0xbb, name, 1.0f, 0, 0x2801, 100, 0, 0, 1, 0);
+	enginesound->EmitSound(*(IRecipientFilter *)((IRecipientFilter *)&filter), -1, 0xbb, name, 1.0f, 0, 0x2801, 100, 0, 0, 1, 0);
 }
 // END FUNCTION
 
@@ -118063,20 +117895,19 @@ int CUnknown10189c20::sub_10189c20()
 // END FUNCTION
 
 // FUNCTION: 0x10189f80 size=0x97
+#include "engineclient.h"
 #include "Vector.h"
 struct CVarX { virtual void v0(); virtual bool IsOff(); char pad[0x24]; float m28; };
-struct RenderX { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(Vector *); };
 extern CVarX *g_105fbae4;
 extern CVarX *g_105fba9c;
 extern CVarX *g_105fbb2c;
-extern RenderX *g_104a57d8;
 // TARGET: sub_10189f80
 void sub_10189f80()
 {
     Vector v(g_105fbb2c->IsOff() ? 0.0f : g_105fbb2c->m28,
              g_105fba9c->IsOff() ? 0.0f : g_105fba9c->m28,
              g_105fbae4->IsOff() ? 0.0f : g_105fbae4->m28);
-    g_104a57d8->v8(&v);
+    modelrender->vfunc8(*(const Vector *)(&v));
 }
 // END FUNCTION
 
@@ -118236,6 +118067,7 @@ float CGUIClientRenderable::sub_1018a990(float flCycle, int nSequence, float *po
 // END FUNCTION
 
 // FUNCTION: 0x1018adb0 size=0x92
+#include "engineclient.h"
 struct Model_1018adb0 {
 	char pad[0x18c];
 	int m_count;
@@ -118246,10 +118078,6 @@ struct Node_1018adb0 {
 	char pad[0x4c];
 	Node_1018adb0 *sub_100ac0f0(Model_1018adb0 *, int, int, int, int, int, int, int, int);
 };
-struct IModelInfo_1018adb0 {
-	virtual Model_1018adb0 *GetModel(int h);
-};
-extern IModelInfo_1018adb0 *g_104a57d8;
 
 struct LHold {
 	char pad[0x2c];
@@ -118264,7 +118092,7 @@ void LHold::sub_1018adb0()
 {
 	sub_1018ae50();
 	if (m2c) {
-		Model_1018adb0 *model = g_104a57d8->GetModel(m2c);
+		Model_1018adb0 *model = ((Model_1018adb0 *)modelrender->GetStudiomodel((void *)(m2c)));
 		if (model) {
 			for (int i = 0; i < model->m_count; i++) {
 				int *s = (int *)((char *)model + model->m_off + i * 0x1c);
@@ -118425,35 +118253,15 @@ void CAnimState::sub_1018b060()
 // END FUNCTION
 
 // FUNCTION: 0x1018b110 size=0xd6
+#include "engineclient.h"
 #include <string.h>
 
 int sub_1008d9d0(int, int);
 float sub_1008c2d0(int, int, void *);
 int sub_1007a030(int, int);
 
-struct IModelInfoView
-{
-	virtual int v0(int);
-};
 
-struct IEngineView
-{
-	virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3();
-	virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7();
-	virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11();
-	virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15();
-	virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19();
-	virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23();
-	virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27();
-	virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31();
-	virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35();
-	virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39();
-	virtual void u40();
-	virtual float v41(int);
-};
 
-extern IModelInfoView *g_104a57d8;
-extern IEngineView *g_104a57d4;
 
 class CAnimState
 {
@@ -118468,7 +118276,7 @@ void CAnimState::sub_1018b110()
 	if (!*(int *)((char *)this + 0x2c))
 		return;
 
-	int model = g_104a57d8->v0(*(int *)((char *)this + 0x2c));
+	int model = ((int)modelrender->GetStudiomodel((void *)(*(int *)((char *)this + 0x2c))));
 	if (!model)
 		return;
 
@@ -118482,7 +118290,7 @@ void CAnimState::sub_1018b110()
 	if (!(f > 0.0f))
 		return;
 
-	float dt = g_104a57d4->v41(1);
+	float dt = engine->vfunc41(1);
 	dt = dt / f;
 	*(float *)((char *)this + 0x30) += dt;
 
@@ -118492,7 +118300,7 @@ void CAnimState::sub_1018b110()
 	int m2 = *(int *)((char *)this + 0x2c);
 	int seq = *(int *)((char *)this + 0xc);
 	if (m2)
-		m2 = g_104a57d8->v0(m2);
+		m2 = ((int)modelrender->GetStudiomodel((void *)(m2)));
 	if (sub_1007a030(m2, seq) & 1)
 	{
 		sub_1018b060();
@@ -118786,6 +118594,7 @@ void sub_1018c710()
 // END FUNCTION
 
 // FUNCTION: 0x1018c770 size=0x95
+#include "engineclient.h"
 #include "CInput.h"
 struct SubV_1018c770 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
@@ -118809,18 +118618,13 @@ struct CVarV_1018c770 {
 	int m_n0;
 	ParentV_1018c770 *m_pParent;
 };
-struct CvarIfV_1018c770 {
-	virtual void v0(); virtual void v1();
-	virtual CVarV_1018c770 *FindVar(const char *name);
-};
 extern ObjV_1018c770 *sub_10170f60();
-extern CvarIfV_1018c770 *g_104a57e0;
 
 bool sub_1018c770()
 {
 	if (sub_10170f60() && sub_10170f60()->m_sub.vfunc22())
 		return true;
-	static CVarV_1018c770 *s_pHide = g_104a57e0->FindVar("v_hidevgui");
+	static CVarV_1018c770 *s_pHide = ((CVarV_1018c770 *)cvar->FindVar("v_hidevgui"));
 	CVarV_1018c770 *cv = s_pHide;
 	if (cv && !cv->m_pParent->vfunc1() && cv->m_pParent->m_n2c)
 		return true;
@@ -120436,20 +120240,12 @@ void CViewRenderBeams::sub_101934d0(void *pBeamV)
 // END FUNCTION
 
 // FUNCTION: 0x101935e0 size=0x1a9
+#include "engineclient.h"
 #include "CGlobalVarsBase.h"
 #include "Vector.h"
 
 struct model_t;
 
-struct IVModelInfo_101935e0
-{
-	virtual void v0();
-	virtual void v1();
-	virtual const model_t *GetModel(int modelindex);
-	virtual void v3();
-	virtual void v4();
-	virtual int GetModelFrameCount(const model_t *model);
-};
 
 
 struct BeamInfo_t_101935e0
@@ -120504,7 +120300,6 @@ struct Beam_t_101935e0
 	int frameCount;           // 0x160
 };
 
-extern IVModelInfo_101935e0 *g_104a57f8;
 
 struct CUnknown101935e0
 {
@@ -120513,7 +120308,7 @@ struct CUnknown101935e0
 
 void CUnknown101935e0::sub_101935e0(Beam_t_101935e0 *pBeam, const BeamInfo_t_101935e0 &beamInfo)
 {
-	const model_t *pSprite = g_104a57f8->GetModel(beamInfo.m_nModelIndex);
+	const model_t *pSprite = ((const model_t *)modelinfo->GetModel(beamInfo.m_nModelIndex));
 	if (!pSprite)
 		return;
 
@@ -120523,7 +120318,7 @@ void CUnknown101935e0::sub_101935e0(Beam_t_101935e0 *pBeam, const BeamInfo_t_101
 	pBeam->haloScale = beamInfo.m_flHaloScale;
 	pBeam->frameRate = 0.0f;
 	pBeam->frame = 0.0f;
-	pBeam->frameCount = g_104a57f8->GetModelFrameCount(pSprite);
+	pBeam->frameCount = modelinfo->GetModelFrameCount((const void *)(pSprite));
 	pBeam->t = gpGlobals->curtime * beamInfo.m_flSpeed;
 	pBeam->die = gpGlobals->curtime + beamInfo.m_flLife;
 	pBeam->width = beamInfo.m_flWidth;
@@ -120829,25 +120624,8 @@ void UtlMem::sub_10197a20(int num)
 // END FUNCTION
 
 // FUNCTION: 0x10198260 size=0xb6
+#include "engineclient.h"
 #include "ScopeTrace.h"
-struct IMat10198260 {
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
-	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
-	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual int v64(int a);
-	virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
-	virtual void v70(); virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74(); virtual void v75(); virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79();
-	virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84(); virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89();
-	virtual void v90(); virtual void v91(); virtual void v92(); virtual void v93(); virtual void v94(); virtual void v95(); virtual void v96(); virtual void v97(); virtual void v98(); virtual void v99();
-	virtual void v100(); virtual void v101(); virtual void v102(); virtual void v103(); virtual void v104(); virtual void v105(); virtual void v106(); virtual void v107(); virtual void v108(); virtual void v109();
-	virtual void v110(); virtual void v111(); virtual void v112(); virtual void v113(); virtual void v114(); virtual void v115(); virtual void v116(); virtual void v117(); virtual void v118(); virtual void v119();
-	virtual void v120(void (*fn)()); virtual void v121(); virtual void v122(); virtual void v123(); virtual void v124(); virtual void v125(); virtual void v126(); virtual void v127();
-	virtual void *v128(int w, int h, int fmt);
-};
-extern IMat10198260 *g_104a57ec;
 extern void *g_106198f8;
 extern char g_106198fc;
 void sub_10198320();
@@ -120856,10 +120634,10 @@ void *sub_10198260()
 	ScopeTrace t("::GetPowerOfTwoFrameBufferTexture", g_102de300);
 	if (!g_106198f8)
 	{
-		g_106198f8 = g_104a57ec->v128(512, 512, g_104a57ec->v64(0));
+		g_106198f8 = materials->vfunc128(512, 512, materials->vfunc64(0));
 		if (!g_106198fc)
 		{
-			g_104a57ec->v120(sub_10198320);
+			materials->AddRestoreFunc((int)(sub_10198320));
 			g_106198fc = 1;
 		}
 	}
@@ -120961,45 +120739,10 @@ void sub_10198460()
 // END FUNCTION
 
 // FUNCTION: 0x101987e0 size=0xa4
+#include "engineclient.h"
 #include "ScopeTrace.h"
 
-struct MatView
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void *FindTexture(const char *name, const char *group, int a);
-	virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32();
-	virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36();
-	virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40();
-	virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
-	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48();
-	virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52();
-	virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56();
-	virtual void v57(); virtual void v58(); virtual void v59(); virtual void v60();
-	virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64();
-	virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68();
-	virtual void v69(); virtual void v70(); virtual void v71(); virtual void v72();
-	virtual void v73(); virtual void v74(); virtual void v75(); virtual void v76();
-	virtual void v77(); virtual void v78(); virtual void v79(); virtual void v80();
-	virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84();
-	virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88();
-	virtual void v89(); virtual void v90(); virtual void v91(); virtual void v92();
-	virtual void v93(); virtual void v94(); virtual void v95(); virtual void v96();
-	virtual void v97(); virtual void v98(); virtual void v99(); virtual void v100();
-	virtual void v101(); virtual void v102(); virtual void v103(); virtual void v104();
-	virtual void v105(); virtual void v106(); virtual void v107(); virtual void v108();
-	virtual void v109(); virtual void v110(); virtual void v111(); virtual void v112();
-	virtual void v113(); virtual void v114(); virtual void v115(); virtual void v116();
-	virtual void v117(); virtual void v118(); virtual void v119();
-	virtual void AddRestoreFunc(void (*fn)());
-};
 
-extern MatView *g_104a57ec;
 extern void *g_10619910;
 extern unsigned char g_10619914;
 void sub_10198890();
@@ -121010,10 +120753,10 @@ void *sub_101987e0()
 	ScopeTrace t("::GetWaterReflectionTexture", g_102de300);
 	if (!g_10619910)
 	{
-		g_10619910 = g_104a57ec->FindTexture("_rt_WaterReflection", "RenderTargets", 1);
+		g_10619910 = materials->FindTexture("_rt_WaterReflection", "RenderTargets", 1);
 		if (!g_10619914)
 		{
-			g_104a57ec->AddRestoreFunc(sub_10198890);
+			materials->AddRestoreFunc((int)(sub_10198890));
 			g_10619914 = 1;
 		}
 	}
@@ -121034,45 +120777,10 @@ void sub_10198890()
 // END FUNCTION
 
 // FUNCTION: 0x101988f0 size=0xa4
+#include "engineclient.h"
 #include "ScopeTrace.h"
 
-struct IMaterialSystemV
-{
-	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
-	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
-	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
-	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-	virtual void *FindTexture(const char *name, const char *group, int a);   // slot 28
-	virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32();
-	virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36();
-	virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40();
-	virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
-	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48();
-	virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52();
-	virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56();
-	virtual void v57(); virtual void v58(); virtual void v59(); virtual void v60();
-	virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64();
-	virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68();
-	virtual void v69(); virtual void v70(); virtual void v71(); virtual void v72();
-	virtual void v73(); virtual void v74(); virtual void v75(); virtual void v76();
-	virtual void v77(); virtual void v78(); virtual void v79(); virtual void v80();
-	virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84();
-	virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88();
-	virtual void v89(); virtual void v90(); virtual void v91(); virtual void v92();
-	virtual void v93(); virtual void v94(); virtual void v95(); virtual void v96();
-	virtual void v97(); virtual void v98(); virtual void v99(); virtual void v100();
-	virtual void v101(); virtual void v102(); virtual void v103(); virtual void v104();
-	virtual void v105(); virtual void v106(); virtual void v107(); virtual void v108();
-	virtual void v109(); virtual void v110(); virtual void v111(); virtual void v112();
-	virtual void v113(); virtual void v114(); virtual void v115(); virtual void v116();
-	virtual void v117(); virtual void v118(); virtual void v119();
-	virtual void AddRestoreFunc(void (*fn)(void));   // slot 120
-};
 
-extern IMaterialSystemV *g_104a57ec;
 void sub_101989a0();
 static void *g_10619918;
 static bool g_1061991c;
@@ -121083,10 +120791,10 @@ void *sub_101988f0(void)
 	ScopeTrace trace("::GetWaterRefractionTexture", g_102de300);
 	if (!g_10619918)
 	{
-		g_10619918 = g_104a57ec->FindTexture("_rt_WaterRefraction", "RenderTargets", 1);
+		g_10619918 = materials->FindTexture("_rt_WaterRefraction", "RenderTargets", 1);
 		if (!g_1061991c)
 		{
-			g_104a57ec->AddRestoreFunc(sub_101989a0);
+			materials->AddRestoreFunc((int)(sub_101989a0));
 			g_1061991c = true;
 		}
 	}
@@ -122808,42 +122516,12 @@ bool CViewRender::sub_1019f140(int arg)
 // END FUNCTION
 
 // FUNCTION: 0x1019f940 size=0xee
+#include "engineclient.h"
 #include "ScopeTrace.h"
 #include "CViewRender.h"
 
-class IVMaterialSystemConfig_1019f940
-{
-public:
-	virtual void v0() = 0; virtual void v1() = 0; virtual void v2() = 0; virtual void v3() = 0;
-	virtual void v4() = 0; virtual void v5() = 0; virtual void v6() = 0; virtual void v7() = 0;
-	virtual void v8() = 0; virtual void v9() = 0;
-	virtual bool v10() = 0;
-};
 
-class IMaterialSystem_1019f940
-{
-public:
-	virtual void v0() = 0; virtual void v1() = 0; virtual void v2() = 0; virtual void v3() = 0;
-	virtual void v4() = 0; virtual void v5() = 0; virtual void v6() = 0; virtual void v7() = 0;
-	virtual void v8() = 0; virtual void v9() = 0; virtual void v10() = 0; virtual void v11() = 0;
-	virtual void v12() = 0; virtual void v13() = 0; virtual void v14() = 0; virtual void v15() = 0;
-	virtual void v16() = 0; virtual void v17() = 0; virtual void v18() = 0; virtual void v19() = 0;
-	virtual void v20() = 0; virtual void v21() = 0; virtual void v22() = 0; virtual void v23() = 0;
-	virtual void v24() = 0; virtual void v25() = 0; virtual void v26() = 0; virtual void v27() = 0;
-	virtual void v28() = 0; virtual void v29() = 0; virtual void v30() = 0; virtual void v31() = 0;
-	virtual void v32() = 0; virtual void v33() = 0; virtual void v34() = 0; virtual void v35() = 0;
-	virtual void v36() = 0; virtual void v37() = 0; virtual void v38() = 0; virtual void v39() = 0;
-	virtual void v40() = 0; virtual void v41() = 0; virtual void v42() = 0; virtual void v43() = 0;
-	virtual void v44() = 0; virtual void v45() = 0; virtual void v46() = 0; virtual void v47() = 0;
-	virtual void v48() = 0; virtual void v49() = 0; virtual void v50() = 0; virtual void v51() = 0;
-	virtual void v52() = 0; virtual void v53() = 0; virtual void v54() = 0; virtual void v55() = 0;
-	virtual void v56() = 0; virtual void v57() = 0; virtual void v58() = 0; virtual void v59() = 0;
-	virtual void v60() = 0; virtual void v61() = 0;
-	virtual void v62(void *pTex, int a1) = 0;
-};
 
-extern IVMaterialSystemConfig_1019f940 *g_104a57f0;
-extern IMaterialSystem_1019f940 *g_104a57ec;
 extern void *sub_10198380();
 
 class CViewRender_1019f940 : public CViewRender
@@ -122863,7 +122541,7 @@ bool CViewRender_1019f940::sub_1019f940(void *view)
 {
 	ScopeTrace _trace("CViewRender::DrawCrossfadeOverlay", g_102de300);
 
-	if (!g_104a57f0->v10())
+	if (!g_pMaterialSystemHardwareConfig->vfunc10())
 		return false;
 
 	float alpha = m_flAlpha498;
@@ -122871,7 +122549,7 @@ bool CViewRender_1019f940::sub_1019f940(void *view)
 		return false;
 
 	void *pTex = sub_10198380();
-	g_104a57ec->v62(pTex, 0);
+	materials->vfunc62((int)(pTex), 0);
 	sub_1019e530(view, m_pMat424, alpha, 0, 0, 255, 255, 255);
 	return true;
 }
