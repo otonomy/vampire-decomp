@@ -27,6 +27,143 @@ CTempEnts::~CTempEnts()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1003b5d0 size=0x27e
+#include "Vector.h"
+#include "QAngle.h"
+#include "CTempEnts.h"
+
+struct FizzModelInfo
+{
+	virtual void v0(); virtual void v1();
+	virtual void *GetModel(int modelIndex);
+	virtual void GetModelBounds(const void *model, Vector &mins, Vector &maxs);
+	virtual void v4();
+	virtual int GetModelFrameCount(const void *model);
+};
+extern FizzModelInfo *g_104a57f8;
+struct FizzRandom
+{
+	virtual void v0();
+	virtual float RandomFloat(float lo, float hi);
+	virtual int RandomInt(int lo, int hi);
+};
+extern FizzRandom *g_104a5738;
+struct FizzEngine
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+	virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+	virtual void v36(); virtual void v37(); virtual void v38();
+	virtual float GetTime(int n);	// 39
+};
+extern FizzEngine *g_104a57d4;
+
+struct FizzEnt
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual const QAngle &GetLocalAngles();	// 10
+	char pad4[0x40 - 4];
+	void *m_pModel;	// 0x40
+	char pad44[0x50 - 0x44];
+	unsigned char m_r, m_g, m_b, m_a;	// 0x50
+};
+
+struct TempEntView
+{
+	char pad0[0x48];
+	int m_nRenderMode;	// 0x48
+	char pad4c[0x53 - 0x4c];
+	unsigned char m_alpha;	// 0x53
+	char pad54[0x7ac - 0x54];
+	int flags;	// 0x7ac
+	float die;	// 0x7b0
+	int m_7b4;
+	float x;	// 0x7b8
+	float y;	// 0x7bc
+	char pad7c0[0x7f0 - 0x7c0];
+	float m_flSpriteScale;	// 0x7f0
+	int m_7f4, m_7f8;
+	float m_flFrame;	// 0x7fc
+};
+struct CUnknown1003a840 { int sub_1003a840(int x, int y, int z); };
+
+static inline void SinCos( float radians, float *sine, float *cosine )
+{
+	_asm
+	{
+		fld		DWORD PTR [radians]
+		fsincos
+
+		mov edx, DWORD PTR [cosine]
+		mov eax, DWORD PTR [sine]
+
+		fstp DWORD PTR [edx]
+		fstp DWORD PTR [eax]
+	}
+}
+
+void CTempEnts::vfunc11(C_BaseEntity *pEnt, int modelIndex, int density)
+{
+	FizzEnt *pent = (FizzEnt *)pEnt;
+	TempEntView *pTemp;
+	void *model;
+	int i, width, depth, count, frameCount;
+	float maxHeight, speed, xspeed, yspeed;
+	Vector origin;
+	Vector mins, maxs;
+
+	if (!pent->m_pModel || !modelIndex)
+		return;
+
+	model = g_104a57f8->GetModel(modelIndex);
+	if (!model)
+		return;
+
+	count = density + 1;
+
+	g_104a57f8->GetModelBounds(model, mins, maxs);
+
+	maxHeight = maxs.z - mins.z;
+	width = maxs.x - mins.x;
+	depth = maxs.y - mins.y;
+	speed = pent->m_r * 256.0 + pent->m_g;
+	if (pent->m_b)
+		speed = -speed;
+
+	float yaw = pent->GetLocalAngles().y * (3.14159265358979323846 / 180);
+	SinCos(yaw, &yspeed, &xspeed);
+	xspeed *= speed;
+	yspeed *= speed;
+	frameCount = g_104a57f8->GetModelFrameCount(model);
+
+	for (i = 0; i < count; i++)
+	{
+		origin.x = mins.x + g_104a5738->RandomInt(0, width - 1);
+		origin.y = mins.y + g_104a5738->RandomInt(0, depth - 1);
+		origin.z = mins.z;
+		pTemp = sub_1003cdd0(&origin, model);
+		if (!pTemp)
+			return;
+
+		pTemp->flags |= 1;
+		pTemp->x = origin.x;
+		pTemp->y = origin.y;
+
+		float zspeed = g_104a5738->RandomInt(80, 140);
+		((CUnknown1003a840 *)pTemp)->sub_1003a840(*(int *)&xspeed, *(int *)&yspeed, *(int *)&zspeed);
+		pTemp->die = g_104a57d4->GetTime(0) + (maxHeight / zspeed) - 0.1;
+		pTemp->m_flFrame = g_104a5738->RandomInt(0, frameCount - 1);
+		pTemp->m_flSpriteScale = 1.0 / g_104a5738->RandomFloat(2, 5);
+		pTemp->m_nRenderMode = 4;
+		pTemp->m_alpha = 255;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1003b850 size=0x264
 #include "CTempEnts.h"
 #include "Vector.h"

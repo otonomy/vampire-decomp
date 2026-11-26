@@ -2238,6 +2238,7 @@
 0x1003b530 func   ??0CTempEnts@@QAE@XZ CTempEnts::CTempEnts
 0x1003b570 func   ??_GCTempEnts@@UAEPAXI@Z ??_GCTempEnts@@UAEPAXI@Z
 0x1003b590 func   ??1CTempEnts@@UAE@XZ CTempEnts::~CTempEnts
+0x1003b5d0 func   ?vfunc11@CTempEnts@@UAEXPAVC_BaseEntity@@HH@Z CTempEnts::vfunc11
 0x1003b850 func   ?vfunc8@CTempEnts@@UAEXABVVector@@0MHHM@Z CTempEnts::vfunc8
 0x1003c3e0 func   ?vfunc15@CTempEnts@@UAEXHHMM@Z CTempEnts::vfunc15
 0x1003c5d0 func   ?vfunc16@CTempEnts@@UAEXH@Z CTempEnts::vfunc16
