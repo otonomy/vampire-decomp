@@ -13350,6 +13350,13 @@ template <> int ClientClassInit<DT_SmokeStack::ignored>(DT_SmokeStack::ignored *
 }
 // END FUNCTION
 
+// FUNCTION: 0x1002fdf0 size=0x3
+char sub_1002fdf0()
+{
+    return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1002feb0 size=0x1b
 namespace lifted {
 extern char g_102eae94;
