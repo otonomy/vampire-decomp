@@ -135398,6 +135398,128 @@ void sub_10190f30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10191200 size=0x404
+#include "CViewRender.h"
+#include "C_BasePlayer.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include "CInput.h"
+#include "CClientEntityList.h"
+#include "ConVar.h"
+#include <string.h>
+
+struct ViewEffects_10191200
+{
+	virtual void vfunc0();
+	virtual void vfunc1();
+	virtual void vfunc2();
+	virtual void vfunc3();
+	virtual void vfunc4();
+	virtual void vfunc5();
+	virtual void vfunc6();
+	virtual void vfunc7(Vector &origin, QAngle &angles, float scale);
+	virtual void vfunc8(Vector &origin, QAngle &angles, float scale);
+};
+extern ViewEffects_10191200 *g_102d5238;
+
+struct ViewModelRec_10191200
+{
+	int m_unk00;
+	int m_unk04;
+	int m_unk08;
+	int m_unk0c;
+	float m_fl10;
+};
+
+extern ConVar g_105fc9a0;
+extern ConVar g_105fca30;
+extern ConVar g_105fc9e8;
+extern int g_104e16f4;
+static float g_105fcac4;
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
+
+void CViewRender::sub_10191200()
+{
+	ScopeTrace st("CViewRender::CalcView", g_102de300);
+	ViewModelRec_10191200 *pViewModels[2];
+	memset(pViewModels, 0, sizeof(pViewModels));
+
+	sub_10190390();
+
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return;
+
+	float flBob = sub_1018ffd0();
+	VectorCopy(pPlayer->GetAbsOrigin(), View().origin);
+	if (*(int *)((char *)pPlayer + 0x16f4) & 0x400)
+		View().origin.z += 64.0f;
+	else
+		VectorAdd(*(Vector *)((char *)pPlayer + 0x148), View().origin, View().origin);
+	View().origin.z += flBob;
+
+	engine->GetViewAngles(View().angles);
+	g_102d5238->vfunc6();
+	g_102d5238->vfunc7(View().origin, View().angles, 1.0f);
+	float flHeight = sub_10190900();
+	View().origin.z += flHeight;
+	if (!input->vfunc29())
+	{
+		g_102d5238->vfunc8(View().origin, View().angles, 1.0f);
+		sub_10190850();
+		sub_10190640();
+	}
+
+	Vector forward, right, up;
+	sub_101090a0(*(const QAngle *)pPlayer->vfunc195(), &forward, &right, &up);
+	for (int i = 0; i < 3; i++)
+	{
+		View().origin[i] += forward[i] * g_105fc9a0.GetFloat() + right[i] * g_105fca30.GetFloat() + up[i] * g_105fc9e8.GetFloat();
+	}
+
+	VectorAdd(*(Vector *)&View().angles, *(Vector *)((char *)pPlayer + 0x1718), *(Vector *)&View().angles);
+
+	int j;
+	for (j = 0; j < 2; j++)
+	{
+		pViewModels[j] = (ViewModelRec_10191200 *)sub_10190ba0(j, *(int *)((char *)pPlayer + 0x44), pPlayer->GetAbsOrigin(), View().angles, *(Vector *)((char *)pPlayer + 0x148), flHeight, *(int *)&flBob);
+	}
+
+	if (g_104e16f4 != -1 && pPlayer->GetAbsOrigin().z - g_105fcac4 > 0.0f)
+	{
+		float dt = engine->vfunc41(0);
+		if (dt < 0.0f)
+			dt = 0.0f;
+		g_105fcac4 += dt * 150.0f;
+		if (pPlayer->GetAbsOrigin().z < g_105fcac4)
+			g_105fcac4 = pPlayer->GetAbsOrigin()[2];
+		if (pPlayer->GetAbsOrigin().z - g_105fcac4 > 18.0f)
+			g_105fcac4 = pPlayer->GetAbsOrigin().z - 18.0f;
+		View().origin.z += g_105fcac4 - pPlayer->GetAbsOrigin()[2];
+		for (j = 0; j < 2; j++)
+		{
+			if (pViewModels[j])
+				pViewModels[j]->m_fl10 += g_105fcac4 - pPlayer->GetAbsOrigin()[2];
+		}
+	}
+	else
+	{
+		g_105fcac4 = pPlayer->GetAbsOrigin()[2];
+	}
+
+	int nView = render->vfunc39();
+	if (nView > engine->GetMaxClients())
+	{
+		C_BaseEntity *pEnt = cl_entitylist->sub_100d0cf0(nView);
+		if (pEnt)
+		{
+			View().origin = pEnt->GetAbsOrigin();
+			View().angles = pEnt->GetAbsAngles();
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10191710 size=0x230
 #include "CViewRender.h"
 #include "CViewSetup.h"
