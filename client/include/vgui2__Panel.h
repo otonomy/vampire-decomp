@@ -14,6 +14,8 @@ class Panel : public vgui2::IClientPanel
 {
 public:
 	static void operator delete(void *pMem);
+	static void *operator new(unsigned int);
+	static void *operator new(unsigned int, void *p) { return p; }
 	Panel(Panel *parent, const char *name);
 	void sub_101ab300(bool, bool);
 	void sub_101ac570(void *);
