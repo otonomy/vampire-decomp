@@ -5738,6 +5738,7 @@
 0x1010a790 func   ?sub_1010a790@@YAXABUSRadianEuler@@AAVQuaternion@@@Z sub_1010a790
 0x1010a890 func   ?sub_1010a890@@YAXABVVector@@00H@Z sub_1010a890
 0x1010a930 func   ?sub_1010a930@@YAXPBMPAM@Z sub_1010a930
+0x1010a980 func   ?sub_1010a980@@YAXABVVector@@000MAAV1@@Z sub_1010a980
 0x1010aba0 func   ?sub_1010aba0@@YAXABVVector@@000MAAV1@@Z sub_1010aba0
 0x1010ada0 func   ?sub_1010ada0@@YAXABVVector@@000MAAV1@@Z sub_1010ada0
 0x1010af20 func   ?sub_1010af20@@YAXABVVector@@000MAAV1@@Z sub_1010af20

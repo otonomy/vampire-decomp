@@ -67093,6 +67093,39 @@ void sub_1010a930(const float *q, float *angles)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1010a980 size=0x213
+#include "Vector.h"
+void sub_1010a980(const Vector &p1, const Vector &p2, const Vector &p3, const Vector &p4, float t, Vector &output)
+{
+	output.Init();
+	float tt = 0.5f * t * t;
+	float ttt = t * tt;
+	t *= 0.5f;
+	Vector a, b, c, d;
+	VectorScale(p1, -ttt, a);
+	VectorScale(p2, 3.0f * ttt, b);
+	VectorScale(p3, -3.0f * ttt, c);
+	VectorScale(p4, ttt, d);
+	VectorAdd(a, output, output);
+	VectorAdd(b, output, output);
+	VectorAdd(c, output, output);
+	VectorAdd(d, output, output);
+	VectorScale(p1, tt + tt, a);
+	VectorScale(p2, -5.0f * tt, b);
+	VectorScale(p3, 4.0f * tt, c);
+	VectorScale(p4, -tt, d);
+	VectorAdd(a, output, output);
+	VectorAdd(b, output, output);
+	VectorAdd(c, output, output);
+	VectorAdd(d, output, output);
+	VectorScale(p1, -t, a);
+	VectorScale(p3, t, b);
+	VectorAdd(a, output, output);
+	VectorAdd(b, output, output);
+	VectorAdd(p2, output, output);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010aba0 size=0x1fb
 // mathlib Catmull_Rom_Spline_Tangent, verbatim
 // TARGET: sub_1010aba0
