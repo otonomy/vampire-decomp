@@ -78,6 +78,74 @@ void CBossHealthBar::vfunc113()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004d890 size=0x33e
+#include "CBossHealthBar.h"
+#include "CHUDSprite.h"
+#include "ConVar.h"
+#include "CInput.h"
+#include "engineclient.h"
+
+extern ConVar g_105faa30;
+int sub_100cd100();
+
+struct BarRect { int left; int right; int top; int bottom; };
+
+#define BAR_MIN(a, b) (((a) > (b)) ? (b) : (a))
+#define BAR_MAX(a, b) (((a) >= (b)) ? (a) : (b))
+
+void CBossHealthBar::vfunc98()
+{
+	static ConVar *s_pHideVGui = cvar->FindVar("v_hidevgui");
+	if (s_pHideVGui && s_pHideVGui->GetBool())
+		return;
+	if (!g_105faa30.GetBool())
+		return;
+	if (input->vfunc52() > 0.0f)
+		return;
+
+	if (!m_pChild1)
+	{
+		m_pChild2 = new CHUDSprite("hud/BloodBar_Empty", 0, 0, 0x200, 0x40, 0x200, 0x40);
+		m_pChild1 = new CHUDSprite("hud/BloodBar_Full", 0, 0, 0x200, 0x40, 0x200, 0x40);
+	}
+
+	int x, y;
+	sub_101a98c0(&x, &y);
+
+	if (m_b199 && m_unk194 < 255)
+		m_unk194 = BAR_MIN(m_unk194 + 5, 255);
+	else if (m_b19a && m_unk194 > 0)
+		m_unk194 = BAR_MAX(m_unk194 - 5, 0);
+
+	for (int i = 0; i < m_unk1a0; i++)
+	{
+		int h = 360 - m_unk1a4[i] * 360 / 100;
+		{
+			BarRect rect;
+			rect.left = 0;
+			rect.right = 0x200;
+			rect.top = 0;
+			rect.bottom = 0x40;
+			m_pChild2->sub_1005c430(x, m_unk184 * i + y, m_unk180, m_unk184, (int)&rect, m_unk194);
+			rect.left = h + 0x4b;
+			rect.top = 0;
+			rect.right = 0x1b3;
+			rect.bottom = 0x40;
+			m_pChild1->sub_1005c430(m_unk18c + x, m_unk184 * i + y,
+				(int)((m_unk180 - m_unk18c) - rect.left * (sub_100cd100() / 1024.0)),
+				m_unk184, (int)&rect, m_unk194);
+		}
+		if (m_unk1ac[i])
+		{
+			int w = g_pMatSystemSurface->vfunc15(m_nFont, m_unk1ac[i]);
+			int th;
+			g_pMatSystemSurface->vfunc14(m_nFont, w, &th, m_unk1ac[i]);
+			g_pMatSystemSurface->vfunc12(m_nFont, (m_unk180 - w) / 2, (i + 1) * m_unk184 - th, 0xff, 0xff, 0xff, m_unk194, m_unk1ac[i]);
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004dbd0 size=0x1
 #include "CBossHealthBar.h"
 void CBossHealthBar::vfunc97()

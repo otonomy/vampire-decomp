@@ -37,7 +37,7 @@ public:
 	virtual void vfunc11(int, void *);	// slot 11
 	virtual void vfunc12(void *);	// slot 12; shapes differ
 	virtual void vfunc13();
-	virtual void vfunc14();
+	virtual int vfunc14();	// slot 14: the map version (CFPSPanel's "map: %s [ver: %d]")
 	virtual void vfunc15();
 	virtual void vfunc16();
 	virtual void vfunc17();
@@ -66,7 +66,7 @@ public:
 	virtual void vfunc40();
 	virtual float vfunc41(int);	// slot 41; seen as GetFrameTime 1, Time 1
 	virtual float vfunc42();	// slot 42
-	virtual void vfunc43();
+	virtual void vfunc43(float);	// slot 43: C_BasePlayer::OnDataChanged hands it 1 / +0x1078 (0.2f when dead)
 	virtual int vfunc44();	// slot 44; seen as FrameCount 1
 	virtual void vfunc45();
 	virtual int vfunc46();	// slot 46; seen as GetX 1; shapes differ
@@ -265,7 +265,7 @@ public:
 	virtual int vfunc3();	// slot 3
 	virtual int vfunc4();	// slot 4
 	virtual int vfunc5();	// slot 5
-	virtual int vfunc6();	// slot 6
+	virtual void vfunc6(float);	// slot 6: SetBlend (DrawSpriteModel's render->SetBlend(1.0))
 	virtual int vfunc7();	// slot 7
 	virtual int vfunc8();	// slot 8
 	virtual int vfunc9();	// slot 9
@@ -300,7 +300,7 @@ public:
 	virtual int vfunc38();	// slot 38
 	virtual int vfunc39();	// slot 39
 	virtual void vfunc40();
-	virtual void vfunc41();
+	virtual unsigned char **vfunc41();	// slot 41: where the area bits pointer lives (C_BasePlayer::OnDataChanged stores the player's +0x166c)
 	virtual double vfunc42();	// slot 42
 	virtual void vfunc43(int, int);	// slot 43; shapes differ
 	virtual float vfunc44(int);	// slot 44
@@ -726,7 +726,7 @@ public:
 	virtual void vfunc10();
 	virtual void vfunc11();
 	virtual void __cdecl vfunc12(int, int, int, ...);	// slot 12; seen as Draw 1; DrawColoredText(font, x, y, r, g, b, a, fmt, ...)
-	virtual void vfunc13();
+	virtual void vfunc13(int, int, int, int, int, int, int, int, int, const char *, ...);	// slot 13: text in a box (font, x, y, w, h, r, g, b, a, fmt, ...) (CProgBar)
 	virtual void vfunc14(int, int, int *, const char *, ...);	// slot 14: text size with a wrap width (CCredits)
 	virtual int vfunc15(int, const char *, ...);	// slot 15; seen as DrawTextLen 1
 };

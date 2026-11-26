@@ -46,7 +46,8 @@ struct StudioBone	// 0xa0 bytes each (Studio_BuildMatrices 0x100c3600 reads thes
 	char m_pad08[0x20 - 8];
 	Vector m_pos;	// 0x20
 	Quaternion m_quat;	// 0x2c
-	char m_pad3c[0x88 - 0x3c];
+	char m_pad3c[0x58 - 0x3c];
+	float m_poseToBone[3][4];	// 0x58: the pose-to-bone matrix (3x4)
 	unsigned char m_bFlags88;	// 0x88: bit 1 (value 2) = the bone's rotation is not inherited from the parent (only the translation is: rotation = the root matrix * bone rotation)
 	char m_pad89[0x90 - 0x89];
 	int m_nProcIndex90;	// 0x90: offset of the procedural bone record from this bone (0 = none)

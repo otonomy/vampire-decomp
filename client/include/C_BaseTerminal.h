@@ -41,7 +41,9 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	bool m_bF04;	// 0xf04: accepts typing
 	char m_pad0f05[0xf0c - 0xf05];
 	bool m_bF0c;	// 0xf0c: armed for the "hackcmd break" key ('c')
-	char m_pad0f0d[3];
+	bool m_bF0d;	// 0xf0d: cursor keys move the cursor
+	char m_cF0e;
+	char m_cF0f;
 	unsigned int m_nF10;	// 0xf10: input flags (1 = command mode, 2 = digits only, 8 = key sound)
 	int m_nF14;	// 0xf14: maximum text length (0 = none)
 	int m_nF18;	// 0xf18: the key sound (engine slot 8 turns it into a name)

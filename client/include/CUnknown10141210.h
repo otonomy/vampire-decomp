@@ -9,4 +9,6 @@ public:
 	CUnknown10141210(int n);
 	~CUnknown10141210();
 	void sub_10141370();
+	bool sub_10141300(const char **ppHelp);
+	const char *sub_10141340();
 };

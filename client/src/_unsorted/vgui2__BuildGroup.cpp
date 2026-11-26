@@ -63,6 +63,100 @@ int vgui2::BuildGroup::vfunc16(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c1370 size=0x435
+#include "vgui2__BuildGroup.h"
+#include "vgui2__Label.h"
+#include <stdio.h>
+
+struct Surface_101c1370
+{
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+    virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+    virtual void PushMakeCurrent(int panel, bool useInsets);
+    virtual void PopMakeCurrent(int panel);
+    virtual void v10();
+    virtual void DrawSetColor(int r, int g, int b, int a);
+    virtual void DrawFilledRect(int x0, int y0, int x1, int y1);
+};
+
+Surface_101c1370 *sub_101ac8d0();
+
+struct Bounds_101a9980
+{
+    void sub_101a9980(int &x, int &y, int &wide, int &tall);
+};
+
+#define BG_BUILDCONTEXT ((vgui2::Panel *)m_unk5c)
+#define BG_CURRENT ((vgui2::Panel *)m_unk3c)
+#define BG_RULER(i) (((vgui2::Label **)((char *)this + 0xa0))[i])
+
+void vgui2::BuildGroup::vfunc18()
+{
+    if (!*((char *)this + 0xb0))
+        return;
+
+    if (BG_BUILDCONTEXT == BG_CURRENT)
+    {
+        vfunc16(0);
+        return;
+    }
+    else
+        vfunc16(1);
+
+    int x, y, wide, tall;
+    ((Bounds_101a9980 *)BG_BUILDCONTEXT)->sub_101a9980(x, y, wide, tall);
+    BG_BUILDCONTEXT->vfunc27(&x, &y);
+
+    int cx, cy, cwide, ctall;
+    ((Bounds_101a9980 *)BG_CURRENT)->sub_101a9980(cx, cy, cwide, ctall);
+
+    sub_101ac8d0()->PushMakeCurrent(BG_BUILDCONTEXT->vfunc0(), false);
+
+    sub_101ac8d0()->DrawSetColor(255, 255, 255, 255);
+
+    sub_101ac8d0()->DrawFilledRect(0, cy, cx, cy + 1);
+    sub_101ac8d0()->DrawFilledRect(cx + cwide, cy, wide, cy + 1);
+
+    sub_101ac8d0()->DrawFilledRect(0, cy + ctall - 1, cx, cy + ctall);
+    sub_101ac8d0()->DrawFilledRect(cx + cwide, cy + ctall - 1, wide, cy + ctall);
+
+    sub_101ac8d0()->DrawFilledRect(cx, 0, cx + 1, cy);
+    sub_101ac8d0()->DrawFilledRect(cx + cwide - 1, 0, cx + cwide, cy);
+
+    sub_101ac8d0()->DrawFilledRect(cx, cy + ctall, cx + 1, tall);
+    sub_101ac8d0()->DrawFilledRect(cx + cwide - 1, cy + ctall, cx + cwide, tall);
+
+    sub_101ac8d0()->PopMakeCurrent(BG_BUILDCONTEXT->vfunc0());
+
+    char textstring[20];
+    sprintf(textstring, "%d", cx);
+    BG_RULER(0)->vfunc108(textstring);
+    int twide, ttall;
+    BG_RULER(0)->vfunc110(&twide, &ttall);
+    BG_RULER(0)->sub_101a98f0(twide, ttall);
+    BG_RULER(0)->sub_101a9890(cx / 2 - twide / 2, cy - ttall + 3);
+
+    sprintf(textstring, "%d", cy);
+    BG_RULER(1)->vfunc108(textstring);
+    BG_RULER(1)->vfunc110(&twide, &ttall);
+    BG_RULER(1)->sub_101a98f0(twide, ttall);
+    BG_RULER(1)->sub_101a9920(&twide, &ttall);
+    BG_RULER(1)->sub_101a9890(cx - twide + 3, cy / 2 - ttall / 2);
+
+    sprintf(textstring, "%d", cy);
+    BG_RULER(2)->vfunc108(textstring);
+    BG_RULER(2)->vfunc110(&twide, &ttall);
+    BG_RULER(2)->sub_101a98f0(twide, ttall);
+    BG_RULER(2)->sub_101a9890(cx + cwide + (wide - cx - cwide) / 2 - twide / 2, cy + ctall - 3);
+
+    sprintf(textstring, "%d", cy);
+    BG_RULER(3)->vfunc108(textstring);
+    BG_RULER(3)->vfunc110(&twide, &ttall);
+    BG_RULER(3)->sub_101a98f0(twide, ttall);
+    BG_RULER(3)->sub_101a9890(cx + cwide, cy + ctall + (tall - cy - ctall) / 2 - ttall / 2);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c1db0 size=0x15
 #include "vgui2__BuildGroup.h"
 namespace lifted {

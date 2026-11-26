@@ -119,3 +119,118 @@ void CFPSPanel::vfunc2()
     ((lifted::V *)this)->f21(((lifted::V *)this)->f107());
 }
 // END FUNCTION
+
+// FUNCTION: 0x10166090 size=0x4a0
+#include "CFPSPanel.h"
+#include "ConVar.h"
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+#include "Vector.h"
+#include "QAngle.h"
+#include <string.h>
+
+extern "C" __declspec(dllimport) double Plat_FloatTime();
+
+struct FPSSurfaceView
+{
+	virtual void m0(); virtual void m1(); virtual void m2(); virtual void m3(); virtual void m4(); virtual void m5();
+	virtual void m6(); virtual void m7(); virtual void m8(); virtual void m9(); virtual void m10(); virtual void m11();
+	virtual void m12(); virtual void m13(); virtual void m14(); virtual void m15(); virtual void m16(); virtual void m17();
+	virtual void m18(); virtual void m19(); virtual void m20(); virtual void m21(); virtual void m22(); virtual void m23();
+	virtual void m24(); virtual void m25(); virtual void m26(); virtual void m27(); virtual void m28(); virtual void m29();
+	virtual void m30(); virtual void m31(); virtual void m32(); virtual void m33(); virtual void m34(); virtual void m35();
+	virtual void m36(); virtual void m37(); virtual void m38(); virtual void m39(); virtual void m40(); virtual void m41();
+	virtual void m42(); virtual void m43(); virtual void m44(); virtual void m45(); virtual void m46(); virtual void m47();
+	virtual void m48(); virtual void m49(); virtual void m50(); virtual void m51(); virtual void m52(); virtual void m53();
+	virtual void m54(); virtual void m55(); virtual void m56(); virtual void m57(); virtual void m58(); virtual void m59();
+	virtual void m60(); virtual void m61(); virtual void m62();
+	virtual int GetFontTall(int font);
+};
+
+struct FPSPlayerView
+{
+	virtual void m0(); virtual void m1(); virtual void m2(); virtual void m3(); virtual void m4(); virtual void m5();
+	virtual void m6(); virtual void m7(); virtual void m8();
+	virtual const Vector &GetAbsOrigin();
+};
+
+struct FPSPlayerView2
+{
+	char m_pad0000[0xa8];
+	Vector m_vecVelocity;	// 0xa8
+};
+
+#define V10(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); virtual void p##5(); virtual void p##6(); virtual void p##7(); virtual void p##8(); virtual void p##9();
+struct FPSPlayerAngView
+{
+	V10(a0) V10(a1) V10(a2) V10(a3) V10(a4) V10(a5) V10(a6) V10(a7) V10(a8) V10(a9)
+	V10(b0) V10(b1) V10(b2) V10(b3) V10(b4) V10(b5) V10(b6) V10(b7) V10(b8)
+	virtual void c0(); virtual void c1(); virtual void c2(); virtual void c3(); virtual void c4();
+	virtual const QAngle &GetAbsAngles();
+};
+
+extern FPSSurfaceView *sub_101ac8d0();
+extern const Vector &sub_1018f340();
+extern const QAngle &sub_1018f350();
+
+extern ConVar *g_105fab3c;
+extern ConVar *g_105fab8c;
+extern double g_105fabd0[30];
+extern int g_105faccc;
+
+#define m_hFont (*(int *)((char *)this + 0x58))
+
+void CFPSPanel::vfunc98()
+{
+	int i = 0;
+
+	if (!g_105fab3c->vfunc1() && g_105fab3c->m_nValue)
+	{
+		static double lastrealtime = Plat_FloatTime();
+		double curtime = Plat_FloatTime();
+		double frametime = curtime - lastrealtime;
+		double total = 0.0;
+
+		g_105fabd0[g_105faccc] = frametime;
+		if (g_105faccc >= 30)
+			g_105faccc = 0;
+		g_105faccc++;
+
+		for (int j = 0; j < 30; j++)
+			total += g_105fabd0[j];
+
+		if (curtime > lastrealtime)
+		{
+			i = 1;
+			g_pMatSystemSurface->vfunc12(m_hFont, 2, 2, 255, 255, 255, 255, "%i / %i fps", (int)(1.0 / frametime), (int)(1.0 / (total * (1.0 / 30.0))));
+		}
+		lastrealtime = curtime;
+	}
+	else
+	{
+		memset(g_105fabd0, 0, sizeof(g_105fabd0));
+	}
+
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!g_105fab8c->vfunc1() && g_105fab8c->m_nValue && pPlayer)
+	{
+		FPSPlayerView *pv = (FPSPlayerView *)pPlayer;
+		FPSPlayerAngView *pa = (FPSPlayerAngView *)pPlayer;
+
+		g_pMatSystemSurface->vfunc12(m_hFont, 2, (sub_101ac8d0()->GetFontTall(m_hFont) + 2) * i + 2, 255, 255, 255, 255, "map: %s [ver: %d]", engine->vfunc106(), engine->vfunc14());
+		i++;
+		g_pMatSystemSurface->vfunc12(m_hFont, 2, (sub_101ac8d0()->GetFontTall(m_hFont) + 2) * i + 2, 255, 255, 255, 255, "plr pos:  %-3.2f %-3.2f %-3.2f", pv->GetAbsOrigin().x, pv->GetAbsOrigin().y, pv->GetAbsOrigin().z);
+		i++;
+		g_pMatSystemSurface->vfunc12(m_hFont, 2, (sub_101ac8d0()->GetFontTall(m_hFont) + 2) * i + 2, 255, 255, 255, 255, "plr ang:  %-3.2f %-3.2f %-3.2f", pa->GetAbsAngles().x, pa->GetAbsAngles().y, pa->GetAbsAngles().z);
+		i++;
+		g_pMatSystemSurface->vfunc12(m_hFont, 2, (sub_101ac8d0()->GetFontTall(m_hFont) + 2) * i + 2, 255, 255, 255, 255, "cam pos:  %-3.2f %-3.2f %-3.2f", sub_1018f340().x, sub_1018f340().y, sub_1018f340().z);
+		i++;
+		g_pMatSystemSurface->vfunc12(m_hFont, 2, (sub_101ac8d0()->GetFontTall(m_hFont) + 2) * i + 2, 255, 255, 255, 255, "cam ang:  %-3.2f %-3.2f %-3.2f", sub_1018f350().x, sub_1018f350().y, sub_1018f350().z);
+
+		Vector vel = ((FPSPlayerView2 *)pPlayer)->m_vecVelocity;
+		float speed = FastSqrt(vel.z * vel.z + vel.x * vel.x + vel.y * vel.y);
+		i++;
+		g_pMatSystemSurface->vfunc12(m_hFont, 2, (sub_101ac8d0()->GetFontTall(m_hFont) + 2) * i + 2, 255, 255, 255, 255, "plr vel:  %-3.2f, %-3.2f", speed, vel.z);
+	}
+}
+// END FUNCTION

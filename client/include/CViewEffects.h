@@ -13,25 +13,60 @@ public:
     int m_unk0c;
     int m_unk10;
     int m_unk14;
-    int m_unk18;
-    int m_unk1c;
-    int m_unk20;
-    int m_unk24;
-    int m_unk28;
-    int m_unk2c;
-    int m_unk30;
-    int m_unk34;
-    int m_unk38;
-    int m_unk3c;
-    int m_unk40;
-    int m_unk44;
-    int m_unk48;
-    int m_unk4c;
+    // the screen shake (CalcShake: type 0 random offsets, 1 roll only, other: moved to the wave block at +0x50)
+    struct screenshake_t
+    {
+        int type;
+        float time;
+        float duration;
+        float amplitude;
+        float frequency;
+        float nextShake;
+        float offset[3];
+        float angle;
+        float appliedOffset[3];
+        float appliedAngle;
+    };
+    union
+    {
+        screenshake_t m_Shake;
+        struct
+        {
+            int m_unk18;
+            int m_unk1c;
+            int m_unk20;
+            int m_unk24;
+            int m_unk28;
+            int m_unk2c;
+            int m_unk30;
+            int m_unk34;
+            int m_unk38;
+            int m_unk3c;
+            int m_unk40;
+            int m_unk44;
+            int m_unk48;
+            int m_unk4c;
+        };
+    };
     int m_nState;
-    int m_unk54;
-    int m_unk58;
-    int m_unk5c;
-    int m_unk60;
+    // SetWaves (sub_10196d70) stores its int arguments here; CalcShake reads them as floats
+    union
+    {
+        struct
+        {
+            int m_unk54;
+            int m_unk58;
+            int m_unk5c;
+            int m_unk60;
+        };
+        struct
+        {
+            float m_flWaveTime;
+            float m_flWaveDuration;
+            float m_flWaveAmplitude;
+            float m_flWaveFrequency;
+        };
+    };
     int m_unk64;
     Vector m_vecAppliedOffset;
     float m_flAppliedAngle;

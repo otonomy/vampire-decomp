@@ -15,6 +15,7 @@ public:
 	static C_BasePlayer *GetLocalPlayer();
 	bool sub_100a5910();
 	virtual ~C_BasePlayer();
+	virtual void OnDataChanged(int updateType);
 	int sub_100a2450();
 	int sub_100a93e0();
 	int sub_100a96a0(int iStat);
@@ -90,14 +91,20 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc187();
 	virtual void vfunc188();
 	virtual void vfunc189(int);
-	virtual void vfunc190();
+	virtual void vfunc190(class C_BaseCombatWeapon *pWeapon);
 	virtual void vfunc191();
 	virtual C_BaseCombatWeapon *vfunc192();
 	virtual C_BaseCombatWeapon *vfunc193();
 	virtual C_BaseEntity *vfunc194(const char *pName);
 	virtual char * vfunc195();
 	virtual int vfunc196(int, int, int);
-	char m_pad1438[0x14e4 - 0x1438];
+	char m_pad1438[0x14d0 - 0x1438];
+	float m_fl14d0;
+	bool m_b14d4;
+	char m_c14d5; char m_c14d6; char m_c14d7;
+	int m_n14d8;	// 0x14d8: the active discipline ("discipline_%d" icon, 31 = none)
+	int m_n14dc;
+	int m_n14e0;
 	int m_unk14e4;
 	CBaseHandle m_h14e8;
 	char m_pad14ec[0x162c - 0x14ec];

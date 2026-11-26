@@ -20113,6 +20113,18 @@ int CUnknown10033f50::sub_10033f50()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10033f90 size=0x1a
+extern "C" __declspec(dllimport) void DevMsg(int level, const char *pszFormat, ...);
+namespace lifted {
+extern char g_1027df08;
+}
+struct CUnknown10033f90 { void sub_10033f90(int); };
+void CUnknown10033f90::sub_10033f90(int a0)
+{
+    DevMsg(1, (const char *)((int)&lifted::g_1027df08), *(int *)((char *)this + 0xcc));
+}
+// END FUNCTION
+
 // FUNCTION: 0x10033fd0 size=0x6
 namespace lifted {
 extern char g_102ec36c;
@@ -26075,6 +26087,169 @@ void sub_1004a9c0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004a9e0 size=0x5df
+#include "Vector.h"
+#include "engineclient.h"
+
+extern float g_103ecd74;
+extern Vector g_103ecd78;
+extern void *g_103ecd84;
+extern float g_10283eb8;
+
+#define FADE_MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define FADE_MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+struct FadeMeshBuilder;
+
+struct FadeMesh
+{
+	virtual void LockMesh(int numVerts, int numIndices, FadeMeshBuilder &desc);
+	virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void SetPrimitiveType(int type);
+	virtual void v11();
+	virtual void Draw(int firstIndex, int numIndices);
+};
+
+inline unsigned char FadeFToC(float c)
+{
+	volatile float dc;
+	dc = c * 255.0f + (float)(1 << 23);
+	return *(unsigned char *)&dc;
+}
+
+struct FadeMeshBuilder
+{
+	int m_VertexSize_Position;
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;
+	int m_VertexSize_Color;
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];
+	int m_unk28[(0x80 - 0x28) / 4];
+	FadeMesh *m_pMesh;
+	bool m_bGenerateIndices;
+	char m_pad85[3];
+	int m_NumVertices;
+	int m_NumIndices;
+	int m_n90;
+	int m_n94;
+	int m_nCurrentVertex;
+	int m_n9c;
+	int m_Type;
+	bool m_bA4;
+	char m_padA5[3];
+	float *m_pCurrPosition;
+	float *m_pCurrNormal;
+	float *m_pCurrTexCoord[4];
+	unsigned char *m_pCurrColor;
+
+	FadeMeshBuilder()
+	{
+		m_NumVertices = 0;
+		m_NumIndices = 0;
+		m_n90 = 0;
+		m_n94 = 0;
+		m_nCurrentVertex = 0;
+		m_n9c = 0;
+		m_bA4 = false;
+	}
+	void sub_100421f0(int type, int numPrimitives);
+	void sub_100422e0();
+	void sub_10005230();
+	void sub_1004afc0(float r, float g, float b, float a);
+	void sub_10031a20(int stage, float s, float t);
+	void sub_10041c90(bool bSpewData, bool bDraw);
+
+	void Begin(FadeMesh *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bGenerateIndices = false;
+		sub_100421f0(type, numPrimitives);
+		m_n94 = 0;
+		m_n90 = 0;
+		m_bA4 = true;
+		m_Type = type;
+		m_pMesh->SetPrimitiveType(2);
+		m_pMesh->LockMesh(m_NumVertices, m_NumIndices, *this);
+		sub_100422e0();
+	}
+	__forceinline void Position3f(float x, float y, float z)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = x;
+		*pDst++ = y;
+		*pDst = z;
+	}
+	void Color4f(float r, float g, float b, float a)
+	{
+		int col = (FadeFToC(b)) | (FadeFToC(g) << 8) | (FadeFToC(r) << 16) | (FadeFToC(a) << 24);
+		*(int *)m_pCurrColor = col;
+	}
+	void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+	void AdvanceVertex()
+	{
+		if (++m_nCurrentVertex > m_n90)
+			m_n90 = m_nCurrentVertex;
+		m_pCurrPosition = (float *)((unsigned char *)m_pCurrPosition + m_VertexSize_Position);
+		m_pCurrNormal = (float *)((unsigned char *)m_pCurrNormal + m_VertexSize_Normal);
+		m_pCurrTexCoord[0] = (float *)((unsigned char *)m_pCurrTexCoord[0] + m_VertexSize_TexCoord[0]);
+		m_pCurrTexCoord[1] = (float *)((unsigned char *)m_pCurrTexCoord[1] + m_VertexSize_TexCoord[1]);
+		m_pCurrTexCoord[2] = (float *)((unsigned char *)m_pCurrTexCoord[2] + m_VertexSize_TexCoord[2]);
+		m_pCurrTexCoord[3] = (float *)((unsigned char *)m_pCurrTexCoord[3] + m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+};
+
+void sub_1004a9e0()
+{
+	if (g_103ecd74 != 0.0f && g_103ecd84 && materials) {
+		materials->vfunc70(10);
+		materials->vfunc81();
+		materials->vfunc70(0);
+		materials->vfunc81();
+		FadeMesh *pMesh = (FadeMesh *)materials->GetDynamicMesh(true, 0, 0, g_103ecd84);
+		FadeMeshBuilder meshBuilder;
+		Vector color = g_103ecd78;
+		color.x = FADE_MIN(FADE_MAX(color.x, 0.0f), 1.0f);
+		color.y = FADE_MIN(FADE_MAX(color.y, 0.0f), 1.0f);
+		color.z = FADE_MIN(FADE_MAX(color.z, 0.0f), 1.0f);
+		float alpha = FADE_MIN(FADE_MAX(g_103ecd74, 0.0f), 1.0f);
+
+		meshBuilder.Begin(pMesh, 7, 1);
+
+		meshBuilder.Position3f(-g_10283eb8, -g_10283eb8, -g_10283eb8);
+		meshBuilder.Color4f(color.x, color.y, color.z, alpha);
+		meshBuilder.TexCoord2f(0, 0, 0);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.Position3f(-g_10283eb8, g_10283eb8, -g_10283eb8);
+		meshBuilder.Color4f(color.x, color.y, color.z, alpha);
+		meshBuilder.TexCoord2f(0, 0, 0);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.Position3f(g_10283eb8, g_10283eb8, -g_10283eb8);
+		meshBuilder.Color4f(color.x, color.y, color.z, alpha);
+		meshBuilder.TexCoord2f(0, 0, 0);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.Position3f(g_10283eb8, -g_10283eb8, -g_10283eb8);
+		meshBuilder.sub_1004afc0(color.x, color.y, color.z, alpha);
+		meshBuilder.sub_10031a20(0, 0, 0);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_10041c90(false, false);
+		pMesh->Draw(-1, 0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004afc0 size=0x89
 #include "CMeshBuilder.h"
 
@@ -26628,6 +26803,30 @@ int sub_1004d590()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004dbe0 size=0x40
+struct CUnkFade {
+	char m_pad[0x24];
+	int m_n20;
+	bool m_bOn;
+	bool m_b25;
+	bool m_b26;
+	void sub_1004dbe0(bool on);
+};
+void CUnkFade::sub_1004dbe0(bool on)
+{
+	if (!m_bOn && on) {
+		m_n20 = 0;
+		m_b25 = true;
+		m_b26 = false;
+	} else if (m_bOn && !on) {
+		m_n20 = 255;
+		m_b26 = true;
+		m_b25 = on;
+	}
+	m_bOn = on;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004dc30 size=0x6
 namespace lifted {
 extern int g_103ede3c;
@@ -27039,6 +27238,30 @@ void CHudStatSound::sub_1004f0c0(int stat, float volume, int pitch, int flags)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004f710 size=0x40
+struct CUnkFade {
+	char m_pad[0x30];
+	int m_n20;
+	bool m_bOn;
+	bool m_b25;
+	bool m_b26;
+	void sub_1004f710(bool on);
+};
+void CUnkFade::sub_1004f710(bool on)
+{
+	if (!m_bOn && on) {
+		m_n20 = 0;
+		m_b25 = true;
+		m_b26 = false;
+	} else if (m_bOn && !on) {
+		m_n20 = 255;
+		m_b26 = true;
+		m_b25 = on;
+	}
+	m_bOn = on;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004f750 size=0x4
 struct CUnknown1004f750 { char sub_1004f750(); };
 char CUnknown1004f750::sub_1004f750()
@@ -27430,6 +27653,133 @@ void CHudDialog::sub_10053200()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10053c70 size=0x292
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+#include "UtlMem.h"
+#include "CUtlVector4.h"
+#include "UtlVec8.h"
+#include <string.h>
+#include <stdlib.h>
+
+extern "C" __declspec(dllimport) int Q_snprintf(char *pDest, int maxLen, const char *pFormat, ...);
+extern "C" __declspec(dllimport) void Plat_Free(void *pMem);
+extern "C" unsigned char *__cdecl _mbsdup(const unsigned char *);
+void sub_1002c110(char **pMemory, char *const *src);
+
+struct LineVector
+{
+	char **m_pMemory;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+	int m_Size;
+	char **m_pElements;
+
+	LineVector()
+	{
+		((UtlMem *)this)->sub_100557c0(0, 0);
+		m_Size = 0;
+		m_pElements = m_pMemory;
+	}
+	~LineVector()
+	{
+		Purge();
+		if (m_nGrowSize != -1)
+		{
+			if (m_pMemory)
+			{
+				Plat_Free(m_pMemory);
+				m_pMemory = 0;
+			}
+			m_nAllocationCount = 0;
+		}
+	}
+	void Purge()
+	{
+		m_Size = 0;
+		((UtlMem *)this)->sub_100558d0();
+		m_pElements = m_pMemory;
+	}
+	int Count() const { return m_Size; }
+	char *&operator[](int i) { return m_pMemory[i]; }
+	int InsertBefore(int elem, char *const &src)
+	{
+		((CUtlVector4 *)this)->sub_10055800(1);
+		((UtlVec8 *)this)->sub_10055890(elem, 1);
+		sub_1002c110(&m_pMemory[elem], &src);
+		return elem;
+	}
+	int AddToTail(char *const &src) { return InsertBefore(m_Size, src); }
+	void ShiftElementsLeft(int elem, int num = 1)
+	{
+		int numToMove = m_Size - elem - num;
+		if (numToMove > 0 && num > 0)
+			memmove(&m_pMemory[elem], &m_pMemory[elem + num], numToMove * sizeof(char *));
+	}
+	void Remove(int elem)
+	{
+		ShiftElementsLeft(elem);
+		--m_Size;
+	}
+};
+
+void CHudDialog::sub_10053c70(bool bDraw, int nIndex, const char *pszText, int nFlags, int nType, int *pY)
+{
+	ScopeTrace st("CHudDialog::PaintResponse", g_102de300);
+	if (nIndex < 0)
+		return;
+
+	int nFont = sub_10053f10(nFlags, nType);
+	char buf[0x800];
+	Q_snprintf(buf, sizeof(buf), "%d. %s", nIndex + 1, pszText);
+	int nLen = strlen(buf);
+
+	int i = 0;
+	int nStart = 0;
+	int nLastSpace = 0;
+	LineVector lines;
+	char *pszLine = 0;
+	int nMax = sub_100556d0(nFont, buf);
+	while (i < nLen)
+	{
+		if (i - nStart >= nMax)
+		{
+			buf[nLastSpace] = 0;
+			pszLine = (char *)_mbsdup((unsigned char *)&buf[nStart]);
+			lines.AddToTail(pszLine);
+			nStart = nLastSpace + 1;
+			i = nStart;
+			nMax = sub_100556d0(nFont, &buf[nStart]);
+		}
+		else
+		{
+			if (buf[i] == ' ')
+				nLastSpace = i;
+			i++;
+		}
+	}
+
+	if (strlen(&buf[nStart]))
+	{
+		pszLine = (char *)_mbsdup((unsigned char *)&buf[nStart]);
+		lines.AddToTail(pszLine);
+	}
+
+	for (int j = lines.Count() - 1; j >= 0; j--)
+	{
+		pszLine = lines[j];
+		sub_10053ff0(bDraw, pszLine, nFlags, nType, pY);
+	}
+
+	while (lines.Count())
+	{
+		pszLine = lines[0];
+		free(pszLine);
+		lines.Remove(0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10053f10 size=0xd3
 #include "CHudDialog.h"
 #include "ScopeTrace.h"
@@ -27466,6 +27816,117 @@ int CHudDialog::sub_10053f10(int flags, int n)
 		return v->m_9e0;
 	}
 	return font;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10053ff0 size=0x441
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+
+int sub_100cd0f0();
+int sub_100cd100();
+
+#define VS_SLOTS8(n) virtual void a##n##0(); virtual void a##n##1(); virtual void a##n##2(); virtual void a##n##3(); virtual void a##n##4(); virtual void a##n##5(); virtual void a##n##6(); virtual void a##n##7();
+struct VGuiSurfaceView
+{
+	VS_SLOTS8(0) VS_SLOTS8(1) VS_SLOTS8(2) VS_SLOTS8(3) VS_SLOTS8(4) VS_SLOTS8(5) VS_SLOTS8(6)
+	virtual void a70(); virtual void a71(); virtual void a72(); virtual void a73(); virtual void a74(); virtual void a75(); virtual void a76();
+	virtual int GetFontTall(unsigned long font);	// slot 63
+};
+VGuiSurfaceView *sub_101ac8d0();
+
+#define F(type, off) (*(type *)((char *)this + (off)))
+
+void CHudDialog::sub_10053ff0(bool bDraw, const char *pszText, int nFlags, int nType, int *pY)
+{
+	ScopeTrace st("CHudDialog::PaintResponseLine", g_102de300);
+
+	int nYOffset = (int)(25 * (sub_100cd0f0() * (1.0 / 768.0)));
+	int y = F(int, 0x198) - *pY - nYOffset;
+	int x = (int)(36 * (sub_100cd100() * (1.0 / 1024.0)));
+
+	if (nFlags == 0)
+	{
+		if (bDraw)
+			g_pMatSystemSurface->vfunc12(F(int, 0x9d0), x, y, F(unsigned char, 0x9e8), F(unsigned char, 0x9e9), F(unsigned char, 0x9ea), (int)F(float, 0x1a8), pszText);
+		*pY += sub_101ac8d0()->GetFontTall(F(int, 0x9d0)) * 1.33;
+	}
+	else if (nFlags & 1)
+	{
+		int *pFont;
+		unsigned char *pColor;
+		if (nType == 6)
+		{
+			pFont = &F(int, 0x9dc);
+			pColor = &F(unsigned char, 0x9f4);
+		}
+		else
+		{
+			pFont = &F(int, 0x9e0);
+			pColor = &F(unsigned char, 0x9f8);
+		}
+		if (bDraw)
+			g_pMatSystemSurface->vfunc12(*pFont, x, y, pColor[0], pColor[1], pColor[2], (int)F(float, 0x1a8), pszText);
+		*pY += sub_101ac8d0()->GetFontTall(*pFont) * 1.33;
+	}
+	else if (nFlags & 2)
+	{
+		int *pFont;
+		unsigned char *pColor;
+		if (nType == 7)
+		{
+			pFont = &F(int, 0x9d4);
+			pColor = &F(unsigned char, 0x9ec);
+		}
+		else if (nType == 6)
+		{
+			pFont = &F(int, 0x9e4);
+			pColor = &F(unsigned char, 0x9fc);
+		}
+		else if (nType == 8)
+		{
+			pFont = &F(int, 0x9d8);
+			pColor = &F(unsigned char, 0x9f0);
+		}
+		else
+		{
+			pFont = &F(int, 0x9d0);
+			pColor = &F(unsigned char, 0x9e8);
+		}
+		if (bDraw)
+			g_pMatSystemSurface->vfunc12(*pFont, x, y, pColor[0], pColor[1], pColor[2], (int)F(float, 0x1a8), pszText);
+		*pY += sub_101ac8d0()->GetFontTall(*pFont) * 1.33;
+	}
+	else if (nFlags == 0x10)
+	{
+		sub_100549f0(-1, 0);
+		((IManagedHudElement *)this)->vfunc5_hud(false);
+	}
+	else if (nFlags == 0x20)
+	{
+		static int s_nAlpha = (int)F(float, 0x1a4);
+		static bool s_bUp = true;
+		if (s_bUp)
+		{
+			if (s_nAlpha++ > 180)
+				s_bUp = false;
+		}
+		else
+		{
+			if (s_nAlpha-- < 80)
+				s_bUp = true;
+		}
+		if (bDraw)
+			g_pMatSystemSurface->vfunc12(F(int, 0x9d0), x, y, F(unsigned char, 0x9e8), F(unsigned char, 0x9e9), F(unsigned char, 0x9ea), s_nAlpha, "(press 1 to continue)");
+		*pY += sub_101ac8d0()->GetFontTall(F(int, 0x9d0)) * 1.5;
+	}
+	else
+	{
+		if (bDraw)
+			g_pMatSystemSurface->vfunc12(F(int, 0x9d0), x, y, F(unsigned char, 0xa00), F(unsigned char, 0xa01), F(unsigned char, 0xa02), (int)F(float, 0x1a8), pszText);
+		*pY += sub_101ac8d0()->GetFontTall(F(int, 0x9d0)) * 1.33;
+	}
 }
 // END FUNCTION
 
@@ -29156,6 +29617,299 @@ void CHUDSprite::sub_1005c3b0(int a, int b, int c, int d, int e)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1005d280 size=0x457
+#include "CHUDSprite.h"
+#include "ScopeTrace.h"
+#include "Vector.h"
+
+#define Assert(_exp) ((void)(_exp))
+
+struct MeshDesc_local
+{
+	int m_VertexSize_Position;
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;
+	int m_VertexSize_Color;
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];
+	int m_VertexSize_TangentS;
+	int m_VertexSize_TangentT;
+	int m_VertexSize_TangentSxT;
+	int m_VertexSize_UserData;
+	int m_ActualVertexSize;
+	int m_FirstVertex;
+	int m_NumBoneWeights;
+	float *m_pPosition;
+	float *m_pBoneWeight;
+	unsigned char *m_pBoneMatrixIndex;
+	float *m_pNormal;
+	unsigned char *m_pColor;
+	unsigned char *m_pSpecular;
+	float *m_pTexCoord[4];
+	float *m_pTangentS;
+	float *m_pTangentT;
+	float *m_pTangentSxT;
+	float *m_pUserData;
+	unsigned short *m_pIndices;
+};
+
+struct IMesh
+{
+	virtual void LockMesh(int numVerts, int numIndices, MeshDesc_local &desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+struct IMaterialSystem
+{
+	virtual void v0() = 0; virtual void v1() = 0; virtual void v2() = 0; virtual void v3() = 0;
+	virtual void v4() = 0; virtual void v5() = 0; virtual void v6() = 0; virtual void v7() = 0;
+	virtual void v8() = 0; virtual void v9() = 0; virtual void v10() = 0; virtual void v11() = 0;
+	virtual void v12() = 0; virtual void v13() = 0; virtual void v14() = 0; virtual void v15() = 0;
+	virtual void v16() = 0; virtual void v17() = 0; virtual void v18() = 0; virtual void v19() = 0;
+	virtual void v20() = 0; virtual void v21() = 0; virtual void v22() = 0; virtual void v23() = 0;
+	virtual void v24() = 0; virtual void v25() = 0; virtual void v26() = 0; virtual void v27() = 0;
+	virtual void v28() = 0; virtual void v29() = 0; virtual void v30() = 0; virtual void v31() = 0;
+	virtual void v32() = 0; virtual void v33() = 0; virtual void v34() = 0; virtual void v35() = 0;
+	virtual void v36() = 0; virtual void v37() = 0; virtual void v38() = 0; virtual void v39() = 0;
+	virtual void v40() = 0; virtual void v41() = 0; virtual void v42() = 0; virtual void v43() = 0;
+	virtual void v44() = 0; virtual void v45() = 0; virtual void v46() = 0; virtual void v47() = 0;
+	virtual void v48() = 0; virtual void v49() = 0; virtual void v50() = 0; virtual void v51() = 0;
+	virtual void v52() = 0;
+	virtual void Bind(void *material, void *proxyData = 0) = 0;
+	virtual void v54() = 0; virtual void v55() = 0; virtual void v56() = 0; virtual void v57() = 0;
+	virtual void v58() = 0; virtual void v59() = 0; virtual void v60() = 0; virtual void v61() = 0;
+	virtual void v62() = 0; virtual void v63() = 0; virtual void v64() = 0; virtual void v65() = 0;
+	virtual void v66() = 0; virtual void v67() = 0; virtual void v68() = 0; virtual void v69() = 0;
+	virtual void v70() = 0; virtual void v71() = 0; virtual void v72() = 0; virtual void v73() = 0;
+	virtual void v74() = 0; virtual void v75() = 0; virtual void v76() = 0; virtual void v77() = 0;
+	virtual void v78() = 0; virtual void v79() = 0; virtual void v80() = 0; virtual void v81() = 0;
+	virtual void v82() = 0; virtual void v83() = 0; virtual void v84() = 0; virtual void v85() = 0;
+	virtual void v86() = 0; virtual void v87() = 0; virtual void v88() = 0; virtual void v89() = 0;
+	virtual void v90() = 0; virtual void v91() = 0; virtual void v92() = 0; virtual void v93() = 0;
+	virtual void v94() = 0; virtual void v95() = 0; virtual void v96() = 0; virtual void v97() = 0;
+	virtual void v98() = 0; virtual void v99() = 0; virtual void v100() = 0; virtual void v101() = 0;
+	virtual void v102() = 0; virtual void v103() = 0; virtual void v104() = 0; virtual void v105() = 0;
+	virtual void v106() = 0; virtual void v107() = 0; virtual void v108() = 0; virtual void v109() = 0;
+	virtual void v110() = 0;
+	virtual IMesh *GetDynamicMesh(bool buffered = true, IMesh *pVertexOverride = 0, IMesh *pIndexOverride = 0, void *pAutoBind = 0) = 0;
+};
+
+extern IMaterialSystem *g_104a57ec;
+
+inline unsigned char FastFToC(float c)
+{
+	volatile float dc;
+	dc = c * 255.0f + (float)(1 << 23);
+	return *(unsigned char *)&dc;
+}
+
+class MeshBuilderLocal : private MeshDesc_local
+{
+public:
+	inline MeshBuilderLocal()
+		: m_pMesh(0), m_NumIndices(0), m_NumVertices(0),
+		  m_CurrentVertex(0), m_CurrentIndex(0), m_MaxVertices(0),
+		  m_MaxIndices(0), m_GenerateIndices(false)
+	{
+	}
+
+	inline void Begin(IMesh *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_NumIndices = 0; m_NumVertices = 0;
+		m_GenerateIndices = true;
+		m_Type = type;
+		if ((type == 7) || (type == 6))
+			m_pMesh->SetPrimitiveType(2);
+		else if ((type == 4) || (type == 5))
+			m_pMesh->SetPrimitiveType(1);
+		else
+			m_pMesh->SetPrimitiveType(type);
+		m_pMesh->LockMesh(m_MaxVertices, m_MaxIndices, *this);
+		sub_100422e0();
+	}
+
+	inline void sub_100421f0(int type, int numPrimitives)
+	{
+		switch (type)
+		{
+		case 0: m_MaxVertices = m_MaxIndices = numPrimitives; break;
+		case 1: m_MaxVertices = m_MaxIndices = numPrimitives * 2; break;
+		case 4: m_MaxVertices = numPrimitives + 1; m_MaxIndices = numPrimitives * 2; break;
+		case 5: m_MaxVertices = numPrimitives; m_MaxIndices = numPrimitives * 2; break;
+		case 2: m_MaxVertices = m_MaxIndices = numPrimitives * 3; break;
+		case 3: m_MaxVertices = m_MaxIndices = numPrimitives + 2; break;
+		case 7: m_MaxVertices = numPrimitives * 4; m_MaxIndices = numPrimitives * 6; break;
+		case 6: m_MaxVertices = numPrimitives; m_MaxIndices = (numPrimitives - 2) * 3; break;
+		default: break;
+		}
+	}
+	inline void sub_100422e0()
+	{
+		m_CurrentVertex = 0;
+		m_CurrentIndex = 0;
+		m_pCurrPosition = m_pPosition;
+		m_pCurrNormal = m_pNormal;
+		m_pCurrTexCoord[0] = m_pTexCoord[0];
+		m_pCurrTexCoord[1] = m_pTexCoord[1];
+		m_pCurrTexCoord[2] = m_pTexCoord[2];
+		m_pCurrTexCoord[3] = m_pTexCoord[3];
+		m_pCurrColor = m_pColor;
+	}
+	void sub_10041c90(bool spewData = false, bool bDraw = false);
+
+	inline void IncrementFloatPointer(float *&pBufferPointer, int vertexSize)
+	{
+		pBufferPointer = reinterpret_cast<float *>(reinterpret_cast<unsigned char *>(pBufferPointer) + vertexSize);
+	}
+
+	inline void sub_100319d0(float x, float y, float z)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = x;
+		*pDst++ = y;
+		*pDst = z;
+	}
+
+	inline void sub_10031a20(int stage, float s, float t)
+	{
+		Assert(m_pTexCoord[stage] && m_pCurrTexCoord[stage]);
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+
+	inline void sub_10059af0(const float *rgb)
+	{
+		int col = (FastFToC(rgb[2])) | (FastFToC(rgb[1]) << 8) | (FastFToC(rgb[0]) << 16) | 0xFF000000;
+		*(int *)m_pCurrColor = col;
+	}
+
+	inline void sub_10005230()
+	{
+		if (++m_CurrentVertex > m_NumVertices)
+			m_NumVertices = m_CurrentVertex;
+		IncrementFloatPointer(m_pCurrPosition, m_VertexSize_Position);
+		IncrementFloatPointer(m_pCurrNormal, m_VertexSize_Normal);
+		IncrementFloatPointer(m_pCurrTexCoord[0], m_VertexSize_TexCoord[0]);
+		IncrementFloatPointer(m_pCurrTexCoord[1], m_VertexSize_TexCoord[1]);
+		IncrementFloatPointer(m_pCurrTexCoord[2], m_VertexSize_TexCoord[2]);
+		IncrementFloatPointer(m_pCurrTexCoord[3], m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+
+private:
+	IMesh *m_pMesh;
+	bool m_bModify;
+	int m_MaxVertices;
+	int m_MaxIndices;
+	int m_NumVertices;
+	int m_NumIndices;
+	mutable int m_CurrentVertex;
+	mutable int m_CurrentIndex;
+	int m_Type;
+	bool m_GenerateIndices;
+	mutable float *m_pCurrPosition;
+	mutable float *m_pCurrNormal;
+	mutable float *m_pCurrTexCoord[4];
+	mutable unsigned char *m_pCurrColor;
+};
+
+struct IMaterialWH
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual int GetMappingWidth();
+	virtual int GetMappingHeight();
+};
+
+void CHUDSprite::sub_100594b0(float *s0, float *s1, float *t0, float *t1, int *w, int *h, void *rect)
+{
+	ScopeTrace trace("CHUDSprite::AdjustSubRect", g_102de300, g_102de300);
+	int x0 = m_unk08;
+	int x1 = m_unk08 + *w;
+	int y0 = m_unk0c;
+	int y1 = m_unk0c + *h;
+	*w = x1 - x0;
+	*h = y1 - y0;
+	if (m_unk18 < 0)
+		m_unk18 = ((IMaterialWH *)m_unk04)->GetMappingWidth();
+	double iw = 1.0 / m_unk18;
+	*s0 = (float)((x0 + 0.5) * iw);
+	*s1 = (float)((x1 - 0.5) * iw);
+	if (m_unk1c < 0)
+		m_unk1c = ((IMaterialWH *)m_unk04)->GetMappingHeight();
+	double ih = 1.0 / m_unk1c;
+	*t0 = (float)((y0 + 0.5) * ih);
+	*t1 = (float)((y1 - 0.5) * ih);
+}
+
+typedef void (MeshBuilderLocal::*Color3fvFn)(const float *);
+Color3fvFn pcd_force_emit_color3fv() { return &MeshBuilderLocal::sub_10059af0; }
+
+// TARGET: CHUDSprite::sub_1005d280
+void CHUDSprite::sub_1005d280(int x, int y, int w, int h)
+{
+	ScopeTrace trace("CHUDSprite::drawFlipped", g_102de300, g_102de300);
+	if (!m_unk04)
+		return;
+
+	float color[3];
+	int subh, subw;
+	subw = m_unk10;
+	subh = m_unk14;
+	float v1, u1, u0, v0;
+	u0 = 0.0f; u1 = 1.0f; v0 = 0.0f; v1 = 1.0f;
+	sub_100594b0(&u0, &u1, &v0, &v1, &subw, &subh, 0);
+
+	g_104a57ec->Bind((void *)m_unk04);
+	IMesh *pMesh = g_104a57ec->GetDynamicMesh(true);
+
+	color[0] = 1.0f;
+	color[1] = 1.0f;
+	color[2] = 1.0f;
+
+	MeshBuilderLocal meshBuilder;
+	meshBuilder.Begin(pMesh, 7, 1);
+
+	meshBuilder.sub_10059af0(color);
+	meshBuilder.sub_10031a20(0, u1, v0);
+	meshBuilder.sub_100319d0((float)x, (float)y, 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10059af0(color);
+	meshBuilder.sub_10031a20(0, u0, v0);
+	meshBuilder.sub_100319d0((float)(x + w), (float)y, 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10059af0(color);
+	meshBuilder.sub_10031a20(0, u0, v1);
+	meshBuilder.sub_100319d0((float)(x + w), (float)(y + h), 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10059af0(color);
+	meshBuilder.sub_10031a20(0, u1, v1);
+	meshBuilder.sub_100319d0((float)x, (float)(y + h), 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10041c90();
+	pMesh->Draw();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1005d6e0 size=0x6a
 #include "ScopeTrace.h"
 extern char g_10286d90[];
@@ -29557,6 +30311,30 @@ void CItemInfo::sub_1005eef0()
 {
 	if (m_unk190 == 0)
 		m_unk190 = (CItemInfoOwned *)new CHUDSprite("hud/InfoWindow", 0, 0, 0x200, 0x400, 0x200, 0x400);
+}
+// END FUNCTION
+
+// FUNCTION: 0x1005f040 size=0x40
+struct CUnkFade {
+	char m_pad[0x18];
+	int m_n20;
+	bool m_bOn;
+	bool m_b25;
+	bool m_b26;
+	void sub_1005f040(bool on);
+};
+void CUnkFade::sub_1005f040(bool on)
+{
+	if (!m_bOn && on) {
+		m_n20 = 0;
+		m_b25 = true;
+		m_b26 = false;
+	} else if (m_bOn && !on) {
+		m_n20 = 255;
+		m_b26 = true;
+		m_b25 = on;
+	}
+	m_bOn = on;
 }
 // END FUNCTION
 
@@ -39833,6 +40611,531 @@ CSpriteHandle *sub_10081cd0(const char *name, int a, int b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10082200 size=0x3aa
+#include "IClientEntity.h"
+#include "CSpriteHandle.h"
+#include "CMeshBuilder.h"
+#include "ConVar.h"
+#include "engineclient.h"
+
+struct IMeshView
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void Draw(int firstIndex, int numIndices);
+};
+
+struct CIC
+{
+	void sub_100052c0(const unsigned char *rgba);
+};
+
+struct S10041e00
+{
+	void sub_10041e00(const float *v);
+};
+
+struct CMeshBuilderLocal : public CMeshBuilder
+{
+	CMeshBuilderLocal()
+	{
+		m_unk80[0] = 0;
+		m_unk80[2] = 0;
+		m_unk80[3] = 0;
+		m_n90 = 0;
+		m_nCurrentIndex = 0;
+		m_i98 = 0;
+		m_nIndexCount = 0;
+		*(bool *)&m_unka0[1] = false;
+	}
+};
+
+extern ConVar g_106192f0;	// mat_wireframe
+void sub_10108fd0(const Vector &start, float scale, const Vector &direction, Vector &dest);
+void sub_100825b0(CSpriteHandle *psprite, const Vector &origin, float scale, int r, int g, int b, int a,
+	const Vector &forward, const Vector &right, const Vector &up);
+
+void sub_10082200(IClientEntity *baseentity, CSpriteHandle *psprite, const Vector &origin, float fscale, float frame,
+	int rendermode, int r, int g, int b, int a, const Vector &forward, const Vector &right, const Vector &up)
+{
+	float scale;
+	if (fscale > 0)
+		scale = fscale;
+	else
+		scale = 1.0f;
+
+	if (rendermode == 0)
+		render->vfunc6(1.0f);
+
+	void *material = psprite->m_pMaterial;
+	if (!material)
+		return;
+	psprite->sub_10136f90(rendermode);
+	psprite->sub_10136f80(frame);
+
+	materials->Bind(material, (IClientRenderable *)baseentity);
+
+	{
+		unsigned char color[4];
+		Vector point;
+		IMeshView *pMesh = (IMeshView *)materials->GetDynamicMesh(true, 0, 0, 0);
+		CMeshBuilderLocal meshBuilder;
+		meshBuilder.sub_10041b10(pMesh, 7, 1);
+
+		color[0] = r;
+		color[1] = g;
+		color[2] = b;
+		color[3] = a;
+
+		((CIC *)&meshBuilder)->sub_100052c0(color);
+		meshBuilder.sub_10031a20(0, 0, 1);
+		sub_10108fd0(origin, psprite->GetDown() * scale, up, point);
+		sub_10108fd0(point, psprite->GetLeft() * scale, right, point);
+		((S10041e00 *)&meshBuilder)->sub_10041e00(point.Base());
+		meshBuilder.sub_10005230();
+
+		((CIC *)&meshBuilder)->sub_100052c0(color);
+		meshBuilder.sub_10031a20(0, 0, 0);
+		sub_10108fd0(origin, psprite->GetUp() * scale, up, point);
+		sub_10108fd0(point, psprite->GetLeft() * scale, right, point);
+		((S10041e00 *)&meshBuilder)->sub_10041e00(point.Base());
+		meshBuilder.sub_10005230();
+
+		((CIC *)&meshBuilder)->sub_100052c0(color);
+		meshBuilder.sub_10031a20(0, 1, 0);
+		sub_10108fd0(origin, psprite->GetUp() * scale, up, point);
+		sub_10108fd0(point, psprite->GetRight() * scale, right, point);
+		((S10041e00 *)&meshBuilder)->sub_10041e00(point.Base());
+		meshBuilder.sub_10005230();
+
+		((CIC *)&meshBuilder)->sub_100052c0(color);
+		meshBuilder.sub_10031a20(0, 1, 1);
+		sub_10108fd0(origin, psprite->GetDown() * scale, up, point);
+		sub_10108fd0(point, psprite->GetRight() * scale, right, point);
+		((S10041e00 *)&meshBuilder)->sub_10041e00(point.Base());
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_10041c90(false, false);
+		pMesh->Draw(-1, 0);
+	}
+
+	if (g_106192f0.GetBool())
+	{
+		void *pMaterial = materials->FindMaterial("debug/debugspritewireframe", 0, true);
+		materials->Bind(pMaterial, 0);
+		sub_100825b0(psprite, origin, scale, r, g, b, a, forward, right, up);
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x10082a50 size=0x57c
+#include "engineclient.h"
+#include "Vector.h"
+
+struct color32
+{
+	unsigned char r, g, b, a;
+};
+
+const Vector &sub_10198d30();	// CurrentViewOrigin
+const Vector &sub_10198d60();	// CurrentViewRight
+const Vector &sub_10198d70();	// CurrentViewUp
+void sub_10108fd0(const Vector &start, float scale, const Vector &direction, Vector &dest);	// VectorMA
+
+struct IMesh_10082a50
+{
+	virtual void LockMesh(int numVerts, int numIndices, void *desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+struct MeshBuilder_10082a50
+{
+	int m_VertexSize_Position;	// 0x00
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;	// 0x0c
+	int m_VertexSize_Color;	// 0x10
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];	// 0x18
+	int m_unk28[(0x80 - 0x28) / 4];
+	IMesh_10082a50 *m_pMesh;	// 0x80
+	bool m_bModify;		// 0x84
+	int m_NumVertices;	// 0x88
+	int m_NumIndices;	// 0x8c
+	int m_MaxVertex;	// 0x90
+	int m_MaxIndex;		// 0x94
+	int m_CurrentVertex;	// 0x98
+	int m_CurrentIndex;	// 0x9c
+	int m_Type;		// 0xa0
+	bool m_GenerateIndices;	// 0xa4
+	float *m_pCurrPosition;	// 0xa8
+	float *m_pCurrNormal;	// 0xac
+	float *m_pCurrTexCoord[4];	// 0xb0
+	unsigned char *m_pCurrColor;	// 0xc0
+
+	MeshBuilder_10082a50()
+		: m_pMesh(0), m_NumVertices(0), m_NumIndices(0), m_MaxVertex(0), m_MaxIndex(0),
+		  m_CurrentVertex(0), m_CurrentIndex(0), m_GenerateIndices(false)
+	{
+	}
+
+	void sub_100421f0(int type, int numPrimitives);	// ComputeNumVertsAndIndices
+	void sub_100422e0();	// Reset
+	void sub_10031a20(int stage, float s, float t);	// TexCoord2f
+	void sub_100052c0(const unsigned char *rgba);	// Color4ubv
+	void sub_10041e00(const float *v);	// Position3fv
+	void sub_10005230();	// AdvanceVertex
+	void sub_10041c90(bool bSpewData, bool bDraw);	// End
+
+	__forceinline void Begin(IMesh_10082a50 *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_MaxIndex = 0;
+		m_MaxVertex = 0;
+		m_GenerateIndices = true;
+		m_Type = type;
+		m_pMesh->SetPrimitiveType(2);
+		m_pMesh->LockMesh(m_NumVertices, m_NumIndices, this);
+		sub_100422e0();
+	}
+	__forceinline void Color4ub(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+	{
+		*(int *)m_pCurrColor = (((((a << 8) | r) << 8) | g) << 8) | b;
+	}
+	__forceinline void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+	__forceinline void Position3fv(const float *v)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = *v++;
+		*pDst++ = *v++;
+		*pDst = *v;
+	}
+	__forceinline void AdvanceVertex()
+	{
+		if (++m_CurrentVertex > m_MaxVertex)
+			m_MaxVertex = m_CurrentVertex;
+		m_pCurrPosition = (float *)((unsigned char *)m_pCurrPosition + m_VertexSize_Position);
+		m_pCurrNormal = (float *)((unsigned char *)m_pCurrNormal + m_VertexSize_Normal);
+		m_pCurrTexCoord[0] = (float *)((unsigned char *)m_pCurrTexCoord[0] + m_VertexSize_TexCoord[0]);
+		m_pCurrTexCoord[1] = (float *)((unsigned char *)m_pCurrTexCoord[1] + m_VertexSize_TexCoord[1]);
+		m_pCurrTexCoord[2] = (float *)((unsigned char *)m_pCurrTexCoord[2] + m_VertexSize_TexCoord[2]);
+		m_pCurrTexCoord[3] = (float *)((unsigned char *)m_pCurrTexCoord[3] + m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+};
+
+void sub_10082a50(const Vector &vecOrigin, float flWidth, float flHeight, color32 color)
+{
+	unsigned char pColor[4] = { color.r, color.g, color.b, color.a };
+
+	flWidth *= 0.5f;
+	flHeight *= 0.5f;
+
+	Vector fwd, right(1, 0, 0), up(0, 1, 0);
+	VectorSubtract(sub_10198d30(), vecOrigin, fwd);
+	float flDist = VectorNormalize(fwd);
+	if (flDist >= 1e-3)
+	{
+		CrossProduct(sub_10198d70(), fwd, right);
+		flDist = VectorNormalize(right);
+		if (flDist >= 1e-3)
+		{
+			CrossProduct(fwd, right, up);
+		}
+		else
+		{
+			CrossProduct(fwd, sub_10198d60(), up);
+			VectorNormalize(up);
+			CrossProduct(up, fwd, right);
+		}
+	}
+
+	MeshBuilder_10082a50 meshBuilder;
+	Vector point;
+	IMesh_10082a50 *pMesh = (IMesh_10082a50 *)materials->GetDynamicMesh(true, 0, 0, 0);
+
+	meshBuilder.Begin(pMesh, 7, 1);
+
+	meshBuilder.Color4ub(color.r, color.g, color.b, color.a);
+	meshBuilder.TexCoord2f(0, 0, 1);
+	sub_10108fd0(vecOrigin, -flHeight, up, point);
+	sub_10108fd0(point, -flWidth, right, point);
+	meshBuilder.Position3fv(point.Base());
+	meshBuilder.AdvanceVertex();
+
+	meshBuilder.Color4ub(color.r, color.g, color.b, color.a);
+	meshBuilder.TexCoord2f(0, 0, 0);
+	sub_10108fd0(vecOrigin, flHeight, up, point);
+	sub_10108fd0(point, -flWidth, right, point);
+	meshBuilder.Position3fv(point.Base());
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_100052c0(pColor);
+	meshBuilder.sub_10031a20(0, 1, 0);
+	sub_10108fd0(vecOrigin, flHeight, up, point);
+	sub_10108fd0(point, flWidth, right, point);
+	meshBuilder.sub_10041e00(point.Base());
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_100052c0(pColor);
+	meshBuilder.sub_10031a20(0, 1, 1);
+	sub_10108fd0(vecOrigin, -flHeight, up, point);
+	sub_10108fd0(point, flWidth, right, point);
+	meshBuilder.sub_10041e00(point.Base());
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10041c90(false, false);
+	pMesh->Draw();
+}
+// END FUNCTION
+
+// FUNCTION: 0x10082fd0 size=0x606
+#include <math.h>
+#include "Vector.h"
+#include "ConVar.h"
+
+#define M_PI 3.14159265358979323846
+#define FBEAM_SINENOISE 0x00000010
+#define FBEAM_SHADEIN 0x00000040
+#define FBEAM_SHADEOUT 0x00000080
+
+#define clamp(val, min, max) (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)))
+
+class CSpriteHandle;
+CSpriteHandle *sub_10081cd0(const char *model, int frame, int rendermode);	// Draw_SetSpriteTexture
+void sub_100835e0(Vector *pDelta, Vector *pViewDir, Vector *pPerp);	// ComputeBeamPerpendicular
+void sub_10108fd0(const Vector &start, float scale, const Vector &dir, Vector &dest);	// VectorMA
+const Vector &sub_10198d50();	// CurrentViewForward
+const Vector &sub_10198d60();	// CurrentViewRight
+const Vector &sub_10198d70();	// CurrentViewUp
+
+extern ConVar g_104870e0;
+extern Vector g_104d4970;
+
+inline void SinCos(float radians, float *sine, float *cosine)
+{
+	_asm
+	{
+		fld		DWORD PTR [radians]
+		fsincos
+
+		mov edx, DWORD PTR [cosine]
+		mov eax, DWORD PTR [sine]
+
+		fstp DWORD PTR [edx]
+		fstp DWORD PTR [eax]
+	}
+}
+
+struct BeamSeg_t
+{
+	Vector m_vPos;
+	Vector m_vColor;
+	float m_flTexCoord;
+	float m_flWidth;
+	float m_flAlpha;
+};
+
+class CBeamSegDraw
+{
+public:
+	CBeamSegDraw()
+	{
+		m_pMesh = 0;
+		m_nMaxVertexCount = 0;
+		m_nMaxIndexCount = 0;
+		m_nVertexCount = 0;
+		m_nIndexCount = 0;
+		m_nCurrentVertex = 0;
+		m_nCurrentIndex = 0;
+		m_bGenerateIndices = false;
+	}
+	void sub_100813c0(int nSegs, void *pMaterial);	// Start
+	void sub_100814e0(BeamSeg_t *pSeg);	// NextSeg
+	void sub_10081b90();	// End
+
+	int m_unk00[0x80 / 4];	// the mesh builder's MeshDesc_t
+	void *m_pMesh;	// 0x80
+	bool m_bModify;	// 0x84
+	int m_nMaxVertexCount;	// 0x88
+	int m_nMaxIndexCount;	// 0x8c
+	int m_nVertexCount;	// 0x90
+	int m_nIndexCount;	// 0x94
+	int m_nCurrentVertex;	// 0x98
+	int m_nCurrentIndex;	// 0x9c
+	int m_Type;	// 0xa0
+	bool m_bGenerateIndices;	// 0xa4
+	int m_unka8[(0xc4 - 0xa8) / 4];
+	int m_unkc4[(0xfc - 0xc4) / 4];
+};
+
+void sub_10082fd0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode,
+	const Vector &source, const Vector &delta, float startWidth, float endWidth, float scale, float freq, float speed,
+	int segments, int flags, float *color, float fadeLength, const Vector *pViewOrigin)
+{
+	int i, noiseIndex, noiseStep;
+	float div, length, fraction, factor, vLast, vStep, brightness;
+
+	if (!g_104870e0.GetInt())
+		return;
+
+	if (!sub_10081cd0(spritemodel, (int)frame, rendermode))
+		return;
+
+	if (segments < 2)
+		return;
+
+	length = delta.Length();
+	float flMaxWidth = ((startWidth > endWidth) ? startWidth : endWidth) * 0.5f;
+	div = 1.0 / (segments - 1);
+
+	if (length * div < flMaxWidth * 1.414)
+	{
+		segments = (int)(length / (flMaxWidth * 1.414)) + 1;
+		if (segments < 2)
+			segments = 2;
+	}
+
+	if (segments > noise_divisions)
+		segments = noise_divisions;
+
+	div = 1.0 / (segments - 1);
+	length *= 0.01;
+	vStep = div * length;
+
+	vLast = fmod(freq * speed, 1);
+
+	if (flags & FBEAM_SINENOISE)
+	{
+		if (segments < 16)
+		{
+			segments = 16;
+			div = 1.0 / (segments - 1);
+		}
+		scale *= 100;
+		length = segments * (1.0 / 10);
+	}
+	else
+	{
+		scale *= length;
+	}
+
+	noiseStep = (int)((float)(noise_divisions - 1) * div * 65536.0f);
+	noiseIndex = 0;
+
+	if (flags & FBEAM_SINENOISE)
+	{
+		noiseIndex = 0;
+	}
+
+	brightness = 1.0;
+	if (flags & FBEAM_SHADEIN)
+	{
+		brightness = 0;
+	}
+
+	float fadeFraction = fadeLength / delta.Length();
+	fadeFraction = clamp(fadeFraction, 1.e-6, 1.f);
+
+	CBeamSegDraw segDraw;
+	segDraw.sub_100813c0(segments, 0);
+
+	Vector perp1;
+	if (*pViewOrigin != g_104d4970)
+	{
+		Vector vecDir = delta * 0.5f + source - *pViewOrigin;
+		VectorNormalize(vecDir);
+		sub_100835e0((Vector *)&delta, &vecDir, &perp1);
+	}
+	else
+	{
+		sub_100835e0((Vector *)&delta, (Vector *)&sub_10198d50(), &perp1);
+	}
+
+	for (i = 0; i < segments; i++)
+	{
+		BeamSeg_t curSeg;
+		curSeg.m_flAlpha = 1;
+
+		fraction = i * div;
+
+		if ((flags & FBEAM_SHADEIN) && (flags & FBEAM_SHADEOUT))
+		{
+			if (fraction < 0.5)
+				brightness = 2 * (fraction / fadeFraction);
+			else
+				brightness = 2 * (1.0 - (fraction / fadeFraction));
+		}
+		else if (flags & FBEAM_SHADEIN)
+		{
+			brightness = fraction / fadeFraction;
+		}
+		else if (flags & FBEAM_SHADEOUT)
+		{
+			brightness = 1.0 - (fraction / fadeFraction);
+		}
+
+		if (brightness < 0)
+			brightness = 0;
+		else if (brightness > 1)
+			brightness = 1;
+
+		curSeg.m_vColor.x = brightness * color[0];
+		curSeg.m_vColor.y = brightness * color[1];
+		curSeg.m_vColor.z = brightness * color[2];
+
+		sub_10108fd0(source, fraction, delta, curSeg.m_vPos);
+
+		if (scale != 0)
+		{
+			factor = scale * prgNoise[noiseIndex >> 16];
+			if (flags & FBEAM_SINENOISE)
+			{
+				float s, c;
+				SinCos(fraction * length * M_PI + freq, &s, &c);
+				sub_10108fd0(curSeg.m_vPos, factor * s, sub_10198d70(), curSeg.m_vPos);
+				sub_10108fd0(curSeg.m_vPos, factor * c, sub_10198d60(), curSeg.m_vPos);
+			}
+			else
+			{
+				sub_10108fd0(curSeg.m_vPos, factor, perp1, curSeg.m_vPos);
+			}
+		}
+
+		if (endWidth == startWidth)
+			curSeg.m_flWidth = startWidth * 2;
+		else
+			curSeg.m_flWidth = ((endWidth - startWidth) * fraction + startWidth) * 2;
+
+		curSeg.m_flTexCoord = vLast;
+		segDraw.sub_100814e0(&curSeg);
+
+		vLast += vStep;
+		noiseIndex += noiseStep;
+	}
+
+	segDraw.sub_10081b90();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100835e0 size=0x71
 #include "Vector.h"
 
@@ -39871,6 +41174,478 @@ void sub_100845a0(const char *name, float a, int b, int c, int d, int e)
 	CSpriteHandle *spr = sub_10081cd0(name, (int)a, b);
 	if (spr)
 		sub_10081d70(spr->m_pMaterial, c, d, e);
+}
+// END FUNCTION
+
+// FUNCTION: 0x100845e0 size=0x4f5
+#include "engineclient.h"
+#include "Vector.h"
+#include <math.h>
+
+class CSpriteHandle;
+CSpriteHandle *sub_10081cd0(const char *pSprite, int frame, int rendermode);
+
+struct MeshDesc_local
+{
+	int m_VertexSize_Position;
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;
+	int m_VertexSize_Color;
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];
+	int m_VertexSize_TangentS;
+	int m_VertexSize_TangentT;
+	int m_VertexSize_TangentSxT;
+	int m_VertexSize_UserData;
+	int m_ActualVertexSize;
+	int m_FirstVertex;
+	int m_NumBoneWeights;
+	float *m_pPosition;
+	float *m_pBoneWeight;
+	unsigned char *m_pBoneMatrixIndex;
+	float *m_pNormal;
+	unsigned char *m_pColor;
+	unsigned char *m_pSpecular;
+	float *m_pTexCoord[4];
+	float *m_pTangentS;
+	float *m_pTangentT;
+	float *m_pTangentSxT;
+	float *m_pUserData;
+	unsigned short *m_pIndices;
+};
+
+struct IMesh
+{
+	virtual void LockMesh(int numVerts, int numIndices, MeshDesc_local &desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+__forceinline unsigned char FastFToC(float c)
+{
+	float dc;
+	dc = c * 255.0f + (float)(1 << 23);
+	return *(unsigned char *)&dc;
+}
+
+inline void SinCos( float radians, float *sine, float *cosine )
+{
+	_asm
+	{
+		fld		DWORD PTR [radians]
+		fsincos
+
+		mov edx, DWORD PTR [cosine]
+		mov eax, DWORD PTR [sine]
+
+		fstp DWORD PTR [edx]
+		fstp DWORD PTR [eax]
+	}
+}
+
+class MeshBuilderLocal : private MeshDesc_local
+{
+public:
+	inline MeshBuilderLocal()
+		: m_pMesh(0), m_NumIndices(0), m_NumVertices(0),
+		  m_CurrentVertex(0), m_CurrentIndex(0), m_MaxVertices(0),
+		  m_MaxIndices(0), m_GenerateIndices(false)
+	{
+	}
+
+	inline void Begin(IMesh *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_NumIndices = 0; m_NumVertices = 0;
+		m_GenerateIndices = true;
+		m_Type = type;
+		if ((type == 7) || (type == 6))
+			m_pMesh->SetPrimitiveType(2);
+		else if ((type == 4) || (type == 5))
+			m_pMesh->SetPrimitiveType(1);
+		else
+			m_pMesh->SetPrimitiveType(type);
+		m_pMesh->LockMesh(m_MaxVertices, m_MaxIndices, *this);
+		sub_100422e0();
+	}
+
+	void sub_100421f0(int type, int numPrimitives);
+	void sub_100422e0();
+	void sub_10041c90(bool spewData, bool bDraw);
+
+	__forceinline void IncrementFloatPointer(float *&pBufferPointer, int vertexSize)
+	{
+		pBufferPointer = reinterpret_cast<float *>(reinterpret_cast<unsigned char *>(pBufferPointer) + vertexSize);
+	}
+
+	__forceinline void Position3fv(const float *v)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = *v++;
+		*pDst++ = *v++;
+		*pDst = *v;
+	}
+
+	__forceinline void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+
+	__forceinline void Color3fv(const float *rgb)
+	{
+		int col = (FastFToC(rgb[2])) | (FastFToC(rgb[1]) << 8) | (FastFToC(rgb[0]) << 16) | 0xFF000000;
+		*(int *)m_pCurrColor = col;
+	}
+
+	__forceinline void AdvanceVertex()
+	{
+		if (++m_CurrentVertex > m_NumVertices)
+			m_NumVertices = m_CurrentVertex;
+		IncrementFloatPointer(m_pCurrPosition, m_VertexSize_Position);
+		IncrementFloatPointer(m_pCurrNormal, m_VertexSize_Normal);
+		IncrementFloatPointer(m_pCurrTexCoord[0], m_VertexSize_TexCoord[0]);
+		IncrementFloatPointer(m_pCurrTexCoord[1], m_VertexSize_TexCoord[1]);
+		IncrementFloatPointer(m_pCurrTexCoord[2], m_VertexSize_TexCoord[2]);
+		IncrementFloatPointer(m_pCurrTexCoord[3], m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+
+private:
+	IMesh *m_pMesh;
+	bool m_bModify;
+	int m_MaxVertices;
+	int m_MaxIndices;
+	int m_NumVertices;
+	int m_NumIndices;
+	mutable int m_CurrentVertex;
+	mutable int m_CurrentIndex;
+	int m_Type;
+	bool m_GenerateIndices;
+	mutable float *m_pCurrPosition;
+	mutable float *m_pCurrNormal;
+	mutable float *m_pCurrTexCoord[4];
+	mutable unsigned char *m_pCurrColor;
+};
+
+#define M_PI 3.14159265358979323846
+
+void sub_100845e0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode,
+	const Vector &source, const Vector &delta, float width, float scale, float freq, float speed, int segments, float *color)
+{
+	int i;
+	float div, length, fraction, vLast, vStep;
+	Vector point;
+	float w;
+
+	if (!sub_10081cd0(spritemodel, (int)frame, rendermode))
+		return;
+
+	if (segments < 2)
+		return;
+
+	if (segments > noise_divisions)
+		segments = noise_divisions;
+
+	length = VectorLength(delta) * 0.01;
+	if (length < 0.5)
+		length = 0.5;
+	div = 1.0 / (segments - 1);
+
+	vStep = length * div;
+
+	vLast = fmod(freq * speed, 1);
+	scale = scale * length;
+
+	w = freq * delta[2];
+
+	IMesh *pMesh = (IMesh *)materials->GetDynamicMesh(true, 0, 0, 0);
+
+	MeshBuilderLocal meshBuilder;
+	meshBuilder.Begin(pMesh, 3, (segments - 1) * 2);
+
+	for (i = 0; i < segments; i++)
+	{
+		float s, c;
+		fraction = i * div;
+		point[0] = source[0];
+		point[1] = source[1];
+		point[2] = source[2];
+
+		meshBuilder.Color3fv(color);
+		meshBuilder.TexCoord2f(0, 1.0f, vLast);
+		meshBuilder.Position3fv(point.Base());
+		meshBuilder.AdvanceVertex();
+
+		SinCos(fraction * 2 * M_PI, &s, &c);
+		point[0] = s * w + source[0];
+		point[1] = c * w + source[1];
+		point[2] = source[2];
+
+		meshBuilder.Color3fv(color);
+		meshBuilder.TexCoord2f(0, 0.0f, vLast);
+		meshBuilder.Position3fv(point.Base());
+		meshBuilder.AdvanceVertex();
+
+		vLast += vStep;
+	}
+
+	meshBuilder.sub_10041c90(false, false);
+	pMesh->Draw();
+}
+// END FUNCTION
+
+// FUNCTION: 0x10084ae0 size=0x511
+#include "CSpriteHandle.h"
+#include "Vector.h"
+#include "engineclient.h"
+
+extern "C" double fmod(double, double);
+#pragma intrinsic(fmod)
+
+#define M_PI 3.14159265358979323846
+
+CSpriteHandle *sub_10081cd0(const char *spritemodel, int frame, int rendermode);	// Draw_SetSpriteTexture
+
+inline void SinCos( float radians, float *sine, float *cosine )
+{
+	_asm
+	{
+		fld		DWORD PTR [radians]
+		fsincos
+
+		mov edx, DWORD PTR [cosine]
+		mov eax, DWORD PTR [sine]
+
+		fstp DWORD PTR [edx]
+		fstp DWORD PTR [eax]
+	}
+}
+
+struct MeshDesc_local
+{
+	int m_VertexSize_Position;
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;
+	int m_VertexSize_Color;
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];
+	int m_VertexSize_TangentS;
+	int m_VertexSize_TangentT;
+	int m_VertexSize_TangentSxT;
+	int m_VertexSize_UserData;
+	int m_ActualVertexSize;
+	int m_FirstVertex;
+	int m_NumBoneWeights;
+	float *m_pPosition;
+	float *m_pBoneWeight;
+	unsigned char *m_pBoneMatrixIndex;
+	float *m_pNormal;
+	unsigned char *m_pColor;
+	unsigned char *m_pSpecular;
+	float *m_pTexCoord[4];
+	float *m_pTangentS;
+	float *m_pTangentT;
+	float *m_pTangentSxT;
+	float *m_pUserData;
+	unsigned short *m_pIndices;
+};
+
+struct IMesh
+{
+	virtual void LockMesh(int numVerts, int numIndices, MeshDesc_local &desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+inline unsigned char FastFToC(float c)
+{
+	volatile float dc;
+	dc = c * 255.0f + (float)(1 << 23);
+	return *(unsigned char *)&dc;
+}
+
+class MeshBuilderLocal : private MeshDesc_local
+{
+public:
+	inline MeshBuilderLocal()
+		: m_pMesh(0), m_NumIndices(0), m_NumVertices(0),
+		  m_CurrentVertex(0), m_CurrentIndex(0), m_MaxVertices(0),
+		  m_MaxIndices(0), m_GenerateIndices(false)
+	{
+	}
+
+	inline void Begin(IMesh *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_NumIndices = 0; m_NumVertices = 0;
+		m_GenerateIndices = true;
+		m_Type = type;
+		if ((type == 7) || (type == 6))
+			m_pMesh->SetPrimitiveType(2);
+		else if ((type == 4) || (type == 5))
+			m_pMesh->SetPrimitiveType(1);
+		else
+			m_pMesh->SetPrimitiveType(type);
+		m_pMesh->LockMesh(m_MaxVertices, m_MaxIndices, *this);
+		sub_100422e0();
+	}
+
+	void sub_100421f0(int type, int numPrimitives);
+	void sub_100422e0();
+	void sub_10041c90(bool spewData = false, bool bDraw = false);
+
+	inline void IncrementFloatPointer(float *&pBufferPointer, int vertexSize)
+	{
+		pBufferPointer = reinterpret_cast<float *>(reinterpret_cast<unsigned char *>(pBufferPointer) + vertexSize);
+	}
+
+	inline void Position3fv(const float *v)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = *v++;
+		*pDst++ = *v++;
+		*pDst = *v;
+	}
+
+	inline void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+
+	inline void Color3f(float r, float g, float b)
+	{
+		int col = (FastFToC(b)) | (FastFToC(g) << 8) | (FastFToC(r) << 16) | 0xFF000000;
+		*(int *)m_pCurrColor = col;
+	}
+
+	inline void Color3fv(const float *rgb)
+	{
+		int col = (FastFToC(rgb[2])) | (FastFToC(rgb[1]) << 8) | (FastFToC(rgb[0]) << 16) | 0xFF000000;
+		*(int *)m_pCurrColor = col;
+	}
+
+	inline void AdvanceVertex()
+	{
+		if (++m_CurrentVertex > m_NumVertices)
+			m_NumVertices = m_CurrentVertex;
+		IncrementFloatPointer(m_pCurrPosition, m_VertexSize_Position);
+		IncrementFloatPointer(m_pCurrNormal, m_VertexSize_Normal);
+		IncrementFloatPointer(m_pCurrTexCoord[0], m_VertexSize_TexCoord[0]);
+		IncrementFloatPointer(m_pCurrTexCoord[1], m_VertexSize_TexCoord[1]);
+		IncrementFloatPointer(m_pCurrTexCoord[2], m_VertexSize_TexCoord[2]);
+		IncrementFloatPointer(m_pCurrTexCoord[3], m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+
+private:
+	IMesh *m_pMesh;
+	bool m_bModify;
+	int m_MaxVertices;
+	int m_MaxIndices;
+	int m_NumVertices;
+	int m_NumIndices;
+	mutable int m_CurrentVertex;
+	mutable int m_CurrentIndex;
+	int m_Type;
+	bool m_GenerateIndices;
+	mutable float *m_pCurrPosition;
+	mutable float *m_pCurrNormal;
+	mutable float *m_pCurrTexCoord[4];
+	mutable unsigned char *m_pCurrColor;
+};
+
+// DrawCylinder (2004 SDK cl_dll/beamdraw.cpp)
+void sub_10084ae0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode,
+	const Vector &source, const Vector &delta, float width, float scale, float freq, float speed, int segments, float *color)
+{
+	int i;
+	float div, length, fraction, vLast, vStep;
+	CSpriteHandle *pSprite;
+	Vector point;
+
+	pSprite = sub_10081cd0(spritemodel, frame, rendermode);
+	if (!pSprite)
+		return;
+
+	if (segments < 2)
+		return;
+
+	if (segments > noise_divisions)
+		segments = noise_divisions;
+
+	length = VectorLength(delta) * 0.01;
+	if (length < 0.5)
+		length = 0.5;
+	div = 1.0 / (segments - 1);
+
+	vStep = length * div;
+
+	vLast = fmod(freq * speed, 1);
+
+	IMesh *pMesh = (IMesh *)materials->GetDynamicMesh(true, 0, 0, 0);
+	MeshBuilderLocal meshBuilder;
+	meshBuilder.Begin(pMesh, 3, (segments - 1) * 2);
+
+	float radius = delta.z;
+	for (i = 0; i < segments; i++)
+	{
+		float s, c;
+		fraction = i * div;
+		SinCos(fraction * 2 * M_PI, &s, &c);
+
+		point[0] = s * radius * freq + source[0];
+		point[1] = c * radius * freq + source[1];
+		point[2] = source[2] + width;
+
+		meshBuilder.Color3f(0.0f, 0.0f, 0.0f);
+		meshBuilder.TexCoord2f(0, 1.0f, vLast);
+		meshBuilder.Position3fv(point.Base());
+		meshBuilder.AdvanceVertex();
+
+		point[0] = (radius + width) * s * freq + source[0];
+		point[1] = (radius + width) * c * freq + source[1];
+		point[2] = source[2] - width;
+
+		meshBuilder.Color3fv(color);
+		meshBuilder.TexCoord2f(0, 0.0f, vLast);
+		meshBuilder.Position3fv(point.Base());
+		meshBuilder.AdvanceVertex();
+
+		vLast += vStep;
+	}
+
+	meshBuilder.sub_10041c90();
+	pMesh->Draw();
 }
 // END FUNCTION
 
@@ -51830,6 +53605,139 @@ void CUnknown100ad130::sub_100ad130( BoneHolder_100ad130 *pBones, float flUnused
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ad2c0 size=0x442
+#include "Vector.h"
+#include <math.h>
+
+struct matrix3x4_100ad2c0
+{
+	float m[3][4];
+};
+
+struct Quaternion_100ad2c0
+{
+	float x, y, z, w;
+};
+
+void sub_10108a50(const matrix3x4_100ad2c0 &in1, const matrix3x4_100ad2c0 &in2, matrix3x4_100ad2c0 &out);	// ConcatTransforms
+void sub_10108080(const Vector &in, const matrix3x4_100ad2c0 &m, Vector &out);	// VectorITransform
+void sub_10108430(const matrix3x4_100ad2c0 &in, matrix3x4_100ad2c0 &out);	// MatrixCopy
+void sub_1010a720(const Vector &axis, float angle, Quaternion_100ad2c0 &q);	// AxisAngleQuaternion
+void sub_1010a540(const Quaternion_100ad2c0 &q, const Vector &pos, matrix3x4_100ad2c0 &m);	// QuaternionMatrix
+void sub_10107f80(const float *in, const matrix3x4_100ad2c0 &m, float *out);	// VectorTransform
+
+#define RAD2DEG_100ad2c0(x) ((float)(x) * 57.29578f)
+
+// one bone of the chain (0x64 bytes)
+struct BoneChainLink_100ad2c0
+{
+	int iBone;			// 0x00
+	int iParentBone;		// 0x04
+	float flGroundOffset;		// 0x08
+	matrix3x4_100ad2c0 local;	// 0x0c
+	Vector vecAxis;			// 0x3c
+	float flLength;			// 0x48
+	Vector vecEnd;			// 0x4c
+	int m_unk58[3];
+};
+
+struct BoneArray_100ad2c0
+{
+	int m_unk0;
+	matrix3x4_100ad2c0 *m_pBones;	// +4
+};
+
+struct CUnknown100ad2c0
+{
+	int m_unk0[2];
+	float m_flMaxAngle;		// 0x08
+	float m_flDamping;		// 0x0c
+	int m_unk10[(0x24 - 0x10) / 4];
+	int m_nLinks;			// 0x24
+	BoneChainLink_100ad2c0 *m_pLinks;	// 0x28
+
+	void sub_100ad2c0(float flTime, BoneArray_100ad2c0 *pBones, float flGround);
+};
+
+void CUnknown100ad2c0::sub_100ad2c0(float flTime, BoneArray_100ad2c0 *pBones, float flGround)
+{
+	for (int i = 0; i < m_nLinks; ++i)
+	{
+		BoneChainLink_100ad2c0 *pLink = &m_pLinks[i];
+
+		matrix3x4_100ad2c0 m;
+		sub_10108a50(pBones->m_pBones[pLink->iParentBone], pLink->local, m);
+
+		Vector localEnd;
+		sub_10108080(pLink->vecEnd, m, localEnd);
+		Vector dir = localEnd;
+		VectorNormalize(dir);
+
+		Vector cross;
+		cross.sub_10049f20(pLink->vecAxis.z * dir.y - dir.z * pLink->vecAxis.y,
+			dir.z * pLink->vecAxis.x - dir.x * pLink->vecAxis.z,
+			dir.x * pLink->vecAxis.y - dir.y * pLink->vecAxis.x);
+
+		if (cross.LengthSqr() < 0.0001f)
+		{
+			sub_10108430(m, pBones->m_pBones[pLink->iBone]);
+		}
+		else
+		{
+			Vector fwd; fwd = localEnd;
+			VectorNormalize(fwd);
+			VectorNormalize(cross);
+			float flAngle; flAngle = acos(DotProduct(pLink->vecAxis, fwd));
+			float flRot = flAngle * pow(m_flDamping, flTime);
+			if (flRot > m_flMaxAngle)
+				flRot = m_flMaxAngle;
+
+			Quaternion_100ad2c0 q;
+			sub_1010a720(cross, RAD2DEG_100ad2c0(-flRot), q);
+			Vector zero(0, 0, 0);
+			matrix3x4_100ad2c0 rot;
+			sub_1010a540(q, zero, rot);
+			sub_10108a50(m, rot, pBones->m_pBones[pLink->iBone]);
+		}
+
+		localEnd = pLink->vecAxis * pLink->flLength;
+		sub_10107f80(&localEnd.x, pBones->m_pBones[pLink->iBone], &pLink->vecEnd.x);
+
+		float flFloor = flGround + m_pLinks[i].flGroundOffset;
+		if (flFloor > m_pLinks[i].vecEnd.z)
+		{
+			m_pLinks[i].vecEnd.z = flFloor;
+
+			sub_10108a50(pBones->m_pBones[pLink->iParentBone], pLink->local, m);
+			sub_10108080(pLink->vecEnd, m, localEnd);
+			dir = localEnd;
+			VectorNormalize(dir);
+
+			cross = Vector(dir.y * pLink->vecAxis.z - dir.z * pLink->vecAxis.y,
+				dir.z * pLink->vecAxis.x - dir.x * pLink->vecAxis.z,
+				dir.x * pLink->vecAxis.y - dir.y * pLink->vecAxis.x);
+
+			if (cross.LengthSqr() < 0.0001f)
+			{
+				sub_10108430(m, pBones->m_pBones[pLink->iBone]);
+			}
+			else
+			{
+				Vector fwd = localEnd;
+				VectorNormalize(fwd);
+				VectorNormalize(cross);
+				Quaternion_100ad2c0 q;
+				sub_1010a720(cross, RAD2DEG_100ad2c0(-acos(DotProduct(fwd, pLink->vecAxis))), q);
+				matrix3x4_100ad2c0 rot;
+				Vector zero(0, 0, 0);
+				sub_1010a540(q, zero, rot);
+				sub_10108a50(m, rot, pBones->m_pBones[pLink->iBone]);
+			}
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ad710 size=0x9
 namespace lifted {
 extern char g_1022e914;
@@ -52950,6 +54858,78 @@ bool sub_100b3640(Vector vec, int type)
 	p->vfunc122((int)&vec);
 	((IClientNetworkable *)((char *)p + 8))->PostDataUpdate(0);
 	return true;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100b3b00 size=0x627
+#include <string.h>
+
+int sub_100b3b00(const char *name)
+{
+	if (!_strcmpi(name, "DECAL_GUNSHOT1_C")) return 0;
+	if (!_strcmpi(name, "DECAL_GUNSHOT2_C")) return 1;
+	if (!_strcmpi(name, "DECAL_GUNSHOT3_C")) return 2;
+	if (!_strcmpi(name, "DECAL_GUNSHOT4_C")) return 3;
+	if (!_strcmpi(name, "DECAL_GUNSHOT5_C")) return 4;
+	if (!_strcmpi(name, "DECAL_GUNSHOT1_M")) return 5;
+	if (!_strcmpi(name, "DECAL_GUNSHOT2_M")) return 6;
+	if (!_strcmpi(name, "DECAL_GUNSHOT3_M")) return 7;
+	if (!_strcmpi(name, "DECAL_GUNSHOT4_M")) return 8;
+	if (!_strcmpi(name, "DECAL_GUNSHOT5_M")) return 9;
+	if (!_strcmpi(name, "DECAL_GUNSHOT1_W")) return 10;
+	if (!_strcmpi(name, "DECAL_GUNSHOT2_W")) return 11;
+	if (!_strcmpi(name, "DECAL_GUNSHOT3_W")) return 12;
+	if (!_strcmpi(name, "DECAL_GUNSHOT4_W")) return 13;
+	if (!_strcmpi(name, "DECAL_GUNSHOT5_W")) return 14;
+	if (!_strcmpi(name, "DECAL_GUNSHOT1_G")) return 15;
+	if (!_strcmpi(name, "DECAL_GUNSHOT2_G")) return 16;
+	if (!_strcmpi(name, "DECAL_GUNSHOT3_G")) return 17;
+	if (!_strcmpi(name, "DECAL_GUNSHOT4_G")) return 18;
+	if (!_strcmpi(name, "DECAL_GUNSHOT5_G")) return 19;
+	if (!_strcmpi(name, "DECAL_GUNSHOT1_F")) return 20;
+	if (!_strcmpi(name, "DECAL_GUNSHOT2_F")) return 21;
+	if (!_strcmpi(name, "DECAL_GUNSHOT3_F")) return 22;
+	if (!_strcmpi(name, "DECAL_GUNSHOT4_F")) return 23;
+	if (!_strcmpi(name, "DECAL_GUNSHOT5_F")) return 24;
+	if (!_strcmpi(name, "DECAL_SCORCH1")) return 30;
+	if (!_strcmpi(name, "DECAL_SCORCH2")) return 31;
+	if (!_strcmpi(name, "DECAL_BLOOD1")) return 32;
+	if (!_strcmpi(name, "DECAL_BLOOD2")) return 33;
+	if (!_strcmpi(name, "DECAL_BLOOD3")) return 34;
+	if (!_strcmpi(name, "DECAL_BLOOD4")) return 35;
+	if (!_strcmpi(name, "DECAL_BLOOD5")) return 36;
+	if (!_strcmpi(name, "DECAL_BLOOD6")) return 37;
+	if (!_strcmpi(name, "DECAL_YBLOOD1")) return 38;
+	if (!_strcmpi(name, "DECAL_YBLOOD2")) return 39;
+	if (!_strcmpi(name, "DECAL_YBLOOD3")) return 40;
+	if (!_strcmpi(name, "DECAL_YBLOOD4")) return 41;
+	if (!_strcmpi(name, "DECAL_YBLOOD5")) return 42;
+	if (!_strcmpi(name, "DECAL_YBLOOD6")) return 43;
+	if (!_strcmpi(name, "DECAL_GLASSBREAK1")) return 44;
+	if (!_strcmpi(name, "DECAL_GLASSBREAK2")) return 45;
+	if (!_strcmpi(name, "DECAL_GLASSBREAK3")) return 46;
+	if (!_strcmpi(name, "DECAL_BIGSHOT1")) return 47;
+	if (!_strcmpi(name, "DECAL_BIGSHOT2")) return 48;
+	if (!_strcmpi(name, "DECAL_BIGSHOT3")) return 49;
+	if (!_strcmpi(name, "DECAL_BIGSHOT4")) return 50;
+	if (!_strcmpi(name, "DECAL_BIGSHOT5")) return 51;
+	if (!_strcmpi(name, "DECAL_BPROOF1")) return 52;
+	if (!_strcmpi(name, "DECAL_SMALLSCORCH1")) return 53;
+	if (!_strcmpi(name, "DECAL_SMALLSCORCH2")) return 54;
+	if (!_strcmpi(name, "DECAL_SMALLSCORCH3")) return 55;
+	if (!_strcmpi(name, "DECAL_FADINGSCORCH")) return 56;
+	if (!_strcmpi(name, "DECAL_BEERSPLASH")) return 57;
+	if (!_strcmpi(name, "DECAL_DARKCUT1")) return 58;
+	if (!_strcmpi(name, "DECAL_DARKCUT2")) return 59;
+	if (!_strcmpi(name, "DECAL_DARKCUT3")) return 60;
+	if (!_strcmpi(name, "DECAL_FOOTPRINT_WET")) return 61;
+	if (!_strcmpi(name, "DECAL_FOOTPRINT_DIRT")) return 62;
+	if (!_strcmpi(name, "DECAL_REDGLOWFADE")) return 63;
+	if (!_strcmpi(name, "DECAL_PLASMAGLOWFADE")) return 64;
+	if (!_strcmpi(name, "DECAL_SPLASH")) return 65;
+	if (!_strcmpi(name, "DECAL_GUNSHOT_EXPLOSIVE")) return 66;
+	if (!_strcmpi(name, "DECAL_FIRE")) return 67;
+	return 0;
 }
 // END FUNCTION
 
@@ -54465,6 +56445,207 @@ char CUnknown100b7bb0::sub_100b7bb0(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b7bf0 size=0x26f
+#include "C_BreakableSurface.h"
+#include "Vector.h"
+#include "QAngle.h"
+#include "engineclient.h"
+
+class IBrushSurface;
+struct IMesh;
+
+void sub_10109340(const Vector &forward, QAngle &angles);	// VectorAngles
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);	// AngleVectors
+
+struct EdgeRenderInfo_b7bf0
+{
+	char m_nWidth;	// 0
+	char m_nHeight;	// 1
+	char m_nSide;	// 2
+	char m_nEdgeType;	// 3
+	char m_nStyle;	// 4
+	char m_pad5;
+	unsigned short m_Previous;	// 6
+	unsigned short m_Next;	// 8
+};
+
+class MeshBuilder_b7bf0
+{
+public:
+	int m_unk00[0x80 / 4];
+	void *m_pMesh;	// 0x80
+	bool m_bModify;	// 0x84
+	int m_nMaxVertexCount;	// 0x88
+	int m_nMaxIndexCount;	// 0x8c
+	int m_nVertexCount;	// 0x90
+	int m_nIndexCount;	// 0x94
+	int m_nCurrentVertex;	// 0x98
+	int m_nCurrentIndex;	// 0x9c
+	int m_Type;	// 0xa0
+	bool m_bGenerateIndices;	// 0xa4
+	float *m_pCurrPosition;	// 0xa8
+	float *m_pCurrNormal;	// 0xac
+	float *m_pCurrTexCoord[4];	// 0xb0
+	unsigned char *m_pCurrColor;	// 0xc0
+
+	MeshBuilder_b7bf0()
+	{
+		m_pMesh = 0;
+		m_nMaxVertexCount = 0;
+		m_nMaxIndexCount = 0;
+		m_nVertexCount = 0;
+		m_nIndexCount = 0;
+		m_nCurrentVertex = 0;
+		m_nCurrentIndex = 0;
+		m_bGenerateIndices = false;
+	}
+};
+
+struct RenderList_b7bf0
+{
+	EdgeRenderInfo_b7bf0 *m_pMemory;
+	EdgeRenderInfo_b7bf0 &operator[](unsigned short i) { return m_pMemory[i]; }
+	unsigned short Next(unsigned short i) { return m_pMemory[i].m_Next; }
+};
+
+#define m_RenderList (*(RenderList_b7bf0 *)&m_pArray)
+
+void C_BreakableSurface::sub_100b7bf0(IBrushSurface *pBrushSurface)
+{
+	QAngle vAngles;
+	{
+		Vector vNormal = m_vNormal.sub_10004d80(-1.0f);
+		sub_10109340(vNormal, vAngles);
+	}
+	Vector vWidthStep, vHeightStep;
+	sub_101090a0(vAngles, 0, &vWidthStep, &vHeightStep);
+	vWidthStep *= m_flPanelWidth;
+	vHeightStep *= m_flPanelHeight;
+
+	MeshBuilder_b7bf0 meshBuilder;
+	IMesh *pMesh = 0;
+	int nCurStyle = -1;
+	int nCurEdgeType = -1;
+	for (unsigned short i = m_n454; i != 0xffff; i = m_RenderList.Next(i))
+	{
+		if (nCurStyle != m_RenderList[i].m_nStyle || nCurEdgeType != m_RenderList[i].m_nEdgeType)
+		{
+			nCurEdgeType = m_RenderList[i].m_nEdgeType;
+			nCurStyle = m_RenderList[i].m_nStyle;
+			m_pCurrentDetailTexture = m_EdgeTextures[nCurEdgeType * 3 + nCurStyle].m_pTexture;
+			materials->vfunc65(0);
+			materials->Bind(m_pMaterialEdge, (char *)this + 4);
+			pMesh = (IMesh *)materials->GetDynamicMesh(true, 0, 0, 0);
+		}
+
+		Vector vRenderPos = m_vCorner + (m_RenderList[i].m_nWidth * vWidthStep) + (m_RenderList[i].m_nHeight * vHeightStep);
+		sub_100b8f30(pBrushSurface, pMesh, (CMeshBuilder *)&meshBuilder, vRenderPos, vWidthStep, vHeightStep, m_RenderList[i].m_nSide);
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x100b7e60 size=0x28c
+#include "C_BreakableSurface.h"
+#include "Vector.h"
+#include "QAngle.h"
+#include "engineclient.h"
+
+class IBrushSurface;
+struct IMesh;
+
+void sub_10109340(const Vector &forward, QAngle &angles);	// VectorAngles
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);	// AngleVectors
+
+struct EdgeRenderInfo_b7e60
+{
+	char m_nWidth;	// 0
+	char m_nHeight;	// 1
+	char m_nSide;	// 2
+	char m_nEdgeType;	// 3
+	char m_nStyle;	// 4
+	char m_pad5;
+	unsigned short m_Previous;	// 6
+	unsigned short m_Next;	// 8
+};
+
+class MeshBuilder_b7e60
+{
+public:
+	int m_unk00[0x80 / 4];
+	void *m_pMesh;	// 0x80
+	bool m_bModify;	// 0x84
+	int m_nMaxVertexCount;	// 0x88
+	int m_nMaxIndexCount;	// 0x8c
+	int m_nVertexCount;	// 0x90
+	int m_nIndexCount;	// 0x94
+	int m_nCurrentVertex;	// 0x98
+	int m_nCurrentIndex;	// 0x9c
+	int m_Type;	// 0xa0
+	bool m_bGenerateIndices;	// 0xa4
+	float *m_pCurrPosition;	// 0xa8
+	float *m_pCurrNormal;	// 0xac
+	float *m_pCurrTexCoord[4];	// 0xb0
+	unsigned char *m_pCurrColor;	// 0xc0
+
+	MeshBuilder_b7e60()
+	{
+		m_pMesh = 0;
+		m_nMaxVertexCount = 0;
+		m_nMaxIndexCount = 0;
+		m_nVertexCount = 0;
+		m_nIndexCount = 0;
+		m_nCurrentVertex = 0;
+		m_nCurrentIndex = 0;
+		m_bGenerateIndices = false;
+	}
+};
+
+struct RenderList_b7e60
+{
+	EdgeRenderInfo_b7e60 *m_pMemory;
+	EdgeRenderInfo_b7e60 &operator[](unsigned short i) { return m_pMemory[i]; }
+	unsigned short Next(unsigned short i) { return m_pMemory[i].m_Next; }
+};
+
+#define m_RenderList (*(RenderList_b7e60 *)&m_pArray)
+
+void C_BreakableSurface::sub_100b7e60(IBrushSurface *pBrushSurface)
+{
+	QAngle vAngles;
+	{
+		Vector vNormal = m_vNormal.sub_10004d80(-1.0f);
+		sub_10109340(vNormal, vAngles);
+	}
+	Vector vWidthStep, vHeightStep;
+	sub_101090a0(vAngles, 0, &vWidthStep, &vHeightStep);
+	vWidthStep *= m_flPanelWidth;
+	vHeightStep *= m_flPanelHeight;
+
+	MeshBuilder_b7e60 meshBuilder;
+	IMesh *pMesh = 0;
+	int nCurStyle = -1;
+	int nCurEdgeType = -1;
+	for (unsigned short i = m_n454; i != 0xffff; i = m_RenderList.Next(i))
+	{
+		if (nCurStyle != m_RenderList[i].m_nStyle ||
+			nCurEdgeType != m_RenderList[i].m_nEdgeType)
+		{
+			nCurStyle = m_RenderList[i].m_nStyle;
+			nCurEdgeType = m_RenderList[i].m_nEdgeType;
+			void *pMaterial = (void *)m_EdgeTextures[nCurEdgeType * 3 + nCurStyle - 1].m_unkc;
+			pMesh = (IMesh *)materials->GetDynamicMesh(true, 0, 0, pMaterial);
+		}
+
+		Vector vRenderPos = m_vCorner +
+							(m_RenderList[i].m_nWidth * vWidthStep) +
+							(m_RenderList[i].m_nHeight * vHeightStep) +
+							(0.30f * m_vNormal);
+
+		sub_100b9500(pBrushSurface, pMesh, (CMeshBuilder *)&meshBuilder, vRenderPos, vWidthStep, vHeightStep, m_RenderList[i].m_nSide);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b80f0 size=0x3d
 #include "C_BreakableSurface.h"
 bool C_BreakableSurface::sub_100b80f0(int x, int y)
@@ -54651,6 +56832,451 @@ int C_BreakableSurface::sub_100b8460(int x, int y)
 		i = p->m_n8;
 	}
 	return 0xffff;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100b8a00 size=0x521
+#include "C_BreakableSurface.h"
+#include "Vector.h"
+
+#define Assert(_exp) ((void)(_exp))
+
+struct Vector2D_local
+{
+	float x, y;
+	float *Base() { return &x; }
+};
+
+class IBrushSurface
+{
+public:
+	virtual void ComputeTextureCoordinate(const Vector &worldPos, Vector2D_local &texCoord) = 0;
+	virtual void ComputeLightmapCoordinate(const Vector &worldPos, Vector2D_local &lightmapCoord) = 0;
+};
+
+struct MeshDesc_local
+{
+	int m_VertexSize_Position;
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;
+	int m_VertexSize_Color;
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];
+	int m_VertexSize_TangentS;
+	int m_VertexSize_TangentT;
+	int m_VertexSize_TangentSxT;
+	int m_VertexSize_UserData;
+	int m_ActualVertexSize;
+	int m_FirstVertex;
+	int m_NumBoneWeights;
+	float *m_pPosition;
+	float *m_pBoneWeight;
+	unsigned char *m_pBoneMatrixIndex;
+	float *m_pNormal;
+	unsigned char *m_pColor;
+	unsigned char *m_pSpecular;
+	float *m_pTexCoord[4];
+	float *m_pTangentS;
+	float *m_pTangentT;
+	float *m_pTangentSxT;
+	float *m_pUserData;
+	unsigned short *m_pIndices;
+};
+
+struct IMesh
+{
+	virtual void LockMesh(int numVerts, int numIndices, MeshDesc_local &desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+inline unsigned char FastFToC(float c)
+{
+	volatile float dc;
+	dc = c * 255.0f + (float)(1 << 23);
+	return *(unsigned char *)&dc;
+}
+
+class MeshBuilderLocal : private MeshDesc_local
+{
+public:
+	inline void Begin(IMesh *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_NumIndices = 0; m_NumVertices = 0;
+		m_GenerateIndices = true;
+		m_Type = type;
+		if ((type == 7) || (type == 6))
+			m_pMesh->SetPrimitiveType(2);
+		else if ((type == 4) || (type == 5))
+			m_pMesh->SetPrimitiveType(1);
+		else
+			m_pMesh->SetPrimitiveType(type);
+		m_pMesh->LockMesh(m_MaxVertices, m_MaxIndices, *this);
+		sub_100422e0();
+	}
+
+	void sub_100421f0(int type, int numPrimitives);
+	void sub_100422e0();
+	void sub_10041c90(bool spewData = false, bool bDraw = false);
+
+	inline void IncrementFloatPointer(float *&pBufferPointer, int vertexSize)
+	{
+		pBufferPointer = reinterpret_cast<float *>(reinterpret_cast<unsigned char *>(pBufferPointer) + vertexSize);
+	}
+
+	inline void sub_100319d0(float x, float y, float z)	// Position3f
+	{
+		Assert(m_pPosition && m_pCurrPosition);
+		float *pDst = m_pCurrPosition;
+		*pDst++ = x;
+		*pDst++ = y;
+		*pDst = z;
+	}
+
+	inline void sub_100319f0(const float *n)	// Normal3fv
+	{
+		float *pDst = m_pCurrNormal;
+		*pDst++ = *n++;
+		*pDst++ = *n++;
+		*pDst = *n;
+	}
+
+	inline void sub_10031a20(int stage, float s, float t)	// TexCoord2f
+	{
+		Assert(m_pTexCoord[stage] && m_pCurrTexCoord[stage]);
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+
+	inline void sub_100ba0a0(int stage, const float *st)	// TexCoord2fv
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = *st++;
+		*pDst = *st;
+	}
+
+	inline void sub_1004afc0(float r, float g, float b, float a)	// Color4f
+	{
+		int col = (FastFToC(b)) | (FastFToC(g) << 8) | (FastFToC(r) << 16) | (FastFToC(a) << 24);
+		*(int *)m_pCurrColor = col;
+	}
+
+	inline void sub_10005230()	// AdvanceVertex
+	{
+		if (++m_CurrentVertex > m_NumVertices)
+			m_NumVertices = m_CurrentVertex;
+		IncrementFloatPointer(m_pCurrPosition, m_VertexSize_Position);
+		IncrementFloatPointer(m_pCurrNormal, m_VertexSize_Normal);
+		IncrementFloatPointer(m_pCurrTexCoord[0], m_VertexSize_TexCoord[0]);
+		IncrementFloatPointer(m_pCurrTexCoord[1], m_VertexSize_TexCoord[1]);
+		IncrementFloatPointer(m_pCurrTexCoord[2], m_VertexSize_TexCoord[2]);
+		IncrementFloatPointer(m_pCurrTexCoord[3], m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+
+private:
+	IMesh *m_pMesh;
+	bool m_bModify;
+	int m_MaxVertices;
+	int m_MaxIndices;
+	int m_NumVertices;
+	int m_NumIndices;
+	mutable int m_CurrentVertex;
+	mutable int m_CurrentIndex;
+	int m_Type;
+	bool m_GenerateIndices;
+	mutable float *m_pCurrPosition;
+	mutable float *m_pCurrNormal;
+	mutable float *m_pCurrTexCoord[4];
+	mutable unsigned char *m_pCurrColor;
+};
+
+// DrawOneBlock (2003 SDK cl_dll/c_func_breakablesurf.cpp)
+void C_BreakableSurface::sub_100b8a00(IBrushSurface *pBrushSurface, IMesh *pMesh, CMeshBuilder *pBuilder,
+	const Vector &vCurPos, const Vector &vWidthStep, const Vector &vHeightStep)
+{
+	MeshBuilderLocal *pMeshBuilder = (MeshBuilderLocal *)pBuilder;
+	pMeshBuilder->Begin(pMesh, 7, 1);
+
+	Vector2D_local texCoord, lightCoord;
+	pBrushSurface->ComputeTextureCoordinate(vCurPos, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vCurPos, lightCoord);
+
+	pMeshBuilder->sub_100319d0(vCurPos.x, vCurPos.y, vCurPos.z);
+	pMeshBuilder->sub_1004afc0(1.0f, 1.0f, 1.0f, 1.0f);
+	pMeshBuilder->sub_10031a20(0, 0, 1);
+	pMeshBuilder->sub_100ba0a0(1, lightCoord.Base());
+	pMeshBuilder->sub_100ba0a0(2, texCoord.Base());
+	pMeshBuilder->sub_100319f0(m_vNormal.Base());
+	pMeshBuilder->sub_10005230();
+
+	Vector vNextPos = vCurPos + vWidthStep;
+
+	pBrushSurface->ComputeTextureCoordinate(vNextPos, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vNextPos, lightCoord);
+
+	pMeshBuilder->sub_100319d0(vNextPos.x, vNextPos.y, vNextPos.z);
+	pMeshBuilder->sub_1004afc0(1.0f, 1.0f, 1.0f, 1.0f);
+	pMeshBuilder->sub_10031a20(0, 0, 0);
+	pMeshBuilder->sub_100ba0a0(1, lightCoord.Base());
+	pMeshBuilder->sub_100ba0a0(2, texCoord.Base());
+	pMeshBuilder->sub_100319f0(m_vNormal.Base());
+	pMeshBuilder->sub_10005230();
+
+	vNextPos = vNextPos + vHeightStep;
+
+	pBrushSurface->ComputeTextureCoordinate(vNextPos, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vNextPos, lightCoord);
+
+	pMeshBuilder->sub_100319d0(vNextPos.x, vNextPos.y, vNextPos.z);
+	pMeshBuilder->sub_1004afc0(1.0f, 1.0f, 1.0f, 1.0f);
+	pMeshBuilder->sub_10031a20(0, 1, 0);
+	pMeshBuilder->sub_100ba0a0(1, lightCoord.Base());
+	pMeshBuilder->sub_100ba0a0(2, texCoord.Base());
+	pMeshBuilder->sub_100319f0(m_vNormal.Base());
+	pMeshBuilder->sub_10005230();
+
+	vNextPos = vNextPos - vWidthStep;
+
+	pBrushSurface->ComputeTextureCoordinate(vNextPos, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vNextPos, lightCoord);
+
+	pMeshBuilder->sub_100319d0(vNextPos.x, vNextPos.y, vNextPos.z);
+	pMeshBuilder->sub_1004afc0(1.0f, 1.0f, 1.0f, 1.0f);
+	pMeshBuilder->sub_10031a20(0, 1, 1);
+	pMeshBuilder->sub_100ba0a0(1, lightCoord.Base());
+	pMeshBuilder->sub_100ba0a0(2, texCoord.Base());
+	pMeshBuilder->sub_100319f0(m_vNormal.Base());
+	pMeshBuilder->sub_10005230();
+
+	pMeshBuilder->sub_10041c90();
+	pMesh->Draw();
+}
+// END FUNCTION
+
+// FUNCTION: 0x100b8f30 size=0x5d0
+#include "C_BreakableSurface.h"
+#include "Vector.h"
+
+struct Vector2D_b8f30
+{
+	float x, y;
+	float *Base() { return &x; }
+};
+
+class IBrushSurface
+{
+public:
+	virtual void ComputeTextureCoordinate(const Vector &worldPos, Vector2D_b8f30 &texCoord) = 0;
+	virtual void ComputeLightmapCoordinate(const Vector &worldPos, Vector2D_b8f30 &lightmapCoord) = 0;
+};
+
+struct IMesh
+{
+	virtual void LockMesh(int numVerts, int numIndices, void *desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+inline void IncrementFloatPointer(float *&pBufferPointer, int vertexSize)
+{
+	pBufferPointer = (float *)((unsigned char *)pBufferPointer + vertexSize);
+}
+
+class MeshBuilder_b8f30
+{
+public:
+	int m_VertexSize_Position;	// 0x00
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;	// 0x0c
+	int m_VertexSize_Color;	// 0x10
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];	// 0x18
+	int m_unk28[(0x80 - 0x28) / 4];
+	IMesh *m_pMesh;	// 0x80
+	bool m_bModify;	// 0x84
+	int m_nMaxVertexCount;	// 0x88
+	int m_nMaxIndexCount;	// 0x8c
+	int m_nVertexCount;	// 0x90
+	int m_nIndexCount;	// 0x94
+	int m_nCurrentVertex;	// 0x98
+	int m_nCurrentIndex;	// 0x9c
+	int m_Type;	// 0xa0
+	bool m_bGenerateIndices;	// 0xa4
+	float *m_pCurrPosition;	// 0xa8
+	float *m_pCurrNormal;	// 0xac
+	float *m_pCurrTexCoord[4];	// 0xb0
+	unsigned char *m_pCurrColor;	// 0xc0
+
+	void sub_100421f0(int type, int numPrimitives);	// ComputeNumVertsAndIndices
+	void sub_100422e0();	// Reset
+	void sub_100319d0(float x, float y, float z);	// Position3f
+	void sub_100319f0(const float *n);	// Normal3fv
+	void sub_10042960(int r, int g, int b, int a);	// Color4ub
+	void sub_100ba0a0(int stage, const float *v);	// TexCoord2fv
+	void sub_10031a20(int stage, float s, float t);	// TexCoord2f
+	void sub_10005230();	// AdvanceVertex
+	void sub_10041c90(bool bSpewData, bool bDraw);	// End
+
+	__forceinline void Begin(IMesh *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_nIndexCount = 0;
+		m_nVertexCount = 0;
+		m_bGenerateIndices = true;
+		m_Type = type;
+		m_pMesh->SetPrimitiveType(2);
+		m_pMesh->LockMesh(m_nMaxVertexCount, m_nMaxIndexCount, this);
+		sub_100422e0();
+	}
+	__forceinline void Position3f(float x, float y, float z)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = x;
+		*pDst++ = y;
+		*pDst = z;
+	}
+	__forceinline void Normal3fv(const float *n)
+	{
+		float *pDst = m_pCurrNormal;
+		*pDst++ = *n++;
+		*pDst++ = *n++;
+		*pDst = *n;
+	}
+	__forceinline void Color4ub(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+	{
+		int col = b | (g << 8) | (r << 16) | (a << 24);
+		*(int *)m_pCurrColor = col;
+	}
+	__forceinline void TexCoord2fv(int stage, const float *v)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = *v++;
+		*pDst = *v;
+	}
+	__forceinline void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+	__forceinline void AdvanceVertex()
+	{
+		if (++m_nCurrentVertex > m_nVertexCount)
+			m_nVertexCount = m_nCurrentVertex;
+		IncrementFloatPointer(m_pCurrPosition, m_VertexSize_Position);
+		IncrementFloatPointer(m_pCurrNormal, m_VertexSize_Normal);
+		IncrementFloatPointer(m_pCurrTexCoord[0], m_VertexSize_TexCoord[0]);
+		IncrementFloatPointer(m_pCurrTexCoord[1], m_VertexSize_TexCoord[1]);
+		IncrementFloatPointer(m_pCurrTexCoord[2], m_VertexSize_TexCoord[2]);
+		IncrementFloatPointer(m_pCurrTexCoord[3], m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+};
+
+void C_BreakableSurface::sub_100b8f30(IBrushSurface *pBrushSurface, IMesh *pMesh, CMeshBuilder *pInMeshBuilder, const Vector &vCurPos, const Vector &vEdgeStep, const Vector &vEdgeExtStep, int nEdgeType)
+{
+	MeshBuilder_b8f30 *pMeshBuilder = (MeshBuilder_b8f30 *)pInMeshBuilder;
+	pMeshBuilder->Begin(pMesh, 7, 1);
+
+	Vector2D_b8f30 texCoord, lightCoord;
+	pBrushSurface->ComputeTextureCoordinate(vCurPos, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vCurPos, lightCoord);
+	pMeshBuilder->Position3f(vCurPos.x, vCurPos.y, vCurPos.z);
+	pMeshBuilder->Normal3fv(m_vNormal.Base());
+	pMeshBuilder->Color4ub(255, 255, 255, 255);
+	pMeshBuilder->TexCoord2fv(2, texCoord.Base());
+	pMeshBuilder->TexCoord2fv(1, lightCoord.Base());
+	switch (nEdgeType)
+	{
+	case 1: pMeshBuilder->TexCoord2f(0, 1.0f, 0.0f); break;
+	case 0: pMeshBuilder->TexCoord2f(0, 1.0f, 1.0f); break;
+	case 3: pMeshBuilder->TexCoord2f(0, 0.0f, 1.0f); break;
+	case 2: pMeshBuilder->TexCoord2f(0, 0.0f, 0.0f); break;
+	}
+	pMeshBuilder->AdvanceVertex();
+
+	Vector vTemp = vCurPos + vEdgeStep;
+	pBrushSurface->ComputeTextureCoordinate(vTemp, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vTemp, lightCoord);
+	pMeshBuilder->Position3f(vTemp.x, vTemp.y, vTemp.z);
+	pMeshBuilder->Normal3fv(m_vNormal.Base());
+	pMeshBuilder->Color4ub(255, 255, 255, 255);
+	pMeshBuilder->TexCoord2fv(2, texCoord.Base());
+	pMeshBuilder->TexCoord2fv(1, lightCoord.Base());
+	switch (nEdgeType)
+	{
+	case 1: pMeshBuilder->TexCoord2f(0, 1.0f, 1.0f); break;
+	case 0: pMeshBuilder->TexCoord2f(0, 0.0f, 1.0f); break;
+	case 3: pMeshBuilder->TexCoord2f(0, 0.0f, 0.0f); break;
+	case 2: pMeshBuilder->TexCoord2f(0, 1.0f, 0.0f); break;
+	}
+	pMeshBuilder->AdvanceVertex();
+
+	vTemp = vTemp + vEdgeExtStep;
+	pBrushSurface->ComputeTextureCoordinate(vTemp, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vTemp, lightCoord);
+	pMeshBuilder->Position3f(vTemp.x, vTemp.y, vTemp.z);
+	pMeshBuilder->Normal3fv(m_vNormal.Base());
+	pMeshBuilder->Color4ub(255, 255, 255, 255);
+	pMeshBuilder->TexCoord2fv(2, texCoord.Base());
+	pMeshBuilder->TexCoord2fv(1, lightCoord.Base());
+	switch (nEdgeType)
+	{
+	case 1: pMeshBuilder->sub_10031a20(0, 0.0f, 1.0f); break;
+	case 0: pMeshBuilder->sub_10031a20(0, 0.0f, 0.0f); break;
+	case 3: pMeshBuilder->sub_10031a20(0, 1.0f, 0.0f); break;
+	case 2: pMeshBuilder->sub_10031a20(0, 1.0f, 1.0f); break;
+	}
+	pMeshBuilder->sub_10005230();
+
+	vTemp.sub_10039080(vTemp.sub_100b9b80(vEdgeStep));
+	pBrushSurface->ComputeTextureCoordinate(vTemp, texCoord);
+	pBrushSurface->ComputeLightmapCoordinate(vTemp, lightCoord);
+	pMeshBuilder->sub_100319d0(vTemp.x, vTemp.y, vTemp.z);
+	pMeshBuilder->sub_100319f0(m_vNormal.Base());
+	pMeshBuilder->sub_10042960(255, 255, 255, 255);
+	pMeshBuilder->sub_100ba0a0(2, texCoord.Base());
+	pMeshBuilder->sub_100ba0a0(1, lightCoord.Base());
+	switch (nEdgeType)
+	{
+	case 1: pMeshBuilder->sub_10031a20(0, 0.0f, 0.0f); break;
+	case 0: pMeshBuilder->sub_10031a20(0, 1.0f, 0.0f); break;
+	case 3: pMeshBuilder->sub_10031a20(0, 1.0f, 1.0f); break;
+	case 2: pMeshBuilder->sub_10031a20(0, 0.0f, 1.0f); break;
+	}
+	pMeshBuilder->sub_10005230();
+
+	pMeshBuilder->sub_10041c90(false, false);
+	pMesh->Draw();
 }
 // END FUNCTION
 
@@ -60414,6 +63040,70 @@ ClassMapEntry *CClassMap::sub_100ce920(unsigned short i)
 bool CUtlRBTree148::sub_100cf230(unsigned short i) const
 {
 	return Links(Links(i).m_Parent).m_Left == i;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100cf4e0 size=0x531
+#include "CUtlRBTree148.h"
+
+// CUtlRBTree::InsertRebalance (tier1 utlrbtree.h), 0x94-byte nodes
+void CUtlRBTree148::sub_100cf4e0(unsigned short elem)
+{
+	while (elem != m_Root && Color(Parent(elem)) == 0)
+	{
+		unsigned short parent = Parent(elem);
+		unsigned short grandparent = Parent(parent);
+
+		if (LeftChild(Parent(parent)) == parent)
+		{
+			unsigned short uncle = RightChild(grandparent);
+			if (Color(uncle) == 0)
+			{
+				SetColor(parent, 1);
+				SetColor(uncle, 1);
+				SetColor(grandparent, 0);
+				elem = grandparent;
+			}
+			else
+			{
+				if (RightChild(Parent(elem)) == elem)
+				{
+					elem = parent;
+					RotLeft(elem);
+					parent = Parent(elem);
+					grandparent = Parent(parent);
+				}
+				SetColor(parent, 1);
+				SetColor(grandparent, 0);
+				RotRight(grandparent);
+			}
+		}
+		else
+		{
+			unsigned short uncle = LeftChild(grandparent);
+			if (Color(uncle) == 0)
+			{
+				SetColor(parent, 1);
+				SetColor(uncle, 1);
+				SetColor(grandparent, 0);
+				elem = grandparent;
+			}
+			else
+			{
+				if (LeftChild(Parent(elem)) == elem)
+				{
+					elem = parent;
+					RotRight(elem);
+					parent = Parent(elem);
+					grandparent = Parent(parent);
+				}
+				SetColor(parent, 1);
+				SetColor(grandparent, 0);
+				sub_100cfa20(grandparent);
+			}
+		}
+	}
+	SetColor(m_Root, 1);
 }
 // END FUNCTION
 
@@ -66978,6 +69668,179 @@ void sub_100e7380(int a1, int a2, int a3, int a4, int a5)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100e73c0 size=0x483
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "ConVar.h"
+#include "engineclient.h"
+
+struct CUnknown100a2450
+{
+	int sub_100a2450();
+};
+
+struct CStepMoveTypeView
+{
+	virtual void m0(); virtual void m1(); virtual void m2(); virtual void m3();
+	virtual void m4(); virtual void m5(); virtual void m6(); virtual void m7();
+	virtual int GetMoveType();
+};
+
+struct CStepPlayerData
+{
+	void *m_vtable;
+	char m_pad0004[0xc - 4];
+	CStepMoveTypeView m_MoveType;	// 0x0c
+	char m_pad0010[0x90 - 0x10];
+	int m_nWaterLevel;	// 0x90
+	char m_pad0094[0x1994 - 0x94];
+	float m_flStepSoundTime;	// 0x1994
+};
+
+struct CPhysSysView
+{
+	virtual void m0(); virtual void m1(); virtual void m2(); virtual void m3();
+	virtual void m4(); virtual void m5(); virtual void m6(); virtual void m7();
+	virtual void m8();
+	virtual EngineGlobals::IPhysicsSurfaceProps *GetSurfaceProps();
+};
+
+extern ConVar *g_104dfaa4;
+extern CPhysSysView *g_104df784;
+extern ConVar *g_104cf7cc;
+extern int g_104cfd48;
+
+#define player ((CStepPlayerData *)m_pMove)
+#define mv ((CMovePlayerView *)m_pPlayer)
+#define PLAYERFLAGS() (((CUnknown100a2450 *)m_pMove)->sub_100a2450())
+#define GROUND() (((CMoveDataView *)m_pMove)->g104())
+
+void CGameMovement::sub_100e73c0()
+{
+	float speed;
+	float velwalk, velrun, flduck;
+	int fLadder, fWalking;
+	float fvol;
+
+	if (player->m_flStepSoundTime > 0)
+		return;
+	if (PLAYERFLAGS() & 0x60)
+		return;
+	if (player->m_MoveType.GetMoveType() == 9)
+		return;
+	if (g_104dfaa4->vfunc1() || g_104dfaa4->m_fValue == 0)
+		return;
+
+	EngineGlobals::IPhysicsSurfaceProps *props = g_104df784->GetSurfaceProps();
+	void *psurface = m_pSurface9c;
+
+	speed = VectorLength(mv->m_vecVelocity);
+
+	fLadder = (player->m_MoveType.GetMoveType() == 10);
+
+	if ((PLAYERFLAGS() & 2) || fLadder || player->m_nWaterLevel)
+	{
+		velwalk = 60;
+		velrun = 80;
+		flduck = 100;
+	}
+	else
+	{
+		velwalk = 120;
+		velrun = 220;
+		flduck = 0;
+	}
+
+	if (!fLadder && !GROUND() && !player->m_nWaterLevel)
+		return;
+
+	if (!(mv->m_vecVelocity.Length2D() > 0.0))
+		return;
+
+	if (!(speed >= velwalk) && player->m_flStepSoundTime != 0)
+		return;
+
+	fWalking = speed < velrun;
+
+	sub_100e6f20();
+	sub_100e6ef0();
+
+	if (fLadder)
+	{
+		psurface = props->vfunc5(props->vfunc3("ladder"));
+		fvol = 0.35f;
+		player->m_flStepSoundTime = 350;
+	}
+	else if (player->m_nWaterLevel > 1)
+	{
+		if (g_104cfd48 == 0)
+		{
+			g_104cfd48 = 1;
+			return;
+		}
+		if (g_104cfd48++ == 3)
+			g_104cfd48 = 0;
+		psurface = props->vfunc5(props->vfunc3("wade"));
+		fvol = 1.0f;
+		player->m_flStepSoundTime = 600;
+	}
+	else if (player->m_nWaterLevel == 1)
+	{
+		psurface = props->vfunc5(props->vfunc3("water"));
+		fvol = 1.0f;
+		player->m_flStepSoundTime = fWalking ? 400 : 300;
+	}
+	else
+	{
+		player->m_flStepSoundTime = fWalking ? 400 : 300;
+		if (mv->m_vecVelocity.Length2D() <= 100.0f)
+			player->m_flStepSoundTime = 800;
+		switch ((char)m_bA4)
+		{
+		default:
+			fvol = fWalking ? 0.2 : 0.5;
+			break;
+		case 'M':
+			fvol = fWalking ? 0.2 : 0.5;
+			break;
+		case 'D':
+			fvol = fWalking ? 0.25 : 0.55;
+			break;
+		case 'V':
+			fvol = fWalking ? 0.4 : 0.7;
+			break;
+		case 'G':
+			fvol = fWalking ? 0.2 : 0.5;
+			break;
+		case 'T':
+			fvol = fWalking ? 0.2 : 0.5;
+			break;
+		case 'S':
+			fvol = fWalking ? 0.2 : 0.5;
+			break;
+		}
+	}
+
+	player->m_flStepSoundTime += flduck;
+
+	if (PLAYERFLAGS() & 2)
+		fvol *= 0.35;
+
+	fvol *= g_104cf7cc->vfunc1() ? 0.0f : g_104cf7cc->m_fValue;
+	if (fvol > 1.0)
+		fvol = 1.0f;
+
+	if (!fLadder && !player->m_nWaterLevel && GROUND())
+	{
+		if (!(mv->m_fFlags24 & 0x79a) && mv->m_vecVelocity.Length2D() <= velwalk)
+			return;
+		slot16(psurface, fvol, 0);
+		return;
+	}
+	slot16(psurface, fvol, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100e7850 size=0xf
 struct SP { char pad[0x1990]; int m1990; };
 struct CView { int m0; int m4; SP *m8; char sub_100e7850(); };
@@ -73223,6 +76086,17 @@ char CInput::sub_100ff0a0(CUnkPlayer *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ff700 size=0x10
+namespace lifted {
+extern char g_104d24e4;
+int sub_10101e20(int, int);
+}
+int sub_100ff700()
+{
+    return lifted::sub_10101e20((int)&lifted::g_104d24e4, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ff710 size=0x10
 namespace lifted {
 extern char g_104d24e4;
@@ -74615,6 +77489,170 @@ void CInput_101030c0::sub_101030c0( int a1, FrameData_101030c0 *pFrame )
 		engine->GetViewAngles( viewangles );
 		viewangles.y = anglemod( viewangles.y + flOld - m_flYawDelta );
 		engine->SetViewAngles( viewangles );
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x10103c60 size=0x6b4
+#include "bf_write.h"
+#include "CUserCmd.h"
+
+struct VecCompare_10103c60
+{
+	bool sub_10104320(const Vector &v) const;	// operator!=, where the game did not inline it
+};
+
+inline void WriteOneBit_10103c60(bf_write *buf, int nValue)
+{
+	if (!buf->sub_10104360(1))
+		buf->sub_10104380(nValue);
+}
+
+void sub_10103c60(bf_write *buf, CUserCmd *to, CUserCmd *from)
+{
+	if (to->command_number != from->command_number + 1)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->WriteUBitLongIndexed(to->command_number, 32);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->viewangles.x != from->viewangles.x)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_10086f10(to->viewangles.x, 16);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->viewangles.y != from->viewangles.y)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_10086f10(to->viewangles.y, 16);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->viewangles.z != from->viewangles.z)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_10086f10(to->viewangles.z, 8);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->forwardmove != from->forwardmove)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_100866b0((int)(to->forwardmove + 0.01f), 16);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->sidemove != from->sidemove)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_100866b0((int)(to->sidemove + 0.01f), 16);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->upmove != from->upmove)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->sub_100866b0((int)(to->upmove + 0.01f), 16);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->buttons != from->buttons)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->WriteUBitLongIndexed(to->buttons, 32);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	if (to->impulse != from->impulse)
+	{
+		WriteOneBit_10103c60(buf, 1);
+		buf->WriteUBitLongIndexed(to->impulse, 8);
+	}
+	else
+	{
+		WriteOneBit_10103c60(buf, 0);
+	}
+
+	buf->WriteUBitLongIndexed(to->m_b2c, 8);
+	buf->WriteUBitLongIndexed(to->msec, 8);
+	WriteOneBit_10103c60(buf, to->m_b44);
+	WriteOneBit_10103c60(buf, to->m_b45);
+
+	if (to->m_n4c != from->m_n4c)
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087210(to->m_n4c, 5, true);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+
+	if (((const VecCompare_10103c60 *)&to->m_vec50)->sub_10104320(from->m_vec50))
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087380(to->m_vec50);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+
+	if (to->m_fl08 != from->m_fl08)
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087210((int)to->m_fl08, 8, true);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+
+	if (to->m_b47 != from->m_b47)
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087210(to->m_b47, 8, true);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
+	}
+
+	if (to->m_b46 != from->m_b46)
+	{
+		buf->sub_101043d0(1);
+		buf->sub_10087210(to->m_b46, 8, true);
+	}
+	else
+	{
+		buf->sub_101043d0(0);
 	}
 }
 // END FUNCTION
@@ -77048,6 +80086,22 @@ void sub_101094e0(const QAngle &angles, matrix3x4_t &matrix)
 	w[0] = 0.0f;
 	w[4] = 0.0f;
 	w[8] = 0.0f;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10109620 size=0x40
+#include "Vector.h"
+
+void sub_10109660(Vector *pVec, int arg);
+
+// TARGET: sub_10109620
+void sub_10109620(const Vector *pVec, int arg)
+{
+    Vector tmp;
+    tmp.x = pVec->y * 57.29578f;
+    tmp.y = pVec->z * 57.29578f;
+    tmp.z = pVec->x * 57.29578f;
+    sub_10109660(&tmp, arg);
 }
 // END FUNCTION
 
@@ -85218,6 +88272,21 @@ void sub_10120660(int a, int b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10120690 size=0x20
+namespace lifted {
+extern int g_104e0c9c;
+}
+struct CUnknown10120690 { void * sub_10120690(int, int); };
+void * CUnknown10120690::sub_10120690(int a0, int a1)
+{
+    *(int *)this = a0;
+    *(int *)((char *)this + 4) = a1;
+    *(int *)((char *)this + 8) = lifted::g_104e0c9c;
+    lifted::g_104e0c9c = (int)this;
+    return this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101206d0 size=0x5
 namespace lifted {
 int sub_100cd9a0();
@@ -89946,6 +93015,17 @@ void sub_1012d3f0(int a, int b, const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012d500 size=0x10
+namespace lifted {
+extern char g_105e5540;
+struct C100c1060 { int sub_1012f130(int); };
+}
+int sub_1012d500(int a0)
+{
+    return ((lifted::C100c1060 *)((int)&lifted::g_105e5540))->sub_1012f130(a0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012d510 size=0x15
 namespace lifted {
 extern int g_104a57d4;
@@ -91077,6 +94157,16 @@ const char * __stdcall sub_1012f8c0(float value)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012f960 size=0x10
+namespace lifted {
+int sub_1012dbf0(int);
+}
+int __stdcall sub_1012f960(int a0)
+{
+    return lifted::sub_1012dbf0(a0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012f9c0 size=0x1b
 #include "CUnknown1024b2d0.h"
 
@@ -92115,6 +95205,133 @@ CUnknown10131f30::Links_t const &CUnknown10131f30::sub_10131f30(int i) const
 	static Links_t s_Sentinel = { InvalidIndex(), InvalidIndex(), InvalidIndex(), 1 };
 	Node_t *pElements = (Node_t *)*(int *)((char *)this + 4);
 	return (i != InvalidIndex()) ? *(Links_t *)&pElements[i] : *(Links_t *)&s_Sentinel;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10131f80 size=0x4da
+#include "CUtlRBTree232.h"
+
+typedef CUtlRBTree232 Tree;
+
+static __forceinline CUtlRBTree232::Links_t &LinksW(Tree *t, int i) { return t->m_pElements[i].m_Links; }
+static __forceinline int LeftChild(Tree *t, int i) { return t->sub_10131a70(i).m_Left; }
+static __forceinline int RightChild(Tree *t, int i) { return t->sub_10131a70(i).m_Right; }
+static __forceinline int Parent(Tree *t, int i) { return t->sub_10131a70(i).m_Parent; }
+static __forceinline int Color(Tree *t, int i) { return t->sub_10131a70(i).m_Tag; }
+static __forceinline bool IsRoot(Tree *t, int i) { return i == t->m_Root; }
+static __forceinline bool IsRed(Tree *t, int i) { return Color(t, i) == 0; }
+static __forceinline bool IsLeftChild(Tree *t, int i) { return LeftChild(t, Parent(t, i)) == i; }
+static __forceinline bool IsRightChild(Tree *t, int i) { return RightChild(t, Parent(t, i)) == i; }
+static __forceinline void SetLeftChild(Tree *t, int i, int child) { LinksW(t, i).m_Left = child; }
+static __forceinline void SetRightChild(Tree *t, int i, int child) { LinksW(t, i).m_Right = child; }
+static __forceinline void SetParent(Tree *t, int i, int parent) { LinksW(t, i).m_Parent = parent; }
+static __forceinline void SetColor(Tree *t, int i, int c) { LinksW(t, i).m_Tag = c; }
+
+static __forceinline void RotateLeftInline(Tree *t, int elem)
+{
+	int rightchild = RightChild(t, elem);
+	SetRightChild(t, elem, LeftChild(t, rightchild));
+	if (LeftChild(t, rightchild) != Tree::InvalidIndex())
+		SetParent(t, LeftChild(t, rightchild), elem);
+
+	if (rightchild != Tree::InvalidIndex())
+		SetParent(t, rightchild, Parent(t, elem));
+	if (!IsRoot(t, elem))
+	{
+		if (IsLeftChild(t, elem))
+			SetLeftChild(t, Parent(t, elem), rightchild);
+		else
+			SetRightChild(t, Parent(t, elem), rightchild);
+	}
+	else
+		t->m_Root = rightchild;
+
+	SetLeftChild(t, rightchild, elem);
+	if (elem != Tree::InvalidIndex())
+		SetParent(t, elem, rightchild);
+}
+
+static __forceinline void RotateRightInline(Tree *t, int elem)
+{
+	int leftchild = LeftChild(t, elem);
+	SetLeftChild(t, elem, RightChild(t, leftchild));
+	if (RightChild(t, leftchild) != Tree::InvalidIndex())
+		SetParent(t, RightChild(t, leftchild), elem);
+
+	if (leftchild != Tree::InvalidIndex())
+		SetParent(t, leftchild, Parent(t, elem));
+	if (!IsRoot(t, elem))
+	{
+		if (IsRightChild(t, elem))
+			SetRightChild(t, Parent(t, elem), leftchild);
+		else
+			SetLeftChild(t, Parent(t, elem), leftchild);
+	}
+	else
+		t->m_Root = leftchild;
+
+	SetRightChild(t, leftchild, elem);
+	if (elem != Tree::InvalidIndex())
+		SetParent(t, elem, leftchild);
+}
+
+void CUtlRBTree232::sub_10131f80(int elem)
+{
+	while (!IsRoot(this, elem) && Color(this, Parent(this, elem)) == 0)
+	{
+		int parent = Parent(this, elem);
+		int grandparent = Parent(this, parent);
+
+		if (IsLeftChild(this, parent))
+		{
+			int uncle = RightChild(this, grandparent);
+			if (IsRed(this, uncle))
+			{
+				SetColor(this, parent, 1);
+				SetColor(this, uncle, 1);
+				SetColor(this, grandparent, 0);
+				elem = grandparent;
+			}
+			else
+			{
+				if (IsRightChild(this, elem))
+				{
+					elem = parent;
+					RotateLeftInline(this, elem);
+					parent = Parent(this, elem);
+					grandparent = Parent(this, parent);
+				}
+				SetColor(this, parent, 1);
+				SetColor(this, grandparent, 0);
+				RotateRightInline(this, grandparent);
+			}
+		}
+		else
+		{
+			int uncle = LeftChild(this, grandparent);
+			if (IsRed(this, uncle))
+			{
+				SetColor(this, parent, 1);
+				SetColor(this, uncle, 1);
+				SetColor(this, grandparent, 0);
+				elem = grandparent;
+			}
+			else
+			{
+				if (IsLeftChild(this, elem))
+				{
+					elem = parent;
+					RotateRightInline(this, parent);
+					parent = Parent(this, elem);
+					grandparent = Parent(this, parent);
+				}
+				SetColor(this, parent, 1);
+				SetColor(this, grandparent, 0);
+				sub_10132e80(grandparent);
+			}
+		}
+	}
+	SetColor(this, m_Root, 1);
 }
 // END FUNCTION
 
@@ -93704,6 +96921,143 @@ struct CUnknown10136ff0 { int sub_10136ff0(int, int, int, int); };
 int CUnknown10136ff0::sub_10136ff0(int a0, int a1, int a2, int a3)
 {
     return ((lifted::C10137020 *)this)->sub_10137020(a0, a1, a2, *(int *)this, *(int *)((char *)this + 4), a3);
+}
+// END FUNCTION
+
+// FUNCTION: 0x10137020 size=0x4f2
+#include "engineclient.h"
+#include "CMeshBuilder.h"
+
+struct wrect_10137020 { int left, right, top, bottom; };
+
+struct IMesh_10137020
+{
+	virtual void LockMesh(int numVerts, int numIndices, CMeshBuilder &desc) = 0;
+	virtual void v1() = 0; virtual void v2() = 0; virtual void v3() = 0; virtual void v4() = 0;
+	virtual void v5() = 0; virtual void v6() = 0; virtual void v7() = 0; virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+struct CUnknown10136f40 { void sub_10136f40(float *color); };
+struct MeshDim { void sub_100421f0(int type, int numPrimitives); };
+struct Obj_100319d0 { void sub_100319d0(float x, float y, float z); };
+
+void sub_101376e0(void *pSprite, int frame, float *pLeft, float *pRight, float *pTop, float *pBottom, int *pWide, int *pTall, const wrect_10137020 *prcSubRect);
+bool sub_10137520(int *x, int *y, int *w, int *h, float *left, float *top, float *right, float *bottom);
+extern bool g_105e5d80;
+
+static __forceinline unsigned char FastFToC(float c)
+{
+	volatile float dc;
+	dc = c * 255.0f + (float)(1 << 23);
+	return *(unsigned char *)&dc;
+}
+
+static __forceinline void MB_AdvanceVertex(CMeshBuilder &mb)
+{
+	if (++mb.m_i98 > mb.m_n90)
+		mb.m_n90 = mb.m_i98;
+	mb.m_a8 += mb.m_i0;
+	mb.m_ac += mb.m_ic;
+	mb.m_b0 += mb.m_i18;
+	mb.m_b4 += mb.m_i1c;
+	mb.m_b8 += mb.m_i20;
+	mb.m_bc += mb.m_i24;
+	mb.m_c0 += mb.m_i10;
+}
+
+static __forceinline void MB_Color3fv(CMeshBuilder &mb, const float *rgb)
+{
+	int col = (FastFToC(rgb[2])) | (FastFToC(rgb[1]) << 8) | (FastFToC(rgb[0]) << 16) | 0xFF000000;
+	*(int *)mb.m_pCurrColor = col;
+}
+
+static __forceinline void MB_TexCoord2f(CMeshBuilder &mb, int stage, float s, float t)
+{
+	float *pDst = (float *)(&mb.m_b0)[stage];
+	*pDst++ = s;
+	*pDst = t;
+}
+
+static __forceinline void MB_Position3f(CMeshBuilder &mb, float x, float y, float z)
+{
+	float *pDst = (float *)mb.m_a8;
+	*pDst++ = x;
+	*pDst++ = y;
+	*pDst = z;
+}
+
+struct CUnknown10136f80
+{
+	int m_width;
+	int m_height;
+	int m_numFrames;
+	void *m_material;
+	int sub_10136f80(float frame);
+	void *GetMaterial() { return m_material; }
+	void sub_10137020(int frame, int x, int y, int iWidth, int iHeight, const wrect_10137020 *prcSubRect);
+};
+
+void CUnknown10136f80::sub_10137020(int frame, int x, int y, int iWidth, int iHeight, const wrect_10137020 *prcSubRect)
+{
+	float fLeft = 0;
+	float fRight = 1;
+	float fTop = 0;
+	float fBottom = 1;
+	if (prcSubRect)
+		sub_101376e0(this, frame, &fLeft, &fRight, &fTop, &fBottom, &iWidth, &iHeight, prcSubRect);
+	if (g_105e5d80 && !sub_10137520(&x, &y, &iWidth, &iHeight, &fLeft, &fTop, &fRight, &fBottom))
+		return;
+	sub_10136f80(frame);
+	IMesh_10137020 *pMesh = (IMesh_10137020 *)materials->GetDynamicMesh(true, 0, 0, GetMaterial());
+	CMeshBuilder meshBuilder;
+	int *mb = (int *)&meshBuilder;
+	mb[0x88 / 4] = 0;
+	mb[0x8c / 4] = 0;
+	mb[0x90 / 4] = 0;
+	mb[0x94 / 4] = 0;
+	mb[0x98 / 4] = 0;
+	mb[0x9c / 4] = 0;
+	*(bool *)&mb[0xa4 / 4] = false;
+	mb[0x80 / 4] = (int)pMesh;
+	*(bool *)&mb[0x84 / 4] = false;
+	((MeshDim *)&meshBuilder)->sub_100421f0(7, 1);
+	mb[0x94 / 4] = 0;
+	mb[0x90 / 4] = 0;
+	*(bool *)&mb[0xa4 / 4] = true;
+	mb[0xa0 / 4] = 7;
+	((IMesh_10137020 *)mb[0x80 / 4])->SetPrimitiveType(2);
+	((IMesh_10137020 *)mb[0x80 / 4])->LockMesh(mb[0x88 / 4], mb[0x8c / 4], meshBuilder);
+	meshBuilder.sub_100422e0();
+
+	float color[3];
+	((CUnknown10136f40 *)this)->sub_10136f40(color);
+
+	MB_Color3fv(meshBuilder, color);
+	MB_TexCoord2f(meshBuilder, 0, fLeft, fTop);
+	MB_Position3f(meshBuilder, x, y, 0.0f);
+	MB_AdvanceVertex(meshBuilder);
+
+	MB_Color3fv(meshBuilder, color);
+	MB_TexCoord2f(meshBuilder, 0, fRight, fTop);
+	MB_Position3f(meshBuilder, x + iWidth, y, 0.0f);
+	meshBuilder.sub_10005230();
+
+	MB_Color3fv(meshBuilder, color);
+	MB_TexCoord2f(meshBuilder, 0, fRight, fBottom);
+	((Obj_100319d0 *)&meshBuilder)->sub_100319d0(x + iWidth, y + iHeight, 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10059af0(color);
+	meshBuilder.sub_10031a20(0, fLeft, fBottom);
+	((Obj_100319d0 *)&meshBuilder)->sub_100319d0(x, y + iHeight, 0.0f);
+	meshBuilder.sub_10005230();
+
+	meshBuilder.sub_10041c90(false, false);
+	pMesh->Draw();
 }
 // END FUNCTION
 
@@ -99632,6 +102986,158 @@ struct V3f60 { char pad[0x10]; int a[3]; int sub_10143f60(int v); };
 int V3f60::sub_10143f60(int v) { for (int i = 0; i < 3; i++) if (a[i] == v) return i; return -1; }
 // END FUNCTION
 
+// FUNCTION: 0x10143f80 size=0x501
+#include "CUnknown10141210.h"
+#include "CUnknown10144490.h"
+#include "BigV_10142340.h"
+
+extern "C" __declspec(dllimport) void DevMsg(int level, const char *pMsg, ...);
+
+template <class T> class CDefaultedPtrVector
+{
+public:
+	int m_unk0;
+	int m_unk4;
+	int m_Size;
+	T **m_pElements;
+	T *Element(int i)
+	{
+		if (i >= 0 && i < m_Size)
+			return m_pElements[i];
+		static T s_Invalid(-1);
+		return &s_Invalid;
+	}
+};
+
+struct ClanList : public CDefaultedPtrVector<CUnknown10144490>
+{
+	void sub_10144b30(int clan1, int clan2);
+	void sub_10144b50(int clan);
+};
+
+struct ClanPairTable : public CDefaultedPtrVector<BigV_10142340>
+{
+	int sub_10142c90(int clan1, int clan2);
+};
+
+struct NamedList_105e74fc
+{
+	const char *sub_1013ffa0(int index);
+	int sub_1013fdf0(const char *name);
+};
+
+class CUnknown10143e30
+{
+public:
+	void sub_10143e30();
+	void sub_10143f80(const char **ppHelp, bool bForce);
+	int m_unk00[8];
+	int m_nCount;	// 0x20
+};
+
+extern CDefaultedPtrVector<CUnknown10141210> g_105e7780;
+extern ClanList g_105e7794;
+extern ClanPairTable g_105e77d0;
+extern int g_105e77e0;
+extern NamedList_105e74fc g_105e74fc;
+extern const char g_102de300[];
+
+void CUnknown10143e30::sub_10143f80(const char **ppHelp, bool bForce)
+{
+	sub_10143e30();
+	if (m_nCount < 3)
+		return;
+
+	if (!bForce)
+	{
+		if (!g_105e7780.Element(g_105e77e0)->sub_10141300(0))
+		{
+			if (!*ppHelp || !**ppHelp)
+				bForce = true;
+		}
+	}
+
+	DevMsg(3, "[CharGenWiz]: ClanOrderings:\n\n");
+	int i;
+	for (i = 0; i < g_105e7794.m_Size; i++)
+	{
+		CUnknown10144490 *pClan = g_105e7794.Element(i);
+		DevMsg(3, "   Clan: [%s]", pClan->sub_101445f0());
+		pClan->sub_10144600();
+		DevMsg(3, "  [TOTAL: %d]\n", pClan->m_n20);
+	}
+
+	int best = -1;
+	int second = -1;
+	int bestScore = 0;
+	int secondScore = 0;
+	for (i = 0; i < g_105e7794.m_Size; i++)
+	{
+		int score = g_105e7794.Element(i)->m_n20;
+		if (score > bestScore)
+		{
+			if (bestScore > secondScore)
+			{
+				secondScore = bestScore;
+				second = best;
+			}
+			bestScore = score;
+			best = i;
+		}
+		else if (score > secondScore)
+		{
+			secondScore = score;
+			second = i;
+		}
+	}
+	if (bestScore - secondScore > 5)
+		second = -1;
+
+	DevMsg(3, "[CharGenWizard]: Picked Clans: %s vs. %s\n", g_105e7794.Element(best)->sub_101445f0(), g_105e7794.Element(second)->sub_101445f0());
+
+	if (best != -1)
+		best = g_105e7794.Element(best)->m_n4;
+	if (second != -1)
+		second = g_105e7794.Element(second)->m_n4;
+	g_105e7794.sub_10144b30(best, second);
+
+	if (!bForce)
+	{
+		if (g_105e7780.Element(g_105e77e0)->sub_10141300(ppHelp))
+			*ppHelp = g_105e7780.Element(g_105e77e0)->sub_10141340();
+		return;
+	}
+
+	if (best != -1 && second != -1)
+	{
+		g_105e7794.sub_10144b30(best, second);
+		int pair = g_105e77d0.sub_10142c90(best, second);
+		if (pair != -1)
+		{
+			const char *psz = g_105e77d0.Element(pair)->m_pszHelp;
+			*ppHelp = psz ? psz : g_102de300;
+			return;
+		}
+		DevMsg(1, "ERROR: CharGenWizard: ProcessTraitChoices: Couldn't Find Clan Choice PopUp: %s vs %s!\n", g_105e74fc.sub_1013ffa0(best), g_105e74fc.sub_1013ffa0(second));
+		g_105e7794.sub_10144b50(g_105e74fc.sub_1013fdf0("Player_Malkavian"));
+		*ppHelp = "Help_Popup0b";
+		return;
+	}
+
+	if (best == -1)
+		best = second;
+	if (best != -1)
+	{
+		g_105e7794.sub_10144b50(best);
+		*ppHelp = "Help_Popup0b";
+		return;
+	}
+
+	DevMsg(1, "ERROR: CharGenWizard: ProcessTraitChoices: Couldn't Find ANY Clan Choices!!\n");
+	*ppHelp = g_102de300;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10144490 size=0x19
 struct CUnknown10144490 { void * sub_10144490(int); };
 void * CUnknown10144490::sub_10144490(int a0)
@@ -99993,6 +103499,16 @@ void * CUnknown10144d10::sub_10144d10()
 // FUNCTION: 0x10144d30 size=0x1
 void sub_10144d30()
 {
+}
+// END FUNCTION
+
+// FUNCTION: 0x10144d40 size=0x10
+struct CUnknown10144d40 { void * sub_10144d40(); };
+void * CUnknown10144d40::sub_10144d40()
+{
+    *(int *)this = 0;
+    *(int *)((char *)this + 4) = 0;
+    return this;
 }
 // END FUNCTION
 
@@ -111152,6 +114668,39 @@ int __fastcall sub_10156770(CUnknownStat101f69a0 *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101568f0 size=0x7b
+extern "C" __declspec(dllimport) void Msg(const char *pszFormat, ...);
+namespace lifted {
+extern char g_102c7040;
+extern char g_102ca338;
+extern char g_102cac78;
+extern char g_102cac88;
+extern char g_102de300;
+struct C101567e0 { int sub_101567e0(int); };
+struct C10159d10 { bool sub_10159d10(int); };
+struct C101608a0 { int sub_101608a0(int); };
+struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual int f10(int, int); virtual void u11(); virtual void u12(); virtual int f13(int, int); };
+}
+struct CUnknown101568f0 { int sub_101568f0(int); };
+int CUnknown101568f0::sub_101568f0(int a0)
+{
+    ((lifted::C101608a0 *)this)->sub_101608a0(((lifted::V *)a0)->f13((int)&lifted::g_102c7040, (int)&lifted::g_102de300));
+    int t0 = ((lifted::V *)a0)->f13((int)&lifted::g_102ca338, (int)&lifted::g_102de300);
+    if ((*(char *)((char *)t0)) != 0) {
+        ((lifted::C101567e0 *)this)->sub_101567e0(t0);
+    } else {
+        bool t1 = ((lifted::C10159d10 *)((char *)this + 0x18))->sub_10159d10(a0);
+        if (t1 != 0) {
+            *(int *)((char *)this + 0x10) = 7;
+        } else {
+            Msg((const char *)((int)&lifted::g_102cac88));
+        }
+    }
+    *(int *)((char *)this + 0x40) = ((lifted::V *)a0)->f10((int)&lifted::g_102cac78, -1);
+    return *(int *)((char *)this + 0x40);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10156970 size=0x9
 struct CUnknown10156970 { int a[4]; int m; bool sub_10156970(); };
 bool CUnknown10156970::sub_10156970() { if (m) return false; return true; }
@@ -115024,6 +118573,18 @@ void CUnknown10202ba0::sub_1015ee00()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015ee80 size=0x10
+struct CUnknown1015ee80 { void * sub_1015ee80(); };
+void * CUnknown1015ee80::sub_1015ee80()
+{
+    *(int *)this = 0;
+    *(int *)((char *)this + 4) = 0;
+    *(int *)((char *)this + 0x8) = 0;
+    *(int *)((char *)this + 12) = 0;
+    return this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015ee90 size=0x5
 namespace lifted {
 int sub_1015eea0();
@@ -115354,6 +118915,17 @@ int sub_1015f420(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015f450 size=0x10
+namespace lifted {
+extern char g_105e74fc;
+struct C100c1060 { int sub_1013fdf0(int); };
+}
+int sub_1015f450(int a0)
+{
+    return ((lifted::C100c1060 *)((int)&lifted::g_105e74fc))->sub_1013fdf0(a0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015f460 size=0x22
 namespace lifted {
 extern char g_102de300;
@@ -115369,6 +118941,17 @@ int sub_1015f460(int a0)
         }
     }
     return (int)&lifted::g_102de300;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1015f490 size=0x10
+namespace lifted {
+extern char g_105e74fc;
+struct C100c1060 { int sub_1013fdf0(int); };
+}
+int sub_1015f490(int a0)
+{
+    return ((lifted::C100c1060 *)((int)&lifted::g_105e74fc))->sub_1013fdf0(a0);
 }
 // END FUNCTION
 
@@ -115586,6 +119169,123 @@ string_t sub_1015fc40(const char *psz);
 string_t sub_1015f830(CObj10203950 *pObj, int arg)
 {
 	return sub_1015fc40(pObj->vfunc13(arg, g_102de300));
+}
+// END FUNCTION
+
+// FUNCTION: 0x1015f860 size=0x1ae
+namespace lifted {
+extern char g_105e74e8;
+extern char g_105e74fc;
+extern char g_105e7910;
+extern char g_105e792c;
+extern char g_105e80d0;
+extern char g_105e8120;
+extern char g_105e8544;
+extern char g_105e8558;
+extern char g_105e8574;
+extern char g_105e8590;
+extern char g_105e85ac;
+extern char g_105e85c8;
+extern char g_105e85e4;
+extern char g_105e8600;
+extern char g_105e861c;
+extern char g_105e88b0;
+extern char g_105e8a58;
+extern char g_105f8b98;
+extern char g_105f8c60;
+extern char g_105f90b8;
+extern char g_105f91c8;
+extern char g_105f9220;
+extern char g_105f93c0;
+extern int g_105f9824;
+extern char g_105f9970;
+extern char g_105f99e0;
+extern char g_105faa18;
+int sub_10055f50();
+struct C1013fc80 { int sub_1013fc80(); };
+struct C1013fdc0 { int sub_1013fdc0(); };
+struct C10140a70 { int sub_10140a70(); };
+struct C10140b40 { int sub_10140b40(); };
+struct C10144dc0 { int sub_10144dc0(); };
+struct C10145e10 { int sub_10145e10(); };
+struct C101499f0 { int sub_101499f0(); };
+struct C10149ac0 { int sub_10149ac0(); };
+struct C1014b870 { int sub_1014b870(); };
+struct C1014bab0 { int sub_1014bab0(); };
+struct C1014e360 { int sub_1014e360(); };
+struct C1014e4d0 { int sub_1014e4d0(); };
+struct C1014ef90 { int sub_1014ef90(); };
+struct C1014f480 { int sub_1014f480(); };
+struct C1014f990 { int sub_1014f990(); };
+struct C1014ff70 { int sub_1014ff70(); };
+struct C10150440 { int sub_10150440(); };
+struct C101508f0 { int sub_101508f0(); };
+struct C10150ff0 { int sub_10150ff0(); };
+struct C10151320 { int sub_10151320(); };
+struct C101526a0 { int sub_101526a0(); };
+struct C101532e0 { int sub_101532e0(); };
+struct C10153500 { int sub_10153500(); };
+int sub_10156560();
+struct C10157850 { int sub_10157850(); };
+struct C10157a20 { int sub_10157a20(); };
+struct C1015c4b0 { int sub_1015c4b0(); };
+struct C1015c720 { int sub_1015c720(); };
+int sub_1015e630();
+struct C1015eea0 { int sub_1015eea0(); };
+int sub_1015fa10();
+struct C10161fd0 { int sub_10161fd0(); };
+struct C10162650 { int sub_10162650(); };
+struct C10163350 { int sub_10163350(); };
+}
+int sub_1015f860()
+{
+    if (lifted::g_105f9824 != 0) {
+        lifted::g_105f9824 = 0;
+    }
+    ((lifted::C1015eea0 *)((int)&lifted::g_105f93c0))->sub_1015eea0();
+    lifted::sub_1015fa10();
+    lifted::sub_10156560();
+    ((lifted::C1015c4b0 *)((int)&lifted::g_105f9220))->sub_1015c4b0();
+    ((lifted::C1015c4b0 *)((int)&lifted::g_105f90b8))->sub_1015c4b0();
+    ((lifted::C1015c4b0 *)((int)&lifted::g_105f8c60))->sub_1015c4b0();
+    ((lifted::C1015c4b0 *)((int)&lifted::g_105f91c8))->sub_1015c4b0();
+    ((lifted::C1014b870 *)((int)&lifted::g_105e8120))->sub_1014b870();
+    ((lifted::C1013fc80 *)((int)&lifted::g_105e74fc))->sub_1013fc80();
+    ((lifted::C10144dc0 *)((int)&lifted::g_105e7910))->sub_10144dc0();
+    ((lifted::C101532e0 *)((int)&lifted::g_105e8a58))->sub_101532e0();
+    ((lifted::C10157850 *)((int)&lifted::g_105f8b98))->sub_10157850();
+    ((lifted::C1014e360 *)((int)&lifted::g_105e8544))->sub_1014e360();
+    ((lifted::C10145e10 *)((int)&lifted::g_105e792c))->sub_10145e10();
+    ((lifted::C1014ef90 *)((int)&lifted::g_105e8574))->sub_1014ef90();
+    ((lifted::C1014f480 *)((int)&lifted::g_105e85c8))->sub_1014f480();
+    ((lifted::C1014f990 *)((int)&lifted::g_105e8558))->sub_1014f990();
+    ((lifted::C1014ff70 *)((int)&lifted::g_105e8590))->sub_1014ff70();
+    ((lifted::C10150440 *)((int)&lifted::g_105e8600))->sub_10150440();
+    ((lifted::C101508f0 *)((int)&lifted::g_105e85ac))->sub_101508f0();
+    ((lifted::C10150ff0 *)((int)&lifted::g_105e85e4))->sub_10150ff0();
+    ((lifted::C10151320 *)((int)&lifted::g_105e861c))->sub_10151320();
+    ((lifted::C101499f0 *)((int)&lifted::g_105e80d0))->sub_101499f0();
+    ((lifted::C101526a0 *)((int)&lifted::g_105e88b0))->sub_101526a0();
+    ((lifted::C10161fd0 *)((int)&lifted::g_105f9970))->sub_10161fd0();
+    ((lifted::C10162650 *)((int)&lifted::g_105f99e0))->sub_10162650();
+    ((lifted::C10163350 *)((int)&lifted::g_105faa18))->sub_10163350();
+    ((lifted::C1015c720 *)((int)&lifted::g_105f9220))->sub_1015c720();
+    ((lifted::C1015c720 *)((int)&lifted::g_105f90b8))->sub_1015c720();
+    ((lifted::C1015c720 *)((int)&lifted::g_105f8c60))->sub_1015c720();
+    ((lifted::C1015c720 *)((int)&lifted::g_105f91c8))->sub_1015c720();
+    ((lifted::C10140a70 *)((int)&lifted::g_105e74e8))->sub_10140a70();
+    ((lifted::C1014bab0 *)((int)&lifted::g_105e8120))->sub_1014bab0();
+    ((lifted::C1013fdc0 *)((int)&lifted::g_105e74fc))->sub_1013fdc0();
+    ((lifted::C10157a20 *)((int)&lifted::g_105f8b98))->sub_10157a20();
+    ((lifted::C1013fdc0 *)((int)&lifted::g_105e74fc))->sub_1013fdc0();
+    ((lifted::C10153500 *)((int)&lifted::g_105e8a58))->sub_10153500();
+    ((lifted::C1014e4d0 *)((int)&lifted::g_105e8544))->sub_1014e4d0();
+    ((lifted::C10149ac0 *)((int)&lifted::g_105e80d0))->sub_10149ac0();
+    ((lifted::C10140b40 *)((int)&lifted::g_105e74e8))->sub_10140b40();
+    lifted::sub_10055f50();
+    int t0 = lifted::sub_1015e630();
+    lifted::g_105f9824 = 1;
+    return t0;
 }
 // END FUNCTION
 
@@ -116529,6 +120229,48 @@ int CUnknown101615a0::sub_101615a0()
 void CParsedValue::sub_101615d0(CVStatKV *pKV, const char *pszKey)
 {
 	sub_10161600(sub_1015fb60(pKV->vfunc13(pszKey, "")));
+}
+// END FUNCTION
+
+// FUNCTION: 0x10161600 size=0xaf
+namespace lifted {
+extern char g_105f985c;
+struct C10160500 { int sub_10160500(int); };
+struct C10160660 { bool sub_10160660(); };
+struct C101608a0 { int sub_101608a0(int); };
+struct C10161370 { int sub_10161370(); };
+struct C10161430 { int sub_10161430(); };
+struct C10161590 { int sub_10161590(int); };
+struct C101615a0 { int sub_101615a0(int); };
+struct C101615b0 { int sub_101615b0(int); };
+int sub_101d180e(int);
+int sub_101d21d3(int);
+struct B16 { int d[4]; };
+}
+struct CUnknown10161600 { int sub_10161600(int); };
+int CUnknown10161600::sub_10161600(int a0)
+{
+    lifted::B16 l0;
+    if ((*(char *)((char *)a0)) == 0) {
+        return ((lifted::C10161430 *)this)->sub_10161430();
+    }
+    int t0 = lifted::sub_101d180e(*(char *)((char *)a0));
+    if (t0 == 0) {
+        if ((*(char *)((char *)a0)) != 0x2d) {
+            ((lifted::C10161370 *)((char *)&l0))->sub_10161370();
+            ((lifted::C101608a0 *)((char *)&l0))->sub_101608a0(a0);
+            bool t1 = ((lifted::C10160660 *)((char *)&l0))->sub_10160660();
+            if (t1 == 0) {
+                return ((lifted::C101615a0 *)this)->sub_101615a0((int)((char *)&l0));
+            }
+            int t2 = ((lifted::C10160500 *)((int)&lifted::g_105f985c))->sub_10160500(a0);
+            if (t2 != -1) {
+                return ((lifted::C101615b0 *)this)->sub_101615b0(t2);
+            }
+            return ((lifted::C10161590 *)this)->sub_10161590(-1);
+        }
+    }
+    return ((lifted::C10161590 *)this)->sub_10161590(lifted::sub_101d21d3(a0));
 }
 // END FUNCTION
 
@@ -122111,6 +125853,27 @@ int CUnknown10174fe0::sub_10174fe0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10175050 size=0x43
+extern "C" __declspec(dllimport) void DevMsg(int level, const char *pszFormat, ...);
+namespace lifted {
+extern char g_102d04e8;
+extern char g_105e77d0;
+struct C10142d00 { int sub_10142d00(int, int); };
+struct C10174d10 { int sub_10174d10(); };
+struct C101750a0 { int sub_101750a0(int); };
+}
+struct CUnknown10175050 { int sub_10175050(int); };
+int CUnknown10175050::sub_10175050(int a0)
+{
+    int t0 = ((lifted::C10142d00 *)((int)&lifted::g_105e77d0))->sub_10142d00(a0, 1);
+    if (t0 == 0) {
+        DevMsg(1, (const char *)((int)&lifted::g_102d04e8), a0);
+        return ((lifted::C10174d10 *)this)->sub_10174d10();
+    }
+    return ((lifted::C101750a0 *)this)->sub_101750a0(t0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10175b30 size=0x60
 #include "VCharWizardUI.h"
 #include "vgui2__Panel.h"
@@ -122763,6 +126526,171 @@ void * CUnknown10178030::sub_10178030()
     *(int *)((char *)this + 0x1c) = 0;
     *(char *)((char *)this + 0x20) = 0;
     return this;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10178060 size=0x63d
+#include "vgui2__Label.h"
+#include <stdio.h>
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+extern char g_102de300[];
+extern int g_105fb5e8;
+
+struct Color_10178060
+{
+	unsigned int rgba;
+	Color_10178060() {}
+};
+
+struct IScheme_10178060
+{
+	virtual void v0() = 0;
+	virtual int GetImage(const char *imageName) = 0;	// slot 1
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual int GetFont(const char *fontName) = 0;	// slot 4
+	virtual void v5() = 0;
+	virtual Color_10178060 GetColor(const char *colorName) = 0;	// slot 6
+};
+
+struct LabelColorView_10178060
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void SetBgColor(Color_10178060 c);	// slot 50
+	virtual void SetFgColor(Color_10178060 c);	// slot 51
+};
+
+struct ButtonView_10178060 : public vgui2::Label
+{
+	virtual void vfunc138(); virtual void vfunc139(); virtual void vfunc140(); virtual void vfunc141();
+	virtual void vfunc142(); virtual void vfunc143(); virtual void vfunc144(); virtual void vfunc145();
+	virtual void vfunc146(); virtual void vfunc147(); virtual void vfunc148(); virtual void vfunc149();
+	virtual void vfunc150(); virtual void vfunc151(); virtual void vfunc152(); virtual void vfunc153();
+	virtual void vfunc154(); virtual void vfunc155(); virtual void vfunc156(); virtual void vfunc157();
+	virtual void vfunc158(); virtual void vfunc159(); virtual void vfunc160(); virtual void vfunc161();
+	virtual void vfunc162(const char *command);
+};
+
+void sub_10177f10(vgui2::Panel *parent, ButtonView_10178060 **out, const char *name, int x, int y, int w, int h);
+
+struct CEquipItem_10178790
+{
+	vgui2::Panel *m_pParent;
+	vgui2::Label *m_pBkg;
+	vgui2::Label *m_pItem;
+	vgui2::Label *m_pXp;
+	vgui2::Label *m_pTrgF;
+	vgui2::Label *m_pTrgI;
+	ButtonView_10178060 *m_pTrgB;
+	int m_nCost;
+	bool m_bSelected;
+
+	void sub_10178060(vgui2::Panel *parent, int x, int y);
+};
+
+inline vgui2::Label *NewLabel_10178060(vgui2::Panel *parent, const char *name)
+{
+	void *mem = vgui2::Panel::operator new(0xb8);
+	return mem ? new (mem) vgui2::Label(parent, name, name) : 0;
+}
+
+void CEquipItem_10178790::sub_10178060(vgui2::Panel *parent, int x, int y)
+{
+	char buf[32];
+	vgui2::Label *label;
+
+	m_pParent = parent;
+	IScheme_10178060 *scheme = (IScheme_10178060 *)parent->sub_101ac830();
+
+	sprintf(buf, "veqBkg%d", g_105fb5e8);
+	label = NewLabel_10178060(parent, buf);
+	m_pBkg = label;
+	label->vfunc108(g_102de300);
+	label->vfunc63(0);
+	label->vfunc62(0);
+	label->sub_101a9950(
+		(int)(x * (sub_100cd100() / 1024.0)),
+		(int)(y * (sub_100cd0f0() / 768.0)),
+		(int)(204 * (sub_100cd100() / 1024.0)),
+		(int)(102 * (sub_100cd0f0() / 768.0)));
+	label->vfunc123(0, scheme->GetImage("hud/itemframe"), 0);
+
+	sprintf(buf, "veqItm%d", g_105fb5e8);
+	label = NewLabel_10178060(parent, buf);
+	m_pItem = label;
+	label->vfunc108(g_102de300);
+	label->vfunc63(0);
+	label->vfunc62(0);
+	label->sub_101a9950(
+		(int)(x * (sub_100cd100() / 1024.0)),
+		(int)(y * (sub_100cd0f0() / 768.0)),
+		(int)(204 * (sub_100cd100() / 1024.0)),
+		(int)(102 * (sub_100cd0f0() / 768.0)));
+
+	int font = scheme->GetFont(sub_1018c870("PercolatorSmall"));
+
+	sprintf(buf, "veqXp%d", g_105fb5e8);
+	label = NewLabel_10178060(parent, buf);
+	m_pXp = label;
+	label->vfunc108(g_102de300);
+	label->vfunc118(font);
+	label->vfunc63(0);
+	label->vfunc62(0);
+	((LabelColorView_10178060 *)label)->SetFgColor(scheme->GetColor("TitleText"));
+	((LabelColorView_10178060 *)label)->SetBgColor(scheme->GetColor("GhostControlBG"));
+	label->vfunc111(5);
+	label->sub_101a9950(
+		(int)((x + 77) * (sub_100cd100() / 1024.0)),
+		(int)((y + 73) * (sub_100cd0f0() / 768.0)),
+		(int)(77 * (sub_100cd100() / 1024.0)),
+		(int)(24 * (sub_100cd0f0() / 768.0)));
+
+	sprintf(buf, "veqTrgF%d", g_105fb5e8);
+	label = NewLabel_10178060(parent, buf);
+	m_pTrgF = label;
+	label->vfunc108(g_102de300);
+	label->vfunc63(0);
+	label->vfunc62(0);
+	label->sub_101a9950(
+		(int)((x + 15) * (sub_100cd100() / 1024.0)),
+		(int)((y + 102) * (sub_100cd0f0() / 768.0)),
+		(int)(128 * (sub_100cd100() / 1024.0)),
+		(int)(32 * (sub_100cd0f0() / 768.0)));
+	label->vfunc123(0, scheme->GetImage("interface/charactermaintenance/cm_EquipButFrame"), 0);
+
+	sprintf(buf, "veqTrgI%d", g_105fb5e8);
+	label = NewLabel_10178060(parent, buf);
+	m_pTrgI = label;
+	label->vfunc108(g_102de300);
+	label->vfunc63(0);
+	label->vfunc62(0);
+	label->sub_101a9950(
+		(int)((x + 61) * (sub_100cd100() / 1024.0)),
+		(int)((y + 100) * (sub_100cd0f0() / 768.0)),
+		(int)(32 * (sub_100cd100() / 1024.0)),
+		(int)(32 * (sub_100cd0f0() / 768.0)));
+	if (m_bSelected)
+		m_pTrgI->vfunc123(0, scheme->GetImage("interface/charactermaintenance/cm_EquipBubble"), 0);
+
+	sprintf(buf, "veqTrgB%d", g_105fb5e8);
+	sub_10177f10(parent, &m_pTrgB, buf, x + 61, y + 100, 32, 32);
+	m_pTrgB->vfunc108(g_102de300);
+	m_pTrgB->vfunc162(buf);
+	m_pTrgB->vfunc62(0);
+
+	g_105fb5e8++;
 }
 // END FUNCTION
 
@@ -124323,6 +128251,144 @@ int CUnknown10180de0::sub_10180de0()
     int t1 = ((lifted::C101733d0 *)t0)->sub_101733d0(1);
     *(int *)((char *)this + 0x1f4) = 0;
     return t1;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10181400 size=0x560
+#include "CharEditStatsPanel.h"
+#include "StatOwner2.h"
+#include "CVStatInfoList_t.h"
+#include "C_BasePlayer.h"
+
+bool sub_101713e0();
+struct VCC_1008ebb0 { int sub_1008ebb0(); };
+struct CUnknown1017d340 { void sub_1017d340(int b); };
+struct CStatPageEntry_10181400 { CUnknown1017d340 *m_pButton; int m_unk04[8]; };
+struct CStatPageX
+{
+	int m_unk00;
+	int m_unk04;
+	CVStatInfoList_t *m_pList;	// +8
+	int m_unk0c[(0x3c - 0x0c) / 4];
+	CStatPageEntry_10181400 *m_pEntries;	// +0x3c
+	int sub_1017f870(int index);
+};
+
+#define SV(n) virtual void v##n();
+#define SV10(p) SV(p##0) SV(p##1) SV(p##2) SV(p##3) SV(p##4) SV(p##5) SV(p##6) SV(p##7) SV(p##8) SV(p##9)
+struct CEStatText_10181400
+{
+	SV(0) SV(1) SV(2) SV(3) SV(4) SV(5) SV(6) SV(7) SV(8) SV(9)
+	SV(10) SV(11) SV(12) SV(13) SV(14) SV(15) SV(16) SV(17) SV(18) SV(19) SV(20)
+	virtual void vfunc21(int b);	// 21
+	SV(22) SV(23) SV(24) SV(25) SV(26) SV(27) SV(28) SV(29)
+	SV10(3) SV10(4) SV10(5) SV10(6) SV10(7) SV10(8) SV10(9)
+	SV(100) SV(101) SV(102) SV(103) SV(104) SV(105) SV(106)
+	virtual void vfunc107(const char *text);	// 107
+	virtual void vfunc108(const char *text);	// 108
+};
+
+#define CE_INT(off) (*(int *)((char *)this + (off)))
+#define CE_TEXT(off) (*(CEStatText_10181400 **)((char *)this + (off)))
+#define CE_PTR(off, T) (*(T *)((char *)this + (off)))
+
+static inline const char *CE_Str_10181400(const char *const &s)
+{
+	return s ? s : "";
+}
+
+void CharEditStatsPanel::sub_10181400(const char *pszName)
+{
+	int index;
+	CStatPageX *pPage = (CStatPageX *)sub_101808d0(pszName, &index);
+	if (!pPage)
+		return;
+	CE_TEXT(0x2a4)->vfunc21(1);
+	int stat = index;
+	int cat = CE_INT(0xb4);
+	if (cat >= 6)
+	{
+		if (CE_INT(0xbc) < 0)
+		{
+			CE_TEXT(0x2ac)->vfunc108(g_105f93c0.sub_1015f2f0("StatCategoryTitles")->sub_1015ecd0(cat));
+			CE_TEXT(0x2b0)->vfunc107(g_105f93c0.sub_1015f2f0("StatCategoryLine1")->sub_1015ecd0(CE_INT(0xb4)));
+			CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_pszTitle));
+			CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[0]));
+		}
+		else
+		{
+			CE_TEXT(0x2ac)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_pszTitle));
+			CE_TEXT(0x2b0)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[0]));
+			switch (CE_INT(0xbc))
+			{
+			case 1:
+				CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[7]));
+				CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[2]));
+				break;
+			case 2:
+				CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[8]));
+				CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[3]));
+				break;
+			case 3:
+				CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[9]));
+				CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[4]));
+				break;
+			case 4:
+				CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[10]));
+				CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[5]));
+				break;
+			case 5:
+				CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[11]));
+				CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[6]));
+				break;
+			default:
+				CE_TEXT(0x2a8)->vfunc107("");
+				break;
+			}
+		}
+		CE_TEXT(0x2b4)->vfunc107("");
+		CE_TEXT(0x2b8)->vfunc107("");
+	}
+	else if (cat >= 0)
+	{
+		CE_TEXT(0x2ac)->vfunc108(g_105f93c0.sub_1015f2f0("StatCategoryTitles")->sub_1015ecd0(cat));
+		if (sub_101713e0())
+		{
+			if (!C_BasePlayer::GetLocalPlayer())
+				return;
+			int clan = ((VCC_1008ebb0 *)C_BasePlayer::GetLocalPlayer())->sub_1008ebb0();
+			CE_TEXT(0x2b0)->vfunc107(g_105f93c0.sub_1015f2f0(g_105f93c0.sub_1015f2f0("StatCategoryLine2")->sub_1015ecd0(clan))->sub_1015ecd0(CE_INT(0xb4)));
+			CE_TEXT(0x2b8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[1]));
+		}
+		else
+		{
+			CE_TEXT(0x2b0)->vfunc107(g_105f93c0.sub_1015f2f0("StatCategoryLine1")->sub_1015ecd0(CE_INT(0xb4)));
+			CE_TEXT(0x2b8)->vfunc107("");
+		}
+		CE_TEXT(0x2b4)->vfunc107("");
+		CE_TEXT(0x2a0)->vfunc108(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_pszTitle));
+		CE_TEXT(0x2a8)->vfunc107(CE_Str_10181400(pPage->m_pList->sub_1015cfe0(stat)->m_apszHelpText[0]));
+	}
+	else
+	{
+		CE_TEXT(0x2ac)->vfunc108("");
+		CE_TEXT(0x2b0)->vfunc107("");
+		CE_TEXT(0x2b4)->vfunc107("");
+		CE_TEXT(0x2b8)->vfunc107("");
+		CE_TEXT(0x2a0)->vfunc108("");
+		CE_TEXT(0x2a8)->vfunc107("");
+		CE_TEXT(0x2a4)->vfunc21(0);
+	}
+	if (CE_PTR(0x1f0, CUnknown1017d340 *))
+		CE_PTR(0x1f0, CUnknown1017d340 *)->sub_1017d340(0);
+	int k = pPage->sub_1017f870(stat);
+	if (k == -1)
+		return;
+	CE_PTR(0x1f0, CUnknown1017d340 *) = pPage->m_pEntries[k].m_pButton;
+	CE_PTR(0x1fc, CStatPageX *) = pPage;
+	CE_INT(0x200) = stat;
+	CE_PTR(0x1f0, CUnknown1017d340 *)->sub_1017d340(1);
+	sub_10181f80();
 }
 // END FUNCTION
 
@@ -125933,6 +129999,110 @@ void CUnknown10187230::sub_10187230()
         ((lifted::V *)(*(int *)((char *)this + 0xb8)))->f0(1);
     }
     *(int *)((char *)this + 0xb8) = 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10187400 size=0x452
+#include "VMapScreenUI.h"
+#include "CHUDSprite.h"
+#include "StatOwner2.h"
+#include "vgui2__Button.h"
+
+extern "C" int sprintf(char *, const char *, ...);
+int sub_100cd0f0();
+int sub_100cd100();
+int sub_1018c870(const char *);
+extern char g_102de300[];
+
+struct MapButtonDef { int n0, n1, n2, n3, n4, n5; };
+extern MapButtonDef g_102d24b0[12];
+extern MapButtonDef g_102d25d0[12];
+extern const char *g_102d26fc[12];
+extern const char *g_102d272c[12];
+extern const char *g_102d275c[12];
+extern const char *g_102d278c[12];
+
+struct ISchemeView
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual int GetFont(int);
+};
+
+class CUnknown10186fa0
+{
+public:
+	void *sub_10186fa0(int parent, int name, int text);
+	char m_pad0[0xb8];
+	int m_nB8;
+	int m_nBC;
+	int m_nC0;
+	int m_nC4;
+	CHUDSprite *m_pC8;
+	CHUDSprite *m_pCC;
+	int m_nD0;
+};
+
+class Button_101b3630
+{
+public:
+	void *sub_101b3630(int parent, const char *name, const char *text);
+	char m_pad0[0xf0];
+};
+
+#define SCALEX(v) ((int)((v) * (sub_100cd100() * (1.0 / 1024))))
+#define SCALEY(v) ((int)((v) * (sub_100cd0f0() * (1.0 / 768))))
+
+void VMapScreenUI::sub_10187400()
+{
+	ISchemeView *pScheme = (ISchemeView *)sub_101ac830();
+	m_bkg.sub_101a9950(0, 0, SCALEX(1024.0), SCALEY(1024.0));
+	m_bkg.m_pMapBack = new CHUDSprite("interface/WorldMap/MapBack", 0, 0, 0x400, 0x300, 0x400, 0x400);
+	const MapButtonDef *defs = m_b180 ? g_102d24b0 : g_102d25d0;
+	for (int i = 0; i < 12; i++)
+	{
+		if (!(m_n184 & (1 << i)))
+		{
+			m_bkg.m_pButtons[i] = 0;
+			continue;
+		}
+		char name[64];
+		sprintf(name, "mapbut%d", i);
+		void *mem = vgui2::Panel::operator new(0xd4);
+		vgui2::Label *btn = mem ? (vgui2::Label *)((CUnknown10186fa0 *)mem)->sub_10186fa0((int)(vgui2::Panel *)this, (int)name, (int)name) : 0;
+		m_bkg.m_pButtons[i] = btn;
+		btn->sub_101a9950(SCALEX(defs[i].n4), SCALEY(defs[i].n5), SCALEX(defs[i].n2), SCALEY(defs[i].n3));
+		((CUnknown10186fa0 *)btn)->m_nB8 = SCALEX(defs[i].n2);
+		((CUnknown10186fa0 *)btn)->m_nBC = SCALEY(defs[i].n3);
+		btn->vfunc21(1);
+		btn->vfunc108(g_102de300);
+		btn->vfunc63(0);
+		btn->vfunc62(0);
+		CHUDSprite *a, *b;
+		if (m_b180)
+		{
+			a = new CHUDSprite(g_102d26fc[i], 0, 0, defs[i].n2, defs[i].n3, defs[i].n0, defs[i].n1);
+			b = new CHUDSprite(g_102d272c[i], 0, 0, defs[i].n2, defs[i].n3, defs[i].n0, defs[i].n1);
+		}
+		else
+		{
+			a = new CHUDSprite(g_102d275c[i], 0, 0, defs[i].n2, defs[i].n3, defs[i].n0, defs[i].n1);
+			b = new CHUDSprite(g_102d278c[i], 0, 0, defs[i].n2, defs[i].n3, defs[i].n0, defs[i].n1);
+		}
+		((CUnknown10186fa0 *)btn)->m_pC8 = a;
+		((CUnknown10186fa0 *)btn)->m_pCC = b;
+		((CUnknown10186fa0 *)btn)->m_nD0 = i;
+	}
+	void *mem = vgui2::Panel::operator new(0xf0);
+	vgui2::Button *pExit = mem ? (vgui2::Button *)((Button_101b3630 *)mem)->sub_101b3630((int)(vgui2::Panel *)this, "ExitButton", "ExitButton") : 0;
+	m_bkg.m_pExit = pExit;
+	pExit->vfunc111(4);
+	pExit->vfunc108(g_105f93c0.sub_1015f2f0("UIBarterStrs")->sub_1015ecd0(6));
+	pExit->sub_101a9950(SCALEX(889.0), SCALEY(736.0), SCALEX(90.0), SCALEY(24.0));
+	pExit->vfunc41((int)(vgui2::Panel *)this);
+	pExit->vfunc118(pScheme->GetFont(sub_1018c870("Copperplate")));
+	pExit->vfunc162((int)"ExitClicked");
+	pExit->vfunc63(1);
+	vfunc57(1, 1);
 }
 // END FUNCTION
 
@@ -129395,6 +133565,129 @@ void CViewRenderBeams::sub_101947b0(void **ppList)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10194830 size=0x474
+#include "CViewRenderBeams.h"
+#include "engineclient.h"
+#include "CGlobalVarsBase.h"
+#include "ehandle.h"
+#include "Vector.h"
+
+#ifndef min
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+#endif
+#ifndef max
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#endif
+
+void sub_10194d30(float *noise, int divs);	// SineNoise
+void sub_10194cb0(float *noise, int divs, float scale);	// Noise
+bool sub_10192d00(IHandleEntity *pEnt, int nAttachment, Vector *pt);	// ComputeBeamEntPosition
+
+void CViewRenderBeams::sub_10194830(Beam_t *pbeam, float frametime)
+{
+	if (pbeam->modelIndex < 0)
+	{
+		pbeam->die = gpGlobals->curtime;
+		return;
+	}
+
+	if (!(pbeam->flags & 0x100))
+		pbeam->freq += frametime;
+	else
+		pbeam->freq += frametime * enginerandom->RandomFloat(1.0f, 2.0f);
+
+	pbeam->rgNoise[0] = 0;
+	pbeam->rgNoise[128] = 0;
+	if (pbeam->amplitude != 0.0f)
+	{
+		if (!(pbeam->flags & 0x100) || !pbeam->m_bCalculatedNoise)
+		{
+			if (pbeam->flags & 0x10)
+				sub_10194d30(pbeam->rgNoise, 128);
+			else
+				sub_10194cb0(pbeam->rgNoise, 128, 1.0f);
+			pbeam->m_bCalculatedNoise = true;
+		}
+	}
+
+	if (pbeam->flags & 3)
+	{
+		if (!sub_10195d00(pbeam))
+			return;
+
+		VectorSubtract(pbeam->attachment[1], pbeam->attachment[0], pbeam->delta);
+		if (pbeam->amplitude >= 0.50)
+			pbeam->segments = VectorLength(pbeam->delta) * 0.25 + 3;
+		else
+			pbeam->segments = VectorLength(pbeam->delta) * 0.075 + 3;
+	}
+
+	switch (pbeam->type)
+	{
+	case 25:
+		{
+			for (int i = 1; i < pbeam->numAttachments; i++)
+			{
+				if (!sub_10192d00(((CBaseHandle *)&pbeam->m_fill)[i].Get(), pbeam->attachmentIndex[i], &pbeam->attachment[i]))
+				{
+					VectorCopy(pbeam->attachment[i - 1], pbeam->attachment[i]);
+				}
+			}
+		}
+		break;
+
+	case 26:
+		{
+			float dr = pbeam->end_radius - pbeam->start_radius;
+			if (dr != 0.0f)
+			{
+				float frac = 1.0f;
+				float remaining = pbeam->die - gpGlobals->curtime;
+				if (remaining < pbeam->life && pbeam->life > 0.0f)
+				{
+					frac = remaining / pbeam->life;
+				}
+				frac = min(1.0f, frac);
+				frac = max(0.0f, frac);
+
+				frac = 1.0f - frac;
+
+				Vector endpos = pbeam->attachment[2];
+				endpos.x += (pbeam->start_radius + frac * dr) / 2.0f;
+				Vector startpos = pbeam->attachment[2];
+				startpos.x -= (pbeam->start_radius + frac * dr) / 2.0f;
+
+				pbeam->attachment[0] = startpos;
+				pbeam->attachment[1] = endpos;
+
+				VectorSubtract(pbeam->attachment[1], pbeam->attachment[0], pbeam->delta);
+				if (pbeam->amplitude >= 0.50)
+					pbeam->segments = VectorLength(pbeam->delta) * 0.25 + 3;
+				else
+					pbeam->segments = VectorLength(pbeam->delta) * 0.075 + 3;
+			}
+		}
+		break;
+
+	case 0:
+		if (!sub_101937e0(&pbeam->attachment[0], &pbeam->attachment[1], 0))
+			return;
+		break;
+	}
+
+	pbeam->t = pbeam->freq + (pbeam->die - gpGlobals->curtime);
+	if (pbeam->t != 0.0f)
+	{
+		pbeam->t = 1.0 - pbeam->freq / pbeam->t;
+	}
+
+	if (pbeam->fadeLength == 0.0f)
+	{
+		pbeam->fadeLength = VectorLength(pbeam->delta);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10194cb0 size=0x78
 #include "engineclient.h"
 
@@ -129429,6 +133722,146 @@ void sub_10194d30(float *table, int n)
 		table[i] = (float)sin(x);
 		x += step;
 	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x10195070 size=0x4aa
+#include "CViewRenderBeams.h"
+#include <math.h>
+
+extern Vector g_104d4970;
+const Vector &sub_10198d30();
+void sub_10082fd0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode,
+	const Vector &source, const Vector &delta, float startWidth, float endWidth, float scale, float freq,
+	float speed, int segments, int flags, float *color, float fadeLength, const Vector *pOrigin);
+void sub_100845a0(const char *sprite, float frame, int rendermode, const Vector &source, float scale, float *color);
+
+void CViewRenderBeams::sub_10195070(Beam_t *pbeam, int frame, int rendermode, float *color, const char *sprite, const char *halosprite)
+{
+	Vector color2;
+	VectorCopy(*(Vector *)color, color2);
+
+	Vector beamDir = pbeam->attachment[1] - pbeam->attachment[0];
+	VectorNormalize(beamDir);
+
+	Vector localDir = sub_10198d30() - pbeam->attachment[0];
+	VectorNormalize(localDir);
+
+	float flDot = DotProduct(beamDir, localDir);
+
+	if (flDot < 0.0f)
+	{
+		flDot = 0;
+	}
+	else
+	{
+		flDot = pow(flDot, 20);
+		if (flDot >= 1.0f)
+		{
+			flDot = 1.0f;
+			color[0] = color[1] = color[2] = 0;
+		}
+		else
+		{
+			float scale = 1.0f - flDot;
+			color[0] *= scale;
+			color[1] *= scale;
+			color[2] *= scale;
+		}
+	}
+
+	sub_10082fd0(128, pbeam->rgNoise, sprite, frame, rendermode, pbeam->attachment[0], pbeam->delta,
+		pbeam->width, pbeam->endWidth, pbeam->amplitude, pbeam->freq, pbeam->speed, pbeam->segments,
+		pbeam->flags, color, pbeam->fadeLength * 0.9, &g_104d4970);
+
+	if (flDot != 0.0f)
+	{
+		float width = (1.0f - flDot) * pbeam->fadeLength * 0.5;
+		if (width < 0.0f)
+			width = 0;
+
+		color2 *= flDot;
+
+		sub_10082fd0(128, pbeam->rgNoise, sprite, frame, rendermode, pbeam->attachment[0], pbeam->delta,
+			pbeam->width, pbeam->endWidth, pbeam->amplitude, pbeam->freq, pbeam->speed, pbeam->segments,
+			pbeam->flags, color2.Base(), width, &g_104d4970);
+
+		float haloScale = flDot * pbeam->haloScale;
+
+		Vector colorFade(flDot * flDot, flDot * flDot, flDot * flDot);
+		if (colorFade.x > 1.0f)
+			colorFade.x = 1.0f;
+		if (colorFade.y > 1.0f)
+			colorFade.y = 1.0f;
+		if (colorFade.z > 1.0f)
+			colorFade.z = 1.0f;
+
+		Vector pos1 = pbeam->attachment[0] + beamDir * 10.0f;
+		sub_100845a0(halosprite, frame, rendermode, pos1, haloScale, colorFade.Base());
+
+		Vector pos2 = pbeam->attachment[0] + beamDir * 100.0f;
+		sub_100845a0(halosprite, frame, rendermode, pos2, 40.0f, colorFade.Base());
+
+		Vector pos3 = pbeam->attachment[0] + beamDir * 200.0f;
+		sub_100845a0(halosprite, frame, rendermode, pos3, 70.0f, colorFade.Base());
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x10195520 size=0x248
+#include <math.h>
+#include "CViewRenderBeams.h"
+#include "Vector.h"
+#include "QAngle.h"
+
+void sub_10082fd0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode,
+	const Vector &source, const Vector &delta, float startWidth, float endWidth, float scale, float freq, float speed,
+	int segments, int flags, float *color, float fadeLength, const Vector *pViewOrigin);	// DrawSegs
+void sub_10109010(const QAngle &angles, Vector *forward);	// AngleVectors
+const QAngle &sub_10198d40();	// CurrentViewAngles
+const Vector &sub_10198d30();	// CurrentViewOrigin
+extern Vector g_104d4970;
+
+#define NOISE_DIVISIONS 128
+
+void CViewRenderBeams::sub_10195520(Beam_t *pbeam, int frame, int rendermode, float *color, const char *spritemodel, int unused)
+{
+	Vector color2;
+	VectorCopy(*(Vector *)color, color2);
+
+	Vector beamDir = pbeam->attachment[1] - pbeam->attachment[0];
+	VectorNormalize(beamDir);
+	Vector vecForward;
+	sub_10109010(sub_10198d40(), &vecForward);
+	float flDot = DotProduct(beamDir, vecForward);
+
+	if (flDot > 0)
+		return;
+
+	float flFade = pow(flDot, 10.0);
+
+	Vector localDir = sub_10198d30() - pbeam->attachment[0];
+	flDot = DotProduct(localDir, beamDir);
+	Vector vecProjection = flDot * beamDir;
+	float flDistance = (localDir - vecProjection).Length();
+
+	if (flDistance > 30)
+	{
+		flDistance = 1 - ((flDistance - 30) / 64);
+		if (flDistance <= 0)
+			flFade = 0;
+		else
+			flFade *= pow(flDistance, 3.0);
+	}
+
+	if (flFade < (1.0f / 255.0f))
+		return;
+
+	VectorScale(color2, flFade, color2);
+
+	sub_10082fd0(NOISE_DIVISIONS, pbeam->rgNoise, spritemodel, frame, rendermode, pbeam->attachment[0], pbeam->delta,
+		pbeam->width, pbeam->endWidth, pbeam->amplitude, pbeam->freq, pbeam->speed, pbeam->segments, pbeam->flags,
+		color2.Base(), pbeam->fadeLength, &g_104d4970);
 }
 // END FUNCTION
 
@@ -129691,6 +134124,18 @@ void sub_10198460()
 	ScopeTrace trace("::FullFrameFrameBufferTextureRestoreFunc", g_102de300);
 	if (g_10619900)
 		g_10619900 = 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x101985e0 size=0x60
+#include "ScopeTrace.h"
+
+extern int g_10619908;
+
+void sub_101985e0()
+{
+	ScopeTrace scope("::ScreenDelayTextureRestoreFunc", g_102de300);
+	g_10619908 = 0;
 }
 // END FUNCTION
 
@@ -130620,6 +135065,195 @@ void sub_1019b8b0(float offsetS, float offsetT)
 		meshBuilder.sub_10005230();
 
 		meshBuilder.sub_10041c90();
+		pMesh->Draw();
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x1019bc10 size=0x619
+#include "ConVar.h"
+#include "engineclient.h"
+
+struct IMesh_1019bc10
+{
+	virtual void LockMesh(int numVerts, int numIndices, void *desc) = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual void v4() = 0;
+	virtual void v5() = 0;
+	virtual void v6() = 0;
+	virtual void v7() = 0;
+	virtual void v8() = 0;
+	virtual void v9() = 0;
+	virtual void SetPrimitiveType(int type) = 0;
+	virtual void v11() = 0;
+	virtual void Draw(int firstIndex = -1, int numIndices = 0) = 0;
+};
+
+inline void IncrementFloatPointer(float *&pBufferPointer, int vertexSize)
+{
+	pBufferPointer = (float *)((unsigned char *)pBufferPointer + vertexSize);
+}
+
+class MeshBuilder_1019bc10
+{
+public:
+	int m_VertexSize_Position;	// 0x00
+	int m_VertexSize_BoneWeight;
+	int m_VertexSize_BoneMatrixIndex;
+	int m_VertexSize_Normal;	// 0x0c
+	int m_VertexSize_Color;	// 0x10
+	int m_VertexSize_Specular;
+	int m_VertexSize_TexCoord[4];	// 0x18
+	int m_unk28[(0x80 - 0x28) / 4];
+	IMesh_1019bc10 *m_pMesh;	// 0x80
+	bool m_bModify;	// 0x84
+	int m_nMaxVertexCount;	// 0x88
+	int m_nMaxIndexCount;	// 0x8c
+	int m_nVertexCount;	// 0x90
+	int m_nIndexCount;	// 0x94
+	int m_nCurrentVertex;	// 0x98
+	int m_nCurrentIndex;	// 0x9c
+	int m_Type;	// 0xa0
+	bool m_bGenerateIndices;	// 0xa4
+	float *m_pCurrPosition;	// 0xa8
+	float *m_pCurrNormal;	// 0xac
+	float *m_pCurrTexCoord[4];	// 0xb0
+	unsigned char *m_pCurrColor;	// 0xc0
+
+	void sub_100421f0(int type, int numPrimitives);	// ComputeNumVertsAndIndices
+	void sub_100422e0();	// Reset
+	void sub_10084560();	// the constructor, out of line
+	void sub_10041b10(IMesh_1019bc10 *pMesh, int type, int numPrimitives);	// Begin
+	void sub_100319d0(float x, float y, float z);	// Position3f
+	void sub_10031a20(int stage, float s, float t);	// TexCoord2f
+	void sub_10005230();	// AdvanceVertex
+	void sub_10041c90(bool bSpewData, bool bDraw);	// End
+
+	__forceinline void Construct()
+	{
+		m_pMesh = 0;
+		m_nMaxVertexCount = 0;
+		m_nMaxIndexCount = 0;
+		m_nVertexCount = 0;
+		m_nIndexCount = 0;
+		m_nCurrentVertex = 0;
+		m_nCurrentIndex = 0;
+		m_bGenerateIndices = false;
+	}
+	__forceinline void Begin(IMesh_1019bc10 *pMesh, int type, int numPrimitives)
+	{
+		m_pMesh = pMesh;
+		m_bModify = false;
+		sub_100421f0(type, numPrimitives);
+		m_nIndexCount = 0;
+		m_nVertexCount = 0;
+		m_bGenerateIndices = true;
+		m_Type = type;
+		m_pMesh->SetPrimitiveType(2);
+		m_pMesh->LockMesh(m_nMaxVertexCount, m_nMaxIndexCount, this);
+		sub_100422e0();
+	}
+	__forceinline void Position3f(float x, float y, float z)
+	{
+		float *pDst = m_pCurrPosition;
+		*pDst++ = x;
+		*pDst++ = y;
+		*pDst = z;
+	}
+	__forceinline void TexCoord2f(int stage, float s, float t)
+	{
+		float *pDst = m_pCurrTexCoord[stage];
+		*pDst++ = s;
+		*pDst = t;
+	}
+	__forceinline void AdvanceVertex()
+	{
+		if (++m_nCurrentVertex > m_nVertexCount)
+			m_nVertexCount = m_nCurrentVertex;
+		IncrementFloatPointer(m_pCurrPosition, m_VertexSize_Position);
+		IncrementFloatPointer(m_pCurrNormal, m_VertexSize_Normal);
+		IncrementFloatPointer(m_pCurrTexCoord[0], m_VertexSize_TexCoord[0]);
+		IncrementFloatPointer(m_pCurrTexCoord[1], m_VertexSize_TexCoord[1]);
+		IncrementFloatPointer(m_pCurrTexCoord[2], m_VertexSize_TexCoord[2]);
+		IncrementFloatPointer(m_pCurrTexCoord[3], m_VertexSize_TexCoord[3]);
+		m_pCurrColor += m_VertexSize_Color;
+	}
+};
+
+struct ConVarFloat_1019bc10 { float sub_1019c230(); };	// ConVar::GetFloat, out of line
+
+void sub_1019bc10()
+{
+	float offsetS = (0.5f / 256.0f);
+	float offsetT = (0.5f / 256.0f);
+	bool found;
+	void *pMaterial = materials->FindMaterial("debug/debugrendertarget256", &found, true);
+	static ConVar mat_wateroverlaysize("mat_wateroverlaysize", "128", 0);
+	if (found)
+	{
+		materials->Bind(pMaterial, 0);
+		IMesh_1019bc10 *pMesh = (IMesh_1019bc10 *)materials->GetDynamicMesh(true, 0, 0, 0);
+
+		float w = mat_wateroverlaysize.GetFloat();
+		float h = mat_wateroverlaysize.GetFloat();
+
+		MeshBuilder_1019bc10 meshBuilder;
+		meshBuilder.Construct();
+		meshBuilder.Begin(pMesh, 7, 1);
+
+		meshBuilder.Position3f(0.0f, 0.0f, 0.0f);
+		meshBuilder.TexCoord2f(0, 0.0f + offsetS, 0.0f + offsetT);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.Position3f(w, 0.0f, 0.0f);
+		meshBuilder.TexCoord2f(0, 1.0f + offsetS, 0.0f + offsetT);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.Position3f(w, h, 0.0f);
+		meshBuilder.TexCoord2f(0, 1.0f + offsetS, 1.0f + offsetT);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.Position3f(0.0f, h, 0.0f);
+		meshBuilder.TexCoord2f(0, 0.0f + offsetS, 1.0f + offsetT);
+		meshBuilder.AdvanceVertex();
+
+		meshBuilder.sub_10041c90(false, false);
+		pMesh->Draw();
+	}
+
+	pMaterial = materials->FindMaterial("debug/debugrendertarget256-2", &found, true);
+	if (found)
+	{
+		materials->Bind(pMaterial, 0);
+		IMesh_1019bc10 *pMesh = (IMesh_1019bc10 *)materials->GetDynamicMesh(true, 0, 0, 0);
+
+		float w = ((ConVarFloat_1019bc10 *)&mat_wateroverlaysize)->sub_1019c230();
+		float h = ((ConVarFloat_1019bc10 *)&mat_wateroverlaysize)->sub_1019c230();
+		float xoffset = ((ConVarFloat_1019bc10 *)&mat_wateroverlaysize)->sub_1019c230();
+
+		MeshBuilder_1019bc10 meshBuilder;
+		meshBuilder.sub_10084560();
+		meshBuilder.sub_10041b10(pMesh, 7, 1);
+
+		meshBuilder.sub_100319d0(xoffset, 0.0f, 0.0f);
+		meshBuilder.sub_10031a20(0, 0.0f + offsetS, 1.0f + offsetT);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_100319d0(xoffset + w, 0.0f, 0.0f);
+		meshBuilder.sub_10031a20(0, 1.0f + offsetS, 1.0f + offsetT);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_100319d0(xoffset + w, h, 0.0f);
+		meshBuilder.sub_10031a20(0, 1.0f + offsetS, 0.0f + offsetT);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_100319d0(xoffset, h, 0.0f);
+		meshBuilder.sub_10031a20(0, 0.0f + offsetS, 0.0f + offsetT);
+		meshBuilder.sub_10005230();
+
+		meshBuilder.sub_10041c90(false, false);
 		pMesh->Draw();
 	}
 }
@@ -133712,6 +138346,15 @@ int sub_101a74d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a74f0 size=0x17
+#include "CHud.h"
+void sub_101a7ac0(CHudElement *);
+void sub_101a74f0()
+{
+	sub_101a7ac0(gHUD.FindElement("CHudWeaponSelection"));
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a7510 size=0x17
 #include "CHud.h"
 void sub_101a7b40(CHudElement *);
@@ -134020,6 +138663,19 @@ void CHudWeaponSelection::sub_101a7f20(const char *str, int x, int y, int w, int
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a8b20 size=0x10
+namespace lifted {
+extern int g_104a0d50;
+struct C1017a5c0 { int sub_100aa490(); };
+}
+void sub_101a8b20()
+{
+    if (lifted::g_104a0d50 != 0) {
+        ((lifted::C1017a5c0 *)lifted::g_104a0d50)->sub_100aa490(); return;
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a8b30 size=0x16
 namespace lifted {
 extern char g_10272378;
@@ -134030,6 +138686,19 @@ struct C101a8b20 { int sub_101a8b20(); };
 int sub_101a8b30()
 {
     return ((lifted::C101a8b20 *)(((lifted::C100f0ed0 *)((int)&lifted::g_104cfe38))->sub_100f0ed0((int)&lifted::g_10272378)))->sub_101a8b20();
+}
+// END FUNCTION
+
+// FUNCTION: 0x101a8ba0 size=0x10
+namespace lifted {
+extern int g_104a0d50;
+struct C1017a5c0 { int sub_100aa460(); };
+}
+void sub_101a8ba0()
+{
+    if (lifted::g_104a0d50 != 0) {
+        ((lifted::C1017a5c0 *)lifted::g_104a0d50)->sub_100aa460(); return;
+    }
 }
 // END FUNCTION
 

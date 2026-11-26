@@ -34,6 +34,25 @@ void CClientEffectPrecacheSystem::vfunc5()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d0790 size=0x41
+#include "CClientEffectPrecacheSystem.h"
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+void CClientEffectPrecacheSystem::vfunc1()
+{
+    *(int *)((char *)this + 0x10) = 0;
+    if ((*(int *)((char *)this + 0xc)) != -1) {
+        if ((*(int *)((char *)this + 4)) != 0) {
+            Plat_Free((void *)(*(int *)((char *)this + 4)));
+            *(int *)((char *)this + 4) = 0;
+        }
+        *(int *)((char *)this + 8) = 0;
+        *(int *)((char *)this + 0x14) = *(int *)((char *)this + 4);
+        return;
+    }
+    *(int *)((char *)this + 0x14) = *(int *)((char *)this + 4);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d0890 size=0x3
 #include "CClientEffectPrecacheSystem.h"
 bool CClientEffectPrecacheSystem::vfunc0()

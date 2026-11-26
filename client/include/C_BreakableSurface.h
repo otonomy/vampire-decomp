@@ -4,6 +4,7 @@
 #pragma once
 #include "C_BaseEntity.h"
 #include "IBrushRenderer.h"
+#include "Vector.h"
 
 class C_BreakableSurface : public C_BaseEntity, public IBrushRenderer
 {
@@ -21,14 +22,19 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	char m_pad0018[0x414 - 0x18];
 	int m_nWidth;
 	int m_nHeight;
-	char m_pad041c[0x43c - 0x41c];
+	float m_flPanelWidth;	// 0x41c
+	float m_flPanelHeight;	// 0x420
+	Vector m_vNormal;	// 0x424
+	Vector m_vCorner;	// 0x430
 	bool sub_100b7450(int x, int y);
 	int sub_100b8460(int x, int y);
 	void sub_100b7490(int x, int y, bool bSet);
 	void sub_100b74f0();
 	void sub_100b75c0(int i, int j, const char *pName);
 	bool m_bUnk438;
-	char m_pad043d[0x448 - 0x43d];
+	char m_c43d; char m_c43e; char m_c43f;
+	int m_unk440;
+	void *m_pCurrentDetailTexture;	// 0x444
 	void *m_pArray;
 	int m_unk44c;
 	int m_unk450;
@@ -41,8 +47,17 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int sub_100b83f0(int a0, int a1, int a2);
 	int m_n460;
 	int m_nPanelFlags[1];
-	char m_pad0468[0x940 - 0x468];
+	char m_pad0468[0x884 - 0x468];
+	struct EdgeTexture_t { void *m_pTexture; int m_unk4; int m_unk8; int m_unkc; } m_EdgeTextures[11];	// 0x884: [edge type * 3 + style]
+	int m_unk934;
+	void *m_pMaterialEdge;	// 0x938
+	int m_unk93c;
+	void sub_100b7bf0(class IBrushSurface *pBrushSurface);	// DrawRenderList
+	void sub_100b7e60(class IBrushSurface *pBrushSurface);	// DrawRenderListHighlights
 	bool sub_100b80f0(int x, int y);
 	void sub_100b8130(int nWidth, int nHeight);	// UpdateEdgeType: the eight neighbours' solidity picks each edge's style
 	void sub_100b84c0(int nWidth, int nHeight, int nEdge, int nStyle);	// SetupEdge-like
+	void sub_100b8a00(class IBrushSurface *pBrushSurface, struct IMesh *pMesh, class CMeshBuilder *pMeshBuilder, const Vector &vCurPos, const Vector &vWidthStep, const Vector &vHeightStep);	// DrawOneBlock
+	void sub_100b8f30(class IBrushSurface *pBrushSurface, struct IMesh *pMesh, class CMeshBuilder *pMeshBuilder, const Vector &vCurPos, const Vector &vEdgeStep, const Vector &vEdgeExtStep, int nEdgeType);	// DrawOneEdge
+	void sub_100b9500(class IBrushSurface *pBrushSurface, struct IMesh *pMesh, class CMeshBuilder *pMeshBuilder, const Vector &vCurPos, const Vector &vEdgeStep, const Vector &vEdgeExtStep, int nEdgeType);	// DrawOneEdge for the highlight edges (fixed brown colour)
 };

@@ -17,4 +17,5 @@ public:
 			return false;
 		return !m_bSuppressEvent;
 	}
+	void * vfunc0(char);	// as in C_TempEntsSystem (transplant)
 };

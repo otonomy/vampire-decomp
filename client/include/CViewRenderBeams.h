@@ -46,10 +46,13 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc18(BeamInfo_t &beamInfo);
 	virtual void vfunc19();
 	virtual Beam_t *vfunc20(struct InfoView101942b0 *info);
-	void sub_10194830(Beam_t *pBeam, int a);
+	void sub_10194830(Beam_t *pBeam, float frametime);
+	bool sub_10195d00(Beam_t *pBeam);
 	virtual void vfunc21();
 	void sub_10193790(BeamV *, BeamInfoV *);
+	void sub_10195520(Beam_t *pbeam, int frame, int rendermode, float *color, const char *spritemodel, int unused);	// DrawLaser
 	void sub_101934d0(void *pBeam);
+	void sub_10195070(Beam_t *pbeam, int frame, int rendermode, float *color, const char *sprite, const char *halosprite);	// DrawLaser with halo sprites
 	void sub_101947b0(void **ppList);
 	virtual void vfunc22(BeamV *, BeamInfoV *);
 	// the slots CViewRenderBeams adds to its base's vtable: 23-23, vfuncK at slot K

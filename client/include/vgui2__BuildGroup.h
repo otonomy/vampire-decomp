@@ -8,6 +8,16 @@ namespace vgui2
 class Panel;
 class KeyValues;
 
+// a panel handle (vgui2's PHandle: the panel's id, -1 when none)
+class PHandle
+{
+public:
+	int m_iPanelID;
+	PHandle() : m_iPanelID(-1) {}
+	Panel *sub_101ac670();	// Get
+	void sub_101ac6b0(Panel *p);	// Set
+};
+
 class BuildGroup
 {
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
@@ -24,7 +34,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual int vfunc9();
     virtual int vfunc10();
     virtual void vfunc11(Panel *);
-    virtual void vfunc12();
+    virtual void vfunc12(int code, Panel *panel);
     virtual int vfunc13(int, int);
     virtual char * vfunc14();
     virtual void vfunc15();
@@ -44,9 +54,13 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_101c2860(char *, Panel *);
 	int m_unk4; int m_unk8; int m_unkc;
 	int m_n10; int m_n14; int m_n18; int m_unk1c; int m_n20;
-	int m_unk24; int m_unk28; int m_unk2c; int m_unk30; int m_unk34; int m_unk38; int m_unk3c;
+	union { int m_unk24; bool m_bDragging; }; int m_unk28; int m_unk2c; int m_unk30; int m_unk34; int m_unk38; union { int m_unk3c; Panel *m_pCurrentPanel; };
 	CUtlVector<Panel *> m_Panels;
-	int m_unk54; int m_unk58; int m_unk5c; int m_unk60;
-	CUtlVector<Panel *> m_Controls;
+	int m_unk54; union { int m_unk58; Panel *m_pBuildDialog; }; int m_unk5c; int m_unk60;
+	CUtlVector<PHandle> m_Controls;
+	CUtlVector<int> m_DeltaX;	// 0x78
+	CUtlVector<int> m_DeltaY;	// 0x8c
+	Panel *m_RulerNumber[4];	// 0xa0
+	bool m_bShowRulers;		// 0xb0
 };
 }

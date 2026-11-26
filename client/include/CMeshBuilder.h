@@ -37,4 +37,5 @@ public:
 	void sub_100319d0(float x, float y, float z);	// Position3f
 	void sub_10031a20(int stage, float s, float t);	// TexCoord2f
 	void sub_10042960(int r, int g, int b, int a);	// Color4ub
+	void sub_10115c00(float nx, float ny, float nz);	// Normal3f (out of line)
 };
