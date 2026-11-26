@@ -9279,6 +9279,7 @@
 0x101a7c00 func   ?sub_101a7c00@@YAPAUElemView@@PAU1@PBDHH@Z sub_101a7c00
 0x101a7e90 func   ?sub_101a7e90@@YGXHHPAH0HH@Z sub_101a7e90
 0x101a7f20 func   ?sub_101a7f20@CHudWeaponSelection@@QAEXPBDHHHH@Z CHudWeaponSelection::sub_101a7f20
+0x101a8b20 func   ?sub_101a8b20@@YAXXZ sub_101a8b20
 0x101a8b30 func   ?sub_101a8b30@@YAHXZ sub_101a8b30
 0x101a8bb0 func   ?sub_101a8bb0@@YAHXZ sub_101a8bb0
 0x101a8c60 func   ?sub_101a8c60@CUnknown101a8c60@@QAEPAXXZ CUnknown101a8c60::sub_101a8c60
