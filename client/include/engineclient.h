@@ -269,9 +269,9 @@ public:
 	virtual int vfunc7();	// slot 7
 	virtual int vfunc8();	// slot 8
 	virtual int vfunc9();	// slot 9
-	virtual int vfunc10();	// slot 10
+	virtual void vfunc10(int);	// slot 10: CViewRender::RenderView hands it the player's 1.5^n * 5 (or 0)
 	virtual int vfunc11();	// slot 11
-	virtual int vfunc12();	// slot 12
+	virtual void vfunc12(int);	// slot 12: CViewRender::RenderView hands it the player's +0x1738 (or 0)
 	virtual int vfunc13();	// slot 13
 	virtual void vfunc14(const Vector &, float);	// slot 14; seen as GetSetup 1; shapes differ
 	virtual int vfunc15();	// slot 15
@@ -307,6 +307,7 @@ public:
 	virtual void vfunc45(const void *);	// slot 45
 	virtual void vfunc46();
 	virtual void vfunc47(const char *, float, float, float);	// slot 47
+	virtual bool vfunc48(const Vector &);	// slot 48: IsSkyboxVisibleFromPoint (CViewRender::RenderView)
 };
 extern IVRenderView *g_104a57e4;
 
