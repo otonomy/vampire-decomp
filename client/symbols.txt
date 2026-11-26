@@ -685,6 +685,7 @@
 0x1000f5b0 func   ?_C_WeaponIWritten_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponIWritten_CreateObject
 0x1000f670 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponIWritten@@@Z ClientClassInit
 0x1000f700 func   ?vfunc17@C_WeaponIGeneric@@UAEHXZ C_WeaponIGeneric::vfunc17
+0x1000f740 func   ?sub_1000f740@@YAHXZ sub_1000f740
 0x1000f790 func   ??_GC_WeaponIGeneric@@UAEPAXI@Z ??_GC_WeaponIGeneric@@UAEPAXI@Z
 0x1000f7b0 func   ?vfunc16@C_WeaponIGeneric@@UAEHXZ C_WeaponIGeneric::vfunc16
 0x1000f7c0 func   ?vfunc15@C_WeaponIGeneric@@UAEHXZ C_WeaponIGeneric::vfunc15
