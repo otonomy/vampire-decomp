@@ -50393,6 +50393,18 @@ void UtlMem::sub_100be200(int num)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100be290 size=0x20
+namespace lifted {
+struct C100bf1a0 { int sub_100bf1a0(); };
+int sub_100e1890(int, int, int);
+}
+int sub_100be290(int a0, int a1, int a2)
+{
+    lifted::sub_100e1890(a0, a1, a2);
+    return ((lifted::C100bf1a0 *)a1)->sub_100bf1a0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100be2d0 size=0x6
 namespace lifted {
 extern char g_104a3d24;
