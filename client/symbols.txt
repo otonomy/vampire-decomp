@@ -445,6 +445,7 @@
 0x1000aab0 func   ?_C_WeaponMelee_SabbatLeaderAttack_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_WeaponMelee_SabbatLeaderAttack_CreateObject
 0x1000ab70 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponMelee_SabbatLeaderAttack@@@Z ClientClassInit
 0x1000ac00 func   ?vfunc17@C_WeaponMelee_ChangClaw@@UAEHXZ C_WeaponMelee_ChangClaw::vfunc17
+0x1000ac40 func   ?sub_1000ac40@@YAHXZ sub_1000ac40
 0x1000ac90 func   ??_GC_WeaponMelee_ChangClaw@@UAEPAXI@Z ??_GC_WeaponMelee_ChangClaw@@UAEPAXI@Z
 0x1000acb0 func   ?vfunc16@C_WeaponMelee_ChangClaw@@UAEHXZ C_WeaponMelee_ChangClaw::vfunc16
 0x1000acc0 func   ?vfunc15@C_WeaponMelee_ChangClaw@@UAEHXZ C_WeaponMelee_ChangClaw::vfunc15
