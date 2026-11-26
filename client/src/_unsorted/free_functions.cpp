@@ -13494,6 +13494,32 @@ template <> int ClientClassInit<DT_ItemGRingSerialKiller1::ignored>(DT_ItemGRing
 }
 // END FUNCTION
 
+// FUNCTION: 0x100202c0 size=0x45
+namespace lifted {
+extern char g_10216c94;
+extern char g_10216ca8;
+extern char g_10216ce4;
+extern char g_10216d1c;
+extern char g_10216d74;
+struct C1007a9f0 { int sub_1007a9f0(); };
+int sub_100a1eb0(int);
+}
+int sub_100202c0()
+{
+    int t0 = lifted::sub_100a1eb0(0x978);
+    if (t0 != 0) {
+        int t1 = ((lifted::C1007a9f0 *)t0)->sub_1007a9f0();
+        *(int *)((char *)t0) = (int)&lifted::g_10216d74;
+        *(int *)((char *)t0 + 4) = (int)&lifted::g_10216d1c;
+        *(int *)((char *)t0 + 8) = (int)&lifted::g_10216ce4;
+        *(int *)((char *)t0 + 0xc) = (int)&lifted::g_10216ca8;
+        *(int *)((char *)t0 + 0x10) = (int)&lifted::g_10216c94;
+        return t0;
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10020350 size=0x6
 namespace lifted {
 extern char g_102e6378;

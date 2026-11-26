@@ -1541,6 +1541,7 @@
 0x10020130 func   ?_C_ItemGRingSerialKiller1_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemGRingSerialKiller1_CreateObject
 0x100201f0 func   ?ClientClassInit@@YAHPAUignored@DT_ItemGRingSerialKiller1@@@Z ClientClassInit
 0x10020280 func   ?vfunc17@C_ItemGRingSerialKiller2@@UAEHXZ C_ItemGRingSerialKiller2::vfunc17
+0x100202c0 func   ?sub_100202c0@@YAHXZ sub_100202c0
 0x10020310 func   ??_GC_ItemGRingSerialKiller2@@UAEPAXI@Z ??_GC_ItemGRingSerialKiller2@@UAEPAXI@Z
 0x10020330 func   ?vfunc16@C_ItemGRingSerialKiller2@@UAEHXZ C_ItemGRingSerialKiller2::vfunc16
 0x10020340 func   ?vfunc15@C_ItemGRingSerialKiller2@@UAEHXZ C_ItemGRingSerialKiller2::vfunc15
