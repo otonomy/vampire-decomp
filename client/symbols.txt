@@ -8684,6 +8684,7 @@
 0x10190390 func   ?sub_10190390@CViewRender@@QAEXXZ CViewRender::sub_10190390
 0x101907a0 func   ?sub_101907a0@@YGMABVQAngle@@ABUVector@@MM@Z sub_101907a0
 0x10190850 func   ?sub_10190850@CViewRender@@QAEXXZ CViewRender::sub_10190850
+0x10190ba0 func   ?sub_10190ba0@CViewRender@@QAEPAXHHABVVector@@ABVQAngle@@0MH@Z CViewRender::sub_10190ba0
 0x10190f30 func   ?sub_10190f30@@YAXXZ sub_10190f30
 0x101911a0 func   ?vfunc3@CViewRender@@UAEXXZ CViewRender::vfunc3
 0x10191610 func   ?vfunc14@CViewRender@@UAEPAXXZ CViewRender::vfunc14

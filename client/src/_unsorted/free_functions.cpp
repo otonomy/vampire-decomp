@@ -119866,6 +119866,143 @@ void CViewRender::sub_10190850()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10190ba0 size=0x38b
+#include "CViewRender.h"
+#include "C_BasePlayer.h"
+#include "C_BaseCineCamera.h"
+#include "ConVar.h"
+#include "ScopeTrace.h"
+
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);	// AngleVectors
+void sub_10108fd0(const Vector &start, float scale, const Vector &direction, Vector &dest);	// VectorMA
+
+struct ViewModelSetup_10190ba0	// the view model record slot 6 returns
+{
+	bool m_bActive;	// 0x00
+	int m_nModel;	// 0x04
+	Vector m_vecOrigin;	// 0x08
+	Vector m_angAngles;	// 0x14
+	Vector m_angAngles2;	// 0x20
+};
+
+// CViewRender's members this function reads (the header keeps CViewRender without data: classes are built on it)
+struct CViewRenderData_10190ba0
+{
+	void *m_vtable;
+	Vector m_vecViewModelOffset;	// 0x04: right / forward / up offset of the view model (index != 0)
+	char m_pad0010[0x37c - 0x10];
+	ConVar *m_pCvar37c;	// 0x37c: the convar (set by vfunc0) whose 80 / 90 / 100 / 110 values raise the view model
+};
+
+#define VMV(n) virtual void v##n();
+#define VMV10(p) VMV(p##0) VMV(p##1) VMV(p##2) VMV(p##3) VMV(p##4) VMV(p##5) VMV(p##6) VMV(p##7) VMV(p##8) VMV(p##9)
+struct WeaponView_10190ba0
+{
+	VMV(0) VMV(1) VMV(2) VMV(3) VMV(4) VMV(5) VMV(6) VMV(7) VMV(8) VMV(9)
+	VMV10(1) VMV10(2) VMV10(3) VMV10(4) VMV10(5) VMV10(6) VMV10(7) VMV10(8) VMV10(9)
+	VMV10(10) VMV10(11) VMV10(12) VMV10(13) VMV10(14) VMV10(15) VMV10(16) VMV10(17) VMV10(18) VMV10(19)
+	VMV10(20) VMV10(21) VMV10(22) VMV10(23)
+	VMV(240) VMV(241) VMV(242) VMV(243) VMV(244) VMV(245) VMV(246)
+	virtual bool vfunc247();
+};
+struct PlayerView_10190ba0
+{
+	VMV(0) VMV(1) VMV(2) VMV(3) VMV(4) VMV(5) VMV(6) VMV(7) VMV(8) VMV(9)
+	VMV10(1) VMV10(2) VMV10(3) VMV10(4) VMV10(5) VMV10(6) VMV10(7) VMV10(8) VMV10(9)
+	VMV10(10) VMV10(11) VMV10(12) VMV10(13)
+	VMV(140) VMV(141) VMV(142) VMV(143) VMV(144) VMV(145) VMV(146) VMV(147)
+	virtual WeaponView_10190ba0 *vfunc148();
+};
+struct ClientModeView_10190ba0
+{
+	VMV(0) VMV(1) VMV(2) VMV(3) VMV(4) VMV(5) VMV(6)
+	virtual void vfunc7(Vector &origin, Vector &angles, float f);
+};
+extern ClientModeView_10190ba0 *g_102d5238;
+
+void *CViewRender::sub_10190ba0(int nIndex, int nModel, const Vector &eyeOrigin, const QAngle &eyeAngles, const Vector &offset, float flZ, int unused)
+{
+	ScopeTrace st("CViewRender::CalcViewModelView", g_102de300);
+
+	ViewModelSetup_10190ba0 *pVM = (ViewModelSetup_10190ba0 *)vfunc6(nIndex);
+	if (!pVM)
+		return 0;
+
+	pVM->m_bActive = true;
+	pVM->m_nModel = nModel;
+
+	Vector camAngles;
+	Vector camOrigin;
+	Vector forward, right, up;
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	bool bCine;
+	C_BaseCineCamera *pCam = (C_BaseCineCamera *)pPlayer->sub_100a7890();
+	if (pCam && pCam->sub_10001970() && pCam->sub_100019a0())
+	{
+		bCine = true;
+		pCam->sub_100019d0((QAngle *)&camAngles, &camOrigin);
+		VectorCopy(camAngles, pVM->m_angAngles);
+		VectorCopy(camAngles, pVM->m_angAngles2);
+		VectorCopy(camOrigin, pVM->m_vecOrigin);
+	}
+	else
+	{
+		bCine = false;
+		VectorCopy(*(const Vector *)&eyeAngles, pVM->m_angAngles);
+		VectorCopy(*(const Vector *)&eyeAngles, pVM->m_angAngles2);
+		VectorCopy(eyeOrigin, pVM->m_vecOrigin);
+		Vector &org = pVM->m_vecOrigin;
+		org += offset;
+		pVM->m_vecOrigin.z += flZ;
+	}
+
+	sub_101090a0(*(const QAngle *)&pVM->m_angAngles, &forward, &right, &up);
+
+	sub_1018fcb0(nIndex);
+
+	if (pPlayer)
+	{
+		WeaponView_10190ba0 *pWeapon = ((PlayerView_10190ba0 *)pPlayer)->vfunc148();
+		if (!bCine && pWeapon && pWeapon->vfunc247())
+			sub_1018fb70(nIndex);
+	}
+	if (!bCine)
+	{
+		sub_10108fd0(pVM->m_vecOrigin, -0.1f, right, pVM->m_vecOrigin);
+		g_102d5238->vfunc7(pVM->m_vecOrigin, pVM->m_angAngles, 0.25f);
+	}
+
+	CViewRenderData_10190ba0 *pData = (CViewRenderData_10190ba0 *)this;
+	ConVar *pVar = pData->m_pCvar37c;
+	if (pVar)
+	{
+		switch (pVar->GetInt())
+		{
+		case 90:
+		case 110:
+			pVM->m_vecOrigin.z += 1.0f;
+			break;
+		case 100:
+			pVM->m_vecOrigin.z += 2.0f;
+			break;
+		case 80:
+			pVM->m_vecOrigin.z += 0.5;
+			break;
+		}
+	}
+
+	if (nIndex)
+	{
+		float flRight = pData->m_vecViewModelOffset.x;
+		float flForward = pData->m_vecViewModelOffset.y;
+		float flUp = pData->m_vecViewModelOffset.z;
+		pVM->m_vecOrigin += right * flRight + forward * flForward + up * flUp;
+	}
+
+	return pVM;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10190f30 size=0x21a
 #include "C_BasePlayer.h"
 #include "engineclient.h"
