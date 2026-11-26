@@ -1741,6 +1741,7 @@
 0x10023fb0 func   ?_C_ItemKCarsonApartmentKey_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_ItemKCarsonApartmentKey_CreateObject
 0x10024070 func   ?ClientClassInit@@YAHPAUignored@DT_ItemKCarsonApartmentKey@@@Z ClientClassInit
 0x10024100 func   ?vfunc17@C_ItemKTatooParlorKey@@UAEHXZ C_ItemKTatooParlorKey::vfunc17
+0x10024140 func   ?sub_10024140@@YAHXZ sub_10024140
 0x10024190 func   ??_GC_ItemKTatooParlorKey@@UAEPAXI@Z ??_GC_ItemKTatooParlorKey@@UAEPAXI@Z
 0x100241b0 func   ?vfunc16@C_ItemKTatooParlorKey@@UAEHXZ C_ItemKTatooParlorKey::vfunc16
 0x100241c0 func   ?vfunc15@C_ItemKTatooParlorKey@@UAEHXZ C_ItemKTatooParlorKey::vfunc15
