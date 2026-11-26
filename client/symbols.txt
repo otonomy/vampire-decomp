@@ -4630,6 +4630,7 @@
 0x100c92f0 func   ?sub_100c92f0@CUnknown100c92f0@@QAEHXZ CUnknown100c92f0::sub_100c92f0
 0x100c9300 func   ?sub_100c9300@CUnknown100c9300@@QAEHXZ CUnknown100c9300::sub_100c9300
 0x100c9310 func   ?sub_100c9310@CUnknown100c9310@@QAEHXZ CUnknown100c9310::sub_100c9310
+0x100c9320 func   ?IsVisibleToTeam@C_VGuiScreen@@QAE_NH@Z C_VGuiScreen::IsVisibleToTeam
 0x100c9320 func   ?sub_100c9320@@YGDH@Z sub_100c9320
 0x100c9330 func   ?sub_100c9330@CUnknown100c9330@@QAEHXZ CUnknown100c9330::sub_100c9330
 0x100c9340 func   ?sub_100c9340@CUnknown100c9340@@QAEHXZ CUnknown100c9340::sub_100c9340
