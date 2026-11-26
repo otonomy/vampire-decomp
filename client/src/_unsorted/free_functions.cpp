@@ -60481,6 +60481,83 @@ void sub_100ea250()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ea260 size=0x325
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "CGlobalVarsBase.h"
+#include "ConVar.h"
+
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);	// AngleVectors
+void sub_10108fd0(const Vector &start, float scale, const Vector &direction, Vector &dest);	// VectorMA
+
+extern ConVar *g_104df8ac;	// the noclip max speed convar
+extern ConVar *g_104dfdbc;	// the noclip acceleration convar
+extern ConVar *g_104df9cc;	// the friction convar
+
+#define CVAR_FLOAT(cv) ((cv)->vfunc1() ? 0.0f : (cv)->m_fValue)
+#define mv ((CMovePlayerView *)m_pPlayer)
+
+// "CGameMovement::FullNoClipMove"
+void CGameMovement::sub_100ea260()
+{
+	Vector wishvel;
+	Vector forward, right, up;
+	Vector wishdir;
+	float wishspeed;
+
+	sub_101090a0(mv->m_vecViewAngles0c, &forward, &right, &up);
+
+	float fmove = mv->m_flForwardMove;
+	float smove = mv->m_flSideMove;
+
+	VectorNormalize(forward);
+	VectorNormalize(right);
+
+	for (int i = 0; i < 3; i++)
+		wishvel[i] = forward[i] * fmove + right[i] * smove;
+	wishvel[2] += mv->m_flUpMove;
+
+	VectorCopy(wishvel, wishdir);
+	wishspeed = VectorNormalize(wishdir);
+
+	if (wishspeed > CVAR_FLOAT(g_104df8ac))
+	{
+		VectorScale(wishvel, CVAR_FLOAT(g_104df8ac) / wishspeed, wishvel);
+		wishspeed = CVAR_FLOAT(g_104df8ac);
+	}
+
+	if (CVAR_FLOAT(g_104dfdbc) > 0.0)
+	{
+		vfunc10(wishdir, wishspeed, CVAR_FLOAT(g_104dfdbc));
+
+		float spd = VectorLength(mv->m_vecVelocity);
+		if (spd < 1.0f)
+		{
+			mv->m_vecVelocity.Init();
+			return;
+		}
+
+		float friction = CVAR_FLOAT(g_104df9cc) * m_fieldA0;
+		float control = (spd < CVAR_FLOAT(g_104df8ac) / 4.0) ? CVAR_FLOAT(g_104df8ac) / 4.0 : spd;
+		float drop = control * gpGlobals->frametime * friction;
+		float newspeed = spd - drop;
+		if (newspeed < 0.0f)
+			newspeed = 0.0f;
+		newspeed /= spd;
+		VectorScale(mv->m_vecVelocity, newspeed, mv->m_vecVelocity);
+	}
+	else
+	{
+		VectorCopy(wishvel, mv->m_vecVelocity);
+	}
+
+	sub_10108fd0(mv->m_vecOrigin, gpGlobals->frametime, mv->m_vecVelocity, mv->m_vecOrigin);
+
+	if (CVAR_FLOAT(g_104dfdbc) < 0.0)
+		mv->m_vecVelocity.Init();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ea590 size=0xd8
 #include "engineclient.h"
 #include "CGameMovement.h"

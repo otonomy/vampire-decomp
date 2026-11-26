@@ -5345,6 +5345,7 @@
 0x100e9e40 func   ?sub_100e9e40@CUnknown100e9e40@@QAEPAXH@Z CUnknown100e9e40::sub_100e9e40
 0x100e9e70 func   ?sub_100e9e70@CGameMovement@@QAEHXZ CGameMovement::sub_100e9e70
 0x100ea250 func   ?sub_100ea250@@YAXXZ sub_100ea250
+0x100ea260 func   ?sub_100ea260@CGameMovement@@QAEXXZ CGameMovement::sub_100ea260
 0x100ea590 func   ?sub_100ea590@CGameMovement@@QAEXXZ CGameMovement::sub_100ea590
 0x100eaa70 func   ?vfunc18@CGameMovement@@UAEXXZ CGameMovement::vfunc18
 0x100eb150 func   ?sub_100eb150@CUnknown100353c0@@QAEPAV1@PBV1@@Z CUnknown100353c0::sub_100eb150
