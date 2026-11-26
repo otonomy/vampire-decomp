@@ -11,4 +11,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual int vfunc15();
     virtual int vfunc16();
     char m_pad0014[0x420 - 0x14];
+    bool sub_10006120();	// IsActive
+    float sub_10006100();	// GetFOV
 };

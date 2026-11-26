@@ -361,7 +361,7 @@ public:
 	virtual void vfunc24();
 	virtual void *FindMaterial(const char *, bool *, bool);	// slot 25; shapes differ
 	virtual void vfunc26();
-	virtual void vfunc27();
+	virtual void *vfunc27(const char *pName, bool *pFound, bool bComplain);	// slot 27: a texture by name ("engine/camerarendertarget")
 	virtual void *FindTexture(const char *, const char *, int);	// slot 28
 	virtual void vfunc29();
 	virtual void vfunc30();
@@ -369,7 +369,7 @@ public:
 	virtual void vfunc32();
 	virtual void vfunc33(int);	// slot 33: takes back what slot 34 gave (CViewRender::ViewDrawScene)
 	virtual int vfunc34();	// slot 34
-	virtual void vfunc35();
+	virtual void vfunc35(int *pWidth, int *pHeight);	// slot 35: the render target's size (CViewRender::DrawHighEndMonitors)
 	virtual void vfunc36(int *, int *);	// slot 36
 	virtual void vfunc37();
 	virtual void vfunc38();
@@ -423,8 +423,8 @@ public:
 	virtual void vfunc86(float, float, float, float);	// slot 86: Rotate(angle, x, y, z)
 	virtual void vfunc87();
 	virtual void vfunc88();
-	virtual void vfunc89();
-	virtual void vfunc90();
+	virtual void vfunc89(int x, int y, int w, int h);	// slot 89: Viewport
+	virtual void vfunc90(int *x, int *y, int *w, int *h);	// slot 90: GetViewport
 	virtual void vfunc91();
 	virtual void vfunc92();
 	virtual void vfunc93();

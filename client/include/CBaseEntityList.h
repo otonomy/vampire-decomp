@@ -42,7 +42,10 @@ struct CBaseEntityListEntry	// a slot of the entity table (CEntInfo)
 {
 	void *m_pEntity;	// 0x00
 	int m_SerialNumber;	// 0x04
-	int m_pad;	// 0x08
+	union {
+		int m_pad;	// 0x08
+		unsigned short m_ListIndex;	// 0x08: the entity's node in the live list (NextHandle)
+	};
 
 	CBaseEntityListEntry()
 	{

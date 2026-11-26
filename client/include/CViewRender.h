@@ -83,6 +83,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     void sub_1019aed0(bool, int);	// provisional, like sub_1019af80 (transplant)
     void sub_1019b370(bool drawSkybox, const struct CViewSetup &view, bool bSetupViewModel, bool bDrawViewModel);	// "CViewRender::ViewDrawScene" (keeps materials slot 34's answer at +0x454 and gives it back through slot 33)
     void sub_1019b030(float flFeed, const struct CViewSetup &view);
+    void sub_101919e0(struct CViewSetup cameraView);	// "CViewRender::DrawHighEndMonitors": every active C_PointCamera drawn into engine/camerarendertarget
     void sub_1019d590();
     void sub_10199910(void *pInfo, void *pRenderList, bool, bool);
     void sub_10199cc0(void *pInfo, void *pRenderList, bool, bool, bool);
