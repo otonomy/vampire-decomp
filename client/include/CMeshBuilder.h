@@ -40,4 +40,5 @@ public:
 	void sub_10115c00(float nx, float ny, float nz);	// Normal3f (out of line)
 	void sub_100319f0(const float *n);	// Normal3fv (out of line)
 	void sub_10041e00(const float *v);	// Position3fv (out of line)
+	void sub_10084560();	// the constructor's body, out of line
 };
