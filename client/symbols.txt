@@ -4399,6 +4399,7 @@
 0x100ae000 func   ??_GC_DynamicLight@@UAEPAXI@Z ??_GC_DynamicLight@@UAEPAXI@Z
 0x100ae020 func   ?sub_100ae020@DLNet@@QAEXH@Z DLNet::sub_100ae020
 0x100ae060 func   ?sub_100ae060@@YADXZ sub_100ae060
+0x100ae070 func   ?ClientThink@C_DynamicLight@@UAEXXZ C_DynamicLight::ClientThink
 0x100ae510 func   ?vfunc77@C_DynamicLight@@UAEXXZ C_DynamicLight::vfunc77
 0x100ae5b0 func   ?vfunc16@C_EnvParticle@@UAEHXZ C_EnvParticle::vfunc16
 0x100ae5c0 func   ?vfunc15@C_EnvParticle@@UAEHXZ C_EnvParticle::vfunc15
