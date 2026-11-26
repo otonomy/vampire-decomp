@@ -128,7 +128,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual bool vfunc234(C_BaseAnimating *pViewModel, const Vector &origin, const QAngle &angles, int event, const char *options);
 	virtual int vfunc235(int);
 	virtual void vfunc236(int);
-	virtual void vfunc237();
+	virtual void vfunc237(int);	// draws the crosshair
 	virtual void vfunc238(int);
 	virtual void vfunc239();
 	virtual bool vfunc240();
