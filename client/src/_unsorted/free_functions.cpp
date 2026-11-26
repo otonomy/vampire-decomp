@@ -47521,6 +47521,130 @@ bool C_BreakableSurface::sub_100b80f0(int x, int y)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b8130 size=0x2bf
+#include "C_BreakableSurface.h"
+
+bool C_BreakableSurface::sub_100b80f0(int nWidth, int nHeight)
+{
+	if (nWidth >= m_nWidth || nHeight >= m_nHeight || nWidth < 0 || nHeight < 0)
+		return true;
+	return (m_nPanelFlags[nWidth * 16 + nHeight] & 1) != 0;
+}
+
+// TARGET: ?sub_100b8130@C_BreakableSurface@@QAEXHH@Z
+void C_BreakableSurface::sub_100b8130(int nWidth, int nHeight)
+{
+	if (nWidth >= m_nWidth || nHeight >= m_nHeight || nWidth < 0 || nHeight < 0)
+		return;
+
+	int *pBits = &m_nPanelFlags[nWidth * 16 + nHeight];
+	if (*(unsigned char *)pBits & 1)
+		return;
+	*pBits &= ~2;
+
+	bool bUp = sub_100b80f0(nWidth, nHeight + 1);
+	bool bDown = sub_100b80f0(nWidth, nHeight - 1);
+	bool bLeft = sub_100b80f0(nWidth - 1, nHeight);
+	bool bRight = sub_100b80f0(nWidth + 1, nHeight);
+	bool bUpLeft = sub_100b80f0(nWidth - 1, nHeight + 1);
+	bool bUpRight = sub_100b80f0(nWidth + 1, nHeight + 1);
+	bool bDownLeft = sub_100b80f0(nWidth - 1, nHeight - 1);
+	bool bDownRight = sub_100b80f0(nWidth + 1, nHeight - 1);
+
+	// Top
+	if (bUp)
+	{
+		bool bLeftEdge = !bLeft && bUpLeft;
+		bool bRightEdge = !bRight && bUpRight;
+		if (bLeftEdge)
+		{
+			if (bRightEdge)
+				sub_100b84c0(nWidth, nHeight, 2, 1);
+			else
+				sub_100b84c0(nWidth, nHeight, 2, 2);
+		}
+		else
+		{
+			if (bRightEdge)
+				sub_100b84c0(nWidth, nHeight, 2, 3);
+			else
+				sub_100b84c0(nWidth, nHeight, 2, 0);
+		}
+	}
+	else
+		sub_100b84c0(nWidth, nHeight, 2, -1);
+
+	// Bottom
+	if (bDown)
+	{
+		bool bLeftEdge = !bLeft && bDownLeft;
+		bool bRightEdge = !bRight && bDownRight;
+		if (bLeftEdge)
+		{
+			if (bRightEdge)
+				sub_100b84c0(nWidth, nHeight, 0, 1);
+			else
+				sub_100b84c0(nWidth, nHeight, 0, 3);
+		}
+		else
+		{
+			if (bRightEdge)
+				sub_100b84c0(nWidth, nHeight, 0, 2);
+			else
+				sub_100b84c0(nWidth, nHeight, 0, 0);
+		}
+	}
+	else
+		sub_100b84c0(nWidth, nHeight, 0, -1);
+
+	// Left
+	if (bLeft)
+	{
+		bool bTopEdge = !bUp && bUpLeft;
+		bool bBottomEdge = !bDown && bDownLeft;
+		if (bTopEdge)
+		{
+			if (bBottomEdge)
+				sub_100b84c0(nWidth, nHeight, 3, 1);
+			else
+				sub_100b84c0(nWidth, nHeight, 3, 3);
+		}
+		else
+		{
+			if (bBottomEdge)
+				sub_100b84c0(nWidth, nHeight, 3, 2);
+			else
+				sub_100b84c0(nWidth, nHeight, 3, 0);
+		}
+	}
+	else
+		sub_100b84c0(nWidth, nHeight, 3, -1);
+
+	// Right
+	if (bRight)
+	{
+		bool bTopEdge = !bUp && bUpRight;
+		bool bBottomEdge = !bDown && bDownRight;
+		if (bTopEdge)
+		{
+			if (bBottomEdge)
+				sub_100b84c0(nWidth, nHeight, 1, 1);
+			else
+				sub_100b84c0(nWidth, nHeight, 1, 2);
+		}
+		else
+		{
+			if (bBottomEdge)
+				sub_100b84c0(nWidth, nHeight, 1, 3);
+			else
+				sub_100b84c0(nWidth, nHeight, 1, 0);
+		}
+	}
+	else
+		sub_100b84c0(nWidth, nHeight, 1, -1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b83f0 size=0x6b
 #include "C_BreakableSurface.h"
 

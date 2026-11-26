@@ -4263,6 +4263,7 @@
 0x100b7b40 func   ?sub_100b7b40@C_BreakableSurface@@QAEHHH@Z C_BreakableSurface::sub_100b7b40
 0x100b7bb0 func   ?sub_100b7bb0@CUnknown100b7bb0@@QAEDHH@Z CUnknown100b7bb0::sub_100b7bb0
 0x100b80f0 func   ?sub_100b80f0@C_BreakableSurface@@QAE_NHH@Z C_BreakableSurface::sub_100b80f0
+0x100b8130 func   ?sub_100b8130@C_BreakableSurface@@QAEXHH@Z C_BreakableSurface::sub_100b8130
 0x100b83f0 func   ?sub_100b83f0@C_BreakableSurface@@QAEHHHH@Z C_BreakableSurface::sub_100b83f0
 0x100b8460 func   ?sub_100b8460@C_BreakableSurface@@QAEHHH@Z C_BreakableSurface::sub_100b8460
 0x100b9b80 func   ?sub_100b9b80@Vector@@QBE?AV1@ABV1@@Z Vector::sub_100b9b80
