@@ -16858,6 +16858,7 @@
 0x102b8bb8 data   ??_R0?AVCClientThinkList@@@8 ??_R0?AVCClientThinkList@@@8
 0x102b8d20 data   ??_R0?AVCClientEffectPrecacheSystem@@@8 ??_R0?AVCClientEffectPrecacheSystem@@@8
 0x102b8e98 data   ?g_pEntityList@@3PAVCBaseEntityList@@A g_pEntityList
+0x102b8e9c data   ?cl_entitylist@@3PAVCClientEntityList@@A cl_entitylist
 0x102b8eb8 data   ??_R0?AVIClientEntityList@@@8 ??_R0?AVIClientEntityList@@@8
 0x102b8ed8 data   ??_R0?AVCBaseEntityList@@@8 ??_R0?AVCBaseEntityList@@@8
 0x102b8ef8 data   ??_R0?AVCClientEntityList@@@8 ??_R0?AVCClientEntityList@@@8
