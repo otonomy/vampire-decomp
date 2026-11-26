@@ -5711,6 +5711,7 @@
 0x101069c0 func   ?vfunc24@CInput@@UAE_NXZ CInput::vfunc24
 0x101069d0 func   ?GetFullscreenMousePos@CInput@@UAEXPAH000@Z CInput::GetFullscreenMousePos
 0x101069d0 func   ?vfunc22@CInput@@UAEXPAH000@Z CInput::vfunc22
+0x10106ac0 func   ?SetFullscreenMousePos@CInput@@UAEXHH@Z CInput::SetFullscreenMousePos
 0x10106ac0 func   ?vfunc23@CInput@@UAEXHH@Z CInput::vfunc23
 0x10106b20 func   ?ClearStates@CInput@@UAEXXZ CInput::ClearStates
 0x10106b20 func   ?vfunc19@CInput@@UAEXXZ CInput::vfunc19
