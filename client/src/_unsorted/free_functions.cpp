@@ -75980,6 +75980,169 @@ int sub_100fbde0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fc170 size=0x784
+#include "CInput.h"
+#include "CHud.h"
+#include "ConVar.h"
+#include "engineclient.h"
+
+struct kbutton_t;
+
+extern ConVar g_104d2690;	// cam_idealpitch
+extern ConVar g_104d1d08;	// cam_idealyaw
+extern ConVar g_104d2058;	// cam_idealdist
+extern ConVar g_104d21c0;	// c_maxyaw
+extern ConVar g_104d16d8;	// c_minyaw
+extern ConVar g_104d2398;	// c_maxpitch
+extern ConVar g_104d1fc8;	// c_minpitch
+extern ConVar g_104d1dc0;	// c_maxdistance
+extern ConVar g_104d27c8;	// c_mindistance
+extern kbutton_t g_104d24e4;	// cam_pitchup
+extern kbutton_t g_104d2744;	// cam_pitchdown
+extern kbutton_t g_104d1cfc;	// cam_yawleft
+extern kbutton_t g_104d2534;	// cam_yawright
+extern kbutton_t g_104d2794;	// cam_in
+extern kbutton_t g_104d2494;	// cam_out
+
+void CInput::sub_100fc170()
+{
+	QAngle camAngles;
+	float flSensitivity;
+	float one = 1.0f;
+
+	float camPitch = g_104d2690.GetFloat();
+	camAngles[0] = camPitch;
+	float camYaw = g_104d1d08.GetFloat();
+	camAngles[1] = camYaw;
+	float dist = g_104d2058.GetFloat();
+
+	if (m_unkf4)
+	{
+		int cpx, cpy;
+		sub_10106860(&cpx, &cpy);
+		m_nCameraX = cpx;
+		m_nCameraY = cpy;
+
+		if (!m_fCameraDistanceMove)
+		{
+			if (m_nCameraX < engine->vfunc46())
+			{
+				if (camAngles[1] < g_104d21c0.GetFloat())
+				{
+					camAngles[1] += 0.5 * ((engine->vfunc46() - m_nCameraX) / 2);
+				}
+				if (camAngles[1] > g_104d21c0.GetFloat())
+				{
+					camAngles[1] = g_104d21c0.GetFloat();
+				}
+			}
+			else if (m_nCameraX > engine->vfunc46())
+			{
+				if (camAngles[1] > g_104d16d8.GetFloat())
+				{
+					camAngles[1] -= 0.5 * ((m_nCameraX - engine->vfunc46()) / 2);
+				}
+				if (camAngles[1] < g_104d16d8.GetFloat())
+				{
+					camAngles[1] = g_104d16d8.GetFloat();
+				}
+			}
+
+			if (m_nCameraY > engine->vfunc47())
+			{
+				if (camAngles[0] < g_104d2398.GetFloat())
+				{
+					camAngles[0] += 0.5 * ((m_nCameraY - engine->vfunc47()) / 2);
+				}
+				if (camAngles[0] > g_104d2398.GetFloat())
+				{
+					camAngles[0] = g_104d2398.GetFloat() * one;
+				}
+			}
+			else if (m_nCameraY < engine->vfunc47())
+			{
+				if (camAngles[0] > g_104d1fc8.GetFloat())
+				{
+					camAngles[0] -= 0.5 * ((engine->vfunc47() - m_nCameraY) / 2);
+				}
+				if (camAngles[0] < g_104d1fc8.GetFloat())
+				{
+					camAngles[0] = g_104d1fc8.GetFloat() * one;
+				}
+			}
+
+			if ((flSensitivity = gHUD.sub_100f10c0()) != 0)
+			{
+				m_nCameraOldX = m_nCameraX * flSensitivity;
+				m_nCameraOldY = m_nCameraY * flSensitivity;
+			}
+			else
+			{
+				m_nCameraOldX = m_nCameraX;
+				m_nCameraOldY = m_nCameraY;
+			}
+			vfunc25();
+		}
+	}
+
+	if (input->KeyState(&g_104d24e4))
+		camAngles[0] += 2.5;
+	else if (input->KeyState(&g_104d2744))
+		camAngles[0] -= 2.5;
+
+	if (input->KeyState(&g_104d1cfc))
+		camAngles[1] -= 2.5;
+	else if (input->KeyState(&g_104d2534))
+		camAngles[1] += 2.5;
+
+	if (input->KeyState(&g_104d2794))
+	{
+		dist -= 1.0;
+		if (dist < 30.0)
+		{
+			camAngles[0] = 0;
+			camAngles[1] = 0;
+			dist = 30.0f;
+		}
+	}
+	else if (input->KeyState(&g_104d2494))
+		dist += 1.0;
+
+	if (m_fCameraDistanceMove)
+	{
+		if (m_nCameraY > engine->vfunc47())
+		{
+			if (dist < g_104d1dc0.GetFloat())
+			{
+				dist += 1.0 * ((m_nCameraY - engine->vfunc47()) / 2);
+			}
+			if (dist > g_104d1dc0.GetFloat())
+			{
+				dist = g_104d1dc0.GetFloat();
+			}
+		}
+		else if (m_nCameraY < engine->vfunc47())
+		{
+			if (dist > g_104d27c8.GetFloat())
+			{
+				dist -= 1.0 * ((engine->vfunc47() - m_nCameraY) / 2);
+			}
+			if (dist < g_104d27c8.GetFloat())
+			{
+				dist = g_104d27c8.GetFloat();
+			}
+		}
+		m_nCameraOldX = m_nCameraX * gHUD.sub_100f10c0();
+		m_nCameraOldY = m_nCameraY * gHUD.sub_100f10c0();
+		vfunc25();
+	}
+
+	g_104d2690.vfunc5(camAngles[0]);
+	g_104d1d08.vfunc5(camAngles[1]);
+	g_104d2058.vfunc5(dist);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fc900 size=0x394
 #include "CInput.h"
 #include "C_BasePlayer.h"
