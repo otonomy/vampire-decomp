@@ -50,6 +50,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	bool sub_10195d00(Beam_t *pBeam);
 	virtual void vfunc21();
 	void sub_10193790(BeamV *, BeamInfoV *);
+	void sub_10195520(Beam_t *pbeam, int frame, int rendermode, float *color, const char *spritemodel, int unused);	// DrawLaser
 	void sub_101934d0(void *pBeam);
 	void sub_101947b0(void **ppList);
 	virtual void vfunc22(BeamV *, BeamInfoV *);
