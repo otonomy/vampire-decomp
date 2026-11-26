@@ -133156,6 +133156,89 @@ void sub_10194d30(float *table, int n)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10195070 size=0x4aa
+#include "CViewRenderBeams.h"
+#include <math.h>
+
+extern Vector g_104d4970;
+const Vector &sub_10198d30();
+void sub_10082fd0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode,
+	const Vector &source, const Vector &delta, float startWidth, float endWidth, float scale, float freq,
+	float speed, int segments, int flags, float *color, float fadeLength, const Vector *pOrigin);
+void sub_100845a0(const char *sprite, float frame, int rendermode, const Vector &source, float scale, float *color);
+
+void CViewRenderBeams::sub_10195070(Beam_t *pbeam, int frame, int rendermode, float *color, const char *sprite, const char *halosprite)
+{
+	Vector color2;
+	VectorCopy(*(Vector *)color, color2);
+
+	Vector beamDir = pbeam->attachment[1] - pbeam->attachment[0];
+	VectorNormalize(beamDir);
+
+	Vector localDir = sub_10198d30() - pbeam->attachment[0];
+	VectorNormalize(localDir);
+
+	float flDot = DotProduct(beamDir, localDir);
+
+	if (flDot < 0.0f)
+	{
+		flDot = 0;
+	}
+	else
+	{
+		flDot = pow(flDot, 20);
+		if (flDot >= 1.0f)
+		{
+			flDot = 1.0f;
+			color[0] = color[1] = color[2] = 0;
+		}
+		else
+		{
+			float scale = 1.0f - flDot;
+			color[0] *= scale;
+			color[1] *= scale;
+			color[2] *= scale;
+		}
+	}
+
+	sub_10082fd0(128, pbeam->rgNoise, sprite, frame, rendermode, pbeam->attachment[0], pbeam->delta,
+		pbeam->width, pbeam->endWidth, pbeam->amplitude, pbeam->freq, pbeam->speed, pbeam->segments,
+		pbeam->flags, color, pbeam->fadeLength * 0.9, &g_104d4970);
+
+	if (flDot != 0.0f)
+	{
+		float width = (1.0f - flDot) * pbeam->fadeLength * 0.5;
+		if (width < 0.0f)
+			width = 0;
+
+		color2 *= flDot;
+
+		sub_10082fd0(128, pbeam->rgNoise, sprite, frame, rendermode, pbeam->attachment[0], pbeam->delta,
+			pbeam->width, pbeam->endWidth, pbeam->amplitude, pbeam->freq, pbeam->speed, pbeam->segments,
+			pbeam->flags, color2.Base(), width, &g_104d4970);
+
+		float haloScale = flDot * pbeam->haloScale;
+
+		Vector colorFade(flDot * flDot, flDot * flDot, flDot * flDot);
+		if (colorFade.x > 1.0f)
+			colorFade.x = 1.0f;
+		if (colorFade.y > 1.0f)
+			colorFade.y = 1.0f;
+		if (colorFade.z > 1.0f)
+			colorFade.z = 1.0f;
+
+		Vector pos1 = pbeam->attachment[0] + beamDir * 10.0f;
+		sub_100845a0(halosprite, frame, rendermode, pos1, haloScale, colorFade.Base());
+
+		Vector pos2 = pbeam->attachment[0] + beamDir * 100.0f;
+		sub_100845a0(halosprite, frame, rendermode, pos2, 40.0f, colorFade.Base());
+
+		Vector pos3 = pbeam->attachment[0] + beamDir * 200.0f;
+		sub_100845a0(halosprite, frame, rendermode, pos3, 70.0f, colorFade.Base());
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10195520 size=0x248
 #include <math.h>
 #include "CViewRenderBeams.h"
