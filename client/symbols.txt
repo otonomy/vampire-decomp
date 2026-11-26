@@ -4791,6 +4791,7 @@
 0x100bf6b0 func   ?sub_100bf6b0@CUnknown100bf6b0@@QAEHHH@Z CUnknown100bf6b0::sub_100bf6b0
 0x100bf700 func   ?sub_100bf700@CUnknown100bf700@@QAEHXZ CUnknown100bf700::sub_100bf700
 0x100bf710 func   ?sub_100bf710@@YIDPAUTrailView@@@Z sub_100bf710
+0x100bf790 func   ?sub_100bf790@C_RopeKeyframe@@QAE_NAA_N@Z C_RopeKeyframe::sub_100bf790
 0x100bf9f0 func   ?sub_100bf9f0@@YA_NABVVector@@0M@Z sub_100bf9f0
 0x100c0350 func   ?sub_100c0350@@YGHHH@Z sub_100c0350
 0x100c0630 func   ?sub_100c0630@C_RopeKeyframe@@QAE_NPAUAttV@@HAAVVector@@AAVQAngle@@@Z C_RopeKeyframe::sub_100c0630

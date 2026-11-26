@@ -60026,6 +60026,63 @@ char __fastcall sub_100bf710(TrailView *self)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100bf790 size=0x25b
+#include "C_RopeKeyframe.h"
+
+struct TrailView;
+char __fastcall sub_100bf710(TrailView *p);
+bool sub_100bf9f0(const Vector &a, const Vector &b, float tol);
+int sub_1018f340();
+float sub_1010bd20(const Vector &p, const Vector &a, const Vector &b, float *t);
+extern float g_102b5c90;
+
+struct CV_104a3a5c
+{
+	virtual void v0();
+	virtual bool v1();
+	char m_pad04[0x2c - 4];
+	int m_n2c;
+};
+extern CV_104a3a5c *g_104a3a5c;
+
+#define ROPE_MIN(a, b) ((a) < (b) ? (a) : (b))
+
+static inline bool EndPointResting(C_RopeKeyframe *pRope, int iPt)
+{
+	if (!(pRope->m_fLockedPoints & (1 << iPt)))
+		return true;
+	bool bWasValid = pRope->m_bPrevEndPointPos[iPt];
+	Vector vLast = pRope->m_vPrevEndPointPos[iPt];
+	pRope->m_bPrevEndPointPos[iPt] = pRope->sub_100c0700(iPt, pRope->m_vPrevEndPointPos[iPt]);
+	if (!bWasValid && !pRope->m_bPrevEndPointPos[iPt])
+		return false;
+	return sub_100bf9f0(vLast, pRope->m_vPrevEndPointPos[iPt], 0.1f);
+}
+
+bool C_RopeKeyframe::sub_100bf790(bool &bApplyWind)
+{
+	bApplyWind = false;
+	if (m_fPrevLockedPoints != m_fLockedPoints) {
+		m_iForcePointMoveCounter = 10;
+		m_fPrevLockedPoints = m_fLockedPoints;
+		return false;
+	}
+	if (m_b410)
+		return false;
+	if (!EndPointResting(this, 0) || !EndPointResting(this, 1))
+		return false;
+	Vector &vFirst = m_RopePhysics.GetFirstNode()->m_vPos;
+	Vector &vLast = m_RopePhysics.GetLastNode()->m_vPos;
+	float flDistToLine = sub_1010bd20(*(const Vector *)sub_1018f340(), vFirst, vLast, 0);
+	float d0 = (*(const Vector *)sub_1018f340()).DistTo(vFirst);
+	float d1 = (*(const Vector *)sub_1018f340()).DistTo(vLast);
+	float flMinDist = ROPE_MIN(flDistToLine, ROPE_MIN(d0, d1));
+	if (!(m_RopeFlags & 0x20) && m_nLinksTouchingSomething < (m_RopePhysics.NumNodes() >> 1))
+		bApplyWind = flMinDist < g_102b5c90;
+	return !sub_100bf710((TrailView *)this) && !bApplyWind && (g_104a3a5c->v1() || !g_104a3a5c->m_n2c);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100bf9f0 size=0x8c
 #include "Vector.h"
 inline unsigned long &FloatBits(float &f) { return *reinterpret_cast<unsigned long *>(&f); }
