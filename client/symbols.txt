@@ -8408,6 +8408,7 @@
 0x10167430 func   ??_GCLoadingDiscPanel@@UAEPAXI@Z ??_GCLoadingDiscPanel@@UAEPAXI@Z
 0x10167450 func   ??1CLoadingDiscPanel@@UAE@XZ CLoadingDiscPanel::~CLoadingDiscPanel
 0x10167450 func   ?sub_10167450@CUnknown10167450@@QAEHXZ CUnknown10167450::sub_10167450
+0x10167460 func   ?vfunc98@CLoadingDiscPanel@@UAEXXZ CLoadingDiscPanel::vfunc98
 0x10167960 func   ?vfunc0@CLoadingDisc@@UAEHH@Z CLoadingDisc::vfunc0
 0x10167990 func   ?vfunc1@CLoadingDisc@@UAEXXZ CLoadingDisc::vfunc1
 0x10167af0 func   ?sub_10167af0@@YAXXZ sub_10167af0
