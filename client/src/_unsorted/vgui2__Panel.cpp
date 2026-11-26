@@ -1291,6 +1291,65 @@ int vgui2::Panel::vfunc74(int a)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101ab4e0 size=0x267
+#include "vgui2__Panel.h"
+struct KVView { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void *FindKey(const char *, int); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual int GetInt(const char *, int); virtual void v10(); virtual const char *GetString(const char *, const char *); };
+void *sub_101ac8d0();
+struct VA { void sub_101ab470(int); };
+struct VB { void sub_101ab450(int); };
+struct VC { void sub_101ac6f0(const char *); };
+struct SurfaceView { virtual void a0();virtual void a1();virtual void a2();virtual void a3();virtual void a4();virtual void a5();virtual void a6();virtual void a7();virtual void a8();virtual void a9();
+virtual void b0();virtual void b1();virtual void b2();virtual void b3();virtual void b4();virtual void b5();virtual void b6();virtual void b7();virtual void b8();virtual void b9();
+virtual void c0();virtual void c1();virtual void c2();virtual void c3();virtual void c4();virtual void c5();virtual void c6();virtual void c7();virtual void c8();virtual void c9();
+virtual void d0();virtual void d1();virtual void d2();virtual void d3();virtual void d4();virtual void d5();virtual void d6();virtual void d7();virtual void d8();
+virtual void GetScreenSize(int &, int &); };
+struct PV { virtual void a0();virtual void a1();virtual void a2();virtual void a3();virtual void a4();virtual void a5();virtual void a6();virtual void a7();virtual void a8();virtual void a9();
+virtual void b0();virtual void b1();virtual void b2();virtual void b3();virtual void b4();virtual void b5();virtual void b6();virtual void b7();virtual void b8();virtual void b9();
+virtual void c0();virtual void c1();virtual void c2();virtual void c3();virtual void c4();virtual void c5();virtual void c6();virtual void c7();virtual void c8();virtual void c9();
+virtual void d0();virtual void d1();virtual void d2();virtual void d3();virtual void d4();virtual void d5();
+virtual void e0();virtual void e1();virtual void e2();virtual void e3();virtual void e4();virtual void e5();virtual void e6();virtual void e7();virtual void e8();virtual void e9();
+virtual void SetEnabled(bool); };
+// TARGET: vgui2::Panel::vfunc75
+void vgui2::Panel::vfunc75(int p)
+{
+	KVView *kv = (KVView *)p;
+	int sw, sh, x, y, wide, tall;
+	((SurfaceView *)sub_101ac8d0())->GetScreenSize(sw, sh);
+	sub_101a98c0(&x, &y);
+	x = (int)(kv->GetInt("xpos", x) * (sw * (1.0 / 1024)));
+	y = (int)(kv->GetInt("ypos", y) * (sh * (1.0 / 768)));
+	sub_101a9890(x, y);
+	if (kv->FindKey("zpos", 0))
+		sub_101aa0a0(kv->GetInt("zpos", 0));
+	sub_101a9920(&wide, &tall);
+	wide = (int)(kv->GetInt("wide", wide) * (sw * (1.0 / 1024)));
+	tall = (int)(kv->GetInt("tall", tall) * (sh * (1.0 / 768)));
+	sub_101a98f0(wide, tall);
+	((VA *)this)->sub_101ab470(kv->GetInt("AutoResize", 0));
+	((VB *)this)->sub_101ab450(kv->GetInt("PinCorner", 0));
+	if (kv->GetInt("IgnoreScheme", 0))
+		sub_101a9af0();
+	int state = kv->GetInt("visible", 1);
+	if (state == 0)
+		vfunc21(0);
+	else if (state == 1)
+		vfunc21(1);
+	((PV *)this)->SetEnabled(kv->GetInt("enabled", 1));
+	vfunc29(kv->GetInt("tabPosition", 0));
+	((VC *)this)->sub_101ac6f0(kv->GetString("tooltiptext", 0));
+	int b = kv->GetInt("paintbackground", -1);
+	if (b >= 0)
+		vfunc63(b != 0);
+	int d = kv->GetInt("paintborder", -1);
+	if (d >= 0)
+		vfunc62(d != 0);
+	const char *n = kv->GetString("fieldName", 0);
+	if (n)
+		sub_101a9810(n);
+	vfunc68();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ab860 size=0x6
 #include "vgui2__Panel.h"
 namespace lifted {
