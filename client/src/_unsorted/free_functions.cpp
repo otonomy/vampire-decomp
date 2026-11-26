@@ -102155,6 +102155,30 @@ char CUnknown10140160::sub_10140160(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101401a0 size=0x3c
+#include "Tier1.h"
+
+// a stat record: a stat reference (type +0, id +4; sub_10160740 = its name, "<None>" for none) and a value at +0x10
+struct CStatValuePrint_101401a0
+{
+	int m_nType;
+	int m_nId;
+	int m_unk08;
+	int m_unk0c;
+	int m_nValue;	// 0x10
+
+	const char *sub_10160740();
+	void sub_101401a0();
+};
+
+void CStatValuePrint_101401a0::sub_101401a0()
+{
+	char buf[512];
+	g_101e3190(buf, sizeof(buf), "%s: %d\n", sub_10160740(), m_nValue);
+	g_101e3108("%s", buf);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101401e0 size=0x29
 #include "Vector.h"
 struct CUnknown101d61e0_Sub10 {
