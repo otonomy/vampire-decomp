@@ -110943,6 +110943,31 @@ int CNamedList9fd0::sub_10149260(const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101492b0 size=0x4b
+namespace lifted {
+extern char g_10149300;
+extern char g_105e7c38;
+extern char g_105e8099;
+struct C10148790 { int sub_10148790(int); };
+int sub_101d0df5(int);
+}
+struct CUnknown101492b0 { int sub_101492b0(int); };
+int CUnknown101492b0::sub_101492b0(int a0)
+{
+    if (a0 >= 0) {
+        if (a0 < (*(int *)((char *)this + 4))) {
+            return *(int *)((char *)(*(int *)((char *)this + 8)) + a0 * 4);
+        }
+    }
+    if ((1 & lifted::g_105e8099) == 0) {
+        lifted::g_105e8099 = (char)(lifted::g_105e8099 | 1);
+        ((lifted::C10148790 *)((int)&lifted::g_105e7c38))->sub_10148790(-1);
+        lifted::sub_101d0df5((int)&lifted::g_10149300);
+    }
+    return (int)&lifted::g_105e7c38;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10149310 size=0x57
 #include "CUnknown101dbc60.h"
 #include "CUnknown101db210.h"
