@@ -6088,6 +6088,7 @@
 0x10101b70 func   ?sub_10101b70@@YAXXZ sub_10101b70
 0x10101b80 func   ?sub_10101b80@@YADXZ sub_10101b80
 0x10101b90 func   ?sub_10101b90@@YADD@Z sub_10101b90
+0x10101ba0 func   ?sub_10101ba0@@YAHPBDPAPAD@Z sub_10101ba0
 0x10101cd0 func   ?FindKey@CInput@@UAEHPBD@Z CInput::FindKey
 0x10101d10 func   ?sub_10101d10@CInput@@QAEXPBDH@Z CInput::sub_10101d10
 0x10101d60 func   ?sub_10101d60@CUnknown10101d60@@QAEPAXXZ CUnknown10101d60::sub_10101d60

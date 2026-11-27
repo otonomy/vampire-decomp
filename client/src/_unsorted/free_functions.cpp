@@ -81122,6 +81122,67 @@ char sub_10101b90(char a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10101ba0 size=0x125
+#include "engineclient.h"
+
+extern "C" int isalnum(int);
+extern "C" void *malloc(unsigned int);
+extern "C" unsigned int strlen(const char *);
+#pragma intrinsic(strlen)
+
+int sub_10101ba0(const char *in, char **out)
+{
+	char word[0x40];
+	char buf[0x1000];
+	if (!out)
+		return 0;
+	*out = 0;
+	char *p = buf;
+	const char *q = in;
+	while (*q) {
+		if (*q == '+') {
+			char *w = word;
+			int n = 0;
+			do {
+				if (!((isalnum(*q) || w == word) && n < 0x3f))
+					break;
+				*w++ = *q;
+				n++;
+				q++;
+			} while (*q);
+			*w = 0;
+			const char *r = 0;
+			const char *src;
+			if (strlen(word + 1)) {
+				r = engine->vfunc54(word + 1);
+				if (r) {
+					*p++ = '[';
+					src = r;
+				} else {
+					src = word;
+				}
+			} else {
+				src = word;
+			}
+			while (*src)
+				*p++ = *src++;
+			if (r)
+				*p++ = ']';
+		} else {
+			*p++ = *q++;
+		}
+	}
+	*p = 0;
+	char *m = (char *)malloc(strlen(buf) + 1);
+	const char *s = buf;
+	char *d = m;
+	while ((*d++ = *s++))
+		;
+	*out = m;
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10101d10 size=0x49
 #include "CInput.h"
 extern "C" char *strcpy(char *, const char *);
