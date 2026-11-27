@@ -17,6 +17,7 @@ class CDiscipline : public CManagedHudElement
 public:
 	CDiscipline(int a);
 	virtual ~CDiscipline();
+	void sub_1004eb00();
 	int sub_1004ec90(int id);
 	int sub_1004ecb0(int id);
 	void sub_1004ed00(int id);
