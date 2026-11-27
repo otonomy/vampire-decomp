@@ -17,6 +17,77 @@ void CViewEffects::vfunc0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101963c0 size=0x164
+#include "CViewEffects.h"
+#include "engineclient.h"
+#include "ScopeTrace.h"
+#include "ConVar.h"
+#include <string.h>
+
+#pragma intrinsic(memset)
+
+extern ConVar g_10618708;
+
+struct HolyLightObj_101963c0
+{
+	float m_f0;
+	float m_f4;
+	float m_f8;
+	unsigned char m_c, m_d, m_e, m_f;
+	int m_n10;
+};
+
+struct UtlVec4_101963c0
+{
+	int *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	int m_size;
+	int *m_pElements;
+
+	void sub_10197a20(int num);
+
+	void AddToTail(int src)
+	{
+		int elem = m_size;
+		if (m_size + 1 > m_allocationCount)
+			sub_10197a20(m_size + 1 - m_allocationCount);
+		m_size += 1;
+		m_pElements = m_pMemory;
+		int n = m_size - elem - 1;
+		if (n > 0)
+			memmove(&m_pMemory[elem + 1], &m_pMemory[elem], n * 4);
+		int *p = &m_pMemory[elem];
+		if (p)
+			*p = src;
+	}
+};
+
+void CViewEffects::vfunc1()
+{
+	ScopeTrace st("CViewEffects::LevelInit", g_102de300);
+	memset(&m_Shake, 0, sizeof(m_Shake));
+	memset(&m_nState, 0, 0x38);
+	vfunc17();
+	engine->vfunc3("holylight");
+	if (g_10618708.GetInt())
+	{
+		HolyLightObj_101963c0 *p = (HolyLightObj_101963c0 *)operator new(0x14);
+		p->m_f4 = 5.0f;
+		p->m_f8 = 5.0f;
+		p->m_e = 0;
+		p->m_d = 0;
+		p->m_c = 0;
+		p->m_f = 0xff;
+		p->m_n10 = 0;
+		p->m_f0 = 51.0f;
+		p->m_f4 += (p->m_f8 += engine->Time(0));
+		((UtlVec4_101963c0 *)&m_unk04)->AddToTail((int)p);
+		g_10618708.sub_100dfa90(0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10196530 size=0x460
 #include "CViewEffects.h"
 #include "ScopeTrace.h"
