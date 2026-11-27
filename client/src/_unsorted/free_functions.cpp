@@ -150681,6 +150681,14 @@ int CUnknown101c9da0::sub_101c9da0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c9db0 size=0xc
+struct CUnknown101c9db0 { int sub_101c9db0(int); };
+int CUnknown101c9db0::sub_101c9db0(int a0)
+{
+    return *(int *)((char *)(*(int *)this) + a0 * 4);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c9dc0 size=0x1a
 struct CUnknown101c9dc0 { int sub_101c9dc0(int); };
 int CUnknown101c9dc0::sub_101c9dc0(int a0)
