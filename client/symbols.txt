@@ -3900,6 +3900,7 @@
 0x10095f30 func   ?sub_10095f30@LocalBaseAnimating_10095f30@@UAEXXZ LocalBaseAnimating_10095f30::sub_10095f30
 0x10095f90 func   ?sub_10095f90@RendView10095f90@@QAE_NXZ RendView10095f90::sub_10095f90
 0x10095fb0 func   ?sub_10095fb0@CUnknown10095fb0@@QAEHXZ CUnknown10095fb0::sub_10095fb0
+0x10096060 func   ?sub_10096060@C_BaseAnimating@@QAEXHMM@Z C_BaseAnimating::sub_10096060
 0x100965d0 func   ?sub_100965d0@C_BaseAnimating@@QAEHHH@Z C_BaseAnimating::sub_100965d0
 0x10096650 func   ?sub_10096650@AnimView@@QAEXXZ AnimView::sub_10096650
 0x100966e0 func   ?sub_100966e0@C_BaseAnimating@@QAEXXZ C_BaseAnimating::sub_100966e0

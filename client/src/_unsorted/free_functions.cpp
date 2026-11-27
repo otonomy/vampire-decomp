@@ -48516,6 +48516,128 @@ int CUnknown10095fb0::sub_10095fb0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10096060 size=0x561
+#include "C_BaseAnimating.h"
+#include "engineclient.h"
+#include "Vector.h"
+#include "QAngle.h"
+#include <math.h>
+
+float sub_1010c410(float destAngle, float srcAngle);
+
+inline float anglemod(float a)
+{
+	a = (360.0f / 65536) * ((int)(a * (65536 / 360.0f)) & 65535);
+	return a;
+}
+
+#define FIELD(type, off) (*(type *)((char *)this + (off)))
+
+void C_BaseAnimating::sub_10096060(int count, float flDistScale, float flTimeScale)
+{
+	if (count < 1)
+		return;
+
+	if (flTimeScale < 0.0f)
+		flTimeScale = flDistScale;
+
+	if (!FIELD(void *, 0x6ac))
+		return;
+
+	materials->vfunc29(vfunc26() != 0);
+
+	float curtime;
+	float dt = (curtime = engine->Time(0)) - FIELD(float, 0x708);
+
+	if (dt < 0.5f && dt > 0.0f)
+	{
+		Vector origin = GetRenderOrigin();
+		QAngle angles = GetRenderAngles();
+		float blend = render->vfunc7();
+		float savedAnimTime;
+		float savedCycle;
+		*(int *)&savedCycle = FIELD(int, 0x648);
+		*(int *)&savedAnimTime = FIELD(int, 0x70);
+		float alpha = 0.75f * (ComputeFxBlend() / 255.0f);
+
+		modelrender->vfunc5(2);
+
+		for (int i = 1; i <= count; i++)
+		{
+			float frac = i / dt * flDistScale;
+
+			Vector pos = (FIELD(Vector, 0x718) - origin) * frac + origin;
+			sub_100a2030(&pos);
+
+			QAngle ang = GetRenderAngles();
+			ang.x = anglemod(sub_1010c410(FIELD(QAngle, 0x70c).x, angles.x) * frac + angles.x);
+			ang.y = anglemod(sub_1010c410(FIELD(QAngle, 0x70c).y, angles.y) * frac + angles.y);
+			ang.z = anglemod(sub_1010c410(FIELD(QAngle, 0x70c).z, angles.z) * frac + angles.z);
+			sub_100a2100(ang);
+
+			FIELD(float, 0x648) = savedCycle - (i * flTimeScale) * vfunc138(FIELD(int, 0x63c));
+			FIELD(float, 0x70) = savedAnimTime;
+
+			char *desc = (char *)sub_10096830(FIELD(int, 0x63c));
+			if (desc)
+			{
+				if (FIELD(float, 0x648) < 0.0f)
+				{
+					if (*(int *)(desc + 8) & 1)
+					{
+						FIELD(float, 0x648) *= (1.0f / 256.0f);
+						FIELD(float, 0x648) = (float)(FIELD(float, 0x648) - floor(FIELD(float, 0x648))) * 256.0f;
+					}
+					else
+					{
+						float r = vfunc138(FIELD(int, 0x63c));
+						FIELD(float, 0x70) -= FIELD(float, 0x648) / r;
+						if (FIELD(float, 0x70) > curtime)
+							FIELD(float, 0x70) = curtime;
+						FIELD(float, 0x648) = 0;
+					}
+				}
+				else if (FIELD(float, 0x648) >= 256.0f)
+				{
+					if (*(int *)(desc + 8) & 1)
+					{
+						FIELD(float, 0x648) *= (1.0f / 256.0f);
+						FIELD(float, 0x648) = (float)(FIELD(float, 0x648) - floor(FIELD(float, 0x648))) * 256.0f;
+					}
+					else
+					{
+						FIELD(float, 0x648) = 255.99f;
+					}
+				}
+			}
+
+			render->vfunc6((count + 1 - i) * alpha / (count + 1));
+
+			Vector bounds[2];
+			GetRenderBoundsWorldspace(bounds[0], bounds[1]);
+			int skin = FIELD(int, 0x55c);
+			FIELD(int, 0x6dc) = 0;
+			modelrender->vfunc2(0x41, (IClientRenderable *)((char *)this + 4), 0xffff, FIELD(void *, 0x40), GetRenderOrigin(), GetRenderAngles(), skin, FIELD(int, 0x560), &bounds[0]);
+		}
+
+		modelrender->vfunc5(0);
+		sub_100a2030(&origin);
+		sub_100a2100(angles);
+		FIELD(float, 0x648) = savedCycle;
+		FIELD(float, 0x70) = savedAnimTime;
+		render->vfunc6(blend);
+		FIELD(int, 0x6dc) = 0;
+	}
+
+	if (dt > 0.0f)
+	{
+		FIELD(float, 0x708) = curtime;
+		FIELD(QAngle, 0x70c) = GetRenderAngles();
+		FIELD(Vector, 0x718) = GetRenderOrigin();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10096650 size=0x8f
 struct AnimHdr { char pad[0x18c]; int count; int off; };
 struct AnimEnt { int e0, e1, e2, e3, e4, e5, e6; };
