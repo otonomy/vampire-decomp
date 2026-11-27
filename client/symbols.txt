@@ -4244,6 +4244,7 @@
 0x100a25f0 func   ?sub_100a25f0@CUnknown100a25f0@@QAEDD@Z CUnknown100a25f0::sub_100a25f0
 0x100a2600 func   ?sub_100a2600@CUnknown100a2600@@QAEDXZ CUnknown100a2600::sub_100a2600
 0x100a2610 func   ?sub_100a2610@C_BaseEntity@@QAEX_NH@Z C_BaseEntity::sub_100a2610
+0x100a26e0 func   ?sub_100a26e0@C_BaseEntity@@QAEXXZ C_BaseEntity::sub_100a26e0
 0x100a2840 func   ?vfunc17@C_BaseEntity@@UAEHXZ C_BaseEntity::vfunc17
 0x100a2850 func   ?sub_100a2850@C_BaseEntity@@QAEXPBVVector@@0@Z C_BaseEntity::sub_100a2850
 0x100a28b0 func   ?vfunc114@C_BaseEntity@@UAEPADXZ C_BaseEntity::vfunc114

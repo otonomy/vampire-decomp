@@ -53443,6 +53443,36 @@ void C_BaseEntity::sub_100a2610(bool flag, int a)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a26e0 size=0x76
+#include "C_BaseEntity.h"
+struct Ent_100a26e0 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16();
+	virtual int *v17();
+	int sub_100a2fc0();
+};
+struct Data_100a26e0 {
+	int m[13];
+	Data_100a26e0 *sub_10123290(int, int, int, Ent_100a26e0 *, int, int, int, int, int);
+	void sub_10124440(int *, int, int);
+};
+void sub_100cc190(void *, int, void *);
+void C_BaseEntity::sub_100a26e0()
+{
+	Ent_100a26e0 *ent = (Ent_100a26e0 *)this;
+	sub_100cc190(ent ? (char *)ent + 8 : 0, 1, (char *)ent + 0x3dc);
+	int f = ent->sub_100a2fc0();
+	if (f) {
+		Data_100a26e0 d;
+		d.sub_10123290(2, f, 1, ent, 0, 0, 1, 0, 0);
+		int *a = ent->v17();
+		d.sub_10124440(ent->v17(), a[0], ent->v17()[1]);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a2850 size=0x51
 #include "C_BaseEntity.h"
 #include "vector.h"
