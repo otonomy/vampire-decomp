@@ -100,7 +100,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc133(char);
 	virtual bool vfunc134(char);
 	virtual bool vfunc135();
-	virtual void vfunc136();
+	virtual void vfunc136(int line, int pixelsAcross);	// MoveCursor(line, pixelsAcross)
 	virtual int vfunc137(int);
 	virtual bool vfunc138(char);
 	virtual bool vfunc139(char);
