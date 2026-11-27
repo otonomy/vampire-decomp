@@ -9386,6 +9386,7 @@
 0x101935e0 func   ?sub_101935e0@CUnknown101935e0@@QAEXPAUBeam_t_101935e0@@ABUBeamInfo_t_101935e0@@@Z CUnknown101935e0::sub_101935e0
 0x10193790 func   ?sub_10193790@@YGXPAUBeamV@@PAUBeamInfoV@@@Z sub_10193790
 0x101938a0 func   ?sub_101938a0@CViewRenderBeams@@QAEPAVBeam_t@@PAX@Z CViewRenderBeams::sub_101938a0
+0x10193e70 func   ?vfunc11@CViewRenderBeams@@UAEXAAVVector@@0HHMMMMMMMMHMMMM@Z CViewRenderBeams::vfunc11
 0x10193f90 func   ?vfunc12@CViewRenderBeams@@UAEPAVBeam_t@@PAUBeamInfoV@@@Z CViewRenderBeams::vfunc12
 0x10194040 func   ?vfunc17@CViewRenderBeams@@UAEXHAAVVector@@0HHMMMMMMMMHMMMM@Z CViewRenderBeams::vfunc17
 0x10194160 func   ?sub_10194160@CViewRenderBeams@@QAEPAVBeam_t@@PAX@Z CViewRenderBeams::sub_10194160

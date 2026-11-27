@@ -111,6 +111,76 @@ void CViewRenderBeams::vfunc6(IHandleEntity *pDeadEntity)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10193e70 size=0x113
+#include "CViewRenderBeams.h"
+#include "Vector.h"
+
+struct BeamInfoLocal
+{
+	int type;
+	void *pStartEnt;
+	int startAttachment;
+	void *pEndEnt;
+	int endAttachment;
+	Vector vecStart;
+	Vector vecEnd;
+	int modelIndex;
+	const char *pszModelName;
+	int haloIndex;
+	const char *pszHaloName;
+	float haloScale;
+	float life;
+	float width;
+	float endWidth;
+	float fadeLength;
+	float amplitude;
+	float brightness;
+	float speed;
+	int startFrame;
+	float frameRate;
+	float red;
+	float green;
+	float blue;
+	bool renderable;
+	int segments;
+	int flags;
+	int m_unk7c; int m_unk80; int m_unk84; int m_unk88; int m_unk8c;
+
+	BeamInfoLocal()
+	{
+		segments = -1;
+		type = 0;
+		pszModelName = 0;
+		pszHaloName = 0;
+		flags = 0;
+		renderable = true;
+	}
+};
+
+void CViewRenderBeams::vfunc11(Vector &start, Vector &end, int modelIndex, int haloIndex, float haloScale, float life, float width, float endWidth, float fadeLength, float amplitude, float brightness, float speed, int startFrame, float framerate, float r, float g, float b)
+{
+	BeamInfoLocal info;
+	info.vecStart = start;
+	info.vecEnd = end;
+	info.modelIndex = modelIndex;
+	info.haloIndex = haloIndex;
+	info.haloScale = haloScale;
+	info.life = life;
+	info.width = width;
+	info.endWidth = endWidth;
+	info.fadeLength = fadeLength;
+	info.amplitude = amplitude;
+	info.brightness = brightness;
+	info.speed = speed;
+	info.startFrame = startFrame;
+	info.frameRate = framerate;
+	info.red = r;
+	info.green = g;
+	info.blue = b;
+	vfunc12((BeamInfoV *)&info);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10193f90 size=0xa9
 #include "engineclient.h"
 #include "CViewRenderBeams.h"
