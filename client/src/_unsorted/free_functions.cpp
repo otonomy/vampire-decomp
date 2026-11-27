@@ -51993,6 +51993,21 @@ CUtlMemory28 *CUtlMemory28::sub_100a33d0(int growSize, int allocationCount)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a3410 size=0x30
+extern "C" __declspec(dllimport) void *__cdecl Plat_Alloc(int);
+struct CUnknown100a3410 { void * sub_100a3410(int, int); };
+void * CUnknown100a3410::sub_100a3410(int a0, int a1)
+{
+    *(int *)this = 0;
+    *(int *)((char *)this + 4) = a1;
+    *(int *)((char *)this + 8) = a0;
+    if (a1 != 0) {
+        *(int *)this = (int)Plat_Alloc(a1 * 2);
+    }
+    return this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a3440 size=0x8c
 #include "CUtlVector4.h"
 extern void *(*g_101e3100)(int);

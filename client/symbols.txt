@@ -4227,6 +4227,7 @@
 0x100a33a0 func   ?sub_100a33a0@CUnknown100a33a0@@QAEHHH@Z CUnknown100a33a0::sub_100a33a0
 0x100a33c0 func   ?vfunc34@C_BaseEntity@@UAEHXZ C_BaseEntity::vfunc34
 0x100a33d0 func   ?sub_100a33d0@CUtlMemory28@@QAEPAU1@HH@Z CUtlMemory28::sub_100a33d0
+0x100a3410 func   ?sub_100a3410@CUnknown100a3410@@QAEPAXHH@Z CUnknown100a3410::sub_100a3410
 0x100a3440 func   ?sub_100a3440@CUtlVector4@@QAEXH@Z CUtlVector4::sub_100a3440
 0x100a34d0 func   ?sub_100a34d0@UtlVec8@@QAEXHH@Z UtlVec8::sub_100a34d0
 0x100a3510 func   ?sub_100a3510@@YAHHH@Z sub_100a3510
