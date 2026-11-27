@@ -150,6 +150,28 @@ void C_BaseViewModel::vfunc29(char a)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ab470 size=0x81
+#include "C_BaseViewModel.h"
+#include "Vector.h"
+void sub_100ab2b0(Vector &v, bool b);
+void sub_10108510(int *m, int col, int *out);
+void sub_10108540(int *v, int col, int *m);
+// TARGET: C_BaseViewModel::vfunc141
+void C_BaseViewModel::vfunc141()
+{
+	for (int i = 0; i < *(int *)(*(char **)((char *)this + 0x6ac) + 0x148); i++)
+	{
+		int m[12];
+		Vector v;
+		sub_10091910(i + 1, (int)m);
+		sub_10108510(m, 3, (int *)&v);
+		sub_100ab2b0(v, false);
+		sub_10108540((int *)&v, 3, m);
+		sub_10095ac0(i + 1, (int)m);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ab500 size=0x3
 #include "C_BaseViewModel.h"
 bool C_BaseViewModel::vfunc142()
