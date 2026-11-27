@@ -33573,6 +33573,86 @@ void CUnknown100675e0::sub_100675e0(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10067610 size=0x140
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "CVMainMenu.h"
+#include "engineclient.h"
+struct IGameUI_10067610 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15();
+	virtual void v16(); virtual void v17(); virtual void v18();
+	virtual void v19(const char *, int *);
+};
+struct IPSys_10067610 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15();
+	virtual void v16(int);
+};
+extern IGameUI_10067610 *g_104a5828;
+extern IPSys_10067610 *g_104a581c;
+extern int g_103ef0b8;
+extern int g_103ef0c0;
+#define m_pElems (*(char **)((char *)this + 0x2ec))
+#define m_nElems (*(int *)((char *)this + 0x2f8))
+#define m_n2dc (*(int *)((char *)this + 0x2dc))
+// TARGET: CVMainMenu::sub_10067610
+void CVMainMenu::sub_10067610(int action)
+{
+	if (m_unk2e8 != -1)
+		return;
+	if (sub_10065c90())
+		return;
+	switch (action) {
+	case 3:
+		pcd_stage(engine)->ClientCmd("showsavegame");
+		return;
+	case 1:
+		engine->ClientCmd("showloadgame");
+		return;
+	case 4:
+		g_104a5828->v15();
+		return;
+	case 9:
+		if (g_103ef0b8 != 1) {
+			g_104a5828->v19("#GameUI_ConfirmProgress", &g_103ef0b8);
+			return;
+		}
+		break;
+	case 2:
+		if (g_103ef0c0 != 1) {
+			g_104a5828->v19("#GameUI_ConfirmReload", &g_103ef0c0);
+			return;
+		}
+		break;
+	case 11:
+		if (!sub_10065d30())
+			return;
+		if (!(char)vfunc22())
+			return;
+		break;
+	}
+	m_unk2e8 = action;
+	for (int i = 0; i < m_nElems; i++) {
+		int off = i * 0x64;
+		g_104a581c->v16(*(int *)(&m_pElems[off] + 0x44));
+	}
+	m_n2dc = 0;
+}
+/* judged with these header patches (not saved):
+[
+ {
+  "path": "CVMainMenu.h",
+  "old": "\tbool sub_10065c90();",
+  "new": "\tbool sub_10065c90();\n\tvoid sub_10067610(int action);"
+ }
+]
+*/
+// END FUNCTION
+
 // FUNCTION: 0x10067750 size=0xf8
 #include "engineclient.h"
 #include "CVMainMenu.h"
