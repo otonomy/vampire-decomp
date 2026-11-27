@@ -7410,6 +7410,7 @@
 0x1013ab40 func   ?sub_1013ab40@@YAXPAVCUnknown1006c1c0@@PAUCUnknownImgInfo@@PAE@Z sub_1013ab40
 0x1013ac10 func   ?sub_1013ac10@@YAXPAVCUnknown1006c1c0@@PAUCUnknownImgInfo@@PAE@Z sub_1013ac10
 0x1013ae60 func   ?sub_1013ae60@@YAXPAVCUtlBuffer@@PAUSImgInfo@@PAE@Z sub_1013ae60
+0x1013aee0 func   ?sub_1013aee0@@YAXPAVCUtlBuffer@@PAUHdrX@@PAUCol4@@@Z sub_1013aee0
 0x1013b160 func   ?sub_1013b160@@YAXPAX00@Z sub_1013b160
 0x1013b350 func   ?sub_1013b350@@YAXPAX00@Z sub_1013b350
 0x1013b5e0 func   ?sub_1013b5e0@@YA_NPAVCUnknown1006bea0@@PAUXImgHdr@@@Z sub_1013b5e0

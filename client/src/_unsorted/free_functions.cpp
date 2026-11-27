@@ -103652,6 +103652,40 @@ void sub_1013ae60(CUtlBuffer *buf, SImgInfo *info, unsigned char *dest)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013aee0 size=0x10e
+#include "CUtlBuffer.h"
+void sub_1013ce00(CUtlBuffer *, const char *, ...);
+struct Col4 { unsigned char r, g, b, a; };
+struct HdrX { char m_pad[0xc]; unsigned short m_nColors; };
+
+static inline unsigned char GetUC(CUtlBuffer *b)
+{
+	unsigned char c;
+	if (!(b->m_nFlags & 1)) {
+		if (b->sub_1013cbb0(1)) {
+			c = b->m_pBuffer[b->m_nGet];
+			b->m_nGet++;
+		} else {
+			c = 0;
+		}
+	} else {
+		sub_1013ce00(b, "%u", &c);
+	}
+	return c;
+}
+
+// TARGET: sub_1013aee0
+void sub_1013aee0(CUtlBuffer *buf, HdrX *hdr, Col4 *dst)
+{
+	for (int i = 0; i < hdr->m_nColors; i++, dst++) {
+		dst->b = GetUC(buf);
+		dst->g = GetUC(buf);
+		dst->r = GetUC(buf);
+		dst->a = 0xff;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013b160 size=0x6f
 extern "C" __declspec(dllimport) void Plat_Free(void *pMem);
 
