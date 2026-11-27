@@ -6341,6 +6341,7 @@
 0x1010c9d0 func   ?sub_1010c9d0@@YAHXZ sub_1010c9d0
 0x1010ca00 func   ??_GCSubtractProxy@@UAEPAXI@Z ??_GCSubtractProxy@@UAEPAXI@Z
 0x1010ca20 func   ?vfunc0@CMultiplyProxy@@UAE_NPAX0@Z CMultiplyProxy::vfunc0
+0x1010ca50 func   ?vfunc1@CMultiplyProxy@@UAEXH@Z CMultiplyProxy::vfunc1
 0x1010cb80 func   ?sub_1010cb80@@YAHXZ sub_1010cb80
 0x1010cbb0 func   ??_GCMultiplyProxy@@UAEPAXI@Z ??_GCMultiplyProxy@@UAEPAXI@Z
 0x1010cbd0 func   ?vfunc0@CDivideProxy@@UAE_NPAX0@Z CDivideProxy::vfunc0
