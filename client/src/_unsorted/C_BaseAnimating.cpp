@@ -117,6 +117,58 @@ int C_BaseAnimating::vfunc86()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1008f790 size=0x101
+#include "C_BaseAnimating.h"
+#include "engineclient.h"
+#include "CUtlVector72.h"
+struct T48;
+struct CUtlVector48 {
+	void *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	int m_size;
+	void *m_pElements;
+	int sub_10096fc0(int, int, const T48 *);
+};
+#define F(t, o) (*(t *)((char *)this + (o)))
+// TARGET: C_BaseAnimating::vfunc72
+int C_BaseAnimating::vfunc72()
+{
+	if (!GetModel())
+		return 0;
+	char *pHdr = (char *)modelinfo->vfunc20(GetModel());
+	if (!pHdr)
+		return 0;
+	if (*(int *)(pHdr + 0xe4) & 0x400)
+		sub_1009f0a0();
+	sub_100922c0();
+	int nBones = *(int *)(pHdr + 0xf0);
+	if (F(int, 0x734) != nBones) {
+		CUtlVector48 *bones = (CUtlVector48 *)((char *)this + 0x728);
+		bones->m_size = 0;
+		bones->sub_10096fc0(0, nBones, 0);
+	}
+	F(void *, 0x6e4) = pHdr;
+	F(void *, 0x6e8) = F(void *, 0x728);
+	int nAttach = *(int *)(pHdr + 0x148);
+	if (F(int, 0x77c) != nAttach) {
+		CUtlVector72 *att = (CUtlVector72 *)((char *)this + 0x770);
+		att->m_size = 0;
+		if (nAttach) {
+			if (nAttach > att->m_allocationCount)
+				att->sub_10097160(nAttach - att->m_allocationCount);
+			att->m_size += nAttach;
+			att->m_pElements = att->m_pMemory;
+			int n = att->m_size - nAttach;
+			if (n > 0 && nAttach > 0)
+				memmove(&att->m_pMemory[nAttach], &att->m_pMemory[0], n * 72);
+		}
+	}
+	vfunc112();
+	return (int)pHdr;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1008f8a0 size=0x52
 #include "engineclient.h"
 #include "C_BaseAnimating.h"

@@ -3830,6 +3830,7 @@
 0x1008f5c0 func   ??1C_BaseAnimating@@UAE@XZ C_BaseAnimating::~C_BaseAnimating
 0x1008f6f0 func   ?sub_1008f6f0@S1008f6f0@@QAE_NXZ S1008f6f0::sub_1008f6f0
 0x1008f720 func   ?vfunc86@C_BaseAnimating@@UAEHXZ C_BaseAnimating::vfunc86
+0x1008f790 func   ?vfunc72@C_BaseAnimating@@UAEHXZ C_BaseAnimating::vfunc72
 0x1008f8a0 func   ?vfunc71@C_BaseAnimating@@UAE_NXZ C_BaseAnimating::vfunc71
 0x1008f900 func   ?sub_1008f900@C_BaseAnimating@@QAEHH@Z C_BaseAnimating::sub_1008f900
 0x1008f960 func   ?vfunc122@C_BaseAnimating@@UAEMXZ C_BaseAnimating::vfunc122
