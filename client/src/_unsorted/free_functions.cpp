@@ -25850,6 +25850,49 @@ bool CCollisionProperty::sub_10043930(const Vector &pt)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10043a40 size=0x14a
+#include "CCollisionProperty.h"
+
+extern QAngle g_104d5190;	// vec3_angle
+void sub_10108080(const Vector &in, const matrix3x4_t &matrix, Vector &out);
+void sub_10107f80(const Vector &in, const matrix3x4_t &matrix, Vector &out);
+void sub_1010ba80(const Vector &mins, const Vector &maxs, const Vector &p, Vector &closest);
+
+// TARGET: CCollisionProperty::sub_10043a40
+void CCollisionProperty::sub_10043a40(const Vector &vecWorldPt, Vector *pVecNearestWorldPt)
+{
+	Vector localPt, localClosestPoint;
+
+	if (!(*((unsigned char *)this + 0x44) & 0x80) && m_unk40 != 2 && m_unk40 != 0 && vfunc9(0) != g_104d5190)
+	{
+		const matrix3x4_t &m = vfunc10();
+		sub_10108080(vecWorldPt, m, localPt);
+	}
+	else
+	{
+		const Vector &origin = vfunc8();
+		localPt.x = vecWorldPt.x - origin.x;
+		localPt.y = vecWorldPt.y - origin.y;
+		localPt.z = vecWorldPt.z - origin.z;
+	}
+
+	sub_1010ba80(m_vecMins, *(Vector *)&m_unk10, localPt, localClosestPoint);
+
+	if (!(*((unsigned char *)this + 0x44) & 0x80) && m_unk40 != 2 && m_unk40 != 0 && vfunc9(0) != g_104d5190)
+	{
+		const matrix3x4_t &m = vfunc10();
+		sub_10107f80(localClosestPoint, m, *pVecNearestWorldPt);
+	}
+	else
+	{
+		const Vector &origin = vfunc8();
+		pVecNearestWorldPt->x = localClosestPoint.x + origin.x;
+		pVecNearestWorldPt->y = localClosestPoint.y + origin.y;
+		pVecNearestWorldPt->z = localClosestPoint.z + origin.z;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10043b90 size=0xef
 #include "CCollisionProperty.h"
 
