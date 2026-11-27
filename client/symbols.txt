@@ -8821,6 +8821,7 @@
 0x10174f90 func   ?sub_10174f90@@YAXXZ sub_10174f90
 0x10174fb0 func   ?sub_10174fb0@@YAHXZ sub_10174fb0
 0x10174fe0 func   ?sub_10174fe0@CUnknown10174fe0@@QAEHXZ CUnknown10174fe0::sub_10174fe0
+0x10175020 func   ?sub_10175020@CUnknown10175020@@QAEXH@Z CUnknown10175020::sub_10175020
 0x10175050 func   ?sub_10175050@CUnknown10175050@@QAEHH@Z CUnknown10175050::sub_10175050
 0x10175b30 func   ?sub_10175b30@VCharWizardUI@@QAEXXZ VCharWizardUI::sub_10175b30
 0x10175b90 func   ?sub_10175b90@PanelX@@QAEXH@Z PanelX::sub_10175b90
