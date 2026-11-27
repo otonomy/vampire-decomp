@@ -5091,6 +5091,7 @@
 0x100c9100 func   ?sub_100c9100@@YADXZ sub_100c9100
 0x100c9110 func   ??_GC_VGuiScreen@@UAEPAXI@Z ??_GC_VGuiScreen@@UAEPAXI@Z
 0x100c9160 func   ?sub_100c9160@CUnknown100c9160@@QAEHH@Z CUnknown100c9160::sub_100c9160
+0x100c9190 func   ?OnDataChanged@C_VGuiScreen@@UAEXH@Z C_VGuiScreen::OnDataChanged
 0x100c9220 func   ?vfunc64@C_VGuiScreen@@UAEHHHH@Z C_VGuiScreen::vfunc64
 0x100c9270 func   ?sub_100c9270@C_VGuiScreen@@QAEXH@Z C_VGuiScreen::sub_100c9270
 0x100c92f0 func   ?sub_100c92f0@CUnknown100c92f0@@QAEHXZ CUnknown100c92f0::sub_100c92f0
