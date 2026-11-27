@@ -110,6 +110,37 @@ void CClientLeafSystem::vfunc7(int idx, unsigned int *a, unsigned int *b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d1f60 size=0xaa
+#include "CClientLeafSystem.h"
+#include "CUtlLinkedList12S.h"
+
+// TARGET: CClientLeafSystem::vfunc18
+void CClientLeafSystem::vfunc18(unsigned short elem)
+{
+	sub_100d2220(elem);
+	CUtlLinkedList12S &list = *(CUtlLinkedList12S *)((char *)this + 0x3c);
+	if (elem < list.m_NumAlloced && list.m_pMemory[elem].m_Previous != elem)
+	{
+		CUtlLinkedList12SNode *p = list.m_pMemory;
+		unsigned short prev = p[elem].m_Previous;
+		if (prev != 0xffff)
+			p[prev].m_Next = p[elem].m_Next;
+		else
+			list.m_Head = p[elem].m_Next;
+		unsigned short next = p[elem].m_Next;
+		if (next != 0xffff)
+			p[next].m_Previous = p[elem].m_Previous;
+		else
+			list.m_Tail = p[elem].m_Previous;
+		p[elem].m_Next = elem;
+		p[elem].m_Previous = elem;
+		list.m_ElementCount--;
+	}
+	list.m_pMemory[elem].m_Next = list.m_FirstFree;
+	list.m_FirstFree = elem;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d2770 size=0x68
 #include "CClientLeafSystem.h"
 struct IVf { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(void *, void *); };
