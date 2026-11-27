@@ -32533,6 +32533,42 @@ void CVMainMenu::sub_10066250()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100662d0 size=0xa8
+namespace lifted {
+extern int g_10286860;
+struct C10066380 { int sub_10066380(); };
+struct C10067540 { int sub_10067540(int); };
+int sub_1018ccf0(int);
+struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual int f6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual int f21(int); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual void u40(); virtual void u41(); virtual void u42(); virtual void u43(); virtual void u44(); virtual void u45(); virtual void u46(); virtual void u47(); virtual void u48(); virtual void u49(); virtual void u50(); virtual void u51(); virtual void u52(); virtual void u53(); virtual void u54(); virtual void u55(); virtual void u56(); virtual void u57(); virtual void u58(); virtual void u59(); virtual void u60(); virtual void u61(); virtual void u62(); virtual int f63(int); virtual int f64(int); };
+}
+struct CUnknown100662d0 { int sub_100662d0(); };
+int CUnknown100662d0::sub_100662d0()
+{
+    int r0;
+    lifted::sub_1018ccf0(0);
+    ((lifted::V *)this)->f21(1);
+    ((lifted::V *)this)->f64(1);
+    ((lifted::V *)this)->f63(1);
+    ((lifted::C10067540 *)this)->sub_10067540(1);
+    r0 = 0;
+    if ((*(int *)((char *)this + 0x17c)) > 0) {
+        int t0 = *(int *)((char *)this + 0x17c);
+        do {
+            ((lifted::V *)(*(int *)((char *)(*(int *)((char *)this + 0x170)) + r0 * 4)))->f21(1);
+            ((lifted::V *)(*(int *)((char *)(*(int *)((char *)this + 0x170)) + r0 * 4)))->f64(1);
+            r0 = r0 + 1;
+        } while (r0 < (*(int *)((char *)this + 0x17c)));
+    }
+    if (lifted::g_10286860 != 0) {
+        ((lifted::V *)lifted::g_10286860)->f6();
+    }
+    *(int *)((char *)this + 0x2dc) = 0x437f0000;
+    *(int *)((char *)this + 0x2d8) = 0x3f800000;
+    *(int *)((char *)this + 0x2e8) = -1;
+    return ((lifted::C10066380 *)this)->sub_10066380();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10066380 size=0x32
 #include "engineclient.h"
 struct XSnd
