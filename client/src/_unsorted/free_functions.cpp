@@ -148244,6 +148244,63 @@ void CViewRender::sub_10199910(void *pInfo, void *pRenderList, bool arg2, bool b
 }
 // END FUNCTION
 
+// FUNCTION: 0x10199b40 size=0x16f
+#include "engineclient.h"
+#include "ScopeTrace.h"
+#include "ConVar.h"
+
+extern ConVar *g_10619654;
+extern const char g_1027a844[];
+
+struct Timer_10199b40
+{
+	virtual double Now();
+};
+
+struct Prof_10199b40
+{
+	char m_pad0[0x110];
+	double m_dAccum;
+	char m_pad1[0x1e8 - 0x118];
+	double m_dStart;
+	char m_pad2[0x308 - 0x1f0];
+	Timer_10199b40 *m_pTimer;
+};
+
+Prof_10199b40 *sub_100ad7a0();
+
+void __stdcall sub_10199b40(int a0, int a1, unsigned int flags)
+{
+	ScopeTrace st("CViewRender::DrawWorld", g_102de300);
+	if (!(!g_10619654->vfunc1() && g_10619654->m_nValue)) return; Prof_10199b40 *p = sub_100ad7a0();
+		if (p->m_pTimer)
+			p->m_dStart = p->m_pTimer->Now();
+		unsigned char bA = (flags >> 4) & 1;
+		unsigned char bB = (flags >> 5) & 1;
+		unsigned char t0 = flags >> 6; unsigned char bC = (t0) & 1;
+		int mask = 0;
+		unsigned char bD = 1 & (flags >> 11);
+		if (bD)
+			mask = 0x10;
+		if (bB)
+		{
+			if (bA)
+				mask |= 7;
+			else
+				mask |= 5;
+		}
+		else if (bA)
+			mask |= 6;
+		static ConVar r_drawwatersurface("r_drawwatersurface", g_1027a844, 0);
+		if (bC && r_drawwatersurface.GetInt())
+			mask |= 8;
+		render->vfunc19(mask);
+		p = sub_100ad7a0();
+		if (p->m_pTimer)
+			p->m_dAccum += p->m_pTimer->Now() - p->m_dStart;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10199cc0 size=0x20d
 #include "ScopeTrace.h"
 #include "engineclient.h"
