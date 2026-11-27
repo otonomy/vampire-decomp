@@ -78,6 +78,7 @@ public:
 		// "CVDmg_t::ToStr": scope trace; into the global buffer at 0x1074e5c8: "(" then the first block's name, " <field +4> <name of the damage type record>", the second block's name and " )"
 		// "CVDmg_t::ToShortStr": scope trace; into the global buffer at 0x1074e2ec: "" for field +0 == -1, else " %s %d" (block name, field +4) or " %d" (field +4) when the block at +0x14 is empty
 	char *sub_10159400();
+	char *sub_10159260();
 	static char *sub_10158c80(int flags);	// "CVDmg_t::DMGFlagsToStr": scope trace; the names of the set DMG_ flags in a static 128 byte buffer
 	void sub_10158790();	// the destructor body (stub 0x10010956), called directly
 	void sub_10158950(int a, int b, int c);	// "CVDmg_t::Set": scope trace, stores a / c / b in the fields +0 / +4 / +0x10 (the free-function form of the same address is matched as sub_101fa8d0)
