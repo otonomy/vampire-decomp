@@ -957,6 +957,42 @@ bool C_BaseEntity::vfunc75()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a0c10 size=0xff
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "C_BaseEntity.h"
+#include "engineclient.h"
+struct dlight_100a0c10 {
+	int m_unk0;
+	Vector origin;
+	float radius;
+	unsigned char r, g, b, e;
+	float die;
+};
+#define F(t, o) (*(t *)((char *)this + (o)))
+// TARGET: C_BaseEntity::vfunc76
+void C_BaseEntity::vfunc76()
+{
+	unsigned int index = F(int, 0x44);
+	if (index == render->vfunc39())
+		return;
+	if (F(unsigned char, 0x74) & 4) {
+		dlight_100a0c10 *dl = (dlight_100a0c10 *)effects->CL_AllocDlight(index);
+		dl->origin = GetAbsOrigin();
+		pcd_stage(dl)->origin.z += 16.0f;
+		dl->r = dl->g = dl->b = 250;
+		dl->radius = enginerandom->RandomFloat(400.0, 431.0f);
+		dl->die = engine->Time(0) + 0.001;
+	}
+	if (F(unsigned char, 0x74) & 8) {
+		dlight_100a0c10 *dl = (dlight_100a0c10 *)effects->CL_AllocDlight(F(int, 0x44));
+		dl->origin = GetAbsOrigin();
+		dl->r = dl->g = dl->b = 100;
+		dl->radius = enginerandom->RandomFloat(200.0, 231.0f);
+		dl->die = engine->Time(0) + 0.001;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a0de0 size=0x10
 #include "C_BaseEntity.h"
 namespace lifted {
