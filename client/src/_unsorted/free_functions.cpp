@@ -112032,6 +112032,130 @@ int __stdcall sub_1014a260(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1014a270 size=0x541
+#include "CUnknown101e0f00.h"
+#include "C_BaseAnimating.h"
+#include "ConVar.h"
+#include "Ray_t.h"
+#include "CTraceFilterSimple.h"
+#include "CGameTrace.h"
+#include "engineclient.h"
+
+struct CStatOwnerView_105e74fc
+{
+	char *sub_10140060(void *pEntity);
+};
+
+// C_BaseEntity's slots 23 and 107 return a Vector by value (hidden return pointer); the header still types them
+// void() / int(int) because matched overrides are saved under those signatures.
+#define EV_S(n) virtual void s##n();
+#define EV_S10(a) EV_S(a##0) EV_S(a##1) EV_S(a##2) EV_S(a##3) EV_S(a##4) EV_S(a##5) EV_S(a##6) EV_S(a##7) EV_S(a##8) EV_S(a##9)
+struct CEntityBoxView
+{
+	EV_S(0) EV_S(1) EV_S(2) EV_S(3) EV_S(4) EV_S(5) EV_S(6) EV_S(7) EV_S(8) EV_S(9)
+	EV_S10(1)
+	EV_S(20) EV_S(21) EV_S(22)
+	virtual Vector vfunc23();
+	EV_S(24) EV_S(25) EV_S(26) EV_S(27) EV_S(28) EV_S(29)
+	EV_S10(3) EV_S10(4) EV_S10(5) EV_S10(6) EV_S10(7) EV_S10(8) EV_S10(9)
+	EV_S(100) EV_S(101) EV_S(102) EV_S(103) EV_S(104) EV_S(105) EV_S(106)
+	virtual Vector vfunc107();
+};
+
+extern CStatOwnerView_105e74fc g_105e74fc;
+extern ConVar g_103edd98;
+void sub_101659b0(const Vector &start, const Vector &end, int r, int g, int b, bool noDepthTest, float duration);
+
+static inline void UTIL_TraceLine(const Vector &vecAbsStart, const Vector &vecAbsEnd, unsigned int mask, const void *ignore, int collisionGroup, CGameTrace *ptr)
+{
+	Ray_t ray;
+	ray.InitInline(vecAbsStart, vecAbsEnd);
+	CTraceFilterSimple traceFilter;
+	traceFilter.sub_1004b5c0(ignore, collisionGroup);
+	enginetrace->vfunc4((int)&ray, mask, &traceFilter, (int)ptr);
+}
+
+char CUnknown101e0f00::sub_1014a270(CUnknown101e0f00Entry *pEntry, void *pSource, void *pSource2, void *pTarget, char flag)
+{
+	*(int *)((char *)this + 0x14) = 0;
+
+	C_BaseAnimating *pTgt = (C_BaseAnimating *)pTarget;
+	if (*((unsigned char *)pTgt + 0x74) & 0x40)
+		return false;
+	if (!pTgt->sub_1008f900(-1))
+		return false;
+	if (!pTgt->vfunc18())
+		return false;
+	char *pOwner = *(char **)((char *)pTgt + 0x3f8);
+	if (pOwner && pOwner[0x160c])
+		return false;
+	if (!*((char *)pTgt + 0x10d4))
+		return false;
+	if (g_105e74fc.sub_10140060(pTgt)[0xa1])
+		return false;
+
+	C_BaseEntity *pSrc = (C_BaseEntity *)pSource;
+	if (pTgt == pSrc && pEntry->m_range.Filter()->sub_10146660(7))
+		return false;
+
+	if (flag)
+	{
+		if ((pTgt->GetAbsOrigin() - pSrc->GetAbsOrigin()).Length() > pEntry->m_range.m_nRange)
+		{
+			*(int *)((char *)this + 0x14) = 1;
+			return false;
+		}
+	}
+
+	C_BaseEntity *pSrc2 = (C_BaseEntity *)pSource2;
+	int affects = pEntry->m_range.m_iAffects;
+	if (affects == 0)
+	{
+		if ((pTgt->GetAbsOrigin() - pSrc2->GetAbsOrigin()).Length() > pEntry->m_range.m_nRange)
+		{
+			*(int *)((char *)this + 0x14) = 1;
+			return false;
+		}
+	}
+	else if (affects == 2)
+	{
+		if ((pTgt->GetAbsOrigin() - pSrc2->GetAbsOrigin()).Length() > pEntry->m_range.m_nMaxRadius)
+		{
+			*(int *)((char *)this + 0x14) = 1;
+			return false;
+		}
+		if (pEntry->m_range.m_nMinRadius > 0)
+		{
+			if ((pTgt->GetAbsOrigin() - pSrc2->GetAbsOrigin()).Length() < pEntry->m_range.m_nMinRadius)
+			{
+				*(int *)((char *)this + 0x14) = 1;
+				return false;
+			}
+		}
+	}
+
+	if (pSrc2)
+	{
+		CEntityBoxView *pS = (CEntityBoxView *)pSrc2;
+		CEntityBoxView *pT = (CEntityBoxView *)pTgt;
+		Vector vecSrc;
+		vecSrc = pS->vfunc107() - (pS->vfunc107() - pS->vfunc23()) * 0.5f;
+		CGameTrace tr;
+		UTIL_TraceLine(vecSrc, pT->vfunc107() - (pT->vfunc107() - pT->vfunc23()) * 0.5f, 0x46004003, pSrc2, 0, &tr);
+
+		if (g_103edd98.GetBool())
+			sub_101659b0(*(Vector *)tr.m_startpos, *(Vector *)tr.m_endpos, 0xff, 0, 0, true, -1.0f);
+
+		if (tr.m_fraction < 1.0f && tr.m_pEnt && (void *)tr.m_pEnt != pTgt)
+		{
+			*(int *)((char *)this + 0x14) = 2;
+			return false;
+		}
+	}
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1014a7c0 size=0x8
 struct S { int a[5]; unsigned m14; bool sub_1014a7c0(); };
 bool S::sub_1014a7c0() { if (m14 == 1) return true; return false; }

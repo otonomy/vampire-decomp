@@ -7754,6 +7754,7 @@
 0x1014a240 func   ?sub_1014a240@@YAHXZ sub_1014a240
 0x1014a250 func   ?sub_1014a250@@YGHH@Z sub_1014a250
 0x1014a260 func   ?sub_1014a260@@YGHH@Z sub_1014a260
+0x1014a270 func   ?sub_1014a270@CUnknown101e0f00@@QAEDPAUCUnknown101e0f00Entry@@PAX11D@Z CUnknown101e0f00::sub_1014a270
 0x1014a7c0 func   ?sub_1014a7c0@S@@QAE_NXZ S::sub_1014a7c0
 0x1014a7d0 func   ?sub_1014a7d0@@YGPAVC_BaseEntity@@PAX@Z sub_1014a7d0
 0x1014a9c0 func   ?sub_1014a9c0@@YGHH@Z sub_1014a9c0
