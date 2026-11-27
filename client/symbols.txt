@@ -3036,6 +3036,7 @@
 0x10055980 func   ??0CHudInfo@@QAE@H@Z CHudInfo::CHudInfo
 0x10055a00 func   ??_GCHudInfo@@UAEPAXI@Z ??_GCHudInfo@@UAEPAXI@Z
 0x10055a20 func   ??1CHudInfo@@UAE@XZ CHudInfo::~CHudInfo
+0x10055a50 func   ?vfunc98@CHudInfo@@UAEXXZ CHudInfo::vfunc98
 0x10055d20 func   ?sub_10055d20@@YIHPAUV_10055d20@@@Z sub_10055d20
 0x10055f20 func   ?sub_10055f20@CUnknown10055f20@@QAEDD@Z CUnknown10055f20::sub_10055f20
 0x10055f30 func   ?sub_10055f30@@YAHXZ sub_10055f30
