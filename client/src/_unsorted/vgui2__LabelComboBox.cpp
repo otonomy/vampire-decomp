@@ -11,6 +11,19 @@ vgui2::LabelComboBox *pcd_emit_101bb0f0(const vgui2::LabelComboBox &other) { ret
 // TARGET: ??_GLabelComboBox@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101bb110 size=0x33
+#include "vgui2__LabelComboBox.h"
+vgui2::LabelComboBox::~LabelComboBox()
+{
+	vgui2::Panel *a = *(vgui2::Panel **)((char *)this + 0xf8);
+	if (a)
+		delete a;
+	vgui2::Panel *b = *(vgui2::Panel **)((char *)this + 0xfc);
+	if (b)
+		delete b;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101bb180 size=0xe
 #include "vgui2__LabelComboBox.h"
 namespace lifted {
