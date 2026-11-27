@@ -115398,6 +115398,99 @@ void CPartListUnit3::sub_10142850()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101428b0 size=0x1e3
+#include "CUnknown10141210.h"
+struct IObjV
+{
+	virtual void v0(); virtual void v1();
+	virtual IObjV *vFirstChild(const char *name);
+	virtual IObjV *vNext();
+};
+struct SecListV { int m_grow; int m_alloc; int m_size; void **m_data; bool sub_101414b0(IObjV *); };
+struct BigV
+{
+	BigV *sub_10142340(int);
+	void sub_101423d0(void *);
+	bool sub_10142480(IObjV *);
+};
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" __declspec(dllimport) void DevMsg(int, const char *, ...);
+extern SecListV g_105e7780;
+extern int g_105e7788;
+extern CUnknown10141210 **g_105e778c;
+
+struct BigListV
+{
+	int m_grow; int m_alloc; int m_size; BigV **m_data;
+	bool sub_101428b0(const char *a1, IObjV *root, int idx, const char *name);
+};
+
+bool BigListV::sub_101428b0(const char *a1, IObjV *root, int idx, const char *name)
+{
+	IObjV *sec = root->vFirstChild(name);
+	if (sec) {
+		g_105e7780.sub_101414b0(sec);
+		IObjV *child = sec->vFirstChild("PopUp");
+		while (child) {
+			if (m_alloc == m_size) {
+				m_alloc += m_grow;
+				if (m_data) {
+					BigV **n = (BigV **)operator new(m_alloc * 4);
+					int i = 0;
+					if (m_size > 0) {
+						do {
+							n[i] = m_data[i];
+							i++;
+						} while (i < m_size);
+					}
+					if (i < m_alloc) {
+						do {
+							n[i] = 0;
+							i++;
+						} while (i < m_alloc);
+					}
+					operator delete(m_data);
+					m_data = n;
+				} else {
+					m_data = (BigV **)operator new(m_alloc * 4);
+					int i = 0;
+					if (m_alloc > 0) {
+						do {
+							m_data[i] = 0;
+							i++;
+						} while (i < m_alloc);
+					}
+				}
+				m_size++;
+			} else
+				m_size++;
+			if (!m_data[m_size - 1]) {
+				void *mem = operator new(0x174);
+				m_data[m_size - 1] = mem ? ((BigV *)mem)->sub_10142340(m_size - 1) : 0;
+			}
+			BigV *p = m_data[m_size - 1];
+			if (!p) {
+				Msg("Unable to parse data file for: %s.  Memory allocation ERROR!\n", a1);
+				return false;
+			}
+			CUnknown10141210 *def;
+			if (idx >= 0 && idx < g_105e7788) {
+				def = g_105e778c[idx];
+			} else {
+				static CUnknown10141210 s_default(-1);
+				def = &s_default;
+			}
+			p->sub_101423d0((char *)def + 0x14);
+			p->sub_10142480(child);
+			child = child->vNext();
+		}
+		return true;
+	}
+	DevMsg(1, "ERROR: CharGenWizard: CVPopUpInfoMgr::LoadSection FAILED: %s!\n", name);
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10142b50 size=0x135
 #include "CVPopUpInfoMgr.h"
 #include "engineclient.h"
