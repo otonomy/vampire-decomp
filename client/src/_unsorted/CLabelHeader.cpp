@@ -1,6 +1,29 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x10171040 size=0x59
+#include "CLabelHeader.h"
+#pragma warning(disable: 4716)
+struct ColorV
+{
+	unsigned char c[4];
+	ColorV(int r, int g, int b, int a) { c[0] = r; c[1] = g; c[2] = b; c[3] = a; }
+};
+struct TgtV2 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void f3(int); };
+struct TgtV { void *vt; char pad[0x1c]; TgtV2 *m_p20; };
+typedef vgui2::Label BaseClass;
+// TARGET: CLabelHeader::vfunc74
+int CLabelHeader::vfunc74(int pScheme)
+{
+	BaseClass::vfunc74(pScheme);
+	TgtV *p = *(TgtV **)((char *)this + 0xb8);
+	ColorV c(255, 170, 0, 0);
+	p->m_p20->f3(*(int *)&c);
+	ColorV d(0, 0, 0, 0);
+	vfunc50(*(int *)&d);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101710a0 size=0xb4
 #include "CLabelHeader.h"
 

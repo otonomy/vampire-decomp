@@ -8782,6 +8782,7 @@
 0x10170f60 func   ?sub_10170f60@@YAHXZ sub_10170f60
 0x10170f70 func   ?sub_10170f70@@YAHXZ sub_10170f70
 0x10170f90 func   ??1CharEditPanel@@UAE@XZ CharEditPanel::~CharEditPanel
+0x10171040 func   ?vfunc74@CLabelHeader@@UAEHH@Z CLabelHeader::vfunc74
 0x101710a0 func   ?vfunc138@CLabelHeader@@UAEXHPBD@Z CLabelHeader::vfunc138
 0x10171160 func   ?vfunc108@CLabelHeader@@UAEXPBD@Z CLabelHeader::vfunc108
 0x10171320 func   ?vfunc118@CLabelHeader@@UAEXXZ CLabelHeader::vfunc118
