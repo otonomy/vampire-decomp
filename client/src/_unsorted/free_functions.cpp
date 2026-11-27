@@ -106685,6 +106685,47 @@ void sub_1013aee0(CUtlBuffer *buf, HdrX *hdr, Col4 *dst)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013aff0 size=0x164
+#include "CUtlBuffer.h"
+
+struct SImgInfo_1013aff0
+{
+	int m_unk[3];
+	unsigned short m_nCount;
+};
+
+void sub_1013ce00(CUtlBuffer *buf, const char *fmt, void *out);
+
+static inline unsigned char GetUC_1013aff0(CUtlBuffer *buf)
+{
+	unsigned char c;
+	if (!(buf->m_nFlags & 1))
+	{
+		if (buf->sub_1013cbb0(1))
+		{
+			c = buf->m_pBuffer[buf->m_nGet];
+			buf->m_nGet++;
+		}
+		else
+			c = 0;
+	}
+	else
+		sub_1013ce00(buf, "%u", &c);
+	return c;
+}
+
+void sub_1013aff0(CUtlBuffer *buf, SImgInfo_1013aff0 *info, unsigned char *out)
+{
+	for (int i = 0; i < info->m_nCount; i++, out += 4)
+	{
+		out[2] = GetUC_1013aff0(buf);
+		out[1] = GetUC_1013aff0(buf);
+		out[0] = GetUC_1013aff0(buf);
+		out[3] = GetUC_1013aff0(buf);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013b160 size=0x6f
 extern "C" __declspec(dllimport) void Plat_Free(void *pMem);
 
