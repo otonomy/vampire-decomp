@@ -119113,6 +119113,59 @@ int sub_101522b0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101522c0 size=0x13c
+#include "ehandle.h"
+#include "CBaseEntityList.h"
+#include "matrix3x4_t.h"
+#include "QAngle.h"
+#include "C_BaseEntity.h"
+struct IParentRend_101522c0 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void SetupBones(matrix3x4_t *, int, int, float, int);
+};
+struct ParentEnt_101522c0 {
+	char pad[0x3f0];
+	int m_p3f0;
+};
+void sub_10108a50(const matrix3x4_t &, const matrix3x4_t &, matrix3x4_t &);
+void sub_10107eb0(const matrix3x4_t &, QAngle &);
+void sub_10108510(matrix3x4_t *, int, Vector *);
+struct Self_101522c0 {
+	char pad0[0x78c];
+	CBaseHandle m_hParent;
+	int m_iBone;
+	char pad1[0x1c];
+	matrix3x4_t m_local;
+	int m_iState;
+	Vector m_vecOrigin;
+	QAngle m_angAngles;
+	void sub_100919c0(matrix3x4_t *, int, int, float, int);
+	void sub_101522c0(matrix3x4_t *, int, int, float, int);
+};
+// TARGET: Self_101522c0::sub_101522c0
+void Self_101522c0::sub_101522c0(matrix3x4_t *pOut, int nMax, int boneMask, float t, int a5)
+{
+	matrix3x4_t boneToWorld[350];
+	matrix3x4_t result;
+	if (m_iBone >= 0 && m_iState == 1) {
+		ParentEnt_101522c0 *pParent = (ParentEnt_101522c0 *)m_hParent.Get();
+		if (pParent && pParent->m_p3f0) {
+			((IParentRend_101522c0 *)((char *)pParent + 4))->SetupBones(boneToWorld, 350, 0xfffc, t, a5);
+			a5 = 0;
+			sub_10108a50(boneToWorld[m_iBone], m_local, result);
+			sub_10107eb0(result, m_angAngles);
+			sub_10108510(&result, 3, &m_vecOrigin);
+			C_BaseEntity *pEnt = (C_BaseEntity *)((char *)this - 4);
+			pEnt->sub_100a2100(m_angAngles);
+			pEnt->sub_100a2030(&m_vecOrigin);
+		}
+	}
+	sub_100919c0(pOut, nMax, boneMask, t, a5);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10152400 size=0x15
 namespace lifted {
 int sub_10094040();
