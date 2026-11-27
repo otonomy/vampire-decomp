@@ -10,6 +10,7 @@ class C_Func_Dust : public C_BaseEntity
 public:
 	C_Func_Dust();
 	virtual ~C_Func_Dust();
+	virtual void PostDataUpdate(int updateType);
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with C_Func_Dust's own function
 	virtual int vfunc15();
@@ -23,7 +24,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_LifetimeMin;	// 0x424
 	int m_LifetimeMax;	// 0x428
 	int m_DistMax;	// 0x42c
-	int m_unk430;
+	const char *m_pszMaterial;
 	int m_DustFlags;	// 0x434: 2 scale motes by distance, 4 frozen
 	CParticleEffect m_ParticleEffect;
 	int m_unk4a8;
@@ -31,7 +32,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	unsigned char m_unk4ad;
 	unsigned char m_unk4ae;
 	unsigned char m_unk4af;
-	int m_unk4b0;
+	float m_flFactor;
 	int m_unk4b4;
 	void sub_100babb0();	// AttemptSpawnNewParticle (Source 2003 c_func_dust.cpp)
 };
