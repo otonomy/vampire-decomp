@@ -8996,6 +8996,7 @@
 0x1017ac30 func   ?sub_1017ac30@@YAXXZ sub_1017ac30
 0x1017ac40 func   ?sub_1017ac40@CUnknown1017ac40@@QAEHXZ CUnknown1017ac40::sub_1017ac40
 0x1017ac60 func   ?sub_1017ac60@@YAPBDHH_N@Z sub_1017ac60
+0x1017af70 func   ?sub_1017af70@@YAPBDHH@Z sub_1017af70
 0x1017b130 func   ?sub_1017b130@CUnknown1017b130@@QAEPAXHHH@Z CUnknown1017b130::sub_1017b130
 0x1017b160 func   ??_GVRButton@@UAEPAXI@Z ??_GVRButton@@UAEPAXI@Z
 0x1017b180 func   ??1VRButton@@UAE@XZ VRButton::~VRButton
