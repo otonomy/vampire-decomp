@@ -144504,6 +144504,31 @@ void CViewRender::sub_10190390()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10190640 size=0x15f
+#include "CViewRender.h"
+#include "ConVar.h"
+#include "engineclient.h"
+#include <math.h>
+
+extern ConVar *g_105fc7fc;
+extern ConVar *g_105fbea4;
+extern ConVar *g_105fbdc4;
+extern ConVar *g_105fc644;
+extern ConVar *g_105fc5fc;
+extern ConVar *g_105fbd7c;
+
+struct VBobView_10190640 { char m_pad[0x28c]; float m_flScale; };
+#define CVF(p) ((p)->vfunc1() ? 0.0f : (p)->m_fValue)
+
+void CViewRender::sub_10190640()
+{
+	VBobView_10190640 *v = (VBobView_10190640 *)this;
+	*(float *)((char *)this + 0x68) += (float)sin(engine->Time(0) * CVF(g_105fc7fc)) * v->m_flScale * CVF(g_105fbea4);
+	*(float *)((char *)this + 0x60) += (float)sin(engine->Time(0) * CVF(g_105fbdc4)) * v->m_flScale * CVF(g_105fc644);
+	*(float *)((char *)this + 0x64) += (float)sin(engine->Time(0) * CVF(g_105fc5fc)) * v->m_flScale * CVF(g_105fbd7c);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101907a0 size=0xaa
 #include "CInput.h"
 #include "Vector.h"
