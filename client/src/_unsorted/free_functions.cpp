@@ -137136,6 +137136,83 @@ int CUnknown101820f0::sub_101820f0(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10182100 size=0x12c
+struct CUnknown1017d310
+{
+	char m_pad[0xbc];
+	int m_n0bc;
+	void sub_1017d310(char);
+};
+
+struct StatEnt { int m_0; int m_key; int m_pad[6]; int m_val; };
+
+struct SPanelView
+{
+	char m_pad00[0xb4];
+	int m_n0b4;
+	char m_pad0b8[0xe4 - 0xb8];
+	int m_nA;
+	CUnknown1017d310 **m_pA;
+	char m_pad0ec[0xf4 - 0xec];
+	int m_nE1;
+	char m_pad0f8[4];
+	StatEnt *m_pE1;
+	char m_pad100[0x130 - 0x100];
+	int m_nB;
+	CUnknown1017d310 **m_pB;
+	char m_pad138[0x140 - 0x138];
+	int m_nE2;
+	char m_pad144[4];
+	StatEnt *m_pE2;
+	char m_pad14c[0x18c - 0x14c];
+	int m_nE3;
+	char m_pad190[4];
+	StatEnt *m_pE3;
+	char m_pad198[0x1d8 - 0x198];
+	int m_nE4;
+	char m_pad1dc[4];
+	StatEnt *m_pE4;
+};
+
+void __fastcall sub_10182100(SPanelView *self, int edx, int key)
+{
+	int i;
+	if (key)
+		self->m_n0b4 = -1;
+	for (i = 0; i < self->m_nE1; i++) {
+		if (self->m_pE1[i].m_key == key)
+			self->m_n0b4 = self->m_pE1[i].m_val;
+	}
+	for (i = 0; i < self->m_nE2; i++) {
+		if (self->m_pE2[i].m_key == key)
+			self->m_n0b4 = self->m_pE2[i].m_val;
+	}
+	for (i = 0; i < self->m_nE3; i++) {
+		if (self->m_pE3[i].m_key == key)
+			self->m_n0b4 = self->m_pE3[i].m_val;
+	}
+	for (i = 0; i < self->m_nE4; i++) {
+		if (self->m_pE4[i].m_key == key)
+			self->m_n0b4 = self->m_pE4[i].m_val;
+	}
+	int sel = key ? self->m_n0b4 : -2;
+	for (i = 0; i < self->m_nA; i++) {
+		CUnknown1017d310 *p = self->m_pA[i];
+		if (p->m_n0bc == sel)
+			p->sub_1017d310(1);
+		else
+			p->sub_1017d310(0);
+	}
+	for (i = 0; i < self->m_nB; i++) {
+		CUnknown1017d310 *p = self->m_pB[i];
+		if (p->m_n0bc == sel)
+			p->sub_1017d310(1);
+		else
+			p->sub_1017d310(0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10182230 size=0xfc
 struct CUnknown1017d310
 {
