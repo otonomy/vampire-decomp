@@ -4013,6 +4013,7 @@
 0x1009c470 func   ?sub_1009c470@@YAXXZ sub_1009c470
 0x1009c500 func   ?sub_1009c500@@YAXXZ sub_1009c500
 0x1009c5b0 func   ?sub_1009c5b0@@YAXPAVIHandleEntity@@@Z sub_1009c5b0
+0x1009c6b0 func   ?sub_1009c6b0@@YAXPAVC_BaseCombatWeapon@@@Z sub_1009c6b0
 0x1009c7e0 func   ?sub_1009c7e0@@YAXXZ sub_1009c7e0
 0x1009c7f0 func   ?sub_1009c7f0@@YAPAVC_BaseCombatWeapon@@HH@Z sub_1009c7f0
 0x1009c950 func   ?sub_1009c950@@YAHXZ sub_1009c950

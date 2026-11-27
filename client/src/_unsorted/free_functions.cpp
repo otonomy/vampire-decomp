@@ -50990,6 +50990,70 @@ void sub_1009c5b0(IHandleEntity *pEntity)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009c6b0 size=0x128
+#include "C_BaseCombatWeapon.h"
+#include "C_BasePlayer.h"
+#include "ehandle.h"
+#include "UtlMem.h"
+
+extern "C" void *memmove(void *, const void *, unsigned int);
+
+struct OwnerSub { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual int v9(); };
+struct OwnerView { char pad[8]; OwnerSub sub; };
+
+struct HandleVec : UtlMem
+{
+	int m_size;
+	CBaseHandle *m_pElements;
+	CBaseHandle *Mem() const { return (CBaseHandle *)m_pMemory; }
+	int Find(const CBaseHandle &src) const
+	{
+		for (int i = 0; i < m_size; i++) {
+			IHandleEntity *a = src.Get();
+			IHandleEntity *b = Mem()[i].Get();
+			if (b == a)
+				return i;
+		}
+		return -1;
+	}
+};
+
+extern HandleVec g_1049d978;
+
+void sub_1009c6b0(C_BaseCombatWeapon *pWeapon)
+{
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return;
+	int own = *(int *)((char *)pPlayer + 0x16d4);
+	if (!own)
+		return;
+	if (!pWeapon)
+		return;
+	OwnerView *o = (OwnerView *)pWeapon->sub_1007bab0();
+	if (!o)
+		return;
+	if (own != o->sub.v9())
+		return;
+	CBaseHandle h;
+	h.m_Index = *((IHandleEntity *)pWeapon)->vfunc1();
+	HandleVec &v = g_1049d978;
+	if (v.Find(h) == -1) {
+		int elem = v.m_size;
+		if (v.m_size + 1 > v.m_allocationCount)
+			v.sub_1009cf00(v.m_size + 1 - v.m_allocationCount);
+		v.m_size += 1;
+		v.m_pElements = v.Mem();
+		int numToMove = v.m_size - elem - 1;
+		if (numToMove > 0)
+			memmove(&v.Mem()[elem + 1], &v.Mem()[elem], numToMove * sizeof(CBaseHandle));
+		CBaseHandle *p = &v.Mem()[elem];
+		if (p)
+			*p = h;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009c7e0 size=0xb
 namespace lifted {
 extern int g_1049d984;
