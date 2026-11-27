@@ -125154,6 +125154,36 @@ void sub_1015e630()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015e9e0 size=0x120
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "CVStatInfoList_t.h"
+#include "ScopeTrace.h"
+extern CVStatInfoList_t g_105f9220;
+extern CVStatInfoList_t g_105f90b8;
+extern CVStatInfoList_t g_105f8c60;
+extern CVStatInfoList_t g_105f91c8;
+// TARGET: sub_1015e9e0
+int __cdecl sub_1015e9e0(CVDmgBlock16_t *pBlock, int arg)
+{
+	ScopeTrace st("vampStats_SubIdxFromDepStr", g_102de300);
+	if (!pBlock->sub_10160660())
+	{
+		switch (pBlock->m_a)
+		{
+		case 0:
+			return g_105f9220.sub_1015cfe0(pcd_stage(pBlock->m_b))->sub_1015b300((const char *)arg);
+		case 1:
+			return g_105f90b8.sub_1015cfe0(pcd_stage(pBlock->m_b))->sub_1015b300((const char *)arg);
+		case 2:
+			return g_105f8c60.sub_1015cfe0(pcd_stage(pBlock->m_b))->sub_1015b300((const char *)arg);
+		case 3:
+			return g_105f91c8.sub_1015cfe0(pcd_stage(pBlock->m_b))->sub_1015b300((const char *)arg);
+		}
+	}
+	return -1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015eb00 size=0xc
 extern int g_102cb108[];
 // TARGET: sub_1015eb00
