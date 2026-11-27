@@ -130442,6 +130442,60 @@ int CVStatSubCost_t::sub_10159880(int level, bool bForce)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10159940 size=0x1cb
+#include "CVStatCost_t.h"
+#include "ScopeTrace.h"
+extern "C" int sprintf(char *, const char *, ...);
+extern "C" unsigned int strlen(const char *);
+#pragma intrinsic(strlen)
+extern "C" int abs(int);
+#pragma intrinsic(abs)
+struct ToStrNames { const char *sub_1015ecd0(); };
+struct ToStrOwner { int sub_1015f160(const char *); ToStrNames *sub_1015f270(int, int); };
+extern ToStrOwner g_105f93c0;
+extern char g_105f8d08[];
+// TARGET: CVStatSubCost_t::sub_10159940
+const char *CVStatSubCost_t::sub_10159940()
+{
+	ScopeTrace st("CVStatSubCost_t::ToStr", g_102de300);
+	switch (m_nType)
+	{
+	case 9998:
+	{
+		int off = 0;
+		for (int i = 0; i < m_nCount; i++)
+		{
+			if (!(i >= m_nCount - 1)) sprintf(g_105f8d08 + off, "%d, ", m_pTable[i]); else sprintf(g_105f8d08 + off, "%d", m_pTable[i]);
+			off += strlen(g_105f8d08 + off);
+		}
+		break;
+	}
+	case 9999:
+	{
+		int id = g_105f93c0.sub_1015f160("CostStrings");
+		if (id != -1)
+		{
+			const char *name = g_105f93c0.sub_1015f270(id, 3)->sub_1015ecd0();
+			if (m_nAdd == 0)
+				sprintf(g_105f8d08, "%s * %d", name, m_nBase);
+			else if (m_nAdd > 0)
+				sprintf(g_105f8d08, "( %s * %d ) + %d", name, m_nBase, m_nAdd);
+			else
+				sprintf(g_105f8d08, "( %s * %d ) - %d", name, m_nBase, abs(m_nAdd));
+		}
+		break;
+	}
+	case 10000:
+		g_105f8d08[0] = 0;
+		break;
+	default:
+		sprintf(g_105f8d08, "%d", m_nType);
+		break;
+	}
+	return g_105f8d08;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10159b10 size=0x2a
 #include "CUnknown101fbf80.h"
 
