@@ -146430,6 +146430,46 @@ void VItemInfoUI::sub_10186450(int arg)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10186620 size=0x1d0
+#include "VItemInfoUI.h"
+#include "CVStatInfoList_t.h"
+#include "ScopeTrace.h"
+extern CVStatInfoList_t g_105f8c60;
+int sub_100cd0f0();
+int sub_100cd100();
+struct IIModel { void sub_1018b320(const char *); void sub_1018bc30(const char *); };
+#define XRES(x) (x * (sub_100cd0f0() / 768.0))
+#define YRES(y) (y * (sub_100cd100() / 1024.0))
+// TARGET: VItemInfoUI::sub_10186620
+void VItemInfoUI::sub_10186620(int idx)
+{
+	const char *const &model = g_105f8c60.sub_1015cfe0(idx)->m_pszInfoModel;
+	const char *pszModel = model ? model : g_102de300;
+	if (*pszModel)
+	{
+		((IIModel *)m_n184)->sub_1018b320(pszModel);
+		((IIModel *)m_n184)->sub_1018bc30("ACT_IDLE");
+	}
+	const char *const &title = g_105f8c60.sub_1015cfe0(idx)->m_pszTitle;
+	sub_10186450((int)(title ? title : g_102de300));
+	sub_10186530(g_102de300, 0);
+	vgui2::TextEntry *desc = (vgui2::TextEntry *)((char *)this + 0x240);
+	desc->sub_101a9950(
+		(int)((YRES(470.0) - YRES(370.0)) * 0.5),
+		(int)(XRES(650.0) - XRES(310.0) - XRES(36.0)),
+		(int)YRES(370.0),
+		(int)XRES(310.0));
+	const char *const &help = g_105f8c60.sub_1015cfe0(idx)->m_apszHelpText[0];
+	desc->vfunc107(help ? help : g_102de300);
+	desc->vfunc101();
+	int h = desc->sub_101b1c70();
+	if (desc->sub_101b16e0() > h)
+		desc->vfunc140(1);
+	else
+		desc->vfunc140(0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101867f0 size=0x12
 struct S_101867f0 { char pad[0x180]; bool m; };
 void __fastcall sub_101867f0(S_101867f0 *self, int edx, int a)
