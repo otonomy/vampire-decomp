@@ -17133,6 +17133,47 @@ void sub_10027d20(const Vector &origin, const Vector &mins, const Vector &maxs, 
 }
 // END FUNCTION
 
+// FUNCTION: 0x10027ec0 size=0x159
+#include "engineclient.h"
+#include "Vector.h"
+void sub_10027d20(Vector *pos, const Vector &mins, const Vector &maxs, int, int, int, int, float t);
+void sub_100dfc60(Vector *a, Vector *b, int, int, int, int, float t);
+struct Ent_10027ec0 {
+	Vector m_pos;
+	int m_unk0c, m_unk10, m_unk14;
+	int m_idx;
+	int m_unk1c[(0x34 - 0x1c) / 4];
+	int m_state;
+	float m_t;
+};
+struct Self_10027ec0 {
+	char m_pad[0x980];
+	Ent_10027ec0 m_e[50];
+	void sub_10027c30(Vector *out, int);
+	void sub_10027ec0();
+};
+void Self_10027ec0::sub_10027ec0()
+{
+	Ent_10027ec0 *e = m_e;
+	for (int n = 50; n; n--, e++) {
+		int state = *(int *)((char *)e - 8);
+		if (state == 1) {
+			float t = engine->vfunc41(0);
+			sub_10027d20(&e->m_pos, Vector(-2.0f, -2.0f, -2.0f), Vector(2.0f, 2.0f, 2.0f), 0, 0, 255, 0, t);
+			if (e->m_idx == -1) {
+				Vector tmp;
+				sub_10027c30(&tmp, 0);
+				sub_100dfc60(&e->m_pos, &tmp, 50, 50, 255, 0, t);
+			} else if (e->m_idx >= 0 && e->m_idx < 50) {
+				sub_100dfc60(&e->m_pos, &m_e[e->m_idx].m_pos, 50, 50, 255, 0, t);
+			}
+		} else if (state != 0) {
+			sub_10027d20(&e->m_pos, Vector(-2.0f, -2.0f, -2.0f), Vector(2.0f, 2.0f, 2.0f), 255, 100, 255, 0, *(float *)((char *)e - 4));
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10028020 size=0x7d
 namespace lifted {
 extern int g_104a581c;
