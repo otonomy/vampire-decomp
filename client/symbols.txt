@@ -9291,6 +9291,7 @@
 0x1017b9a0 func   ?sub_1017b9a0@@YAXPAVPanel@vgui2@@PAPAVTextEntry@2@PBDHHHH2@Z sub_1017b9a0
 0x1017bb10 func   ?sub_1017bb10@CharEditInfoPanel@@QAEXXZ CharEditInfoPanel::sub_1017bb10
 0x1017c140 func   ?sub_1017c140@CUnknown1017c140@@QAEXXZ CUnknown1017c140::sub_1017c140
+0x1017c260 func   ?vfunc78@CharEditInfoPanel@@UAEXH@Z CharEditInfoPanel::vfunc78
 0x1017c3a0 func   ?vfunc124@CharEditInfoPanel@@UAEXH@Z CharEditInfoPanel::vfunc124
 0x1017c530 func   ?vfunc102@CharEditInfoPanel@@UAEHXZ CharEditInfoPanel::vfunc102
 0x1017c540 func   ?sub_1017c540@@YGXH@Z sub_1017c540
