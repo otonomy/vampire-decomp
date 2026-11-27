@@ -99,6 +99,30 @@ void CClientShadowMgr::vfunc15(int r, int g, int b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d5b50 size=0x51
+#include "CClientShadowMgr.h"
+struct ShadowSub { void sub_100d4710(); };
+struct ShadowVt {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void RemoveShadow(unsigned short h);
+};
+// TARGET: CClientShadowMgr::vfunc5
+void CClientShadowMgr::vfunc5()
+{
+	unsigned short h = m_Shadows.m_Head;
+	if (h != 0xffff) {
+		do {
+			unsigned short next = m_Shadows.m_pMemory[h].m_Next;
+			((ShadowVt *)this)->RemoveShadow(h);
+			h = next;
+		} while (h != 0xffff);
+	}
+	if (*((char *)this + 0xd8))
+		((ShadowSub *)((char *)this + 0x48))->sub_100d4710();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d5ce0 size=0x4f
 #include "CClientShadowMgr.h"
 #include "Vector.h"
