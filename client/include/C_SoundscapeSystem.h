@@ -15,7 +15,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual void vfunc4();
     virtual void vfunc5();
     virtual void vfunc6();
-    virtual void vfunc7();
+    virtual void vfunc7(int a);
+    void sub_100c0f30(int a);
     // the slots C_SoundscapeSystem adds to its base's vtable: 9-9, vfuncK at slot K
     virtual void vfunc9();
     void *sub_100c0a90(unsigned int flags);
