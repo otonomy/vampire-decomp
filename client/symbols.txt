@@ -9125,6 +9125,7 @@
 0x10188580 func   ?vfunc101@QuestLogPanel@@UAEXXZ QuestLogPanel::vfunc101
 0x10188590 func   ?sub_10188590@@YAXPAUPanelBase@@PAPAUTextEntryProxy@@PBDHHHH22@Z sub_10188590
 0x10189130 func   ?sub_10189130@@YAXXZ sub_10189130
+0x10189140 func   ?sub_10189140@CUnknown10189140@@QAEXXZ CUnknown10189140::sub_10189140
 0x101892d0 func   ?sub_101892d0@QuestLogPanel@@QAEXH@Z QuestLogPanel::sub_101892d0
 0x10189340 func   ?sub_10189340@@YGXH@Z sub_10189340
 0x10189380 func   ?vfunc78@QuestLogPanel@@UAEXH@Z QuestLogPanel::vfunc78

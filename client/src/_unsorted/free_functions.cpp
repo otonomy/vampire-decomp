@@ -136679,6 +136679,103 @@ void sub_10189130()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10189140 size=0x184
+namespace lifted {
+extern char g_102d39a4;
+extern int g_104a0d50;
+extern int g_104a57d4;
+int sub_100ccea0(int, int);
+struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual int f20(int); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual int f27(int, int); };
+}
+struct CUnknown10189140 { void sub_10189140(); };
+void CUnknown10189140::sub_10189140()
+{
+    int r0;
+    int r1;
+    int t0;
+    r0 = 4;
+    r1 = (int)((char *)this + 0x7c);
+    do {
+        t0 = *(int *)((char *)r1);
+        if (t0 != 0) {
+            ((lifted::V *)t0)->f20(1);
+        }
+        r1 = r1 + 4;
+        r0 = r0 - 1;
+    } while (r0 != 0);
+    int t1 = *(int *)((char *)this + 0xc8);
+    if (t1 != 0) {
+        ((lifted::V *)t1)->f20(1);
+    }
+    int t2 = *(int *)((char *)this + 0x98);
+    *(int *)((char *)this + 0xc8) = 0;
+    if (t2 != 0) {
+        ((lifted::V *)t2)->f20(1);
+    }
+    int t3 = *(int *)((char *)this + 0x8c);
+    *(int *)((char *)this + 0x98) = 0;
+    if (t3 != 0) {
+        ((lifted::V *)t3)->f20(1);
+    }
+    int t4 = *(int *)((char *)this + 0x90);
+    *(int *)((char *)this + 0x8c) = 0;
+    if (t4 != 0) {
+        ((lifted::V *)t4)->f20(1);
+    }
+    int t5 = *(int *)((char *)this + 0xac);
+    *(int *)((char *)this + 0x90) = 0;
+    if (t5 != 0) {
+        ((lifted::V *)t5)->f20(1);
+    }
+    int t6 = *(int *)((char *)this + 0xa0);
+    *(int *)((char *)this + 0xac) = 0;
+    if (t6 != 0) {
+        ((lifted::V *)t6)->f20(1);
+    }
+    int t7 = *(int *)((char *)this + 0x90);
+    *(int *)((char *)this + 0xa0) = 0;
+    if (t7 != 0) {
+        ((lifted::V *)t7)->f20(1);
+    }
+    int t8 = *(int *)((char *)this + 0xc0);
+    *(int *)((char *)this + 0x90) = 0;
+    if (t8 != 0) {
+        ((lifted::V *)t8)->f20(1);
+    }
+    int t9 = *(int *)((char *)this + 0xb4);
+    *(int *)((char *)this + 0xc0) = 0;
+    if (t9 != 0) {
+        ((lifted::V *)t9)->f20(1);
+    }
+    int t10 = *(int *)((char *)this + 0xb8);
+    *(int *)((char *)this + 0xb4) = 0;
+    if (t10 != 0) {
+        ((lifted::V *)t10)->f20(1);
+    }
+    int t11 = *(int *)((char *)this + 0x9c);
+    *(int *)((char *)this + 0xb8) = 0;
+    if (t11 != 0) {
+        ((lifted::V *)t11)->f20(1);
+    }
+    int t12 = *(int *)((char *)this + 0xb0);
+    *(int *)((char *)this + 0x9c) = 0;
+    if (t12 != 0) {
+        ((lifted::V *)t12)->f20(1);
+    }
+    int t13 = *(int *)((char *)this + 0xc4);
+    *(int *)((char *)this + 0xb0) = 0;
+    if (t13 != 0) {
+        ((lifted::V *)t13)->f20(1);
+    }
+    *(int *)((char *)this + 0xc4) = 0;
+    int t14 = lifted::g_104a0d50;
+    if (t14 != 0) {
+        int t15 = *(int *)((char *)lifted::g_104a57d4);
+        ((lifted::V *)lifted::g_104a57d4)->f27(lifted::sub_100ccea0((int)&lifted::g_102d39a4, *(int *)((char *)t14 + 0x15ec)), 1);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x101892d0 size=0x6b
 #include "C_BasePlayer.h"
 #include "QuestLogPanel.h"
