@@ -171,6 +171,7 @@
 0x10004420 func   ??1C_ParticleStorm@@UAE@XZ C_ParticleStorm::~C_ParticleStorm
 0x10004480 func   ?sub_10004480@CUnknown10004480@@QAEXHD@Z CUnknown10004480::sub_10004480
 0x100044d0 func   ?sub_100044d0@CUnknown100044d0@@QAEDD@Z CUnknown100044d0::sub_100044d0
+0x10004510 func   ?OnDataChanged@C_ParticleStorm@@UAEXH@Z C_ParticleStorm::OnDataChanged
 0x10004560 func   ?sub_10004560@@YADXZ sub_10004560
 0x10004610 func   ?sub_10004610@CUnknown10004610@@QAEXM@Z CUnknown10004610::sub_10004610
 0x10004ce0 func   ?sub_10004ce0@Vector@@QAEXMM@Z Vector::sub_10004ce0
