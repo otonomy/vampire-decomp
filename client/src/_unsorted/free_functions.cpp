@@ -66967,6 +66967,59 @@ int LLView::sub_100d3930(unsigned short i)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d3970 size=0x10a
+#include "CUtlLinkedList12S.h"
+extern "C" void *(__cdecl *g_101e3100)(int);
+extern "C" void *(__cdecl *g_101e3104)(void *, int);
+extern "C" void (__cdecl *g_101e310c)(const char *, ...);
+
+static inline unsigned short InvalidIndex() { return (unsigned short)~0; }
+
+// TARGET: CUtlLinkedList12S::sub_100d3970
+unsigned short CUtlLinkedList12S::sub_100d3970(bool multilist)
+{
+	unsigned short elem;
+	if (m_FirstFree == InvalidIndex())
+	{
+		if (m_NumAlloced == m_allocationCount && m_growSize != -1)
+		{
+			int nNew = m_allocationCount + 1;
+			while (m_allocationCount < nNew)
+			{
+				if (m_allocationCount != 0)
+				{
+					if (m_growSize)
+						m_allocationCount += m_growSize;
+					else
+						m_allocationCount += m_allocationCount;
+				}
+				else
+					m_allocationCount = 3;
+			}
+			if (m_pMemory)
+				m_pMemory = (CUtlLinkedList12SNode *)g_101e3104(m_pMemory, m_allocationCount * 12);
+			else
+				m_pMemory = (CUtlLinkedList12SNode *)g_101e3100(m_allocationCount * 12);
+		}
+		elem = m_NumAlloced;
+		m_NumAlloced++;
+		if (elem == InvalidIndex())
+			g_101e310c("CUtlLinkedList overflow!\n");
+	}
+	else
+	{
+		elem = m_FirstFree;
+		m_FirstFree = InternalElement(m_FirstFree).m_Next;
+	}
+	if (!multilist)
+		InternalElement(elem).m_Next = InternalElement(elem).m_Previous = elem;
+	else
+		InternalElement(elem).m_Next = InternalElement(elem).m_Previous = InvalidIndex();
+	m_pElements = m_pMemory;
+	return elem;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d3a80 size=0x8d
 #include "CUtlLinkedList8.h"
 
