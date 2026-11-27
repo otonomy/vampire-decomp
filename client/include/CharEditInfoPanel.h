@@ -8,6 +8,7 @@
 class CharEditInfoPanel : public vgui2::PropertyPage
 {
 public:
+	CharEditInfoPanel();
 	virtual ~CharEditInfoPanel();
 	static void operator delete(void *pMem) { free(pMem); }
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
