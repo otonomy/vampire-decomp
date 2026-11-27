@@ -109165,6 +109165,52 @@ void CPartListUnit3::sub_10142850()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10142b50 size=0x135
+#include "CVPopUpInfoMgr.h"
+#include "engineclient.h"
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+extern void (*g_101e3118)(int level, const char *fmt, ...);
+struct CChk { bool sub_10142760(int a); };
+struct PopUpItem { int m_unk0; const char *m_pszName; };
+int CVPopUpInfoMgr::sub_10142b50(const char *name, int arg)
+{
+	int nCount = 0;
+	int found = -1;
+	int i;
+	g_101e3118(3, "[CharGenWiz]: CVPopUpInfoMgr::Lookup: ( %s )\n\n", name);
+	for (i = 0; i < m_nCount; i++) {
+		PopUpItem *p = (PopUpItem *)m_pItems[i];
+		const char *s = p->m_pszName;
+		if (!s)
+			s = "";
+		if (!_strcmpi(s, name) && ((CChk *)p)->sub_10142760(arg)) {
+			const char *n = p->m_pszName;
+			g_101e3118(3, "   PopUp: %s (%d)\n", n ? n : "", i);
+			found = i;
+			nCount++;
+		}
+	}
+	if (nCount <= 0)
+		return -1;
+	if (nCount == 1)
+		return found;
+	int pick = enginerandom->RandomInt(0, nCount - 1);
+	int k = 0;
+	for (i = 0; i < m_nCount; i++) {
+		PopUpItem *p = (PopUpItem *)m_pItems[i];
+		const char *s = p->m_pszName;
+		if (!s)
+			s = "";
+		if (!_strcmpi(s, name) && ((CChk *)p)->sub_10142760(arg)) {
+			if (k == pick)
+				return i;
+			k++;
+		}
+	}
+	return -1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10142e30 size=0x1a
 namespace lifted {
 struct C10142620 { int sub_10142620(); };
