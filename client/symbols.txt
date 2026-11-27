@@ -4422,6 +4422,7 @@
 0x100abdb0 func   ?sub_100abdb0@CUnknown100abdb0@@QAEHXZ CUnknown100abdb0::sub_100abdb0
 0x100abdf0 func   ?sub_100abdf0@CUnknown100abdf0@@QAEHXZ CUnknown100abdf0::sub_100abdf0
 0x100abe30 func   ?vfunc122@C_BaseViewModel@@UAEMXZ C_BaseViewModel::vfunc122
+0x100abe80 func   ?sub_100abe80@NetV_100abe80@@QAEXH@Z NetV_100abe80::sub_100abe80
 0x100abf90 func   ?sub_100abf90@@YADXZ sub_100abf90
 0x100abfa0 func   ?vfunc37@C_BaseViewModel@@UAEXXZ C_BaseViewModel::vfunc37
 0x100abfc0 func   ?vfunc120@C_BaseViewModel@@UAEXHH@Z C_BaseViewModel::vfunc120

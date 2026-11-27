@@ -54778,6 +54778,82 @@ int CUnknown100abdf0::sub_100abdf0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100abe80 size=0x10a
+#include "C_BaseAnimating.h"
+#include "C_BasePlayer.h"
+struct PoseV_100abe80 { int m_a; int m_b; int m_c; int m_d; };
+struct BaseV_100abe80
+{
+	void sub_100a06f0(int);
+	PoseV_100abe80 *sub_10096830(int);
+};
+struct WpnV_100abe80
+{
+	char *sub_1007b160();
+};
+extern WpnV_100abe80 *sub_1009b210();
+extern int g_104a0d7c;
+extern int g_105fbf3c;
+extern int g_105fbf40;
+extern float g_105fbf44;
+struct NetV_100abe80
+{
+	char m_pad[0x78];
+	int m_n78;
+	char m_pad2[0x62c - 0x7c];
+	int m_n62c;
+	int m_n630;
+	int m_n634;
+	char m_pad3[0x7b0 - 0x638];
+	int m_n7b0;
+	void sub_100abe80(int updateType);
+};
+void NetV_100abe80::sub_100abe80(int updateType)
+{
+	C_BasePlayer *pLocal = C_BasePlayer::GetLocalPlayer();
+	if (m_n78 != m_n7b0)
+	{
+		((BaseV_100abe80 *)((char *)this - 8))->sub_100a06f0(m_n78);
+		m_n7b0 = m_n78;
+	}
+	if (m_n634 != m_n62c && pLocal)
+	{
+		PoseV_100abe80 *p = ((BaseV_100abe80 *)((char *)this - 8))->sub_10096830(m_n634);
+		if (p)
+		{
+			int v = p->m_d;
+			if (!g_104a0d7c || v == 0xb4 || v == 0xb6 || v == 0x3a7 || v == 0x3b5)
+			{
+				g_104a0d7c = 0;
+				if (!*((char *)pLocal + 0x14d5))
+				{
+					g_104a0d7c = 1;
+					WpnV_100abe80 *w = sub_1009b210();
+					if (!w)
+						goto done;
+					if (!*(int *)(w->sub_1007b160() + 0x244c))
+						goto done;
+				}
+				else
+				{
+					WpnV_100abe80 *w = sub_1009b210();
+					if (w)
+					{
+						char *x = w->sub_1007b160();
+						g_105fbf3c = *(int *)(x + 0x4fe8c);
+						g_105fbf40 = *(int *)(x + 0x4fe90);
+						g_105fbf44 = -*(float *)(x + 0x4fe94);
+					}
+				}
+			}
+			g_104a0d7c = 0;
+		}
+	}
+done:
+	((C_BaseAnimating *)((char *)this - 8))->C_BaseAnimating::OnDataChanged(updateType);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100abf90 size=0x3
 char sub_100abf90()
 {
