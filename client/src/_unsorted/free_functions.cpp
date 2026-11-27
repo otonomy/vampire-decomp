@@ -53244,6 +53244,51 @@ void C_BaseEntity::sub_100a0450()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a0650 size=0x88
+#include "C_BaseEntity.h"
+#include "engineclient.h"
+
+struct PredCV
+{
+	virtual void s0();
+	virtual char v1();
+	char m_pad[0x28];
+	int m_n2c;
+};
+extern PredCV *g_104e170c;
+
+struct ListObj
+{
+	bool sub_10120760();
+	int sub_10120790();
+};
+
+bool __fastcall sub_100a2ed0(C_BaseEntity *self);
+
+// TARGET: C_BaseEntity::sub_100a0650
+void C_BaseEntity::sub_100a0650(const char *context)
+{
+	if (g_104e170c->v1())
+		return;
+	if (!g_104e170c->m_n2c)
+		return;
+	if (!sub_100a29a0())
+	{
+		ListObj *obj = (ListObj *)((char *)this + 0xcc);
+		if (!obj->sub_10120760())
+			return;
+		if (engine->vfunc34() - 1 != obj->sub_10120790())
+			return;
+		sub_100a2e40(1);
+	}
+	if (!vfunc94())
+		return;
+	if (sub_100a2ed0(this))
+		return;
+	sub_100a25b0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a06f0 size=0x15
 struct CUnknown1009fbb0 { void sub_1009fbb0(int a); void sub_100a06f0(int a); };
 void CUnknown1009fbb0::sub_100a06f0(int a)
