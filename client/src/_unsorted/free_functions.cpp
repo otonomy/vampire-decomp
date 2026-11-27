@@ -93194,6 +93194,45 @@ void C_BaseEntity::sub_1011b3b0(int type)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011b730 size=0x160
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+
+struct DataObj_1011b730 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void vfunc3(C_BaseEntity *pEnt); };
+struct DataSys_1011b730
+{
+	void *m_pad[2];
+	DataObj_1011b730 *m_data[32];
+	bool IsValidType(int type)
+	{
+		ScopeTrace st("CDataObjectAccessSystem::IsValidType", g_102de300);
+		if (type < 0 || type >= 32)
+			return false;
+		if (m_data[type])
+			return true;
+		return false;
+	}
+	void DestroyDataObject(int type, C_BaseEntity *pEnt)
+	{
+		ScopeTrace st("CDataObjectAccessSystem::DestroyDataObject", g_102de300);
+		if (!IsValidType(type))
+			return;
+		m_data[type]->vfunc3(pEnt);
+	}
+};
+extern DataSys_1011b730 g_104e0ba0;
+
+void C_BaseEntity::sub_1011b730(int type)
+{
+	ScopeTrace st("CBaseEntity::DestroyDataObject", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	if (sub_1011b290(type))
+	{
+		g_104e0ba0.DestroyDataObject(type, this);
+		sub_1011b3b0(type);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011bb30 size=0xf7
 struct VProfNode
 {
