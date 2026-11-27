@@ -673,6 +673,18 @@ public:
 	virtual const char *FindNext(int);	// slot 23; shapes differ
 	virtual void vfunc24();
 	virtual void FindClose(int);	// slot 25
+	virtual void vfunc26();
+	virtual void vfunc27();
+	virtual void vfunc28();
+	virtual void vfunc29();
+	virtual void vfunc30();
+	virtual void vfunc31();
+	virtual void vfunc32();
+	virtual void vfunc33();
+	virtual void vfunc34();
+	virtual void vfunc35();
+	virtual void vfunc36(int);
+	virtual void vfunc37();
 };
 extern IFileSystem *g_104a580c;
 
