@@ -5162,6 +5162,7 @@
 0x100cd2e0 func   ?sub_100cd2e0@CUnknown100cd2e0@@QAEHHHHH@Z CUnknown100cd2e0::sub_100cd2e0
 0x100cd310 func   ?sub_100cd310@CUnknown100cd310@@QAEXXZ CUnknown100cd310::sub_100cd310
 0x100cd330 func   ?sub_100cd330@@YAMABVVector@@MM@Z sub_100cd330
+0x100cd410 func   ?sub_100cd410@@YAXABVVector@@0H@Z sub_100cd410
 0x100cd530 func   ?sub_100cd530@@YAXXZ sub_100cd530
 0x100cd540 func   ?sub_100cd540@@YAXPBVVector@@HM@Z sub_100cd540
 0x100cd5f0 func   ?sub_100cd5f0@@YAHHH@Z sub_100cd5f0

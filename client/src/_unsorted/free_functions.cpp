@@ -65589,6 +65589,26 @@ float sub_100cd330(const Vector &position, float minz, float maxz)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100cd410 size=0x11f
+#include "Vector.h"
+#include "C_RecipientFilter.h"
+#include "engineclient.h"
+struct CTEIface { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16();
+	virtual void Bubbles(IRecipientFilter &filter, float delay, const Vector *mins, const Vector *maxs, float height, int modelindex, int count, float speed); };
+extern CTEIface *g_102b6980;
+float sub_100cd330(const Vector &pos, float minz, float maxz);
+// TARGET: sub_100cd410
+void __cdecl sub_100cd410(const Vector &mins, const Vector &maxs, int count)
+{
+	Vector mid = (mins + maxs) * 0.5f;
+	float flHeight = sub_100cd330(mid, mid.z, mid.z + 1024.0f);
+	flHeight = flHeight - mins.z;
+	CPASFilter filter(mid);
+	int idx = modelinfo->GetModelIndex("sprites/bubble.vmt");
+	g_102b6980->Bubbles(filter, 0.0f, &mins, &maxs, flHeight, idx, count, 8.0f);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100cd530 size=0x1
 void sub_100cd530()
 {
