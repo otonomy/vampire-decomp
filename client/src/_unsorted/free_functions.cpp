@@ -101286,6 +101286,70 @@ void UtlMem::sub_10130fd0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10131000 size=0x134
+#include "CUtlRBTree232.h"
+#include "CUnknown101b30d0.h"
+extern "C" __declspec(dllimport) void *Plat_Alloc(unsigned int);
+extern "C" __declspec(dllimport) void *Plat_Realloc(void *, unsigned int);
+struct Mem232 {
+	CUtlRBTree232::Node_t *m_pMemory;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+	void Grow(int num)
+	{
+		if (m_nGrowSize == -1)
+			return;
+		int nAllocationRequested = m_nAllocationCount + num;
+		while (m_nAllocationCount < nAllocationRequested) {
+			if (m_nAllocationCount != 0) {
+				if (m_nGrowSize)
+					m_nAllocationCount += m_nGrowSize;
+				else
+					m_nAllocationCount += m_nAllocationCount;
+			} else {
+				m_nAllocationCount = 1;
+			}
+		}
+		if (m_pMemory)
+			m_pMemory = (CUtlRBTree232::Node_t *)Plat_Realloc(m_pMemory, m_nAllocationCount * sizeof(CUtlRBTree232::Node_t));
+		else
+			m_pMemory = (CUtlRBTree232::Node_t *)Plat_Alloc(m_nAllocationCount * sizeof(CUtlRBTree232::Node_t));
+	}
+};
+int CUtlRBTree232::sub_10131000(int parent, bool leftchild)
+{
+	int i = m_FirstFree;
+	if (i == InvalidIndex()) {
+		if (m_nAllocationCount == m_TotalElements)
+			((Mem232 *)&m_pElements)->Grow(1);
+		i = m_TotalElements++;
+	} else {
+		m_FirstFree = sub_10131a70(i).m_Right;
+	}
+	char *p = m_pElements[i].m_Data;
+	if (p) {
+		*(unsigned short *)p = 0xffff;
+		((CUnknown101b30d0 *)(p + 0xc))->sub_101332a0();
+	}
+	Links_t &links = m_pElements[i].m_Links;
+	links.m_Parent = parent;
+	links.m_Right = InvalidIndex();
+	links.m_Left = InvalidIndex();
+	links.m_Tag = 0;
+	if (parent != InvalidIndex()) {
+		if (leftchild)
+			m_pElements[parent].m_Links.m_Left = i;
+		else
+			m_pElements[parent].m_Links.m_Right = i;
+	} else {
+		m_Root = i;
+	}
+	sub_10131f80(i);
+	m_NumElements++;
+	return i;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10131140 size=0xf9
 #include "utlrbtree.h"
 #include "CUtlRBTreeOf.h"
