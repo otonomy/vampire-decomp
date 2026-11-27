@@ -73,6 +73,8 @@ public:
 	void sub_1011c9a0(Vector &move);
 	int sub_1011cac0(Vector &in, const Vector &normal, Vector &out, float overbounce);
 	void sub_100a23f0(int flag);
+	void sub_100a1ce0(struct Ray_t &ray, const Vector &center, int decal, bool doTrace, CGameTrace &tr, int lod);
+	void sub_100a1b40(struct Ray_t &ray, int hitbox, int decal, bool doTrace, CGameTrace &tr, int lod);
 	void sub_100a1d60(const Vector &start, const Vector &pos, const Vector &dir, int hitbox, int decal, bool, CGameTrace &tr, int);	// AddDecal (TE_Decal)
 	virtual ICollideable *GetClientCollideable();	// IClientUnknown slot 2
 	virtual IClientNetworkable *GetClientNetworkable();	// IClientUnknown slot 3
