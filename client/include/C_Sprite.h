@@ -19,5 +19,11 @@ public:
 	virtual int vfunc17();
 	virtual void OnDataChanged(int updateType);
 	float vfunc121();
+	virtual void vfunc120(const char *);
+	virtual int vfunc121_slot();
 	virtual int vfunc122();
+	virtual void vfunc19();
+	void sub_10136580(int, int);
+	void sub_101365a0(float, int);
+	void sub_101365d0();
 };
