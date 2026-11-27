@@ -65,6 +65,7 @@ public:
 	void *sub_1015c440(unsigned int flags);	// vector deleting destructor
 	void sub_1015b420(CVStatKV *pKV);	// "CVStatInfo_t::PreLoad"-like (stub 0x100135fc): loads the record from its "Stat" key
 	CVStatInfo_t *sub_1015b050();	// "CVStatInfo_t::CVStatInfo_t": constructs the five records, the cost and the list, then scope trace and the plain fields
+	void sub_1015bb30(CVStatKV *pKV, CVStatInfoList_t *pDefaults);	// "CVStatInfo_t::PostLoad"
 	int sub_1015bec0(int level);	// "CVStatInfo_t::Get_Duration_Initial": scope trace, duration of the level (clamped to 5), 0 without a table
 	int sub_1015bf50(int level);	// "CVStatInfo_t::Get_Duration_Add": same shape, the second dword of the level entry
 	char sub_1015b3b0();	// a flag of the stat record (called through the stub at 0x1000308f), picks the one-name form of the detailed dump
