@@ -8550,6 +8550,7 @@
 0x10161800 func   ?sub_10161800@CVTraitDependencyValue_t@@QAEPAV1@XZ CVTraitDependencyValue_t::sub_10161800
 0x10161820 func   ?sub_10161820@CVTraitDependencyValue_t@@QAEPAV1@H@Z CVTraitDependencyValue_t::sub_10161820
 0x10161840 func   ?vfunc0@CVTraitDependencyValue_t@@QAEXXZ CVTraitDependencyValue_t::vfunc0
+0x101618f0 func   ?sub_101618f0@CUnknownEq@@QAEPADXZ CUnknownEq::sub_101618f0
 0x10161a40 func   ?sub_10161a40@CUnknown10205f70@@QAE_NPAXPBD@Z CUnknown10205f70::sub_10161a40
 0x10161bb0 func   ?sub_10161bb0@CUnknown101d7520Sub@@QAEDPAX@Z CUnknown101d7520Sub::sub_10161bb0
 0x10161bf0 func   ?sub_10161bf0@CUnknown10206190@@QAEXXZ CUnknown10206190::sub_10161bf0

@@ -130251,6 +130251,35 @@ CVTraitDependencyValue_t *CVTraitDependencyValue_t::sub_10161820(int a)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101618f0 size=0x7e
+struct SubA { char sub_10160660(); const char *sub_10160740(); };
+struct SubB { int sub_10161760(int); };
+struct SubC { int sub_1015ecd0(); };
+struct Owner { int sub_1015f160(const char *); SubC *sub_1015f270(int, int); };
+extern Owner g_105f93c0;
+extern char g_105f98f0[];
+extern char g_102de300[];
+extern "C" __declspec(dllimport) int __cdecl Q_snprintf(char *, int, const char *, ...);
+struct CUnknownEq {
+    int m_0;
+    SubA m_4;
+    int m_unk8, m_unkc, m_unk10;
+    int m_14;
+    SubB m_18;
+    char *sub_101618f0();
+};
+// TARGET: CUnknownEq::sub_101618f0
+char *CUnknownEq::sub_101618f0()
+{
+    if (!m_4.sub_10160660()) {
+        int a = g_105f93c0.sub_1015f160("Equality");
+        Q_snprintf(g_105f98f0, 0x80, "(%s  %s  %s)\n", m_4.sub_10160740(), g_105f93c0.sub_1015f270(a, m_14)->sub_1015ecd0(), m_18.sub_10161760((int)(this ? &m_4 : 0)));
+        return g_105f98f0;
+    }
+    return g_102de300;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10161a40 size=0x169
 #include "CUnknown10205f70.h"
 
