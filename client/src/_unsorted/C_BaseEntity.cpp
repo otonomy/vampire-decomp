@@ -179,6 +179,52 @@ bool C_BaseEntity::vfunc106()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10001730 size=0x14e
+#include "C_BaseEntity.h"
+#include "CCollisionProperty.h"
+
+extern "C" void sub_10107f80(const Vector *, const matrix3x4_t *, Vector *);
+extern QAngle g_104d5190;
+
+static inline Vector &AllocTempVector()
+{
+    static Vector s_vecTemp[128];
+    static int s_nIndex = 0;
+    s_nIndex = (s_nIndex + 1) & 0x7f;
+    return s_vecTemp[s_nIndex];
+}
+
+static inline const Vector &WorldSpaceCenter(CCollisionProperty *col)
+{
+    const Vector &maxs = *(const Vector *)&col->m_unk10;
+    Vector &out = AllocTempVector();
+    Vector &center = AllocTempVector();
+    center.x = (maxs.x - col->m_vecMins.x) * 0.5f + col->m_vecMins.x;
+    center.y = (maxs.y - col->m_vecMins.y) * 0.5f + col->m_vecMins.y;
+    center.z = (maxs.z - col->m_vecMins.z) * 0.5f + col->m_vecMins.z;
+    if (!(col->m_unk44 & 0x80) && col->m_unk40 != 2 && col->m_unk40 != 0) {
+        const QAngle &ang = col->vfunc9(0);
+        if (g_104d5190.x != ang.x || g_104d5190.y != ang.y || g_104d5190.z != ang.z) {
+            const matrix3x4_t &m = col->vfunc10();
+            sub_10107f80(&center, &m, &out);
+            return out;
+        }
+    }
+    const Vector &org = col->vfunc8();
+    float ox = org.x;
+    out.x = ox + center.x;
+    out.y = org.y + center.y;
+    out.z = org.z + center.z;
+    return out;
+}
+
+// TARGET: C_BaseEntity::vfunc23
+Vector C_BaseEntity::vfunc23()
+{
+    return WorldSpaceCenter((CCollisionProperty *)((char *)this + 0x190));
+}
+// END FUNCTION
+
 // FUNCTION: 0x10001890 size=0x1
 #include "C_BaseEntity.h"
 void C_BaseEntity::vfunc112()
