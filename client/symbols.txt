@@ -8467,6 +8467,7 @@
 0x101587f0 func   ?sub_101587f0@CVDmg_t@@QAEXPAV1@@Z CVDmg_t::sub_101587f0
 0x101588c0 func   ?sub_101588c0@CVDmg_t@@QAEXXZ CVDmg_t::sub_101588c0
 0x10158950 func   ?sub_10158950@@YIXPAUCVDmg_t@@HHHH@Z sub_10158950
+0x101589c0 func   ?sub_101589c0@CVDmg_t@@QAEXPAUCVDmgNewSrcX@@@Z CVDmg_t::sub_101589c0
 0x10158a80 func   ?sub_10158a80@CVDmg_t@@QAEHXZ CVDmg_t::sub_10158a80
 0x10158b00 func   ?sub_10158b00@@YAIPBD@Z sub_10158b00
 0x10158c80 func   ?sub_10158c80@CVDmg_t@@SAPADH@Z CVDmg_t::sub_10158c80

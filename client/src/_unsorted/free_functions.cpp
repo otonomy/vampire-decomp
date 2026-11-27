@@ -129642,6 +129642,41 @@ void __fastcall sub_10158950(CVDmg_t *self, int, int a, int b, int c)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101589c0 size=0xbb
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "CVDmg_t.h"
+#include "ScopeTrace.h"
+struct IEdictIdxX
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual int vfunc9();
+};
+struct CVDmgNewSrcX
+{
+	int m_pad0;
+	int m_pad4;
+	IEdictIdxX m_edict;
+	char m_pad0c[0x3f8 - 0xc];
+	void *m_pCharacter;
+};
+// TARGET: CVDmg_t::sub_101589c0
+void CVDmg_t::sub_101589c0(CVDmgNewSrcX *pSrc)
+{
+	ScopeTrace st("CVDmg_t::SetSrc", g_102de300);
+	if (pSrc)
+	{
+		if (!m_block14.sub_10160660())
+			m_field04 -= m_block14.sub_10160b40(pcd_stage(pSrc->m_pCharacter));
+		m_field34 = pSrc->m_edict.vfunc9();
+	}
+	else
+		m_field34 = 0;
+	if (!m_block14.sub_10160660())
+		m_field04 += m_block14.sub_10160b40(pcd_stage(pSrc->m_pCharacter));
+}
+// END FUNCTION
+
 // FUNCTION: 0x10158a80 size=0x7b
 #include "ScopeTrace.h"
 #include "CVDmg_t.h"
