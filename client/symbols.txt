@@ -9232,6 +9232,7 @@
 0x1018ccd0 func   ?sub_1018ccd0@@YAHH@Z sub_1018ccd0
 0x1018ccf0 func   ?sub_1018ccf0@@YAXH@Z sub_1018ccf0
 0x1018cdd0 func   ?sub_1018cdd0@@YAXXZ sub_1018cdd0
+0x1018d000 func   ?sub_1018d000@CLabelHeader@@QAEXHHPAH0@Z CLabelHeader::sub_1018d000
 0x1018d130 func   ?sub_1018d130@@YAHXZ sub_1018d130
 0x1018d160 func   ?sub_1018d160@@YAHXZ sub_1018d160
 0x1018d180 func   ?sub_1018d180@@YAHXZ sub_1018d180

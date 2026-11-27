@@ -138392,6 +138392,45 @@ void sub_1018cdd0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018d000 size=0x105
+#include "CLabelHeader.h"
+void CLabelHeader::sub_1018d000(int textwide, int texttall, int *px, int *py)
+{
+	int wide, tall;
+	sub_101a9920(&wide, &tall);
+	*px = 0;
+	*py = 0;
+	switch (*(int *)((char *)this + 0xd0))
+	{
+	case 0: case 3: case 6:
+		*px = 0;
+		break;
+	case 1: case 4: case 7:
+		*px = (wide - textwide) / 2;
+		break;
+	case 2: case 5: case 8:
+		*px = wide - textwide;
+		break;
+	}
+	switch (*(int *)((char *)this + 0xd0))
+	{
+	case 0: case 1: case 2:
+		*py = 0;
+		break;
+	case 3: case 4: case 5:
+		*py = (tall - texttall) / 2;
+		break;
+	case 6: case 7: case 8:
+		*py = tall - texttall;
+		break;
+	}
+	if (*px < 0)
+		*px = 0;
+	*px += *(int *)((char *)this + 0xc4);
+	*py += *(int *)((char *)this + 0xc8);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018d130 size=0x23
 namespace lifted {
 extern char g_1027b3c4;
