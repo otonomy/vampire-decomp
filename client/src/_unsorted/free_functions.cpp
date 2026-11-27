@@ -89318,6 +89318,66 @@ int __stdcall sub_1010e740(float x, int width)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1010e9b0 size=0x169
+#include "CHudMessage.h"
+#include <stdlib.h>
+
+struct client_textmessage_s
+{
+	int effect;
+	unsigned char r1, g1, b1, a1;
+	unsigned char r2, g2, b2, a2;
+	float x;
+	float y;
+	float fadein;
+	float fadeout;
+	float holdtime;
+	float fxtime;
+	const char *pName;
+	const char *pMessage;
+};
+
+void CHudMessage::sub_1010e9b0()
+{
+	client_textmessage_s *pMessage = m_pMessage;
+	if (pMessage->effect < 0)
+		return;
+	if (pMessage->effect > 1)
+	{
+		if (pMessage->effect != 2)
+			return;
+		float fTemp = m_length * pMessage->fadein + pMessage->holdtime;
+		m_unkd0 = fTemp;
+		if (m_time > fTemp && pMessage->fadeout > 0.0f)
+			m_fadeBlend = (int)(((m_time - fTemp) / pMessage->fadeout) * 255.0f);
+		else
+			m_fadeBlend = 0;
+		return;
+	}
+	float fTemp = pMessage->holdtime + pMessage->fadein;
+	m_unkd0 = fTemp;
+	if (m_time < pMessage->fadein)
+	{
+		m_fadeBlend = (int)(((pMessage->fadein - m_time) * (1.0 / pMessage->fadein)) * 255.0);
+	}
+	else if (m_time > fTemp)
+	{
+		if (pMessage->fadeout > 0.0f)
+			m_fadeBlend = (int)(((m_time - fTemp) / pMessage->fadeout) * 255.0f);
+		else
+			m_fadeBlend = 255;
+	}
+	else
+		m_fadeBlend = 0;
+	m_charTime = 0;
+	if (pMessage->effect == 1)
+	{
+		if (rand() % 100 < 10)
+			m_charTime = 1.0f;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010eb20 size=0x1e6
 #include "CHudMessage.h"
 
