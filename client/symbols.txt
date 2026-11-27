@@ -7679,6 +7679,7 @@
 0x10141be0 func   ?sub_10141be0@CUnknown10141be0@@QAEHXZ CUnknown10141be0::sub_10141be0
 0x10141bf0 func   ?sub_10141bf0@CClanFilter@@QAEDPAPBD@Z CClanFilter::sub_10141bf0
 0x10141c90 func   ?sub_10141c90@CUnknown10141c90@@QAEXXZ CUnknown10141c90::sub_10141c90
+0x10141e80 func   ??0CUnknown10141e80@@QAE@H@Z CUnknown10141e80::CUnknown10141e80
 0x10141eb0 func   ?sub_10141eb0@CUnknown10141eb0@@QAEPAXH@Z CUnknown10141eb0::sub_10141eb0
 0x10141f70 func   ?sub_10141f70@@YIDPAUSelf_10141f70@@PAX@Z sub_10141f70
 0x10141fe0 func   ?sub_10141fe0@CUnknown10141fe0@@QAEPAXXZ CUnknown10141fe0::sub_10141fe0
