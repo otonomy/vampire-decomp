@@ -85,6 +85,7 @@ public:
 	void sub_1009f680(int i, float v);	// stores v in the float array at +0x23c (the absolute origin)
 	void sub_1009f2e0(int a, int b);
 	void sub_1011a950();
+	void sub_1011a5f0(const Vector &start, const Vector &move, CGameTrace &trace);
 	void sub_1011cf40();
 	void sub_1011cbd0(CGameTrace &trace, Vector &move);
 	void sub_1011d250();
