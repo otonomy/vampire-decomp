@@ -5783,6 +5783,7 @@
 0x100ee8e0 func   ?sub_100ee8e0@CGameTrace@@QBE_NXZ CGameTrace::sub_100ee8e0
 0x100ee900 func   ?sub_100ee900@CUnk10129770@@QAEHXZ CUnk10129770::sub_100ee900
 0x100ee920 func   ?sub_100ee920@CUnknown100ee920@@QAEHXZ CUnknown100ee920::sub_100ee920
+0x100ee940 func   ?vfunc0@GlobalWetnessProxy@@UAE_NPAX0@Z GlobalWetnessProxy::vfunc0
 0x100ee980 func   ?vfunc1@GlobalWetnessProxy@@UAEXH@Z GlobalWetnessProxy::vfunc1
 0x100eea30 func   ?sub_100eea30@@YAHXZ sub_100eea30
 0x100eea60 func   ??_GGlobalWetnessProxy@@UAEPAXI@Z ??_GGlobalWetnessProxy@@UAEPAXI@Z
