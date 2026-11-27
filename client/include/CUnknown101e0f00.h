@@ -49,6 +49,7 @@ struct CUnknown101e0f00Src	// the 0x1c byte source descriptions at +0xa4 / +0xc0
 	int m_nB;	// 0x14
 	CUnknown101e0f00SrcB **m_ppB;	// 0x18
 
+	char sub_10147be0(class IKVNodeView *pKV, const char *pszName);	// loads a source description from the node
 	void sub_10147da0(const char *pszLabel);	// Debug_Display with the label (stub 0x10015d66)
 	void sub_10147990();	// the constructor body (stub 0x10002036)
 		// notes the hit of discipline id on a (stub 0x10012157)
@@ -74,6 +75,7 @@ struct CUnknown101e0f00Tail	// the object at +0xdc of an entry
 {
 		// the constructor body (stub 0x1000e124)
 	void sub_10149310();	// Debug_Display (stub 0x10006a23)
+	void sub_101491f0();	// resets the tail (frees its list)
 	CUnknown101e0f00Fx *sub_101492b0(int a, int b, int c, int d);	// callback worker taking four values (stub 0x10015da2)
 };
 
@@ -111,6 +113,7 @@ struct CUnknown101e0f00Entry	// one targeted discipline
 
 		// loads the entry from its "DisciplineTgt" key (the loader hands itself as the second argument)
 	void sub_101496e0();	// Debug_Display of the entry (stub 0x100100fa)
+	bool sub_10149450(class IKVNodeView *pKV, class CUnknown101e0f00 *pLoader);
 	CUnknown101e0f00Entry *sub_10149370(int id);	// the constructor body (stub of 0x101e0520): constructs the sub objects, stores the id and its bit mask (a DevMsg "Overflowed targeted discipline" and mask 0 from id 30 up)
 		// stub 0x1000da7b: the cost of the entry for the character (the character's stat 8 / 2 for the dword at +0x10, plus the dword at +0x20)
 };
