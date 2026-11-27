@@ -93200,6 +93200,75 @@ trace21 *sub_1011c140(trace21 *out)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011c1b0 size=0x15e
+#include "Vector.h"
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+class CBaseEntity;
+struct csurface_1011c1b0 {
+	const char *name;
+	short surfaceProps;
+	unsigned short flags;
+};
+struct cplane_1011c1b0 {
+	Vector normal;
+	float dist;
+	unsigned char type;
+	unsigned char signbits;
+	unsigned char pad[2];
+	void Copy(const cplane_1011c1b0 &o)
+	{
+		normal.sub_10039080(o.normal);
+		dist = o.dist;
+		type = o.type;
+		signbits = o.signbits;
+		for (unsigned int i = 0; i < 2; i++)
+			pad[i] = o.pad[i];
+	}
+};
+struct trace_1011c1b0 {
+	Vector startpos;
+	Vector endpos;
+	cplane_1011c1b0 plane;
+	float fraction;
+	int contents;
+	unsigned short dispFlags;
+	bool allsolid;
+	bool startsolid;
+	float fractionleftsolid;
+	csurface_1011c1b0 surface;
+	int hitgroup;
+	short physicsbone;
+	CBaseEntity *m_pEnt;
+	int hitbox;
+	void Copy(const trace_1011c1b0 &o)
+	{
+		startpos = o.startpos;
+		endpos = o.endpos;
+		plane.Copy(o.plane);
+		fraction = o.fraction;
+		contents = o.contents;
+		dispFlags = o.dispFlags;
+		allsolid = o.allsolid;
+		startsolid = o.startsolid;
+		fractionleftsolid = o.fractionleftsolid;
+		surface = o.surface;
+		hitgroup = o.hitgroup;
+		physicsbone = o.physicsbone;
+		m_pEnt = o.m_pEnt;
+		hitbox = o.hitbox;
+	}
+};
+extern trace_1011c1b0 g_104e0b20;
+void C_BaseEntity::sub_1011c1b0(C_BaseEntity *other, CGameTrace &trace)
+{
+	ScopeTrace st("CBaseEntity::PhysicsMarkEntitiesAsTouching", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	g_104e0b20.Copy(*(trace_1011c1b0 *)&trace);
+	sub_1011be90(other);
+	other->sub_1011be90(this);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011c5c0 size=0x225
 #include "engineclient.h"
 #include "Vector.h"
