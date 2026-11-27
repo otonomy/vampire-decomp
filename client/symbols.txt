@@ -8010,6 +8010,7 @@
 0x1014add0 func   ?sub_1014add0@CUnknown1014add0@@QAEXXZ CUnknown1014add0::sub_1014add0
 0x1014ae20 func   ?sub_1014ae20@VFeat1014ae20@@QAEXPAUCVStatKV@@@Z VFeat1014ae20::sub_1014ae20
 0x1014aec0 func   ?sub_1014aec0@CVFeat_t@@QAEXPAUCVTraitKV@@PAUCVDmgBlock16_t@@@Z CVFeat_t::sub_1014aec0
+0x1014b200 func   ?sub_1014b200@S1014b200@@QAEHPAUCharStatView_1014b200@@@Z S1014b200::sub_1014b200
 0x1014b580 func   ?sub_1014b580@@YGHH@Z sub_1014b580
 0x1014b590 func   ?sub_1014b590@S1014b590@@QAEHPAUCharStatView@@@Z S1014b590::sub_1014b590
 0x1014b6b0 func   ?sub_1014b6b0@CFeatWeight1014b@@QAEHPAUCFeatChar1014b@@@Z CFeatWeight1014b::sub_1014b6b0

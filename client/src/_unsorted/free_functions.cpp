@@ -119650,6 +119650,54 @@ void CVFeat_t::sub_1014aec0(CVTraitKV *pKV, CVDmgBlock16_t *pBlock)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1014b200 size=0x1a5
+#include "CVStatList_t.h"
+#include "CVDmg_t.h"
+#include "Tier1.h"
+struct CharStatView_1014b200 { char m_pad[0x1164]; };
+struct S1014b200
+{
+	char m_pad[0x18];
+	int m_max;
+	int m_count;
+	CVDmgBlock16_t *m_pBlocks;
+	int sub_1014b200(CharStatView_1014b200 *pChar);
+};
+
+// TARGET: S1014b200::sub_1014b200
+int S1014b200::sub_1014b200(CharStatView_1014b200 *pChar)
+{
+	int cap = m_max;
+	int total = 0;
+	if (pChar)
+	{
+		for (int i = 0; i < m_count; i++)
+		{
+			int stat = m_pBlocks[i].m_b;
+			switch (m_pBlocks[i].m_a)
+			{
+			case 0:
+			{
+				int v = m_pBlocks[i].sub_10160db0(((CVStatListSet *)((char *)pChar + 0x1164))->Find(0)->sub_1015d6e0(stat));
+				if (v <= 0 && stat < 10)
+					v = 1;
+				total += v;
+				break;
+			}
+			case 1:
+				total += m_pBlocks[i].sub_10160db0(((CVStatListSet *)((char *)pChar + 0x1164))->Find(1)->sub_1015d6e0(stat));
+				break;
+			}
+		}
+	}
+	else
+	{
+		g_101e311c("Invalid Character pointer for: Feats::FeatValue\n");
+	}
+	return (total > cap) ? cap : total;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1014b580 size=0x5
 int __stdcall sub_1014b580(int a0)
 {
