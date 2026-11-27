@@ -7724,6 +7724,7 @@
 0x101499f0 func   ?sub_101499f0@CUnknown101d5bd0@@QAEXXZ CUnknown101d5bd0::sub_101499f0
 0x10149ac0 func   ?sub_10149ac0@CUnknown101e0f00@@QAEXXZ CUnknown101e0f00::sub_10149ac0
 0x10149c30 func   ?sub_10149c30@CUnknown101e0f00@@QAE_NPBDPAH@Z CUnknown101e0f00::sub_10149c30
+0x10149ce0 func   ?sub_10149ce0@CUnknown10149ce0@@QAEHH@Z CUnknown10149ce0::sub_10149ce0
 0x10149d40 func   ?sub_10149d40@CUnknown101e0f00@@QAEHHH@Z CUnknown101e0f00::sub_10149d40
 0x10149d80 func   ?sub_10149d80@CFindListView@@QAEHI@Z CFindListView::sub_10149d80
 0x10149dc0 func   ?sub_10149dc0@CNamedListX@@QAEHPBD@Z CNamedListX::sub_10149dc0

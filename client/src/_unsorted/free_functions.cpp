@@ -111383,6 +111383,31 @@ bool CUnknown101e0f00::sub_10149c30(const char *name, int *pIndex)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10149ce0 size=0x4b
+namespace lifted {
+extern char g_10149d30;
+extern char g_105e7c34;
+extern char g_105e7fb0;
+struct C10149370 { int sub_10149370(int); };
+int sub_101d0df5(int);
+}
+struct CUnknown10149ce0 { int sub_10149ce0(int); };
+int CUnknown10149ce0::sub_10149ce0(int a0)
+{
+    if (a0 >= 0) {
+        if (a0 < (*(int *)((char *)this + 4))) {
+            return *(int *)((char *)(*(int *)((char *)this + 8)) + a0 * 4);
+        }
+    }
+    if ((1 & lifted::g_105e7c34) == 0) {
+        lifted::g_105e7c34 = (char)(lifted::g_105e7c34 | 1);
+        ((lifted::C10149370 *)((int)&lifted::g_105e7fb0))->sub_10149370(-1);
+        lifted::sub_101d0df5((int)&lifted::g_10149d30);
+    }
+    return (int)&lifted::g_105e7fb0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10149d40 size=0x3b
 #include "CUnknown101e0f00.h"
 
