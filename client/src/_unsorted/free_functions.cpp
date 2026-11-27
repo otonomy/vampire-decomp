@@ -94342,6 +94342,44 @@ void sub_1011bb30(void *pOther, TouchLink *pTouch)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011bc30 size=0x125
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+struct TouchLink {
+	C_BaseEntity *m_pEntity;	// 0x00
+	int m_nKey;	// 0x04
+	TouchLink *m_pNext;	// 0x08
+	TouchLink *m_pPrev;	// 0x0c
+};
+struct TouchLinkPool { void sub_1010e440(void *); };
+extern TouchLinkPool g_104e0b74;
+extern int g_104e0c28;
+void sub_1011ba80(C_BaseEntity *, C_BaseEntity *);
+inline void FreeTouchLink(TouchLink *link)
+{
+	ScopeTrace st("FreeTouchLink", g_102de300);
+	g_104e0c28--;
+	g_104e0b74.sub_1010e440(link);
+}
+// TARGET: sub_1011bc30
+void sub_1011bc30(C_BaseEntity *ent)
+{
+	ScopeTrace st("CBaseEntity::PhysicsRemoveTouchedList", g_102de300);
+	TouchLink *root = ent->sub_1011b440(1);
+	if (root) {
+		TouchLink *link = root->m_pNext;
+		while (link && link != root) {
+			TouchLink *next = link->m_pNext;
+			sub_1011ba80(ent, link->m_pEntity);
+			FreeTouchLink(link);
+			link = next;
+		}
+		ent->sub_1011b730(1);
+	}
+	*(int *)((char *)ent + 0xd4) = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011bd60 size=0x8f
 #include "C_BaseEntity.h"
 #include "ScopeTrace.h"
