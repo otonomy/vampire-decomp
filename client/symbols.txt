@@ -2702,6 +2702,7 @@
 0x10043090 func   ?sub_10043090@@YAHHHH@Z sub_10043090
 0x100430c0 func   ?sub_100430c0@CUnknown100430c0@@QAEPAXXZ CUnknown100430c0::sub_100430c0
 0x100430e0 func   ?sub_100430e0@CUnknown100430e0@@QAEHXZ CUnknown100430e0::sub_100430e0
+0x100430f0 func   ?sub_100430f0@CCollisionProperty@@QAEXH@Z CCollisionProperty::sub_100430f0
 0x10043150 func   ?sub_10043150@Rec64@@QAEXH@Z Rec64::sub_10043150
 0x100431d0 func   ?vfunc0@CCollisionProperty@@UAEPAXXZ CCollisionProperty::vfunc0
 0x100431e0 func   ?sub_100431e0@@YIXPAVCCollisionProperty@@H@Z sub_100431e0

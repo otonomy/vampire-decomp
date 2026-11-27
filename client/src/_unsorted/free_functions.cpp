@@ -25315,6 +25315,31 @@ int CUnknown100430e0::sub_100430e0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100430f0 size=0x60
+#include "CCollisionProperty.h"
+#include "engineclient.h"
+__declspec(dllimport) void DevMsg(const char *, ...);
+// TARGET: CCollisionProperty::sub_100430f0
+void CCollisionProperty::sub_100430f0(int arg)
+{
+	if (!partition)
+	{
+		DevMsg("ERROR: partition not initialized when it was needed.\n");
+		return;
+	}
+	if (m_unk46 == 0xffff)
+	{
+		sub_100444b0();
+		if (m_unk46 == 0xffff)
+		{
+			DevMsg("ERROR: m_Partition failed to initialized.\n");
+			return;
+		}
+	}
+	partition->vfunc0(m_unk46, arg);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10043150 size=0x76
 extern int g_104d4970, g_104d4974, g_104d4978;
 struct Rec64 {
