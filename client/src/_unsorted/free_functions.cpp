@@ -41410,6 +41410,45 @@ int CUnknown10080eb0::sub_10080eb0(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10080ee0 size=0x10c
+#include "engineclient.h"
+#include "C_Beam.h"
+#include "C_BaseCombatWeapon.h"
+#include "CBaseEntityList.h"
+#include "ehandle.h"
+
+struct CUnknown10080ee0 { void sub_10080ee0(int); };
+struct CUnknown1009fc10 { void sub_1009fc10(int); };
+struct CUnknown10044460 { void sub_100433c0(Vector *, Vector *); };
+struct IRel { virtual void v0(); virtual IRel *v1(); };
+IRel * __stdcall sub_100a9af0(int);
+
+void CUnknown10080ee0::sub_10080ee0(int a)
+{
+	C_Beam *beam = (C_Beam *)((char *)this - 8);
+	beam->sub_100a0450();
+	((CUnknown1009fc10 *)beam)->sub_1009fc10((int)modelinfo->GetModel(beam->vfunc51()));
+	CBaseHandle *p = (CBaseHandle *)((char *)this + 0x420);
+	for (int i = 0; i < 10; i++, p++) {
+		C_BaseEntity *e = (C_BaseEntity *)p->Get();
+		if (e) {
+			C_BaseCombatWeapon *w = dynamic_cast<C_BaseCombatWeapon *>(e);
+			if (w && w->vfunc240()) {
+				char *v = (char *)w->sub_1007bab0();
+				if (v && *(int *)(v + 0x3f8)) {
+					IRel *r = sub_100a9af0(0);
+					if (r)
+						*(int *)p = *(int *)r->v1();
+				}
+			}
+		}
+	}
+	Vector a1, a2;
+	beam->sub_10081060(&a1, &a2);
+	((CUnknown10044460 *)((char *)this + 0x188))->sub_100433c0(&a1, &a2);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10080ff0 size=0x3
 char sub_10080ff0()
 {
