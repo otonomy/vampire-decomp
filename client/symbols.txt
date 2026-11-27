@@ -4224,6 +4224,7 @@
 0x100a1eb0 func   ??2C_BaseEntity@@SAPAXI@Z ??2C_BaseEntity@@SAPAXI@Z
 0x100a1eb0 func   ?sub_100a1eb0@@YAHH@Z sub_100a1eb0
 0x100a1ec0 func   ??3C_BaseEntity@@SAXPAX@Z ??3C_BaseEntity@@SAXPAX@Z
+0x100a1ed0 func   ?vfunc83@C_BaseEntity@@UAEXM@Z C_BaseEntity::vfunc83
 0x100a1ff0 func   ?sub_100a1ff0@CUnknown100a1ff0@@QAEDD@Z CUnknown100a1ff0::sub_100a1ff0
 0x100a2000 func   ?vfunc29@C_BaseEntity@@UAEXD@Z C_BaseEntity::vfunc29
 0x100a2020 func   ?IsDormant@C_BaseEntity@@UAE_NXZ C_BaseEntity::IsDormant

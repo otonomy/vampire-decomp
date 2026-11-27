@@ -1301,6 +1301,20 @@ int C_BaseEntity::vfunc66()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a1ed0 size=0x1b
+#include "C_BaseEntity.h"
+#include "CBaseHandle.h"
+
+struct HbThink_100a1ed0 { void sub_100cfea0(CBaseHandle h, float t); };
+HbThink_100a1ed0 *sub_1002d700();
+struct HbEnt_100a1ed0 { CBaseHandle sub_1002d710(); };
+
+void C_BaseEntity::vfunc83(float t)
+{
+	sub_1002d700()->sub_100cfea0(((HbEnt_100a1ed0 *)this)->sub_1002d710(), t);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a2000 size=0x16
 #include "C_BaseEntity.h"
 namespace lifted {
