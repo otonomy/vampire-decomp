@@ -9033,6 +9033,7 @@
 0x1017c660 func   ?sub_1017c660@CUnknown1017c660@@QAEHXZ CUnknown1017c660::sub_1017c660
 0x1017c680 func   ?sub_1017c680@@YAXPBD@Z sub_1017c680
 0x1017c7b0 func   ?sub_1017c7b0@@YIPAUV_1017c7b0@@PAU1@@Z sub_1017c7b0
+0x1017c7c0 func   ?sub_1017c7c0@@YAXPAVPanel@vgui2@@PAPAVVRButton@@HHHHHH@Z sub_1017c7c0
 0x1017c900 func   ?sub_1017c900@CUnknown1017c900@@QAEPAXHHH@Z CUnknown1017c900::sub_1017c900
 0x1017c950 func   ??_GVHButton@@UAEPAXI@Z ??_GVHButton@@UAEPAXI@Z
 0x1017c970 func   ??1VHButton@@UAE@XZ VHButton::~VHButton
