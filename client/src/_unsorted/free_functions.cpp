@@ -29260,6 +29260,31 @@ int CUnknown10057710::sub_10057710(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100577f0 size=0x4f
+namespace lifted {
+extern char g_102843c0;
+extern char g_102860f8;
+struct C10055d30 { int sub_10055d30(int, int, int); };
+int sub_101d1d18(int, int, int, int, int);
+}
+struct CUnknown100577f0 { void sub_100577f0(int, int, int); };
+void CUnknown100577f0::sub_100577f0(int a0, int a1, int a2)
+{
+    int r0;
+    int r1;
+    r0 = *(int *)((char *)this + 0x170);
+    if (r0 != 0) {
+        do {
+            r1 = lifted::sub_101d1d18(*(int *)((char *)r0), 0, (int)&lifted::g_102843c0, (int)&lifted::g_102860f8, 0);
+            if (r1 != 0) {
+                r1 = ((lifted::C10055d30 *)r1)->sub_10055d30(a0, a1, a2);
+            }
+            r0 = *(int *)((char *)r0 + 4);
+        } while (r0 != 0);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x10057840 size=0x52
 #include "CHudManagerPanel.h"
 #include "CHudTimerUI.h"
