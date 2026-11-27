@@ -28525,6 +28525,55 @@ void sub_1004fe20()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004ff90 size=0x161
+#include "engineclient.h"
+int sub_100cd100();
+int sub_100cd0f0();
+extern char g_103ede84;
+struct Row_1004ff90 {
+	int m_f00;
+	int m_f04;
+	int m_f08, m_f0c, m_f10;
+	int m_f14;
+	int m_f18;
+	int m_f1c;
+	int m_f20, m_f24, m_f28, m_f2c;
+	int m_f30;
+	int m_f34;
+	int m_f38, m_f3c, m_f40, m_f44, m_f48, m_f4c, m_f50, m_f54, m_f58, m_f5c, m_f60, m_f64, m_f68, m_f6c;
+};
+extern Row_1004ff90 g_10284ba0[];
+struct Self_1004ff90 {
+	char m_pad0[0x178];
+	int m_n178;
+	char m_pad17c[0x1a0 - 0x17c];
+	int m_n1a0;
+	char m_pad1a4[0x200 - 0x1a4];
+	int m_font;
+	unsigned char m_colors[4][4];
+	void sub_1004ff90(const char *text, int idx, int colorIdx);
+};
+void Self_1004ff90::sub_1004ff90(const char *text, int idx, int colorIdx)
+{
+	int w = g_pMatSystemSurface->vfunc15(m_font, text);
+	if (w > sub_100cd100() / 4)
+		w = sub_100cd100() / 4;
+	Row_1004ff90 *row = &g_10284ba0[idx];
+	int t = row->m_f00 + 0x98;
+	double a = sub_100cd100();
+	int x = (int)(a - (sub_100cd100() * (1.0 / 1024.0)) * t - m_n178 - w + row->m_f30);
+	if (x < 0) {
+		if (!g_103ede84)
+			g_103ede84 = 1;
+		x = 0;
+	}
+	int h = row->m_f04 - row->m_f34 - row->m_f1c - row->m_f14 + 0x7f;
+	double b = sub_100cd0f0();
+	int y = (int)(b - (sub_100cd0f0() * (1.0 / 768.0)) * h);
+	g_pMatSystemSurface->vfunc12(m_font, x, y, m_colors[colorIdx][0], m_colors[colorIdx][1], m_colors[colorIdx][2], m_n1a0, text);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10050100 size=0x3d
 #include "CUtlVector16.h"
 
