@@ -9,7 +9,7 @@
   {
    "name": "client.dll",
    "code": 1973229,
-   "done": 0.6201977098279617
+   "done": 0.6297764371125758
   },
   {
    "name": "GameUI.dll",
@@ -120,20 +120,20 @@
  "vampire": [
   {
    "name": "_unsorted",
-   "cpp": 1411653,
-   "asm": 34494,
+   "cpp": 1411627,
+   "asm": 34469,
    "open": 0,
-   "n_cpp": 9613,
-   "n_asm": 66,
+   "n_cpp": 9611,
+   "n_asm": 64,
    "n_open": 0
   },
   {
    "name": "dlls",
-   "cpp": 1091150,
-   "asm": 48208,
+   "cpp": 1091163,
+   "asm": 48195,
    "open": 0,
-   "n_cpp": 6750,
-   "n_asm": 58,
+   "n_cpp": 6751,
+   "n_asm": 57,
    "n_open": 0
   },
   {
@@ -236,30 +236,30 @@
  "client": [
   {
    "name": "no file yet",
-   "cpp": 673080,
+   "cpp": 682791,
    "asm": 13425,
-   "open": 395131,
-   "n_cpp": 7235,
+   "open": 385421,
+   "n_cpp": 7254,
    "n_asm": 43,
-   "n_open": 1052
+   "n_open": 1034
   },
   {
    "name": "cl_dll",
-   "cpp": 246283,
+   "cpp": 251021,
    "asm": 9871,
-   "open": 215039,
-   "n_cpp": 2628,
+   "open": 210301,
+   "n_cpp": 2634,
    "n_asm": 13,
-   "n_open": 575
+   "n_open": 569
   },
   {
    "name": "game_shared",
-   "cpp": 47969,
+   "cpp": 49871,
    "asm": 0,
-   "open": 32034,
-   "n_cpp": 405,
+   "open": 30132,
+   "n_cpp": 409,
    "n_asm": 0,
-   "n_open": 89
+   "n_open": 85
   },
   {
    "name": "_init",
