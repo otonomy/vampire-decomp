@@ -8956,6 +8956,7 @@
 0x1017d730 func   ??_GCharEditStatsPanel@@UAEPAXI@Z ??_GCharEditStatsPanel@@UAEPAXI@Z
 0x1017d930 func   ?sub_1017d930@CUnknown1017d930@@QAEXH@Z CUnknown1017d930::sub_1017d930
 0x1017dba0 func   ?sub_1017dba0@CUnknown1017dba0@@QAEHXZ CUnknown1017dba0::sub_1017dba0
+0x1017dbc0 func   ?sub_1017dbc0@CUnknown1017dbc0@@QAEXXZ CUnknown1017dbc0::sub_1017dbc0
 0x1017dc00 func   ?sub_1017dc00@V1017@@QAEHXZ V1017::sub_1017dc00
 0x1017f0d0 func   ?sub_1017f0d0@@YA_NHH@Z sub_1017f0d0
 0x1017f0f0 func   ?sub_1017f0f0@@YAHD@Z sub_1017f0f0

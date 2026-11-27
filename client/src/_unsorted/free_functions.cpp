@@ -133465,6 +133465,28 @@ int CUnknown1017dba0::sub_1017dba0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017dbc0 size=0x38
+namespace lifted {
+struct C1017c720 { int sub_1017c720(); };
+}
+struct CUnknown1017dbc0 { void sub_1017dbc0(); };
+void CUnknown1017dbc0::sub_1017dbc0()
+{
+    int r0;
+    int r1;
+    int r2;
+    r0 = 7;
+    r1 = (int)((char *)this + 0x80);
+    do {
+        *(int *)((char *)this + 0x2e4) = (*(int *)((char *)this + 0x2e4)) + (*(int *)((char *)r1));
+        *(int *)((char *)r1) = 0;
+        r2 = ((lifted::C1017c720 *)((char *)r1 + -4))->sub_1017c720();
+        r1 = r1 + 8;
+        r0 = r0 - 1;
+    } while (r0 != 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017dc00 size=0x1a
 struct E1017 { int a; int b; };
 struct V1017 { char pad[0x80]; E1017 e[7]; int sub_1017dc00(); };
