@@ -63193,6 +63193,28 @@ int CSoundList::sub_100c1bc0(const T64 &src)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c1dd0 size=0x9d
+#include "C_SoundscapeSystem.h"
+float sub_101070a0(float *);
+// TARGET: C_SoundscapeSystem::sub_100c1dd0
+void C_SoundscapeSystem::sub_100c1dd0(float t)
+{
+    if (!(t < m_next)) {
+        m_next = t + 3600.0f;
+        for (int i = m_count - 1; i >= 0; i--) {
+            if (t >= m_entries[i].m_time) {
+                sub_100c1c80(&m_entries[i]);
+                SSEntry *f = m_entries;
+                f[i].m_time = sub_101070a0(f[i].m_data) + t;
+            }
+            float *q = &m_entries[i].m_time;
+            if (*q < m_next)
+                m_next = *q;
+        }
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c1e70 size=0x3e
 #include "UtlVec40.h"
 
