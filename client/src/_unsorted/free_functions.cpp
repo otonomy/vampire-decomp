@@ -75987,6 +75987,61 @@ CHudElement *CHud::sub_100f0ed0(const char *pName)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f0f30 size=0x12a
+#include "CHud.h"
+#include "CHudElement.h"
+#include "CSaveRestoreBlockSet.h"
+#include <string.h>
+#pragma intrinsic(strcmp)
+struct NamedFlag { const char *name; int flag; };
+extern NamedFlag g_102bbde0[];
+inline void HudGrowVector(CHud *h, int num)
+{
+    if (h->m_HudListSize + num > h->m_HudListAlloc && h->m_HudListGrow != -1)
+    {
+        int alloc = h->m_HudListAlloc;
+        int grow = h->m_HudListGrow;
+        if (alloc < h->m_HudListSize + num)
+        {
+            do
+                alloc = alloc ? (grow ? alloc + grow : alloc + alloc) : 8;
+            while (alloc < h->m_HudListSize + num);
+            h->m_HudListAlloc = alloc;
+        }
+        int &rAlloc = *(int *)((char *)h + 0x44);
+        if (h->m_HudListMem)
+            h->m_HudListMem = (CHudElement **)g_101e3104(h->m_HudListMem, rAlloc * 4);
+        else
+            h->m_HudListMem = (CHudElement **)g_101e3100(rAlloc * 4);
+    }
+    h->m_HudListSize += num;
+    h->m_pHudDebug = h->m_HudListMem;
+}
+inline void HudShiftRight(CHud *h, int elem, int num)
+{
+    int numToMove = h->m_HudListSize - elem - num;
+    if (numToMove > 0)
+        memmove(&h->m_HudListMem[elem + num], &h->m_HudListMem[elem], numToMove * 4);
+}
+void CHud::sub_100f0f30(CHudElement *pElem)
+{
+    int elem = m_HudListSize;
+    HudGrowVector(this, 1);
+    HudShiftRight(this, elem, 1);
+    CHudElement **slot = &m_HudListMem[elem];
+    if (slot)
+        *slot = pElem;
+    for (int i = 0; g_102bbde0[i].name; i++)
+    {
+        if (!strcmp(g_102bbde0[i].name, (const char *)pElem->vfunc8()))
+        {
+            pElem->vfunc12(g_102bbde0[i].flag);
+            break;
+        }
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x100f10c0 size=0x4
 struct CUnknown100f10c0 { float sub_100f10c0(); };
 float CUnknown100f10c0::sub_100f10c0()
