@@ -143421,6 +143421,68 @@ void sub_1018d1f0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018d200 size=0x15b
+#include "CVProfile.h"
+extern CVProfile *g_101e3138;
+extern unsigned char g_105fbcfc;
+__declspec(dllimport) void vtune(bool);
+struct CCycle_1018d200 {
+	unsigned long lo, hi;
+	void Sample()
+	{
+		unsigned long *pSample = &lo;
+		__asm {
+			mov ecx, pSample
+			rdtsc
+			mov [ecx], eax
+			mov [ecx + 4], edx
+		}
+	}
+};
+// TARGET: sub_1018d200
+void sub_1018d200()
+{
+	if (!g_105fbcfc) {
+		CVProfile *g = g_101e3138;
+		if (++g->m_nPause == 1) {
+			CVProfNode *node = g->m_pRoot;
+			node->m_nCurFrameCalls++;
+			if (node->m_nRecursions++ == 0) {
+				((CCycle_1018d200 *)&node->m_CurFrameTime)->Sample();
+				CVProfile *g2 = g_101e3138;
+				int id = node->m_BudgetGroupID;
+				g2->m_Stack[g2->m_nDepth] = id;
+				g2->m_nDepth++;
+				if (g2->m_Stack[g2->m_nDepth - 2] != id && g2->m_bEnabled && id == g2->m_nCurBudget)
+					vtune(true);
+			}
+		}
+		g_105fbcfc = 1;
+	} else {
+		CVProfile *g = g_101e3138;
+		if (--g->m_nPause == 0) {
+			CVProfNode *node = g->m_pRoot;
+			if (--node->m_nRecursions == 0 && node->m_nCurFrameCalls != 0) {
+				CCycle_1018d200 now;
+				now.lo = 0;
+				now.hi = 0;
+				now.Sample();
+				unsigned __int64 n = *(unsigned __int64 *)&now;
+				node->m_CurFrameTime.v = n - node->m_CurFrameTime.v;
+				node->m_TotalTime += node->m_CurFrameTime;
+				CVProfile *g2 = g_101e3138;
+				int d = --g2->m_nDepth;
+				int a = g2->m_Stack[d + 1];
+				int b = g2->m_Stack[d];
+				if (b != a && g2->m_bEnabled && a == g2->m_nCurBudget)
+					vtune(false);
+			}
+		}
+		g_105fbcfc = 0;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018d3b0 size=0xb
 namespace lifted {
 extern char g_1018d3c0;

@@ -9411,6 +9411,7 @@
 0x1018d160 func   ?sub_1018d160@@YAHXZ sub_1018d160
 0x1018d180 func   ?sub_1018d180@@YAHXZ sub_1018d180
 0x1018d1f0 func   ?sub_1018d1f0@@YAXXZ sub_1018d1f0
+0x1018d200 func   ?sub_1018d200@@YAXXZ sub_1018d200
 0x1018d3b0 func   ?sub_1018d3b0@@YAXXZ sub_1018d3b0
 0x1018d3c0 func   ?sub_1018d3c0@@YAXXZ sub_1018d3c0
 0x1018d4b0 func   ?sub_1018d4b0@@YAXXZ sub_1018d4b0
