@@ -498,6 +498,205 @@ void CInput::MakeWeaponSelection(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10103320 size=0x72f
+#include "CInput.h"
+#include "CUserCmd.h"
+#include "ConVar.h"
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+#include "CClientEntityList.h"
+#include "IClientMode.h"
+#include <math.h>
+#include <stdlib.h>
+
+extern ConVar g_104d35c8;
+extern ConVar g_104d2e58;
+extern ConVar g_104e1708;
+extern ConVar g_104e14a8;
+extern ConVar g_104e1798;
+extern ConVar g_104d34a0;
+extern int g_102bd928;
+extern int g_104d3e3c;
+extern int g_104a0d48;
+extern QAngle g_104d33c4;
+extern IClientMode *g_105f99d8;
+extern float g_102353d0;	// 250.0f
+void sub_10109340(const Vector &dir, QAngle &angles);
+
+struct VecInit_1009f020 { void sub_1009f020(float x, float y, float z); };
+
+#define clamp_10103320(val, min, max) (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)))
+
+struct CreateMoveStatic_10103320
+{
+	~CreateMoveStatic_10103320() {}
+};
+
+void CInput::CreateMove(int sequence_number, int totalslots, float tick_frametime, float input_sample_frametime, int active, float packet_loss)
+{
+	m_n1c4 = *(int *)&packet_loss;
+	int nAdjust = abs(m_n1c4);
+	CUserCmd *cmd = &m_pCommands[sequence_number & (totalslots - 1)];
+	cmd->command_number = 0;
+	cmd->m_fl08 = 0;
+	cmd->msec = 0;
+	cmd->frametime = 0;
+	cmd->viewangles.Init();
+	cmd->forwardmove = 0.0f;
+	cmd->sidemove = 0.0f;
+	cmd->upmove = 0.0f;
+	cmd->m_b2c = 0;
+	cmd->buttons = 0;
+	cmd->m_n34 = 0;
+	cmd->impulse = 0;
+	cmd->m_n3c = 0;
+	cmd->m_n40 = 0;
+	cmd->m_b44 = 1;
+	cmd->m_b45 = 1;
+	cmd->m_b46 = 0;
+	cmd->m_b47 = 0;
+	cmd->m_n48 = 0;
+	cmd->m_n4c = 0;
+	((VecInit_1009f020 *)&cmd->m_vec50)->sub_1009f020(0, 0, 0);
+	cmd->m_b5c = 0;
+	cmd->command_number = sequence_number;
+	cmd->msec = (int)floor(tick_frametime * 1000.0f + 0.5f);
+	if (nAdjust)
+	{
+		int n = 1;
+		if (m_n1c4 > 0)
+		{
+			cmd->msec += n;
+			m_n1c4 -= n;
+		}
+		else if (m_n1c4 < 0)
+		{
+			int d = cmd->msec - 1;
+			n = (d > 0) ? n : ((d < 0) ? 0 : d);
+			cmd->msec -= n;
+			m_n1c4 += n;
+		}
+	}
+	cmd->msec = clamp_10103320(cmd->msec, 0, 250);
+	cmd->frametime = cmd->msec * 0.001f;
+	cmd->frametime = clamp_10103320(cmd->frametime, 0.0f, 0.25f);
+
+	static CreateMoveStatic_10103320 s_unused;
+
+	if (*(int *)&input_sample_frametime && m_b144)
+	{
+		QAngle viewangles;
+		engine->GetViewAngles(viewangles);
+		sub_101028d0(tick_frametime);
+		sub_10102a50(cmd);
+		sub_10102d00(cmd);
+		sub_10102df0(cmd);
+		sub_10102fe0(tick_frametime, cmd);
+		if (g_104d35c8.GetInt())
+		{
+			QAngle angles;
+			engine->GetViewAngles(angles);
+			angles.x = 0;
+			angles.z = 0;
+			engine->SetViewAngles(angles);
+		}
+		if (m_f100 >= 1.0f)
+		{
+			C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+			if (pPlayer)
+			{
+				Vector eye;
+				Vector dir = *(Vector *)((char *)pPlayer + 0x1754) - *(Vector *)pPlayer->vfunc107((int)&eye);
+				QAngle angles;
+				sub_10109340(dir, angles);
+				float flPitch = (float)((angles.x + 180.0f) * (1.0f / 360.0f) - floor((angles.x + 180.0f) * (1.0f / 360.0f))) * 360.0f - 180.0f;
+				if (flPitch < -80.0f || flPitch > 80.0f)
+					flPitch = 0.0f;
+				angles.x = flPitch;
+				angles.y = (float)(angles.y * (1.0f / 360.0f) - floor(angles.y * (1.0f / 360.0f))) * 360.0f;
+				angles.z = 0;
+				engine->SetViewAngles(angles);
+			}
+		}
+		sub_101030c0(viewangles, cmd);
+	}
+	else if (!m_b144)
+	{
+		float mx, my;
+		AccumulateMouse();
+		sub_101063f0(&mx, &my);
+	}
+
+	QAngle viewangles;
+	engine->GetViewAngles(viewangles);
+
+	cmd->impulse = g_104d3e3c;
+	g_104d3e3c = 0;
+	cmd->m_n3c = g_104a0d48;
+	g_104a0d48 = 0;
+
+	cmd->buttons = GetButtonBits(1);
+
+	if (g_104d2e58.GetInt())
+	{
+		if (cmd->forwardmove > 0.0f)
+			cmd->buttons |= 8;
+		else if (cmd->forwardmove < 0.0f)
+			cmd->buttons |= 0x10;
+	}
+
+	if (g_102bd928)
+	{
+		VectorCopy(*(Vector *)&viewangles, cmd->viewangles);
+		VectorCopy(*(Vector *)&viewangles, *(Vector *)&g_104d33c4);
+	}
+	else
+	{
+		VectorCopy(*(Vector *)&g_104d33c4, cmd->viewangles);
+	}
+
+	engine->SetViewAngles(*(QAngle *)&cmd->viewangles);
+
+	g_105f99d8->vfunc22(tick_frametime, cmd);
+
+	m_n1bc = (int)cmd->forwardmove;
+
+	cmd->m_fl08 = render->vfunc42() * 1000.0f;
+	cmd->m_fl08 = clamp_10103320(cmd->m_fl08, 0.0f, g_102353d0);
+
+	cmd->m_b44 = (g_104e1708.GetInt() && g_104e14a8.GetInt()) ? 1 : 0;
+	cmd->m_b45 = (g_104e1708.GetInt() && g_104e1798.GetInt()) ? 1 : 0;
+	cmd->m_b47 = clamp_10103320(m_p1c8 ? m_p1c8->GetInt() : 30, 1, 255);
+	cmd->m_b46 = clamp_10103320(m_p1cc ? m_p1cc->GetInt() : 20, 1, 255);
+
+	int nEnt = g_104d34a0.GetInt();
+	if (nEnt >= 1 && nEnt <= engine->GetMaxClients())
+	{
+		C_BaseEntity *pEnt = cl_entitylist->sub_100d0cf0(nEnt);
+		if (pEnt)
+		{
+			C_BaseEntity *pOwner = *(C_BaseEntity **)((char *)pEnt + 0x3f8);
+			if (pOwner)
+			{
+				cmd->m_n4c = pOwner->entindex();
+				cmd->m_vec50 = *(Vector *)pOwner->vfunc43();
+			}
+		}
+	}
+
+	cmd->m_n34 = cmd->buttons;
+	if (m_f100 > 0.0f)
+	{
+		float flScale = 1.0f - m_f100;
+		cmd->buttons = 0;
+		cmd->impulse = 0;
+		cmd->forwardmove *= flScale;
+		cmd->sidemove *= flScale;
+		cmd->upmove *= flScale;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10103a60 size=0x97
 #include "CInput.h"
 #include "CUserCmd.h"
