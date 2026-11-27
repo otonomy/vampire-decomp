@@ -7663,6 +7663,7 @@
 0x1013b3c0 func   ?sub_1013b3c0@@YAXPAX00@Z sub_1013b3c0
 0x1013b440 func   ?sub_1013b440@@YAXPAX00@Z sub_1013b440
 0x1013b5e0 func   ?sub_1013b5e0@@YA_NPAVCUnknown1006bea0@@PAUXImgHdr@@@Z sub_1013b5e0
+0x1013b620 func   ?sub_1013b620@@YADPAXPAUS620@@PAUT620@@@Z sub_1013b620
 0x1013b970 func   ?sub_1013b970@@YADHPAVCUnknown1006c1c0@@@Z sub_1013b970
 0x1013ba50 func   ?vfunc1@CTimeMaterialProxy@@UAEXH@Z CTimeMaterialProxy::vfunc1
 0x1013bab0 func   ?sub_1013bab0@@YAHXZ sub_1013bab0

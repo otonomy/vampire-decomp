@@ -110964,6 +110964,70 @@ bool sub_1013b5e0(CUnknown1006bea0 *r, XImgHdr *h)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013b620 size=0xef
+#pragma pack(push, 1)
+struct S620 {
+	unsigned char a;
+	char p1[4];
+	unsigned short w5;
+	char p2[5];
+	unsigned short wc;
+	unsigned short we;
+	char p3;
+	unsigned char flags;
+};
+#pragma pack(pop)
+
+struct T620 {
+	void *p;
+	int r;
+	int m;
+};
+
+struct Info620 { int a; int b; };
+
+typedef void (__cdecl *CB620)(void *, S620 *, void *);
+CB620 sub_1013b710(S620 *s);
+int sub_100f4440(int a, int b, int c, int d);
+Info620 *sub_100f4420(int a);
+extern int g_105e74b8;
+extern "C" __declspec(dllimport) void *Plat_Alloc(unsigned int);
+extern "C" __declspec(dllimport) void *Plat_Realloc(void *, unsigned int);
+
+// TARGET: sub_1013b620
+char sub_1013b620(void *obj, S620 *s, T620 *t)
+{
+	CB620 fn = sub_1013b710(s);
+	if (!fn)
+		return 0;
+	g_105e74b8 = 0;
+	int n = sub_100f4440(s->wc, s->we, 0, 0);
+	if (t->r < n && t->m != -1) {
+		void *p = t->p;
+		t->r = n;
+		if (p)
+			p = Plat_Realloc(p, n);
+		else
+			p = Plat_Alloc(n);
+		t->p = p;
+	}
+	if (s->flags & 0x20) {
+		for (int i = 0; i < s->we; i++) {
+			char *b = (char *)t->p;
+			int sz = sub_100f4420(0)->b;
+			fn(obj, s, b + s->wc * sz * i);
+		}
+	} else {
+		for (int i = s->we - 1; i >= 0; i--) {
+			char *b = (char *)t->p;
+			int sz = sub_100f4420(0)->b;
+			fn(obj, s, b + s->wc * sz * i);
+		}
+	}
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013b970 size=0xd5
 #include "CUnknown1006c1c0.h"
 
