@@ -305,6 +305,103 @@ void CPrediction::vfunc16(C_BasePlayer *player, CUserCmdView *ucmd, void *pHelpe
 }
 // END FUNCTION
 
+// FUNCTION: 0x10122440 size=0x1ab
+#include "CPrediction.h"
+#include "ehandle.h"
+#include "CGlobalVarsBase.h"
+
+inline int Float2Int( float a )
+{
+	int CtrlwdHolder;
+	int CtrlwdSetter;
+	int RetVal;
+
+	__asm 
+	{
+		fld    a					// push 'a' onto the FP stack
+		fnstcw CtrlwdHolder		// store FPU control word
+		movzx  eax, CtrlwdHolder	// move and zero extend word into eax
+		and    eax, 0xFFFFF3FF	// set all bits except rounding bits to 1
+		or     eax, 0x00000400	// set rounding mode bits to round down
+		mov    CtrlwdSetter, eax	// Prepare to set the rounding mode -- prepare to enter plan 'B'
+		fldcw  CtrlwdSetter		// Entering plan 'B' now...
+		fistp  RetVal			// Store and converted (to int) result
+		fldcw  CtrlwdHolder		// Restore control word
+	}
+
+	return RetVal;
+}
+
+struct PredCmd_10122440
+{
+	char m_pad0[0x10];
+	float frametime;
+	float angX, angY, angZ;
+	char m_pad20[0x30 - 0x20];
+	int weaponselect;
+};
+struct VehSub_10122440
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void vfunc6(void *pMove);
+};
+#define PV1(a) virtual void a();
+#define PV10(p) PV1(p##0) PV1(p##1) PV1(p##2) PV1(p##3) PV1(p##4) PV1(p##5) PV1(p##6) PV1(p##7) PV1(p##8) PV1(p##9)
+struct VehEnt_10122440
+{
+	PV10(a) PV10(b) PV10(c) PV10(d) PV10(e) PV10(f)
+	virtual void g0(); virtual void g1(); virtual void g2();
+	virtual VehSub_10122440 *vfunc63();
+};
+struct CUnknown100a9a80 { void sub_100a9a80(int); };
+struct PredPlayer_10122440
+{
+	char m_pad0[0x1888];
+	float m_angX, m_angY, m_angZ;
+	char m_pad1894[0x19c4 - 0x1894];
+	CBaseHandle m_h19c4;
+	char m_pad19c8[0x19f0 - 0x19c8];
+	float m_flTime;
+};
+struct GameMovement_10122440
+{
+	virtual void v0();
+	virtual void vfunc1(void *player, void *pMove);
+};
+extern void *g_1027bbf0;
+extern GameMovement_10122440 *g_1027b8f8;
+extern void __stdcall sub_10122350(PredPlayer_10122440 *player, PredCmd_10122440 *ucmd);
+
+// TARGET: CPrediction::vfunc18
+void CPrediction::vfunc18(void *pHelper, PredPlayer_10122440 *player, PredCmd_10122440 *ucmd)
+{
+	player->m_flTime = Float2Int(player->m_flTime * 1000.0f + 0.5f) * 0.001f;
+	sub_10122350(player, ucmd);
+	gpGlobals->curtime = player->m_flTime;
+	gpGlobals->frametime = ucmd->frametime;
+	((CUnknown100a9a80 *)player)->sub_100a9a80(ucmd->weaponselect);
+	player->m_angX = ucmd->angX;
+	player->m_angY = ucmd->angY;
+	player->m_angZ = ucmd->angZ;
+	sub_101223b0(player);
+	sub_101223c0(player, (double)ucmd->frametime);
+	vfunc16((C_BasePlayer *)player, (CUserCmdView *)ucmd, pHelper, (CMoveDataView *)g_1027bbf0);
+	VehEnt_10122440 *pVeh = (VehEnt_10122440 *)player->m_h19c4.Get();
+	if (!pVeh)
+	{
+		if (g_1027b8f8)
+			g_1027b8f8->vfunc1(player, g_1027bbf0);
+	}
+	else
+		pVeh->vfunc63()->vfunc6(g_1027bbf0);
+	vfunc17(player, ucmd, g_1027bbf0);
+	sub_10122430(player);
+	sub_10122380(player);
+	player->m_flTime += ucmd->frametime;
+	player->m_flTime = Float2Int(player->m_flTime * 1000.0f + 0.5f) * 0.001f;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101225f0 size=0x250
 template <class T> __forceinline T pcd_stage(T x) { return x; }
 #include "CPrediction.h"
