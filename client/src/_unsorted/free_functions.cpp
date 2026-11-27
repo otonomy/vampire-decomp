@@ -146103,6 +146103,69 @@ void __cdecl sub_1018bf50(vgui2::Panel *parent, vgui2::Label **out, const char *
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018c0d0 size=0x195
+#include "VLabel.h"
+#include "vgui2__Panel.h"
+
+extern "C" int sprintf(char *, const char *, ...);
+extern "C" int sub_100cd0f0();
+extern "C" int sub_100cd100();
+extern "C" char *sub_1018c870(const char *);
+
+struct Color4
+{
+	int v;
+	Color4() {}
+};
+
+struct IScheme4
+{
+	virtual void v0();
+	virtual void v1();
+	virtual void v2();
+	virtual int GetBorder(const char *name);
+	virtual int GetFont(const char *name);
+	virtual void v5();
+	virtual Color4 GetColor(const char *name);
+};
+
+struct Obj_101ac830
+{
+	int sub_101ac830();
+};
+
+struct CUnknown101a9950
+{
+	void sub_101a9950(int a, int b, int c, int d);
+};
+
+// TARGET: sub_1018c0d0
+void sub_1018c0d0(vgui2::Panel *parent, VLabel **out, int a3, const char *name, int a5, int a6, int a7, int a8, const char *border)
+{
+	IScheme4 *scheme = (IScheme4 *)((Obj_101ac830 *)parent)->sub_101ac830();
+	int font = scheme->GetFont(sub_1018c870("PercolatorMedium"));
+	char buf[0x30];
+	sprintf(buf, "%s%s", name, "Border");
+	void *mem = vgui2::Panel::operator new(0xbc);
+	VLabel *label = mem ? new (mem) VLabel(parent, buf, buf) : 0;
+	*out = label;
+	label->vfunc118(font);
+	label->vfunc108("");
+	label->vfunc63(0);
+	label->vfunc51(scheme->GetColor("TitleText").v);
+	label->vfunc50(scheme->GetColor("GhostControlBG").v);
+	label->vfunc111(4);
+	((CUnknown101a9950 *)label)->sub_101a9950(
+		(int)(a5 * (sub_100cd100() * 0.0009765625)),
+		(int)(a6 * (sub_100cd0f0() * 0.0013020833333333333)),
+		(int)(a7 * (sub_100cd100() * 0.0009765625)),
+		(int)(a8 * (sub_100cd0f0() * 0.0013020833333333333)));
+	int b = scheme->GetBorder(border);
+	label->vfunc60((void *)b);
+	label->m_n0b8 = a3;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018c2a0 size=0x13c
 #include "VHLabel.h"
 extern "C" int sprintf(char *, const char *, ...);
