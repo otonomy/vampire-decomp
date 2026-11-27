@@ -80,6 +80,7 @@ public:
 	char *sub_10159400();
 	char *sub_10159260();
 	static char *sub_10158c80(int flags);	// "CVDmg_t::DMGFlagsToStr": scope trace; the names of the set DMG_ flags in a static 128 byte buffer
+	void sub_101589c0(struct CVDmgNewSrcX *pSrc);
 	void sub_10158790();	// the destructor body (stub 0x10010956), called directly
 	void sub_10158950(int a, int b, int c);	// "CVDmg_t::Set": scope trace, stores a / c / b in the fields +0 / +4 / +0x10 (the free-function form of the same address is matched as sub_101fa8d0)
 	void sub_10158ef0(const char *pszText);	// "CVDmg_t::Parse": scope trace; reads "<block> <number> <damage type value> ..." from the text (space separated): the first block (a name, or the empty block when it starts with a digit), the number at +4, the damage type value at +0 and the field at +0x10, then an optional second block at +0x24; a text that is cut short nulls the record
