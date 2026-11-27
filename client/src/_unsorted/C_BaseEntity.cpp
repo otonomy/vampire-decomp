@@ -858,6 +858,37 @@ int C_BaseEntity::DrawModel(int flags, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a0240 size=0x94
+#include "C_BaseEntity.h"
+char sub_100cc190(void *, int, void *);
+struct Ent_100a0240 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18();
+	virtual void v19();
+	bool sub_100a2ba0();
+};
+void C_BaseEntity::PreDataUpdate(int updateType)
+{
+	volatile int *p = (volatile int *)this + 2;
+	p[0x294/4] = p[0x2ac/4];
+	p[0x298/4] = p[0x2b0/4];
+	p[0x29c/4] = p[0x2b4/4];
+	p[0x2a0/4] = p[0x2b8/4];
+	p[0x2a4/4] = p[0x2bc/4];
+	p[0x2a8/4] = p[0x2c0/4];
+	if (sub_100cc190(this ? (char *)this + 8 : 0, updateType, (char *)p + 0x3d4)) {
+		OnPreDataChanged(updateType);
+	}
+	if (updateType == 0) {
+		Ent_100a0240 *e = (Ent_100a0240 *)this;
+		if (!e->sub_100a2ba0())
+			e->v19();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a0320 size=0x12a
 #include "engineclient.h"
 #include "C_BaseEntity.h"
