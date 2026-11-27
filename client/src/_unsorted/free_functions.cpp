@@ -122218,6 +122218,53 @@ bool TipsMgr::sub_101518e0(TipKV *kv, const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10151a60 size=0xbe
+struct TipKV {
+	virtual void vf0();
+	virtual void vf1();
+	virtual TipKV *FindKey(const char *name);
+	virtual TipKV *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual TipKV *FindKey(const char *name);
+};
+struct TipsMgr {
+	bool sub_101518e0(TipKV *node, const char *path);
+	char sub_10151a60();
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" __declspec(dllimport) void DevMsg(int, const char *, ...);
+extern "C" int sprintf(char *, const char *, ...);
+
+// TARGET: TipsMgr::sub_10151a60
+char TipsMgr::sub_10151a60()
+{
+	char path[260];
+	sprintf(path, "%s%s.txt", "vdata\\system\\", "LoadingTips");
+	DataFile *file = sub_101545c0(path, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", path);
+		return 0;
+	}
+	TipKV *node = file->FindKey("Tips_Section");
+	while (node) {
+		if (!sub_101518e0(node, path))
+			DevMsg(1, "ERROR: LoadTips: CVLoadTipsInfoMgr::Load FAILED!\n");
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10151b20 size=0x11
 struct CUnknown10151b20 { int m_unk0; int m_unk4; int m_unk8; int *m_pItems; int m_nCur; int sub_10151b20(); };
 int CUnknown10151b20::sub_10151b20()
