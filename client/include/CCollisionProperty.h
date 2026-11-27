@@ -31,6 +31,8 @@ public:
     void *m_unk3c;
     int m_unk40;
     unsigned short m_unk44;
+    unsigned short m_unk46;
+    void sub_100430f0(int arg);
     int *sub_100432f0(char a);
     int vfunc11();
     bool sub_100442d0();

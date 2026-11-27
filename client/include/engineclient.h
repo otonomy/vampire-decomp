@@ -623,7 +623,7 @@ extern INetworkStringTableClient *g_104a5804;
 class ISpatialPartition
 {
 public:
-	virtual void vfunc0();
+	virtual void vfunc0(unsigned short, int);
 	virtual void vfunc1();
 	virtual void vfunc2();
 	virtual void vfunc3(unsigned short);	// slot 3
