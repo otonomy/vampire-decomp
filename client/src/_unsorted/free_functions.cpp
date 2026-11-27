@@ -90875,6 +90875,31 @@ void C_BaseEntity::sub_1011c7f0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011cac0 size=0x10c
+#include "Vector.h"
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+int C_BaseEntity::sub_1011cac0(Vector &in, const Vector &normal, Vector &out, float overbounce)
+{
+	ScopeTrace st("CBaseEntity::PhysicsClipVelocity", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	float backoff;
+	float angle;
+	int i, blocked;
+
+	blocked = 0;
+	angle = normal[2];
+	if (angle > 0) blocked |= 1;
+	if (angle == 0) blocked |= 2;
+	backoff = DotProduct(in, normal) * overbounce;
+	for (i = 0; i < 3; i++) {
+		double change = normal[i] * backoff;
+		out[i] = in[i] - change;
+		if (out[i] > -0.1 && out[i] < 0.1) out[i] = 0;
+	}
+	return blocked;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011cbd0 size=0x36b
 #include "C_BaseEntity.h"
 #include "CGameTrace.h"
