@@ -37,6 +37,9 @@ public:
 	void sub_101a9af0();
 	void sub_101aa590();
 	void sub_101a9ff0(int);
+	void sub_101a9980(int *x, int *y, int *wide, int *tall);
+	int sub_101ab460();
+	int sub_101ab480();
 	void sub_101aafb0(void *);
 	void sub_101aa0a0(int);
 	int sub_101a99f0(int);
