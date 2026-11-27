@@ -26026,6 +26026,32 @@ struct CIdxView100445d0 { int *m_pData; int *sub_100445d0(int i); };
 int *CIdxView100445d0::sub_100445d0(int i) { return &m_pData[i]; }
 // END FUNCTION
 
+// FUNCTION: 0x10044730 size=0x140
+#define PCD_LPF_CTOR
+#include "C_RecipientFilter.h"
+#include "engineclient.h"
+
+// TARGET: sub_10044730
+void sub_10044730(const Vector *pPos)
+{
+	float flVolume = enginerandom->RandomFloat(0.8f, 1.0f);
+	float flPitch = enginerandom->RandomFloat(90.0f, 110.0f);
+	Vector origin = *pPos;
+	const char *pszSound;
+	switch (enginerandom->RandomInt(0, 4))
+	{
+	case 1: pszSound = "weapons/fx/rics/ric2.wav"; break;
+	case 2: pszSound = "weapons/fx/rics/ric3.wav"; break;
+	case 3: pszSound = "weapons/fx/rics/ric4.wav"; break;
+	case 4: pszSound = "weapons/fx/rics/ric5.wav"; break;
+	default: pszSound = "weapons/fx/rics/ric1.wav"; break;
+	}
+	enginesound->vfunc0(pszSound, 0);
+	CLocalPlayerFilter filter;
+	enginesound->EmitSound(filter, 0, 6, pszSound, flVolume, 0x3fc00000, 0, (int)flPitch, (int)&origin, 0, 1, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10044870 size=0x2f8
 template <class T> __forceinline T pcd_stage(T x) { return x; }
 #include "engineclient.h"

@@ -2753,6 +2753,7 @@
 0x10044630 func   ?vfunc17@CCollisionProperty@@UAEXXZ CCollisionProperty::vfunc17
 0x10044640 func   ?vfunc12@CCollisionProperty@@QAEHXZ CCollisionProperty::vfunc12
 0x10044650 func   ?vfunc0@ClientEffectRegister@PrecacheMuzzleFlash@@UAEX_N@Z PrecacheMuzzleFlash::ClientEffectRegister::vfunc0
+0x10044730 func   ?sub_10044730@@YAXPBVVector@@@Z sub_10044730
 0x10044870 func   ?sub_10044870@@YAXABVVector@@ABVQAngle@@MH@Z sub_10044870
 0x10044b70 func   ?FX_Smoke@@YAXABVVector@@ABVQAngle@@MHHPAE@Z FX_Smoke
 0x10044b70 func   ?sub_10044b70@@YAXABVVector@@ABVQAngle@@MHHPAE@Z sub_10044b70
