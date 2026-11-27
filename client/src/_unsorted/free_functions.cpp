@@ -110948,6 +110948,65 @@ void sub_1013b440(void *a, void *b, void *c)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013b4c0 size=0x116
+#include "CUnknown1006c1c0.h"
+
+#pragma pack(push, 1)
+struct S4c0 {
+	unsigned char a;
+	char p1[4];
+	unsigned short w5;
+	char p2[5];
+	unsigned short wc;
+	unsigned short we;
+};
+#pragma pack(pop)
+
+struct T4c0 {
+	void *p;
+	int r;
+	int m;
+};
+
+int sub_1013a4b0(CUnknown1006c1c0 *o, S4c0 *s);
+char sub_1013b5e0(CUnknown1006c1c0 *o, S4c0 *s);
+char sub_1013b620(CUnknown1006c1c0 *o, S4c0 *s, T4c0 *t);
+void sub_100f6400(void *, int, int, int, int, float, int, int, int, int, int);
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+
+// TARGET: sub_1013b4c0
+char sub_1013b4c0(int arg0, CUnknown1006c1c0 *o, int w, int h, int a4, int a5, char a6, int a7, int a8)
+{
+	S4c0 s;
+	sub_1013a4b0(o, &s);
+	if (s.a)
+		o->sub_1013cbe0(1, s.a);
+	if (!s.w5 || sub_1013b5e0(o, &s))
+	{
+		T4c0 t;
+		t.p = 0;
+		t.r = 0;
+		t.m = 0;
+		char ok = sub_1013b620(o, &s, &t);
+		if (ok && w * h < s.wc * s.we)
+			ok = 0;
+		if (!ok)
+		{
+			if (t.m != -1 && t.p)
+				Plat_Free(t.p);
+		}
+		else
+		{
+			sub_100f6400(t.p, arg0, s.wc, s.we, a4, 2.2f, a5, a6 == 0, a7, a8, 0);
+			if (t.m != -1 && t.p)
+				Plat_Free(t.p);
+			return 1;
+		}
+	}
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013b5e0 size=0x31
 #include "CUnknown1006bea0.h"
 #pragma pack(push, 1)
