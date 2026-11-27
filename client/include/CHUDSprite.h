@@ -13,6 +13,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_10059620(int, int, int, int);
 	int sub_100593e0(const struct wrect_100593e0 *, const struct wrect_100593e0 *, struct wrect_100593e0 *);
 	void sub_1005aeb0(int, int, int, int, int, int, int, int);
+	void sub_1005cda0(int x, int y, int w, int h, void *clip, int r, int g, int b, int a);	// "CHUDSprite::drawClippedColorTint"
 	void sub_10059b70(int, int, int, int, int);
 	void sub_1005a9e0(int x, int y, int w, int h, int, int r, int g, int b);
 	void sub_1005c3b0(int, int, int, int, int);
