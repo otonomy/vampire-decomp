@@ -140101,6 +140101,59 @@ void CharEditStatsPanel::sub_10181cc0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10181f80 size=0x161
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "CharEditStatsPanel.h"
+#include "StatOwner2.h"
+#include "CVStatInfoList_t.h"
+#include "C_BasePlayer.h"
+#include <stdio.h>
+
+struct StatSel_10181f80 { int m_f0; int m_f4; CVStatInfoList_t *m_pList; int *m_pMin; int *m_pMax; };
+struct DmgBlk_10181f80 { int m_a, m_b, m_c, m_d; void sub_10161380(int a, int b); int sub_10161170(void *pPlayer); };
+char sub_101713e0();
+#define SEL ((StatSel_10181f80 *)m_n1fc)
+
+void CharEditStatsPanel::sub_10181f80()
+{
+	int cost = 0;
+	if (m_n1fc)
+	{
+		char buf[0x50];
+		if (sub_101713e0())
+		{
+			sprintf(buf, "%s: %d", g_105f93c0.sub_1015f2f0("CostStrings")->sub_1015ecd0(5), *(int *)((char *)this + 0x80 + pcd_stage(*(int *)((char *)this + 0xb4)) * 8));
+		}
+		else
+		{
+			int lo = SEL->m_pMin[m_n200];
+			int hi = SEL->m_pMax[m_n200];
+			int cap = hi < lo ? lo : hi;
+			C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+			if (pPlayer)
+			{
+				if (cap < SEL->m_pList->sub_1015cfe0(m_n200)->sub_1015c1d0((int)pPlayer))
+				{
+					DmgBlk_10181f80 blk;
+					blk.sub_10161380(SEL->m_pList->m_field2c, m_n200);
+					cost = blk.sub_10161170(pPlayer);
+					if (cap > 0)
+						sprintf(buf, "%s: %d", g_105f93c0.sub_1015f2f0("CostStrings")->sub_1015ecd0(0), cost);
+					else
+						sprintf(buf, "%s: %d", g_105f93c0.sub_1015f2f0("CostStrings")->sub_1015ecd0(4), cost);
+				}
+				else
+					sprintf(buf, "%s: --", g_105f93c0.sub_1015f2f0("CostStrings")->sub_1015ecd0(0));
+			}
+			else
+				sprintf(buf, "");
+		}
+		((vgui2::Label *)m_p2a4)->vfunc108(buf);
+	}
+	*(int *)((char *)this + 0xb8) = cost;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101820f0 size=0xd
 struct CUnknown101820f0 { int sub_101820f0(int); };
 int CUnknown101820f0::sub_101820f0(int a0)
