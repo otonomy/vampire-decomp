@@ -44,6 +44,8 @@ public:
 	virtual int vfunc16();
 	virtual void ClientThink();	// IClientThinkable slot 0
 	void sub_100c9270(int);
+	virtual void OnDataChanged(int type);
+	int sub_100c93a0();
 	void sub_100c9680(Vector &v1, Vector &v2, Vector &v3);
 	void sub_100c9820();
 	void sub_100c9860();	// draws the screen's quad (m_flWidth x m_flHeight) with the panel material (m_b) at m_matrix
