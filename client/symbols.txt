@@ -2111,6 +2111,7 @@
 0x10031160 func   ?sub_10031160@SteamJetParticleView@@QAEXM@Z SteamJetParticleView::sub_10031160
 0x100319d0 func   ?sub_100319d0@Obj_100319d0@@QAEXHHH@Z Obj_100319d0::sub_100319d0
 0x100319f0 func   ?sub_100319f0@S100319f0@@QAEXPBM@Z S100319f0::sub_100319f0
+0x10031a20 func   ?sub_10031a20@CUnknown10031a20@@QAEHHHH@Z CUnknown10031a20::sub_10031a20
 0x10031d80 func   ?UpdateLightingRamp@C_SteamJet@@QAEXXZ C_SteamJet::UpdateLightingRamp
 0x10031d80 func   ?sub_10031d80@C_SteamJet@@QAEXXZ C_SteamJet::sub_10031d80
 0x10032190 func   ??0C_TEMetalSparks@@QAE@XZ C_TEMetalSparks::C_TEMetalSparks

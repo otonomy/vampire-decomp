@@ -19201,6 +19201,17 @@ void S100319f0::sub_100319f0(const float *s)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10031a20 size=0x1b
+struct CUnknown10031a20 { int sub_10031a20(int, int, int); };
+int CUnknown10031a20::sub_10031a20(int a0, int a1, int a2)
+{
+    int t0 = *(int *)((char *)this + a0 * 4 + 0xb0);
+    *(int *)((char *)t0) = a1;
+    *(int *)((char *)t0 + 4) = a2;
+    return t0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10031d80 size=0x3e3
 #include "C_SteamJet.h"
 #include "engineclient.h"
