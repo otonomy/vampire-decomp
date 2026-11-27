@@ -14,4 +14,5 @@ public:
 	CUnknown10142e50(int);
 	~CUnknown10142e50();
 	int sub_10143120(int);
+	void sub_10142f10(void *);
 };
