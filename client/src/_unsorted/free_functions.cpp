@@ -97566,6 +97566,29 @@ const char *CRangeView::sub_1012da10()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012da70 size=0x37
+extern "C" __declspec(dllimport) int Q_snprintf(char *pDest, int maxLen, const char *pFormat, ...);
+namespace lifted {
+extern char g_102c22bc;
+extern char g_102c4280;
+extern char g_102c4370;
+extern char g_105e5628;
+}
+int sub_1012da70(int a0)
+{
+    int r0;
+    r0 = (int)&lifted::g_102c4280;
+    do {
+        if ((*(int *)((char *)r0)) == a0) {
+            return *(int *)((char *)r0 + 4);
+        }
+        r0 = r0 + 8;
+    } while (r0 < ((int)&lifted::g_102c4370));
+    Q_snprintf((char *)((int)&lifted::g_105e5628), 0x20, (const char *)((int)&lifted::g_102c22bc), a0);
+    return (int)&lifted::g_105e5628;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012dab0 size=0x65
 #include "CUnknown101b2570.h"
 

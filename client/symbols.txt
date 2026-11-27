@@ -7124,6 +7124,7 @@
 0x1012d9c0 func   ?sub_1012d9c0@CUnknown1012d9c0@@QAEHXZ CUnknown1012d9c0::sub_1012d9c0
 0x1012d9d0 func   ?sub_1012d9d0@@YAPBDH@Z sub_1012d9d0
 0x1012da10 func   ?sub_1012da10@CRangeView@@QAEPBDXZ CRangeView::sub_1012da10
+0x1012da70 func   ?sub_1012da70@@YAHH@Z sub_1012da70
 0x1012dab0 func   ?sub_1012dab0@CUnknown101b2570@@QAEPBDXZ CUnknown101b2570::sub_1012dab0
 0x1012db70 func   ?sub_1012db70@CUnknown101b2570@@QAEXPBD@Z CUnknown101b2570::sub_1012db70
 0x1012dbc0 func   ?sub_1012dbc0@CUnknown101b2570@@QAEXPBD@Z CUnknown101b2570::sub_1012dbc0
