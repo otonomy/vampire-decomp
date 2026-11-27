@@ -89187,6 +89187,37 @@ int CUnknown10119600::sub_10119600()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10119610 size=0x47
+namespace lifted {
+struct C10119730 { int sub_10119730(int, int); };
+struct C101197b0 { int sub_101197b0(int, int); };
+}
+struct CUnknown10119610 { int sub_10119610(); };
+int CUnknown10119610::sub_10119610()
+{
+    int r0;
+    int r1;
+    int r2;
+    r0 = 0;
+    r1 = *(int *)((char *)this + 0x28);
+    if (r1 > 0) {
+        r2 = 0;
+        do {
+            if ((*(int *)((char *)((*(int *)((char *)this + 0x1c)) + r2) + 8)) == 0) {
+                ((lifted::C10119730 *)this)->sub_10119730(*(int *)((char *)((*(int *)((char *)this + 0x1c)) + r2)), *(int *)((char *)((*(int *)((char *)this + 0x1c)) + r2) + 4));
+            } else {
+                ((lifted::C101197b0 *)this)->sub_101197b0(*(int *)((char *)((*(int *)((char *)this + 0x1c)) + r2)), *(int *)((char *)((*(int *)((char *)this + 0x1c)) + r2) + 4));
+            }
+            r1 = *(int *)((char *)this + 0x28);
+            r0 = r0 + 1;
+            r2 = r2 + 0xc;
+        } while (r0 < r1);
+    }
+    *(int *)((char *)this + 0x28) = 0;
+    return r1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10119660 size=0x82
 #include "CUtlMemory12.h"
 extern "C" void *memmove(void *, const void *, unsigned int);

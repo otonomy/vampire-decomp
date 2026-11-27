@@ -6626,6 +6626,7 @@
 0x10119550 func   ?vfunc1@CCollisionEvent@@UAEXPAUCCollisionImpact@@@Z CCollisionEvent::vfunc1
 0x101195f0 func   ?vfunc2@CCollisionEvent@@UAEXHHHHH@Z CCollisionEvent::vfunc2
 0x10119600 func   ?sub_10119600@CUnknown10119600@@QAEHXZ CUnknown10119600::sub_10119600
+0x10119610 func   ?sub_10119610@CUnknown10119610@@QAEHXZ CUnknown10119610::sub_10119610
 0x10119660 func   ?sub_10119660@OwnerV12@@QAEXHHH@Z OwnerV12::sub_10119660
 0x101196f0 func   ?vfunc3@CCollisionEvent@@UAEXPAUIObj@@0H@Z CCollisionEvent::vfunc3
 0x10119730 func   ?sub_10119730@@YGHHH@Z sub_10119730
