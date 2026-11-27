@@ -25,6 +25,18 @@ CStudiomodelPanel *pcd_emit_1018b250(const CStudiomodelPanel &other) { return ne
 // TARGET: ??_GCStudiomodelPanel@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x1018b270 size=0x2a
+#include "CStudiomodelPanel.h"
+#include "CGUIClientRenderable.h"
+// TARGET: ??1CStudiomodelPanel@@UAE@XZ
+CStudiomodelPanel::~CStudiomodelPanel()
+{
+	CGUIClientRenderable *p = (CGUIClientRenderable *)m_p58;
+	if (p)
+		delete p;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018bc10 size=0x16
 #include "CStudiomodelPanel.h"
 namespace lifted {
