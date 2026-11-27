@@ -10731,6 +10731,7 @@
 0x101c0030 func   ?vfunc127@Menu@vgui2@@UAEHH@Z vgui2::Menu::vfunc127
 0x101c0080 func   ?sub_101c0080@Menu@vgui2@@QAEXPAX@Z vgui2::Menu::sub_101c0080
 0x101c00d0 func   ?vfunc78@Menu@vgui2@@UAEXH@Z vgui2::Menu::vfunc78
+0x101c0120 func   ?sub_101c0120@Menu@vgui2@@QAEXH@Z vgui2::Menu::sub_101c0120
 0x101c03e0 func   ?vfunc90@Menu@vgui2@@UAEXH@Z vgui2::Menu::vfunc90
 0x101c0420 func   ?vfunc81@Menu@vgui2@@UAEXXZ vgui2::Menu::vfunc81
 0x101c0590 func   ?vfunc74@Menu@vgui2@@UAEHH@Z vgui2::Menu::vfunc74
