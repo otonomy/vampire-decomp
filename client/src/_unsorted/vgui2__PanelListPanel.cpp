@@ -11,6 +11,17 @@ vgui2::PanelListPanel *pcd_emit_101ca820(const vgui2::PanelListPanel &other) { r
 // TARGET: ??_GPanelListPanel@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101ca840 size=0x22
+#include "vgui2__PanelListPanel.h"
+namespace vgui2 {
+PanelListPanel::~PanelListPanel()
+{
+	vfunc112();
+	::operator delete(*(void **)((char *)this + 0x60));
+}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ca910 size=0x21
 #include "vgui2__PanelListPanel.h"
 int vgui2::PanelListPanel::vfunc113(int a0)
