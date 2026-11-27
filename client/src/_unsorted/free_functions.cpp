@@ -71297,6 +71297,50 @@ bool sub_100dad40(const Vector &p1, const Vector &p2, const Vector &p3, const Ve
 }
 // END FUNCTION
 
+// FUNCTION: 0x100dae30 size=0x153
+#include "Vector.h"
+#include <float.h>
+
+static inline float FloatMakePositive(float f)
+{
+	int i = *(int *)&f;
+	i &= 0x7FFFFFFF;
+	return *(float *)&i;
+}
+
+// TARGET: sub_100dae30
+bool sub_100dae30(const Vector &boxMin, const Vector &boxMax, const Vector &origin, const Vector &vecDelta, float flTolerance)
+{
+	float tmin = -FLT_MAX;
+	float tmax = FLT_MAX;
+	for (int i = 0; i < 3; ++i)
+	{
+		if (FloatMakePositive(vecDelta[i]) < 1e-8)
+		{
+			if ((origin[i] < boxMin[i] - flTolerance) || (origin[i] > boxMax[i] + flTolerance))
+				return false;
+			continue;
+		}
+		float invDelta = 1.0f / vecDelta[i];
+		float t1 = (boxMin[i] - flTolerance - origin[i]) * invDelta;
+		float t2 = (boxMax[i] + flTolerance - origin[i]) * invDelta;
+		if (t1 > t2)
+		{
+			float temp = t1;
+			t1 = t2;
+			t2 = temp;
+		}
+		if (t1 > tmin)
+			tmin = t1;
+		if (t2 < tmax)
+			tmax = t2;
+		if ((tmin > tmax) || (tmax < 0.0f) || (tmin > 1.0f))
+			return false;
+	}
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100daf90 size=0x127
 #include "Vector.h"
 

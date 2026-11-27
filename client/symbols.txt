@@ -5488,6 +5488,7 @@
 0x100dac00 func   ?sub_100dac00@@YA_NABVVector@@000@Z sub_100dac00
 0x100dac80 func   ?sub_100dac80@@YA_NABVVector@@000@Z sub_100dac80
 0x100dad40 func   ?sub_100dad40@@YA_NABVVector@@0000000H@Z sub_100dad40
+0x100dae30 func   ?sub_100dae30@@YA_NABVVector@@000M@Z sub_100dae30
 0x100daf90 func   ?sub_100daf90@@YA_NABVVector@@0PAUBoxObj@@M@Z sub_100daf90
 0x100db0c0 func   ?sub_100db0c0@@YA_NABURayRR_t@@0AAM1@Z sub_100db0c0
 0x100db300 func   ?sub_100db300@@YAMPBURayView10240ac0@@PBUPlaneView10240ac0@@@Z sub_100db300
