@@ -22,7 +22,8 @@ public:
 	CExperienceAward *m_pElements;	// 0x10
 	char m_flag14;	// 0x14
 
-	CExperienceAward *sub_10163600(int index);	// "ExperienceTable::GetAward": scope trace, record `index` or a warning and the static dummy record
+	CExperienceAward *sub_10163600(int index);
+	void sub_101636a0(int file);	// "ExperienceTable::GetAward": scope trace, record `index` or a warning and the static dummy record
 	void sub_10163410();	// "ExperienceTable::PurgeExperience": scope trace, frees the two strings of every record and purges the memory
 	void sub_10163290();	// "ExperienceTable::~ExperienceTable": scope trace, PurgeExperience, then the inlined CUtlVector destructor (RemoveAll + Purge, then the CUtlMemory Purge)
 		// "ExperienceTable::FindIndex": scope trace, index of the record whose name equals pszName (case-insensitive, compared over the longer length), else a warning and -1

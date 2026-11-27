@@ -11,6 +11,7 @@ struct CUtlMemory12
 	void sub_1002d470();
 	void Purge() { if (m_growSize != -1) { if (m_pMemory) { Plat_Free(m_pMemory); m_pMemory = 0; } m_allocationCount = 0; } }
 	void sub_10119fe0(int num);
+	void sub_10163a50(int num);
 	void sub_1002d690(int num);
 	CUtlMemory12 *sub_1002d430(int growSize, int allocationCount);	// constructor: allocates allocationCount * 12 bytes
 };
