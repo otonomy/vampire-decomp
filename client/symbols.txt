@@ -8776,6 +8776,7 @@
 0x101722c0 func   ?vfunc3@CTextImage2@@UAEXXZ CTextImage2::vfunc3
 0x101722d0 func   ??_GCTextImage2@@UAEPAXI@Z ??_GCTextImage2@@UAEPAXI@Z
 0x10172320 func   ?sub_10172320@ScoreVt_10172320@@QAEHH@Z ScoreVt_10172320::sub_10172320
+0x10172380 func   ?sub_10172380@CharEditPanel@@QAEXPAXHHHHHH@Z CharEditPanel::sub_10172380
 0x10172850 func   ?sub_10172850@CVSPanelX@@QAEXXZ CVSPanelX::sub_10172850
 0x10172880 func   ?sub_10172880@@YIXPAUVSelf@@HPBD@Z sub_10172880
 0x10172ac0 func   ?sub_10172ac0@@YADXZ sub_10172ac0
