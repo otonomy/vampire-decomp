@@ -41652,6 +41652,90 @@ void C_Beam::sub_10081060(Vector *pMins, Vector *pMaxs)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100813c0 size=0x118
+#include "engineclient.h"
+#include "ConVar.h"
+
+extern ConVar g_106192f0;
+static void *g_10487124;
+
+struct IMeshV100813c0
+{
+	virtual void v0(int a, int b, void *c);
+	virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(int type);
+};
+
+struct CBeamSegDraw
+{
+	char m_pad0000[0x44];
+	int m_i44;
+	char m_pad0048[0x50 - 0x48];
+	int m_i50;
+	int m_i54;
+	char m_pad0058[0x5c - 0x58];
+	int m_i5c;
+	int m_i60;
+	int m_i64;
+	int m_i68;
+	char m_pad006c[0x80 - 0x6c];
+	IMeshV100813c0 *m_pMesh;
+	char m_b84;
+	char m_pad0085[3];
+	int m_i88;
+	int m_i8c;
+	int m_i90;
+	int m_i94;
+	int m_i98;
+	int m_i9c;
+	int m_iA0;
+	char m_bA4;
+	char m_pad00a5[3];
+	int m_iA8;
+	int m_iAc;
+	int m_iB0;
+	int m_iB4;
+	int m_iB8;
+	int m_iBc;
+	int m_iC0;
+	char m_pad00c4[0xd0 - 0xc4];
+	int m_nTotalSegs;
+	int m_nSegsDrawn;
+	void sub_100813c0(int nSegs, void *pMaterial);
+};
+
+void CBeamSegDraw::sub_100813c0(int nSegs, void *pMaterial)
+{
+	m_nSegsDrawn = 0;
+	m_nTotalSegs = nSegs;
+	if (g_106192f0.GetInt()) {
+		if (!g_10487124)
+			g_10487124 = materials->FindMaterial("shadertest/wireframevertexcolor", 0, true);
+		if (g_10487124)
+			pMaterial = g_10487124;
+	}
+	m_pMesh = (IMeshV100813c0 *)materials->GetDynamicMesh(true, 0, 0, pMaterial);
+	m_b84 = 0;
+	m_i8c = nSegs * 2;
+	m_i88 = nSegs * 2;
+	m_i94 = 0;
+	m_i90 = 0;
+	m_bA4 = 1;
+	m_iA0 = 3;
+	m_pMesh->v10(3);
+	m_pMesh->v0(m_i88, m_i8c, this);
+	m_iA8 = m_i44;
+	m_iAc = m_i50;
+	m_iB0 = m_i5c;
+	m_iB4 = m_i60;
+	m_i98 = 0;
+	m_i9c = 0;
+	m_iB8 = m_i64;
+	m_iBc = m_i68;
+	m_iC0 = m_i54;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100814e0 size=0x30c
 #include "CMeshBuilder.h"
 

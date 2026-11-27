@@ -3661,6 +3661,7 @@
 0x10080ff0 func   ?sub_10080ff0@@YADXZ sub_10080ff0
 0x10081000 func   ?vfunc37@C_Beam@@UAEXXZ C_Beam::vfunc37
 0x10081060 func   ?sub_10081060@C_Beam@@QAEXPAVVector@@0@Z C_Beam::sub_10081060
+0x100813c0 func   ?sub_100813c0@CBeamSegDraw@@QAEXHPAX@Z CBeamSegDraw::sub_100813c0
 0x100814e0 func   ?sub_100814e0@CBeamSegDraw@@QAEXPAUCBeamSeg@@@Z CBeamSegDraw::sub_100814e0
 0x100817f0 func   ?sub_100817f0@VStore@@QAEXPBM@Z VStore::sub_100817f0
 0x10081820 func   ?sub_10081820@CMeshBuilder@@QAEXPBM@Z CMeshBuilder::sub_10081820
