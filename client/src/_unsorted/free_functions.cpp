@@ -18754,6 +18754,84 @@ char * CUnknown1002c540::sub_1002c540()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1002d160 size=0x143
+#include "Vector.h"
+struct CBeamSeg_1002d160 {
+	Vector m_vPos;
+	Vector m_vColor;
+	float m_flTexCoord;
+	float m_flWidth;
+	float m_flAlpha;
+};
+struct CBeamSegDraw {
+	int m_unk0[0x80 / 4];
+	int m_p80;
+	int m_u84;
+	int m_i88;
+	int m_i8c;
+	int m_i90;
+	int m_i94;
+	int m_i98;
+	int m_i9c;
+	char m_ba0[4];
+	char m_ba4;
+	int m_ib0[0x54 / 4];
+	CBeamSegDraw()
+	{
+		m_p80 = 0;
+		m_i88 = 0;
+		m_i8c = 0;
+		m_i90 = 0;
+		m_i94 = 0;
+		m_i98 = 0;
+		m_i9c = 0;
+		m_ba4 = 0;
+	}
+	void sub_100813c0(int, void *);
+	void sub_100814e0(CBeamSeg_1002d160 *);
+	void sub_10081b90();
+};
+struct Pt_1002d160 {
+	char pad[0x18];
+	Vector m_vPos;
+};
+extern float g_1027c678;
+struct Rope_1002d160 {
+	char pad0[0x410];
+	int m_nRopes;
+	int m_nPoints;
+	int m_u418;
+	Pt_1002d160 *m_pPts;
+	char pad1[0x47c - 0x420];
+	void *m_pMaterial;
+	int sub_1002d160(int, int);
+};
+// TARGET: Rope_1002d160::sub_1002d160
+int Rope_1002d160::sub_1002d160(int a, int b)
+{
+	if (!m_pMaterial)
+		return 0;
+	for (int i = 0; i < m_nRopes; i++) {
+		Pt_1002d160 *pPts = m_pPts + m_nPoints * i;
+		CBeamSegDraw beamDraw;
+		beamDraw.sub_100813c0(m_nPoints - 1, m_pMaterial);
+		for (int j = 0; j < m_nPoints; j++) {
+			CBeamSeg_1002d160 seg;
+			seg.m_vPos = pPts[j].m_vPos;
+			seg.m_flWidth = g_1027c678;
+			seg.m_vColor.x = 0.0f;
+			seg.m_vColor.y = 0.0f;
+			seg.m_vColor.z = 0.0f;
+			seg.m_flTexCoord = 0.0f;
+			seg.m_flAlpha = 0.0f;
+			beamDraw.sub_100814e0(&seg);
+		}
+		beamDraw.sub_10081b90();
+	}
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1002d430 size=0x33
 #include "CUtlMemory12.h"
 extern void *(*g_101e3100)(int);
