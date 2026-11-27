@@ -29,3 +29,17 @@ C_SteamJet *pcd_emit_10030fd0(const C_SteamJet &other) { return new C_SteamJet(o
 
 // TARGET: ??_GC_SteamJet@@UAEPAXI@Z
 // END FUNCTION
+
+// FUNCTION: 0x10031070 size=0x3e
+#include "C_SteamJet.h"
+
+extern char g_104e0768[];
+
+void C_SteamJet::OnDataChanged(int updateType)
+{
+	C_BaseEntity::OnDataChanged(updateType);
+	if (updateType == 0)
+		((IPrototypeAppEffect *)((char *)this + 0x468))->vfunc1(g_104e0768, 0);
+	m_Lifetime = m_JetLength / m_Speed;
+}
+// END FUNCTION
