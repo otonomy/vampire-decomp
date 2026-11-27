@@ -1,6 +1,17 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x100971d0 size=0x3f
+#include "C_BaseAnimatingOverlay.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+// TARGET: ??0C_BaseAnimatingOverlay@@QAE@XZ
+C_BaseAnimatingOverlay::C_BaseAnimatingOverlay()
+{
+	memset((char *)this + 0x790, 0, 0x390);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10097210 size=0x1e
 #include "C_BaseAnimatingOverlay.h"
 
