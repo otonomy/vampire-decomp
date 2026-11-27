@@ -142208,6 +142208,31 @@ int sub_1018f600()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018fb70 size=0x138
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
+void sub_10108fd0(const Vector &start, float scale, const Vector &dir, Vector &dest);
+struct VMView_1018fb70 { char pad[0x8]; Vector m_vOrigin; QAngle m_vAngles; };
+void CViewRender::sub_1018fb70(int nIndex)
+{
+	ScopeTrace st("CViewRender::CalcViewModelLag", g_102de300);
+	VMView_1018fb70 *vm = (VMView_1018fb70 *)vfunc6(nIndex);
+	if (vm) {
+		Vector forward;
+		sub_101090a0(vm->m_vAngles, &forward, 0, 0);
+		Vector &lastFacing = *(Vector *)((char *)this + 0x458);
+		Vector vDifference;
+		vDifference.x = forward.x - lastFacing.x;
+		vDifference.y = forward.y - lastFacing.y;
+		vDifference.z = forward.z - lastFacing.z;
+		sub_10108fd0(lastFacing, 5.0 * engine->vfunc41(0), vDifference, lastFacing);
+		sub_10108fd0(vm->m_vOrigin, 5.0f, vDifference * -1.0f, vm->m_vOrigin);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018ffd0 size=0x301
 #include "ScopeTrace.h"
 #include "CInput.h"
