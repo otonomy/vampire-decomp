@@ -18795,6 +18795,27 @@ char * CUnknown1002c540::sub_1002c540()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1002ca30 size=0x5f
+#include "C_Hairball.h"
+#include "CClientEntityList.h"
+#include "CBaseHandle.h"
+#include "engineclient.h"
+
+struct HbThink_1002ca30 { void sub_100cfea0(CBaseHandle h, float t); };
+HbThink_1002ca30 *sub_1002d700();
+struct HbList_1002ca30 { CBaseHandle sub_100e2360(void *pEnt); };
+struct HbEnt_1002ca30 { CBaseHandle sub_1002d710(); };
+
+void C_Hairball::sub_1002ca30()
+{
+	((HbList_1002ca30 *)cl_entitylist)->sub_100e2360(this);
+	sub_1002d700()->sub_100cfea0(((HbEnt_1002ca30 *)this)->sub_1002d710(), -1293.0f);
+	sub_100a1a70(1);
+	m_Physics.m_a[6] = (int)materials->FindMaterial("cable/cable", 0, 1);
+	m_flNextBurst = 5.0f;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1002d160 size=0x143
 #include "Vector.h"
 struct CBeamSeg_1002d160 {

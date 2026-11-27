@@ -2072,6 +2072,7 @@
 0x1002c540 func   ?sub_1002c540@CUnknown1002c540@@QAEPADXZ CUnknown1002c540::sub_1002c540
 0x1002c740 func   ??0C_Hairball@@QAE@XZ C_Hairball::C_Hairball
 0x1002c920 func   ??_GC_Hairball@@UAEPAXI@Z ??_GC_Hairball@@UAEPAXI@Z
+0x1002ca30 func   ?sub_1002ca30@C_Hairball@@QAEXXZ C_Hairball::sub_1002ca30
 0x1002ca90 func   ?ClientThink@C_Hairball@@UAEXXZ C_Hairball::ClientThink
 0x1002d160 func   ?sub_1002d160@Rope_1002d160@@QAEHHH@Z Rope_1002d160::sub_1002d160
 0x1002d430 func   ?sub_1002d430@CUtlMemory12@@QAEPAU1@HH@Z CUtlMemory12::sub_1002d430
