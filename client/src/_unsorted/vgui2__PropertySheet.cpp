@@ -11,6 +11,17 @@ vgui2::PropertySheet *pcd_emit_101c84a0(const vgui2::PropertySheet &other) { ret
 // TARGET: ??_GPropertySheet@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101c84c0 size=0x26
+#include "vgui2__PropertySheet.h"
+namespace vgui2 {
+PropertySheet::~PropertySheet()
+{
+	::operator delete(*(void **)((char *)this + 0x6c));
+	::operator delete(*(void **)((char *)this + 0x60));
+}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c84f0 size=0x285
 #include "vgui2__PropertySheet.h"
 #include "vgui2__Button.h"
