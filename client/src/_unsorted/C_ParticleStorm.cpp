@@ -47,3 +47,31 @@ void C_ParticleStorm::OnDataChanged(int updateType)
 	}
 }
 // END FUNCTION
+
+// FUNCTION: 0x10004570 size=0x9f
+#include "C_ParticleStorm.h"
+#include "CParticleMgr.h"
+#include "CParticleEffectBinding.h"
+struct CL { int sub_101165c0(unsigned char); };
+struct SpawnTimer
+{
+    float m_t0;
+    float m_t1;
+    void Init(float rate) { m_t0 = 1.0f / rate; m_t1 = 0; }
+};
+#define BIND ((CParticleEffectBinding *)((char *)this + 0x414))
+// TARGET: C_ParticleStorm::vfunc1
+void C_ParticleStorm::vfunc1(void *pParticleMgr, void *pArgs)
+{
+    CParticleMgr *pMgr = (CParticleMgr *)pParticleMgr;
+    if (!pMgr->sub_101175b0(BIND, (IParticleEffectP *)this))
+        return;
+    m_Pos = GetAbsOrigin();
+    m_Mat = BIND->sub_101163a0("particle/dx8_particle_cloud");
+    IMaterial *pMaterial = (IMaterial *)((CL *)BIND)->sub_101165c0(m_Mat);
+    if (pMaterial)
+        m_Renderer.sub_1004a860(pMaterial);
+    ((SpawnTimer *)&m_t0)->Init(m_SpawnRate);
+    m_pMgr = pMgr;
+}
+// END FUNCTION
