@@ -6498,6 +6498,7 @@
 0x10114770 func   ?sub_10114770@CUnknown10114770@@QAEPAXXZ CUnknown10114770::sub_10114770
 0x101148a0 func   ?vfunc1@CBaseSimpleCollision@@UAEXABVVector@@0PAUCGameTrace@@_N@Z CBaseSimpleCollision::vfunc1
 0x10114b40 func   ?vfunc2@CBaseSimpleCollision@@UAEXABVVector@@0MM@Z CBaseSimpleCollision::vfunc2
+0x10114d80 func   ?sub_10114d80@CUnknown10114d80@@QAEHXZ CUnknown10114d80::sub_10114d80
 0x10114db0 func   ??0CParticleCollision@@QAE@XZ CParticleCollision::CParticleCollision
 0x10114db0 func   ?sub_10114db0@CUnknown10114db0@@QAEPAXXZ CUnknown10114db0::sub_10114db0
 0x1011527a func   ?sub_1011527a@@YAXXZ sub_1011527a

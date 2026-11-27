@@ -87365,6 +87365,27 @@ void * CUnknown10114770::sub_10114770()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10114d80 size=0x25
+struct CUnknown10114d80 { int sub_10114d80(); };
+int CUnknown10114d80::sub_10114d80()
+{
+    int r0;
+    int r1;
+    r0 = (int)((char *)this + 0xc);
+    r1 = 6;
+    do {
+        *(int *)((char *)r0 + 4) = -1082130432;
+        *(int *)((char *)r0 + -8) = 0;
+        *(int *)((char *)r0 + -4) = 0;
+        *(int *)((char *)r0) = 0;
+        r0 = r0 + 0x10;
+        r1 = r1 - 1;
+    } while (r1 != 0);
+    *(int *)((char *)this + 0x64) = 0;
+    return r0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10114db0 size=0x2e
 namespace lifted {
 extern char g_102357b0;
