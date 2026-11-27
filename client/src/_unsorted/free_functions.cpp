@@ -28778,6 +28778,177 @@ int __stdcall sub_10056f00(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10056fd0 size=0x33c
+#include "CHudInfoBar.h"
+#include "StatOwner2.h"
+#include "CExperienceTable.h"
+#include "C_ItemGKeyring.h"
+#include "C_BasePlayer.h"
+#include "CVStatList_t.h"
+#include "ehandle.h"
+#include "utlvector.h"
+
+extern "C" __declspec(dllimport) int Q_snprintf(char *pDest, int maxLen, const char *pFormat, ...);
+extern "C" __declspec(dllimport) char *Q_strncpy(char *pDest, const char *pSrc, int maxLen);
+
+struct InfoBarEntry_t
+{
+	int m_nId;
+	int m_nParam;
+	char m_szText[0x80];
+};
+
+struct InfoBarMsgDef_t
+{
+	int m_n00;
+	unsigned char m_b04;
+	unsigned char m_bTextMessage;
+	unsigned char m_bUnique;
+	unsigned char m_bReplace;
+	unsigned char m_bDisabled;
+	unsigned char m_pad09[3];
+	int m_nFormat;
+	int m_n10;
+	int m_n14;
+	int m_n18;
+};
+extern InfoBarMsgDef_t g_103ee160[];
+
+extern CExperienceTable g_105faa18;
+extern CUtlVector<CBaseHandle> g_1049d8f8;
+
+C_BaseCombatWeapon *sub_1009b210();
+
+struct KeyringKey_t
+{
+	char m_szId[0x60];
+	char m_szName[0x60];
+};
+
+struct KeyringView
+{
+	char m_pad0000[0x978];
+	CUtlVector<KeyringKey_t> m_Keys;	// 0x978
+};
+
+struct WeaponInfoView
+{
+	char m_pad0000[0x2108];
+	char m_szAmmoNames[1][32];
+};
+
+struct PlayerStatListsView
+{
+	char m_pad0000[0x1178];
+	int m_nLists;
+	CVStatList_t **m_pLists;
+};
+
+#define INFOBAR_STR(i) g_105f93c0.sub_1015f2f0("Infobar_Strings")->sub_1015ecd0(i)
+
+void CHudInfoBar::sub_10056fd0(InfoBarEntry_t *pEntry, int id, int param, const char *pszText, bool bRemove)
+{
+	pEntry->m_nId = id;
+	pEntry->m_nParam = param;
+	pEntry->m_szText[0] = 0;
+
+	InfoBarMsgDef_t *pDef = &g_103ee160[id];
+	if (pDef->m_nFormat)
+	{
+		switch (pDef->m_nFormat)
+		{
+		case 1:
+			goto format1;
+		case 2:
+			Q_strncpy(pEntry->m_szText, pszText, 0x80);
+			return;
+		case 3:
+			goto format3;
+		default:
+			return;
+		}
+	}
+
+	switch (id)
+	{
+	case 23:
+		Q_snprintf(pEntry->m_szText, 0x80, "%s", (const char *)g_105faa18.sub_10163600(param)->m_b);
+		return;
+	case 19:
+	case 20:
+	{
+		for (int i = 0; i < g_1049d8f8.Count(); i++)
+		{
+			C_BaseCombatWeapon *pWeapon = (C_BaseCombatWeapon *)g_1049d8f8[i].Get();
+			if (!pWeapon)
+				continue;
+			C_ItemGKeyring *pKeyring = dynamic_cast<C_ItemGKeyring *>(pWeapon);
+			if (pKeyring)
+			{
+				KeyringView *pKeys = (KeyringView *)pKeyring;
+				if (pKeys->m_Keys.Count() > param)
+				{
+					const char *pszKey = pKeys->m_Keys[param].m_szName;
+					Q_snprintf(pEntry->m_szText, 0x80, "%s%s", INFOBAR_STR(id), pszKey);
+				}
+				return;
+			}
+		}
+		return;
+	}
+	case 26:
+	{
+		C_BaseCombatWeapon *pWeapon = sub_1009b210();
+		if (!pWeapon)
+			return;
+		Q_snprintf(pEntry->m_szText, 0x80, "%s%s", INFOBAR_STR(id), ((WeaponInfoView *)pWeapon->sub_1007b160())->m_szAmmoNames[pEntry->m_nParam]);
+		return;
+	}
+	case 30: case 31: case 32: case 33: case 34: case 35:
+	case 36: case 37: case 38: case 39: case 40: case 41:
+	{
+		int nLevel = 1;
+		PlayerStatListsView *pPlayer = (PlayerStatListsView *)C_BasePlayer::GetLocalPlayer();
+		if (pPlayer)
+		{
+			CVStatList_t *pList;
+			int nLists = pPlayer->m_nLists;
+			for (int i = 0; i < nLists; i++)
+			{
+				if (pPlayer->m_pLists[i]->m_field10 == 2)
+				{
+					pList = pPlayer->m_pLists[i];
+					goto found;
+				}
+			}
+			{
+				static CVStatList_t s_default(-1);
+				pList = &s_default;
+			}
+found:
+			nLevel = pList->sub_1015dbd0(8);
+		}
+		Q_snprintf(pEntry->m_szText, 0x80, "%s%s", g_105f93c0.sub_1015f2f0("UIHudObfFeedbackStrs")->sub_1015ecd0(nLevel - 1), INFOBAR_STR(id));
+		return;
+	}
+	case 78:
+		Q_snprintf(pEntry->m_szText, 0x80, "%s (%s)", INFOBAR_STR(id), pszText);
+		return;
+	case 54:
+		if (bRemove)
+			sub_10057310(0x4f);
+	default:
+		Q_strncpy(pEntry->m_szText, INFOBAR_STR(id), 0x80);
+		return;
+	}
+format1:
+	Q_snprintf(pEntry->m_szText, 0x80, "%s%d", INFOBAR_STR(id), param);
+	return;
+format3:
+	Q_snprintf(pEntry->m_szText, 0x80, "%s%s", INFOBAR_STR(id), pszText);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10057470 size=0x72
 struct Elem { char data[0x88]; };
 struct Mem {
