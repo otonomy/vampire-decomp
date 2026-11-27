@@ -32,3 +32,72 @@ void CLoadingDisc::vfunc1()
     }
 }
 // END FUNCTION
+
+// FUNCTION: 0x101679c0 size=0x10f
+#include "engineclient.h"
+#include "CGlobalVarsBase.h"
+#include "CLoadingDisc.h"
+
+#define LV1(a) virtual void a();
+#define LV10(p) LV1(p##0) LV1(p##1) LV1(p##2) LV1(p##3) LV1(p##4) LV1(p##5) LV1(p##6) LV1(p##7) LV1(p##8) LV1(p##9)
+
+struct LoadingDiscPanel
+{
+	LV10(a) LV10(b)
+	LV1(c0)
+	virtual void vfunc21(bool bOn);
+	LV10(d)
+	LV1(e0) LV1(e1) LV1(e2) LV1(e3) LV1(e4) LV1(e5) LV1(e6)
+	LV10(f)
+	virtual void vfunc49();
+	char m_pad[0x88 - 4];
+	int m_nAlpha;
+	bool m_bVisible;
+};
+
+extern bool g_105fad08;
+extern float g_105fad0c;
+extern "C" void sub_1018ccf0(int);
+
+void CLoadingDisc::vfunc2(bool bOn)
+{
+	if (g_105fad08 != bOn)
+	{
+		if (g_105fad08)
+		{
+			g_105fad0c = gpGlobals->curtime + 3.0;
+			engine->ClientCmd("clear_io_states");
+		}
+		else
+			sub_1018ccf0(4);
+		m_pPanel->m_nAlpha = 255;
+		g_105fad08 = bOn;
+	}
+	if (!bOn)
+	{
+		if (g_105fad0c > gpGlobals->curtime)
+		{
+			bOn = true;
+			double flT = 3.0 - (g_105fad0c - gpGlobals->curtime);
+			int nAlpha;
+			if (flT < 1.0)
+				nAlpha = 255;
+			else
+			{
+				double flFrac = (flT - 1.0) * 255.0;
+				nAlpha = (int)(255.0 - flFrac * 0.5);
+				if (nAlpha > 255)
+					nAlpha = 255;
+				else if (nAlpha < 0)
+					nAlpha = 0;
+			}
+			m_pPanel->m_nAlpha = nAlpha;
+			m_pPanel->vfunc49();
+			m_pPanel->m_bVisible = bOn;
+		}
+		else
+			m_pPanel->m_bVisible = false;
+	}
+	m_pPanel->vfunc21(bOn);
+}
+// END FUNCTION

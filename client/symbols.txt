@@ -8631,6 +8631,7 @@
 0x10167460 func   ?vfunc98@CLoadingDiscPanel@@UAEXXZ CLoadingDiscPanel::vfunc98
 0x10167960 func   ?vfunc0@CLoadingDisc@@UAEHH@Z CLoadingDisc::vfunc0
 0x10167990 func   ?vfunc1@CLoadingDisc@@UAEXXZ CLoadingDisc::vfunc1
+0x101679c0 func   ?vfunc2@CLoadingDisc@@UAEX_N@Z CLoadingDisc::vfunc2
 0x10167af0 func   ?sub_10167af0@@YAXXZ sub_10167af0
 0x10167b10 func   ?sub_10167b10@@YAXXZ sub_10167b10
 0x10167ca0 func   ?sub_10167ca0@@YAHXZ sub_10167ca0
