@@ -74902,6 +74902,53 @@ void CGlowOverlay::sub_100eee60(const Vector &vToGlow)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100efd40 size=0x121
+#include "CGlowOverlay.h"
+#include "CUtlLinkedList8.h"
+
+extern "C" __declspec(dllimport) void Error(const char *, ...);
+struct CMem8b_t { void sub_100eff70(int); };
+extern CUtlLinkedList8 g_104cfdc0;
+
+// TARGET: CGlowOverlay::sub_100efd40
+void CGlowOverlay::sub_100efd40()
+{
+	m_bActivated = true;
+	if (m_ListIndex == 0xffff) {
+		CUtlLinkedList8 &l = g_104cfdc0;
+		unsigned short elem;
+		if (l.m_FirstFree == 0xffff) {
+			if (l.m_NumAlloced == l.m_allocationCount)
+				((CMem8b_t *)&l)->sub_100eff70(1);
+			elem = l.m_NumAlloced;
+			++l.m_NumAlloced;
+			if (elem == 0xffff)
+				Error("CUtlLinkedList overflow!\n");
+		} else {
+			elem = l.m_FirstFree;
+			l.m_FirstFree = l.m_pMemory[l.m_FirstFree].m_Next;
+		}
+		l.m_pMemory[elem].m_Previous = elem;
+		l.m_pMemory[elem].m_Next = elem;
+		l.m_pElements = l.m_pMemory;
+		l.sub_100efee0(elem);
+		CUtlLinkedList8Node *n = &l.m_pMemory[elem];
+		n->m_Next = 0xffff;
+		n->m_Previous = l.m_Tail;
+		l.m_Tail = elem;
+		if (n->m_Previous == 0xffff)
+			l.m_Head = elem;
+		else
+			l.m_pMemory[n->m_Previous].m_Next = elem;
+		++l.m_ElementCount;
+		CUtlLinkedList8Node *pNode = &l.m_pMemory[elem];
+		if (pNode)
+			pNode->m_Data = (int)this;
+		m_ListIndex = elem;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100efe70 size=0x8
 struct CUnknown100efe70 { void sub_100efe70(); };
 void CUnknown100efe70::sub_100efe70()
