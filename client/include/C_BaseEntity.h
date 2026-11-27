@@ -11,6 +11,7 @@ class C_BaseEntity : public IClientEntity
 public:
 	C_BaseEntity();
 	bool sub_1011c5c0();
+	struct TouchLink *sub_1011b440(int type);
 	void sub_100a26e0();
 	void sub_100af040();
 	void sub_100a2580();
