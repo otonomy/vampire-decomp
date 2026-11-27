@@ -28,6 +28,7 @@ public:
 	int sub_1015cde0(const char *name, int index);
 	int sub_1015c8f0(const char *name);	// "CVStatInfoList_t::Lookup(char*)": scope trace, index of the stat whose name equals the argument (case-insensitive, null name counts as ""), -1 when none
 	int sub_1015c9b0(const char *name);
+	int sub_1015ccb0(const char *name, int index);	// "CVStatInfoList_t::LookupNextPartial"
 	CVDmgBlock16_t *sub_1015cf10(const char *name);
 		// "CVStatInfoList_t::Lookup( const char *name )": same lookup (name string at +0x18 of each record)
 	int sub_1015ca70(const char *name);	// "CVStatInfoList_t::LookupPartial": scope trace, index of the first stat whose lowercased name starts with the lowercased argument, -1 when none
