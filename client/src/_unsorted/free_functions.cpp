@@ -93233,6 +93233,21 @@ void C_BaseEntity::sub_1011b730(int type)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011b890 size=0x85
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+
+void C_BaseEntity::sub_1011b890()
+{
+	ScopeTrace st("CBaseEntity::DestroyAllDataObjects", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	for (int i = 0; i < 4; i++)
+	{
+		if (sub_1011b290(i))
+			sub_1011b730(i);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011bb30 size=0xf7
 struct VProfNode
 {
