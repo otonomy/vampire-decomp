@@ -279,7 +279,7 @@ public:
 	virtual int vfunc16();	// slot 16
 	virtual int vfunc17(void *pWaterInfo, bool *pbWater, const Vector &origin);	// slot 17: the water under the view (CViewRender::ViewDrawScene)
 	virtual int vfunc18();	// slot 18
-	virtual int vfunc19();	// slot 19
+	virtual void vfunc19(int);	// slot 19
 	virtual int vfunc20();	// slot 20
 	virtual int vfunc21();	// slot 21
 	virtual int vfunc22();	// slot 22
