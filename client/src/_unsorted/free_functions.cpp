@@ -83278,6 +83278,38 @@ void CInput::sub_101025f0(float speed, Vector &viewangles)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101026b0 size=0x14e
+#include "CInput.h"
+struct kbutton_t { int d[4]; };
+struct IView { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void StopPitchDrift(); };
+struct CPitchSpeed { virtual void v0(); virtual bool IsZero(); int m_unk04[9]; float m_f28; };
+extern char g_104d3e0c;
+extern IView *g_102d43d8;
+extern CPitchSpeed *g_104d3d54;
+extern kbutton_t g_104d3590, g_104d3af0, g_104d38ac, g_104d2dd4;
+bool sub_10186d50();
+// TARGET: CInput::sub_101026b0
+void CInput::sub_101026b0(float speed, QAngle &viewangles)
+{
+    float *p = (float *)&viewangles;
+    if (g_104d3e0c & 1) {
+        g_102d43d8->StopPitchDrift();
+        if (!sub_10186d50()) {
+            float ps = g_104d3d54->IsZero() ? 0.0f : g_104d3d54->m_f28;
+            p[0] -= speed * ps * KeyState(&g_104d3590);
+            ps = g_104d3d54->IsZero() ? 0.0f : g_104d3d54->m_f28;
+            p[0] += speed * ps * KeyState(&g_104d3af0);
+        }
+    }
+    float up = KeyState(&g_104d38ac);
+    float down = KeyState(&g_104d2dd4);
+    p[0] -= speed * (g_104d3d54->IsZero() ? 0.0f : g_104d3d54->m_f28) * up;
+    p[0] += speed * (g_104d3d54->IsZero() ? 0.0f : g_104d3d54->m_f28) * down;
+    if (up != 0.0f || down != 0.0f)
+        g_102d43d8->StopPitchDrift();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10102800 size=0xc8
 #include "CInput.h"
 #include "ConVar.h"
