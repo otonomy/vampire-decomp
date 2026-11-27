@@ -36,6 +36,7 @@ public:
 	void sub_100d66d0(int a0, unsigned short h);	// BuildOrthoShadow-like: a blob box (-18,-18,0)..(18,18,+0xa4) around the shadow direction (+8)
 	void sub_100d6320(class VMatrix &worldToShadow, const Vector &origin, const Vector &dir, const Vector &xvec, const Vector &yvec);	// BuildGeneralWorldToShadowMatrix
 	void sub_100d5bd0(unsigned short h);
+	void sub_100d5ca0(unsigned short h);
 	void sub_100d6ca0(int a0, unsigned short h, int *a2, int *a3);
 	void sub_100d7130(int a0, unsigned short h, int *a2);
 	void sub_100d7180(int a0, unsigned short h, int *a2);	// provisional, like sub_100d7130 (transplant)
