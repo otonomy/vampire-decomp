@@ -5400,6 +5400,7 @@
 0x100d3f70 func   ?sub_100d3f70@CUnknown100d3f70@@QAEXXZ CUnknown100d3f70::sub_100d3f70
 0x100d3f80 func   ?vfunc0@IClientMode@@QAEPAXD@Z IClientMode::vfunc0
 0x100d4030 func   ?vfunc2@ClientModeShared@@UAEXXZ ClientModeShared::vfunc2
+0x100d4040 func   ?vfunc15@ClientModeShared@@UAEXH@Z ClientModeShared::vfunc15
 0x100d41e0 func   ?vfunc11@ClientModeShared@@UAE_NH@Z ClientModeShared::vfunc11
 0x100d41f0 func   ?vfunc13@ClientModeShared@@UAE_NXZ ClientModeShared::vfunc13
 0x100d4200 func   ?sub_100d4200@S_100d4200@@QAEXHH@Z S_100d4200::sub_100d4200
