@@ -21,6 +21,15 @@ CSignLabel *pcd_emit_10060730(const CSignLabel &other) { return new CSignLabel(o
 // TARGET: ??_GCSignLabel@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x10060750 size=0x2c
+#include "CSignLabel.h"
+CSignLabel::~CSignLabel()
+{
+	::operator delete(*(void **)((char *)this + 0xb8));
+	::operator delete(*(void **)((char *)this + 0xbc));
+}
+// END FUNCTION
+
 // FUNCTION: 0x10060780 size=0x143
 #include "CSignLabel.h"
 
