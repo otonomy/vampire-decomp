@@ -3308,6 +3308,7 @@
 0x10064bb0 func   ?sub_10064bb0@@YAXXZ sub_10064bb0
 0x10064c60 func   ?sub_10064c60@@YAXXZ sub_10064c60
 0x10064c70 func   ?sub_10064c70@@YGXHHPAH@Z sub_10064c70
+0x10064cf0 func   ?sub_10064cf0@@YAX_NM@Z sub_10064cf0
 0x10064dd0 func   ?sub_10064dd0@@YAHHD@Z sub_10064dd0
 0x10064df0 func   ?sub_10064df0@@YAXPAVC_BaseCombatWeapon@@@Z sub_10064df0
 0x10065050 func   ?sub_10065050@@YAXH@Z sub_10065050

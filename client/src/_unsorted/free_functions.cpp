@@ -33312,6 +33312,27 @@ void __stdcall sub_10064c70(int a0, int a1, int *out)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10064cf0 size=0x55
+#include "engineclient.h"
+extern char g_103eef9c;
+extern float g_103eefa0;
+extern float g_103eef60;
+void *sub_1009b210();
+void sub_100650c0();
+// TARGET: sub_10064cf0
+void sub_10064cf0(bool flag, float t)
+{
+	g_103eef9c = flag;
+	if (flag && sub_1009b210()) {
+		g_103eefa0 = (float)engine->Time(0);
+		g_103eef60 = t - g_103eefa0;
+		if (g_103eef60 <= 0.1)
+			g_103eef9c = 0;
+	}
+	sub_100650c0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10064dd0 size=0x14
 namespace lifted {
 extern char g_103eee59;
