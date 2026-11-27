@@ -10484,6 +10484,7 @@
 0x101bbaf0 func   ?vfunc98@Slider@vgui2@@UAEXXZ vgui2::Slider::vfunc98
 0x101bbb10 func   ?vfunc116@Slider@vgui2@@UAEHH@Z vgui2::Slider::vfunc116
 0x101bbb20 func   ?sub_101bbb20@Slider@vgui2@@QAEXXZ vgui2::Slider::sub_101bbb20
+0x101bbc40 func   ?sub_101bbc40@Slider@vgui2@@QAEXXZ vgui2::Slider::sub_101bbc40
 0x101bbe90 func   ?vfunc117@Slider@vgui2@@UAEXPBD@Z vgui2::Slider::vfunc117
 0x101bbf20 func   ?vfunc114@Slider@vgui2@@UAEXPBD0@Z vgui2::Slider::vfunc114
 0x101bc020 func   ?vfunc97@Slider@vgui2@@UAEXXZ vgui2::Slider::vfunc97

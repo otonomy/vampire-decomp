@@ -159157,6 +159157,67 @@ void vgui2::Slider::sub_101bbb20()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101bbc40 size=0x19d
+#include "vgui2__Slider.h"
+struct Color_101bbc40
+{
+	unsigned char _color[4];
+	Color_101bbc40(int r, int g, int b, int a) { _color[0] = r; _color[1] = g; _color[2] = b; _color[3] = a; }
+};
+struct Surface_101bbc40
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+	virtual void DrawSetColor(Color_101bbc40 c);
+	virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38();
+	virtual void GetScreenSize(int *wide, int *tall);
+};
+Surface_101bbc40 *sub_101ac8d0();
+struct IImage_101bbc40
+{
+	virtual void Paint();
+	virtual void SetPos(int x, int y);
+	virtual void GetSize(int *wide, int *tall);
+	virtual void SetColor(Color_101bbc40 c);
+};
+#define P90 (*(IImage_101bbc40 **)((char *)this + 0x90))
+#define P94 (*(IImage_101bbc40 **)((char *)this + 0x94))
+#define P98 (*(IImage_101bbc40 **)((char *)this + 0x98))
+// TARGET: vgui2::Slider::sub_101bbc40
+void vgui2::Slider::sub_101bbc40()
+{
+	int x, y, wide, tall;
+	vfunc121(x, y, wide, tall);
+	vfunc65(wide, tall);
+	int sw, sh;
+	sub_101ac8d0()->GetScreenSize(&sw, &sh);
+	y = (int)(12.0 * (sh * 0.0013020833333333333) + y);
+	sub_101ac8d0()->DrawSetColor(Color_101bbc40(127, 140, 127, 255));
+	if (P90)
+	{
+		P90->SetPos(2, y);
+		P90->SetColor(Color_101bbc40(127, 140, 127, 255));
+		P90->Paint();
+	}
+	if (P94)
+	{
+		int w, t;
+		P94->GetSize(&w, &t);
+		P94->SetPos(wide - w, y);
+		P94->SetColor(Color_101bbc40(127, 140, 127, 255));
+		P94->Paint();
+	}
+	if (P98)
+	{
+		int t, w;
+		P98->GetSize(&w, &t);
+		P98->SetPos(x, (int)((y - t) - 18.0 * (sh * 0.0013020833333333333)));
+		P98->Paint();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101bc860 size=0x42
 #include "utlvector.h"
 
