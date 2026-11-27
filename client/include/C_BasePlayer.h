@@ -175,6 +175,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	char m_pad1a28[0x1aac - 0x1a28];
 	CUserCmd m_Cmd1aac;
 	void sub_100a73a0();
+	void sub_100a6bd0(CUserCmd *cmd);
 };
 
 // the local player (2004 SDK c_baseplayer.h): read it as C_BasePlayer::GetLocalPlayer()
