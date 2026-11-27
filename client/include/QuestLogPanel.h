@@ -8,7 +8,10 @@
 class QuestLogPanel : public vgui2::PropertyPage
 {
 public:
+	QuestLogPanel();
 	virtual ~QuestLogPanel();
+	void sub_10188730();
+	int sub_10189990(int);
 	static void operator delete(void *pMem) { free(pMem); }
 	void sub_101892d0(int);
 	void sub_10189600();	// rebuilds the three quest lists (active / completed / other) of the player's area
