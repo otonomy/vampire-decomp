@@ -955,6 +955,60 @@ bool C_BaseEntity::vfunc67()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a0740 size=0x15f
+#include "C_BaseEntity.h"
+#include "Vector.h"
+#include "QAngle.h"
+extern "C" void *__cdecl memmove(void *, const void *, unsigned int);
+extern "C" void *__cdecl memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+inline void *operator new(unsigned int, void *p) { return p; }
+struct Entry_100a0740 {
+	float time;
+	Vector origin;
+	Vector angles;
+};
+struct Vec_100a0740 {
+	Entry_100a0740 *m_pMemory;
+	int m_alloc;
+	int m_grow;
+	int m_size;
+	Entry_100a0740 *m_pElements;
+	void sub_100a35f0(int num);
+	void AddToHead(const Entry_100a0740 &src)
+	{
+		int elem = 0;
+		if (m_size + 1 > m_alloc)
+			sub_100a35f0(m_size + 1 - m_alloc);
+		m_size++;
+		m_pElements = m_pMemory;
+		int n = m_size - elem - 1;
+		if (n > 0)
+			memmove(&m_pMemory[elem + 1], &m_pMemory[elem], n * sizeof(Entry_100a0740));
+		Entry_100a0740 *p = &m_pMemory[elem];
+		if (p)
+			new (p) Entry_100a0740(src);
+	}
+};
+void C_BaseEntity::vfunc68(bool update)
+{
+	Entry_100a0740 e;
+	if (((Vec_100a0740 *)((char *)this + 0x130))->m_size >= 1)
+		e = ((Vec_100a0740 *)((char *)this + 0x130))->m_pMemory[0];
+	else
+		memset(&e, 0, sizeof(e));
+	Vec_100a0740 *v = (Vec_100a0740 *)((char *)this + 0x130);
+	v->m_size = 0;
+	if (update) {
+		e.time = *(float *)((char *)this + 0x70);
+		e.origin = GetAbsOrigin();
+		e.angles = *(const Vector *)&GetAbsAngles();
+	}
+	v->AddToHead(e);
+	v->AddToHead(e);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a08a0 size=0x3d
 #include "C_BaseEntity.h"
 #include "Vector.h"
