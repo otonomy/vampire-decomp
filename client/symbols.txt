@@ -9299,6 +9299,7 @@
 0x1018c840 func   ?sub_1018c840@@YADXZ sub_1018c840
 0x1018c850 func   ?sub_1018c850@@YAHH@Z sub_1018c850
 0x1018c870 func   ?sub_1018c870@@YAPADPBD@Z sub_1018c870
+0x1018c8f0 func   ?sub_1018c8f0@@YAXPAVPanel@vgui2@@PAPAVVRButton@@HHHHHH@Z sub_1018c8f0
 0x1018ca20 func   ?sub_1018ca20@CUnknown1018ca20@@QAEPAXHHH@Z CUnknown1018ca20::sub_1018ca20
 0x1018ca50 func   ??_GVHLabel@@UAEPAXI@Z ??_GVHLabel@@UAEPAXI@Z
 0x1018ca70 func   ??1VHLabel@@UAE@XZ VHLabel::~VHLabel

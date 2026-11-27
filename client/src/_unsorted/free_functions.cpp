@@ -140376,6 +140376,34 @@ char *sub_1018c870(const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018c8f0 size=0x12b
+#include "VRButton.h"
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((x) * ((float)sub_100cd100() / 1024.0))
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+struct IS { virtual void v0(); virtual void v1(); virtual void v2(); virtual void *GetBorder(const char *); virtual int GetFont(const char *); };
+struct CUnknown1017b130 { void *sub_1017b130(int, int, int); };
+
+void sub_1018c8f0(vgui2::Panel *parent, VRButton **out, int a3, int a4, int x, int y, int w, int h)
+{
+	IS *pScheme = (IS *)parent->sub_101ac830();
+	int font = pScheme->GetFont(sub_1018c870("Copperplate"));
+	void *mem = vgui2::Panel::operator new(0xf4);
+	VRButton *b = mem ? (VRButton *)((CUnknown1017b130 *)mem)->sub_1017b130((int)parent, a3, a4) : 0;
+	*out = b;
+	b->vfunc118(font);
+	b->vfunc63(0);
+	b->vfunc41((int)parent);
+	b->vfunc162(a3);
+	void *border = pScheme->GetBorder("CharEditBorder");
+	b->vfunc60(border);
+	b->vfunc111(4);
+	b->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018ca20 size=0x25
 namespace lifted {
 extern char g_1024f33c;
