@@ -8552,6 +8552,7 @@
 0x10163290 func   ?sub_10163290@CExperienceTable@@QAEXXZ CExperienceTable::sub_10163290
 0x10163410 func   ?sub_10163410@CExperienceTable@@QAEXXZ CExperienceTable::sub_10163410
 0x10163600 func   ?sub_10163600@CExperienceTable@@QAEPAUCExperienceAward@@H@Z CExperienceTable::sub_10163600
+0x101636a0 func   ?sub_101636a0@CExperienceTable@@QAEXH@Z CExperienceTable::sub_101636a0
 0x101637f0 func   ?sub_101637f0@CExperienceTable@@QAE_NPADPAUCExperienceAward@@@Z CExperienceTable::sub_101637f0
 0x10163970 func   ?sub_10163970@S10032fb0@@QAEXH@Z S10032fb0::sub_10163970
 0x101639e0 func   ?sub_101639e0@@YIXPAUMem@@HH@Z sub_101639e0

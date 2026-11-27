@@ -130087,6 +130087,51 @@ CExperienceAward *CExperienceTable::sub_10163600(int index)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101636a0 size=0x14b
+#include "CExperienceTable.h"
+#include "CUtlMemory12.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+extern "C" unsigned int __cdecl strlen(const char *);
+#pragma intrinsic(strlen)
+extern "C" void *__cdecl memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+extern "C" void *__cdecl memmove(void *, const void *, unsigned int);
+extern char g_105f9a18[];
+
+// TARGET: CExperienceTable::sub_101636a0
+void CExperienceTable::sub_101636a0(int file)
+{
+	ScopeTrace st("ExperienceTable::LoadFile", g_102de300);
+	while (1)
+	{
+		CExperienceAward award;
+		memset(&award, 0, sizeof(award));
+		g_105f9a18[0] = 0;
+		char *r = filesystem->vfunc20(g_105f9a18, 0x1000, file);
+		if (g_105f9a18[0] == (char)0xff || !r)
+			break;
+		if (g_105f9a18[0] == '>')
+			continue;
+		if ((int)strlen(g_105f9a18) < 3)
+			continue;
+		if (!sub_101637f0(g_105f9a18, &award))
+			break;
+		int elem = m_Size;
+		if (m_Size + 1 > m_allocationCount)
+			((CUtlMemory12 *)this)->sub_10163a50(m_Size + 1 - m_allocationCount);
+		m_pElements = m_pMemory;
+		m_Size = m_Size + 1;
+		int n = m_Size - elem - 1;
+		if (n > 0)
+			memmove(&m_pMemory[elem + 1], &m_pMemory[elem], n * sizeof(CExperienceAward));
+		CExperienceAward *p = &m_pMemory[elem];
+		if (p)
+			*p = award;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101637f0 size=0x173
 #include "ScopeTrace.h"
 #include "CExperienceTable.h"
