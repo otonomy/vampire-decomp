@@ -12,6 +12,7 @@ class BuildModeDialog : public vgui2::Frame
 public:
 	BuildModeDialog(void *pBuildGroup);
 	void sub_101c3bb0();
+	void sub_101c4f80();
 	void sub_101c4b30();
 	void sub_101c4a20();
 	void sub_101c45b0(void *, const char *);
