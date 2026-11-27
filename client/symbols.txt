@@ -2840,6 +2840,7 @@
 0x1004bde0 func   ?sub_1004bde0@CAmmoCounter@@QAEXXZ CAmmoCounter::sub_1004bde0
 0x1004c2a0 func   ?vfunc97@CAmmoCounter@@UAEXXZ CAmmoCounter::vfunc97
 0x1004c2b0 func   ?sub_1004c2b0@XKey@@QAEXD@Z XKey::sub_1004c2b0
+0x1004c3f0 func   ?sub_1004c3f0@CAmmoCounter@@QAEXPBDH@Z CAmmoCounter::sub_1004c3f0
 0x1004c500 func   ?sub_1004c500@@YAXXZ sub_1004c500
 0x1004c520 func   ?sub_1004c520@@YAXXZ sub_1004c520
 0x1004c550 func   ??0CBloodBar@@QAE@H@Z CBloodBar::CBloodBar

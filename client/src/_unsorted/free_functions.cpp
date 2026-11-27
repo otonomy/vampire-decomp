@@ -27040,6 +27040,31 @@ void XKey::sub_1004c2b0(char down)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004c3f0 size=0x10b
+#include "engineclient.h"
+#include "CAmmoCounter.h"
+extern int sub_100cd100();
+void CAmmoCounter::sub_1004c3f0(const char *text, int n)
+{
+	int width = g_pMatSystemSurface->vfunc15(m_nFont, text);
+	if (width > sub_100cd100() / 4)
+		width = sub_100cd100() / 4;
+	int x = (m_n180 - width) / 2;
+	if (x < 0)
+		x = 0;
+	int lines = 0;
+	if (n > 0)
+	{
+		g_pMatSystemSurface->vfunc14(m_nFont, width, &lines, text);
+		lines++;
+	}
+	int y = lines * n + m_n194;
+	if (m_n178 + x + width > sub_100cd100())
+		x = sub_100cd100() + (-5 - m_n178 - width);
+	g_pMatSystemSurface->vfunc12(m_nFont, x, y, 255, 255, 255, (int)m_fl198, text);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004c500 size=0x17
 #define V8(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7();
 struct IEngine_104a57d4 {
