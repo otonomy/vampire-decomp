@@ -1871,6 +1871,77 @@ bool vgui2::TextEntry::vfunc158(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b0a10 size=0x196
+#include "vgui2__TextEntry.h"
+#include "vgui2__Menu.h"
+struct Surface_101b0a10
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38();
+	virtual void GetScreenSize(int *wide, int *tall);
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
+	virtual void v70(); virtual void v71();
+	virtual void GetCursorPos(int *x, int *y);
+};
+Surface_101b0a10 *sub_101ac8d0();
+// TARGET: vgui2::TextEntry::vfunc125
+void vgui2::TextEntry::vfunc125()
+{
+	vgui2::Menu *menu = *(vgui2::Menu **)((char *)this + 0xfc);
+	if (!menu)
+		return;
+	int cursorX, cursorY;
+	sub_101ac8d0()->GetCursorPos(&cursorX, &cursorY);
+	vgui2::Panel *top = this;
+	while (top->vfunc31())
+		top = (vgui2::Panel *)top->vfunc31();
+	top->vfunc27(&cursorX, &cursorY);
+	int px, py;
+	top->sub_101a98c0(&px, &py);
+	cursorX += px;
+	cursorY += py;
+	int s0, s1;
+	if (vfunc158((int)&s0, (int)&s1))
+	{
+		(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc124("&Cut", 1);
+		(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc124("C&opy", 1);
+	}
+	else
+	{
+		(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc124("&Cut", 0);
+		(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc124("C&opy", 0);
+	}
+	(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc21(1);
+	(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc15(0);
+	(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc57(1, 0);
+	int menuWide, menuTall;
+	(*(vgui2::Menu **)((char *)this + 0xfc))->sub_101a9920(&menuWide, &menuTall);
+	int wide, tall;
+	sub_101ac8d0()->GetScreenSize(&wide, &tall);
+	int y, x;
+	if (wide - menuWide > cursorX)
+	{
+		x = cursorX;
+		y = cursorY;
+		if (!(tall - menuTall > cursorY))
+			y -= menuTall;
+	}
+	else
+	{
+		y = cursorY;
+		if (!(tall - menuTall > cursorY))
+			y -= menuTall;
+		x = cursorX - menuWide;
+	}
+	(*(vgui2::Menu **)((char *)this + 0xfc))->sub_101a9890(x, y);
+	(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc15(0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b0bb0 size=0x2a
 #include "vgui2__TextEntry.h"
 namespace lifted {

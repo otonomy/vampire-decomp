@@ -10079,6 +10079,7 @@
 0x101b0700 func   ?vfunc122@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc122
 0x101b09c0 func   ?vfunc124@TextEntry@vgui2@@UAEHXZ vgui2::TextEntry::vfunc124
 0x101b09d0 func   ?vfunc158@TextEntry@vgui2@@UAE_NHH@Z vgui2::TextEntry::vfunc158
+0x101b0a10 func   ?vfunc125@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc125
 0x101b0bb0 func   ?vfunc126@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc126
 0x101b0d90 func   ?vfunc128@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc128
 0x101b0ec0 func   ?vfunc130@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc130
