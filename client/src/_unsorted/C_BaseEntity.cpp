@@ -1528,6 +1528,33 @@ char *C_BaseEntity::vfunc114()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a2cf0 size=0x50
+#include "C_BaseEntity.h"
+
+struct PredCtx
+{
+	char m_pad[0x10];
+	unsigned int m_hServerEntity;
+};
+
+// TARGET: C_BaseEntity::vfunc113
+bool C_BaseEntity::vfunc113(bool isbeingremoved, C_BaseEntity *predicted)
+{
+	PredCtx *ctx = *(PredCtx **)((char *)predicted + 0xd0);
+	if (ctx)
+	{
+		if (this)
+			ctx->m_hServerEntity = *vfunc1();
+		else
+			ctx->m_hServerEntity = 0xffffffff;
+	}
+	sub_100a2e40(1);
+	sub_100a0650("OnPredictedEntityRemove");
+	predicted->sub_100a2e90(1);
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a2d40 size=0x2a
 #include "C_BaseEntity.h"
 namespace lifted {
