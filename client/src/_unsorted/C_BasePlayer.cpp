@@ -163,6 +163,28 @@ C_BasePlayer *pcd_emit_100a54a0() { return new C_BasePlayer; }
 // TARGET: ??_GC_BasePlayer@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x100a5540 size=0x168
+#include "C_BasePlayer.h"
+#include "ehandle.h"
+
+struct CUnknown100af100 { void sub_100af100(C_BasePlayer *p); };
+struct CUnknown100aeed0 { void sub_100aeed0(); };
+void sub_100ca040(void *p);
+
+C_BasePlayer::~C_BasePlayer()
+{
+	if (m_h14e8.Get())
+	{
+		((CUnknown100af100 *)m_h14e8.Get())->sub_100af100(this);
+		((CUnknown100aeed0 *)m_h14e8.Get())->sub_100aeed0();
+		m_h14e8 = CBaseHandle();
+	}
+	sub_100ca040(m_h19f4.Get());
+	if (this == g_pLocalPlayer)
+		g_pLocalPlayer = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a58a0 size=0x9
 #include "C_BasePlayer.h"
 void C_BasePlayer::vfunc177() { IsTransparent(); }
