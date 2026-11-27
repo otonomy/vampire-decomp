@@ -73,7 +73,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_nItems;
 	void sub_10053200();	// "CHudDialog::ComputeAlpha"
 	int sub_10053b50(bool);
-	void sub_10053770(bool);
+	int sub_10053770(bool);
 	void sub_100530f0();
 	char m_szItems[4][0x800];	// 0x122c
 	int m_iItemFlags[4];
