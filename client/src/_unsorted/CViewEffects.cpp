@@ -306,6 +306,48 @@ void CViewEffects::vfunc9(Vector &origin, QAngle &angles, float factor)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10196fe0 size=0x1a7
+#include "CViewEffects.h"
+#include "engineclient.h"
+#include "ScopeTrace.h"
+#include "utlvector.h"
+#include "ScreenFade_t.h"
+// TARGET: CViewEffects::vfunc4
+int CViewEffects::vfunc4(int a0, int a1, void *pFade)
+{
+	ScopeTrace st("CViewEffects::Fade", g_102de300);
+	ScreenFade_t *pNew = new ScreenFade_t;
+	ScreenFadeMsg_t *pMsg = (ScreenFadeMsg_t *)pFade;
+	pNew->End = (float)pMsg->duration * (1.0 / 4096.0);
+	pNew->Reset = (float)pMsg->holdTime * (1.0 / 4096.0);
+	pNew->r = pMsg->r;
+	pNew->g = pMsg->g;
+	pNew->b = pMsg->b;
+	pNew->a = pMsg->a;
+	pNew->Flags = pMsg->fadeFlags;
+	pNew->Speed = 0;
+	if (pMsg->duration > 0)
+	{
+		if (pMsg->fadeFlags & 2)
+		{
+			if (pNew->End)
+				pNew->Speed = -(float)pNew->a / pNew->End;
+			pNew->Reset += (pNew->End += engine->Time(0));
+		}
+		else
+		{
+			if (pNew->End)
+				pNew->Speed = (float)pNew->a / pNew->End;
+			pNew->End += (pNew->Reset += engine->Time(0));
+		}
+	}
+	if (pMsg->fadeFlags & 0x10)
+		vfunc17();
+	((CUtlVector<ScreenFade_t *> *)((char *)this + 4))->AddToTail(pNew);
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10197190 size=0x323
 #include "CViewEffects.h"
 #include "ScopeTrace.h"
