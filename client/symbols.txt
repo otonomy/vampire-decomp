@@ -10693,6 +10693,7 @@
 0x101c2b00 func   ?vfunc8@BuildGroup@vgui2@@UAEHH@Z vgui2::BuildGroup::vfunc8
 0x101c2b10 func   ?vfunc9@BuildGroup@vgui2@@UAEHXZ vgui2::BuildGroup::vfunc9
 0x101c2b20 func   ?sub_101c2b20@CUnknown101c2b20@@QAEPADXZ CUnknown101c2b20::sub_101c2b20
+0x101c2b30 func   ?RemoveAll@?$CUtlVector@VPHandle@vgui2@@V?$CUtlMemory@VPHandle@vgui2@@@@@@QAEXXZ CUtlVector<vgui2::PHandle,CUtlMemory<vgui2::PHandle> >::RemoveAll
 0x101c2b30 func   ?sub_101c2b30@CUnknown101c2b30@@QAEXXZ CUnknown101c2b30::sub_101c2b30
 0x101c2b40 func   ?CopyArray@?$CUtlVector@VPHandle@vgui2@@V?$CUtlMemory@VPHandle@vgui2@@@@@@QAEXPBVPHandle@vgui2@@H@Z CUtlVector<vgui2::PHandle,CUtlMemory<vgui2::PHandle> >::CopyArray
 0x101c2b40 func   ?sub_101c2b40@CUtlVector4@@QAEXPBHH@Z CUtlVector4::sub_101c2b40
