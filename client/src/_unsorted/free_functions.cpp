@@ -94190,6 +94190,41 @@ void C_BaseEntity::sub_1011b890()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011b9a0 size=0xd9
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+struct TouchLink {
+	C_BaseEntity *m_pEntity;	// 0x00
+	int m_nKey;	// 0x04
+	TouchLink *m_pNext;	// 0x08
+	TouchLink *m_pPrev;	// 0x0c
+};
+void sub_1011ba80(C_BaseEntity *, C_BaseEntity *);
+void sub_1011bb30(void *, TouchLink *);
+// TARGET: C_BaseEntity::sub_1011b9a0
+void C_BaseEntity::sub_1011b9a0()
+{
+	ScopeTrace st("CBaseEntity::PhysicsCheckForEntityUntouch", this ? "clientside entity" : "NULL CLIENT ENTITY", g_102de300);
+	TouchLink *root = sub_1011b440(1);
+	if (root) {
+		TouchLink *link = root->m_pNext;
+		while (link != root) {
+			TouchLink *next = link->m_pNext;
+			if (link->m_nKey == -1)
+				sub_1011bd60(link->m_pEntity);
+			else if (link->m_nKey != *(int *)((char *)this + 0xd4)) {
+				sub_1011ba80(this, link->m_pEntity);
+				sub_1011bb30(this, link);
+			}
+			link = next;
+		}
+		if (root->m_pNext == root && root->m_pPrev == root)
+			sub_1011b730(1);
+	}
+	vfunc97(0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011ba80 size=0xb0
 #include "C_BaseEntity.h"
 #include "ScopeTrace.h"
