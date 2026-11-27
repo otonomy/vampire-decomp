@@ -34,4 +34,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	CParticleMgrEntry m_entries[20];
 	int m_nCount;
 	CUtlLinkedList8 m_list;
+	void *m_pMaterialSystem;
+	int m_unk16c; int m_unk170; int m_unk174; int m_unk178; int m_unk17c; int m_unk180; int m_unk184; int m_unk188;
+	int m_unk18c; int m_unk190; int m_unk194; int m_unk198; int m_unk19c; int m_unk1a0; int m_unk1a4; int m_unk1a8;
+	struct Pool *m_pPool;
+	bool sub_10117400(int nItems, void *pMaterialSystem);
+	void sub_10117460();
 };
