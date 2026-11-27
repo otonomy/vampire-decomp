@@ -148108,6 +148108,46 @@ void CViewRender::sub_1019d8f0( const char *view )
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019d990 size=0x150
+#include "C_BasePlayer.h"
+#include "ScopeTrace.h"
+#include "CVStatList_t.h"
+struct PSub { virtual void v0(); virtual bool IsZero(); char pad[0x28]; int m_i2c; };
+struct PCVar { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void SetValue(int); PSub *m_p4; };
+PCVar *sub_100df2c0(const char *);
+extern PCVar *g_10619928;
+extern int g_1061992c, g_10619930;
+// TARGET: sub_1019d990
+void __stdcall sub_1019d990(int a)
+{
+    ScopeTrace st("CViewRender::ProteanRenderSettings", g_102de300);
+    C_BasePlayer *pl = C_BasePlayer::GetLocalPlayer();
+    if (pl) {
+        if (!g_10619928) {
+            g_10619928 = sub_100df2c0("mat_fullbright");
+            if (!g_10619928)
+                return;
+        }
+        int idx = ((CVStatListSet *)((char *)pl + 0x1164))->Find(3)->sub_1015dbd0(0xb);
+        if (idx >= 1) {
+            if (idx != g_1061992c) {
+                PSub *&s = g_10619928->m_p4;
+                int v;
+                if (s->IsZero())
+                    v = 0;
+                else
+                    v = s->m_i2c;
+                g_10619930 = v;
+                g_10619928->SetValue(1);
+            }
+        } else if (idx != g_1061992c) {
+            g_10619928->SetValue(g_10619930);
+        }
+        g_1061992c = idx;
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019e2a0 size=0xbb
 #include "Vector.h"
 struct VMatrix1019e2a0 {
