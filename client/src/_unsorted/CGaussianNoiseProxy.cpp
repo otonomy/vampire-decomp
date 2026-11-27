@@ -1,6 +1,25 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x1010d6b0 size=0x94
+#include "CGaussianNoiseProxy.h"
+#include "CClampProxy.h"
+bool CGaussianNoiseProxy::vfunc0(void *pMaterial, void *pKeyValues)
+{
+	if (!CResultProxy::vfunc0(pMaterial, pKeyValues))
+		return false;
+	if (!m_Mean.sub_100e3140(pMaterial, pKeyValues, "mean", 0.0f))
+		return false;
+	if (!m_StdDev.sub_100e3140(pMaterial, pKeyValues, "halfwidth", 1.0f))
+		return false;
+	if (!m_flMinVal.sub_100e3140(pMaterial, pKeyValues, "minVal", -3.402823466e+38f))
+		return false;
+	if (!m_flMaxVal.sub_100e3140(pMaterial, pKeyValues, "maxVal", 3.402823466e+38f))
+		return false;
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010d750 size=0xbb
 #include "CGaussianNoiseProxy.h"
 #include "CClampProxy.h"

@@ -6404,6 +6404,7 @@
 0x1010d5f0 func   ?vfunc1@CUniformNoiseProxy@@UAEXH@Z CUniformNoiseProxy::vfunc1
 0x1010d660 func   ?sub_1010d660@@YAHXZ sub_1010d660
 0x1010d690 func   ??_GCUniformNoiseProxy@@UAEPAXI@Z ??_GCUniformNoiseProxy@@UAEPAXI@Z
+0x1010d6b0 func   ?vfunc0@CGaussianNoiseProxy@@UAE_NPAX0@Z CGaussianNoiseProxy::vfunc0
 0x1010d750 func   ?vfunc1@CGaussianNoiseProxy@@UAEXH@Z CGaussianNoiseProxy::vfunc1
 0x1010d840 func   ?sub_1010d840@@YAHXZ sub_1010d840
 0x1010d870 func   ??_GCGaussianNoiseProxy@@UAEPAXI@Z ??_GCGaussianNoiseProxy@@UAEPAXI@Z
