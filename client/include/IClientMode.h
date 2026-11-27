@@ -29,7 +29,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual bool vfunc19();
 	virtual int vfunc20();
 	virtual void vfunc21();
-	virtual void vfunc22(int, int);
+	virtual void vfunc22(float flInputSampleTime, class CUserCmd *cmd);
 	virtual void vfunc23(int);
 	virtual void vfunc24(int);
 	virtual void vfunc25();

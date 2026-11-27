@@ -302,7 +302,7 @@ public:
 	virtual int vfunc39();	// slot 39
 	virtual float vfunc40();	// slot 40: the view fov (CViewRender::SetUpView)
 	virtual unsigned char **vfunc41();	// slot 41: where the area bits pointer lives (C_BasePlayer::OnDataChanged stores the player's +0x166c)
-	virtual double vfunc42();	// slot 42
+	virtual float vfunc42();	// slot 42: the frame time (CInput::CreateMove scales it by 1000.0f)
 	virtual void vfunc43(int, int);	// slot 43; shapes differ
 	virtual float vfunc44(int);	// slot 44
 	virtual void vfunc45(const void *);	// slot 45

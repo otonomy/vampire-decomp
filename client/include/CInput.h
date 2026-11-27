@@ -45,12 +45,28 @@ public:
     float m_f100;
     int m_unk104[(0x138 - 0x104) / 4];
     float m_f138;
-    int m_unk13c[(0x19c - 0x13c) / 4];
+    int m_unk13c[(0x144 - 0x13c) / 4];
+    bool m_b144;
+    char m_c145; char m_c146; char m_c147;
+    int m_unk148[(0x19c - 0x148) / 4];
     int m_fCameraDistanceMove;	// 0x19c
     int m_nCameraOldX;	// 0x1a0
     int m_nCameraOldY;	// 0x1a4
     int m_nCameraX;	// 0x1a8
     int m_nCameraY;	// 0x1ac
+    int m_unk1b0[(0x1bc - 0x1b0) / 4];
+    int m_n1bc;	// 0x1bc: the last command's forward move, truncated
+    class CUserCmd *m_pCommands;	// 0x1c0
+    int m_n1c4;	// 0x1c4: msec adjustment still to apply (CreateMove's last argument)
+    class ConVar *m_p1c8;	// 0x1c8: CreateMove clamps its int to 1..255 (30 without it) into CUserCmd +0x47
+    class ConVar *m_p1cc;	// 0x1cc: the same into +0x46 (20 without it)
+    void sub_101028d0(float frametime);
+    void sub_10102a50(class CUserCmd *cmd);
+    void sub_10102d00(class CUserCmd *cmd);
+    void sub_10102df0(class CUserCmd *cmd);
+    void sub_10102fe0(float frametime, class CUserCmd *cmd);
+    void sub_101030c0(class QAngle &viewangles, class CUserCmd *cmd);
+    void sub_101063f0(float *mx, float *my);
     void sub_100fc170();	// CAM_Think-like: mouse / key camera angles and distance into cam_idealpitch/yaw/dist
     char sub_100ff0a0(struct CUnkPlayer *);
     void sub_100fc900();
