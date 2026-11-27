@@ -110,3 +110,29 @@ bool CHudAreaIcon::vfunc107()
 	return sub_10163bf0() && !g_10286860->Check(0);
 }
 // END FUNCTION
+
+// FUNCTION: 0x100527c0 size=0x1a5
+#include "CHudAreaIcon.h"
+#include "CHUDSprite.h"
+extern "C" int sub_100cd0f0();
+extern "C" int sub_100cd100();
+// TARGET: CHudAreaIcon::vfunc114
+void CHudAreaIcon::vfunc114()
+{
+	m_unk180 = (int)(51.0 * (sub_100cd100() * 0.0009765625));
+	m_unk184 = (int)(51.0 * (sub_100cd0f0() * 0.0013020833333333333));
+	m_unk188 = (int)(0.0 * (sub_100cd100() * 0.0009765625));
+	m_unk18c = (int)(155.0 * (sub_100cd0f0() * 0.0013020833333333333));
+	if (m_p19c)
+		delete m_p19c;
+	m_p19c = (CHudAreaIconObj *)new CHUDSprite("hud/Nos_Indicator/NosIndicator_Arrow", 0, 0, 0x80, 0x80, 0x80, 0x80);
+	if (m_p1a4)
+		delete m_p1a4;
+	m_p1a4 = (CHudAreaIconObj *)new CHUDSprite("hud/Nos_Indicator/NosIndicator_Mask", 0, 0, 0x80, 0x80, 0x80, 0x80);
+	if (m_p1a0)
+		delete m_p1a0;
+	m_p1a0 = (CHudAreaIconObj *)new CHUDSprite("hud/Nos_Indicator/NosIndicator_Frame", 0, 0, 0x80, 0x80, 0x80, 0x80);
+	sub_101a9890(m_unk188, m_unk18c);
+	sub_101a98f0(m_unk180, m_unk184);
+}
+// END FUNCTION
