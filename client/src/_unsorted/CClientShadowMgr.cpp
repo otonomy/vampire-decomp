@@ -99,6 +99,31 @@ void CClientShadowMgr::vfunc15(int r, int g, int b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d5a30 size=0x115
+#include "CClientShadowMgr.h"
+#include "engineclient.h"
+struct ShadowSlots { virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7(); virtual void s8(); virtual void s9(); virtual void s10(); virtual void s11(); virtual void s12(); virtual void s13(); virtual void s14(); virtual void v15(unsigned char, unsigned char, unsigned char); };
+struct Unk48 { void sub_100d45a0(); };
+void sub_100d7fc0();
+// TARGET: CClientShadowMgr::vfunc2
+void CClientShadowMgr::vfunc2()
+{
+	sub_100d7fc0();
+	Vector c;
+	engine->vfunc95(&c.x);
+	c *= 3.0f;
+	c.x += 0.4f;
+	c.y += 0.4f;
+	c.z += 0.4f;
+	unsigned char r = (unsigned char)((c.x > 1.0) ? 255.0f : c.x * 255.0f);
+	unsigned char g = (unsigned char)((c.y > 1.0) ? 255.0f : c.y * 255.0f);
+	unsigned char b = (unsigned char)((c.z > 1.0) ? 255.0f : c.z * 255.0f);
+	((ShadowSlots *)this)->v15(r, g, b);
+	if (*((unsigned char *)this + 0xd8))
+		((Unk48 *)((char *)this + 0x48))->sub_100d45a0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d5b50 size=0x51
 #include "CClientShadowMgr.h"
 struct ShadowSub { void sub_100d4710(); };
