@@ -242,6 +242,53 @@ C_BaseCombatWeapon *pcd_emit_1007ab20(const C_BaseCombatWeapon &other) { return 
 // TARGET: ??_GC_BaseCombatWeapon@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x1007ab40 size=0x159
+#include "C_BaseCombatWeapon.h"
+#include "CUtlVector4.h"
+#include "CVDmg_t.h"
+struct HV_1007ab40 {
+	int *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	int m_size;
+	int *m_pElements;
+	void sub_1007db30(int elem, int num);
+	int Find(unsigned int *h)
+	{
+		for (int i = 0; i < m_size; i++) {
+			CBaseHandle *pe = (CBaseHandle *)&m_pMemory[i];
+			void *pSrc = g_pEntityList->sub_1007aca0(h);
+			if (pe->Get() == pSrc)
+				return i;
+		}
+		return -1;
+	}
+	void Remove(int elem)
+	{
+		sub_1007db30(elem, 1);
+		m_size--;
+	}
+};
+extern HV_1007ab40 g_1049d8f8;
+extern HV_1007ab40 g_1049d978;
+C_BaseCombatWeapon::~C_BaseCombatWeapon()
+{
+	unsigned int h = -1;
+	h = *((IHandleEntity *)this)->vfunc1();
+	int i = g_1049d8f8.Find(&h);
+	if (i != -1)
+		g_1049d8f8.Remove(i);
+	i = g_1049d978.Find(&h);
+	if (i != -1)
+		g_1049d978.Remove(i);
+	CVDmg_t *p = (CVDmg_t *)((char *)this + 0x8a8);
+	for (int n = 3; n; n--) {
+		p--;
+		p->sub_10158790();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007acd0 size=0xb7
 #include "C_BaseCombatWeapon.h"
 
