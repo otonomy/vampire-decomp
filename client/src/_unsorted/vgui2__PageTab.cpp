@@ -1,6 +1,24 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101c81f0 size=0x6b
+#include "vgui2__PageTab.h"
+struct SchemeView {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual int *GetColor(int *out, const char *name, int def);
+};
+int vgui2::PageTab::vfunc74(int a)
+{
+	Button::vfunc74(a);
+	SchemeView *s = (SchemeView *)a;
+	int c, d;
+	*(int *)((char *)this + 0xf1) = *s->GetColor(&d, "BrightControlText", *(int *)vfunc53((int)&c));
+	int *p = s->GetColor(&d, "FgColorDim", *(int *)vfunc53((int)&c));
+	*(int *)((char *)this + 0xf5) = *p;
+	return (int)p;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c8260 size=0x44
 #include "vgui2__PageTab.h"
 namespace lifted {

@@ -10,6 +10,7 @@ class CMoveHelperClient : public IMoveHelper
 public:
 	int m_unk04; int m_unk08; int m_unk0c; int m_unk10; int m_unk14; int m_unk18;
 	virtual void vfunc1();
+	virtual bool vfunc2(const struct CGameTrace &tr, const Vector &impactvelocity);
 	void sub_1010f5b0(const Vector &origin, int channel, const char *sample, float volume, int level, int flags, int pitch);
 	virtual void vfunc3();
 	virtual void vfunc4(int idx, const char *fmt, ...);

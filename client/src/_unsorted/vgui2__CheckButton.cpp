@@ -11,6 +11,17 @@ vgui2::CheckButton *pcd_emit_101baa10(const vgui2::CheckButton &other) { return 
 // TARGET: ??_GCheckButton@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101baa30 size=0x22
+#include "vgui2__CheckButton.h"
+struct CheckObj { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual ~CheckObj(); };
+vgui2::CheckButton::~CheckButton()
+{
+	CheckObj *p = *(CheckObj **)((char *)this + 0xf4);
+	if (p)
+		delete p;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101baa60 size=0x122
 #include "vgui2__CheckButton.h"
 

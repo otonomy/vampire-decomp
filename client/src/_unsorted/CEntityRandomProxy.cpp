@@ -1,6 +1,19 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101250d0 size=0x3d
+#include "CEntityRandomProxy.h"
+#include "CClampProxy.h"
+bool CEntityRandomProxy::vfunc0(void *pMaterial, void *pKeyValues)
+{
+	if (!CResultProxy::vfunc0(pMaterial, pKeyValues))
+		return false;
+	if (!m_Input.sub_100e3140(pMaterial, pKeyValues, "scale", 1.0f))
+		return false;
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10125110 size=0x36
 #include "CEntityRandomProxy.h"
 

@@ -11,6 +11,60 @@ vgui2::Label *pcd_emit_101b2080(const vgui2::Label &other) { return new vgui2::L
 // TARGET: ??_GLabel@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101b20a0 size=0xbd
+#include "vgui2__Label.h"
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+struct LabelObj { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual ~LabelObj(); };
+struct LabelView {
+	char pad0[0x5c];
+	LabelObj *m5c;
+	void *m60; int m64; int m68; int m6c; void *m70;
+	void *m74; int m78; int m7c; int m80; void *m84;
+	char pad88[0x20];
+	void *ma8;
+};
+vgui2::Label::~Label()
+{
+	LabelView *v = (LabelView *)this;
+	if (v->m5c)
+		delete v->m5c;
+	if (v->ma8)
+		::operator delete(v->ma8);
+	v->m80 = 0;
+	if (v->m7c != -1) {
+		if (v->m74) {
+			Plat_Free(v->m74);
+			v->m74 = 0;
+		}
+		v->m78 = 0;
+	}
+	v->m84 = v->m74;
+	if (v->m7c != -1) {
+		if (v->m74) {
+			Plat_Free(v->m74);
+			v->m74 = 0;
+		}
+		v->m78 = 0;
+	}
+	v->m6c = 0;
+	if (v->m68 != -1) {
+		if (v->m60) {
+			Plat_Free(v->m60);
+			v->m60 = 0;
+		}
+		v->m64 = 0;
+	}
+	v->m70 = v->m60;
+	if (v->m68 != -1) {
+		if (v->m60) {
+			Plat_Free(v->m60);
+			v->m60 = 0;
+		}
+		v->m64 = 0;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b2230 size=0x23
 #include "vgui2__Label.h"
 namespace lifted {
@@ -749,6 +803,89 @@ void vgui2::Label::vfunc105(vgui2::Panel *p)
 		w->v15(0);
 	else
 		Panel::vfunc105(p);
+}
+// END FUNCTION
+
+// FUNCTION: 0x101b2e60 size=0x10b
+#include "vgui2__Label.h"
+#pragma warning(disable: 4716)
+struct Color { unsigned int rgba; Color() {} };
+struct IScheme_101b2e60 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual Color GetColor(const char *name); };
+struct LabelView
+{
+	char pad0[0x60];
+	void **m_pImages;
+	int pad64; int pad68;
+	int m_nImages;
+	char pad70[0x98 - 0x70];
+	unsigned int m_AssociateColor;
+	int m_nTextImageIndex;
+	int m_nTextColorState;
+};
+#define LV ((LabelView *)this)
+// TARGET: vgui2::Label::vfunc74
+int vgui2::Label::vfunc74(int pSchemeArg)
+{
+	IScheme_101b2e60 *pScheme = (IScheme_101b2e60 *)pSchemeArg;
+	Panel::vfunc74(pSchemeArg);
+	for (int i = 0; i < LV->m_nImages; i++)
+	{
+		if (!LV->m_pImages[i])
+			continue;
+		if (i == LV->m_nTextImageIndex)
+			continue;
+		LV->m_pImages[i] = 0;
+	}
+	vfunc113(pScheme->GetColor("DisabledFgColor1").rgba);
+	vfunc114(pScheme->GetColor("DisabledFgColor2").rgba);
+	vfunc50(pScheme->GetColor("LabelBgColor").rgba);
+	switch (LV->m_nTextColorState)
+	{
+	case 1:
+		vfunc51(pScheme->GetColor("LabelDimText").rgba);
+		break;
+	case 2:
+		vfunc51(pScheme->GetColor("BrightControlText").rgba);
+	default:
+		vfunc51(pScheme->GetColor("BrightBaseText").rgba);
+		break;
+	}
+	LV->m_AssociateColor = pScheme->GetColor("BrightControlText").rgba;
+}
+// END FUNCTION
+
+// FUNCTION: 0x101b2f70 size=0x118
+#include "vgui2__Label.h"
+#include "vgui2__KeyValues.h"
+#define V10(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); \
+	virtual void p##5(); virtual void p##6(); virtual void p##7(); virtual void p##8(); virtual void p##9();
+struct TextImageView { V10(a) V10(b) virtual void c0(); virtual void c1(); virtual void c2(); virtual void c3(); virtual void c4(); virtual void c5(); virtual void c6(); virtual void c7(); virtual void c8(); virtual void GetText(char *buf, int n); };
+void vgui2::Label::sub_101b2f70(int a)
+{
+	vgui2::KeyValues *kv = (vgui2::KeyValues *)a;
+	Panel::sub_101ab750(a);
+	char buf[256];
+	(*(TextImageView **)((char *)this + 0x5c))->GetText(buf, 255);
+	kv->vfunc14("labelText", buf);
+	const char *s;
+	switch (*(int *)((char *)this + 0x58))
+	{
+	case 0: s = "north-west"; break;
+	case 1: s = "north"; break;
+	case 2: s = "north-east"; break;
+	case 4: s = "center"; break;
+	case 5: s = "east"; break;
+	case 6: s = "south-west"; break;
+	case 7: s = "south"; break;
+	case 8: s = "south-east"; break;
+	case 3:
+	default: s = "west"; break;
+	}
+	kv->vfunc14("textAlignment", s);
+	if (m_pA4)
+		kv->vfunc14("associate", m_pA4->vfunc18());
+	kv->vfunc15((int)"dulltext", *(int *)((char *)this + 0xa0) == 1);
+	kv->vfunc15((int)"brighttext", *(int *)((char *)this + 0xa0) == 2);
 }
 // END FUNCTION
 

@@ -11,6 +11,21 @@ vgui2::EditablePanel *pcd_emit_101b46c0(const vgui2::EditablePanel &other) { ret
 // TARGET: ??_GEditablePanel@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101b4740 size=0x32
+#include "vgui2__EditablePanel.h"
+#include "vgui2__BuildGroup.h"
+struct CUnknown101c2e30 { void sub_101c2e30(); };
+using namespace vgui2;
+// TARGET: vgui2::EditablePanel::~EditablePanel
+EditablePanel::~EditablePanel()
+{
+	BuildGroup *p = (BuildGroup *)m_p58;
+	if (p)
+		delete p;
+	((CUnknown101c2e30 *)((char *)this + 0x5c))->sub_101c2e30();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b4780 size=0x42
 #include "vgui2__EditablePanel.h"
 int sub_101ac900();

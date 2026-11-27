@@ -1,6 +1,25 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x1010d010 size=0x91
+#include "CSineProxy.h"
+#include "CClampProxy.h"
+bool CSineProxy::vfunc0(void *pMaterial, void *pKeyValues)
+{
+	if (!CResultProxy::vfunc0(pMaterial, pKeyValues))
+		return false;
+	if (!m_SinePeriod.sub_100e3140(pMaterial, pKeyValues, "sinePeriod", 1.0f))
+		return false;
+	if (!m_SineMax.sub_100e3140(pMaterial, pKeyValues, "sineMax", 1.0f))
+		return false;
+	if (!m_SineMin.sub_100e3140(pMaterial, pKeyValues, "sineMin", 0.0f))
+		return false;
+	if (!m_SineTimeOffset.sub_100e3140(pMaterial, pKeyValues, "timeOffset", 0.0f))
+		return false;
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010d0b0 size=0x9c
 #include "engineclient.h"
 #include "CSineProxy.h"

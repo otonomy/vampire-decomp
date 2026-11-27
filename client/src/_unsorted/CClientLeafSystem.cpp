@@ -64,6 +64,21 @@ struct V1c70 { char pad[0x20]; El1c70 *arr; void sub_100d1c70(unsigned int h, ch
 void V1c70::sub_100d1c70(unsigned int h, char v) { arr[h & 0xffff].f = v; }
 // END FUNCTION
 
+// FUNCTION: 0x100d1c90 size=0x60
+#include "CClientLeafSystem.h"
+struct RendView { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void GetBounds(float *mins, float *maxs); };
+unsigned short CClientLeafSystem::vfunc4(IClientRenderable *pRenderable, int group)
+{
+    bool b = false;
+    if (group == 3) { b = true; group = 2; }
+    float mins[3], maxs[3];
+    unsigned short h = sub_100d1b60(pRenderable, group, b ? 1 : 0);
+    ((RendView *)pRenderable)->GetBounds(mins, maxs);
+    sub_100d2800(h, mins, maxs);
+    return h;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d1de0 size=0x23
 #include "CClientLeafSystem.h"
 struct LeafRec { int a0, a4, a8, ac; unsigned short w10; short w12; int a14, a18, a1c, a20, a24, a28, a2c, a30; };

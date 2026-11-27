@@ -1,6 +1,29 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101c10a0 size=0x101
+#include "vgui2__BuildGroup.h"
+#include "vgui2__Panel.h"
+using namespace vgui2;
+// TARGET: vgui2::BuildGroup::~BuildGroup
+BuildGroup::~BuildGroup()
+{
+	if (m_pBuildDialog)
+		delete m_pBuildDialog;
+	m_pBuildDialog = 0;
+	if (m_unk54)
+		delete (char *)m_unk54;
+	for (int i = 0; i < 4; i++)
+	{
+		if (m_RulerNumber[i])
+		{
+			delete m_RulerNumber[i];
+			m_RulerNumber[i] = 0;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c11b0 size=0x45
 #include "vgui2__BuildGroup.h"
 namespace lifted {

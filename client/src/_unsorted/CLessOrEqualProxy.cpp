@@ -29,6 +29,51 @@ bool CLessOrEqualProxy::vfunc0(void *pMaterial, void *pKeyValues)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1010dc50 size=0xe9
+#include "CLessOrEqualProxy.h"
+struct IMV { virtual void v0(); virtual void v1(); virtual void SetFloatValue(float f); virtual float GetFloatValue(); virtual void v4(); virtual int GetIntValue(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void SetVecValue(const float *v, int n); virtual void v14(); virtual void v15(); virtual void GetVecValue(float *v, int n); virtual int VectorSize(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual int GetType(); };
+
+// TARGET: CLessOrEqualProxy::vfunc1
+void CLessOrEqualProxy::vfunc1(int)
+{
+	IMV *pSource;
+	if (((IMV *)m_unk0c)->GetFloatValue() <= ((IMV *)m_unk10)->GetFloatValue())
+		pSource = (IMV *)m_pLessVar;
+	else
+		pSource = (IMV *)m_pGreaterVar;
+	int vecSize = 0;
+	int type = ((IMV *)m_unk04)->GetType();
+	if (type == 2)
+	{
+		if (m_unk08 >= 0)
+			type = 0;
+		vecSize = ((IMV *)m_unk04)->VectorSize();
+	}
+	else if (type == 6)
+	{
+		type = pSource->GetType();
+		if (type == 2)
+			vecSize = pSource->VectorSize();
+	}
+	switch (type)
+	{
+	case 0:
+		sub_100e33c0(pSource->GetFloatValue());
+		break;
+	case 2:
+	{
+		float buf[3];
+		pSource->GetVecValue(buf, vecSize);
+		((IMV *)m_unk04)->SetVecValue(buf, vecSize);
+		break;
+	}
+	case 4:
+		((IMV *)m_unk04)->SetFloatValue((float)pSource->GetIntValue());
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010dda0 size=0x1e
 #include "CLessOrEqualProxy.h"
 

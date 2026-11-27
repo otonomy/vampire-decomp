@@ -11,6 +11,21 @@ VUnderscoreLabel *pcd_emit_1017d550(const VUnderscoreLabel &other) { return new 
 // TARGET: ??_GVUnderscoreLabel@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x1017d580 size=0x2a
+#include "VUnderscoreLabel.h"
+#pragma warning(disable: 4716)
+struct IScheme_1017d580 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void *GetBorder(const char *name); };
+typedef vgui2::Label BaseClass;
+// TARGET: VUnderscoreLabel::vfunc74
+int VUnderscoreLabel::vfunc74(int pSchemeArg)
+{
+	IScheme_1017d580 *pScheme = (IScheme_1017d580 *)pSchemeArg;
+	BaseClass::vfunc74(pSchemeArg);
+	void *pBorder = pScheme->GetBorder("UnderlineBorder");
+	vfunc60(pBorder);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017d5b0 size=0x41
 #include "VUnderscoreLabel.h"
 namespace lifted {

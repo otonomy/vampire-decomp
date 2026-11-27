@@ -1,6 +1,34 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101846d0 size=0x115
+#include "VItemInfoUI.h"
+class IVScheme { public: virtual int v0(); virtual void *LoadScheme(const char *); };
+IVScheme *sub_101ac8c0();
+extern char g_102de300[];
+extern char g_105fb7dc;
+extern void (*g_101e3108)(const char *pMsg, ...);
+// TARGET: ??0VItemInfoUI@@QAE@H@Z
+VItemInfoUI::VItemInfoUI(int a)
+    : CHudElement(a), CBasePanel(0, a), m_bkg(this, "BkgFrame", g_102de300), m_desc(this, "ItemDesc"), m_help(this, "HelpInfo", g_102de300)
+{
+	m_b420 = 0;
+	void *scheme = sub_101ac8c0()->LoadScheme("Resource/VampireScheme.res");
+	if (!scheme)
+		g_101e3108("Error loading '%s'\n", "Resource/VampireScheme.res");
+	CBasePanel::sub_101aa230(scheme);
+	CBasePanel::sub_10186970(0);
+	CBasePanel::vfunc39(0);
+	CBasePanel::vfunc54(2);
+	m_b180 = 0;
+	m_bkg.sub_101aa230(scheme);
+	m_desc.sub_101aa230(scheme);
+	m_help.sub_101aa230(scheme);
+	m_n184 = 0;
+	g_105fb7dc = 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101847f0 size=0x1e
 #include "VItemInfoUI.h"
 

@@ -62,6 +62,7 @@ public:
     class ConVar *m_p1cc;	// 0x1cc: the same into +0x46 (20 without it)
     void sub_101028d0(float frametime);
     void sub_10102a50(class CUserCmd *cmd);
+    int sub_10102940();
     void sub_10102d00(class CUserCmd *cmd);
     void sub_10102df0(class CUserCmd *cmd);
     void sub_10102fe0(float frametime, class CUserCmd *cmd);

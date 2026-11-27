@@ -54,7 +54,7 @@ public:
 	char m_pad0128[0x130 - 0x128];
 	int m_field0130;	// 0x0130
 	int m_field0134;	// 0x0134: number of entries of the action pointer array
-	int m_field0138;	// 0x0138: the action pointer array
+	void **m_field0138;	// 0x0138: the action pointer array
 
 	int DefaultValue() { return m_default09c.sub_10161510(); }
 	bool sub_1005d6e0();

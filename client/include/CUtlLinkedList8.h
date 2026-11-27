@@ -26,6 +26,8 @@ public:
 	CUtlLinkedList8Node &InternalElement(unsigned short i) { return m_pMemory[i]; }
 
 	void sub_100d3500();
+	void sub_10117d70(int);
+	unsigned short sub_100d3b10(bool multilist);
 
 	void sub_1002c080(unsigned short elem);	// "CUtlLinkedList::Unlink"
 	void sub_100d1190(unsigned short elem);

@@ -31,6 +31,8 @@ public:
     void *m_unk3c;
     int m_unk40;
     unsigned short m_unk44;
+    unsigned short m_unk46;
+    void sub_100430f0(int arg);
     int *sub_100432f0(char a);
     int vfunc11();
     bool sub_100442d0();
@@ -41,4 +43,7 @@ public:
     void sub_100432a0(int a);
     void sub_10043860(const Vector &mins, const Vector &maxs, Vector *pWorldMins, Vector *pWorldMaxs);
     float sub_10043b90(const Vector *pPoint);
+    void sub_100444b0();
+    float sub_10043c80(const Vector *dir);
+    bool sub_10043930(const Vector &pt);
 };

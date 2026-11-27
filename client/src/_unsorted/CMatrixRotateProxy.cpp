@@ -1,6 +1,27 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x1004a690 size=0x6a
+#include "CMatrixRotateProxy.h"
+#include "CKeyValuesX.h"
+struct IMatVarFinder { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void *FindVar(const char *pName, bool *pFound, bool bComplain); };
+extern char g_102de300[];
+// TARGET: CMatrixRotateProxy::vfunc0
+bool CMatrixRotateProxy::vfunc0(void *pMaterial, void *pKeyValues)
+{
+	m_pAxisVar = 0;
+	const char *pAxisVarName = ((CKeyValuesX *)pKeyValues)->sub_10128590("axisVar", g_102de300);
+	if (pAxisVarName && pAxisVarName[0])
+	{
+		bool found;
+		m_pAxisVar = ((IMatVarFinder *)pMaterial)->FindVar(pAxisVarName, &found, false);
+	}
+	if (!m_Angle.sub_100e3140(pMaterial, pKeyValues, "angle", 0))
+		return false;
+	return CResultProxy::vfunc0(pMaterial, pKeyValues);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004a700 size=0x92
 #include "CMatrixRotateProxy.h"
 #include "CClampProxy.h"

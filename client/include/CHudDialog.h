@@ -59,20 +59,25 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	bool m_b1b6;
 	bool m_b1b7;
 	float m_flLastTime;	// 0x1b8: engine time of the last ComputeAlpha
-	char m_pad01bc[0x9c8 - 0x1bc];
+	int m_n1bc;
+	char m_szPrompt[0x9c0 - 0x1c0];
+	int m_nPromptFlags;
+	int m_nPromptType;
 	int m_nFonts[8];	// 0x9c8: scheme fonts Dlg_Base x3, Persuasion, Seduction, Dominate, Dementation, Intimidate
 	DlgColor m_aColors[6];	// 0x9e8: scheme colors of the same names
 	DlgColor m_colError;	// 0xa00
 	DlgColor m_colFillBkg;	// 0xa04
 	CHUDSprite *m_pCorners[2][2];	// 0xa08: hud/DialogFrmCrnrs
 	CHUDSprite *m_pEdges[2][2];	// 0xa18: hud/DialogFrmEdgs
-	char m_pad0a28[0x122c - 0xa28];
+	char m_pad0a28[0x1228 - 0xa28];
+	int m_nItems;
 	void sub_10053200();	// "CHudDialog::ComputeAlpha"
-	void sub_10053b50(bool);
-	void sub_10053770(bool);
+	int sub_10053b50(bool);
+	int sub_10053770(bool);
 	void sub_100530f0();
 	char m_szItems[4][0x800];	// 0x122c
-	char m_pad322c[0x324c - 0x322c];
+	int m_iItemFlags[4];
+	int m_iItemType[4];
 	char m_szText[0x800];	// 0x324c
 	int m_nOptions;	// 0x3a4c
 	char m_szOptions[4][0x800];	// 0x3a50

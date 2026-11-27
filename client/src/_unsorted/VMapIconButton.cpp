@@ -11,6 +11,20 @@ VMapIconButton *pcd_emit_10187000(const VMapIconButton &other) { return new VMap
 // TARGET: ??_GVMapIconButton@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x10187020 size=0x31
+#include "VMapIconButton.h"
+struct MapIconObj { virtual ~MapIconObj(); };
+VMapIconButton::~VMapIconButton()
+{
+	MapIconObj *a = *(MapIconObj **)((char *)this + 0xc8);
+	if (a)
+		delete a;
+	MapIconObj *b = *(MapIconObj **)((char *)this + 0xcc);
+	if (b)
+		delete b;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10187070 size=0x93
 #include "VMapIconButton.h"
 struct PV_10187070 { void sub_101ab130(); };

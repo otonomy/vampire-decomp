@@ -13,6 +13,7 @@ struct CPEBList
 	CPEBList() { m_a = 0; m_b = 0; m_c = 0; sub_10117b60(); m_x18 = m_a; }
 };
 class CParticleEffectBinding;
+class CParticleMgr;
 class VMatrix;
 struct CPEBOwner { void sub_101176b0(CParticleEffectBinding *); };
 class CParticleEffectBinding : public CDefaultClientRenderable
@@ -21,6 +22,7 @@ public:
 	CParticleEffectBinding();
 	~CParticleEffectBinding();
 	int sub_10116710();
+	void sub_10116df0(CParticleMgr *, void *);
 	void *sub_10117260(const char *name, unsigned short *pIndex);
 	void sub_10116e10();
 	void sub_10116bb0(VMatrix *, VMatrix *);	// RenderStart

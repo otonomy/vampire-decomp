@@ -31,6 +31,7 @@ public:
 	bool sub_100a6b10();
 	void sub_1007ede0(C_BaseEntity *pEntity);
 	void sub_100a9f40(C_BaseEntity *pEntity);
+	void sub_100a9e30(C_BaseEntity *pEntity);
 	C_BaseEntity *sub_100a7890();
 	void sub_100a5fc0();
 	void sub_100a6450();	// sound / stat tick: two convar overrides (else +0x17a0 / +0x179c) for engine sound slots 9 / 8 on a static local player filter, slot 13 with +0x16f0, then eases +0x1648 towards 1 - level(stat list 3) * 0.07
@@ -116,6 +117,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	float m_fl1634;
 	char m_pad1638[0x16b0 - 0x1638];
 	int m_unk16b0;
+	void sub_100a73a0();
 };
 
 // the local player (2004 SDK c_baseplayer.h): read it as C_BasePlayer::GetLocalPlayer()

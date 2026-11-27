@@ -53,6 +53,64 @@ void CMoveHelperClient::vfunc1()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1010f270 size=0x117
+#include "CMoveHelperClient.h"
+#include "CGameTrace.h"
+#include "CUtlVector96.h"
+
+struct CTraceCtor1010f270 { void sub_100421e0(); };
+struct CVecCopy1010f270 { void sub_10039080(const void *src); };
+struct CPlaneCopy1010f270 { void sub_1010f390(const void *src); };
+struct CGrow1010f270 { void sub_1010f8c0(int num); };
+
+struct TouchElem1010f270
+{
+	float m_delta[3];
+	CGameTrace m_trace;
+};
+
+bool CMoveHelperClient::vfunc2(const CGameTrace &tr, const Vector &impactvelocity)
+{
+	for (int i = 0; i < m_unk18; i++) {
+		if (((TouchElem1010f270 *)m_unk0c)[i].m_trace.m_pEnt == tr.m_pEnt)
+			return false;
+	}
+	CUtlVector96 *vec = (CUtlVector96 *)&m_unk0c;
+	int elem = vec->m_size;
+	if (elem + 1 > vec->m_allocationCount)
+		((CGrow1010f270 *)vec)->sub_1010f8c0(elem - vec->m_allocationCount + 1);
+	vec->m_size++;
+	vec->m_pElements = vec->m_pMemory;
+	vec->sub_1010f870(elem, 1);
+	TouchElem1010f270 *p = &((TouchElem1010f270 *)vec->m_pMemory)[elem];
+	if (p)
+		((CTraceCtor1010f270 *)&p->m_trace)->sub_100421e0();
+	CGameTrace *dst = &((TouchElem1010f270 *)vec->m_pMemory)[elem].m_trace;
+	dst->m_startpos[0] = tr.m_startpos[0];
+	dst->m_startpos[1] = tr.m_startpos[1];
+	dst->m_startpos[2] = tr.m_startpos[2];
+	((CVecCopy1010f270 *)dst->m_endpos)->sub_10039080(tr.m_endpos);
+	((CPlaneCopy1010f270 *)dst->m_planeNormal)->sub_1010f390(tr.m_planeNormal);
+	dst->m_fraction = tr.m_fraction;
+	dst->m_contents = tr.m_contents;
+	dst->m_dispFlags = tr.m_dispFlags;
+	dst->m_allsolid = tr.m_allsolid;
+	dst->m_startsolid = tr.m_startsolid;
+	dst->m_fractionleftsolid = tr.m_fractionleftsolid;
+	*(int *)&dst->m_surfaceName = *(int *)&tr.m_surfaceName;
+	*(int *)&dst->m_surfaceProps = *(int *)&tr.m_surfaceProps;
+	dst->m_hitgroup = tr.m_hitgroup;
+	dst->m_physicsbone = tr.m_physicsbone;
+	dst->m_pEnt = tr.m_pEnt;
+	dst->m_hitbox = tr.m_hitbox;
+	TouchElem1010f270 *q = &((TouchElem1010f270 *)vec->m_pMemory)[elem];
+	q->m_delta[0] = impactvelocity.x;
+	q->m_delta[1] = impactvelocity.y;
+	q->m_delta[2] = impactvelocity.z;
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010f3e0 size=0x1
 #include "CMoveHelperClient.h"
 

@@ -81,6 +81,31 @@ vgui2::Panel::Panel(Panel *parent, const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a9780 size=0x8f
+#include "vgui2__Panel.h"
+struct ISurf101ac8f0 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(void *); };
+ISurf101ac8f0 *sub_101ac8f0();
+namespace vgui2 {
+Panel::~Panel()
+{
+	char *self = (char *)this;
+	self[0x32] = 0;
+	self[0x10] = 1;
+	sub_101aa050(0);
+	while (vfunc36()) {
+		Panel *c = sub_101aac10(0);
+		c->vfunc32(0);
+		if (c->vfunc40())
+			delete c;
+	}
+	::operator delete(*(void **)(self + 0x2c));
+	sub_101ac8f0()->v12(*(void **)(self + 4));
+	*(int *)(self + 4) = 0;
+	::operator delete(*(void **)(self + 0x40));
+}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a9860 size=0xd
 #include "vgui2__Panel.h"
 // TARGET: vgui2::Panel::vfunc18

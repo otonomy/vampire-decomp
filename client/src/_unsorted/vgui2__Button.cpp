@@ -11,6 +11,17 @@ vgui2::Button *pcd_emit_101b36f0(const vgui2::Button &other) { return new vgui2:
 // TARGET: ??_GButton@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101b3710 size=0x20
+#include "vgui2__Button.h"
+struct ButtonObj { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); };
+vgui2::Button::~Button()
+{
+	ButtonObj *p = *(ButtonObj **)((char *)this + 0xc4);
+	if (p)
+		p->v21();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b3730 size=0x23
 #include "vgui2__Button.h"
 namespace lifted {
@@ -259,6 +270,61 @@ void vgui2::Button::vfunc81()
 {
     ((lifted::V *)this)->f57(0, 0);
     ((lifted::C101ab3f0 *)this)->sub_101ab3f0();
+}
+// END FUNCTION
+
+// FUNCTION: 0x101b3b40 size=0xf7
+#include "vgui2__Button.h"
+
+struct BtnScheme
+{
+	virtual void v0(); virtual void v1(); virtual void v2();
+	virtual int vfunc3(const char *pszName);
+	virtual void v4();
+	virtual int *vfunc5(int *pOut, const char *pszName, int nDefault);
+};
+struct BtnColorSlots
+{
+	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7(); virtual void s8(); virtual void s9();
+	virtual void s10(); virtual void s11(); virtual void s12(); virtual void s13(); virtual void s14(); virtual void s15(); virtual void s16(); virtual void s17(); virtual void s18(); virtual void s19();
+	virtual void s20(); virtual void s21(); virtual void s22(); virtual void s23(); virtual void s24(); virtual void s25(); virtual void s26(); virtual void s27(); virtual void s28(); virtual void s29();
+	virtual void s30(); virtual void s31(); virtual void s32(); virtual void s33(); virtual void s34(); virtual void s35(); virtual void s36(); virtual void s37(); virtual void s38(); virtual void s39();
+	virtual void s40(); virtual void s41(); virtual void s42(); virtual void s43(); virtual void s44(); virtual void s45(); virtual void s46(); virtual void s47(); virtual void s48(); virtual void s49();
+	virtual void s50(); virtual void s51();
+	virtual int *vfunc52(int *pOut);
+	virtual int *vfunc53(int *pOut);
+};
+struct BtnView
+{
+	char m_pad[0xc8];
+	int m_nDefaultBorder;
+	int m_nDepressedBorder;
+	int m_nKeyFocusBorder;
+	int m_nDefaultFg;
+	int m_nDefaultBg;
+	int m_nArmedFg;
+	int m_nArmedBg;
+	int m_nDepressedFg;
+	int m_nDepressedBg;
+};
+
+// TARGET: vgui2::Button::vfunc74
+int vgui2::Button::vfunc74(int pScheme)
+{
+	BtnScheme *s = (BtnScheme *)pScheme;
+	BtnView *v = (BtnView *)this;
+	BtnColorSlots *c = (BtnColorSlots *)this;
+	int clr;
+	Label::vfunc74(pScheme);
+	v->m_nDefaultBorder = s->vfunc3("ButtonBorder");
+	v->m_nDepressedBorder = s->vfunc3("ButtonDepressedBorder");
+	v->m_nKeyFocusBorder = s->vfunc3("ButtonKeyFocusBorder");
+	v->m_nDefaultFg = *c->vfunc53(&clr);
+	v->m_nDefaultBg = *c->vfunc52(&clr);
+	v->m_nArmedFg = *s->vfunc5(&clr, "ButtonArmedFgColor", v->m_nDefaultFg);
+	v->m_nArmedBg = *s->vfunc5(&clr, "ButtonArmedBgColor", v->m_nDefaultBg);
+	v->m_nDepressedFg = *s->vfunc5(&clr, "ButtonDepressedFgColor", v->m_nDefaultFg);
+	return v->m_nDepressedBg = *s->vfunc5(&clr, "ButtonDepressedBgColor", v->m_nDefaultBg);
 }
 // END FUNCTION
 
@@ -534,6 +600,21 @@ bool vgui2::Button::vfunc14(vgui2::KeyValues *data)
 		return true;
 	}
 	return this->Label::vfunc14(data);
+}
+// END FUNCTION
+
+// FUNCTION: 0x101b4100 size=0x50
+#include "vgui2__Button.h"
+#include "vgui2__KeyValues.h"
+extern char g_102de300[];
+void vgui2::Button::sub_101b4100(int a)
+{
+	vgui2::KeyValues *kv = (vgui2::KeyValues *)a;
+	Label::sub_101b2f70(a);
+	vgui2::KeyValues *cmd = *(vgui2::KeyValues **)((char *)this + 0xc4);
+	if (cmd)
+		kv->vfunc14("command", cmd->vfunc11("command", g_102de300));
+	kv->vfunc15((int)"default", *(unsigned char *)((char *)this + 0xec));
 }
 // END FUNCTION
 

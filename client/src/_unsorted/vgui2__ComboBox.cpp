@@ -11,6 +11,19 @@ vgui2::ComboBox *pcd_emit_101c78f0(const vgui2::ComboBox &other) { return new vg
 // TARGET: ??_GComboBox@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101c7910 size=0x33
+#include "vgui2__ComboBox.h"
+vgui2::ComboBox::~ComboBox()
+{
+	vgui2::Panel *a = *(vgui2::Panel **)((char *)this + 0x12c);
+	if (a)
+		delete a;
+	vgui2::Panel *b = *(vgui2::Panel **)((char *)this + 0x130);
+	if (b)
+		delete b;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c7950 size=0xe
 #include "vgui2__ComboBox.h"
 namespace lifted {

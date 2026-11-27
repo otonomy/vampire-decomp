@@ -1,6 +1,32 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101b8380 size=0x96
+#include "vgui2__FrameSystemButton.h"
+struct SchemeView {
+	virtual int v0(const char *); virtual int v1(int); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual int *GetColor(int *out, const char *name);
+};
+struct V47 {
+#define D8(n) virtual void n##a(); virtual void n##b(); virtual void n##c(); virtual void n##d(); virtual void n##e(); virtual void n##f(); virtual void n##g(); virtual void n##h();
+	D8(a) D8(b) D8(c) D8(d) D8(e)
+	virtual void x0(); virtual void x1(); virtual void x2(); virtual void x3(); virtual void x4(); virtual void x5(); virtual void x6();
+	virtual int f47();
+};
+int vgui2::FrameSystemButton::vfunc74(int a)
+{
+	Button::vfunc74(a);
+	SchemeView *s = (SchemeView *)a;
+	int c;
+	*(int *)((char *)this + 0x104) = *s->GetColor(&c, "TitleBarBgColor");
+	*(int *)((char *)this + 0x108) = *s->GetColor(&c, "TitleBarDisabledBgColor");
+	*(int *)((char *)this + 0xfc) = s->v1(s->v0("TitleBarIcon"));
+	*(int *)((char *)this + 0x100) = s->v1(s->v0("TitleBarDisabledIcon"));
+	vfunc112(0, 0);
+	return vfunc46(((V47 *)this)->f47());
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b8420 size=0x5
 #include "vgui2__FrameSystemButton.h"
 int vgui2::FrameSystemButton::vfunc164(int a0, int a1, int a2, int a3)

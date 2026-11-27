@@ -94,6 +94,23 @@ vgui2::TextEntry *pcd_emit_101acd90(const vgui2::TextEntry &other) { return new 
 // TARGET: ??_GTextEntry@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101acdb0 size=0x4f
+#include "vgui2__TextEntry.h"
+namespace vgui2 {
+TextEntry::~TextEntry()
+{
+	char *s = (char *)this;
+	vgui2::Panel *a = *(vgui2::Panel **)(s + 0xfc);
+	if (a)
+		delete a;
+	::operator delete(*(void **)(s + 0xe8));
+	::operator delete(*(void **)(s + 0x80));
+	::operator delete(*(void **)(s + 0x6c));
+	::operator delete(*(void **)(s + 0x60));
+}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ace00 size=0xf9
 struct Color {
 	int c;
@@ -2171,6 +2188,19 @@ void vgui2::TextEntry::vfunc75(int p)
 	TELoc *loc = s->Get(((CUnknown101aa220 *)this)->sub_101aa220());
 	TEColor def;
 	*(TEColor *)((char *)this + 0xf0) = loc->GetColor("BorderSelection", def);
+}
+// END FUNCTION
+
+// FUNCTION: 0x101b1650 size=0x59
+#include "vgui2__TextEntry.h"
+#include "vgui2__KeyValues.h"
+void vgui2::TextEntry::sub_101b1650(int a)
+{
+	vgui2::KeyValues *data = (vgui2::KeyValues *)a;
+	Panel::sub_101ab750(a);
+	data->vfunc15((int)"textHidden", *(unsigned char *)((char *)this + 0x89));
+	data->vfunc15((int)"editable", vfunc135());
+	data->vfunc15((int)"maxchars", *(int *)((char *)this + 0xac));
 }
 // END FUNCTION
 

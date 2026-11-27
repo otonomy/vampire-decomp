@@ -1,6 +1,8 @@
 // CUtlVector4: a CUtlVector whose elements are 4 bytes (memory, allocation count, grow size, size, element pointer).
 #pragma once
 
+#include "CBaseHandle.h"
+#include "ehandle.h"
 extern "C" void *__cdecl memmove(void *, const void *, unsigned int);
 extern "C" void *__cdecl sub_101d0f30(void *, const void *, unsigned int);
 
@@ -14,6 +16,34 @@ public:
 	int *m_pElements;
 
 	void sub_100d3ed0(int num);
+	void sub_1009cf00(int num);
+	void sub_100ac080(int num);
+	int FindEHandle(const CBaseHandle &src) const
+	{
+		for (int i = 0; i < m_size; i++)
+		{
+			CBaseHandle *pe = (CBaseHandle *)&m_pMemory[i];
+			IHandleEntity *pSrc = src.Get();
+			if (pe->Get() == pSrc)
+				return i;
+		}
+		return -1;
+	}
+	int AddToTailEHandle(const CBaseHandle &src)
+	{
+		int elem = m_size;
+		if (m_size + 1 > m_allocationCount)
+			sub_100ac080(m_size + 1 - m_allocationCount);
+		m_size += 1;
+		m_pElements = m_pMemory;
+		int n = m_size - elem - 1;
+		if (n > 0)
+			memmove(&m_pMemory[elem + 1], &m_pMemory[elem], n * 4);
+		int *p = &m_pMemory[elem];
+		if (p)
+			*p = *(const int *)&src;
+		return elem;
+	}
 	void GrowN(int num)
 	{
 		if (m_size + num > m_allocationCount)

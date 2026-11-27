@@ -78,7 +78,7 @@ public:
 	virtual int GetMaxClients();	// slot 51
 	virtual void vfunc52();
 	virtual void vfunc53();
-	virtual void vfunc54();
+	virtual const char *vfunc54(const char *);
 	virtual void vfunc55();
 	virtual void vfunc56();
 	virtual int IsInGame();	// slot 57
@@ -623,14 +623,14 @@ extern INetworkStringTableClient *g_104a5804;
 class ISpatialPartition
 {
 public:
-	virtual void vfunc0();
+	virtual void vfunc0(unsigned short, int);
 	virtual void vfunc1();
 	virtual void vfunc2();
 	virtual void vfunc3(unsigned short);	// slot 3
 	virtual void vfunc4();
 	virtual void vfunc5();
 	virtual void vfunc6();
-	virtual void vfunc7();
+	virtual void vfunc7(unsigned short, const Vector &, const Vector &);
 	virtual void vfunc8();
 	virtual void vfunc9();
 	virtual void vfunc10();

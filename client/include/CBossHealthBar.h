@@ -19,7 +19,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc112();
 	virtual void vfunc113();
 	// the slots CBossHealthBar adds to its base's vtable: 114-114, vfuncK at slot K
-	virtual void vfunc114();
+	virtual void vfunc114(int count, const char *flags, const int *ids, bool bShow);
 	CBossHealthBar(int a);
 	struct IFontLike { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int GetFont(const char *); };
 	IFontLike *sub_101ac830();
@@ -29,6 +29,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_1004d710(int, int, int, int);
 	void sub_1004d850();
 	void sub_101a98c0(int *, int *);
-	int m_unk174; int m_unk178; int m_unk17c; int m_unk180; int m_unk184; int m_unk188; int m_unk18c; int m_unk190; int m_unk194; char m_b198; char m_b199; char m_b19a; char m_b19b; int m_nFont; int m_unk1a0; int m_unk1a4[2]; const char *m_unk1ac[2]; int m_unk1b4; int m_unk1b8; int m_unk1bc;
+	int m_unk174; int m_unk178; int m_unk17c; int m_unk180; int m_unk184; int m_unk188; int m_unk18c; int m_unk190; int m_unk194; char m_b198; char m_b199; char m_b19a; char m_b19b; int m_nFont; int m_unk1a0; int m_unk1a4[2]; const char *m_unk1ac[2]; int m_unk1b4; float m_unk1b8; float m_unk1bc;
 	CHUDSprite *m_pChild1; CHUDSprite *m_pChild2;
 };

@@ -10,3 +10,12 @@ CSignTextBlock *pcd_emit_10060400(const CSignTextBlock &other) { return new CSig
 
 // TARGET: ??_GCSignTextBlock@@UAEPAXI@Z
 // END FUNCTION
+
+// FUNCTION: 0x10060530 size=0x2c
+#include "CSignTextBlock.h"
+CSignTextBlock::~CSignTextBlock()
+{
+	::operator delete(*(void **)((char *)this + 0x128));
+	::operator delete(*(void **)((char *)this + 0x12c));
+}
+// END FUNCTION

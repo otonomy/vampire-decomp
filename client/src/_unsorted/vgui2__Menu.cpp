@@ -11,6 +11,19 @@ vgui2::Menu *pcd_emit_101bf4d0(const vgui2::Menu &other) { return new vgui2::Men
 // TARGET: ??_GMenu@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101bf4f0 size=0x2b
+#include "vgui2__Menu.h"
+namespace vgui2 {
+Menu::~Menu()
+{
+	Panel *p = *(Panel **)((char *)this + 0x70);
+	if (p)
+		delete p;
+	::operator delete(*(void **)((char *)this + 0x6c));
+}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101bf660 size=0x5f
 #include "vgui2__Menu.h"
 #include "vgui2__MenuItem.h"
@@ -684,6 +697,48 @@ int vgui2::Menu::vfunc74(int pScheme)
 	int *p2 = ((ISchemeView *)pScheme)->v6(&color, "Menu/BgColor");
 	int nRet = vfunc50(*p2);
 	return nRet;
+}
+// END FUNCTION
+
+// FUNCTION: 0x101c05f0 size=0xff
+#include "vgui2__Menu.h"
+#include "vgui2__MenuItem.h"
+extern void *sub_101b6840(unsigned int size);
+struct KV_101c05f0 {
+	KV_101c05f0 *sub_101b5670(const char *name);
+};
+struct IVGui_101c05f0 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void PostMessage(int target, void *params, int from, float delaySeconds);
+};
+extern IVGui_101c05f0 *sub_101ac8f0();
+// TARGET: vgui2::Menu::vfunc132
+void vgui2::Menu::vfunc132()
+{
+	vfunc21(0);
+	((vgui2::Panel *)m_i70)->vfunc21(0);
+	vgui2::MenuItem *item = dynamic_cast<vgui2::MenuItem *>((vgui2::Panel *)vfunc31());
+	if (item) {
+		vgui2::Menu *menu = dynamic_cast<vgui2::Menu *>((vgui2::Panel *)item->vfunc31());
+		if (menu) {
+			KV_101c05f0 *msg = (KV_101c05f0 *)sub_101b6840(0x1c);
+			if (msg)
+				msg = msg->sub_101b5670("MenuItemSelected");
+			else
+				msg = 0;
+			sub_101ac8f0()->PostMessage(menu->vfunc0(), msg, vfunc0(), 0.0f);
+		}
+	}
+	KV_101c05f0 *msg2 = (KV_101c05f0 *)sub_101b6840(0x1c);
+	if (msg2)
+		msg2 = msg2->sub_101b5670("MenuItemSelected");
+	else
+		msg2 = 0;
+	vgui2::Panel *parent = (vgui2::Panel *)vfunc31();
+	sub_101ac8f0()->PostMessage(parent->vfunc0(), msg2, vfunc0(), 0.0f);
 }
 // END FUNCTION
 

@@ -1020,6 +1020,60 @@ int CTempEnts::vfunc22(int a0, int a1, int a2)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1003d640 size=0xfe
+#include "engineclient.h"
+#include "CTempEnts.h"
+#include "C_BaseEntity.h"
+#include "Vector.h"
+
+struct TEV23
+{
+	char m_pad000[0x48];
+	int m_f48;
+	int m_f4c;
+	unsigned char m_r, m_g, m_b, m_a;
+	char m_pad54[0x7ac - 0x54];
+	int m_flags;
+	float m_die;
+	float m_scale1;
+	char m_pad7b8[0x7e8 - 0x7b8];
+	float m_f7e8;
+	char m_pad7ec[0x7f0 - 0x7ec];
+	float m_f7f0;
+	char m_pad7f4[0x7fc - 0x7f4];
+	int m_f7fc;
+};
+struct IV43d8 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void AddEnt(void *e); };
+extern IV43d8 *g_102d43d8;
+extern QAngle g_104d5190;
+
+// TARGET: CTempEnts::vfunc23
+void CTempEnts::vfunc23(const Vector &org, int ang, int unused)
+{
+	TEV23 *e = (TEV23 *)sub_1003cdd0(&org, *(void **)((char *)this + 0xfbf50));
+	if (e)
+	{
+		e->m_f48 = 5;
+		e->m_r = 0xff;
+		e->m_g = 0xff;
+		e->m_b = 0xff;
+		e->m_a = 0xff;
+		e->m_f4c = 0;
+		e->m_die = engine->Time(0) + 0.01f;
+		e->m_f7fc = 0;
+		e->m_scale1 = 1.0f;
+		((C_BaseEntity *)e)->sub_100a2030(&org);
+		((C_BaseEntity *)e)->sub_100a2100(g_104d5190);
+		((C_BaseEntity *)e)->sub_100a2100(*(const QAngle *)ang);
+		e->m_f7f0 = enginerandom->RandomFloat(0.2f, 0.3f);
+		((C_BaseEntity *)e)->sub_1009f6c0(2, (float)enginerandom->RandomInt(0, 360));
+		e->m_flags = 4;
+		e->m_f7e8 = enginerandom->RandomFloat(0.0f, 360.0f);
+		g_102d43d8->AddEnt(e);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1003d740 size=0x21
 #include "CTempEnts.h"
 namespace lifted {

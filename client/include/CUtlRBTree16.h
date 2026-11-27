@@ -29,6 +29,8 @@ public:
 	static unsigned short InvalidIndex() { return 0xffff; }
 
 	const Links_t &sub_10112720(unsigned short i) const;
+	void sub_10111dd0(const void *insert, unsigned short &parent, bool &leftchild);	// "CUtlRBTree::FindInsertionPosition"
+	unsigned short sub_10111210(const void *search);	// "CUtlRBTree::Find"
 	const Links_t &sub_10113190(unsigned short i) const;
 	const Links_t &sub_101397f0(unsigned short i) const;
 

@@ -117,6 +117,58 @@ int C_BaseAnimating::vfunc86()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1008f790 size=0x101
+#include "C_BaseAnimating.h"
+#include "engineclient.h"
+#include "CUtlVector72.h"
+struct T48;
+struct CUtlVector48 {
+	void *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	int m_size;
+	void *m_pElements;
+	int sub_10096fc0(int, int, const T48 *);
+};
+#define F(t, o) (*(t *)((char *)this + (o)))
+// TARGET: C_BaseAnimating::vfunc72
+int C_BaseAnimating::vfunc72()
+{
+	if (!GetModel())
+		return 0;
+	char *pHdr = (char *)modelinfo->vfunc20(GetModel());
+	if (!pHdr)
+		return 0;
+	if (*(int *)(pHdr + 0xe4) & 0x400)
+		sub_1009f0a0();
+	sub_100922c0();
+	int nBones = *(int *)(pHdr + 0xf0);
+	if (F(int, 0x734) != nBones) {
+		CUtlVector48 *bones = (CUtlVector48 *)((char *)this + 0x728);
+		bones->m_size = 0;
+		bones->sub_10096fc0(0, nBones, 0);
+	}
+	F(void *, 0x6e4) = pHdr;
+	F(void *, 0x6e8) = F(void *, 0x728);
+	int nAttach = *(int *)(pHdr + 0x148);
+	if (F(int, 0x77c) != nAttach) {
+		CUtlVector72 *att = (CUtlVector72 *)((char *)this + 0x770);
+		att->m_size = 0;
+		if (nAttach) {
+			if (nAttach > att->m_allocationCount)
+				att->sub_10097160(nAttach - att->m_allocationCount);
+			att->m_size += nAttach;
+			att->m_pElements = att->m_pMemory;
+			int n = att->m_size - nAttach;
+			if (n > 0 && nAttach > 0)
+				memmove(&att->m_pMemory[nAttach], &att->m_pMemory[0], n * 72);
+		}
+	}
+	vfunc112();
+	return (int)pHdr;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1008f8a0 size=0x52
 #include "engineclient.h"
 #include "C_BaseAnimating.h"
@@ -624,6 +676,32 @@ void C_BaseAnimating::vfunc37()
         ((lifted::V *)this)->f132(0);
     }
     ((lifted::C100a0de0 *)this)->sub_100a0de0();
+}
+// END FUNCTION
+
+// FUNCTION: 0x10094f00 size=0x121
+#include "C_BaseAnimating.h"
+#include "Vector.h"
+#include "QAngle.h"
+struct CUnknown1009f6e0 { char *sub_1009f6e0(); };
+struct CUnknown1009f6f0 { char *sub_1009f6f0(); };
+void sub_100ccf50(const QAngle *from, const QAngle *to, QAngle *out, float frac);
+bool C_BaseAnimating::vfunc73()
+{
+	if (GetSolid() != 4)
+		return C_BaseEntity::vfunc73();
+	if (sub_1009f140(0x800))
+	{
+		*(Vector *)((char *)this + 0x54) = *(Vector *)((CUnknown1009f6e0 *)this)->sub_1009f6e0();
+		*(QAngle *)((char *)this + 0x60) = *(QAngle *)((CUnknown1009f6f0 *)this)->sub_1009f6f0();
+	}
+	float frac = vfunc122();
+	Vector newOrigin = *(Vector *)((char *)this + 0x54) * (1.0f - frac) + *(Vector *)((CUnknown1009f6e0 *)this)->sub_1009f6e0() * frac;
+	sub_100a2030(&newOrigin);
+	QAngle newAngles;
+	sub_100ccf50((QAngle *)((char *)this + 0x60), (QAngle *)((CUnknown1009f6f0 *)this)->sub_1009f6f0(), &newAngles, frac);
+	sub_100a2100(newAngles);
+	return true;
 }
 // END FUNCTION
 

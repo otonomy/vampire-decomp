@@ -1,6 +1,19 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x100ee940 size=0x3d
+#include "GlobalWetnessProxy.h"
+#include "CClampProxy.h"
+bool GlobalWetnessProxy::vfunc0(void *pMaterial, void *pKeyValues)
+{
+	if (!CResultProxy::vfunc0(pMaterial, pKeyValues))
+		return false;
+	if (!m_Scale.sub_100e3140(pMaterial, pKeyValues, "scale", 1.0f))
+		return false;
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ee980 size=0x79
 #include "GlobalWetnessProxy.h"
 #include "CClampProxy.h"

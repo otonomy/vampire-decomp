@@ -37,6 +37,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     float m_f190;
     int m_unk194[(0x1ac - 0x194) / 4];
     float m_f1ac;
+    ~CGUIClientRenderable();
     float sub_1018a7d0();
     float sub_1018a8c0(float cur, float prev, float curTime, bool b);
     float sub_1018a860(int i, float cur, float prev, float curTime);

@@ -111,6 +111,76 @@ void CViewRenderBeams::vfunc6(IHandleEntity *pDeadEntity)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10193e70 size=0x113
+#include "CViewRenderBeams.h"
+#include "Vector.h"
+
+struct BeamInfoLocal
+{
+	int type;
+	void *pStartEnt;
+	int startAttachment;
+	void *pEndEnt;
+	int endAttachment;
+	Vector vecStart;
+	Vector vecEnd;
+	int modelIndex;
+	const char *pszModelName;
+	int haloIndex;
+	const char *pszHaloName;
+	float haloScale;
+	float life;
+	float width;
+	float endWidth;
+	float fadeLength;
+	float amplitude;
+	float brightness;
+	float speed;
+	int startFrame;
+	float frameRate;
+	float red;
+	float green;
+	float blue;
+	bool renderable;
+	int segments;
+	int flags;
+	int m_unk7c; int m_unk80; int m_unk84; int m_unk88; int m_unk8c;
+
+	BeamInfoLocal()
+	{
+		segments = -1;
+		type = 0;
+		pszModelName = 0;
+		pszHaloName = 0;
+		flags = 0;
+		renderable = true;
+	}
+};
+
+void CViewRenderBeams::vfunc11(Vector &start, Vector &end, int modelIndex, int haloIndex, float haloScale, float life, float width, float endWidth, float fadeLength, float amplitude, float brightness, float speed, int startFrame, float framerate, float r, float g, float b)
+{
+	BeamInfoLocal info;
+	info.vecStart = start;
+	info.vecEnd = end;
+	info.modelIndex = modelIndex;
+	info.haloIndex = haloIndex;
+	info.haloScale = haloScale;
+	info.life = life;
+	info.width = width;
+	info.endWidth = endWidth;
+	info.fadeLength = fadeLength;
+	info.amplitude = amplitude;
+	info.brightness = brightness;
+	info.speed = speed;
+	info.startFrame = startFrame;
+	info.frameRate = framerate;
+	info.red = r;
+	info.green = g;
+	info.blue = b;
+	vfunc12((BeamInfoV *)&info);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10193f90 size=0xa9
 #include "engineclient.h"
 #include "CViewRenderBeams.h"
@@ -318,6 +388,50 @@ Beam_t *CViewRenderBeams::vfunc20(InfoView101942b0 *info)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10194370 size=0x11a
+#include "CViewRenderBeams.h"
+#include "vector.h"
+struct BIL
+{
+	int m00, m04, m08, m0c, m10, m14, m18, m1c, m20, m24, m28, m2c, m30, m34, m38, m3c, m40, m44, m48, m4c, m50, m54, m58, m5c, m60, m64, m68, m6c;
+	bool m70;
+	int m74, m78;
+	float m7c, m80, m84;
+	int m88, m8c;
+};
+void CViewRenderBeams::sub_10194370(Vector *center, int startRadius, int endRadius, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18)
+{
+	BIL info;
+	info.m00 = 0;
+	info.m30 = 0;
+	info.m38 = 0;
+	info.m78 = 0;
+	info.m2c = a4;
+	info.m34 = a5;
+	info.m3c = a6;
+	info.m40 = a7;
+	info.m44 = a8;
+	info.m48 = a9;
+	info.m4c = a10;
+	info.m50 = a11;
+	info.m54 = a12;
+	info.m58 = a13;
+	info.m5c = a14;
+	info.m60 = a15;
+	info.m64 = a16;
+	info.m68 = a17;
+	info.m6c = a18;
+	info.m74 = -1;
+	info.m70 = true;
+	info.m7c = center->x;
+	info.m80 = center->y;
+	info.m84 = center->z;
+	info.m88 = startRadius;
+	info.m8c = endRadius;
+	vfunc16((BeamInfoV *)&info);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10194490 size=0xac
 #include "CViewRenderBeams.h"
 struct BeamInfoV { char p0[0x14]; int m14, m18, m1c, m20, m24, m28; char p2c[0x40 - 0x2c]; float m40; char p44[0x7c - 0x44]; int m7c, m80, m84; int m88, m8c; };
@@ -347,6 +461,70 @@ Beam_t *CViewRenderBeams::vfunc16(BeamInfoV *info)
 	if (info->m40 == 0.0f)
 		v->m2c |= 0x80000000;
 	return b;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10194680 size=0x123
+#include "CViewRenderBeams.h"
+#include "vector.h"
+extern Vector g_104d4970;
+struct EntView10194680 { virtual void v0(); virtual unsigned int *v1(); char pad[0x1c]; };
+struct PartView10194680 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual int v8(); };
+struct EntObj10194680 { int pad0; PartView10194680 part; };
+struct BeamInfoV
+{
+	int m_nType;
+	EntView10194680 *m_pStartEnt;
+	int m_nStartAttachment;
+	EntView10194680 *m_pEndEnt;
+	int m_nEndAttachment;
+	Vector m_vecStart;
+	Vector m_vecEnd;
+	int m_unk2c[(0x40 - 0x2c) / 4];
+	float m_f40;
+};
+struct BeamV
+{
+	char pad[0x28];
+	int type;
+	int flags;
+	char pad2[0x104 - 0x30];
+	unsigned int entity0;
+	unsigned int entity1;
+	char pad3[0x12c - 0x10c];
+	int attach0;
+	int attach1;
+};
+// TARGET: CViewRenderBeams::vfunc14
+Beam_t *CViewRenderBeams::vfunc14(BeamInfoV *info)
+{
+	if (info->m_f40 != 0.0f)
+	{
+		if (!info->m_pStartEnt || !((EntObj10194680 *)info->m_pStartEnt)->part.v8() || !info->m_pEndEnt || !((EntObj10194680 *)info->m_pEndEnt)->part.v8())
+			return 0;
+	}
+	info->m_vecStart = g_104d4970;
+	info->m_vecEnd = g_104d4970;
+	BeamV *pBeam = (BeamV *)sub_101938a0(info);
+	if (!pBeam)
+		return 0;
+	pBeam->type = 0x18;
+	pBeam->flags = 3;
+	if (info->m_pStartEnt)
+		pBeam->entity0 = *info->m_pStartEnt->v1();
+	else
+		pBeam->entity0 = 0xffffffff;
+	pBeam->attach0 = info->m_nStartAttachment;
+	if (info->m_pEndEnt)
+		pBeam->entity1 = *info->m_pEndEnt->v1();
+	else
+		pBeam->entity1 = 0xffffffff;
+	pBeam->attach1 = info->m_nEndAttachment;
+	sub_10193790(pBeam, info);
+	if (info->m_f40 == 0.0f)
+		pBeam->flags |= 0x80000000;
+	sub_10194830((Beam_t *)pBeam, 0);
+	return (Beam_t *)pBeam;
 }
 // END FUNCTION
 
