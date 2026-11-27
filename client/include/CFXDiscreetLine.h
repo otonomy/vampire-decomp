@@ -14,7 +14,7 @@ public:
 	virtual ~CFXDiscreetLine();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with CFXDiscreetLine's own function
-	virtual void vfunc1();
+	virtual void vfunc1(double frametime);
 	virtual bool vfunc3();
 	virtual void vfunc4();
 	// the slots CFXDiscreetLine adds to its base's vtable: 5-5, vfuncK at slot K
