@@ -74272,6 +74272,28 @@ int CUnknown100f08d0::sub_100f08d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f0900 size=0x23
+namespace lifted {
+struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual int f4(); };
+}
+struct CUnknown100f0900 { int sub_100f0900(); };
+int CUnknown100f0900::sub_100f0900()
+{
+    int r0;
+    int r1;
+    r0 = 0;
+    r1 = *(int *)((char *)this + 0x4c);
+    if (r1 > 0) {
+        do {
+            ((lifted::V *)(*(int *)((char *)(*(int *)((char *)this + 0x40)) + r0 * 4)))->f4();
+            r1 = *(int *)((char *)this + 0x4c);
+            r0 = r0 + 1;
+        } while (r0 < r1);
+    }
+    return r1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100f0930 size=0x4d
 extern "C" __declspec(dllimport) void __cdecl Plat_Free(void *);
 
