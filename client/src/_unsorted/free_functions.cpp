@@ -108862,6 +108862,16 @@ int __stdcall sub_101465e0(int a)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10146650 size=0xe
+namespace lifted {
+extern char g_102c7bc0;
+}
+int __stdcall sub_10146650(int a0)
+{
+    return *(int *)((char *)&lifted::g_102c7bc0 + a0 * 4);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10146660 size=0x15
 struct CBitSet_10146660 { unsigned int m_bits; char sub_10146660(int bit); };
 char CBitSet_10146660::sub_10146660(int bit)
