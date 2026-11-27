@@ -133699,6 +133699,31 @@ int CUnknown10177ee0::sub_10177ee0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10177f10 size=0x117
+#include "vgui2__Button.h"
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((x) * ((float)sub_100cd100() / 1024.0))
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+struct IS { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual int GetFont(const char *); };
+void sub_10177f10(vgui2::Panel *parent, vgui2::Button **out, const char *text, int x, int y, int w, int h)
+{
+	IS *pScheme = (IS *)parent->sub_101ac830();
+	int font = pScheme->GetFont(sub_1018c870("Copperplate"));
+	void *mem = vgui2::Panel::operator new(0xf0);
+	vgui2::Button *b = mem ? new (mem) vgui2::Button((int)parent, (int)text, (int)text) : 0;
+	*out = b;
+	b->vfunc118(font);
+	b->vfunc108(text);
+	b->vfunc63(0);
+	b->vfunc41((int)parent);
+	b->vfunc162((int)text);
+	b->vfunc111(4);
+	b->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
+}
+// END FUNCTION
+
 // FUNCTION: 0x10178030 size=0x1f
 struct CUnknown10178030 { void * sub_10178030(); };
 void * CUnknown10178030::sub_10178030()
