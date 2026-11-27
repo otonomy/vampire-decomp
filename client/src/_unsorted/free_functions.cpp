@@ -40721,6 +40721,82 @@ void CUnk1007d970::sub_1007d970(int)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007d9b0 size=0x125
+#include "CUnknown10206400.h"
+#include "CUnknown10206340.h"
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+struct PlayerV { char pad[0x1068]; int m_nVendor; };
+struct CharV
+{
+	virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void a5(); virtual void a6(); virtual void a7(); virtual void a8(); virtual void a9();
+	virtual void b0(); virtual void b1(); virtual void b2(); virtual void b3(); virtual void b4(); virtual void b5(); virtual void b6(); virtual void b7(); virtual void b8(); virtual void b9();
+	virtual void c0(); virtual void c1(); virtual void c2(); virtual void c3(); virtual void c4(); virtual void c5(); virtual void c6(); virtual void c7(); virtual void c8(); virtual void c9();
+	virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5(); virtual void d6(); virtual void d7(); virtual void d8(); virtual void d9();
+	virtual void e0(); virtual void e1(); virtual void e2(); virtual void e3(); virtual void e4(); virtual void e5(); virtual void e6(); virtual void e7(); virtual void e8(); virtual void e9();
+	virtual void f0(); virtual void f1(); virtual void f2(); virtual void f3(); virtual void f4(); virtual void f5(); virtual void f6(); virtual void f7(); virtual void f8(); virtual void f9();
+	virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual void g7(); virtual void g8(); virtual void g9();
+	virtual void h0(); virtual void h1(); virtual void h2(); virtual void h3(); virtual void h4(); virtual void h5(); virtual void h6(); virtual void h7(); virtual void h8(); virtual void h9();
+	virtual void i0(); virtual void i1(); virtual void i2(); virtual void i3(); virtual void i4(); virtual void i5(); virtual void i6(); virtual void i7(); virtual void i8(); virtual void i9();
+	virtual void j0(); virtual void j1(); virtual void j2(); virtual void j3(); virtual void j4(); virtual void j5(); virtual void j6(); virtual void j7(); virtual void j8(); virtual void j9();
+	virtual void k0(); virtual void k1(); virtual void k2(); virtual void k3(); virtual void k4(); virtual void k5(); virtual void k6(); virtual void k7(); virtual void k8(); virtual void k9();
+	virtual void l0(); virtual void l1(); virtual void l2(); virtual void l3(); virtual void l4(); virtual void l5(); virtual void l6(); virtual void l7(); virtual void l8(); virtual void l9();
+	virtual void m0(); virtual void m1(); virtual void m2(); virtual void m3(); virtual void m4(); virtual void m5(); virtual void m6(); virtual void m7(); virtual void m8(); virtual void m9();
+	virtual void n0(); virtual void n1(); virtual void n2(); virtual void n3(); virtual void n4(); virtual void n5(); virtual void n6(); virtual void n7(); virtual void n8(); virtual void n9();
+	virtual void o0(); virtual void o1(); virtual void o2(); virtual void o3(); virtual void o4(); virtual void o5(); virtual void o6(); virtual void o7(); virtual void o8(); virtual void o9();
+	virtual void p0(); virtual void p1(); virtual void p2(); virtual void p3(); virtual void p4(); virtual void p5(); virtual void p6(); virtual void p7(); virtual void p8(); virtual void p9();
+	virtual void q0(); virtual void q1(); virtual void q2(); virtual void q3(); virtual void q4(); virtual void q5(); virtual void q6(); virtual void q7(); virtual void q8(); virtual void q9();
+	virtual void r0(); virtual void r1(); virtual void r2(); virtual void r3(); virtual void r4(); virtual void r5(); virtual void r6(); virtual void r7(); virtual void r8(); virtual void r9();
+	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7(); virtual void s8(); virtual void s9();
+	virtual void t0(); virtual void t1(); virtual void t2(); virtual void t3(); virtual void t4(); virtual void t5(); virtual void t6(); virtual void t7(); virtual void t8(); virtual void t9();
+	virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9();
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void w0(); virtual void w1(); virtual void w2();
+	virtual const char *GetName();
+};
+inline CUnknown10206400 *FindVendor(int id)
+{
+	for (int i = 0; i < g_105f9970.m_nCount; i++)
+	{
+		if (g_105f9970.m_ppVendors[i]->m_nId == id)
+			return g_105f9970.m_ppVendors[i];
+	}
+	static CUnknown10206400 s_defVendor(-1);
+	return &s_defVendor;
+}
+inline CUnknown10206340 *FindItem(CUnknown10206400 *v, int id)
+{
+	for (int i = 0; i < v->m_n14; i++)
+	{
+		if (((CUnknown10206340 *)v->m_ppItems18[i])->m_field0000 == id)
+			return (CUnknown10206340 *)v->m_ppItems18[i];
+	}
+	static CUnknown10206340 s_defItem(-1);
+	return &s_defItem;
+}
+inline const char *ItemName(CUnknown10206340 *p)
+{
+	const char *const &r = p->m_pszName;
+	return r ? r : "";
+}
+// TARGET: sub_1007d9b0
+bool __fastcall sub_1007d9b0(CharV *self, int edx, PlayerV *pPlayer)
+{
+	if (!pPlayer)
+		return false;
+	int nVendor = pPlayer->m_nVendor;
+	if (nVendor < 0 || nVendor >= g_105f9970.m_nCount)
+		return false;
+	CUnknown10206400 *pVendor = FindVendor(nVendor);
+	for (int i = 0; i < pVendor->m_n14; i++)
+	{
+		CUnknown10206340 *pItem = FindItem(pVendor, i);
+		if (!_strcmpi(ItemName(pItem), self->GetName()))
+			return true;
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007dae0 size=0x6
 namespace lifted {
 extern char g_1027ace8;
