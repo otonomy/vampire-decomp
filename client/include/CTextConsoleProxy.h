@@ -18,4 +18,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void *m_pMaterial;
 	C_BaseTerminal *m_pTerminal;
 	void sub_100c8670(C_BaseTerminal *);
+	void sub_100c8580(C_BaseTerminal *);
 };
