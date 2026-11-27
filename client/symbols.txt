@@ -5661,6 +5661,7 @@
 0x100e0560 func   ?sub_100e0560@@YGXH@Z sub_100e0560
 0x100e0570 func   ?sub_100e0570@V0570@@QAEPAHI@Z V0570::sub_100e0570
 0x100e05a0 func   ?vfunc11@CDetailObjectSystem@@UAEPADI@Z CDetailObjectSystem::vfunc11
+0x100e0700 func   ?vfunc2@CDetailObjectSystem@@UAEXXZ CDetailObjectSystem::vfunc2
 0x100e0900 func   ?sub_100e0900@CDetailObjectSystem@@QAEXAAUBuf_100e0900@@@Z CDetailObjectSystem::sub_100e0900
 0x100e0bc0 func   ?sub_100e0bc0@CDetailObjectSystem@@QAEXAAUBuf_100e0900@@@Z CDetailObjectSystem::sub_100e0bc0
 0x100e0c90 func   ?sub_100e0c90@CDetailObjectSystem@@QAE_NHPAX@Z CDetailObjectSystem::sub_100e0c90

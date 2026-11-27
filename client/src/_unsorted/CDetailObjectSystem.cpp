@@ -67,6 +67,62 @@ char *CDetailObjectSystem::vfunc11(unsigned int i)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100e0700 size=0x158
+#include "CDetailObjectSystem.h"
+#include "CUtlBuffer.h"
+#include "engineclient.h"
+
+extern void *(__cdecl *g_101e3100)(unsigned int);
+extern void *(__cdecl *g_101e3104)(void *, unsigned int);
+extern "C" __declspec(dllimport) void Warning(const char *fmt, ...);
+
+struct CInitView
+{
+	CInitView *sub_1013c8a0(int, int, unsigned char);
+};
+
+// TARGET: CDetailObjectSystem::vfunc2
+void CDetailObjectSystem::vfunc2()
+{
+	if (engine->vfunc83(0x64707270) != 2)
+	{
+		Warning("Map uses old detail prop file format.. ignoring detail props\n");
+		return;
+	}
+	int size = engine->vfunc84(0x64707270);
+	unsigned char *mem = 0;
+	int alloc = 0;
+	if (size > 0)
+	{
+		alloc = size;
+		mem = (unsigned char *)g_101e3100(size);
+	}
+	if (engine->vfunc85(0x64707270, mem, size))
+	{
+		CUtlBuffer buf;
+		((CInitView *)&buf)->sub_1013c8a0((int)mem, size, 0);
+		sub_100e0900((Buf_100e0900 &)buf);
+		sub_100e0a40((Buf_100e0900 &)buf);
+	}
+	size = engine->vfunc84(0x64706c74);
+	if (alloc < size)
+	{
+		if (mem)
+			mem = (unsigned char *)g_101e3104(mem, size);
+		else
+			mem = (unsigned char *)g_101e3100(size);
+	}
+	if (engine->vfunc85(0x64706c74, mem, size))
+	{
+		CUtlBuffer buf;
+		((CInitView *)&buf)->sub_1013c8a0((int)mem, size, 0);
+		sub_100e0bc0((Buf_100e0900 &)buf);
+	}
+	if (mem)
+		Plat_Free(mem);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100e08f0 size=0x1
 #include "CDetailObjectSystem.h"
 // TARGET: CDetailObjectSystem::vfunc5
