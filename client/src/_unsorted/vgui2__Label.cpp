@@ -11,6 +11,60 @@ vgui2::Label *pcd_emit_101b2080(const vgui2::Label &other) { return new vgui2::L
 // TARGET: ??_GLabel@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101b20a0 size=0xbd
+#include "vgui2__Label.h"
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+struct LabelObj { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual ~LabelObj(); };
+struct LabelView {
+	char pad0[0x5c];
+	LabelObj *m5c;
+	void *m60; int m64; int m68; int m6c; void *m70;
+	void *m74; int m78; int m7c; int m80; void *m84;
+	char pad88[0x20];
+	void *ma8;
+};
+vgui2::Label::~Label()
+{
+	LabelView *v = (LabelView *)this;
+	if (v->m5c)
+		delete v->m5c;
+	if (v->ma8)
+		::operator delete(v->ma8);
+	v->m80 = 0;
+	if (v->m7c != -1) {
+		if (v->m74) {
+			Plat_Free(v->m74);
+			v->m74 = 0;
+		}
+		v->m78 = 0;
+	}
+	v->m84 = v->m74;
+	if (v->m7c != -1) {
+		if (v->m74) {
+			Plat_Free(v->m74);
+			v->m74 = 0;
+		}
+		v->m78 = 0;
+	}
+	v->m6c = 0;
+	if (v->m68 != -1) {
+		if (v->m60) {
+			Plat_Free(v->m60);
+			v->m60 = 0;
+		}
+		v->m64 = 0;
+	}
+	v->m70 = v->m60;
+	if (v->m68 != -1) {
+		if (v->m60) {
+			Plat_Free(v->m60);
+			v->m60 = 0;
+		}
+		v->m64 = 0;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b2230 size=0x23
 #include "vgui2__Label.h"
 namespace lifted {
