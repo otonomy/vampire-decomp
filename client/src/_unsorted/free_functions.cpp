@@ -155688,6 +155688,39 @@ int CUnknown101c4f50::sub_101c4f50()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c4f80 size=0x6b
+#include "vgui2__BuildModeDialog.h"
+#include "vgui2__MessageBox.h"
+#define m_pHelpDlg (*(vgui2::MessageBox **)((char *)this + 0x108))
+typedef void (__fastcall *PFVoid)(void *);
+// TARGET: vgui2::BuildModeDialog::sub_101c4f80
+void vgui2::BuildModeDialog::sub_101c4f80()
+{
+	char helpText[] = "In the Build Mode Dialog Window:\n"
+		"Delete button - deletes the currently selected panel if it is deletable.\n"
+		"Apply button - applies changes to the Context Panel.\n"
+		"Save button - saves all settings to file. \n"
+		"Revert to saved- reloads the last saved file.\n"
+		"Auto Update - any changes apply instantly.\n"
+		"Typing Enter in any text field applies changes.\n"
+		"New Control menu - creates a new panel in the upper left corner.\n\n"
+		"In the Context Panel:\n"
+		"After selecting and moving a panel Ctrl-z will undo the move.\n"
+		"Shift clicking panels allows multiple panels to be selected into a group.\n"
+		"Ctrl-c copies the settings of the last selected panel.\n"
+		"Ctrl-v creates a new panel with the copied settings at the location of the mouse pointer.\n"
+		"Arrow keys slowly move panels, holding shift + arrow will slowly resize it.\n"
+		"Holding right mouse button down opens a dropdown panel creation menu.\n"
+		"  Panel will be created where the menu was opened.\n"
+		"Delete key deletes the currently selected panel if it is deletable.\n"
+		"  Does nothing to multiple selections.";
+	void *p = vgui2::Panel::operator new(0xf0);
+	m_pHelpDlg = p ? new (p) vgui2::MessageBox("Build Mode Help", helpText, this) : 0;
+	m_pHelpDlg->vfunc41((int)this);
+	((PFVoid)(*(void ***)m_pHelpDlg)[145])(m_pHelpDlg);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c4ff0 size=0xd
 namespace lifted {
 struct V { virtual int f0(int); };

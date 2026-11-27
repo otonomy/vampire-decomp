@@ -10520,6 +10520,7 @@
 0x101c4f20 func   ?sub_101c4f20@CUnknown101c4f20@@QAEHXZ CUnknown101c4f20::sub_101c4f20
 0x101c4f30 func   ?sub_101c4f30@CUnknown101c4f30@@QAEHXZ CUnknown101c4f30::sub_101c4f30
 0x101c4f50 func   ?sub_101c4f50@CUnknown101c4f50@@QAEHXZ CUnknown101c4f50::sub_101c4f50
+0x101c4f80 func   ?sub_101c4f80@BuildModeDialog@vgui2@@QAEXXZ vgui2::BuildModeDialog::sub_101c4f80
 0x101c4ff0 func   ?sub_101c4ff0@CUnknown101c4ff0@@QAEHXZ CUnknown101c4ff0::sub_101c4ff0
 0x101c54d0 func   ?vfunc102@BuildModeDialog@vgui2@@UAEHXZ vgui2::BuildModeDialog::vfunc102
 0x101c54e0 func   ?sub_101c54e0@CUnknown101c54e0@@QAEHXZ CUnknown101c54e0::sub_101c54e0
