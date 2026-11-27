@@ -91204,6 +91204,47 @@ void C_BaseEntity::sub_1011c7f0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011c9a0 size=0x11a
+#include "C_BaseEntity.h"
+#include "Vector.h"
+#include "ConVar.h"
+#include "CGlobalVarsBase.h"
+#include "ScopeTrace.h"
+
+struct CGravView1011c9a0
+{
+	char m_pad0000[0xa8];
+	float m_vx;	// 0xa8
+	float m_vy;	// 0xac
+	float m_vz;	// 0xb0
+	char m_pad00b4[0x154 - 0xb4];
+	float m_bvx;	// 0x154
+	float m_bvy;	// 0x158
+	float m_bvz;	// 0x15c
+	float m_flGravity;	// 0x160
+};
+
+#define GV ((CGravView1011c9a0 *)this)
+
+void C_BaseEntity::sub_1011c9a0(Vector &move)
+{
+	ScopeTrace trace("CBaseEntity::PhysicsAddGravityMove", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	float ent_gravity;
+	if (GV->m_flGravity != 0.0f)
+		ent_gravity = GV->m_flGravity;
+	else
+		ent_gravity = 1.0f;
+	float gravity = g_104dfce4->vfunc1() ? 0.0f : g_104dfce4->m_fValue;
+	gravity *= ent_gravity;
+	float newZ = GV->m_vz - gravity * gpGlobals->frametime;
+	move.x = (GV->m_bvx + GV->m_vx) * gpGlobals->frametime;
+	move.y = (GV->m_bvy + GV->m_vy) * gpGlobals->frametime;
+	move.z = ((GV->m_vz + newZ) * 0.5 + GV->m_bvz) * gpGlobals->frametime;
+	GV->m_vz = newZ;
+	sub_1011c7f0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011cac0 size=0x10c
 #include "Vector.h"
 #include "C_BaseEntity.h"
