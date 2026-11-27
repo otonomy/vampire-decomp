@@ -25209,6 +25209,69 @@ void C_TestTraceline::sub_100417c0(Vector &center, unsigned char *pColor)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10041c90 size=0x166
+#include "CMeshBuilder.h"
+
+struct MeshView_10041c90
+{
+	virtual void vfunc0();
+	virtual void vfunc1(int a, int b, void *pBuilder);
+	virtual void vfunc2(); virtual void vfunc3();
+	virtual void vfunc4(unsigned short *p, int n, int first);
+	virtual void vfunc5(unsigned short *p, int n, int first);
+	virtual void vfunc6(unsigned short *p, int n, int first);
+	virtual void vfunc7(unsigned short *p, int n, int first);
+	virtual void vfunc8(unsigned short *p, int n, int first);
+	virtual void vfunc9(); virtual void vfunc10(); virtual void vfunc11();
+	virtual void vfunc12(int a, int b);
+	virtual void vfunc13(); virtual void vfunc14();
+	virtual void vfunc15(int a, int b, void *pBuilder);
+	virtual void vfunc16();
+	virtual void vfunc17(void *pBuilder);
+};
+
+#define MESH (*(MeshView_10041c90 **)&m_unk80[0])
+#define TYPE (*(int *)&m_unka0[0])
+#define BEGUN (*((char *)&m_unka0[0] + 4))
+
+void CMeshBuilder::sub_10041c90(bool bSpewData, bool bDraw)
+{
+	if (BEGUN)
+	{
+		int nIndices = m_n90;
+		if (TYPE == 7)
+			nIndices = nIndices * 6 / 4;
+		else if (TYPE == 6)
+			nIndices = nIndices * 3 - 6;
+		else if (TYPE == 4)
+			nIndices = nIndices * 2 - 2;
+		else if (TYPE == 5)
+			nIndices = nIndices * 2;
+		m_nCurrentIndex = nIndices;
+		if (TYPE == 7)
+			MESH->vfunc5(m_pIndices, nIndices, *(int *)&m_wIndexOffset);
+		else if (TYPE == 6)
+			MESH->vfunc6(m_pIndices, nIndices, *(int *)&m_wIndexOffset);
+		else if (TYPE == 4)
+			MESH->vfunc7(m_pIndices, nIndices, *(int *)&m_wIndexOffset);
+		else if (TYPE == 5)
+			MESH->vfunc8(m_pIndices, nIndices, *(int *)&m_wIndexOffset);
+		else if (TYPE != 0)
+			MESH->vfunc4(m_pIndices, nIndices, *(int *)&m_wIndexOffset);
+	}
+	if (m_n90 > 0)
+		MESH->vfunc17(this);
+	if (bSpewData)
+		MESH->vfunc15(m_n90, m_nCurrentIndex, this);
+	MESH->vfunc1(m_n90, m_nCurrentIndex, this);
+	if (bDraw)
+		MESH->vfunc12(-1, 0);
+	MESH = 0;
+	m_unk80[3] = 0;
+	m_unk80[2] = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10041e00 size=0x22
 struct S10041e00 {
 	char pad[0xa8];
