@@ -13,12 +13,12 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc3();
 	virtual void vfunc4();
 	virtual void vfunc5();
-	virtual void vfunc6();
+	virtual void vfunc6(bool error_check, int commands_acknowledged);
 	virtual int vfunc7();
-	virtual int vfunc8(int);
+	virtual void vfunc8(class Vector *);
 	virtual void vfunc9(int);
-	virtual int vfunc10(int);
-	virtual void vfunc11();
+	virtual void vfunc10(class Vector *);
+	virtual void vfunc11(const class Vector *v);
 	virtual bool vfunc12();
 	virtual int vfunc13();
 	virtual bool vfunc14();
