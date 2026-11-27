@@ -4405,6 +4405,7 @@
 0x100aacb0 func   ?sub_100aacb0@CUnknown101a5290@@QAEXXZ CUnknown101a5290::sub_100aacb0
 0x100aad10 func   ?sub_100aad10@IntVec@@QAEXHH@Z IntVec::sub_100aad10
 0x100aad50 func   ?sub_100aad50@UtlMem@@QAEXXZ UtlMem::sub_100aad50
+0x100aad80 func   ?Grow@?$CUtlMemory@V?$CHandle@VC_BaseEntity@@@@@@QAEXH@Z CUtlMemory<CHandle<C_BaseEntity> >::Grow
 0x100aad80 func   ?sub_100aad80@UtlMem@@QAEXH@Z UtlMem::sub_100aad80
 0x100aaeb0 func   ?sub_100aaeb0@@YAXXZ sub_100aaeb0
 0x100aaf30 func   ?sub_100aaf30@@YAHXZ sub_100aaf30
