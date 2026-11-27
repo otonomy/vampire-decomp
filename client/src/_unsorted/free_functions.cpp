@@ -50409,6 +50409,52 @@ void Class1009c2e0::sub_1009c2e0(bool bEnable)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009c350 size=0x116
+#include "CUtlVector4.h"
+#include "C_BasePlayer.h"
+#include "C_BaseEntity.h"
+#include "ehandle.h"
+#include "CBaseEntityList.h"
+
+extern CUtlVector4 g_1049d964;
+extern CUtlVector4 g_1049d978;
+struct HV { C_BaseEntity *sub_1007bab0(); };
+struct CPlr16d4 { char pad[0x16d4]; int m_i16d4; };
+
+void sub_1009c350()
+{
+	g_1049d978.m_size = 0;
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return;
+	int idx = ((CPlr16d4 *)pPlayer)->m_i16d4;
+	if (!idx)
+		return;
+	for (int i = 0; i < g_1049d964.m_size; i++) {
+		CBaseHandle h;
+		*(int *)&h = g_1049d964.m_pMemory[i];
+		C_BaseEntity *pEnt = (C_BaseEntity *)h.Get();
+		if (!pEnt)
+			continue;
+		C_BaseEntity *pOwner = ((HV *)pEnt)->sub_1007bab0();
+		if (!pOwner)
+			continue;
+		if (idx == pOwner->entindex()) {
+			const int &src = g_1049d964.m_pMemory[i];
+			int elem = g_1049d978.m_size;
+			if (g_1049d978.m_size + 1 > g_1049d978.m_allocationCount)
+				g_1049d978.sub_1009cf00(g_1049d978.m_size + 1 - g_1049d978.m_allocationCount);
+			g_1049d978.m_size += 1;
+			g_1049d978.m_pElements = g_1049d978.m_pMemory;
+			g_1049d978.ShiftRightN(elem, 1);
+			int *p = &g_1049d978.m_pMemory[elem];
+			if (p)
+				*p = src;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009c470 size=0x85
 #include "C_BaseCombatWeapon.h"
 #include "ehandle.h"
