@@ -141,6 +141,47 @@ void CClientLeafSystem::vfunc18(unsigned short elem)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d2390 size=0xdb
+#include "CClientLeafSystem.h"
+#include "CShadowLeafEnum.h"
+#include "Ray_t.h"
+#include "engineclient.h"
+
+struct ILeafQuery
+{
+	virtual void s0();
+	virtual void s1();
+	virtual void s2();
+	virtual void s3();
+	virtual void EnumerateLeavesAlongRay(Ray_t &ray, ISpatialLeafEnumerator *pEnum, int context);
+};
+
+// TARGET: CClientLeafSystem::vfunc19
+void CClientLeafSystem::vfunc19(unsigned short elem, const Vector &origin, const Vector &dir, const float *size, float scale)
+{
+	sub_100d2220(elem);
+	(*(int *)((char *)this + 0xdc))++;
+	Ray_t ray;
+	ray.m_Extents[0] = 0;
+	ray.m_Extents[1] = 0;
+	ray.m_Start[0] = origin.x;
+	ray.m_Start[1] = origin.y;
+	ray.m_Start[2] = origin.z;
+	ray.m_Extents[2] = 0;
+	ray.m_Delta[0] = scale * dir.x;
+	ray.m_Delta[1] = scale * dir.y;
+	ray.m_Delta[2] = scale * dir.z;
+	float r = (size[1] < size[0] ? size[0] : size[1]) * 0.5f;
+	ray.m_StartOffset[0] = r;
+	ray.m_StartOffset[1] = r;
+	ray.m_StartOffset[2] = r;
+	ray.m_IsRay = false;
+	ray.m_IsSwept = true;
+	CShadowLeafEnum e;
+	((ILeafQuery *)engine->vfunc87())->EnumerateLeavesAlongRay(ray, &e, elem);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d2770 size=0x68
 #include "CClientLeafSystem.h"
 struct IVf { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(void *, void *); };
