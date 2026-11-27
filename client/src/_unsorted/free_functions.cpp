@@ -54203,6 +54203,90 @@ void sub_100a2b30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a2bb0 size=0x137
+#include "CClientEntityList.h"
+#include "CPredictableList.h"
+#include "CBaseHandle.h"
+
+struct PredId_100a2bb0 { int m_raw; };
+struct CUnknown10120720 { void sub_10120720(); };
+struct CUnknown1042d770 { void sub_101207d0(int, int, const char *, const char *, int); };
+struct CUnknown101209f0 { int sub_101209f0(); };
+struct CUnknown10120a00 { void sub_10120a00(int); };
+struct CUnknown100a2e40 { void sub_100a2e40(bool); };
+struct CUnknown10044400 { void sub_10044400(); };
+struct EntListAdd_100a2bb0 { CBaseHandle sub_100e2360(void *ent); };
+
+struct NetView_100a2bb0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void vfunc4(int);
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual int entindex();
+};
+struct IPrediction_100a2bb0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13();
+	virtual bool IsFirstTimePredicted();
+};
+struct PredContext_100a2bb0
+{
+	bool m_bActive;
+	int m_nCreationCommandNumber;
+	const char *m_pszCreationModule;
+	int m_nCreationLineNumber;
+	CBaseHandle m_hServerEntity;
+	PredContext_100a2bb0()
+	{
+		m_bActive = false;
+		m_nCreationCommandNumber = -1;
+		m_pszCreationModule = 0;
+		m_nCreationLineNumber = 0;
+		m_hServerEntity.m_Index = 0xffffffff;
+	}
+};
+
+extern IPrediction_100a2bb0 *g_1027bbf4;
+extern CPredictableList g_1049e33c;
+char *sub_1007ddf0();
+char *sub_100a2ab0(const char *name);
+char *sub_100a01e0(PredId_100a2bb0 *id);
+char sub_100cc190(void *a, int b, void *c);
+
+// TARGET: sub_100a2bb0
+char *sub_100a2bb0(const char *classname, const char *module, int line)
+{
+	char *player = sub_1007ddf0();
+	int command_number = *(int *)(*(char **)(player + 0x18c8) + 4);
+	int player_index = ((NetView_100a2bb0 *)(player + 8))->entindex() - 1;
+	PredId_100a2bb0 testId;
+	((CUnknown10120720 *)&testId)->sub_10120720();
+	((CUnknown1042d770 *)&testId)->sub_101207d0(player_index, command_number, classname, module, line);
+	if (!g_1027bbf4->IsFirstTimePredicted())
+		return sub_100a01e0(&testId);
+	char *ent = sub_100a2ab0(classname);
+	if (!ent)
+		return 0;
+	((CUnknown100a2e40 *)ent)->sub_100a2e40(true);
+	((CUnknown10120a00 *)(ent + 0xcc))->sub_10120a00(((CUnknown101209f0 *)&testId)->sub_101209f0());
+	PredContext_100a2bb0 *ctx = new PredContext_100a2bb0;
+	ctx->m_bActive = true;
+	ctx->m_nCreationCommandNumber = command_number;
+	ctx->m_nCreationLineNumber = line;
+	ctx->m_pszCreationModule = module;
+	*(PredContext_100a2bb0 **)(ent + 0xd0) = ctx;
+	((EntListAdd_100a2bb0 *)cl_entitylist)->sub_100e2360(ent);
+	g_1049e33c.sub_1009d0e0(*(CBaseHandle *)(ent + 0xe4));
+	((CUnknown10044400 *)(ent + 0x190))->sub_10044400();
+	*(int *)(ent + 0x44) = -1;
+	if (sub_100cc190(ent + 8, 0, ent + 0x3dc))
+		((NetView_100a2bb0 *)(ent + 8))->vfunc4(0);
+	return ent;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a2da0 size=0x8
 namespace lifted {
 int __stdcall sub_100a29b0(int);
