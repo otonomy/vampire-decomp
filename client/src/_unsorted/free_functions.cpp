@@ -50522,6 +50522,31 @@ int CHost_10097f80::sub_10097f80(int i)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10097fd0 size=0x144
+#include "C_BaseCombatWeapon.h"
+#include "CUtlVector4.h"
+#include "ehandle.h"
+#include <string.h>
+#pragma intrinsic(strcmp)
+
+extern CUtlVector4 g_1049d8f8;
+
+#define H(i) (*(CBaseHandle *)&g_1049d8f8.m_pMemory[i])
+
+// TARGET: sub_10097fd0
+C_BaseCombatWeapon * __stdcall sub_10097fd0(const char *name, int a1)
+{
+	int n = g_1049d8f8.m_size;
+	for (int i = 0; i < n; i++) {
+		if (H(i).Get() &&
+		    !strcmp(((C_BaseCombatWeapon *)H(i).Get())->vfunc114(), name) &&
+		    ((C_BaseCombatWeapon *)H(i).Get())->vfunc169() == a1)
+			return (C_BaseCombatWeapon *)H(i).Get();
+	}
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100981f0 size=0x6
 namespace lifted {
 extern char g_1049d79c;

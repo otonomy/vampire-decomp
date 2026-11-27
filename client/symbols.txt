@@ -3982,6 +3982,7 @@
 0x10097f60 func   ?sub_10097f60@CUnknown10097f60@@QAEHHH@Z CUnknown10097f60::sub_10097f60
 0x10097f80 func   ?sub_10097f80@CHost_10097f80@@QAEHH@Z CHost_10097f80::sub_10097f80
 0x10097fa0 func   ?vfunc148@C_BaseCombatCharacter@@UAEPAXXZ C_BaseCombatCharacter::vfunc148
+0x10097fd0 func   ?sub_10097fd0@@YGPAVC_BaseCombatWeapon@@PBDH@Z sub_10097fd0
 0x10098120 func   ?vfunc147@C_BaseCombatCharacter@@UAE_NPAVC_BaseCombatWeapon@@H@Z C_BaseCombatCharacter::vfunc147
 0x100981d0 func   ?vfunc16@C_BaseCombatCharacter@@UAEHXZ C_BaseCombatCharacter::vfunc16
 0x100981e0 func   ?vfunc15@C_BaseCombatCharacter@@UAEHXZ C_BaseCombatCharacter::vfunc15
