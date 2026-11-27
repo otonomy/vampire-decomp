@@ -3629,6 +3629,7 @@
 0x1007dc10 func   ?vfunc108@C_BaseEntity@@UAEHXZ C_BaseEntity::vfunc108
 0x1007dc20 func   ?vfunc109@C_BaseEntity@@UAEPADXZ C_BaseEntity::vfunc109
 0x1007dc30 func   ?vfunc110@C_BaseEntity@@UAEHH@Z C_BaseEntity::vfunc110
+0x1007dc50 func   ?vfunc56@C_BaseEntity@@UAEABVVector@@XZ C_BaseEntity::vfunc56
 0x1007dd90 func   ?sub_1007dd90@@YIHPAUV_1007dd90@@@Z sub_1007dd90
 0x1007dda0 func   ?vfunc65@C_BaseEntity@@UAE_NHH@Z C_BaseEntity::vfunc65
 0x1007ddc0 func   ?sub_1007ddc0@@YAHXZ sub_1007ddc0

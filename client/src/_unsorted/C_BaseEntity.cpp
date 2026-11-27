@@ -300,6 +300,48 @@ int C_BaseEntity::vfunc110(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007dc50 size=0x13c
+#include "C_BaseEntity.h"
+#include "CCollisionProperty.h"
+
+extern "C" void sub_10107f80(const Vector *, const matrix3x4_t *, Vector *);
+extern QAngle g_104d5190;
+
+static inline Vector &AllocTempVector()
+{
+    static Vector s_vecTemp[128];
+    static int s_nIndex = 0;
+    s_nIndex = (s_nIndex + 1) & 0x7f;
+    return s_vecTemp[s_nIndex];
+}
+
+// TARGET: C_BaseEntity::vfunc56
+const Vector &C_BaseEntity::vfunc56()
+{
+    CCollisionProperty *col = (CCollisionProperty *)((char *)this + 0x190);
+    const Vector &maxs = *(const Vector *)&col->m_unk10;
+    Vector &out = AllocTempVector();
+    Vector &center = AllocTempVector();
+    center.x = (maxs.x - col->m_vecMins.x) * 0.5f + col->m_vecMins.x;
+    center.y = (maxs.y - col->m_vecMins.y) * 0.5f + col->m_vecMins.y;
+    center.z = (maxs.z - col->m_vecMins.z) * 0.5f + col->m_vecMins.z;
+    if (!(col->m_unk44 & 0x80) && col->m_unk40 != 2 && col->m_unk40 != 0) {
+        const QAngle &ang = col->vfunc9(0);
+        if (g_104d5190.x != ang.x || g_104d5190.y != ang.y || g_104d5190.z != ang.z) {
+            const matrix3x4_t &m = col->vfunc10();
+            sub_10107f80(&center, &m, &out);
+            return out;
+        }
+    }
+    const Vector &org = col->vfunc8();
+    float ox = org.x;
+    out.x = ox + center.x;
+    out.y = org.y + center.y;
+    out.z = org.z + center.z;
+    return out;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007dd90 size=0xe
 struct V_1007dd90 { int m_unk[0x88 / 4]; int m_n88; };
 // TARGET: sub_1007dd90
