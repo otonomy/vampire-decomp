@@ -315,6 +315,45 @@ void CHudDialog::ScrollUp()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10055260 size=0xfc
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+// TARGET: CHudDialog::vfunc114
+int CHudDialog::vfunc114(int down, int keynum, int binding)
+{
+    ScopeTrace st("CHudDialog::Key_Event", g_102de300);
+    if (keynum == 0xef) {
+        ScrollDn();
+        return 0;
+    }
+    if (keynum == 0xf0) {
+        ScrollUp();
+        return 0;
+    }
+    if (keynum == 0xf1) {
+        sub_10054b60();
+        return 0;
+    }
+    if (!down) {
+        switch (keynum) {
+        case 0x31:
+            sub_100549f0(0, false);
+            break;
+        case 0x32:
+            sub_100549f0(1, false);
+            break;
+        case 0x33:
+            sub_100549f0(2, false);
+            break;
+        case 0x34:
+            sub_100549f0(3, false);
+            break;
+        }
+    }
+    return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100553f0 size=0x254
 #include "CHudDialog.h"
 #include "ScopeTrace.h"
