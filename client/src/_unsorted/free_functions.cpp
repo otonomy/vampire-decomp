@@ -42776,6 +42776,29 @@ int CUnknown10080b60::sub_10080b60(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10080c70 size=0x183
+#include "C_Beam.h"
+#include "Vector.h"
+
+struct CUnknown10044460 { void sub_100433c0(const Vector &mins, const Vector &maxs); };
+
+void C_Beam::sub_10080c70()
+{
+	const Vector &start = sub_10080650();
+	const Vector &end = *(const Vector *)sub_100806f0();
+	Vector mins, maxs;
+	mins.x = start.x < end.x ? start.x : end.x;
+	mins.y = start.y < end.y ? start.y : end.y;
+	mins.z = start.z < end.z ? start.z : end.z;
+	maxs.x = start.x > end.x ? start.x : end.x;
+	maxs.y = start.y > end.y ? start.y : end.y;
+	maxs.z = start.z > end.z ? start.z : end.z;
+	((CUnknown10044460 *)((char *)this + 0x190))->sub_100433c0(mins - GetAbsOrigin(), maxs - GetAbsOrigin());
+	sub_100a2850(&vfunc52(), &vfunc53());
+	vfunc111();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10080e00 size=0x5
 int __stdcall sub_10080e00(int a0)
 {
