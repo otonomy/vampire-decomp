@@ -8370,6 +8370,7 @@
 0x101574f0 func   ?sub_101574f0@CUnknown101f1050@@QAEPAHXZ CUnknown101f1050::sub_101574f0
 0x10157560 func   ?sub_10157560@CUnknown101f10e0@@QAE_NPAX@Z CUnknown101f10e0::sub_10157560
 0x10157630 func   ?sub_10157630@CUnknown101f7cc0@@QAE_NPAX@Z CUnknown101f7cc0::sub_10157630
+0x101576f0 func   ?sub_101576f0@CUnknown101f10e0@@QAE_NPBD@Z CUnknown101f10e0::sub_101576f0
 0x10157a20 func   ?sub_10157a20@CUnknown101d5bd0@@QAEXXZ CUnknown101d5bd0::sub_10157a20
 0x10157ac0 func   ?sub_10157ac0@CUnknown101f18b0@@QAEPADH@Z CUnknown101f18b0::sub_10157ac0
 0x10157af0 func   ?sub_10157af0@CUnknown101f0e50@@QAE_NH@Z CUnknown101f0e50::sub_10157af0
