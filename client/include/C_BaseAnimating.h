@@ -94,7 +94,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc131(int, int, int, int, int, int);
 	virtual void vfunc132(bool);
 	virtual int vfunc133();
-	virtual void vfunc134();
+	virtual void vfunc134(int numbones, const matrix3x4_t &cameraTransform, void *pBoneAccessor);
 	virtual void vfunc135();
 	virtual float vfunc136(float flInterval);
 	virtual float vfunc137(float);
