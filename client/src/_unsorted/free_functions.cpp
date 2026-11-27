@@ -66172,6 +66172,68 @@ void C_BaseTerminal::sub_100c7f50()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c8060 size=0x1a6
+#include "C_BaseTerminal.h"
+void C_BaseTerminal::sub_100c8060(int c)
+{
+	unsigned short *data = (unsigned short *)m_rgData;
+	if (c == 0x7f)
+	{
+		data[m_nE78 + m_nE7c * 36] = 0;
+		if (m_nE78 > m_nE80)
+		{
+			m_nE78--;
+		}
+		else
+		{
+			m_nE78 = m_nStride - 1;
+			m_nE7c--;
+		}
+		m_b7a8 = true;
+		return;
+	}
+	if (c == 0xd || c == 0xa)
+	{
+		m_nE7c++;
+		m_nE78 = m_nE80;
+		if (m_nE7c >= m_nMax - 1)
+		{
+			sub_100c8210(1);
+			m_nE7c = m_nMax - 1;
+		}
+		return;
+	}
+	if ((unsigned int)c >= 0x1b && (unsigned int)c < 0x7f)
+	{
+		if (m_nE78 >= m_nStride)
+			sub_100c8060(0xa);
+		c |= m_bE74;
+		unsigned short *p = &data[m_nE78 + m_nE7c * 36];
+		if (*p != c)
+		{
+			*p = c;
+			m_b7a8 = true;
+		}
+		m_nE78++;
+		return;
+	}
+	if ((unsigned int)c > 0x7f)
+	{
+		unsigned short v = (unsigned short)(c << 8);
+		if (m_nE78 >= m_nStride)
+			sub_100c8060(0xa);
+		v |= m_bE74;
+		unsigned short *p = &data[m_nE78 + m_nE7c * 36];
+		if (*p != v)
+		{
+			*p = v;
+			m_b7a8 = true;
+		}
+		m_nE78++;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c8210 size=0xca
 #include "engineclient.h"
 #include "C_BaseTerminal.h"
