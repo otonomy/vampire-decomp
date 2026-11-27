@@ -63,6 +63,8 @@ public:
 	int sub_100a2450();
 	int sub_100a93e0();
 	int sub_100a96a0(int iStat);
+	int sub_100a94d0(int n, bool *pOut);
+	char sub_100a9910(int);
 	char *sub_100a9af0(int);
 	void sub_100a9c90();
 	bool sub_100a54c0(int, int);
