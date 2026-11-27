@@ -40897,6 +40897,27 @@ int sub_10080840(int a0, int a1, int a2, int a3, int a4, int a5)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10080a90 size=0x63
+namespace lifted {
+struct C10080490 { int sub_10080490(int); };
+struct C10080c70 { int sub_10080c70(); };
+struct C1009f700 { int sub_1009f700(int); };
+struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual void u20(); virtual void u21(); virtual void u22(); virtual void u23(); virtual void u24(); virtual void u25(); virtual void u26(); virtual void u27(); virtual void u28(); virtual void u29(); virtual void u30(); virtual void u31(); virtual void u32(); virtual void u33(); virtual void u34(); virtual void u35(); virtual void u36(); virtual void u37(); virtual void u38(); virtual void u39(); virtual int f40(int); };
+}
+struct CUnknown10080a90 { int sub_10080a90(int, int); };
+int CUnknown10080a90::sub_10080a90(int a0, int a1)
+{
+    *(int *)((char *)this + 0x41c) = 2;
+    *(int *)((char *)this + 0x424) = ((*(int *)((char *)this + 0x424)) & 0xff0) | 1;
+    ((lifted::C1009f700 *)this)->sub_1009f700(a0);
+    ((lifted::V *)this)->f40(a0);
+    ((lifted::C10080490 *)this)->sub_10080490(a1);
+    *(int *)((char *)this + 0x450) = 0;
+    *(int *)((char *)this + (*(int *)((char *)this + 0x41c)) * 4 + 0x44c) = 0;
+    return ((lifted::C10080c70 *)this)->sub_10080c70();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10080b00 size=0x58
 namespace lifted {
 struct C10080450 { int sub_10080450(int); };
