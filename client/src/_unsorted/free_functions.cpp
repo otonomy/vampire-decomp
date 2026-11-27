@@ -135082,6 +135082,73 @@ int sub_101747e0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101749c0 size=0x152
+#include "VCharWizardUI.h"
+#include "ScopeTrace.h"
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((int)((x) * (sub_100cd100() * 0.0009765625)))
+#define YRES(y) ((int)((y) * (sub_100cd0f0() * 0.0013020833333333333)))
+struct ColorX { unsigned int c; ColorX() {} };
+struct IScheme
+{
+	virtual void v0(); virtual int v1(const char *); virtual void v2(); virtual void v3(); virtual int GetFont(const char *);
+	virtual void v5(); virtual ColorX GetColor(const char *);
+};
+#define N10(a) virtual void a##0(); virtual void a##1(); virtual void a##2(); virtual void a##3(); virtual void a##4(); virtual void a##5(); virtual void a##6(); virtual void a##7(); virtual void a##8(); virtual void a##9();
+struct PV
+{
+	N10(a) N10(b) N10(c) N10(d) N10(e)
+	virtual void v50(); virtual void v51(ColorX); N10(f) virtual void v62(int);
+	N10(g) N10(h) N10(i) N10(j) virtual void k0(); virtual void k1(); virtual void k2(); virtual void k3();
+	virtual void v107(const char *);
+	N10(l) N10(m) virtual void n0(); virtual void n1(); virtual void n2(); virtual void n3();
+	virtual void v132(int); virtual void v133(); virtual void v134(int); virtual void v135(); virtual void v136(); virtual void v137();
+	virtual void v138(int); virtual void v139(); virtual void v140(int);
+	void sub_101a9950(int, int, int, int);
+};
+struct PA
+{
+	N10(a) N10(b) N10(c) N10(d) N10(e) N10(f) N10(g) N10(h) N10(i) N10(j) N10(k) N10(l)
+	virtual void m0(); virtual void m1(); virtual void m2();
+	virtual void v123(int, int, int);
+	void sub_101a9950(int, int, int, int);
+};
+struct GV { int a; int b; char c; int d; int e; };
+
+// TARGET: VCharWizardUI::sub_101749c0
+void VCharWizardUI::sub_101749c0()
+{
+	CBasePanel *base = (CBasePanel *)((char *)this + 0x10);
+	IScheme *pScheme = (IScheme *)base->sub_101ac830();
+	PA *pA = (PA *)((char *)this + 0x180);
+	pA->sub_101a9950(0, 0, XRES(1024.0), YRES(768.0));
+	pA->v123(0, pScheme->v1("hud/InfoWindow"), 0);
+	int font = pScheme->GetFont(sub_1018c870("ParagraphText"));
+	PV *pB = (PV *)((char *)this + 0x238);
+	pB->v132(font);
+	pB->v107(g_102de300);
+	pB->v51(pScheme->GetColor("VUnselectedText"));
+	pB->sub_101a9950(0, 0, 0x32, 0x32);
+	pB->v138(1);
+	pB->v140(0);
+	pB->v134(0);
+	pB->v62(0);
+	GV *g = (GV *)&m_groups[0];
+	for (int i = 0; i < 4; i++)
+	{
+		g[i].c = 0;
+		g[i].a = 0;
+		g[i].b = 0;
+		g[i].e = 0;
+		g[i].d = 0;
+	}
+	base->vfunc57(1, 1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10174b20 size=0x2b
 namespace lifted {
 struct C101a9950 { int sub_101a9950(int, int, int, int); };
