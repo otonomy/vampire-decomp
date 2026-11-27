@@ -9,6 +9,7 @@ class Slider : public vgui2::Panel
 {
 public:
 	void *sub_101bb6e0(void *parent, const char *name);
+	void sub_101bbb20();	// DrawTicks
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the base slots the game's vtable fills with Slider's own function
     virtual int vfunc74(int);
