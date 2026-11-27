@@ -115028,6 +115028,88 @@ CRec_101423d0 &CRec_101423d0::sub_101423d0(const CRec_101423d0 &rhs)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10142480 size=0x163
+struct IObjV
+{
+	virtual void v0(); virtual void v1();
+	virtual IObjV *vFirstChild(const char *name);
+	virtual IObjV *vNext();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9();
+	virtual int vKeyLookup(const char *name, int def);
+	virtual void v11();
+	virtual char vGetBool(const char *name, char def);
+	virtual const char *vGetString(const char *name, const char *def);
+};
+struct RegionV { int l, t, r, b; void sub_10141710(IObjV *, const char *); bool sub_10141790(); };
+struct NLV { int sub_1013fdf0(const char *); };
+struct SubA { void sub_101421c0(IObjV *); };
+struct PageV;
+struct CharCtl
+{
+	int m_unk0; int m_trait; const char *m_text; int m_charTemplate; int m_keyLookup;
+	char m_b14, m_b15, m_b16, m_b17, m_b18, m_b19, m_b1a, m_b1b, m_b1c, m_b1d, m_b1e, m_b1f;
+	const char *m_font; const char *m_next;
+	SubA m_subA;
+	char m_pad29[0xf];
+	RegionV m_subB;
+	bool sub_101418b0(IObjV *obj, PageV *a2);
+};
+extern NLV g_105e74fc;
+int *sub_1015f830(int *, IObjV *, const char *);
+int *sub_1015f7e0(int *, IObjV *, const char *);
+void sub_10141aa0(int *, int);
+
+bool RegionV::sub_10141790()
+{
+	if (b > 0)
+		return true;
+	return t > 0;
+}
+
+struct PageV
+{
+	int m_unk0; const char *m_internalName; const char *m_text; const char *m_font; const char *m_bkgImage;
+	int m_charTemplate; SubA m_subA; char m_p19[0xf]; char m_bOrder; char m_bClan; char m_p2a[2]; int m_unk2c; int m_unk30;
+	RegionV m_region; RegionV m_textRegion; CharCtl m_ctl[4];
+	bool sub_10142480(IObjV *obj);
+};
+
+// TARGET: ?sub_10142480@PageV@@QAE_NPAUIObjV@@@Z
+bool PageV::sub_10142480(IObjV *obj)
+{
+	if (obj) {
+		IObjV *o = obj;
+		sub_10141aa0((int *)&m_internalName, *sub_1015f7e0((int *)&obj, o, "InternalName"));
+		sub_10141aa0((int *)&m_text, *sub_1015f830((int *)&obj, o, "Text"));
+		sub_10141aa0((int *)&m_bkgImage, *sub_1015f830((int *)&obj, o, "Bkg_Image"));
+		sub_10141aa0((int *)&m_font, *sub_1015f830((int *)&obj, o, "Font"));
+		m_unk2c = 0;
+		RegionV *src = &m_region;
+		src->sub_10141710(o, "Region");
+		RegionV *dst = &m_textRegion;
+		if (!dst->sub_10141790())
+			*dst = *src;
+		m_textRegion.sub_10141710(o, "TextRegion");
+		const char *tmpl = o->vGetString("CharTemplate", "");
+		if (*tmpl)
+			m_charTemplate = g_105e74fc.sub_1013fdf0(tmpl);
+		m_subA.sub_101421c0(o);
+		m_bOrder = o->vGetBool("Order_Prereqs", m_bOrder);
+		m_bClan = o->vGetBool("Clan_Prereqs", m_bClan);
+		IObjV *c = o->vFirstChild("Action");
+		for (int i = 0; i < 4; i++) {
+			if (!c)
+				break;
+			m_ctl[i].sub_101418b0(c, this);
+			c = c->vNext();
+		}
+		return true;
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101425f0 size=0x16
 int sub_10141bb0(const char *);
 struct S_101425f0 { int a, b; const char *m; int sub_101425f0(); };
