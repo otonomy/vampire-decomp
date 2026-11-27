@@ -55971,6 +55971,99 @@ void sub_100b1f80(V3 *a, V3 *b, int c, int d, int e, int f, EPView *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b2460 size=0x180
+#include "Vector.h"
+
+extern "C" __declspec(dllimport) int RandomInt(int nMin, int nMax);
+
+struct SChar4_100b2460
+{
+	signed char x, y, z, w;
+	SChar4_100b2460 &operator=(const SChar4_100b2460 &o) { *(int *)this = *(const int *)&o; return *this; }
+};
+
+struct CPart_100b2460
+{
+	Vector m_Pos;	// 0x00
+	float m_f0c;
+	float m_f10;	// 0x10
+	int m_n14;
+	int m_n18;
+	int m_n1c;
+	int m_n20;	// 0x20
+	int m_n24;
+	int m_n28;	// 0x28
+	SChar4_100b2460 m_c2c;	// 0x2c
+};
+
+struct CViewSetup_100b2460
+{
+	char m_pad00[0x38];
+	Vector origin;	// 0x38
+};
+
+struct CView_100b2460 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual CViewSetup_100b2460 *vfunc14(); };
+extern CView_100b2460 *g_102d43d8;
+
+struct CEnt_100b2460
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual const Vector &vfunc43();
+	char m_pad0004[0x420 - 4];
+	int m_n420;	// 0x420
+	int m_n424;
+	int m_n428;	// 0x428
+	float m_f42c, m_f430, m_f434, m_f438;	// 0x42c
+	int m_n43c;	// 0x43c
+	int m_n440, m_n444, m_n448;
+	float m_f44c;	// 0x44c
+};
+
+void sub_100b2460(Vector *pOut, int a2, int a3, CPart_100b2460 *p, bool bRandom, int a6, CEnt_100b2460 *ent)
+{
+	SChar4_100b2460 c;
+	c.x = 0;
+	c.y = 0;
+	c.z = 0;
+	c.w = 0;
+
+	p->m_n28 = ent->m_n428;
+
+	if (bRandom)
+	{
+		c.x = RandomInt(-99, 99);
+		c.y = RandomInt(-99, 99);
+		c.z = RandomInt(-99, 99);
+		p->m_c2c = c;
+		p->m_Pos.x *= ent->m_f42c;
+		p->m_Pos.y *= ent->m_f430;
+		p->m_Pos.z *= ent->m_f434;
+		p->m_f10 *= ent->m_f438;
+		p->m_n20 = ent->m_n43c;
+	}
+
+	if (ent->m_n420 == 13 || bRandom)
+	{
+		c = p->m_c2c;
+		Vector dir(c.x * 0.01f, c.y * 0.01f, c.z * 0.01f);
+		VectorNormalize(dir);
+
+		Vector origin;
+		CViewSetup_100b2460 *pView = g_102d43d8->vfunc14();
+		if (pView)
+			origin = pView->origin;
+		else
+			origin = ent->vfunc43();
+
+		*pOut = origin + dir * ent->m_f44c;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b25e0 size=0x15a
 #include "Vector.h"
 extern float (*g_101e31a0)(float flMinVal, float flMaxVal);
