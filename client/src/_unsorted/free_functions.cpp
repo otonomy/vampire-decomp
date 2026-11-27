@@ -136625,6 +136625,67 @@ void VHotkeysUI::sub_10183280(HotkeyRow_10183280 *row, int y, const char *title,
 }
 // END FUNCTION
 
+// FUNCTION: 0x10183690 size=0x11d
+#include <stdio.h>
+
+#define V10(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7(); virtual void n##8(); virtual void n##9();
+struct IHkPanel10183690
+{
+	V10(a) V10(b)
+	virtual void c0();
+	virtual void s21(int);
+	V10(d) V10(e)
+	virtual void f0(); virtual void f1(); virtual void f2(); virtual void f3();
+	virtual void s46(int);
+	V10(g) V10(h) V10(i) V10(j) V10(k) V10(l)
+	virtual void q0();
+	virtual void s108(const char *);
+	V10(r) V10(s) V10(t) V10(u) V10(w)
+	virtual void z0(); virtual void z1(); virtual void z2(); virtual void z3(); virtual void z4(); virtual void z5(); virtual void z6();
+	virtual void s166(void *entry, void *msg, void *target);
+};
+
+struct CUnknown101bb190 { void sub_101bb190(); };
+struct CKVBuild101b5690 { void *sub_101b5690(const char *, const char *, const char *); };
+void *sub_101b6840(int size);
+
+struct HkRec10183690 { int m_n0; int m_nStart; int m_nCount; };
+struct HkPanelRow10183690 { int f0, f1, f2, f3; IHkPanel10183690 *m_pPanel; };
+
+struct CHotkeysUI10183690
+{
+	char m_pad[0x10];
+	void sub_10183690(int a, int b);
+};
+
+void CHotkeysUI10183690::sub_10183690(int a, int b)
+{
+	HkRec10183690 *rec = (HkRec10183690 *)((char *)this + (b * 3 + 0xc0) * 32);
+	HkPanelRow10183690 *row = (HkPanelRow10183690 *)((int *)this + a * 5 + 0x753);
+	((CUnknown101bb190 *)row->m_pPanel)->sub_101bb190();
+	if (!rec->m_nCount) {
+		row->m_pPanel->s108("");
+		row->m_pPanel->s46(0);
+		row->m_pPanel->s21(0);
+		return;
+	}
+	row->m_pPanel->s46(1);
+	row->m_pPanel->s21(1);
+	for (int i = rec->m_nStart; i < rec->m_nCount + rec->m_nStart; i++) {
+		char *entry = (char *)this + i * 0x90 + 0x180;
+		char buf[0x40];
+		sprintf(buf, "%d_%s", a, entry + 0x50);
+		void *p = sub_101b6840(0x1c);
+		void *msg;
+		if (p)
+			msg = ((CKVBuild101b5690 *)p)->sub_101b5690("TextChanged", "text", buf);
+		else
+			msg = 0;
+		row->m_pPanel->s166(entry, msg, this);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101837b0 size=0x60
 namespace lifted {
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual int f20(int); };
