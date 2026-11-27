@@ -42181,6 +42181,40 @@ CWpnObj1007d430 *sub_1007b160();
 bool sub_1007d430() { void *p = sub_1007b160()->m_p; if (p) return true; return false; }
 // END FUNCTION
 
+// FUNCTION: 0x1007d520 size=0xdb
+#include "C_BaseCombatWeapon.h"
+#include "CUnknown1014ada0.h"
+struct StatDefault;
+struct SCurve6caa0 { float sub_101601a0(int); };
+struct CNamedList1006cf30 { int sub_10160500(const char *); };
+struct StatOwner { int m_unk0; int m_n4; int m_unk8; StatDefault *sub_10160590(int); int sub_10160500(const char *); };
+extern StatOwner g_105f985c;
+extern int g_105e8138;
+extern CUnknown1014ada0 **g_105e813c;
+inline CUnknown1014ada0 *FindFeatList(int type)
+{
+	for (int i = 0; i < g_105e8138; i++)
+	{
+		if (g_105e813c[i]->m_unk00 == type)
+			return g_105e813c[i];
+	}
+	static CUnknown1014ada0 s(-1);
+	return &s;
+}
+// TARGET: C_BaseCombatWeapon::sub_1007d520
+int C_BaseCombatWeapon::sub_1007d520(C_BasePlayer *pPlayer, int a2, bool bSell)
+{
+	float flBase;
+	if (bSell)
+		flBase = (float)*(int *)((char *)sub_1007b160() + 0x266c);
+	else
+		flBase = (float)*(int *)((char *)sub_1007b160() + 0x255c);
+	int n = FindFeatList(5)->sub_1014b3b0(pPlayer) - 1;
+	static int s_idx = g_105f985c.sub_10160500("Barter_Sell_Adjustment");
+	return (int)(((SCurve6caa0 *)g_105f985c.sub_10160590(s_idx))->sub_101601a0(n) * flBase);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007d790 size=0x5a
 #include "C_BaseCombatWeapon.h"
 
