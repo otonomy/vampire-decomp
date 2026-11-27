@@ -2802,6 +2802,7 @@
 0x1004a630 func   ?sub_1004a630@@YAHXZ sub_1004a630
 0x1004a660 func   ?vfunc2@CResultProxy@@UAEXXZ CResultProxy::vfunc2
 0x1004a670 func   ??_GCTextureTransformProxy@@UAEPAXI@Z ??_GCTextureTransformProxy@@UAEPAXI@Z
+0x1004a690 func   ?vfunc0@CMatrixRotateProxy@@UAE_NPAX0@Z CMatrixRotateProxy::vfunc0
 0x1004a700 func   ?vfunc1@CMatrixRotateProxy@@UAEXH@Z CMatrixRotateProxy::vfunc1
 0x1004a7d0 func   ?sub_1004a7d0@@YAHXZ sub_1004a7d0
 0x1004a800 func   ??_GCMatrixRotateProxy@@UAEPAXI@Z ??_GCMatrixRotateProxy@@UAEPAXI@Z
