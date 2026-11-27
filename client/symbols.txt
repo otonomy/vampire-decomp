@@ -3225,6 +3225,7 @@
 0x1005fb00 func   ?sub_1005fb00@@YAHXZ sub_1005fb00
 0x1005fb10 func   ?sub_1005fb10@CUnknown1005fb10@@QAEDXZ CUnknown1005fb10::sub_1005fb10
 0x1005fb20 func   ??_GCProgBar@@UAEPAXI@Z ??_GCProgBar@@UAEPAXI@Z
+0x1005fb40 func   ?sub_1005fb40@CProgBar@@QAEXXZ CProgBar::sub_1005fb40
 0x1005fc80 func   ??1CProgBar@@UAE@XZ CProgBar::~CProgBar
 0x1005fcb0 func   ?sub_1005fcb0@CUnknown1005fcb0@@QAEXXZ CUnknown1005fcb0::sub_1005fcb0
 0x1005fcf0 func   ?sub_1005fcf0@CProgBar@@QAE_NXZ CProgBar::sub_1005fcf0

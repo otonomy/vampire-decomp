@@ -31859,6 +31859,50 @@ char CUnknown1005fb10::sub_1005fb10()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1005fb40 size=0x13d
+#include "CProgBar.h"
+
+struct IScheme_1005fb40
+{
+	virtual int v0();
+	virtual int v1();
+	virtual int v2();
+	virtual int v3();
+	virtual int GetFont(const char *);
+};
+
+struct PanelHelper_1005fb40
+{
+	IScheme_1005fb40 *sub_101ac830();
+};
+
+extern const char *sub_1018c870(const char *);
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+
+#define XRES(x) ((int)((x) * ((float)sub_100cd100() / 1024.0)))
+#define YRES(y) ((int)((y) * ((float)sub_100cd0f0() / 768.0)))
+
+// TARGET: CProgBar::sub_1005fb40
+void CProgBar::sub_1005fb40()
+{
+	int w = sub_100cd100();
+	int h = sub_100cd0f0();
+	m_n194 = 256;
+	m_n190 = 32;
+	m_n18c = XRES(m_n194);
+	m_n188 = YRES(m_n190);
+	m_n180 = (w - m_n18c) / 2;
+	m_n184 = (int)((double)h - (sub_100cd0f0() / 768.0) * 135.0);
+	m_n1a4 = 256;
+	m_n1a0 = 32;
+	m_n19c = XRES(m_n1a4);
+	m_n198 = YRES(m_n1a0);
+	IScheme_1005fb40 *pScheme = ((PanelHelper_1005fb40 *)this)->sub_101ac830();
+	m_n1c0 = pScheme->GetFont(sub_1018c870("PercolatorSmall"));
+}
+// END FUNCTION
+
 // FUNCTION: 0x1005fcb0 size=0x35
 namespace lifted {
 struct V { virtual int f0(int); };
