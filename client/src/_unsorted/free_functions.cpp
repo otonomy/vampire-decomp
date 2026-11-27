@@ -68774,6 +68774,45 @@ void CClientShadowMgr::sub_100d6540(int index, const Vector *v, float f)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d65a0 size=0x12e
+#include "CClientShadowMgr.h"
+#include "IClientEntity.h"
+#include "Vector.h"
+
+void sub_10108fd0(const Vector &start, float scale, const Vector &dir, Vector &dest);
+struct Mgr_100d6510 { void sub_100d6510(unsigned short handle); };
+
+void CClientShadowMgr::sub_100d65a0(IClientEntity *pEnt, unsigned short handle, const Vector *vec, const Vector &mins, const Vector &maxs, const Vector &localShadowDir)
+{
+	Vector corner = pEnt->GetRenderOrigin();
+	float signs[3];
+	int i;
+	for (i = 0; i < 3; i++)
+	{
+		if (localShadowDir[i] < 0.0f)
+		{
+			sub_10108fd0(corner, maxs[i], vec[i], corner);
+			signs[i] = 1.0f;
+		}
+		else
+		{
+			sub_10108fd0(corner, mins[i], vec[i], corner);
+			signs[i] = -1.0f;
+		}
+	}
+	((Mgr_100d6510 *)this)->sub_100d6510(handle);
+	for (i = 0; i < 3; i++)
+	{
+		Vector tmp;
+		float s = signs[i];
+		tmp.x = s * vec[i].x;
+		tmp.y = s * vec[i].y;
+		tmp.z = s * vec[i].z;
+		sub_100d6540(*(int *)&handle, &tmp, corner.z * tmp.z + corner.y * tmp.y + corner.x * tmp.x);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d6c40 size=0x59
 #include "VMatrix.h"
 

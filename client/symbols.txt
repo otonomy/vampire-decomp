@@ -5366,6 +5366,7 @@
 0x100d6430 func   ?sub_100d6430@@YGMHPBVVector@@00MPAV1@@Z sub_100d6430
 0x100d6510 func   ?sub_100d6510@Mgr_100d6510@@QAEXG@Z Mgr_100d6510::sub_100d6510
 0x100d6540 func   ?sub_100d6540@CClientShadowMgr@@QAEXHPBVVector@@M@Z CClientShadowMgr::sub_100d6540
+0x100d65a0 func   ?sub_100d65a0@CClientShadowMgr@@QAEXPAVIClientEntity@@GPBVVector@@ABV3@22@Z CClientShadowMgr::sub_100d65a0
 0x100d6c40 func   ?sub_100d6c40@@YAXAAVVMatrix@@PAM0@Z sub_100d6c40
 0x100d6ca0 func   ?sub_100d6ca0@CClientShadowMgr@@QAEXHGPAH0@Z CClientShadowMgr::sub_100d6ca0
 0x100d7130 func   ?sub_100d7130@CClientShadowMgr@@QAEXHGPAH@Z CClientShadowMgr::sub_100d7130
