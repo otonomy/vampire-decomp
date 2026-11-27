@@ -2738,6 +2738,7 @@
 0x10044420 func   ?sub_10044420@CUnk100ddc00@@QAEXXZ CUnk100ddc00::sub_10044420
 0x10044450 func   ?sub_10044450@@YAXXZ sub_10044450
 0x10044460 func   ?sub_10044460@CUnknown10044460@@QAEXXZ CUnknown10044460::sub_10044460
+0x100444b0 func   ?sub_100444b0@CCollisionProperty@@QAEXXZ CCollisionProperty::sub_100444b0
 0x100445d0 func   ?sub_100445d0@CIdxView100445d0@@QAEPAHH@Z CIdxView100445d0::sub_100445d0
 0x100445e0 func   ?vfunc2@CAutoGameSystem@@UAEXXZ CAutoGameSystem::vfunc2
 0x100445f0 func   ?vfunc3@CAutoGameSystem@@UAEXXZ CAutoGameSystem::vfunc3

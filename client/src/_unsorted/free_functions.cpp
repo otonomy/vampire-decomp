@@ -25834,6 +25834,49 @@ void CUnknown10044460::sub_10044460()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100444b0 size=0x11c
+#include "CCollisionProperty.h"
+#include "engineclient.h"
+struct OuterFl
+{
+	char pad[0x184]; unsigned f0 : 15; unsigned dirty : 1; unsigned f16 : 2; unsigned bit18 : 1;
+	bool IsDirty() const { return dirty; }
+	bool Bit18() const { return bit18; }
+	void ClearDirty() { dirty = 0; }
+};
+struct SelfFl
+{
+	char pad[0x44]; unsigned short b0 : 1; unsigned short b1 : 1; unsigned short b2 : 1; unsigned short b3 : 1;
+	bool B3() const { return b3; }
+};
+void CCollisionProperty::sub_100444b0()
+{
+	if (((OuterFl *)m_unk3c)->IsDirty())
+	{
+		((OuterFl *)m_unk3c)->ClearDirty();
+		if ((m_unk40 == 0 || (((unsigned char *)this)[0x44] & 4)) && !((SelfFl *)this)->B3() && !((OuterFl *)m_unk3c)->Bit18())
+			return;
+		if (*(float *)((char *)this + 0x48) != 0.0f)
+		{
+			Vector mins, maxs;
+			vfunc15(mins, maxs);
+			mins.x -= 1.0f;
+			mins.y -= 1.0f;
+			mins.z -= 1.0f;
+			maxs.x += 1.0f;
+			maxs.y += 1.0f;
+			maxs.z += 1.0f;
+			partition->vfunc7(*(unsigned short *)((char *)this + 0x46), mins, maxs);
+		}
+		else
+		{
+			unsigned short h = *(unsigned short *)((char *)this + 0x46);
+			partition->vfunc7(h, vfunc8(), vfunc8());
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100445d0 size=0xc
 struct CIdxView100445d0 { int *m_pData; int *sub_100445d0(int i); };
 // TARGET: CIdxView100445d0::sub_100445d0
