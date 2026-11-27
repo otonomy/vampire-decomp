@@ -3048,6 +3048,7 @@
 0x10055f20 func   ?sub_10055f20@CUnknown10055f20@@QAEDD@Z CUnknown10055f20::sub_10055f20
 0x10055f30 func   ?sub_10055f30@@YAHXZ sub_10055f30
 0x10055f40 func   ?sub_10055f40@CUnknown10055f40@@QAEDXZ CUnknown10055f40::sub_10055f40
+0x10055f50 func   ?sub_10055f50@@YAXXZ sub_10055f50
 0x10056130 func   ??0CHudInfoBar@@QAE@H@Z CHudInfoBar::CHudInfoBar
 0x100561d0 func   ??_GCHudInfoBar@@UAEPAXI@Z ??_GCHudInfoBar@@UAEPAXI@Z
 0x100561f0 func   ?sub_100561f0@@YAHXZ sub_100561f0

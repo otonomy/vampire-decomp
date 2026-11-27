@@ -30264,6 +30264,97 @@ char CUnknown10055f40::sub_10055f40()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10055f50 size=0x1d1
+extern "C" int sprintf(char *, const char *, ...);
+extern "C" int _strcmpi(const char *, const char *);
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" __declspec(dllimport) void DevMsg(int, const char *, ...);
+extern char g_102de300[];
+struct DataVBase
+{
+	virtual void v0();
+	virtual void v1();
+};
+struct DataNode : virtual DataVBase
+{
+	virtual void n0();
+	virtual void n1();
+	virtual DataNode *FindKey(const char *pszName);
+	virtual DataNode *GetNext();
+	virtual void n4(); virtual void n5(); virtual void n6(); virtual void n7(); virtual void n8(); virtual void n9();
+	virtual int GetInt(const char *pszKey, int nDefault);
+	virtual float GetFloat(const char *pszKey, float flDefault);
+	virtual char GetBool(const char *pszKey, int nDefault);
+	virtual const char *GetString(const char *pszKey, const char *pszDefault);
+};
+struct InfoBarType
+{
+	int m_name;
+	char m_bNeedsGender, m_bHudMsg, m_bFilterMultiple, m_bResetTimer, m_bDisabled;
+	int m_nPrintType;
+	int m_r, m_g, m_b;
+};
+extern InfoBarType g_103ee160[83];
+extern const char *g_102862b8[4];
+DataNode *sub_101545c0(const char *pszName, int pFileSystem);
+int *sub_1015f7e0(int *pOut, DataNode *pNode, const char *pszKey);
+extern int g_104a580c;
+
+// TARGET: sub_10055f50
+void sub_10055f50()
+{
+	char buf[128];
+	sprintf(buf, "%sInfoBarTypes.txt", "vdata\\system\\");
+	DataNode *pFile = sub_101545c0(buf, g_104a580c);
+	if (pFile)
+	{
+		int count = 0;
+		DataNode *pNode = pFile->FindKey("InfoBarMsg");
+		if (pNode)
+		{
+			InfoBarType *p = g_103ee160;
+			do
+			{
+				int tmp;
+				InfoBarType *e = p;
+				count++;
+				p++;
+				e->m_name = *sub_1015f7e0(&tmp, pNode, "InternalName");
+				e->m_bNeedsGender = pNode->GetBool("NeedsGender", 0);
+				e->m_bHudMsg = pNode->GetBool("HudMsg", 0);
+				e->m_bFilterMultiple = pNode->GetBool("FilterMultiple", 0);
+				e->m_bResetTimer = pNode->GetBool("ResetTimer", 0);
+				e->m_bDisabled = pNode->GetBool("Disabled", 0);
+				e->m_r = pNode->GetInt("R", 0);
+				e->m_g = pNode->GetInt("G", 0);
+				e->m_b = pNode->GetInt("B", 0);
+				e->m_nPrintType = 0;
+				const char *s = pNode->GetString("PrintType", g_102de300);
+				if (*s)
+				{
+					for (int i = 0; i < 4; i++)
+					{
+						if (!_strcmpi(g_102862b8[i], s))
+						{
+							e->m_nPrintType = i;
+							break;
+						}
+					}
+				}
+				pNode = pNode->GetNext();
+			} while ((int)p < (int)(g_103ee160 + 83) && pNode);
+			if (count == 83)
+				goto release;
+		}
+		DevMsg(1, "ERROR: CHudInfoBar::LoadInfo: Failed to Load InfoBar Messages Properly!\n");
+release:
+		((DataVBase *)pFile)->v1();
+	}
+	else
+		Msg("Unable to open [%s] data file for: InfoBarTypes\n", buf);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100561f0 size=0x6
 namespace lifted {
 extern int g_103eea74;
