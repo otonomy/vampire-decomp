@@ -249,6 +249,89 @@ void CClientShadowMgr::vfunc13(int w, int h)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d60f0 size=0x11d
+#include "CClientShadowMgr.h"
+#include "CBaseHandle.h"
+#include "engineclient.h"
+
+extern "C" int sub_1009e230();
+
+struct EntListView_100d60f0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual char *GetClientEntityFromHandle(CBaseHandle h);
+};
+
+struct RenderableView_100d60f0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual const void *GetModel();
+};
+
+struct LeafSystemView_100d60f0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+	virtual void v16();
+	virtual unsigned short AddShadow(unsigned short h);
+};
+extern LeafSystemView_100d60f0 *g_102b9060;
+
+struct ObjView_100d60f0
+{
+	virtual void v0();
+	virtual bool v1();
+	int m_pad[10];
+	int m_n2c;
+};
+extern ObjView_100d60f0 *g_104cf014;
+
+struct ShadowView_100d60f0
+{
+	int m_Entity;
+	unsigned short m_ShadowHandle;
+	unsigned short m_Leaf;
+	unsigned short m_Flags;
+};
+
+// TARGET: CClientShadowMgr::vfunc9
+unsigned short CClientShadowMgr::vfunc9(CBaseHandle entity, int flags)
+{
+	if (!*((char *)this + 0xd8))
+		flags &= ~1;
+	char *pEnt = ((EntListView_100d60f0 *)(sub_1009e230() + 0x1803c))->GetClientEntityFromHandle(entity);
+	if (modelinfo->GetModelType(((RenderableView_100d60f0 *)(pEnt + 4))->GetModel()) == 1)
+		flags |= 8;
+	unsigned short h = m_Shadows.sub_100d8c90(false);
+	m_Shadows.sub_100d8b40(0xffff, h);
+	CUtlLinkedList240Node *pNode = &m_Shadows.m_pMemory[h];
+	if (pNode)
+		pNode->sub_100d8dc0();
+	ShadowView_100d60f0 *shadow = (ShadowView_100d60f0 *)&m_Shadows.m_pMemory[h];
+	shadow->m_Entity = *(int *)&entity;
+	shadow->m_Leaf = g_102b9060->AddShadow(h);
+	shadow->m_Flags = flags;
+	int mat1 = m_unk18;
+	int mat2 = m_unk18;
+	int idx = 0xffff;
+	if (flags & 1)
+	{
+		sub_100d5bd0(h);
+		if (!g_104cf014->v1() && g_104cf014->m_n2c)
+			mat1 = m_unk20;
+		else
+			mat1 = m_unk1c;
+		mat2 = m_unk24;
+		idx = h;
+	}
+	shadow->m_ShadowHandle = shadowmgr->vfunc0((void *)mat1, (void *)mat2, idx, 1);
+	return h;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d71d0 size=0x3c3
 #include "engineclient.h"
 #include "CClientShadowMgr.h"
