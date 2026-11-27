@@ -13,6 +13,7 @@ public:
     KeyValues(const char *, const char *, const char *);
     ~KeyValues();
     void sub_101b5ac0(char *, int);
+    void sub_101b5ba0(char *, int);
     int m_unk4;
     void *m_pName;
     union { int m_unkc; float m_flValue; };
