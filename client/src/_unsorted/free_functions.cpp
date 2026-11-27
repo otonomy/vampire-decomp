@@ -18959,6 +18959,163 @@ char CUnknown1002feb0::sub_1002feb0(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1002fed0 size=0x4b0
+#include "Vector.h"
+#include "QAngle.h"
+#include "C_BaseEntity.h"
+#include "CParticleSource.h"
+#include <stdlib.h>
+#include <math.h>
+#pragma intrinsic(sin, cos)
+
+struct SmokeParticle_1002fed0
+{
+	int m_unk00;
+	int m_unk04;
+	int m_unk08;
+	Vector m_Pos;		// 0x0c
+	Vector m_Velocity;	// 0x18
+	Vector m_vColor;	// 0x24
+	float m_flLifetime;	// 0x30
+};
+
+struct CEmitterBinding_1002fed0
+{
+	SmokeParticle_1002fed0 *sub_101165f0(int size, unsigned char material);
+};
+
+struct TimedEvent_1002fed0
+{
+	float m_TimeBetweenEvents;
+	float m_fNextEvent;
+	bool NextEvent(float &curDelta)
+	{
+		if (curDelta >= m_fNextEvent)
+		{
+			curDelta -= m_fNextEvent;
+			m_fNextEvent = m_TimeBetweenEvents;
+			return true;
+		}
+		else
+		{
+			m_fNextEvent -= curDelta;
+			return false;
+		}
+	}
+};
+
+struct LightSrc_1002fed0
+{
+	Vector m_vPos;
+	Vector m_vColor;
+	float m_flIntensity;
+};
+
+inline float RandomFloat_1002fed0(float flMinVal, float flMaxVal)
+{
+	float flRand = (float)rand() * (1.0f / 32767.0f);
+	return flRand * (flMaxVal - flMinVal) + flMinVal;
+}
+
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);	// AngleVectors
+float sub_10117b40();
+
+struct CUnknown1002fed0
+{
+	int m_unk00;
+	CEmitterBinding_1002fed0 m_Binding;	// 0x04
+	int m_unk08[12];
+	unsigned char m_nFlags38;		// 0x38
+	unsigned char m_pad39[3];
+	int m_unk3c[8];
+	CParticleSource m_Source;		// 0x5c
+	float m_flSpread;			// 0xc0
+	float m_flSpeed;			// 0xc4
+	int m_unkc8[4];
+	int m_hMaterial;			// 0xd8
+	float m_flRadius;			// 0xdc
+	LightSrc_1002fed0 m_Lights[2];		// 0xe0
+	int m_nLights;				// 0x118
+	int m_unk11c;
+	Vector m_vColor;			// 0x120
+	Vector m_vColorNorm;			// 0x12c
+	Vector m_vRenderColor;			// 0x138
+	Vector m_vParticleColor;		// 0x144
+	float m_flRotSpeed;			// 0x150
+	float m_Rot[2][2];			// 0x154
+	int m_bRotate;				// 0x164
+	float m_flRenderAlpha;			// 0x168
+	int m_unk16c;
+	CParticleMgr *m_pParticleMgr;		// 0x170
+	unsigned char m_iMaterial;		// 0x174
+	TimedEvent_1002fed0 m_ParticleSpawn;	// 0x178
+
+	C_BaseEntity *GetOuter() { return (C_BaseEntity *)((char *)this - 0x410); }
+	void sub_1002fed0(float fTimeDelta);
+};
+
+void CUnknown1002fed0::sub_1002fed0(float fTimeDelta)
+{
+	if (!m_pParticleMgr)
+		return;
+
+	m_vColorNorm = m_vColor * (1.0f / 255.0f);
+
+	if (m_hMaterial && (m_nFlags38 & 0x40))
+	{
+		Vector forward, right, up;
+		sub_101090a0(GetOuter()->GetAbsAngles(), &forward, &right, &up);
+
+		float tempDelta = fTimeDelta;
+		while (m_ParticleSpawn.NextEvent(tempDelta))
+		{
+			SmokeParticle_1002fed0 *pParticle = m_Binding.sub_101165f0(sizeof(SmokeParticle_1002fed0), m_iMaterial);
+			if (!pParticle)
+				continue;
+
+			float angle = RandomFloat_1002fed0(0.0f, 3.1415927f);
+			Vector vA = forward * (sin(angle) * m_flRadius);
+			Vector vB = right * (cos(angle) * m_flRadius);
+			pParticle->m_Pos = vB + GetOuter()->GetAbsOrigin() + vA;
+
+			Vector vVel = up * m_flSpeed;
+			Vector vR1 = forward * RandomFloat_1002fed0(-m_flSpread, m_flSpread);
+			Vector vR2 = right * RandomFloat_1002fed0(-m_flSpread, m_flSpread);
+			pParticle->m_Velocity = vR2 + vR1 + vVel;
+			pParticle->m_vColor = m_vParticleColor;
+			pParticle->m_flLifetime = 0;
+		}
+	}
+
+	float flAngle = sub_10117b40() * (m_flRotSpeed * 0.017453292f);
+	m_bRotate = (flAngle != 0.0f);
+	if (m_bRotate)
+	{
+		m_Rot[0][0] = cos(flAngle);
+		m_Rot[0][1] = sin(flAngle);
+		m_Rot[1][0] = -m_Rot[0][1];
+		m_Rot[1][1] = m_Rot[0][0];
+	}
+
+	m_flRenderAlpha = ((const unsigned char *)this)[-0x3bd];
+	m_vRenderColor.Init(((const unsigned char *)this)[-0x3c0], ((const unsigned char *)this)[-0x3bf], ((const unsigned char *)this)[-0x3be]);
+
+	int i;
+	for (i = 0; i < m_nLights; i++)
+	{
+		LightSrc_1002fed0 &dst = ((LightSrc_1002fed0 *)m_Source.m_unk00)[i];
+		dst.m_vPos = m_Lights[i].m_vPos;
+		dst.m_vColor = m_Lights[i].m_vColor * (1.0f / 255.9f);
+		dst.m_flIntensity = m_Lights[i].m_flIntensity;
+	}
+	for (int j = i; j < 2; j++)
+		((LightSrc_1002fed0 *)m_Source.m_unk00)[j].m_flIntensity = 0;
+
+	*(Vector *)&m_Source.m_cr = m_vColor * (1.0f / 255.1f);
+	m_Source.sub_1004a8b0(m_pParticleMgr);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10030c50 size=0x6
 namespace lifted {
 extern char g_102eb568;

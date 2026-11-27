@@ -2094,6 +2094,7 @@
 0x1002fd90 func   ?OnDataChanged@C_SmokeStack@@UAEXH@Z C_SmokeStack::OnDataChanged
 0x1002fdf0 func   ?sub_1002fdf0@@YADXZ sub_1002fdf0
 0x1002feb0 func   ?sub_1002feb0@CUnknown1002feb0@@QAEDHH@Z CUnknown1002feb0::sub_1002feb0
+0x1002fed0 func   ?sub_1002fed0@CUnknown1002fed0@@QAEXM@Z CUnknown1002fed0::sub_1002fed0
 0x10030790 func   ?sub_10030790@CLitSmokeEmitter@@QAEXHHHH@Z CLitSmokeEmitter::sub_10030790
 0x100307e0 func   ?vfunc14@CLitSmokeEmitter@@UAEXHHHHHHH@Z CLitSmokeEmitter::vfunc14
 0x10030830 func   ?sub_10030830@SmokeView@@QAEXHHHHHHHH@Z SmokeView::sub_10030830
