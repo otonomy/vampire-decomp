@@ -18073,6 +18073,39 @@ bool sub_10029c30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10029c60 size=0x1d2
+#include "Vector.h"
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "ITraceFilter.h"
+#include "engineclient.h"
+#include "C_TraceFilterNoCharacterCollide.h"
+struct TraceEntNet { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual int v9(); };
+struct TraceCVar { int sub_10005de0(); };
+extern TraceCVar g_103edd98;
+void sub_101659b0(const Vector &, const Vector &, int, int, int, int, float);
+// TARGET: sub_10029c60
+int sub_10029c60(Vector start, Vector end, Vector *pEndOut, void **ppEnt, Vector *pNormalOut, int *pPropOut)
+{
+	C_TraceFilterNoCharacterCollide filter;
+	Ray_t ray;
+	CGameTrace tr;
+	ray.InitInline(start, end);
+	enginetrace->vfunc4((int)&ray, 0x46004033, &filter, (int)&tr);
+	if (g_103edd98.sub_10005de0())
+		sub_101659b0(*(Vector *)tr.m_startpos, *(Vector *)tr.m_endpos, 0xff, 0, 0, 1, -1.0f);
+	*pEndOut = *(Vector *)tr.m_endpos;
+	if (!(tr.m_fraction < 1.0f) && !tr.m_allsolid && !tr.m_startsolid)
+		return 1;
+	*pNormalOut = *(Vector *)tr.m_planeNormal;
+	*ppEnt = tr.m_pEnt;
+	*pPropOut = tr.m_surfaceProps;
+	if (*ppEnt && ((TraceEntNet *)((char *)*ppEnt + 8))->v9())
+		return 3;
+	return 2;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10029e70 size=0x36
 // TARGET: sub_10029e70
 struct CLinkElem

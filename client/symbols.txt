@@ -1994,6 +1994,7 @@
 0x100297b0 func   ?vfunc27@ClientModeHLNormal@@UAE_NXZ ClientModeHLNormal::vfunc27
 0x10029980 func   ?vfunc15@ClientModeHLNormal@@UAEXH@Z ClientModeHLNormal::vfunc15
 0x10029c30 func   ?sub_10029c30@@YA_NXZ sub_10029c30
+0x10029c60 func   ?sub_10029c60@@YAHVVector@@0PAV1@PAPAX1PAH@Z sub_10029c60
 0x10029e40 func   ?sub_10029e40@V9e40@@QAE_NPAUEnt9e40@@H@Z V9e40::sub_10029e40
 0x10029e60 func   ?sub_10029e60@@YAHXZ sub_10029e60
 0x10029e70 func   ?sub_10029e70@@YAXPAUCLinkElem@@0@Z sub_10029e70
