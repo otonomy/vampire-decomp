@@ -4102,6 +4102,7 @@
 0x1009e070 func   ?Init@C_BaseEntity@@UAE_NHH@Z C_BaseEntity::Init
 0x1009e0b0 func   ?vfunc60@C_BaseEntity@@UAEXHH@Z C_BaseEntity::vfunc60
 0x1009e0f0 func   ?sub_1009e0f0@C_BaseEntity@@QAE_NHH@Z C_BaseEntity::sub_1009e0f0
+0x1009e150 func   ?sub_1009e150@C_BaseEntity@@QAEXXZ C_BaseEntity::sub_1009e150
 0x1009e230 func   ?sub_1009e230@@YAHXZ sub_1009e230
 0x1009f020 func   ?sub_1009f020@CUnknown1009f020@@QAEHHHH@Z CUnknown1009f020::sub_1009f020
 0x1009f040 func   ?sub_1009f040@CUnknown1009f040@@QAEPAXXZ CUnknown1009f040::sub_1009f040

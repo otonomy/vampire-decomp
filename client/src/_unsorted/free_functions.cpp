@@ -52908,6 +52908,48 @@ bool C_BaseEntity::sub_1009e0f0(int a, int b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009e150 size=0xd4
+#include "C_BaseEntity.h"
+#include "C_BasePlayer.h"
+#include "CBaseHandle.h"
+struct HandleTarget100d0000 { void sub_100d0000(CBaseHandle h); };
+struct EntList100e2480 { void sub_100e2480(CBaseHandle h); };
+struct PredList1049e33c { void sub_1009d260(CBaseHandle h); };
+struct LeafSys102d5050 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void RemoveEntity(C_BaseEntity *e); };
+struct EntView1009e150 { bool sub_1007dba0(); bool sub_100a2ba0(); void sub_1009f0d0(); void sub_1009e240(); void sub_100a1fc0(); };
+struct CUnk100ddc00 { void sub_10044420(); };
+extern PredList1049e33c g_1049e33c;
+extern LeafSys102d5050 *g_102d5050;
+HandleTarget100d0000 *sub_1002d700();
+EntList100e2480 *sub_1009e230();
+void sub_1011bc30(C_BaseEntity *);
+// TARGET: C_BaseEntity::sub_1009e150
+void C_BaseEntity::sub_1009e150()
+{
+	EntView1009e150 *v = (EntView1009e150 *)this;
+	sub_1011bc30(this);
+	sub_1011b890();
+	CBaseHandle &h = *(CBaseHandle *)((char *)this + 0xe4);
+	if (sub_100a2600() || v->sub_100a2ba0())
+		g_1049e33c.sub_1009d260(h);
+	if (*(int *)&h != -1) {
+		sub_1002d700()->sub_100d0000(h);
+		sub_1009e230()->sub_100e2480(h);
+		if (v->sub_100a2ba0()) {
+			if (v->sub_1007dba0() && g_pLocalPlayer)
+				g_pLocalPlayer->sub_100a9f40(this);
+			*(int *)&h = -1;
+		}
+	}
+	((CUnk100ddc00 *)((char *)this + 0x190))->sub_10044420();
+	if (*(int *)((char *)this + 0x44) != -1)
+		g_102d5050->RemoveEntity(this);
+	v->sub_1009f0d0();
+	v->sub_1009e240();
+	v->sub_100a1fc0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009e230 size=0x6
 #include "CClientEntityList.h"
 int sub_1009e230()
