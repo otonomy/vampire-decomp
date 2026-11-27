@@ -63274,6 +63274,32 @@ int sub_100c0c90(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c0ec0 size=0x6d
+#include "C_SoundscapeSystem.h"
+#include "Vector.h"
+
+struct SsParams_100c0ec0 { Vector m_v[4]; Vector m_o; };
+struct SsSys_100c0ec0 { void sub_100c0e10(); void sub_100c0ca0(); };
+extern SsSys_100c0ec0 g_104a4160;
+extern Vector g_104a417c[5];
+int sub_100c0c90(SsParams_100c0ec0 *p);
+
+void sub_100c0ec0()
+{
+	SsParams_100c0ec0 p;
+	int n = 4;
+	int i = 0;
+	do {
+		p.m_v[i] = g_104a417c[i];
+		i++;
+	} while (--n);
+	p.m_o = g_104a417c[4];
+	g_104a4160.sub_100c0e10();
+	g_104a4160.sub_100c0ca0();
+	sub_100c0c90(&p);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c1310 size=0x209
 #include "CKeyValuesX.h"
 extern "C" __declspec(dllimport) int __cdecl Q_strcasecmp(const char *, const char *);
