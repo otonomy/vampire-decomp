@@ -367,6 +367,51 @@ void __stdcall sub_10002200(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10002390 size=0x129
+#include "Vector.h"
+#include "QAngle.h"
+void sub_10109340(const Vector &, QAngle &);
+struct CUnknown10002390 {
+    char pad[0x410];
+    Vector m_v410;
+    Vector m_v41c;
+    QAngle m_a428;
+    char pad2[0x45c - 0x434];
+    int m_n45c;
+    char pad3[0x468 - 0x460];
+    Vector m_v468;
+    QAngle m_a474;
+    char pad4[0x484 - 0x480];
+    Vector m_v484;
+    char pad5[0x4a1 - 0x490];
+    char m_b4a1;
+    char pad6[2];
+    int m_n4a4;
+    int m_a4a8[3];
+    Vector m_v4b4;
+    char m_b4c0;
+    void sub_10002390();
+};
+void CUnknown10002390::sub_10002390() {
+    int i;
+    m_v468 = m_v410;
+    m_a474 = m_a428;
+    m_v484 = m_v410;
+    m_b4c0 = 1;
+    for (i = 0; i < 3; i++) {
+        m_a4a8[i] = 0;
+        *((char *)this + 0x4c1 + i) = 0;
+    }
+    m_v4b4 = m_v468;
+    m_n4a4 = 0;
+    if (m_n45c == 1) {
+        Vector d = m_v41c - m_v468;
+        sub_10109340(d, m_a474);
+    }
+    m_b4a1 = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100024c0 size=0xd1
 #include "C_BaseCineCamera.h"
 
