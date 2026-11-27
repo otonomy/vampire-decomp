@@ -252,6 +252,43 @@ void vgui2::RadioButton::vfunc169(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c6220 size=0xcc
+#include "vgui2__RadioButton.h"
+void vgui2::RadioButton::sub_101c6220(int code)
+{
+	switch (code)
+	{
+	case 64:
+	case 65:
+		if (vfunc144())
+			Panel::sub_101aa6f0(code);
+		else
+			vfunc143(1);
+		return;
+	case 90:
+	case 91:
+		{
+			RadioButton *best = sub_101c62f0(1);
+			if (best)
+				best->vfunc143(1);
+		}
+		return;
+	case 67:
+		sub_101c62f0(1);
+		return;
+	case 88:
+	case 89:
+		{
+			RadioButton *best = sub_101c62f0(-1);
+			if (best)
+				best->vfunc143(1);
+		}
+		return;
+	}
+	Panel::sub_101aa6f0(code);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c6410 size=0x32
 #include "vgui2__RadioButton.h"
 namespace lifted {
