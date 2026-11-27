@@ -132177,6 +132177,105 @@ void * CUnknown1017b300::sub_1017b300(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017bb10 size=0x425
+#include "CharEditInfoPanel.h"
+#include "vgui2__Label.h"
+#include "CHUDSprite.h"
+#include "StatOwner2.h"
+#include "ConVar.h"
+#include <stdio.h>
+#include <string.h>
+
+struct Color_1017bb10
+{
+    Color_1017bb10() {}
+    unsigned char c[4];
+};
+
+struct Scheme_1017bb10
+{
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+    virtual int GetFont(const char *name);
+    virtual void v5();
+    virtual Color_1017bb10 GetColor(const char *name);
+};
+
+struct Obj_101ac830 { Scheme_1017bb10 *sub_101ac830(); };
+
+struct InfoText_1017bb10
+{
+    vgui2::Label *sub_10170e70(vgui2::Panel *parent, const char *name, const char *text, int flags);
+};
+
+extern int g_105fb5f8;
+extern ConVar g_105fb2e0;
+
+const char *sub_1018c870(const char *name);
+int sub_100cd0f0();
+int sub_100cd100();
+void sub_1018c2a0(CharEditInfoPanel *panel, void **out, const char *text, int x, int y, int w, int h, const char *font);
+void sub_1018c560(vgui2::Panel *panel, vgui2::Label **out, vgui2::Panel *label, const char *name, int x, int y, int h);
+void sub_1018c710(CharEditInfoPanel *panel, void **out, void *label, const char *name, int x, int y, int h);
+void sub_1017b840(CharEditInfoPanel *panel, void **out, const char *name, int x, int y, int w, int h, const char *font);
+void sub_1017b9a0(CharEditInfoPanel *panel, void **out, const char *name, int x, int y, int w, int h, const char *font);
+void sub_1018c8f0(CharEditInfoPanel *panel, void **out, const char *name, const char *text, int x, int y, int w, int h);
+
+#define XRES(x) ((int)((x) * (sub_100cd100() * (1.0 / 1024))))
+#define YRES(y) ((int)((y) * (sub_100cd0f0() * (1.0 / 768))))
+#define CM(type, off) (*(type *)((char *)this + (off)))
+
+void CharEditInfoPanel::sub_1017bb10()
+{
+    CM(char, 0xcc) = 1;
+    Scheme_1017bb10 *scheme = ((Obj_101ac830 *)this)->sub_101ac830();
+    char buf[48];
+
+    sprintf(buf, "%s", g_105f93c0.sub_1015f2f0("UIMiscStrs")->sub_1015ecd0(1));
+    sub_1018c2a0(this, &CM(void *, 0x98), buf, 0x43, 10, 0x19f, 0x1f, "PercolatorMedium");
+    sprintf(buf, "Left%d", g_105fb5f8);
+    sub_1018c560(this, &CM(vgui2::Label *, 0x9c), CM(vgui2::Panel *, 0x98), buf, 0x14, 0xd, 0x1f);
+    sprintf(buf, "Right%d", g_105fb5f8);
+    sub_1018c710(this, &CM(void *, 0xa0), CM(void *, 0x98), buf, 0x214, 0xd, 0x1f);
+    g_105fb5f8++;
+    CM(void *, 0xa4) = NULL;
+    CM(void *, 0xa8) = NULL;
+    CM(void *, 0xac) = NULL;
+    g_105fb5f8++;
+
+    int font = scheme->GetFont(sub_1018c870("PercolatorMedium"));
+    void *mem = vgui2::Panel::operator new(0xc4);
+    vgui2::Label *info = mem ? ((InfoText_1017bb10 *)mem)->sub_10170e70(this, "InfoF", "InfoF", 0) : NULL;
+    CM(vgui2::Label *, 0x7c) = info;
+    info->vfunc118(font);
+    info->vfunc108("");
+    info->vfunc63(false);
+    info->vfunc51(*(int *)&scheme->GetColor("TitleText"));
+    info->vfunc50(*(int *)&scheme->GetColor("GhostControlBG"));
+    info->vfunc111(4);
+    info->sub_101a9950(XRES(22), YRES(151), XRES(512), YRES(422));
+    info->vfunc60(NULL);
+    info->m_n0b8 = XRES(512);
+    info->m_n0bc = YRES(422);
+    *(CHUDSprite **)&info->m_pSprite = new CHUDSprite("interface/charactermaintenance/infowindow2", 0, 0, 0x200, 0x1a6, 0x200, 0x200);
+
+    sub_1017b840(this, &CM(void *, 0x80), "ClanHeader", 0x28, 0x55, 0x1e0, 0x1f, "PercolatorMedium");
+    sub_1017b9a0(this, &CM(void *, 0x84), "ClanEffect", 0x28, 0x78, 0x1e0, 0x3e, "ParagraphText");
+    sub_1017b9a0(this, &CM(void *, 0x88), "ClanPenalty", 0x28, 0xba, 0x1e0, 0x3e, "ParagraphText");
+    if (g_105fb2e0.GetInt())
+    {
+        sub_1017b840(this, &CM(void *, 0x8c), "HistoryHeader", 0x28, 0x12e, 0x1e0, 0x1f, "PercolatorMedium");
+        sub_1017b9a0(this, &CM(void *, 0x90), "HistoryEffect", 0x28, 0x151, 0x1e0, 0x3e, "ParagraphText");
+        sub_1017b9a0(this, &CM(void *, 0x94), "HistoryPenalty", 0x28, 0x174, 0x1e0, 0x3e, "ParagraphText");
+    }
+
+    CM(float, 0xb0) = 0.0f;
+    for (int i = 0; i < 4; i++)
+        ((void **)((char *)this + 0xb4))[i] = NULL;
+    CM(void *, 0xc8) = NULL;
+    sub_1018c8f0(this, &CM(void *, 0xc8), "Accept", g_105f93c0.sub_1015f2f0("UIMiscStrs")->sub_1015ecd0(6), 0x38d, 0x273, 0x63, 0x1b);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017c540 size=0x3
 void __stdcall sub_1017c540(int a0)
 {
