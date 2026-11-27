@@ -919,6 +919,38 @@ void C_BasePlayer::vfunc172(C_BaseCombatWeapon *pWeapon)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a8c50 size=0x132
+#include "C_BasePlayer.h"
+#include "C_BaseCombatWeapon.h"
+#include "ehandle.h"
+inline C_BaseCombatWeapon *GetActive(C_BasePlayer *p)
+{
+	return (C_BaseCombatWeapon *)((CBaseHandle *)((char *)p + 0x1a08))->Get();
+}
+inline C_BaseCombatWeapon *GetLast(C_BasePlayer *p)
+{
+	return (C_BaseCombatWeapon *)((CBaseHandle *)((char *)p + 0x1a0c))->Get();
+}
+void C_BasePlayer::vfunc190(C_BaseCombatWeapon *pWeapon)
+{
+	if (!GetActive(this))
+		return;
+	if (GetActive(this) == pWeapon)
+		vfunc168(0);
+	if (GetLast(this) == pWeapon)
+		((CBaseHandle *)((char *)this + 0x1a0c))->m_Index = 0xffffffff;
+	if (GetActive(this))
+		return;
+	if (*(int *)((char *)pWeapon + 0x79c) == 0xff)
+		vfunc159(5, 0, 1);
+	else
+	{
+		int n = pWeapon->vfunc220();
+		vfunc168((int)vfunc164(n));
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a9920 size=0x86
 #include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
