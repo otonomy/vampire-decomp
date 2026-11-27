@@ -77,7 +77,7 @@ public:
 	virtual void SetViewAngles(QAngle &);	// slot 50
 	virtual int GetMaxClients();	// slot 51
 	virtual void vfunc52();
-	virtual void vfunc53();
+	virtual void vfunc53(int, int);
 	virtual const char *vfunc54(const char *);
 	virtual void vfunc55();
 	virtual void vfunc56();
