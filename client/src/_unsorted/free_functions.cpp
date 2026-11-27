@@ -65625,6 +65625,37 @@ void sub_100c0ec0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c11c0 size=0xc3
+#include "CKeyValuesX.h"
+extern "C" __declspec(dllimport) int __cdecl Q_strcasecmp(const char *, const char *);
+struct SubParamsX { int m_nRecurse; float m_flVolume; int m_nStart; int m_nOverride; int m_nAmbientOverride; bool m_bAllowDSP; };
+struct SndscapeZ
+{
+	void sub_100c1290(CKeyValuesX *);
+	void sub_100c1310(CKeyValuesX *, SubParamsX *);
+	void sub_100c1520(CKeyValuesX *, SubParamsX *);
+	void sub_100c1740(CKeyValuesX *, SubParamsX *);
+	void sub_100c11c0(CKeyValuesX *pSoundscape, SubParamsX *params);
+};
+
+void SndscapeZ::sub_100c11c0(CKeyValuesX *pSoundscape, SubParamsX *params)
+{
+	CKeyValuesX *pKey = pSoundscape->sub_101283a0();
+	while (pKey) {
+		if (!Q_strcasecmp(pKey->sub_10127c70(), "dsp")) {
+			if (params->m_bAllowDSP)
+				sub_100c1290(pKey);
+		} else if (!Q_strcasecmp(pKey->sub_10127c70(), "playlooping"))
+			sub_100c1310(pKey, params);
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "playrandom"))
+			sub_100c1520(pKey, params);
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "playsoundscape"))
+			sub_100c1740(pKey, params);
+		pKey = pKey->sub_101283b0();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c1310 size=0x209
 #include "CKeyValuesX.h"
 extern "C" __declspec(dllimport) int __cdecl Q_strcasecmp(const char *, const char *);
