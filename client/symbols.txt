@@ -10503,6 +10503,7 @@
 0x101c6180 func   ?vfunc76@RadioButton@vgui2@@UAEHH@Z vgui2::RadioButton::vfunc76
 0x101c61b0 func   ?vfunc77@RadioButton@vgui2@@UAEHXZ vgui2::RadioButton::vfunc77
 0x101c61e0 func   ?vfunc169@RadioButton@vgui2@@UAEXHH@Z vgui2::RadioButton::vfunc169
+0x101c62f0 func   ?sub_101c62f0@RadioButton@vgui2@@QAEPAV12@H@Z vgui2::RadioButton::sub_101c62f0
 0x101c6410 func   ?vfunc87@RadioButton@vgui2@@UAEXH@Z vgui2::RadioButton::vfunc87
 0x101c64f0 func   ?vfunc102@RadioButton@vgui2@@UAEHXZ vgui2::RadioButton::vfunc102
 0x101c6500 func   ?sub_101c6500@CUnknown101c6500@@QAEPAXHH@Z CUnknown101c6500::sub_101c6500

@@ -154116,6 +154116,49 @@ int CUnknown101c5b70::sub_101c5b70()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c62f0 size=0x120
+#include "vgui2__RadioButton.h"
+vgui2::RadioButton *vgui2::RadioButton::sub_101c62f0(int direction)
+{
+	RadioButton *best = 0;
+	int highest = 0;
+	Panel *pr = (Panel *)vfunc31();
+	if (pr)
+	{
+		for (int i = 0; i < pr->vfunc36(); i++)
+		{
+			RadioButton *child = dynamic_cast<RadioButton *>(pr->vfunc37(i));
+			if (child && child->vfunc168() == *(int *)((char *)this + 0xf8))
+			{
+				if (child->vfunc166() == *(int *)((char *)this + 0x100) + direction)
+				{
+					best = child;
+					break;
+				}
+				else if (child->vfunc166() == 0 && direction == 1)
+				{
+					best = child;
+				}
+				else if (child->vfunc166() > highest && direction == -1)
+				{
+					best = child;
+					highest = best->vfunc166();
+				}
+				else if (!best)
+				{
+					best = child;
+				}
+			}
+		}
+		if (best)
+			best->vfunc15(0);
+		vfunc57(0, 0);
+		vfunc6();
+	}
+	return best;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c6500 size=0x27
 namespace lifted {
 extern char g_10254324;
