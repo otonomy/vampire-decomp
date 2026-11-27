@@ -4604,6 +4604,7 @@
 0x100aeae0 func   ??1C_EnvParticle@@UAE@XZ C_EnvParticle::~C_EnvParticle
 0x100aec70 func   ?vfunc122@C_EnvParticle@@UAEXH@Z C_EnvParticle::vfunc122
 0x100aece0 func   ?vfunc123@C_EnvParticle@@UAEXH@Z C_EnvParticle::vfunc123
+0x100aed50 func   ?PostDataUpdate@C_EnvParticle@@UAEXH@Z C_EnvParticle::PostDataUpdate
 0x100aeea0 func   ?sub_100aeea0@C_EnvParticle@@QAEHHH@Z C_EnvParticle::sub_100aeea0
 0x100aeed0 func   ?sub_100aeed0@CUnknown100aeed0@@QAEXXZ CUnknown100aeed0::sub_100aeed0
 0x100aef00 func   ?sub_100aef00@CUnknown100aef00@@QAEHXZ CUnknown100aef00::sub_100aef00
