@@ -140369,6 +140369,64 @@ IMat_10192880 *sub_10192880(IMat_10192880 *pMat)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10192990 size=0x10a
+struct IVar_10192990
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17();
+	virtual void *GetTexture();
+	virtual void SetTexture(void *tex);
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+	virtual bool IsDefined();
+	virtual void v25();
+	virtual void SetMatrix(void *m);
+	virtual void *GetMatrix();
+};
+struct IMat_10192990
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10();
+	virtual IVar_10192990 *FindVar(const char *name, bool *pFound, bool bComplain);
+	virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31();
+	virtual bool IsFlag(int flag);
+};
+extern bool g_105fc382;
+extern IMat_10192990 *g_105fc338;
+extern IMat_10192990 *g_105fc33c;
+extern IMat_10192990 *g_105fc340;
+extern IMat_10192990 *g_105fc344;
+IMat_10192990 *sub_10192990(IMat_10192990 *pMat)
+{
+	IMat_10192990 *pCopy = g_105fc338;
+	if (g_105fc382 && !pMat->IsFlag(0x80))
+	{
+		if (pMat->IsFlag(0x200000))
+			pCopy = g_105fc33c;
+		else if (pMat->IsFlag(0x100))
+			pCopy = g_105fc344;
+	}
+	else
+		pCopy = g_105fc340;
+	bool found = false;
+	IVar_10192990 *pSrc = pMat->FindVar("$basetexture", &found, false);
+	if (!found || !pSrc->IsDefined())
+		return 0;
+	IVar_10192990 *pDst = pCopy->FindVar("$basetexture", &found, true);
+	pDst->SetTexture(pSrc->GetTexture());
+	IVar_10192990 *pSrcT = pMat->FindVar("$basetexturetransform", &found, false);
+	IVar_10192990 *pDstT = pCopy->FindVar("$basetexturetransform", &found, true);
+	pDstT->SetMatrix(pSrcT->GetMatrix());
+	return pCopy;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10192bf0 size=0xb2
 struct MatVarView
 {
