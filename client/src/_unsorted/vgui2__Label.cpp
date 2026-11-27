@@ -806,6 +806,54 @@ void vgui2::Label::vfunc105(vgui2::Panel *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b2e60 size=0x10b
+#include "vgui2__Label.h"
+#pragma warning(disable: 4716)
+struct Color { unsigned int rgba; Color() {} };
+struct IScheme_101b2e60 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual Color GetColor(const char *name); };
+struct LabelView
+{
+	char pad0[0x60];
+	void **m_pImages;
+	int pad64; int pad68;
+	int m_nImages;
+	char pad70[0x98 - 0x70];
+	unsigned int m_AssociateColor;
+	int m_nTextImageIndex;
+	int m_nTextColorState;
+};
+#define LV ((LabelView *)this)
+// TARGET: vgui2::Label::vfunc74
+int vgui2::Label::vfunc74(int pSchemeArg)
+{
+	IScheme_101b2e60 *pScheme = (IScheme_101b2e60 *)pSchemeArg;
+	Panel::vfunc74(pSchemeArg);
+	for (int i = 0; i < LV->m_nImages; i++)
+	{
+		if (!LV->m_pImages[i])
+			continue;
+		if (i == LV->m_nTextImageIndex)
+			continue;
+		LV->m_pImages[i] = 0;
+	}
+	vfunc113(pScheme->GetColor("DisabledFgColor1").rgba);
+	vfunc114(pScheme->GetColor("DisabledFgColor2").rgba);
+	vfunc50(pScheme->GetColor("LabelBgColor").rgba);
+	switch (LV->m_nTextColorState)
+	{
+	case 1:
+		vfunc51(pScheme->GetColor("LabelDimText").rgba);
+		break;
+	case 2:
+		vfunc51(pScheme->GetColor("BrightControlText").rgba);
+	default:
+		vfunc51(pScheme->GetColor("BrightBaseText").rgba);
+		break;
+	}
+	LV->m_AssociateColor = pScheme->GetColor("BrightControlText").rgba;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b3090 size=0x1f9
 #include "vgui2__Label.h"
 extern "C" int strcmp(const char *, const char *);
