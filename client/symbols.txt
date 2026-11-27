@@ -9938,6 +9938,7 @@
 0x101afb80 func   ?vfunc111@TextEntry@vgui2@@UAEHXZ vgui2::TextEntry::vfunc111
 0x101afbf0 func   ?sub_101afbf0@TextEntry@vgui2@@QAEHXZ vgui2::TextEntry::sub_101afbf0
 0x101afd20 func   ?vfunc162@TextEntry@vgui2@@UAEHXZ vgui2::TextEntry::vfunc162
+0x101afd70 func   ?vfunc136@TextEntry@vgui2@@UAEXHH@Z vgui2::TextEntry::vfunc136
 0x101afed0 func   ?sub_101afed0@CUnknown101afed0@@QAEDD@Z CUnknown101afed0::sub_101afed0
 0x101afee0 func   ?sub_101afee0@CUnknown101afee0@@QAEXXZ CUnknown101afee0::sub_101afee0
 0x101aff20 func   ?sub_101aff20@CUnknown101aff20@@QAEXXZ CUnknown101aff20::sub_101aff20

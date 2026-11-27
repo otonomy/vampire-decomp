@@ -1431,6 +1431,94 @@ int vgui2::TextEntry::vfunc162()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101afd70 size=0x154
+#include "vgui2__TextEntry.h"
+
+int sub_101ad550(int font, int ch);
+
+struct DarC
+{
+	int m_Count;
+	int m_Cap;
+	char *m_pData;
+	char Get(int i) { return (i >= 0 && i < m_Count) ? m_pData[i] : 0; }
+};
+struct DarI
+{
+	int m_Count;
+	int m_Cap;
+	int *m_pData;
+	int Get(int i) { return (i >= 0 && i < m_Count) ? m_pData[i] : 0; }
+};
+struct TEView
+{
+	char m_pad0000[0x58];
+	DarC m_text;	// 0x58
+	DarI m_lines;	// 0x64
+	int m_nCursorPos;	// 0x70
+	char m_pad0074[1];
+	char m_bCursorAtEnd;	// 0x75
+	char m_pad0076[0x89 - 0x76];
+	char m_bHideText;	// 0x89
+	char m_pad008a[0xa4 - 0x8a];
+	int m_na4;	// 0xa4
+	char m_pad00a8[0x100 - 0xa8];
+	char m_bf100;	// 0x100
+	char m_pad0101[0x124 - 0x101];
+	int m_nFont;	// 0x124
+};
+
+// TARGET: vgui2::TextEntry::vfunc136
+void vgui2::TextEntry::vfunc136(int line, int pixelsAcross)
+{
+	TEView *v = (TEView *)this;
+	if (line < 0)
+		line = 0;
+	if (line >= v->m_lines.m_Count)
+		line = v->m_lines.m_Count - 1;
+	v->m_bf100 = 1;
+	int startIndex = vfunc162();
+	int x = 3;
+	v->m_na4 = 0;
+	int i = 0;
+	int lineIdx = 0;
+	int ch;
+	for (; i < v->m_text.m_Count; i++)
+	{
+		*(char *)&ch = v->m_text.Get(i);
+		if (!vfunc164(*(char *)&ch, (int)&i, (int)&x, (int)&startIndex))
+		{
+			if (v->m_bHideText)
+				*(char *)&ch = '*';
+			int lb = v->m_lines.Get(lineIdx);
+			if (lb == i)
+			{
+				if (lineIdx == line)
+				{
+					v->m_bCursorAtEnd = 1;
+					v->m_nCursorPos = i;
+					break;
+				}
+				vfunc161(&x, &startIndex);
+				lineIdx++;
+			}
+			int w = sub_101ad550(v->m_nFont, ch);
+			if (line == lineIdx && x + w / 2 > pixelsAcross)
+			{
+				v->m_nCursorPos = i;
+				break;
+			}
+			x += w;
+		}
+	}
+	if (i == v->m_text.m_Count)
+		vfunc119();
+	vfunc150();
+	vfunc109();
+	vfunc6();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101affe0 size=0xc1
 #include "vgui2__TextEntry.h"
 extern "C" int __cdecl isspace(int);
