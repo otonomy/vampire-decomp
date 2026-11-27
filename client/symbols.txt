@@ -9770,6 +9770,7 @@
 0x101ac910 func   ?sub_101ac910@@YAHXZ sub_101ac910
 0x101ac920 func   ?sub_101ac920@@YAHXZ sub_101ac920
 0x101ac930 func   ?sub_101ac930@@YAHXZ sub_101ac930
+0x101ac940 func   ?sub_101ac940@@YA_NPAPAXH@Z sub_101ac940
 0x101aca60 func   ?sub_101aca60@@YAHPAXPAP6AH0H@ZH@Z sub_101aca60
 0x101acaa0 func   ??0TextEntry@vgui2@@QAE@PAVPanel@1@PBD@Z vgui2::TextEntry::TextEntry
 0x101acd90 func   ??_GTextEntry@vgui2@@UAEPAXI@Z ??_GTextEntry@vgui2@@UAEPAXI@Z

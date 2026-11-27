@@ -149763,6 +149763,40 @@ int sub_101ac930()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101ac940 size=0x120
+struct IVGuiV { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual bool Init(void **factoryList, int numFactories); };
+struct IKeyValuesSystemV { virtual void RegisterSizeofKeyValues(int size); };
+void *sub_101aca60(const char *name, void **factoryList, int numFactories);
+extern void *g_10678dd8;
+extern void *g_10678ddc;
+extern void *g_10678de0;
+extern void *g_10678de4;
+extern IVGuiV *g_10678de8;
+extern void *g_10678dec;
+extern void *g_10678df0;
+extern void *g_10678df4;
+extern IKeyValuesSystemV *g_10678df8;
+// TARGET: sub_101ac940
+bool __cdecl sub_101ac940(void **factoryList, int numFactories)
+{
+	g_10678de8 = (IVGuiV *)sub_101aca60("VGUI_ivgui003", factoryList, numFactories);
+	g_10678dec = sub_101aca60("VGUI_Panel003", factoryList, numFactories);
+	g_10678de0 = sub_101aca60("VGUI_Surface015", factoryList, numFactories);
+	g_10678ddc = sub_101aca60("VGUI_Scheme004", factoryList, numFactories);
+	g_10678de4 = sub_101aca60("VGUI_System005", factoryList, numFactories);
+	g_10678dd8 = sub_101aca60("VGUI_Input004", factoryList, numFactories);
+	g_10678df4 = sub_101aca60("VGUI_Localize002", factoryList, numFactories);
+	g_10678df0 = sub_101aca60("VFileSystem005", factoryList, numFactories);
+	g_10678df8 = (IKeyValuesSystemV *)sub_101aca60("KeyValues001", factoryList, numFactories);
+	g_10678de8->Init(factoryList, numFactories);
+	if (g_10678df8)
+		g_10678df8->RegisterSizeofKeyValues(0x1c);
+	if (!g_10678ddc || !g_10678de0 || !g_10678de4 || !g_10678dd8 || !g_10678de8 || !g_10678df0 || !g_10678df4 || !g_10678df8 || !g_10678dec)
+		return false;
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101aca60 size=0x35
 typedef int (*PFN101)(void *, int);
 int sub_101aca60(void *obj, PFN101 *fns, int n)
