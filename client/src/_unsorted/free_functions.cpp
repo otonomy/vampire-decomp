@@ -139664,6 +139664,81 @@ void CViewRender::sub_10199910(void *pInfo, void *pRenderList, bool arg2, bool b
 }
 // END FUNCTION
 
+// FUNCTION: 0x10199cc0 size=0x20d
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include "CViewRender.h"
+struct DOStats { char pad[0x118]; double d118; char pad2[0xd0]; double d1f0; char pad3[0x110]; struct DOTimer *m_pTimer; };
+struct DOTimer { virtual double Get(); };
+extern DOStats *sub_100ad7a0();
+struct DOTimedStat
+{
+	DOTimedStat() { DOStats *s = sub_100ad7a0(); if (s->m_pTimer) s->d1f0 = s->m_pTimer->Get(); }
+	~DOTimedStat() { DOStats *s = sub_100ad7a0(); if (s->m_pTimer) s->d118 += s->m_pTimer->Get() - s->d1f0; }
+};
+struct DOGate { virtual void v0(); virtual bool IsDisabled(); char pad[0x28]; void *p2c; };
+extern DOGate *g_10618954;
+struct DORenderView { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void SetBlend(float f); virtual void v7(); virtual void SetColorModulation(const float *v); };
+struct DORend { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual void Draw1(int f, void *x); virtual void Draw2(int f, void *x);
+	virtual int GetAlpha(); virtual void v12(); virtual void GetColorModulation(float *v); };
+struct DOEntry { DORend *pRend; unsigned short leaf; unsigned short flags; void *extra; };
+struct DOInfo { int a, b, c; int *m_pLeafs; };
+struct DOList { char pad0[0xc000]; DOEntry entries[0x100]; char pad1[0x48004 - 0xc000 - 0xc00]; int count; };
+extern char g_106198ed;
+extern float g_106198f0;
+struct DOExtra { char pad[8]; float f8; };
+
+void CViewRender::sub_10199cc0(void *pInfo, void *pRenderList, bool bA, bool bC, bool bB)
+{
+	ScopeTrace trace("CViewRender::DrawOpaqueRenderables", g_102de300);
+	if (g_10618954->IsDisabled() || !g_10618954->p2c)
+		return;
+	DOTimedStat stat;
+	if (!sub_10198e70())
+		return;
+	render->vfunc6(1.0f);
+	DOList &list = *(DOList *)pRenderList;
+	int lastLeaf = -1;
+	int nOpaque = list.count;
+	int flags = 0;
+	if (bA)
+		flags = 8;
+	if (bC)
+		flags |= 0x10;
+	for (int i = 0; i < nOpaque; i++)
+	{
+		DOEntry &e = list.entries[i];
+		int *pLeafs = ((DOInfo *)pInfo)->m_pLeafs;
+		if (pLeafs[e.leaf] != lastLeaf)
+			lastLeaf = pLeafs[i];
+		if (flags & e.flags)
+		{
+			if (!(g_106198ed && ((DOExtra *)e.extra)->f8 > g_106198f0))
+			{
+				DORend *r = e.pRend;
+				bool bTwo = (e.flags & 1) != 0;
+				void *ex = e.extra;
+				float a = r->GetAlpha() * (1.0f / 255.0f);
+				if (!(a < 1.0f))
+				{
+					float color[3];
+					r->GetColorModulation(color);
+					((DORenderView *)render)->SetColorModulation(color);
+					int df = 9;
+					if (bTwo)
+						df = 0x19;
+					if (!bB)
+						r->Draw1(df, ex);
+					else
+						r->Draw2(df, ex);
+				}
+			}
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019a950 size=0x22b
 #include "CViewRender.h"
 #include "ScopeTrace.h"
