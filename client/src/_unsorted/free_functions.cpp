@@ -29757,6 +29757,41 @@ bool sub_10054800(const char *pStr)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10054860 size=0x182
+#include "ScopeTrace.h"
+#include "CHudDialog.h"
+extern "C" __declspec(dllimport) char *Q_strncpy(char *, const char *, int);
+bool sub_100547a0(char *);
+bool sub_10054800(char *);
+// TARGET: CHudDialog::sub_10054860
+void CHudDialog::sub_10054860()
+{
+	ScopeTrace st("CHudDialog::DialogCommandCommit", g_102de300);
+	m_b190 = true;
+	Q_strncpy((char *)this + 0xa28, m_szText, 0x800);
+	int i;
+	for (i = 0; i < m_nOptions; i++)
+	{
+		if (sub_100547a0(m_szOptions[i]) || sub_10054800(m_szOptions[i]))
+			Q_strncpy(m_szItems[i], "....", 0x800);
+		else
+			Q_strncpy(m_szItems[i], m_szOptions[i], 0x800);
+		m_iItemFlags[i] = m_iOptionA[i];
+		m_iItemType[i] = m_iOptionB[i];
+	}
+	for (; i < 4; i++)
+	{
+		m_szItems[i][0] = 0;
+		m_iItemFlags[i] = 0;
+		m_iItemType[i] = 0;
+	}
+	m_nItems = m_nOptions;
+	sub_10054f70(0, (char *)this + 0xa28);
+	if (m_nItems == 0)
+		sub_100549f0(-1, true);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100549f0 size=0x15d
 #include "engineclient.h"
 #include "CHudDialog.h"
