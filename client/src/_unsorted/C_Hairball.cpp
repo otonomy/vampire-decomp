@@ -1,6 +1,14 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x1002c920 size=0x10e
+#include "C_Hairball.h"
+
+C_Hairball::C_Hairball() {}
+C_Hairball *pcd_emit_1002c920() { return new C_Hairball; }
+// TARGET: ??_GC_Hairball@@UAEPAXI@Z
+// END FUNCTION
+
 // FUNCTION: 0x1002ca90 size=0x6ca
 #include "C_Hairball.h"
 #include "CGlobalVarsBase.h"
