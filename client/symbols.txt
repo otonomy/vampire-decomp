@@ -3871,6 +3871,7 @@
 0x10091020 func   ?sub_10091020@@YGMMMM_N@Z sub_10091020
 0x100910f0 func   ?vfunc66@C_BaseAnimating@@UAEHXZ C_BaseAnimating::vfunc66
 0x10091640 func   ?vfunc131@C_BaseAnimating@@UAEXHHHHHH@Z C_BaseAnimating::vfunc131
+0x10091650 func   ?vfunc130@C_BaseAnimating@@UAEXPBUCBitVecWords@@PAVVector@@PAVQuaternion@@@Z C_BaseAnimating::vfunc130
 0x10091860 func   ?sub_10091860@C_BaseAnimating@@QAE_NHAAVVector@@AAVQAngle@@AAUmatrix3x4_t@@@Z C_BaseAnimating::sub_10091860
 0x10091910 func   ?sub_10091910@C_BaseAnimating@@QAE_NHH@Z C_BaseAnimating::sub_10091910
 0x10091960 func   ?vfunc142@C_BaseAnimating@@UAE_NXZ C_BaseAnimating::vfunc142

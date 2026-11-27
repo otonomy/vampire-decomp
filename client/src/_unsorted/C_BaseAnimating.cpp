@@ -330,6 +330,61 @@ void C_BaseAnimating::vfunc131(int a0, int a1, int a2, int a3, int a4, int a5)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10091650 size=0x142
+#include "C_BaseAnimating.h"
+#include "Quaternion.h"
+#include "engineclient.h"
+
+struct SPoseHdr;
+SPoseHdr *sub_1008d930(SPoseHdr *, int);
+void sub_1008a690(char *, void *, void *, int, int);
+void sub_1008a1e0(void *, void *, void *, void *, const CBitVecWords *);
+
+struct AnimView
+{
+	char m_pad0000[0x574];
+	float m_flPoseA[24];
+	float m_flPoseB[24];
+	int m_unk634;
+	int m_unk638;
+	int m_nSequence;
+	float m_flCycle;
+	int m_unk644;
+	int m_n648;
+	int m_unk64c;
+	int m_unk650;
+	float m_fl654;
+	char m_pad0658[0x6ac - 0x658];
+	char *m_p6ac;
+};
+
+// TARGET: C_BaseAnimating::vfunc130
+void C_BaseAnimating::vfunc130(const CBitVecWords *boneMask, Vector *pos, Quaternion *q)
+{
+	AnimView *v = (AnimView *)this;
+	float poseparam[24];
+	float tmp[4];
+	if (!sub_10096830(v->m_nSequence))
+		v->m_nSequence = 0;
+	float f = vfunc122();
+	SPoseHdr *hdr = (SPoseHdr *)sub_1008f900(-1);
+	int i;
+	for (i = 0; i < 24; i++) {
+		if (!sub_1008d930(hdr, i))
+			break;
+		poseparam[i] = vfunc129(i, v->m_flPoseA[i], v->m_flPoseB[i], f);
+	}
+	float t = f * 0.1;
+	float cycle = vfunc121(v->m_n648, v->m_nSequence, poseparam, v->m_flCycle, t);
+	sub_100968a0(pos, q, v->m_nSequence, cycle, poseparam, boneMask);
+	sub_10091110(boneMask, cycle, poseparam, pos, q);
+	sub_1008a690(v->m_p6ac, pos, q, (int)poseparam, (int)boneMask);
+	vfunc120(tmp, f);
+	sub_1008a1e0(v->m_p6ac, pos, q, tmp, boneMask);
+	v->m_fl654 = cycle;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10091960 size=0x3
 #include "C_BaseAnimating.h"
 bool C_BaseAnimating::vfunc142()
