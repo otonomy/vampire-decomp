@@ -10275,6 +10275,7 @@
 0x101beb60 func   ?sub_101beb60@CUnknown101beb60@@QAEDD@Z CUnknown101beb60::sub_101beb60
 0x101beb70 func   ?sub_101beb70@CUnknown101beb70@@QAEHXZ CUnknown101beb70::sub_101beb70
 0x101bed70 func   ?sub_101bed70@@YIXPAUS_101bed70@@@Z sub_101bed70
+0x101bed80 func   ?sub_101bed80@SBButton@@QAEXH@Z SBButton::sub_101bed80
 0x101beee0 func   ??_GScrollBar@vgui2@@UAEPAXI@Z ??_GScrollBar@vgui2@@UAEPAXI@Z
 0x101bef00 func   ?vfunc74@ScrollBar@vgui2@@UAEHH@Z vgui2::ScrollBar::vfunc74
 0x101bef40 func   ?vfunc62@ScrollBar@vgui2@@UAE_ND@Z vgui2::ScrollBar::vfunc62
