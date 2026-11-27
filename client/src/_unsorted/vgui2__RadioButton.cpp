@@ -11,6 +11,17 @@ vgui2::RadioButton *pcd_emit_101c5d30(const vgui2::RadioButton &other) { return 
 // TARGET: ??_GRadioButton@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101c5d50 size=0x22
+#include "vgui2__RadioButton.h"
+struct CheckObj { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual ~CheckObj(); };
+vgui2::RadioButton::~RadioButton()
+{
+	CheckObj *p = *(CheckObj **)((char *)this + 0xf4);
+	if (p)
+		delete p;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c5eb0 size=0x5
 #include "vgui2__RadioButton.h"
 int vgui2::RadioButton::vfunc164(int a0, int a1, int a2, int a3)
