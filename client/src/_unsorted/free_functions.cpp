@@ -357,6 +357,18 @@ struct V1f70 { char pad[0x468]; Vec1f70 v; Vec1f70 sub_10001f70(); };
 Vec1f70 V1f70::sub_10001f70() { return v; }
 // END FUNCTION
 
+// FUNCTION: 0x10001fa0 size=0x35
+#include "C_BaseCineCamera.h"
+struct CineV_10001c20 { float sub_10001c20(float dt); };
+// TARGET: C_BaseCineCamera::sub_10001fa0
+void C_BaseCineCamera::sub_10001fa0(float dt)
+{
+	sub_10001fe0(dt);
+	sub_10001d40(dt);
+	((CineV_10001c20 *)this)->sub_10001c20(dt);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10001fe0 size=0x216
 #include "C_BaseCineCamera.h"
 
