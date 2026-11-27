@@ -235,6 +235,35 @@ void C_BaseCineCamera::sub_10001a20()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10001b50 size=0x7e
+#include "C_BaseCineCamera.h"
+#include "CViewSetup.h"
+struct CUnknown10002210 { void sub_10002210(); };
+bool C_BaseCineCamera::sub_10001970()
+{
+	if (m_n45c && m_b465)
+		return true;
+	return false;
+}
+// TARGET: C_BaseCineCamera::sub_10001b50
+void C_BaseCineCamera::sub_10001b50(CViewSetup *pView)
+{
+	if (m_c4a2)
+		((CUnknown10002210 *)this)->sub_10002210();
+	if (m_f490 > 0.0f && sub_10001970())
+	{
+		sub_10001a20();
+		pView->origin.x = m_v468.x;
+		pView->origin.y = m_v468.y;
+		pView->origin.z = m_v468.z;
+		pView->angles.x = m_v474.x;
+		pView->angles.y = m_v474.y;
+		pView->angles.z = m_v474.z;
+		pView->fov = m_f480;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10001c20 size=0x60
 struct CamSingletonV_10001c20 {
 	virtual void v0();
