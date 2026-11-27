@@ -6387,6 +6387,7 @@
 0x1010cdb0 func   ?vfunc0@CClampProxy@@UAE_NPAX0@Z CClampProxy::vfunc0
 0x1010cfc0 func   ?sub_1010cfc0@@YAHXZ sub_1010cfc0
 0x1010cff0 func   ??_GCClampProxy@@UAEPAXI@Z ??_GCClampProxy@@UAEPAXI@Z
+0x1010d010 func   ?vfunc0@CSineProxy@@UAE_NPAX0@Z CSineProxy::vfunc0
 0x1010d0b0 func   ?vfunc1@CSineProxy@@UAEXH@Z CSineProxy::vfunc1
 0x1010d180 func   ?sub_1010d180@@YAHXZ sub_1010d180
 0x1010d1b0 func   ??_GCSineProxy@@UAEPAXI@Z ??_GCSineProxy@@UAEPAXI@Z
