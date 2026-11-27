@@ -54056,6 +54056,30 @@ float CUnknown100a9de0::sub_100a9de0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a9e30 size=0x103
+#include "C_BasePlayer.h"
+#include "C_BaseEntity.h"
+#include "CHandle.h"
+#include "ehandle.h"
+#include "utlvector.h"
+struct CPlayerView_100a9e30
+{
+	char m_pad[0x1a14];
+	CUtlVector<CHandle<C_BaseEntity> > m_Assoc;
+};
+void C_BasePlayer::sub_100a9e30(C_BaseEntity *pEntity)
+{
+	CHandle<C_BaseEntity> e;
+	if (pEntity)
+		e.m_Index = *((IHandleEntity *)pEntity)->vfunc1();
+	else
+		e.m_Index = 0xffffffff;
+	CPlayerView_100a9e30 *p = (CPlayerView_100a9e30 *)this;
+	if (p->m_Assoc.Find(e) == -1)
+		p->m_Assoc.AddToTail(e);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a9f40 size=0xf1
 #include "C_BasePlayer.h"
 #include "utlvector.h"

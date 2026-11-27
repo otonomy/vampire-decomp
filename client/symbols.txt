@@ -4384,6 +4384,7 @@
 0x100a9cb0 func   ?vfunc181@C_BasePlayer@@UAEXXZ C_BasePlayer::vfunc181
 0x100a9de0 func   ?sub_100a9de0@CUnknown100a9de0@@QAEMXZ CUnknown100a9de0::sub_100a9de0
 0x100a9df0 func   ?vfunc184@C_BasePlayer@@UAEXXZ C_BasePlayer::vfunc184
+0x100a9e30 func   ?sub_100a9e30@C_BasePlayer@@QAEXPAVC_BaseEntity@@@Z C_BasePlayer::sub_100a9e30
 0x100a9f40 func   ?sub_100a9f40@C_BasePlayer@@QAEXPAVC_BaseEntity@@@Z C_BasePlayer::sub_100a9f40
 0x100aa040 func   ?sub_100aa040@S100aa040@@QAEXXZ S100aa040::sub_100aa040
 0x100aa240 func   ?vfunc195@C_BasePlayer@@UAEPADXZ C_BasePlayer::vfunc195
