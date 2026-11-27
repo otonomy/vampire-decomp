@@ -67,7 +67,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc157();
 	virtual void vfunc158();
 	virtual void vfunc159(int slot, int, int);	// ret 0xc: weapon selection by slot (0x100a7c40)
-	virtual bool vfunc160(int);
+	virtual bool vfunc160(bool);
+	void sub_100aa490();
 	virtual void vfunc161();
 	virtual void vfunc162();
 	virtual bool vfunc163();
