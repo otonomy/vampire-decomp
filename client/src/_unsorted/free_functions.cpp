@@ -43689,6 +43689,56 @@ void __cdecl sub_100835e0(Vector *a, Vector *b, Vector *out)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10083660 size=0x15f
+#include "vector.h"
+
+extern float g_101e34f0;
+void sub_10108fd0(int a, float b, int c, int d);
+void *sub_1018f380();
+void *sub_1018f370();
+
+struct SinCosHelper_10083660
+{
+	static void Calc(float rad, float *s, float *c)
+	{
+		__asm
+		{
+			fld rad
+			fsincos
+			mov edx, c
+			mov eax, s
+			fstp dword ptr [edx]
+			fstp dword ptr [eax]
+		}
+	}
+};
+
+void sub_10083660(int a0, int a1, int a2, float *a3, int a4, Vector *a5, float a6, int a7, float a8, float a9, float a10, int a11)
+{
+	float len = a5->Length() * 0.01;
+	int fix = (int)(((float)(1.0 / (a7 - 1)) * (a2 - 1)) * 65536.0f);
+	fix *= (a1 + 1);
+	if (0x10 & a11)
+	{
+		fix = 0;
+		len = a7 * 0.1;
+	}
+	sub_10108fd0(a4, a10, (int)a5, a0);
+	if (!(a9 != g_101e34f0)) return; else { float t0 = a9 * a3[fix >> 16];
+		if (a11 & 0x10)
+		{
+			float c, s;
+			SinCosHelper_10083660::Calc((len * a10) * 3.141592653589793 + a8, &s, &c);
+			sub_10108fd0(a0, s * t0, (int)sub_1018f380(), a0);
+			sub_10108fd0(a0, c * t0, (int)sub_1018f370(), a0);
+		}
+		else
+		{
+			sub_10108fd0(a0, t0, *(int *)&a6, a0);
+		} }
+}
+// END FUNCTION
+
 // FUNCTION: 0x10084560 size=0x35
 struct CUnknown10084560 { void * sub_10084560(); };
 void * CUnknown10084560::sub_10084560()
