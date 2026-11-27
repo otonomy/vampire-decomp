@@ -123288,6 +123288,49 @@ bool CUnknown101f10e0::sub_10153180(const char *pszFile)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10153230 size=0xa5
+#include "CUnknown101f0e50.h"
+struct DataNode {
+	virtual void vf0();
+	virtual void vf1();
+	virtual DataNode *FindKey(const char *name);
+	virtual DataNode *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+// TARGET: CUnknown101f0e50::sub_10153230
+bool CUnknown101f0e50::sub_10153230(const char *pszFile)
+{
+	DataFile *file = sub_101545c0(pszFile, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", pszFile);
+		return false;
+	}
+	DataNode *node = file->FindKey("ReactionCategory");
+	while (node) {
+		if (!sub_101530c0(node)) {
+			Msg("Unable to parse category from data file for: %s.  Memory allocation ERROR!\n", pszFile);
+			file->vf1();
+			return false;
+		}
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101532e0 size=0x212
 template <class T> __forceinline T pcd_stage(T x) { return x; }
 #include "CReactionData.h"

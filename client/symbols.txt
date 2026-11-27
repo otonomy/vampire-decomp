@@ -8220,6 +8220,7 @@
 0x10152ff0 func   ?sub_10152ff0@CUnknown101f10e0@@QAE_NPAX@Z CUnknown101f10e0::sub_10152ff0
 0x101530c0 func   ?sub_101530c0@CUnknown101f0e50@@QAE_NPAX@Z CUnknown101f0e50::sub_101530c0
 0x10153180 func   ?sub_10153180@CUnknown101f10e0@@QAE_NPBD@Z CUnknown101f10e0::sub_10153180
+0x10153230 func   ?sub_10153230@CUnknown101f0e50@@QAE_NPBD@Z CUnknown101f0e50::sub_10153230
 0x101532e0 func   ?sub_101532e0@CReactionData@@QAEXXZ CReactionData::sub_101532e0
 0x10153500 func   ?sub_10153500@CUnknown101f10e0@@QAEXXZ CUnknown101f10e0::sub_10153500
 0x10153610 func   ?sub_10153610@CUnknown101f18b0@@QAEPADH@Z CUnknown101f18b0::sub_10153610
