@@ -134722,6 +134722,12 @@ int CUnknown10182460::sub_10182460()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101824e0 size=0x16
+bool sub_101713e0();
+void __fastcall sub_1017dba0(void *self);
+void __fastcall sub_101824e0(void *self, int edx) { if (sub_101713e0()) sub_1017dba0(self); }
+// END FUNCTION
+
 // FUNCTION: 0x10182580 size=0x2c
 namespace lifted {
 extern char g_1027b3a8;
