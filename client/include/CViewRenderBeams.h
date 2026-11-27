@@ -52,6 +52,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	bool sub_10195d00(Beam_t *pBeam);
 	virtual void vfunc21();
 	void sub_10193790(BeamV *, BeamInfoV *);
+	void sub_10194370(Vector *center, int startRadius, int endRadius, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18);
 	void sub_10195520(Beam_t *pbeam, int frame, int rendermode, float *color, const char *spritemodel, int unused);	// DrawLaser
 	void sub_101934d0(void *pBeam);
 	void sub_10195070(Beam_t *pbeam, int frame, int rendermode, float *color, const char *sprite, const char *halosprite);	// DrawLaser with halo sprites
