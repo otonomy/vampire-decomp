@@ -6671,6 +6671,7 @@
 0x10113f60 func   ?sub_10113f60@CUtlRBTree16@@QAEXG@Z CUtlRBTree16::sub_10113f60
 0x10114120 func   ?sub_10114120@CUtlRBTree16@@QBE_NG@Z CUtlRBTree16::sub_10114120
 0x101141e0 func   ?sub_101141e0@CUtlRBTree16@@QAEXG@Z CUtlRBTree16::sub_101141e0
+0x101143a0 func   ?sub_101143a0@CUtlRBTree16@@QAEXG@Z CUtlRBTree16::sub_101143a0
 0x10114560 func   ?sub_10114560@CUtlRBTree16@@QBE_NG@Z CUtlRBTree16::sub_10114560
 0x10114620 func   ?vfunc4@IPanelMetaClassMgr@@QAEPAXD@Z IPanelMetaClassMgr::vfunc4
 0x10114660 func   ?sub_10114660@@YAHHH@Z sub_10114660
