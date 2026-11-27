@@ -69817,6 +69817,53 @@ unsigned short TexAlloc_100d4e90::sub_100d4e90(int size, int unused)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d4f40 size=0xc3
+#include "CClientLeafSystem.h"
+
+struct Node_100d4f40 { unsigned short a; unsigned short p2, p4; unsigned short prev, next; };
+struct View_100d4f40
+{
+	int p0;
+	Node_100d4f40 *nodes;
+	int p8, pc;
+	unsigned short head, tail, freeh, count, total;
+	void sub_100d5010(unsigned short a);
+	bool IsInList(unsigned short i) { return i < total && nodes[i].prev != i; }
+	void Unlink(unsigned short elem)
+	{
+		if (IsInList(elem))
+		{
+			Node_100d4f40 *pBase = nodes;
+			Node_100d4f40 *pOld = &pBase[elem];
+			if (pOld->prev != 0xffff)
+				pBase[pOld->prev].next = pOld->next;
+			else
+				head = pOld->next;
+			if (pOld->next != 0xffff)
+				pBase[pOld->next].prev = pOld->prev;
+			else
+				tail = pOld->prev;
+			pOld->next = elem;
+			pOld->prev = elem;
+			count--;
+		}
+	}
+};
+
+void CClientLeafSystem::sub_100d4f40(unsigned short elem)
+{
+	View_100d4f40 *v = (View_100d4f40 *)this;
+	if (v->nodes[elem].a != 0xffff)
+	{
+		sub_100d4d20(v->nodes[elem].a);
+		v->sub_100d5010(v->nodes[elem].a);
+	}
+	v->Unlink(elem);
+	v->nodes[elem].next = v->freeh;
+	v->freeh = elem;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d5010 size=0x37
 struct E10 { unsigned short m_0; unsigned short pad[4]; };
 struct E16 { int m_0; unsigned short m_4; unsigned short pad[5]; };

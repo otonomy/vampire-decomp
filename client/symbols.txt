@@ -5399,6 +5399,7 @@
 0x100d48a0 func   ?sub_100d48a0@Class_100d48a0@@QAEXH@Z Class_100d48a0::sub_100d48a0
 0x100d4d20 func   ?sub_100d4d20@CClientLeafSystem@@QAEXG@Z CClientLeafSystem::sub_100d4d20
 0x100d4e90 func   ?sub_100d4e90@TexAlloc_100d4e90@@QAEGHH@Z TexAlloc_100d4e90::sub_100d4e90
+0x100d4f40 func   ?sub_100d4f40@CClientLeafSystem@@QAEXG@Z CClientLeafSystem::sub_100d4f40
 0x100d5010 func   ?sub_100d5010@MV@@QAEXG@Z MV::sub_100d5010
 0x100d5050 func   ?sub_100d5050@TexAlloc_100d5050@@QAE_NG@Z TexAlloc_100d5050::sub_100d5050
 0x100d5130 func   ?sub_100d5130@@YIXPAD@Z sub_100d5130
