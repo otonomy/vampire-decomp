@@ -132,3 +132,14 @@ void C_VampireProjectile::vfunc147(int a0)
 {
 }
 // END FUNCTION
+
+// FUNCTION: 0x10152420 size=0x16
+#include "C_VampireProjectile.h"
+
+// TARGET: C_VampireProjectile::vfunc113
+bool C_VampireProjectile::vfunc113(bool isbeingremoved, C_BaseEntity *predicted)
+{
+	C_BaseEntity::vfunc113(isbeingremoved, predicted);
+	return isbeingremoved;
+}
+// END FUNCTION
