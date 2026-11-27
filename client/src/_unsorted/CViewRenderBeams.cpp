@@ -464,6 +464,70 @@ Beam_t *CViewRenderBeams::vfunc16(BeamInfoV *info)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10194680 size=0x123
+#include "CViewRenderBeams.h"
+#include "vector.h"
+extern Vector g_104d4970;
+struct EntView10194680 { virtual void v0(); virtual unsigned int *v1(); char pad[0x1c]; };
+struct PartView10194680 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual int v8(); };
+struct EntObj10194680 { int pad0; PartView10194680 part; };
+struct BeamInfoV
+{
+	int m_nType;
+	EntView10194680 *m_pStartEnt;
+	int m_nStartAttachment;
+	EntView10194680 *m_pEndEnt;
+	int m_nEndAttachment;
+	Vector m_vecStart;
+	Vector m_vecEnd;
+	int m_unk2c[(0x40 - 0x2c) / 4];
+	float m_f40;
+};
+struct BeamV
+{
+	char pad[0x28];
+	int type;
+	int flags;
+	char pad2[0x104 - 0x30];
+	unsigned int entity0;
+	unsigned int entity1;
+	char pad3[0x12c - 0x10c];
+	int attach0;
+	int attach1;
+};
+// TARGET: CViewRenderBeams::vfunc14
+Beam_t *CViewRenderBeams::vfunc14(BeamInfoV *info)
+{
+	if (info->m_f40 != 0.0f)
+	{
+		if (!info->m_pStartEnt || !((EntObj10194680 *)info->m_pStartEnt)->part.v8() || !info->m_pEndEnt || !((EntObj10194680 *)info->m_pEndEnt)->part.v8())
+			return 0;
+	}
+	info->m_vecStart = g_104d4970;
+	info->m_vecEnd = g_104d4970;
+	BeamV *pBeam = (BeamV *)sub_101938a0(info);
+	if (!pBeam)
+		return 0;
+	pBeam->type = 0x18;
+	pBeam->flags = 3;
+	if (info->m_pStartEnt)
+		pBeam->entity0 = *info->m_pStartEnt->v1();
+	else
+		pBeam->entity0 = 0xffffffff;
+	pBeam->attach0 = info->m_nStartAttachment;
+	if (info->m_pEndEnt)
+		pBeam->entity1 = *info->m_pEndEnt->v1();
+	else
+		pBeam->entity1 = 0xffffffff;
+	pBeam->attach1 = info->m_nEndAttachment;
+	sub_10193790(pBeam, info);
+	if (info->m_f40 == 0.0f)
+		pBeam->flags |= 0x80000000;
+	sub_10194830((Beam_t *)pBeam, 0);
+	return (Beam_t *)pBeam;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10194d70 size=0xa2
 #include "CGlobalVarsBase.h"
 #include "CViewRenderBeams.h"
