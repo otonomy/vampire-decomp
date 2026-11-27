@@ -2778,6 +2778,7 @@
 0x10045c70 func   ?vfunc4@CFXLine@@UAEXXZ CFXLine::vfunc4
 0x10045c90 func   ?vfunc5@CFXLine@@UAEXN@Z CFXLine::vfunc5
 0x10045cd0 func   ?vfunc0@ClientEffectRegister@PrecacheEffectSparks@@UAEX_N@Z PrecacheEffectSparks::ClientEffectRegister::vfunc0
+0x10045d60 func   ?sub_10045d60@@YA_NPBVVector@@@Z sub_10045d60
 0x10045eb0 func   ?sub_10045eb0@CUnknown10045eb0@@QAEPAXH@Z CUnknown10045eb0::sub_10045eb0
 0x10045ee0 func   ??_GCTrailParticles@@UAEPAXI@Z ??_GCTrailParticles@@UAEPAXI@Z
 0x10045f00 func   ?vfunc13@CTrailParticles@@UAEXHHHHHHHH@Z CTrailParticles::vfunc13

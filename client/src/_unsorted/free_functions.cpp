@@ -26475,6 +26475,33 @@ void * CUnknown100456d0::sub_100456d0(int a0, int a1, int a2, int a3, int a4, in
 }
 // END FUNCTION
 
+// FUNCTION: 0x10045d60 size=0x14a
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "CTraceFilterSimple.h"
+#include "ConVar.h"
+#include "engineclient.h"
+
+extern ConVar *g_103edd9c;
+const Vector *sub_1018f340();
+void sub_101659b0(const float *start, const float *end, int r, int g, int b, bool noDepthTest, float duration);
+
+// TARGET: sub_10045d60
+bool sub_10045d60(const Vector *pos)
+{
+	Ray_t ray;
+	CTraceFilterSimple filter;
+	CGameTrace tr;
+
+	ray.Init(*pos, *sub_1018f340());
+	filter.sub_1004b5c0(0, 0);
+	enginetrace->vfunc4((int)&ray, 0x4091, &filter, (int)&tr);
+	if (!g_103edd9c->vfunc1() && g_103edd9c->m_nValue)
+		sub_101659b0(tr.m_startpos, tr.m_endpos, 255, 0, 0, true, -1.0f);
+	return tr.m_fraction < 1.0f;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10045eb0 size=0x2f
 namespace lifted {
 extern char g_10227b7c;
