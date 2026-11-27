@@ -144899,6 +144899,34 @@ int CUnknown1018db60::sub_1018db60(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018dba0 size=0x16f
+#include "CVProfPanel.h"
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern CVProfPanel *g_105fbd28;
+
+#define XR(x) ((x) * (sub_100cd100() * 0.0015625))
+#define YR(y) ((y) * (sub_100cd0f0() * 0.0020833333333333333))
+
+// TARGET: CVProfPanel::sub_1018dba0
+void CVProfPanel::sub_1018dba0()
+{
+	vgui2::Panel *base = (vgui2::Panel *)((char *)this + 0x10);
+	base->vfunc57(0, 1);
+	int xb = (int)XR(20.0);
+	int yb = (int)YR(10.0);
+	int wide = sub_100cd100() - xb * 2;
+	int tall = sub_100cd0f0() - yb * 2;
+	vgui2::Panel *tree = (vgui2::Panel *)((char *)this + 0x124);
+	tree->sub_101a9950((int)XR(4.0), (int)YR(22.0), (int)(wide - XR(4.0) * 2), (int)(tall - YR(4.0) * 2 - YR(22.0)));
+	tree->vfunc63(0);
+	tree->vfunc33((int)base);
+	tree->vfunc62(0);
+	g_105fbd28 = this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018dd40 size=0x29
 namespace lifted {
 struct C1018e280 { int sub_1018e280(); };

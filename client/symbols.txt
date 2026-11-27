@@ -9465,6 +9465,7 @@
 0x1018da70 func   ??1CVProfPanel@@UAE@XZ CVProfPanel::~CVProfPanel
 0x1018dab0 func   ?vfunc74@CVProfPanel@@UAEHH@Z CVProfPanel::vfunc74
 0x1018db60 func   ?sub_1018db60@CUnknown1018db60@@QAEHH@Z CUnknown1018db60::sub_1018db60
+0x1018dba0 func   ?sub_1018dba0@CVProfPanel@@QAEXXZ CVProfPanel::sub_1018dba0
 0x1018dd40 func   ?sub_1018dd40@CUnknown1018dd40@@QAEHH@Z CUnknown1018dd40::sub_1018dd40
 0x1018dd70 func   ?CHudElement_vfunc9@CVProfPanel@@QAE_NXZ CVProfPanel::CHudElement_vfunc9
 0x1018dd90 func   ?sub_1018dd90@@YAHXZ sub_1018dd90
