@@ -90,6 +90,52 @@ CHudDialog *pcd_emit_10052eb0(const CHudDialog &other) { return new CHudDialog(o
 // TARGET: ??_GCHudDialog@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x10052f00 size=0x12c
+#include "CHudDialog.h"
+#include "CHUDSprite.h"
+#include "ScopeTrace.h"
+#include "CRestore.h"
+// TARGET: ??1CHudDialog@@UAE@XZ
+CHudDialog::~CHudDialog()
+{
+	void (*pfnFree)(void *);
+	{
+		ScopeTrace st("CHudDialog::~CHudDialog", g_102de300);
+		for (int i = 0; i < 2; i++)
+			for (int j = 0; j < 2; j++)
+			{
+				if (m_pCorners[i][j])
+					delete m_pCorners[i][j];
+				if (m_pEdges[i][j])
+					delete m_pEdges[i][j];
+			}
+		sub_101a9ff0(0);
+		sub_10054e20();
+		pfnFree = g_101e30fc;
+	}
+	m_n184 = 0;
+	if (m_n180 != -1)
+	{
+		if (m_n178)
+		{
+			pfnFree((void *)m_n178);
+			m_n178 = 0;
+		}
+		m_n17c = 0;
+	}
+	m_n188 = m_n178;
+	if (m_n180 != -1)
+	{
+		if (m_n178)
+		{
+			pfnFree((void *)m_n178);
+			m_n178 = 0;
+		}
+		m_n17c = 0;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10053080 size=0x6f
 #include "CHudDialog.h"
 
