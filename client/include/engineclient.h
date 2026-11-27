@@ -119,7 +119,7 @@ public:
 	virtual float vfunc92(int);	// slot 92; seen as LightStyleValue 1
 	virtual void vfunc93();
 	virtual void vfunc94(const Vector &, const Vector *, Vector &);	// slot 94; seen as ComputeDynamicLighting 1
-	virtual void vfunc95();
+	virtual void vfunc95(float *);
 	virtual int vfunc96();	// slot 96; seen as GetDXSupportLevel 1
 	virtual void vfunc97();
 	virtual void vfunc98();
