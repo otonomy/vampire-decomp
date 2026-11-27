@@ -23,7 +23,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual bool vfunc107();
 	virtual void vfunc112();
 	// the slots CHudDialog adds to its base's vtable: 114-116, vfuncK at slot K
-	virtual void vfunc114();
+	virtual int vfunc114(int, int, int);
 	virtual void vfunc115(int, int, int);
 	virtual bool vfunc116();
 	void sub_10054450(bool);
