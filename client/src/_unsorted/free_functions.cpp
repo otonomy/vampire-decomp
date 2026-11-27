@@ -77347,6 +77347,52 @@ void CGameMovement::sub_100ed4d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ed720 size=0x12c
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+
+class CUnknown100a23f0
+{
+public:
+	void sub_100a23f0(int);
+};
+
+struct CUnduckMove2
+{
+	char m_pad0000[0x148];
+	Vector m_vecViewOffset;	// 0x148
+	char m_pad0154[0x16f8 - 0x154];
+	char m_b16f8;
+	char m_bDucked;	// 0x16f9
+	char m_bDucking;	// 0x16fa
+};
+
+#define PLAYER ((CMovePlayerView *)m_pPlayer)
+#define MOVE ((CUnduckMove2 *)m_pMove)
+
+void CGameMovement::sub_100ed720()
+{
+	Vector hullSizeNormal = m_vecHullMax - m_vecHullMin;
+	Vector hullSizeCrouch = m_vecDuckHullMax - m_vecDuckHullMin;
+	Vector viewDelta = (hullSizeNormal - hullSizeCrouch) * 0.5f;
+	MOVE->m_bDucked = 1;
+	MOVE->m_vecViewOffset = *(Vector *)slot4(1, MOVE->m_b16f8);
+	((CUnknown100a23f0 *)m_pMove)->sub_100a23f0(2);
+	MOVE->m_bDucking = 0;
+	if (((CMoveDataView *)m_pMove)->g104() != 0)
+	{
+		for (int i = 0; i < 3; i++)
+			PLAYER->m_vecOrigin[i] -= m_vecDuckHullMin[i] - m_vecHullMin[i];
+	}
+	else
+	{
+		VectorAdd(PLAYER->m_vecOrigin, viewDelta, PLAYER->m_vecOrigin);
+	}
+	sub_100ecfe0(true);
+	vfunc22();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ed9a0 size=0x342
 #include "CGameMovement.h"
 #include "CGameMovementViews.h"

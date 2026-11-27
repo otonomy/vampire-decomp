@@ -5882,6 +5882,7 @@
 0x100ecfb0 func   ?sub_100ecfb0@@YGMMM@Z sub_100ecfb0
 0x100ecfe0 func   ?sub_100ecfe0@CGameMovement@@QAEX_N@Z CGameMovement::sub_100ecfe0
 0x100ed4d0 func   ?sub_100ed4d0@CGameMovement@@QAEXXZ CGameMovement::sub_100ed4d0
+0x100ed720 func   ?sub_100ed720@CGameMovement@@QAEXXZ CGameMovement::sub_100ed720
 0x100ed950 func   ?vfunc25@CGameMovement@@UAEXXZ CGameMovement::vfunc25
 0x100ed9a0 func   ?sub_100ed9a0@CGameMovement@@QAEXXZ CGameMovement::sub_100ed9a0
 0x100edcf0 func   ?sub_100edcf0@@YAPBDH@Z sub_100edcf0
