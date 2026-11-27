@@ -92541,6 +92541,39 @@ void CUtlRBTree20::sub_10113a20(unsigned short elem)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10113be0 size=0x1c0
+#include "CUtlRBTree20.h"
+static inline const CUtlRBTree20::Links_t &LinksI(const CUtlRBTree20 *t, unsigned short i)
+{
+	static CUtlRBTree20::Links_t s_Sentinel = { CUtlRBTree20::InvalidIndex(), CUtlRBTree20::InvalidIndex(), CUtlRBTree20::InvalidIndex(), 1 };
+	return i != CUtlRBTree20::InvalidIndex() ? t->m_pElements[i].m_Links : s_Sentinel;
+}
+static inline void SetLeft(CUtlRBTree20 *t, unsigned short i, unsigned short c) { t->m_pElements[i].m_Links.m_Left = c; }
+static inline void SetRight(CUtlRBTree20 *t, unsigned short i, unsigned short c) { t->m_pElements[i].m_Links.m_Right = c; }
+static inline void SetParent(CUtlRBTree20 *t, unsigned short i, unsigned short c) { t->m_pElements[i].m_Links.m_Parent = c; }
+void CUtlRBTree20::sub_10113be0(unsigned short elem)
+{
+	unsigned short leftchild = sub_10112840(elem).m_Left;
+	SetLeft(this, elem, sub_10112840(leftchild).m_Right);
+	if (sub_10112840(leftchild).m_Right != InvalidIndex())
+		SetParent(this, sub_10112840(leftchild).m_Right, elem);
+	if (leftchild != InvalidIndex())
+		SetParent(this, leftchild, sub_10112840(elem).m_Parent);
+	if (elem != m_Root)
+	{
+		if (LinksI(this, sub_10112840(elem).m_Parent).m_Right == elem)
+			SetRight(this, LinksI(this, elem).m_Parent, leftchild);
+		else
+			SetLeft(this, LinksI(this, elem).m_Parent, leftchild);
+	}
+	else
+		m_Root = leftchild;
+	SetRight(this, leftchild, elem);
+	if (elem != InvalidIndex())
+		SetParent(this, elem, leftchild);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10113da0 size=0x1b2
 #include "CUtlRBTree16.h"
 
