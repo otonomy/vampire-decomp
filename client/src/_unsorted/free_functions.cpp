@@ -57199,6 +57199,57 @@ int HV100a::sub_100a6b90()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a6bd0 size=0x1f4
+#include "C_BasePlayer.h"
+#include "ehandle.h"
+#include "CBaseEntityList.h"
+#include "C_BaseEntity.h"
+void sub_100ca040(void *);
+void sub_100ca010(void *);
+void sub_100ca020(void *, int);
+IHandleEntity *sub_100c9d90(const Vector *, const Vector *, int);
+
+void C_BasePlayer::sub_100a6bd0(CUserCmd *cmd)
+{
+	if (g_pEntityList->sub_1007aca0((unsigned int *)&m_h19f4) && (cmd->buttons & 0x801)) {
+		void *s = g_pEntityList->sub_1007aca0((unsigned int *)&m_h19f4);
+		sub_100ca020(s, cmd->buttons);
+		cmd->buttons &= ~0x801;
+		return;
+	}
+	if ((((cmd->buttons & 1) || (cmd->buttons & 0x800)) && !g_pEntityList->sub_1007aca0((unsigned int *)&m_h19f4)) || *((char *)this + 0x19c8))
+		goto clear;
+	{
+		IHandleEntity *old = m_h19f4.Get();
+		const Vector &o = GetAbsOrigin();
+		const Vector &vo = *(Vector *)((char *)this + 0x148);
+		Vector pos;
+		pos.x = vo.x + o.x;
+		pos.y = o.y;
+		pos.y += vo.y;
+		pos.z = o.z;
+		pos.z += vo.z;
+		IHandleEntity *n = sub_100c9d90(&pos, &cmd->viewangles, -1);
+		if (n)
+			m_h19f4.m_Index = *n->vfunc1();
+		else
+			m_h19f4.m_Index = 0xffffffff;
+		if (old != m_h19f4.Get()) {
+			sub_100ca040(old);
+			sub_100ca010(m_h19f4.Get());
+		}
+		if (m_h19f4.Get()) {
+			sub_100ca020(m_h19f4.Get(), cmd->buttons);
+			cmd->buttons &= ~0x801;
+		}
+		return;
+	}
+clear:
+	sub_100ca040(g_pEntityList->sub_1007aca0((unsigned int *)&m_h19f4));
+	m_h19f4.m_Index = 0xffffffff;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a73a0 size=0x125
 #include "C_BasePlayer.h"
 #include "ConVar.h"
