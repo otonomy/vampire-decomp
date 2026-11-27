@@ -5710,6 +5710,7 @@
 0x100ea260 func   ?sub_100ea260@CGameMovement@@QAEXXZ CGameMovement::sub_100ea260
 0x100ea590 func   ?sub_100ea590@CGameMovement@@QAEXXZ CGameMovement::sub_100ea590
 0x100eaa70 func   ?vfunc18@CGameMovement@@UAEXXZ CGameMovement::vfunc18
+0x100eaaf0 func   ?vfunc19@CGameMovement@@QAEHPAVVector@@PAUCGameTrace@@@Z CGameMovement::vfunc19
 0x100eb150 func   ?sub_100eb150@CUnknown100353c0@@QAEPAV1@PBV1@@Z CUnknown100353c0::sub_100eb150
 0x100eb1f0 func   ?vfunc21@CGameMovement@@UAEDPAX@Z CGameMovement::vfunc21
 0x100eb240 func   ?vfunc20@CGameMovement@@UAEDXZ CGameMovement::vfunc20
