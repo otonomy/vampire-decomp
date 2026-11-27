@@ -6917,6 +6917,7 @@
 0x10124ff0 func   ?vfunc1@CEntitySpeedProxy@@UAEXH@Z CEntitySpeedProxy::vfunc1
 0x10125080 func   ?sub_10125080@@YAHXZ sub_10125080
 0x101250b0 func   ??_GCEntitySpeedProxy@@UAEPAXI@Z ??_GCEntitySpeedProxy@@UAEPAXI@Z
+0x101250d0 func   ?vfunc0@CEntityRandomProxy@@UAE_NPAX0@Z CEntityRandomProxy::vfunc0
 0x10125110 func   ?vfunc1@CEntityRandomProxy@@UAEXH@Z CEntityRandomProxy::vfunc1
 0x10125180 func   ?sub_10125180@@YAHXZ sub_10125180
 0x101251b0 func   ??_GCEntityRandomProxy@@UAEPAXI@Z ??_GCEntityRandomProxy@@UAEPAXI@Z
