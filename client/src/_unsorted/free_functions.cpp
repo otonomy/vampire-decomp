@@ -125329,6 +125329,54 @@ void VList::sub_1015abf0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015acb0 size=0x144
+#include "ScopeTrace.h"
+
+struct StatAction_1015a110 { StatAction_1015a110 *sub_1015a110(int, int); };
+
+struct StatActionList_1015acb0
+{
+	int m_nAlloc;
+	int m_nCount;
+	StatAction_1015a110 **m_ppData;
+	int m_a;
+	int m_b;
+	StatAction_1015a110 *sub_1015acb0();
+};
+
+// TARGET: StatActionList_1015acb0::sub_1015acb0
+StatAction_1015a110 *StatActionList_1015acb0::sub_1015acb0()
+{
+	ScopeTrace st("CVStatActionList_t::Alloc", g_102de300);
+	if (m_nAlloc == m_nCount) {
+		m_nAlloc++;
+		if (m_ppData) {
+			StatAction_1015a110 **p = (StatAction_1015a110 **)operator new(m_nAlloc * 4);
+			int i;
+			for (i = 0; i < m_nCount; i++)
+				p[i] = m_ppData[i];
+			for (; i < m_nAlloc; i++)
+				p[i] = 0;
+			operator delete(m_ppData);
+			m_nCount++;
+			m_ppData = p;
+		} else {
+			m_ppData = (StatAction_1015a110 **)operator new(m_nAlloc * 4);
+			for (int i = 0; i < m_nAlloc; i++)
+				m_ppData[i] = 0;
+			m_nCount++;
+		}
+	} else {
+		m_nCount++;
+	}
+	if (!m_ppData[m_nCount - 1]) {
+		StatAction_1015a110 *p = (StatAction_1015a110 *)operator new(0x58);
+		m_ppData[m_nCount - 1] = p ? p->sub_1015a110(m_a, m_b) : 0;
+	}
+	return m_ppData[m_nCount - 1];
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015ae00 size=0xa7
 namespace lifted {
 extern int g_101e3124;
