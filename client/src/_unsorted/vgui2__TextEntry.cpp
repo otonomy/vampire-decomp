@@ -94,6 +94,23 @@ vgui2::TextEntry *pcd_emit_101acd90(const vgui2::TextEntry &other) { return new 
 // TARGET: ??_GTextEntry@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101acdb0 size=0x4f
+#include "vgui2__TextEntry.h"
+namespace vgui2 {
+TextEntry::~TextEntry()
+{
+	char *s = (char *)this;
+	vgui2::Panel *a = *(vgui2::Panel **)(s + 0xfc);
+	if (a)
+		delete a;
+	::operator delete(*(void **)(s + 0xe8));
+	::operator delete(*(void **)(s + 0x80));
+	::operator delete(*(void **)(s + 0x6c));
+	::operator delete(*(void **)(s + 0x60));
+}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ace00 size=0xf9
 struct Color {
 	int c;
