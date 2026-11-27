@@ -19,6 +19,7 @@ public:
 	Panel(Panel *parent, const char *name);
 	void sub_101ab300(bool, bool);
 	int sub_101aa050(int);
+	void sub_101ab750(int);
 	Panel *sub_101aac10(int);
 	void sub_101ac570(void *);
 	void sub_101aab60(int);
