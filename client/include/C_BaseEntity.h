@@ -47,6 +47,9 @@ public:
 	void sub_1011b890();
 	void sub_1011b730(int type);
 	void sub_100a2ee0();
+	void sub_100a25b0();
+	void sub_100a25f0(int);
+	void sub_100a2760(int, int);
 	void sub_100a2f50();
 	int sub_100a31e0(void *pDataMap);
 	void sub_100a0450();
