@@ -8144,6 +8144,7 @@
 0x10150b90 func   ?sub_10150b90@CUnknown10150b90@@QAEPAXH@Z CUnknown10150b90::sub_10150b90
 0x10150bc0 func   ??1CUnknown101ed170@@QAE@XZ CUnknown101ed170::~CUnknown101ed170
 0x10150bc0 func   ?sub_10150bc0@CUnknown101ed170@@QAEXXZ CUnknown101ed170::sub_10150bc0
+0x10150ff0 func   ?sub_10150ff0@ItemView@@QAEDXZ ItemView::sub_10150ff0
 0x101510f0 func   ?sub_101510f0@ItemView@@QAE_NPAUKVNode@@@Z ItemView::sub_101510f0
 0x10151270 func   ?sub_10151270@CUnknown10151270@@QAEPAXH@Z CUnknown10151270::sub_10151270
 0x10151280 func   ?sub_10151280@@YAXXZ sub_10151280
