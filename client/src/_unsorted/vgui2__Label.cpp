@@ -854,6 +854,41 @@ int vgui2::Label::vfunc74(int pSchemeArg)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b2f70 size=0x118
+#include "vgui2__Label.h"
+#include "vgui2__KeyValues.h"
+#define V10(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); \
+	virtual void p##5(); virtual void p##6(); virtual void p##7(); virtual void p##8(); virtual void p##9();
+struct TextImageView { V10(a) V10(b) virtual void c0(); virtual void c1(); virtual void c2(); virtual void c3(); virtual void c4(); virtual void c5(); virtual void c6(); virtual void c7(); virtual void c8(); virtual void GetText(char *buf, int n); };
+void vgui2::Label::sub_101b2f70(int a)
+{
+	vgui2::KeyValues *kv = (vgui2::KeyValues *)a;
+	Panel::sub_101ab750(a);
+	char buf[256];
+	(*(TextImageView **)((char *)this + 0x5c))->GetText(buf, 255);
+	kv->vfunc14("labelText", buf);
+	const char *s;
+	switch (*(int *)((char *)this + 0x58))
+	{
+	case 0: s = "north-west"; break;
+	case 1: s = "north"; break;
+	case 2: s = "north-east"; break;
+	case 4: s = "center"; break;
+	case 5: s = "east"; break;
+	case 6: s = "south-west"; break;
+	case 7: s = "south"; break;
+	case 8: s = "south-east"; break;
+	case 3:
+	default: s = "west"; break;
+	}
+	kv->vfunc14("textAlignment", s);
+	if (m_pA4)
+		kv->vfunc14("associate", m_pA4->vfunc18());
+	kv->vfunc15((int)"dulltext", *(int *)((char *)this + 0xa0) == 1);
+	kv->vfunc15((int)"brighttext", *(int *)((char *)this + 0xa0) == 2);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b3090 size=0x1f9
 #include "vgui2__Label.h"
 extern "C" int strcmp(const char *, const char *);
