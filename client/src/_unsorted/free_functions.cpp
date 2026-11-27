@@ -52713,6 +52713,18 @@ bool C_BasePlayer::sub_100a54c0(int a, int b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a5520 size=0x16
+namespace lifted {
+extern int g_102b8494;
+}
+struct CUnknown100a5520 { int sub_100a5520(int); };
+int CUnknown100a5520::sub_100a5520(int a0)
+{
+    *(int *)((char *)this + a0 * 4 + 0x14f0) = *(int *)((char *)lifted::g_102b8494 + 0xc);
+    return a0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a5910 size=0x1c
 #include "CInput.h"
 #include "C_BasePlayer.h"

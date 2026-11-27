@@ -4295,6 +4295,7 @@
 0x100a5480 func   ?sub_100a5480@CUnknown100a5480@@QAEPAXD@Z CUnknown100a5480::sub_100a5480
 0x100a54a0 func   ??_GC_BasePlayer@@UAEPAXI@Z ??_GC_BasePlayer@@UAEPAXI@Z
 0x100a54c0 func   ?sub_100a54c0@C_BasePlayer@@QAE_NHH@Z C_BasePlayer::sub_100a54c0
+0x100a5520 func   ?sub_100a5520@CUnknown100a5520@@QAEHH@Z CUnknown100a5520::sub_100a5520
 0x100a5540 func   ??1C_BasePlayer@@UAE@XZ C_BasePlayer::~C_BasePlayer
 0x100a56b0 func   ?vfunc0@CPlayerLocalPredictedData@@UAEPAXD@Z CPlayerLocalPredictedData::vfunc0
 0x100a58a0 func   ?vfunc177@C_BasePlayer@@UAEXXZ C_BasePlayer::vfunc177
