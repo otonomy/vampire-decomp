@@ -140708,6 +140708,36 @@ void sub_101985e0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10198640 size=0xd2
+#include "engineclient.h"
+#include "ScopeTrace.h"
+struct S1061899c { virtual int v0(); virtual bool v1(); char pad[0x24]; float m28; };
+extern S1061899c *g_1061899c;
+extern float g_10618c1c;
+extern char g_10618b44;
+void *sub_10198520();
+void sub_10198720();
+
+// TARGET: sub_10198640
+void sub_10198640()
+{
+	ScopeTrace st("::SetScreenDelayTexture", g_102de300);
+	void *tex = sub_10198520();
+	if (tex)
+	{
+		g_10618b44 = 1;
+		float t = engine->Time(0);
+		float cmp = g_1061899c->v1() ? 0.0f : g_1061899c->m28;
+		if (t > cmp + g_10618c1c)
+		{
+			sub_10198720();
+			g_10618b44 = 1;
+		}
+		materials->vfunc62((int)tex, 0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10198720 size=0xbf
 #include "engineclient.h"
 #include "ScopeTrace.h"
