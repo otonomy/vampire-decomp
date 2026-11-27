@@ -3314,6 +3314,7 @@
 0x100656a0 func   ?sub_100656a0@@YAXXZ sub_100656a0
 0x10065840 func   ??_GCVMainMenu@@UAEPAXI@Z ??_GCVMainMenu@@UAEPAXI@Z
 0x10065860 func   ??1CVMainMenu@@UAE@XZ CVMainMenu::~CVMainMenu
+0x10065950 func   ?sub_10065950@CVMainMenu@@QAEXXZ CVMainMenu::sub_10065950
 0x10065c40 func   ?vfunc97@CVMainMenu@@UAEXXZ CVMainMenu::vfunc97
 0x10065c90 func   ?sub_10065c90@CVMainMenu@@QAE_NXZ CVMainMenu::sub_10065c90
 0x10065d30 func   ?sub_10065d30@CVMainMenu@@QAE_NXZ CVMainMenu::sub_10065d30

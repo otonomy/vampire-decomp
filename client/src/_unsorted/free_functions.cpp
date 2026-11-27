@@ -33047,6 +33047,35 @@ void sub_100656a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10065950 size=0xa7
+#include "CVMainMenu.h"
+extern int g_103ef0bc;
+extern int g_103ef0b8;
+extern int g_103ef0c0;
+// TARGET: CVMainMenu::sub_10065950
+void CVMainMenu::sub_10065950()
+{
+	if (g_103ef0bc > 0 || g_103ef0b8 > 0 || g_103ef0c0 > 0)
+		m_unk2e8 = -1;
+	if (g_103ef0bc == 2)
+		g_103ef0bc = 0;
+	if (g_103ef0b8 == 2)
+		g_103ef0b8 = 0;
+	if (g_103ef0c0 == 2)
+		g_103ef0c0 = 0;
+	if (g_103ef0bc == 1) {
+		sub_10067610(10);
+		g_103ef0bc = 0;
+	} else if (g_103ef0b8 == 1) {
+		sub_10067610(9);
+		g_103ef0b8 = 0;
+	} else if (g_103ef0c0 == 1) {
+		sub_10067610(2);
+		g_103ef0c0 = 0;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10065c90 size=0x9d
 #include "engineclient.h"
 #include "CVMainMenu.h"
