@@ -3259,6 +3259,7 @@
 0x10060400 func   ??_GCSignTextBlock@@UAEPAXI@Z ??_GCSignTextBlock@@UAEPAXI@Z
 0x10060420 func   ?sub_10060420@CSignTextBlock_Copy@@QAEPAV1@PBUSignTextBlockRaw@@@Z CSignTextBlock_Copy::sub_10060420
 0x10060530 func   ??1CSignTextBlock@@UAE@XZ CSignTextBlock::~CSignTextBlock
+0x10060560 func   ?vfunc74@CSignTextBlock@@UAEHH@Z CSignTextBlock::vfunc74
 0x100606d0 func   ?0CSignLabel@@QAE@PAVPanel@vgui2@@PBD1@Z 0CSignLabel
 0x100606d0 func   ??0CSignLabel@@QAE@PAVPanel@vgui2@@PBD1@Z CSignLabel::CSignLabel
 0x10060730 func   ??_GCSignLabel@@UAEPAXI@Z ??_GCSignLabel@@UAEPAXI@Z
