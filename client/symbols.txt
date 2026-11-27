@@ -6837,6 +6837,7 @@
 0x1011b730 func   ?sub_1011b730@C_BaseEntity@@QAEXH@Z C_BaseEntity::sub_1011b730
 0x1011b890 func   ?sub_1011b890@C_BaseEntity@@QAEXXZ C_BaseEntity::sub_1011b890
 0x1011b920 func   ?vfunc98@C_BaseEntity@@UAE_NXZ C_BaseEntity::vfunc98
+0x1011ba80 func   ?sub_1011ba80@@YAXPAVC_BaseEntity@@0@Z sub_1011ba80
 0x1011bb30 func   ?sub_1011bb30@@YAXPAXPAUTouchLink@@@Z sub_1011bb30
 0x1011bd60 func   ?sub_1011bd60@C_BaseEntity@@QAEXPAV1@@Z C_BaseEntity::sub_1011bd60
 0x1011bdf0 func   ?sub_1011bdf0@C_BaseEntity@@QAEXPAV1@@Z C_BaseEntity::sub_1011bdf0

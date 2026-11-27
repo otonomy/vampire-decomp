@@ -94179,6 +94179,38 @@ void C_BaseEntity::sub_1011b890()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011ba80 size=0xb0
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+struct TouchLink {
+	C_BaseEntity *m_pEntity;	// 0x00
+	int m_unk04;
+	TouchLink *m_pNext;	// 0x08
+	TouchLink *m_pPrev;	// 0x0c
+};
+void sub_1011bb30(void *, TouchLink *);
+// TARGET: sub_1011ba80
+void sub_1011ba80(C_BaseEntity *other, C_BaseEntity *ent)
+{
+	ScopeTrace st("CBaseEntity::PhysicsNotifyOtherOfUntouch", g_102de300);
+	if (ent) {
+		TouchLink *root = ent->sub_1011b440(1);
+		if (root) {
+			TouchLink *link = root->m_pNext;
+			while (link != root) {
+				if (link->m_pEntity == other) {
+					sub_1011bb30(ent, link);
+					if (root->m_pNext == root && root->m_pPrev == root)
+						ent->sub_1011b730(1);
+					return;
+				}
+				link = link->m_pNext;
+			}
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011bb30 size=0xf7
 struct VProfNode
 {
