@@ -60378,6 +60378,56 @@ bool sub_100b3640(Vector vec, int type)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b36b0 size=0x1d2
+#include "Vector.h"
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+extern "C" double atof(const char *);
+extern "C" int atoi(const char *);
+struct PlayerAimView
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42();
+	virtual Vector *GetAbsOrigin();
+	virtual void v44();
+	virtual Vector *EyeAngles();
+};
+void sub_101090a0(const void *angles, Vector *forward, Vector *right, Vector *up);
+bool sub_100b3640(Vector pos, int type, Vector normal);
+bool sub_100b35c0(Vector pos, const char *name, Vector normal);
+// TARGET: sub_100b36b0
+void sub_100b36b0()
+{
+	float flDist = 40.0f;
+	switch (engine->vfunc63())
+	{
+	case 2:
+		break;
+	case 3:
+		flDist = atof(engine->Cmd_Argv(2));
+		break;
+	default:
+		return;
+	}
+	PlayerAimView *pPlayer = (PlayerAimView *)C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return;
+	Vector forward;
+	sub_101090a0(pPlayer->EyeAngles(), &forward, 0, 0);
+	Vector pos;
+	pos = forward * flDist;
+	pos = (*(Vector *)((char *)pPlayer + 0x148) + *pPlayer->GetAbsOrigin()) + pos;
+	forward = -forward;
+	if (atoi(engine->Cmd_Argv(1)) > 0)
+		sub_100b3640(pos, atoi(engine->Cmd_Argv(1)), forward);
+	else
+		sub_100b35c0(pos, engine->Cmd_Argv(1), forward);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b38e0 size=0x21c
 #include "C_BasePlayer.h"
 #include "CClientEntityList.h"

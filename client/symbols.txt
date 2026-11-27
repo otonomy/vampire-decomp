@@ -4646,6 +4646,7 @@
 0x100b3560 func   ?sub_100b3560@@YAPAVC_EnvParticle@@XZ sub_100b3560
 0x100b35c0 func   ?sub_100b35c0@@YA_NVVector@@PBD@Z sub_100b35c0
 0x100b3640 func   ?sub_100b3640@@YA_NVVector@@H@Z sub_100b3640
+0x100b36b0 func   ?sub_100b36b0@@YAXXZ sub_100b36b0
 0x100b38e0 func   ?sub_100b38e0@@YAXXZ sub_100b38e0
 0x100b3b00 func   ?sub_100b3b00@@YAHPBD@Z sub_100b3b00
 0x100b4150 func   ?sub_100b4150@@YA_NPAUObjV@@VVector@@11MHH@Z sub_100b4150
