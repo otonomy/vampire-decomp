@@ -51,3 +51,29 @@ bool CTextConsoleProxy::vfunc0(void *pMat, void *)
 	return (bool)*(volatile char *)&pMat;
 }
 // END FUNCTION
+
+// FUNCTION: 0x100c8720 size=0x58
+#include "CTextConsoleProxy.h"
+#include "C_BaseTerminal.h"
+struct MatObj {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(void *);
+};
+// TARGET: CTextConsoleProxy::vfunc1
+void CTextConsoleProxy::vfunc1(IClientRenderable *pArg)
+{
+	if (m_pMaterial && pArg) {
+		C_BaseEntity *pEnt = (C_BaseEntity *)pArg;
+		C_BaseTerminal *pTerm = dynamic_cast<C_BaseTerminal *>(pEnt);
+		if (pTerm) {
+			void *pTex = pTerm->sub_100c7720();
+			if (pTex) {
+				sub_100c8580(pTerm);
+				((MatObj *)m_pMaterial)->v19(pTex);
+			}
+		}
+	}
+}
+// END FUNCTION
