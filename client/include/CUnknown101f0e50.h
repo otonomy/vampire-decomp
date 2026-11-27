@@ -35,6 +35,7 @@ public:
 
 		// zeroes the fields above and returns this
 		// the index of the entry named pszName, -1 when there is none (stub 0x10010861)
+	bool sub_10153230(const char *pszFile);
 	bool sub_10153640(int index);	// "IsValidIndex": index is not -1 and below the count at +0x4
 	bool sub_10157af0(int index);
 	char sub_10157b10(int index);	// stub 0x1000a78b: whether index is a valid entry id (checked by sub_101f9b70)
