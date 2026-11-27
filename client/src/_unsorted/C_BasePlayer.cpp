@@ -405,6 +405,48 @@ void C_BasePlayer::OnDataChanged(int updateType)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a6970 size=0x147
+#include "C_BasePlayer.h"
+#include "vector.h"
+#include "QAngle.h"
+
+struct KFV { float time; Vector v1; QAngle v2; };
+
+extern "C" void sub_100a6ac0(float *);
+extern "C" void sub_10108fd0(const Vector *, float, const Vector *, Vector *);
+extern "C" void sub_100ccf50(const QAngle *, const QAngle *, QAngle *, float);
+
+// TARGET: C_BasePlayer::vfunc149
+void C_BasePlayer::vfunc149(float t, Vector *pOut1, QAngle *pOut2)
+{
+	float f;
+	KFV *pPrev, *pNext;
+	sub_100a1ef0(t, (void **)&pNext, (void **)&pPrev);
+	if (pNext && pPrev) {
+		float tPrev = pPrev->time;
+		float tNext = pNext->time;
+		if (tNext == 0.0f) {
+			*pOut1 = pPrev->v1;
+			*pOut2 = pPrev->v2;
+			return;
+		}
+		Vector delta;
+		VectorSubtract(pNext->v1, pPrev->v1, delta);
+		if (tNext == tPrev)
+			f = 1.0f;
+		else
+			f = (t - tPrev) / (tNext - tPrev);
+		sub_100a6ac0(&f);
+		Vector r1;
+		sub_10108fd0(&pPrev->v1, f, &delta, &r1);
+		QAngle r2;
+		sub_100ccf50(&pPrev->v2, &pNext->v2, &r2, f);
+		*pOut1 = r1;
+		*pOut2 = r2;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a6b10 size=0x71
 #include "engineclient.h"
 #include "C_BasePlayer.h"
