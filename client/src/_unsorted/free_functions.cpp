@@ -57061,6 +57061,96 @@ char CUnknown100a8dc0::sub_100a8dc0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a8de0 size=0x1a4
+#include "C_BasePlayer.h"
+#include "C_BaseCombatWeapon.h"
+#include "engineclient.h"
+extern "C" __declspec(dllimport) int __cdecl Q_snprintf(char *, unsigned int, const char *, ...);
+struct IEdictIdxX
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual int vfunc9();
+};
+struct CUnknown100a8dc0
+{
+	char sub_100a8dc0();
+	void sub_100a8de0(C_BasePlayer *pPlayer, bool bFlag);
+	int m_nState;
+	int m_nDiscipline;
+};
+extern int g_104a0d48;
+char sub_10170bf0();
+void sub_10170c20();
+int sub_1009b210();
+void sub_1004f810();
+void sub_101746f0();
+// TARGET: CUnknown100a8dc0::sub_100a8de0
+void CUnknown100a8dc0::sub_100a8de0(C_BasePlayer *pPlayer, bool bFlag)
+{
+	if (sub_100a8dc0())
+	{
+		if (pPlayer->vfunc167())
+		{
+			if (!sub_10170bf0())
+			{
+				if ((int)pPlayer->vfunc167() != sub_1009b210())
+				{
+					C_BaseCombatWeapon *pWeapon = (C_BaseCombatWeapon *)pPlayer->vfunc167();
+					char *pInfo = (char *)pWeapon->sub_1007b160();
+					if (!*(int *)(pInfo + 0x4fee4))
+					{
+						pPlayer->vfunc168(0);
+						pPlayer->vfunc160(false);
+						return;
+					}
+					if (pPlayer->vfunc163())
+					{
+						C_BaseCombatWeapon *pCur = (C_BaseCombatWeapon *)pPlayer->vfunc167();
+						engine->vfunc27((const char *)pCur->vfunc223(), 1);
+						C_BaseCombatWeapon *pCur2 = (C_BaseCombatWeapon *)pPlayer->vfunc167();
+						g_104a0d48 = ((IEdictIdxX *)((char *)pCur2 + 8))->vfunc9();
+						*(int *)((char *)pPlayer + 0x1a0c) = *(int *)((char *)pPlayer + 0x1a08);
+					}
+				}
+			}
+			else
+			{
+				sub_10170c20();
+				return;
+			}
+		}
+		else if (sub_10170bf0())
+			return;
+		if (bFlag)
+		{
+			pPlayer->vfunc168(0);
+			pPlayer->vfunc160(false);
+		}
+	}
+	else if (m_nState == 0)
+	{
+		bool bChanged;
+		char szCmd[0x30];
+		int nValue = pPlayer->sub_100a94d0(m_nDiscipline, &bChanged);
+		Q_snprintf(szCmd, 0x30, "vdiscipline_int %d", nValue);
+		if (bChanged)
+		{
+			sub_1004f810();
+			engine->vfunc27(szCmd, 1);
+		}
+		if (bFlag)
+			pPlayer->vfunc160(false);
+	}
+	else if (m_nState == 7)
+	{
+		pPlayer->vfunc160(false);
+		if (!m_nDiscipline)
+			sub_101746f0();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a8f90 size=0x39
 #include "C_BasePlayer.h"
 struct CUnknown100a8dc0 {
