@@ -110317,6 +110317,66 @@ void sub_1013ac10(CUnknown1006c1c0 *reader, CUnknownImgInfo *info, unsigned char
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013ac80 size=0x1d8
+#include "CUtlBuffer.h"
+struct ImgHdr { char m_pad0[7]; unsigned char m_bpp; int m_pad8; unsigned short m_nCount; };
+extern unsigned char g_105e70b8[];
+void sub_1013ce00(CUtlBuffer *, const char *, ...);
+#define GET_UC(buf, c) \
+	if (!(buf->m_nFlags & 1)) { \
+		if (buf->sub_1013cbb0(1)) { c = *(unsigned char *)(buf->m_pBuffer + buf->m_nGet); buf->m_nGet++; } \
+		else c = 0; \
+	} else sub_1013ce00(buf, "%u", &c);
+// TARGET: sub_1013ac80
+void sub_1013ac80(CUtlBuffer *buf, ImgHdr *hdr, unsigned char *dst)
+{
+	int i;
+	switch (hdr->m_bpp) {
+	case 32:
+		i = 0;
+		while (i < hdr->m_nCount) {
+			unsigned char c;
+			GET_UC(buf, c);
+			unsigned char *p = &g_105e70b8[c * 4];
+			dst[0] = p[3];
+			dst[1] = p[2];
+			dst[2] = p[1];
+			dst[3] = p[0];
+			i++;
+			dst += 4;
+		}
+		break;
+	case 24:
+		i = 0;
+		while (i < hdr->m_nCount) {
+			unsigned char c;
+			GET_UC(buf, c);
+			dst[0] = g_105e70b8[c * 3 + 2];
+			dst[1] = g_105e70b8[c * 3 + 1];
+			dst[2] = g_105e70b8[c * 3];
+			dst[3] = 0xff;
+			i++;
+			dst += 4;
+		}
+		break;
+	case 8:
+		i = 0;
+		while (i < hdr->m_nCount) {
+			unsigned char c;
+			GET_UC(buf, c);
+			unsigned char *p = &g_105e70b8[c];
+			dst[0] = *p;
+			dst[1] = *p;
+			dst[2] = *p;
+			dst[3] = 0xff;
+			++i;
+			dst += 4;
+		}
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013ae60 size=0x7d
 #include "CUtlBuffer.h"
 #include "CUnknown1006c180.h"
