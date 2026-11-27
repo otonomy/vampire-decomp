@@ -884,6 +884,62 @@ template <> int ClientClassInit<DT_ItemGKeyring::ignored>(DT_ItemGKeyring::ignor
 }
 // END FUNCTION
 
+// FUNCTION: 0x100037f0 size=0x125
+extern "C" __declspec(dllimport) char *Q_strncpy(char *, const char *, int);
+extern "C" void *memmove(void *, const void *, unsigned int);
+void sub_10114660(int, int);
+int sub_10114690();
+char *sub_101146e0();
+
+struct Elem192 { char a[0x60]; char b[0x60]; };
+
+struct CUtlMemory192
+{
+	Elem192 *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	void sub_10003c10(int);
+};
+
+struct EvVec : CUtlMemory192
+{
+	int m_size;
+	Elem192 *m_pElements;
+};
+
+struct EvSelf { char pad[0x970]; EvVec m_Events; };
+
+void __fastcall sub_100037f0(EvSelf *self, int edx, int a, int b)
+{
+	sub_10114660(b, a);
+	int ev = sub_10114690();
+	if ((char)ev == 0x7a) {
+		Elem192 e;
+		Q_strncpy(e.a, sub_101146e0(), 0x60);
+		Q_strncpy(e.b, sub_101146e0(), 0x60);
+		EvVec &v = self->m_Events;
+		int elem = v.m_size;
+		if (v.m_size + 1 > v.m_allocationCount)
+			v.sub_10003c10(v.m_size + 1 - v.m_allocationCount);
+		v.m_size += 1;
+		v.m_pElements = v.m_pMemory;
+		int numToMove = v.m_size - elem - 1;
+		if (numToMove > 0)
+			memmove(&v.m_pMemory[elem + 1], &v.m_pMemory[elem], numToMove * sizeof(Elem192));
+		Elem192 *p = &v.m_pMemory[elem];
+		if (p)
+			*p = e;
+	} else if ((char)ev == 0x7b) {
+		EvVec &v = self->m_Events;
+		int idx = sub_10114690();
+		int n = v.m_size - idx - 1;
+		if (n > 0)
+			memmove(&v.m_pMemory[idx], &v.m_pMemory[idx + 1], n * sizeof(Elem192));
+		--v.m_size;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10003960 size=0x1b
 namespace lifted {
 struct C10003b50 { int sub_10003b50(); };
