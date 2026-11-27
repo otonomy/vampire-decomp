@@ -77218,6 +77218,63 @@ float __stdcall sub_100ecfb0(float a, float b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ecfe0 size=0x1a5
+#include "CBaseEntityList.h"
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "CUnknown100290c0.h"
+#include "CTraceFilterSimple.h"
+#include "engineclient.h"
+#include "C_BaseEntity.h"
+
+void sub_100e7380(int, int, int, int, int);
+
+struct CUnduckSub { virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual unsigned int g7(); };
+struct CUnduckMove
+{
+	char m_pad0000[0xc];
+	CUnduckSub m_sub;
+};
+
+#define PLAYER ((CMovePlayerView *)m_pPlayer)
+
+void CGameMovement::sub_100ecfe0(bool bMoveUp)
+{
+	int direction = bMoveUp ? 1 : 0;
+	CGameTrace trace;
+	unsigned int hitent = 0xffffffff;
+	{
+		Ray_t ray;
+		Vector &origin = PLAYER->m_vecOrigin;
+		ray.sub_100e91e0(origin, origin, sub_100e6ef0(), (float *)sub_100e6f20(), (char)((((CUnduckMove *)m_pMove)->m_sub.g7() >> 6) & 1), 0);
+		sub_100e7380((int)&ray, 0x201400b, ((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0(&PLAYER->m_hRef), 6, (int)&trace);
+	}
+	if ((trace.m_contents & 0x201400b) && trace.m_pEnt)
+		hitent = *((C_BaseEntity *)trace.m_pEnt)->vfunc1();
+	if (hitent == 0xffffffff)
+		return;
+	Vector test;
+	VectorCopy(PLAYER->m_vecOrigin, test);
+	for (int i = 0; i < 36; i++)
+	{
+		PLAYER->m_vecOrigin.z += direction;
+		{
+			Ray_t ray;
+			Vector &origin = PLAYER->m_vecOrigin;
+			ray.sub_100e91e0(origin, origin, sub_100e6ef0(), (float *)sub_100e6f20(), (char)((((CUnduckMove *)m_pMove)->m_sub.g7() >> 6) & 1), 0);
+			CTraceFilterSimple filter;
+			filter.sub_1004b5c0((const void *)((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0(&PLAYER->m_hRef), 6);
+			enginetrace->vfunc4((int)&ray, 0x201400b, &filter, (int)&trace);
+		}
+		if (!(trace.m_contents & 0x201400b) || !trace.m_pEnt || *((C_BaseEntity *)trace.m_pEnt)->vfunc1() == -1)
+			return;
+	}
+	VectorCopy(test, PLAYER->m_vecOrigin);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ed4d0 size=0x24e
 #include "CBaseEntityList.h"
 #include "CGameMovement.h"
