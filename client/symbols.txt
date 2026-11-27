@@ -8816,6 +8816,7 @@
 0x1016b180 func   ??_GVBarterLabel@@UAEPAXI@Z ??_GVBarterLabel@@UAEPAXI@Z
 0x1016b1a0 func   ??1VBarterLabel@@UAE@XZ VBarterLabel::~VBarterLabel
 0x1016b1a0 func   ?sub_1016b1a0@CUnknown1016b1a0@@QAEHXZ CUnknown1016b1a0::sub_1016b1a0
+0x1016b1c0 func   ?vfunc98@VBarterLabel@@UAEXXZ VBarterLabel::vfunc98
 0x1016b2a0 func   ?vfunc85@VBarterLabel@@UAEXXZ VBarterLabel::vfunc85
 0x1016b2d0 func   ?vfunc86@VBarterLabel@@UAEXXZ VBarterLabel::vfunc86
 0x1016b300 func   ?vfunc89@VBarterLabel@@UAEXH@Z VBarterLabel::vfunc89
