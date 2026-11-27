@@ -114275,6 +114275,71 @@ char sub_10141400()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101414b0 size=0x12c
+struct IObjV { int dummy; };
+struct SecV
+{
+	SecV *sub_10141210(int);
+	bool sub_10141250(IObjV *);
+};
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+struct SecListV
+{
+	int m_grow; int m_alloc; int m_size; SecV **m_data;
+	bool sub_101414b0(IObjV *obj);
+};
+
+bool SecListV::sub_101414b0(IObjV *obj)
+{
+	if (obj) {
+		if (m_alloc == m_size) {
+			m_alloc += m_grow;
+			if (m_data) {
+				SecV **n = (SecV **)operator new(m_alloc * 4);
+				int i = 0;
+				if (m_size > 0) {
+					do {
+						n[i] = m_data[i];
+						i++;
+					} while (i < m_size);
+				}
+				if (i < m_alloc) {
+					do {
+						n[i] = 0;
+						i++;
+					} while (i < m_alloc);
+				}
+				operator delete(m_data);
+				m_data = n;
+			} else {
+				m_data = (SecV **)operator new(m_alloc * 4);
+				int i = 0;
+				if (m_alloc > 0) {
+					do {
+						m_data[i] = 0;
+						i++;
+					} while (i < m_alloc);
+				}
+			}
+			m_size++;
+		} else
+			m_size++;
+		if (!m_data[m_size - 1]) {
+			void *mem = operator new(0x188);
+			m_data[m_size - 1] = mem ? ((SecV *)mem)->sub_10141210(m_size - 1) : 0;
+		}
+		SecV *p = m_data[m_size - 1];
+		if (p) {
+			p->sub_10141250(obj);
+			return true;
+		}
+		Msg("Unable to parse data file:  Memory allocation ERROR!\n");
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10141650 size=0x48
 namespace lifted {
 extern char g_102c6f64;
