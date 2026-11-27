@@ -20,6 +20,13 @@ int C_Beam::vfunc15()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10080220 size=0x46
+#include "C_Beam.h"
+C_Beam::C_Beam()
+{
+}
+// END FUNCTION
+
 // FUNCTION: 0x10080270 size=0x90
 #include "C_Beam.h"
 #include "Vector.h"
