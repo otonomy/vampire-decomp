@@ -4960,6 +4960,7 @@
 0x100c8520 func   ?vfunc2@CTextConsoleProxy@@UAEXXZ CTextConsoleProxy::vfunc2
 0x100c8530 func   ??_GCTextConsoleProxy@@UAEPAXI@Z ??_GCTextConsoleProxy@@UAEPAXI@Z
 0x100c8550 func   ??1CTextConsoleProxy@@UAE@XZ CTextConsoleProxy::~CTextConsoleProxy
+0x100c8580 func   ?sub_100c8580@CTextConsoleProxy@@QAEXPAVC_BaseTerminal@@@Z CTextConsoleProxy::sub_100c8580
 0x100c86f0 func   ?vfunc0@CTextConsoleProxy@@UAE_NPAX0@Z CTextConsoleProxy::vfunc0
 0x100c87b0 func   ?sub_100c87b0@@YAHXZ sub_100c87b0
 0x100c87d0 func   ?sub_100c87d0@@YAHXZ sub_100c87d0

@@ -63040,6 +63040,50 @@ void * CUnknown100c8500::sub_100c8500()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c8580 size=0xf0
+#include "CTextConsoleProxy.h"
+#include "C_BaseTerminal.h"
+extern "C" __declspec(dllimport) void *Plat_Alloc(unsigned int);
+extern "C" __declspec(dllimport) void *Plat_Realloc(void *, unsigned int);
+extern "C" void *__cdecl memmove(void *, const void *, unsigned int);
+// TARGET: CTextConsoleProxy::sub_100c8580
+void CTextConsoleProxy::sub_100c8580(C_BaseTerminal *p)
+{
+	if (p == m_pTerminal)
+		return;
+	if (m_pTerminal)
+		sub_100c8670(m_pTerminal);
+	if (p) {
+		int elem = p->m_size;
+		if (p->m_size + 1 > p->m_alloc && p->m_grow != -1) {
+			while (p->m_alloc < p->m_size + 1) {
+				if (p->m_alloc) {
+					if (p->m_grow)
+						p->m_alloc += p->m_grow;
+					else
+						p->m_alloc += p->m_alloc;
+				} else {
+					p->m_alloc = 8;
+				}
+			}
+			if (p->m_pMem)
+				p->m_pMem = Plat_Realloc(p->m_pMem, p->m_alloc * 4);
+			else
+				p->m_pMem = Plat_Alloc(p->m_alloc * 4);
+		}
+		p->m_pElements = p->m_pMem;
+		p->m_size++;
+		int cnt = p->m_size - elem - 1;
+		if (cnt > 0)
+			memmove((int *)p->m_pMem + elem + 1, (int *)p->m_pMem + elem, cnt * 4);
+		int *slot = (int *)p->m_pMem + elem;
+		if (slot)
+			*slot = (int)this;
+	}
+	m_pTerminal = p;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c87b0 size=0x18
 namespace lifted {
 struct C100c8500 { int sub_100c8500(); };
