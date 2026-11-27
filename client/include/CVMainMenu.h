@@ -14,6 +14,9 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc97();
 	virtual void vfunc98();
 	void sub_10066250();
+	void sub_10067540(bool);
+	void sub_10067450();
+	int sub_10067850();
 	void sub_10065f40();
 	char *sub_10065eb0(int);
 	int *sub_100678a0(int *);
@@ -26,7 +29,11 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int sub_10065db0(int, int, int);
 	void sub_10065950();
 	CUtlVector<int> m_vec170;
-	char m_unk184[0x2e8 - 0x184];
+	int m_n184;
+	int m_n188;
+	int m_unk18c;
+	int m_n190;
+	char m_unk194[0x2e8 - 0x194];
 	int m_unk2e8;
 	CUtlVector<int> m_vec2ec;
 	char m_pad300[0x5b4 - 0x300];
