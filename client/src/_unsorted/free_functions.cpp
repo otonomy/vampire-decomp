@@ -65312,6 +65312,70 @@ void CUtlMemory12::sub_100caa80(int num)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100cb0e0 size=0x13e
+struct IImgSrc {
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+    virtual void v4(); virtual void v5(); virtual void v6();
+    virtual const char *f7();
+};
+
+struct CPalImage {
+    int m_unk0;
+    unsigned char *m_pData;
+    int m_unk8;
+    int m_nValid;
+    IImgSrc *m_pSrc;
+    int m_unk14;
+    int m_nColors;
+    unsigned int m_w;
+    unsigned int m_h;
+};
+
+extern "C" bool sub_1013a4f0(const char *, unsigned int *, unsigned int *, int *, float *);
+extern "C" int sub_100f4440(unsigned int, unsigned int, int, int);
+extern "C" bool sub_1013b7d0(unsigned char *, const char *, unsigned int, unsigned int, int, int, int, int, int);
+
+// TARGET: sub_100cb0e0
+void __fastcall sub_100cb0e0(CPalImage *self, int edx_unused)
+{
+    float fl;
+    int fmt;
+    unsigned char used[256];
+    int remap[256];
+
+    if (!sub_1013a4f0(self->m_pSrc->f7(), &self->m_w, &self->m_h, &fmt, &fl)) {
+        self->m_nValid = 0;
+        return;
+    }
+    if (fmt != 5) {
+        self->m_nValid = 0;
+        return;
+    }
+    int size = sub_100f4440(self->m_w, self->m_h, 5, 0);
+    self->m_pData = (unsigned char *)operator new(size);
+    if (!self->m_pData) {
+        self->m_nValid = 0;
+        return;
+    }
+    int flbits = *(int *)&fl;
+    if (!sub_1013b7d0(self->m_pData, self->m_pSrc->f7(), self->m_w, self->m_h, 5, flbits, 0, 0, 0)) {
+        self->m_nValid = 0;
+        return;
+    }
+    int i;
+    for (i = 0; i < 256; i++) used[i] = 0;
+    for (i = 0; i < size; i++) used[self->m_pData[i]] = 1;
+    self->m_nColors = 0;
+    for (i = 0; i < 256; i++) {
+        if (used[i]) {
+            remap[i] = self->m_nColors;
+            self->m_nColors++;
+        }
+    }
+    for (i = 0; i < size; i++) self->m_pData[i] = remap[self->m_pData[i]];
+}
+// END FUNCTION
+
 // FUNCTION: 0x100cb220 size=0xa2
 #include "engineclient.h"
 #include "Vector.h"
