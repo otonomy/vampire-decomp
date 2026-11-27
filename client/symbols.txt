@@ -3895,6 +3895,7 @@
 0x10094e90 func   ?vfunc37@C_BaseAnimating@@UAEXXZ C_BaseAnimating::vfunc37
 0x10094ec0 func   ?sub_10094ec0@CUnknown10094ec0@@QAEHH@Z CUnknown10094ec0::sub_10094ec0
 0x10094ee0 func   ?sub_10094ee0@CUnknown10094ee0@@QAEHH@Z CUnknown10094ee0::sub_10094ee0
+0x10094f00 func   ?vfunc73@C_BaseAnimating@@UAE_NXZ C_BaseAnimating::vfunc73
 0x10095030 func   ?vfunc61@C_BaseAnimating@@UAEXXZ C_BaseAnimating::vfunc61
 0x10095070 func   ?vfunc62@C_BaseAnimating@@UAEHXZ C_BaseAnimating::vfunc62
 0x10095090 func   ?vfunc133@C_BaseAnimating@@UAEHXZ C_BaseAnimating::vfunc133

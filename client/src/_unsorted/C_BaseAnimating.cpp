@@ -679,6 +679,32 @@ void C_BaseAnimating::vfunc37()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10094f00 size=0x121
+#include "C_BaseAnimating.h"
+#include "Vector.h"
+#include "QAngle.h"
+struct CUnknown1009f6e0 { char *sub_1009f6e0(); };
+struct CUnknown1009f6f0 { char *sub_1009f6f0(); };
+void sub_100ccf50(const QAngle *from, const QAngle *to, QAngle *out, float frac);
+bool C_BaseAnimating::vfunc73()
+{
+	if (GetSolid() != 4)
+		return C_BaseEntity::vfunc73();
+	if (sub_1009f140(0x800))
+	{
+		*(Vector *)((char *)this + 0x54) = *(Vector *)((CUnknown1009f6e0 *)this)->sub_1009f6e0();
+		*(QAngle *)((char *)this + 0x60) = *(QAngle *)((CUnknown1009f6f0 *)this)->sub_1009f6f0();
+	}
+	float frac = vfunc122();
+	Vector newOrigin = *(Vector *)((char *)this + 0x54) * (1.0f - frac) + *(Vector *)((CUnknown1009f6e0 *)this)->sub_1009f6e0() * frac;
+	sub_100a2030(&newOrigin);
+	QAngle newAngles;
+	sub_100ccf50((QAngle *)((char *)this + 0x60), (QAngle *)((CUnknown1009f6f0 *)this)->sub_1009f6f0(), &newAngles, frac);
+	sub_100a2100(newAngles);
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10095030 size=0x39
 #include "engineclient.h"
 #include "C_BaseAnimating.h"
