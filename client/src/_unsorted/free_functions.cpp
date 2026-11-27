@@ -58542,6 +58542,19 @@ void List10::sub_100b9f00(unsigned short before, unsigned short elem)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ba0a0 size=0x1c
+struct CUnknown100ba0a0 { int sub_100ba0a0(int, int); };
+int CUnknown100ba0a0::sub_100ba0a0(int a0, int a1)
+{
+    int t0 = *(int *)((char *)this + a0 * 4 + 0xb0);
+    int t1 = *(int *)((char *)a1);
+    *(int *)((char *)t0) = t1;
+    int t2 = *(int *)((char *)a1 + 4);
+    *(int *)((char *)t0 + 4) = t2;
+    return t0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ba0e0 size=0x6
 namespace lifted {
 extern char g_104a26d4;

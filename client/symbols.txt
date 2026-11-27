@@ -4599,6 +4599,7 @@
 0x100b9c50 func   ?vfunc4@CBreakableSurfaceProxy@@UAEXPAVC_BaseEntity@@@Z CBreakableSurfaceProxy::vfunc4
 0x100b9cd0 func   ?sub_100b9cd0@@YAHXZ sub_100b9cd0
 0x100b9f00 func   ?sub_100b9f00@List10@@QAEXGG@Z List10::sub_100b9f00
+0x100ba0a0 func   ?sub_100ba0a0@CUnknown100ba0a0@@QAEHHH@Z CUnknown100ba0a0::sub_100ba0a0
 0x100ba0c0 func   ?vfunc16@C_Func_Dust@@UAEHXZ C_Func_Dust::vfunc16
 0x100ba0d0 func   ?vfunc15@C_Func_Dust@@UAEHXZ C_Func_Dust::vfunc15
 0x100ba0e0 func   ?sub_100ba0e0@@YAHXZ sub_100ba0e0
