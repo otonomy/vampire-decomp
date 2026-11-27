@@ -129009,6 +129009,160 @@ void CInv_10170470::sub_10170470()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10170580 size=0x514
+#include "VBarterUI.h"
+#include "CHud.h"
+#include "C_BasePlayer.h"
+#include "C_BaseCombatWeapon.h"
+#include "ehandle.h"
+#include "engineclient.h"
+#include <stdio.h>
+
+struct V_101869c0;
+void __fastcall sub_101869c0(V_101869c0 *p);
+int sub_100561f0();
+bool sub_101a77c0(C_BasePlayer *pPlayer, C_BaseCombatWeapon *pWeapon);
+extern int g_104a0d48;
+
+struct NameSrc;
+struct VBarterUIView
+{
+	void sub_1016f500(NameSrc *pSrc, char bSell);
+};
+
+#define VSLOTS10(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); virtual void p##5(); virtual void p##6(); virtual void p##7(); virtual void p##8(); virtual void p##9();
+struct HudMessages_local
+{
+	VSLOTS10(a) VSLOTS10(b) VSLOTS10(c) VSLOTS10(d) VSLOTS10(e) VSLOTS10(f) VSLOTS10(g) VSLOTS10(h) VSLOTS10(i) VSLOTS10(j) VSLOTS10(k)
+	virtual void l0(); virtual void l1(); virtual void l2(); virtual void l3(); virtual void l4(); virtual void l5();
+	virtual void vfunc116(int msg, int arg);
+};
+
+struct BarterItem_local
+{
+	char m_pad0[0xba];
+	bool m_bSelected;
+	char m_padbb;
+	CBaseHandle m_hItem;
+};
+
+struct BarterSlot_local
+{
+	BarterItem_local *m_pItem;
+	int m_unk4;
+	int m_unk8;
+};
+
+struct BarterUIData_local
+{
+	char m_pad0[0x181];
+	bool m_bEquipMode;
+	char m_pad182[0x188 - 0x182];
+	BarterSlot_local m_Inv[24];
+	BarterSlot_local m_Stock[32];
+	char m_pad428[0x4d4 - 0x428];
+	int m_nMode;
+	char m_pad4d8[3];
+	bool m_b4db;
+};
+
+void VBarterUI::sub_10170580()
+{
+	BarterUIData_local *d = (BarterUIData_local *)this;
+	char buf[32];
+	BarterSlot_local *pSlot;
+	C_BaseCombatWeapon *pWeapon;
+
+	sub_101869c0((V_101869c0 *)gHUD.FindElement("VItemInfoUI"));
+
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return;
+
+	int i;
+	for (i = 0; i < 24; i++)
+		if (d->m_Inv[i].m_pItem->m_bSelected)
+			goto inv_found;
+	for (i = 0; i < 32; i++)
+		if (d->m_Stock[i].m_pItem->m_bSelected)
+			goto stock_found;
+	return;
+
+stock_found:
+	if (d->m_bEquipMode)
+	{
+		if (d->m_nMode == 9)
+		{
+			pWeapon = (C_BaseCombatWeapon *)d->m_Stock[i].m_pItem->m_hItem.Get();
+			sprintf(buf, "powerupability %d %d", *(int *)((char *)pWeapon->sub_1007b160() + 0x4febc), *(int *)((char *)pWeapon + 0x79c));
+			engine->vfunc27(buf, 1);
+			sub_101869c0((V_101869c0 *)gHUD.FindElement("VItemInfoUI"));
+			return;
+		}
+		pSlot = &d->m_Stock[i];
+		if (!sub_101a77c0(pPlayer, (C_BaseCombatWeapon *)pSlot->m_pItem->m_hItem.Get()))
+		{
+			((HudMessages_local *)sub_100561f0())->vfunc116(0x16, 0);
+			return;
+		}
+		pPlayer->vfunc169((int)pPlayer->vfunc167());
+		pPlayer->vfunc168((int)pSlot->m_pItem->m_hItem.Get());
+		engine->vfunc27((const char *)pPlayer->vfunc167()->vfunc223(), 1);
+		g_104a0d48 = pPlayer->vfunc167()->entindex();
+		return;
+	}
+	pSlot = &d->m_Stock[i];
+	((VBarterUIView *)gHUD.FindElement("VBarterUI"))->sub_1016f500((NameSrc *)pSlot->m_pItem->m_hItem.Get(), 0);
+	((VBarterUI *)gHUD.FindElement("VBarterUI"))->sub_1016f4a0();
+	sub_10170aa0(pSlot->m_pItem->m_hItem.Get(), false);
+	d->m_b4db = true;
+	((VBarterUI *)gHUD.FindElement("VBarterUI"))->sub_1016d150();
+	return;
+
+inv_found:
+	if (d->m_bEquipMode)
+	{
+		if (d->m_nMode == 9)
+		{
+			pWeapon = (C_BaseCombatWeapon *)d->m_Inv[i].m_pItem->m_hItem.Get();
+			sprintf(buf, "powerupability %d %d", *(int *)((char *)pWeapon->sub_1007b160() + 0x4febc), *(int *)((char *)pWeapon + 0x79c));
+			engine->vfunc27(buf, 1);
+			sub_101869c0((V_101869c0 *)gHUD.FindElement("VItemInfoUI"));
+			*((bool *)pWeapon + 0x95c) = true;
+			return;
+		}
+		if (d->m_nMode == 11)
+		{
+			pWeapon = (C_BaseCombatWeapon *)d->m_Inv[i].m_pItem->m_hItem.Get();
+			if (*(int *)((char *)pWeapon->sub_1007b160() + 0x4fed0) == 4)
+			{
+				sprintf(buf, "occult_regen_trigger");
+				engine->vfunc27(buf, 1);
+				sub_101869c0((V_101869c0 *)gHUD.FindElement("VItemInfoUI"));
+				return;
+			}
+		}
+		pSlot = &d->m_Inv[i];
+		if (!sub_101a77c0(pPlayer, (C_BaseCombatWeapon *)pSlot->m_pItem->m_hItem.Get()))
+		{
+			((HudMessages_local *)sub_100561f0())->vfunc116(0x16, 0);
+			return;
+		}
+		pPlayer->vfunc169((int)pPlayer->vfunc167());
+		pPlayer->vfunc168((int)pSlot->m_pItem->m_hItem.Get());
+		engine->vfunc27((const char *)pPlayer->vfunc167()->vfunc223(), 1);
+		g_104a0d48 = pPlayer->vfunc167()->entindex();
+		return;
+	}
+	pSlot = &d->m_Inv[i];
+	((VBarterUIView *)gHUD.FindElement("VBarterUI"))->sub_1016f500((NameSrc *)pSlot->m_pItem->m_hItem.Get(), 1);
+	((VBarterUI *)gHUD.FindElement("VBarterUI"))->sub_1016f4a0();
+	sub_10170aa0(pSlot->m_pItem->m_hItem.Get(), true);
+	d->m_b4db = true;
+	((VBarterUI *)gHUD.FindElement("VBarterUI"))->sub_1016d150();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10170aa0 size=0x114
 #include "C_BasePlayer.h"
 #include "engineclient.h"
