@@ -3428,6 +3428,7 @@
 0x1007a730 func   ?vfunc2@CBaseAnimatedTextureProxy@@UAEXXZ CBaseAnimatedTextureProxy::vfunc2
 0x1007a740 func   ?vfunc0@CBaseAnimatedTextureProxy@@UAE_NPAX0@Z CBaseAnimatedTextureProxy::vfunc0
 0x1007a800 func   ?sub_1007a800@CUnknown1007a800@@QAEHXZ CUnknown1007a800::sub_1007a800
+0x1007a810 func   ?vfunc1@CBaseAnimatedTextureProxy@@UAEXH@Z CBaseAnimatedTextureProxy::vfunc1
 0x1007a9f0 func   ??0C_BaseCombatWeapon@@QAE@XZ C_BaseCombatWeapon::C_BaseCombatWeapon
 0x1007ab20 func   ??_GC_BaseCombatWeapon@@UAEPAXI@Z ??_GC_BaseCombatWeapon@@UAEPAXI@Z
 0x1007ab40 func   ??1C_BaseCombatWeapon@@UAE@XZ C_BaseCombatWeapon::~C_BaseCombatWeapon
