@@ -41,6 +41,7 @@ public:
 	void sub_100d7130(int a0, unsigned short h, int *a2);
 	void sub_100d7180(int a0, unsigned short h, int *a2);	// provisional, like sub_100d7130 (transplant)
 public:
+	void vfunc12(int a, int b);
 	void vfunc2();
 	void vfunc1();
 	void vfunc5();

@@ -424,13 +424,13 @@ public:
 	virtual void vfunc79();
 	virtual void vfunc80();
 	virtual void vfunc81();	// slot 81: LoadIdentity
-	virtual void vfunc82();
+	virtual void vfunc82(double, double, double, double, double, double);
 	virtual void vfunc83();
 	virtual void vfunc84();
 	virtual void vfunc85();
 	virtual void vfunc86(float, float, float, float);	// slot 86: Rotate(angle, x, y, z)
 	virtual void vfunc87();
-	virtual void vfunc88();
+	virtual void vfunc88(float, float, float);
 	virtual void vfunc89(int x, int y, int w, int h);	// slot 89: Viewport
 	virtual void vfunc90(int *x, int *y, int *w, int *h);	// slot 90: GetViewport
 	virtual void vfunc91();
@@ -466,8 +466,8 @@ public:
 	virtual void vfunc121();
 	virtual void vfunc122();
 	virtual void vfunc123();
-	virtual void vfunc124();
-	virtual void vfunc125();
+	virtual void vfunc124(int, int, int);
+	virtual void vfunc125(int, int, int, int);
 	virtual void vfunc126();
 	virtual void vfunc127();
 	virtual void *vfunc128(int, int, int);	// slot 128; shapes differ
