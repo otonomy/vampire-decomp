@@ -104038,6 +104038,15 @@ V4_1013f3d0 XClamp::sub_1013f3d0(int i)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013f400 size=0x11
+struct CUnknown1013f400 { int sub_1013f400(int, int); };
+int CUnknown1013f400::sub_1013f400(int a0, int a1)
+{
+    *(int *)((char *)a0) = *(int *)((char *)this + a1 * 4 + 0x70);
+    return a0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013f420 size=0xc
 struct CUnknown1013f420 { int sub_1013f420(int); };
 int CUnknown1013f420::sub_1013f420(int a0)

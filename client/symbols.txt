@@ -7417,6 +7417,7 @@
 0x1013f370 func   ?sub_1013f370@CUnknown1013f370@@QAE_NH@Z CUnknown1013f370::sub_1013f370
 0x1013f3a0 func   ?sub_1013f3a0@S_1013f3a0@@QAE?AUV4_1013f3a0@@H@Z S_1013f3a0::sub_1013f3a0
 0x1013f3d0 func   ?sub_1013f3d0@XClamp@@QAE?AUV4_1013f3d0@@H@Z XClamp::sub_1013f3d0
+0x1013f400 func   ?sub_1013f400@CUnknown1013f400@@QAEHHH@Z CUnknown1013f400::sub_1013f400
 0x1013f420 func   ?sub_1013f420@CUnknown1013f420@@QAEHH@Z CUnknown1013f420::sub_1013f420
 0x1013f430 func   ?sub_1013f430@CUnknown1013f430@@QAEHH@Z CUnknown1013f430::sub_1013f430
 0x1013f440 func   ?sub_1013f440@StatDefault3@@QAEHH@Z StatDefault3::sub_1013f440
