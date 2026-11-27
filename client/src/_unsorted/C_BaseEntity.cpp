@@ -858,6 +858,82 @@ int C_BaseEntity::DrawModel(int flags, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009fff0 size=0x1e3
+#include "C_BaseEntity.h"
+#include "engineclient.h"
+struct NSTLeaf { virtual void v0(); virtual void v1(unsigned short h); };
+extern NSTLeaf *g_102b9060;
+struct NSTColl
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(Vector *pMins, Vector *pMaxs);
+};
+struct NSTPredId { bool sub_10120760(); void sub_101209c0(int); };
+C_BaseEntity *sub_100a01e0(NSTPredId *p);
+// TARGET: C_BaseEntity::NotifyShouldTransmit
+void C_BaseEntity::NotifyShouldTransmit(int state)
+{
+	if (entindex() <= 0)
+		return;
+	char *n = (char *)this + 8;
+	switch (state)
+	{
+	case 2:
+		vfunc29(1);
+		partition->vfunc6(0x8c, *(unsigned short *)(n + 0x1ce));
+		if (*(unsigned short *)(n + 0xe0) != 0xffff)
+		{
+			g_102b9060->v1(*(unsigned short *)(n + 0xe0));
+			*(unsigned short *)(n + 0xe0) = 0xffff;
+		}
+		break;
+	case 1:
+	{
+		partition->vfunc6(0x8c, *(unsigned short *)(n + 0x1ce));
+		int t = vfunc66();
+		int flags = 0x80;
+		if (t == 1)
+			flags = 0x84;
+		else if (t == 2)
+			flags = 0x88;
+		partition->vfunc4(flags, *(unsigned short *)(n + 0x1ce));
+		Vector mins, maxs;
+		((NSTColl *)(n + 0x188))->v15(&mins, &maxs);
+		partition->vfunc7(*(unsigned short *)(n + 0x1ce), mins, maxs);
+		break;
+	}
+	case 0:
+	{
+		vfunc29(0);
+		int t = vfunc66();
+		int flags = 0x80;
+		if (t == 1)
+			flags = 0x84;
+		else if (t == 2)
+			flags = 0x88;
+		partition->vfunc4(flags, *(unsigned short *)(n + 0x1ce));
+		Vector mins, maxs;
+		((NSTColl *)(n + 0x188))->v15(&mins, &maxs);
+		partition->vfunc7(*(unsigned short *)(n + 0x1ce), mins, maxs);
+		NSTPredId *pId = (NSTPredId *)(n + 0xc4);
+		if (pId->sub_10120760())
+		{
+			pId->sub_101209c0(1);
+			C_BaseEntity *pOther = sub_100a01e0(pId);
+			if (pOther)
+			{
+				((NSTPredId *)((char *)pOther + 0xcc))->sub_101209c0(1);
+				if (vfunc113(false, pOther))
+					pOther->Release();
+			}
+		}
+		break;
+	}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a0240 size=0x94
 #include "C_BaseEntity.h"
 char sub_100cc190(void *, int, void *);
