@@ -10,6 +10,8 @@ class ComboBox : public vgui2::TextEntry
 {
 public:
 	virtual ~ComboBox();
+	ComboBox(Panel *parent, const char *name, int numLines, bool editable);
+	void sub_101c7950(int);
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with ComboBox's own function
 	virtual void vfunc11(int, int);

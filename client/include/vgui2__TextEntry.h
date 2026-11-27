@@ -33,6 +33,7 @@ public:
 	} m_memberInit;
 	void sub_101aefe0();
 	void sub_101af9e0(int a);
+	void sub_101afed0(int);
 	bool sub_101aff70(int n);
 	int sub_101afbf0();
 	void sub_101ae490(int);
