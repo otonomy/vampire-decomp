@@ -33478,6 +33478,38 @@ int sub_100650b0(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100650c0 size=0x162
+#define PCD_LPF_CTOR
+#include "C_RecipientFilter.h"
+#include "engineclient.h"
+#include "StatOwner2.h"
+extern int g_103eef5c;
+extern char g_103eef9c;
+extern float g_103eefa0;
+extern float g_103eef60;
+extern char g_103eef3c;
+void *sub_1009b210();
+// TARGET: sub_100650c0
+void sub_100650c0()
+{
+	const char *name = (const char *)g_105f93c0.sub_1015f2f0("UI_Discipline_Targeting_ProgBar_Sounds")->sub_1015ecd0(g_103eef5c);
+	enginesound->vfunc0(name, 0);
+	CLocalPlayerFilter filter;
+	if (g_103eef9c) {
+		if (sub_1009b210() && sub_1009b210()) {
+			float f = ((float)engine->Time(0) - g_103eefa0) / g_103eef60;
+			if (f > 1.0f)
+				f = 1.0f;
+			enginesound->EmitSound(filter, -1, 0xba, name, f, 0, 0x2801, 100, 0, 0, 1, 0);
+			g_103eef3c = 1;
+			return;
+		}
+	} else {
+		enginesound->vfunc7(-1, 0xba, name);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10065230 size=0x81
 #include "CClientEntityList.h"
 #include "CClientEntityList.h"

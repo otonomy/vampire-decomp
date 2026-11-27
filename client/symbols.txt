@@ -3312,6 +3312,7 @@
 0x10064df0 func   ?sub_10064df0@@YAXPAVC_BaseCombatWeapon@@@Z sub_10064df0
 0x10065050 func   ?sub_10065050@@YAXH@Z sub_10065050
 0x100650b0 func   ?sub_100650b0@@YAHH@Z sub_100650b0
+0x100650c0 func   ?sub_100650c0@@YAXXZ sub_100650c0
 0x10065230 func   ?sub_10065230@TargetedV@@QAEHH@Z TargetedV::sub_10065230
 0x100652c0 func   ?sub_100652c0@@YAXXZ sub_100652c0
 0x100652e0 func   ?sub_100652e0@@YAXXZ sub_100652e0
