@@ -8905,6 +8905,7 @@
 0x1017b510 func   ?sub_1017b510@CUnknown1017b510@@QAEXH@Z CUnknown1017b510::sub_1017b510
 0x1017b530 func   ??_GCharEditInfoPanel@@UAEPAXI@Z ??_GCharEditInfoPanel@@UAEPAXI@Z
 0x1017bb10 func   ?sub_1017bb10@CharEditInfoPanel@@QAEXXZ CharEditInfoPanel::sub_1017bb10
+0x1017c140 func   ?sub_1017c140@CUnknown1017c140@@QAEXXZ CUnknown1017c140::sub_1017c140
 0x1017c3a0 func   ?vfunc124@CharEditInfoPanel@@UAEXH@Z CharEditInfoPanel::vfunc124
 0x1017c530 func   ?vfunc102@CharEditInfoPanel@@UAEHXZ CharEditInfoPanel::vfunc102
 0x1017c540 func   ?sub_1017c540@@YGXH@Z sub_1017c540

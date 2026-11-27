@@ -133192,6 +133192,71 @@ void CharEditInfoPanel::sub_1017bb10()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017c140 size=0x11a
+namespace lifted {
+struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual void u11(); virtual void u12(); virtual void u13(); virtual void u14(); virtual void u15(); virtual void u16(); virtual void u17(); virtual void u18(); virtual void u19(); virtual int f20(int); };
+}
+struct CUnknown1017c140 { void sub_1017c140(); };
+void CUnknown1017c140::sub_1017c140()
+{
+    int r0;
+    int r1;
+    int r2;
+    if ((*(int *)((char *)this + 0x7c)) != 0) {
+        r0 = ((lifted::V *)(*(int *)((char *)this + 0x7c)))->f20(1);
+    }
+    *(int *)((char *)this + 0x7c) = 0;
+    if ((*(int *)((char *)this + 0xc8)) != 0) {
+        r0 = ((lifted::V *)(*(int *)((char *)this + 0xc8)))->f20(1);
+    }
+    *(int *)((char *)this + 0xc8) = 0;
+    if ((*(int *)((char *)this + 0x80)) != 0) {
+        r0 = ((lifted::V *)(*(int *)((char *)this + 0x80)))->f20(1);
+    }
+    *(int *)((char *)this + 0x80) = 0;
+    if ((*(int *)((char *)this + 0x84)) != 0) {
+        r0 = ((lifted::V *)(*(int *)((char *)this + 0x84)))->f20(1);
+    }
+    *(int *)((char *)this + 0x84) = 0;
+    if ((*(int *)((char *)this + 0x88)) != 0) {
+        r0 = ((lifted::V *)(*(int *)((char *)this + 0x88)))->f20(1);
+    }
+    *(int *)((char *)this + 0x88) = 0;
+    if ((*(int *)((char *)this + 0x8c)) != 0) {
+        r0 = ((lifted::V *)(*(int *)((char *)this + 0x8c)))->f20(1);
+    }
+    *(int *)((char *)this + 0x8c) = 0;
+    if ((*(int *)((char *)this + 0x90)) != 0) {
+        r0 = ((lifted::V *)(*(int *)((char *)this + 0x90)))->f20(1);
+    }
+    *(int *)((char *)this + 0x90) = 0;
+    if ((*(int *)((char *)this + 0x94)) != 0) {
+        r0 = ((lifted::V *)(*(int *)((char *)this + 0x94)))->f20(1);
+    }
+    *(int *)((char *)this + 0x94) = 0;
+    if ((*(int *)((char *)this + 0x98)) != 0) {
+        r0 = ((lifted::V *)(*(int *)((char *)this + 0x98)))->f20(1);
+    }
+    *(int *)((char *)this + 0x98) = 0;
+    if ((*(int *)((char *)this + 0x9c)) != 0) {
+        r0 = ((lifted::V *)(*(int *)((char *)this + 0x9c)))->f20(1);
+    }
+    *(int *)((char *)this + 0x9c) = 0;
+    if ((*(int *)((char *)this + 0xb0)) != 0) {
+        r0 = ((lifted::V *)(*(int *)((char *)this + 0xb0)))->f20(1);
+    }
+    r1 = (int)this + 0xb4;
+    r2 = 4;
+    do {
+        if ((*(int *)((char *)r1)) != 0) {
+            r0 = ((lifted::V *)(*(int *)((char *)r1)))->f20(1);
+        }
+        r1 = r1 + 4;
+        r2 = r2 - 1;
+    } while (r2 != 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017c540 size=0x3
 void __stdcall sub_1017c540(int a0)
 {
