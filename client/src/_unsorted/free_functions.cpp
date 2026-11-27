@@ -24011,6 +24011,22 @@ CSmartPtr<CUnknown1003df50> sub_1003dfb0(int pName, Vector *pVec)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1003e020 size=0x36
+#include "CTEParticleRenderer.h"
+#include "CParticleEffectBinding.h"
+struct PMgrByteView { void *sub_101180c0(int size, unsigned char hMaterial, const Vector &pos); };
+// TARGET: CTEParticleRenderer::sub_1003e020
+StandardParticle_t *CTEParticleRenderer::sub_1003e020()
+{
+	if (m_hMaterial == 0xff)
+		m_hMaterial = ((CParticleEffectBinding *)((char *)this + 8))->sub_101163a0("particle/particledefault");
+	StandardParticle_t *pParticle = (StandardParticle_t *)((PMgrByteView *)this)->sub_101180c0(0x30, m_hMaterial, *(const Vector *)((char *)this + 0x5c));
+	if (pParticle)
+		*(unsigned short *)((char *)pParticle + 0x2a) = 0;
+	return pParticle;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1003e7c0 size=0x12
 namespace lifted {
 extern char g_1022711c;
