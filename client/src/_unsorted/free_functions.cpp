@@ -95706,6 +95706,28 @@ void S10032fb0::sub_1011a3c0(int num)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011a680 size=0x1cb
+#include "Ray_t.h"
+#include "engineclient.h"
+struct Cls_1011a680 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual int v12(); };
+struct Ent_1011a680 { int pad[3]; Cls_1011a680 sub; };
+struct Filt_1011a680 { int a, b, c; void sub_1004b5c0(Ent_1011a680 *, int); };
+struct Dbg_1011a680 { virtual void v0(); virtual bool v1(); int pad[10]; int f2c; };
+extern Dbg_1011a680 *g_103edd9c;
+void sub_101659b0(void *, void *, int, int, int, int, float);
+void sub_1011a680(Ent_1011a680 *ent, const Vector &a, const Vector &b, const Vector &mins, const Vector &maxs, int mask, float *tr)
+{
+	Filt_1011a680 f;
+	int grp = ent->sub.v12();
+	Ray_t ray;
+	ray.Init(a, b, mins, maxs);
+	f.sub_1004b5c0(ent, grp);
+	enginetrace->vfunc4((int)&ray, mask, (const void *)&f, (int)tr);
+	if (!g_103edd9c->v1() && g_103edd9c->f2c)
+		sub_101659b0(tr, tr + 3, 255, 255, 0, 1, -1.0f);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011a950 size=0x26c
 #include "Vector.h"
 #include "QAngle.h"

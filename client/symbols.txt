@@ -6863,6 +6863,7 @@
 0x1011a2c0 func   ?sub_1011a2c0@@YAXPAUS10032fb0@@HHHHIGM@Z sub_1011a2c0
 0x1011a3c0 func   ?sub_1011a3c0@S10032fb0@@QAEXH@Z S10032fb0::sub_1011a3c0
 0x1011a430 func   ?vfunc111@C_BaseEntity@@UAEXXZ C_BaseEntity::vfunc111
+0x1011a680 func   ?sub_1011a680@@YAXPAUEnt_1011a680@@ABVVector@@111HPAM@Z sub_1011a680
 0x1011a940 func   ?vfunc96@C_BaseEntity@@UAEXHHHH@Z C_BaseEntity::vfunc96
 0x1011a950 func   ?sub_1011a950@C_BaseEntity@@QAEXXZ C_BaseEntity::sub_1011a950
 0x1011abc0 func   ?sub_1011abc0@CUnknown1011abc0@@QAEHXZ CUnknown1011abc0::sub_1011abc0
