@@ -726,6 +726,73 @@ char VView384::sub_101995b0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019a3f0 size=0x16b
+#include "CViewRender.h"
+#include "engineclient.h"
+#include "ScopeTrace.h"
+#include "CBaseHandle.h"
+#include "ehandle.h"
+#include "CUnknown100290c0.h"
+
+extern "C" void *__cdecl memmove(void *, const void *, unsigned int);
+
+struct RenderableView_1019a3f0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual const void *GetModel();
+};
+
+struct EntView_1019a3f0
+{
+	virtual void v0();
+	virtual const CBaseHandle &GetRefEHandle();
+	char m_pad[0x400 - 4];
+	int m_n400;
+};
+
+struct VecEH_1019a3f0
+{
+	int *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	int m_size;
+	int *m_pElements;
+
+	void sub_100aad80(int num);
+};
+
+void CViewRender::vfunc42(EntView_1019a3f0 *pEnt)
+{
+	ScopeTrace st("CViewRender::AddObfuscatedEntityToRenderList", g_102de300);
+	RenderableView_1019a3f0 *pRend = (RenderableView_1019a3f0 *)((char *)pEnt + 4);
+	if (modelinfo->GetModelType(pRend->GetModel()) != 3 || pEnt->m_n400 != 0)
+		return;
+	CBaseHandle h;
+	h = pEnt->GetRefEHandle();
+	VecEH_1019a3f0 *v = (VecEH_1019a3f0 *)((char *)this + 0x464);
+	int idx = -1;
+	{ int i = 0; while (i < v->m_size) { int *base = v->m_pMemory;
+		IHandleEntity *pSrc = (IHandleEntity *)((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0((unsigned int *)&h);
+		if (((CBaseHandle *)&base[i])->Get() == pSrc)
+		{
+			idx = i;
+			break;
+		} i++; } }
+	if (!(idx != -1)) { int elem = v->m_size;
+	if (1 + v->m_size > v->m_allocationCount)
+		v->sub_100aad80(v->m_size + 1 - v->m_allocationCount);
+	v->m_size += 1;
+	v->m_pElements = v->m_pMemory;
+	int n = v->m_size - elem - 1;
+	if (0 < n)
+		memmove(&v->m_pMemory[elem + 1], &v->m_pMemory[elem], n * 4);
+	int *p = &v->m_pMemory[elem];
+	if (p)
+		*p = *(const int *)&h; }
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019dbd0 size=0x61d
 #include "CViewRender.h"
 #include "ScopeTrace.h"
