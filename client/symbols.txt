@@ -9523,6 +9523,7 @@
 0x10190640 func   ?sub_10190640@CViewRender@@QAEXXZ CViewRender::sub_10190640
 0x101907a0 func   ?sub_101907a0@@YGMABVQAngle@@ABUVector@@MM@Z sub_101907a0
 0x10190850 func   ?sub_10190850@CViewRender@@QAEXXZ CViewRender::sub_10190850
+0x10190900 func   ?sub_10190900@CViewRender@@QAEMXZ CViewRender::sub_10190900
 0x10190ba0 func   ?sub_10190ba0@CViewRender@@QAEPAXHHABVVector@@ABVQAngle@@0MH@Z CViewRender::sub_10190ba0
 0x10190f30 func   ?sub_10190f30@@YAXXZ sub_10190f30
 0x101911a0 func   ?vfunc3@CViewRender@@UAEXXZ CViewRender::vfunc3

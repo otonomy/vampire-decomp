@@ -145434,6 +145434,61 @@ void CViewRender::sub_10190850()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10190900 size=0x16b
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+
+struct CWaterVar
+{
+	virtual void s0();
+	virtual bool vfunc1();
+	int m_u4, m_u8, m_uc, m_u10, m_u14, m_u18, m_u1c, m_u20, m_u24;
+	float m_f28;
+};
+extern CWaterVar *g_105fc68c;
+
+// TARGET: CViewRender::sub_10190900
+float CViewRender::sub_10190900()
+{
+	ScopeTrace st("CViewRender::GetWaterOffset", g_102de300);
+	C_BasePlayer *pl = C_BasePlayer::GetLocalPlayer();
+	float ret = 0.0f;
+	if (2 <= *(int *)((char *)pl + 0x90))
+	{
+		long dist = (int)(g_105fc68c->vfunc1() ? 0.0f : g_105fc68c->m_f28);
+		float pos[3];
+		pos[0] = *(float *)((char *)this + 0x48);
+		*(1 + pos) = *(float *)((char *)this + 0x4c);
+		float z0 = *(float *)((char *)this + 0x50);
+		if (*(int *)((char *)pl + 0x90) == 2)
+		{
+			*(pos + 2) = z0 - dist;
+			for (int i = 0; i < dist; i++)
+			{
+				if (engine->vfunc19(0, *(Vector *)pos) & 0x4030)
+					break;
+				pos[2] = pos[2] + 1.0f;
+			}
+			float t1 = pos[2] + (float)dist; ret = t1 - *(float *)((char *)this + 0x50);
+		}
+		else
+		{
+			*(pos + 2) = (float)dist + z0;
+			for (int i = 0; (int)i < dist; ++i)
+			{
+				if (!(engine->vfunc19(0, *(Vector *)pos) & 0x4030))
+					break;
+				pos[2] -= 1.0f;
+			}
+			float t0 = pos[2] - (float)dist; ret = t0 - *(float *)(0x50 + (char *)this);
+		}
+	}
+	return ret;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10190ba0 size=0x38b
 #include "CViewRender.h"
 #include "C_BasePlayer.h"
