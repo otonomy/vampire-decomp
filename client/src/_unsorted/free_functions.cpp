@@ -129159,6 +129159,53 @@ char __stdcall sub_1016d110(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1016ead0 size=0x102
+#include "StatOwner2.h"
+#include "Tier1.h"
+
+struct WalletX
+{
+	char m_pad000[0x108];
+	char m_text[0x5ebc8 - 0x108];
+	int m_5ebc8;
+	int m_5ebcc;
+	char m_pad5ebd0[0x5f2f4 - 0x5ebd0];
+	int m_a[8];
+};
+struct WalletEnt { WalletX *sub_1007b160(); };
+struct WalletMoney { char m_pad[0x14c8]; int m_money; };
+struct WalletValue { int sub_10160230(); };
+struct WalletStat
+{
+	int sub_10160500(const char *);
+	WalletValue *sub_10160590(int, int);
+};
+extern WalletStat g_105f985c;
+
+// TARGET: sub_1016ead0
+void sub_1016ead0(WalletMoney *pPlayer, WalletEnt *pEnt)
+{
+	if (!pEnt)
+		return;
+	if (!pEnt->sub_1007b160()->m_a[0])
+		return;
+	static int s_id = g_105f985c.sub_10160500("Wallet_Scale");
+	for (int i = 0; i < 4; i++)
+	{
+		if (pPlayer->m_money >= g_105f985c.sub_10160590(s_id, i)->sub_10160230())
+		{
+			WalletX *x = pEnt->sub_1007b160();
+			x->m_5ebc8 = x->m_a[i];
+			x->m_5ebcc = x->m_a[i + 4];
+			g_101e3190(x->m_text, 0x2000, "%s $%d\n\n%s",
+				g_105f93c0.sub_1015f2f0("UI_Wallet_Strings")->sub_1015ecd0(1),
+				pPlayer->m_money,
+				g_105f93c0.sub_1015f2f0("UI_Wallet_Strings")->sub_1015ecd0(i + 2));
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1016ebe0 size=0x78
 #include "CBaseEntityList.h"
 #include "ehandle.h"
