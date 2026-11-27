@@ -76,6 +76,7 @@ public:
 	int sub_100a6780(int b, int h);
 	bool sub_100a6b10();
 	void sub_1007ede0(C_BaseEntity *pEntity);
+	void sub_1007ebe0(C_BaseEntity *pEntity);
 	void sub_100a9f40(C_BaseEntity *pEntity);
 	void sub_100a9e30(C_BaseEntity *pEntity);
 	C_BaseEntity *sub_100a7890();
