@@ -219,6 +219,32 @@ vgui2::Frame *pcd_emit_101b85b0(const vgui2::Frame &other) { return new vgui2::F
 // TARGET: ??_GFrame@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101b85d0 size=0xff
+#include "vgui2__Frame.h"
+struct IObj88 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(int); };
+struct FrameView { char pad[0x88]; IObj88 *p88; char pad2[4]; vgui2::Panel *p[13]; };
+#define FV ((FrameView *)this)
+using namespace vgui2;
+// TARGET: vgui2::Frame::~Frame
+Frame::~Frame()
+{
+	if (FV->p[0]) delete FV->p[0];
+	if (FV->p[1]) delete FV->p[1];
+	if (FV->p[2]) delete FV->p[2];
+	if (FV->p[3]) delete FV->p[3];
+	if (FV->p[4]) delete FV->p[4];
+	if (FV->p[5]) delete FV->p[5];
+	if (FV->p[6]) delete FV->p[6];
+	if (FV->p[7]) delete FV->p[7];
+	if (FV->p[8]) delete FV->p[8];
+	if (FV->p[9]) delete FV->p[9];
+	if (FV->p[10]) delete FV->p[10];
+	if (FV->p[11]) delete FV->p[11];
+	if (FV->p[12]) delete FV->p[12];
+	if (FV->p88) FV->p88->v5(1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b86d0 size=0x119
 #include "vgui2__Frame.h"
 namespace lifted {
