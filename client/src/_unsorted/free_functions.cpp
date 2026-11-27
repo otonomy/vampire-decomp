@@ -110833,6 +110833,71 @@ void S101423a0::sub_101423a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101423d0 size=0xa2
+class CUnknown10141e80;
+
+class CObjList_10142050
+{
+public:
+	int m_nGrow;
+	int m_nAlloc;
+	int m_nCount;
+	CUnknown10141e80 **m_pData;
+
+	CObjList_10142050 *sub_10142050(const CObjList_10142050 &other);
+};
+
+struct S_10141820
+{
+	int m_unk[0x48 / 4];
+	S_10141820 &sub_10141820(const S_10141820 &src);
+};
+
+struct Q_101423d0
+{
+	int a, b, c, d;
+};
+
+class CRec_101423d0
+{
+public:
+	int m_unk0;
+	int m_a4;
+	int m_a8;
+	int m_ac;
+	int m_a10;
+	int m_a14;
+	CObjList_10142050 m_list;
+	char m_c28;
+	char m_c29;
+	char m_pad2a[6];
+	int m_a30;
+	Q_101423d0 m_q34;
+	Q_101423d0 m_q44;
+	S_10141820 m_s[4];
+
+	CRec_101423d0 &sub_101423d0(const CRec_101423d0 &rhs);
+};
+
+CRec_101423d0 &CRec_101423d0::sub_101423d0(const CRec_101423d0 &rhs)
+{
+	m_a4 = rhs.m_a4;
+	m_a8 = rhs.m_a8;
+	m_a10 = rhs.m_a10;
+	m_ac = rhs.m_ac;
+	m_a14 = rhs.m_a14;
+	m_list.sub_10142050(rhs.m_list);
+	m_c28 = rhs.m_c28;
+	m_c29 = rhs.m_c29;
+	m_a30 = rhs.m_a30;
+	m_q34 = rhs.m_q34;
+	m_q44 = rhs.m_q44;
+	for (int i = 0; i < 4; i++)
+		m_s[i].sub_10141820(rhs.m_s[i]);
+	return *this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101425f0 size=0x16
 int sub_10141bb0(const char *);
 struct S_101425f0 { int a, b; const char *m; int sub_101425f0(); };
