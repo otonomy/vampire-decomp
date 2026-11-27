@@ -151006,6 +151006,52 @@ int sub_1019e2a0(const Vector &point, Vector &screen)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019ef20 size=0x179
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "C_BasePlayer.h"
+#include "engineclient.h"
+
+struct ConVarView_1019ef20
+{
+	virtual void v0();
+	virtual bool vfunc1();
+	char m_pad[0x24];
+	float m_fl28;
+};
+extern ConVarView_1019ef20 *g_1061973c;
+extern ConVarView_1019ef20 *g_1061960c;
+void sub_10198640();
+
+bool CViewRender::sub_1019ef20(int arg)
+{
+	ScopeTrace st("CViewRender::DrawMotionBlur", g_102de300);
+	if (g_pMaterialSystemHardwareConfig->vfunc10()) {
+		C_BasePlayer *p = C_BasePlayer::GetLocalPlayer();
+		if (p) {
+			int level = *(int *)((char *)p + 0x1074);
+			if (level >= 1) {
+				level--;
+				int n;
+				if (level > 4)
+					n = 4;
+				else
+					n = level < 0 ? 0 : level;
+				double f = n * 0.125;
+				float a = f * 0.2 + 0.5;
+				float b = f * 0.025 + 0.005f;
+				a = (g_1061973c->vfunc1() ? 0.0f : g_1061973c->m_fl28) * a;
+				float c = g_1061960c->vfunc1() ? 0.0f : g_1061960c->m_fl28;
+				sub_10198640();
+				sub_1019e530(arg, *(int *)((char *)this + 0x428), a, 0.0f, c * b, 0xff, 0xff, 0xff);
+				return true;
+			}
+		}
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019f140 size=0x1ff
 #include "engineclient.h"
 #include "CViewRender.h"
