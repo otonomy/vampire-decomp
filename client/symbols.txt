@@ -7648,6 +7648,7 @@
 0x10143a10 func   ?sub_10143a10@@YAXXZ sub_10143a10
 0x10143a70 func   ?sub_10143a70@CUnknown10143a70@@QAEPAXXZ CUnknown10143a70::sub_10143a70
 0x10143a90 func   ?sub_10143a90@CPtrList101d6400@@QAEXXZ CPtrList101d6400::sub_10143a90
+0x10143ae0 func   ?sub_10143ae0@PtrList@@QAEXXZ PtrList::sub_10143ae0
 0x10143c10 func   ?sub_10143c10@TraitMgr@@QAE_NXZ TraitMgr::sub_10143c10
 0x10143e30 func   ?sub_10143e30@CUnknown10143e30@@QAEXXZ CUnknown10143e30::sub_10143e30
 0x10143f60 func   ?sub_10143f60@V3f60@@QAEHH@Z V3f60::sub_10143f60

@@ -109566,6 +109566,76 @@ void CPtrList101d6400::sub_10143a90()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10143ae0 size=0x129
+#include "CUnknown10142e50.h"
+class CUnknown10143500 { public: void sub_10143500(); };
+extern CUnknown10142e50 **g_105e77f0;
+extern int g_105e77ec;
+extern int g_105e77e8;
+extern CUnknown10143500 **g_105e7804;
+extern int g_105e7800;
+extern int g_105e77fc;
+struct PtrList
+{
+    int m0;
+    int m4;
+    int m8;
+    int **mC;
+    char pad[0x14];
+    void *m24;
+    void sub_10143ae0();
+};
+void PtrList::sub_10143ae0()
+{
+    if (mC)
+    {
+        for (int i = 0; i < m8; i++)
+        {
+            if (mC[i])
+                delete mC[i];
+            mC[i] = 0;
+        }
+        delete mC;
+        mC = 0;
+    }
+    m8 = 0;
+    m4 = 0;
+    delete m24;
+    m24 = 0;
+    if (g_105e77f0)
+    {
+        for (int i = 0; i < g_105e77ec; i++)
+        {
+            CUnknown10142e50 *p = g_105e77f0[i];
+            if (p)
+                delete p;
+            g_105e77f0[i] = 0;
+        }
+        delete g_105e77f0;
+        g_105e77f0 = 0;
+    }
+    g_105e77ec = 0;
+    g_105e77e8 = 0;
+    if (g_105e7804)
+    {
+        for (int i = 0; i < g_105e7800; i++)
+        {
+            CUnknown10143500 *p = g_105e7804[i];
+            if (p)
+            {
+                p->sub_10143500();
+                delete p;
+            }
+            g_105e7804[i] = 0;
+        }
+        delete g_105e7804;
+        g_105e7804 = 0;
+    }
+    g_105e7800 = 0;
+    g_105e77fc = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10143c10 size=0x219
 #include "StatOwner2.h"
 #include "CUnknown101439f0.h"
