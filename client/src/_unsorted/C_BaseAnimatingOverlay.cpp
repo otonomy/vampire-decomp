@@ -6,7 +6,7 @@
 
 // VC6 writes C_BaseAnimatingOverlay's scalar deleting destructor where it emits the class's vtable; `new` in a function
 // nothing calls makes it emit both here
-C_BaseAnimatingOverlay *pcd_emit_10097210() { return new C_BaseAnimatingOverlay; }
+C_BaseAnimatingOverlay *pcd_emit_10097210(const C_BaseAnimatingOverlay &other) { return new C_BaseAnimatingOverlay(other); }
 
 // TARGET: ??_GC_BaseAnimatingOverlay@@UAEPAXI@Z
 // END FUNCTION
