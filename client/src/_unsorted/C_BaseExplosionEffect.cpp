@@ -1,6 +1,23 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x100e41a0 size=0x67
+#include "C_BaseExplosionEffect.h"
+struct CExpl_e5720 { void sub_100e5720(const Vector *origin, float t, Vector *out, float *outf); };
+// TARGET: C_BaseExplosionEffect::vfunc0
+void C_BaseExplosionEffect::vfunc0(const Vector &origin, float t, float scale, int flags)
+{
+	m_vecOrigin = origin;
+	m_fFlags = flags;
+	((CExpl_e5720 *)this)->sub_100e5720(&m_vecOrigin, t, &m_vecDirection, (float *)&m_unk1c);
+	vfunc1();
+	if (scale != 0.0f)
+		vfunc2();
+	vfunc3();
+	vfunc4();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100e53a0 size=0x1
 #include "C_BaseExplosionEffect.h"
 void C_BaseExplosionEffect::vfunc4()

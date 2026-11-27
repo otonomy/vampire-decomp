@@ -5798,6 +5798,7 @@
 0x100e4010 func   ?vfunc0@ClientEffectRegister@PrecacheEffectExplosion@@UAEX_N@Z PrecacheEffectExplosion::ClientEffectRegister::vfunc0
 0x100e40f0 func   ?sub_100e40f0@@YAHXZ sub_100e40f0
 0x100e4100 func   ?sub_100e4100@@YGMABVVector@@0MPAM@Z sub_100e4100
+0x100e41a0 func   ?vfunc0@C_BaseExplosionEffect@@UAEXABVVector@@MMH@Z C_BaseExplosionEffect::vfunc0
 0x100e4c10 func   ?vfunc10@CExplosionParticle@@UAEMPAUSimpleParticleAux_t@@M@Z CExplosionParticle::vfunc10
 0x100e4c80 func   ?vfunc11@CExplosionParticle@@QAEXPAUPartT@@M@Z CExplosionParticle::vfunc11
 0x100e4d80 func   ?vfunc8@CExplosionParticle@@QAEMPAUPartT@@M@Z CExplosionParticle::vfunc8
