@@ -48,6 +48,7 @@ public:
 	void sub_1011b730(int type);
 	void sub_100a2ee0();
 	void sub_100a25b0();
+	void sub_100a2e90(int);
 	void sub_100a0650(const char *context);
 	bool sub_100a29a0();
 	void sub_100a2e40(int);
