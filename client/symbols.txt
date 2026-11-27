@@ -4687,6 +4687,7 @@
 0x100bc150 func   ?sub_100bc150@CUnknown100bc150@@QAEXXZ CUnknown100bc150::sub_100bc150
 0x100bc170 func   ?sub_100bc170@@YGHHH@Z sub_100bc170
 0x100bc180 func   ?sub_100bc180@CUnknown100bc180@@QAEHH@Z CUnknown100bc180::sub_100bc180
+0x100bc1c0 func   ?vfunc5@CHudEntityElement@@UAEXH@Z CHudEntityElement::vfunc5
 0x100bc2c0 func   ?sub_100bc2c0@CUnknown100bc2c0@@QAEPAXHH@Z CUnknown100bc2c0::sub_100bc2c0
 0x100bc2f0 func   ??_GCHudEntityElement@@UAEPAXI@Z ??_GCHudEntityElement@@UAEPAXI@Z
 0x100bc310 func   ?sub_100bc310@@YAPBDXZ sub_100bc310
