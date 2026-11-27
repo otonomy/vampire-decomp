@@ -152,7 +152,7 @@ public:
 	virtual StudioHdr *GetStudiomodel(void *);	// slot 0; shapes differ
 	virtual void vfunc1();
 	virtual int vfunc2(int flags, IClientRenderable *pRenderable, unsigned short instance, const void *model, const Vector &origin, const QAngle &angles, int skin, int body, const Vector *pLightingOrigin);	// slot 2: DrawModel (C_BaseAnimating's trail draw 0x10096060)
-	virtual void vfunc3();
+	virtual void vfunc3(void *pMaterial);	// slot 3: ForcedMaterialOverride (DrawInsightModel)
 	virtual void vfunc4();
 	virtual int vfunc5(int);	// slot 5; seen as GetModelFrameCount 1
 	virtual void vfunc6();
