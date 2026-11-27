@@ -19,4 +19,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual void vfunc118();
     // the slots CLabelHeader adds to its base's vtable: 138-138, vfuncK at slot K
     virtual void vfunc138(int textBufferLen, const char *text);
+    void sub_1018d000(int textwide, int texttall, int *px, int *py);
 };
