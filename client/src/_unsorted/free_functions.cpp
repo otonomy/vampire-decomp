@@ -114403,6 +114403,83 @@ S_10141820 &S_10141820::sub_10141820(const S_10141820 &o)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101418b0 size=0x1e4
+struct IObjV
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9();
+	virtual int vKeyLookup(const char *name, int def);
+	virtual void v11();
+	virtual char vGetBool(const char *name, char def);
+	virtual const char *vGetString(const char *name, const char *def);
+};
+struct NameRecV { int a; int b; const char *name; };
+struct NLV { int sub_1013fdf0(const char *); };
+struct SubA { void sub_101421c0(IObjV *); };
+struct SubB { void sub_10141710(IObjV *, const char *); };
+extern NLV g_105e74fc;
+extern int g_105e775c;
+extern NameRecV **g_105e7760;
+int *sub_1015f830(int *, IObjV *, const char *);
+int *sub_1015f7e0(int *, IObjV *, const char *);
+void sub_10141aa0(int *, int);
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+static const char *const &NameOf(const char *const &r) { return r; }
+
+struct CharCtl
+{
+	int m_unk0; int m_trait; const char *m_text; int m_charTemplate; int m_keyLookup;
+	char m_b14, m_b15, m_b16, m_b17, m_b18, m_b19, m_b1a, m_b1b, m_b1c, m_b1d, m_b1e, m_b1f;
+	const char *m_font; const char *m_next;
+	SubA m_subA;
+	char m_pad29[0xf];
+	SubB m_subB;
+	bool sub_101418b0(IObjV *obj, int a2);
+};
+
+bool CharCtl::sub_101418b0(IObjV *obj, int a2)
+{
+	m_unk0 = a2;
+	if (obj) {
+		const char *trait = obj->vGetString("Trait", "");
+		if (*trait) {
+			int i = 0;
+			while (i < g_105e775c) {
+				const char *const &r = g_105e7760[i]->name;
+				const char *n = r ? r : "";
+				if (!_strcmpi(n, trait))
+					goto found;
+				i++;
+			}
+			i = -1;
+found:
+			m_trait = i;
+		}
+		const char *tmpl = obj->vGetString("CharTemplate", "");
+		if (*tmpl)
+			m_charTemplate = g_105e74fc.sub_1013fdf0(tmpl);
+		sub_10141aa0((int *)&m_text, *sub_1015f830(&a2, obj, "Text"));
+		sub_10141aa0((int *)&m_next, *sub_1015f7e0(&a2, obj, "Next"));
+		sub_10141aa0((int *)&m_font, *sub_1015f7e0(&a2, obj, "Font"));
+		m_keyLookup = obj->vKeyLookup("KeyLookup", m_keyLookup);
+		m_b14 = obj->vGetBool("ProcessTraitChoices", m_b14);
+		m_b15 = obj->vGetBool("SetGenderMale", m_b15);
+		m_b16 = obj->vGetBool("SetGenderFemale", m_b16);
+		m_b17 = obj->vGetBool("IsCheckBox", m_b17);
+		m_b18 = obj->vGetBool("EndCharGenWiz", m_b18);
+		m_b19 = obj->vGetBool("UsesBorder", m_b19);
+		m_b1a = obj->vGetBool("CenterText", m_b1a);
+		m_b1b = obj->vGetBool("MultiLineText", m_b1b);
+		m_b1d = obj->vGetBool("PerformCancel", m_b1d);
+		m_b1e = obj->vGetBool("PerformResetStats", m_b1e);
+		m_subA.sub_101421c0(obj);
+		m_subB.sub_10141710(obj, "Region");
+		return true;
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10141aa0 size=0x14
 int sub_10141aa0(int a0, int a1)
 {
