@@ -8993,6 +8993,7 @@
 0x1017d430 func   ??_GVHOHeadingLabel@@UAEPAXI@Z ??_GVHOHeadingLabel@@UAEPAXI@Z
 0x1017d450 func   ??1VHOHeadingLabel@@UAE@XZ VHOHeadingLabel::~VHOHeadingLabel
 0x1017d450 func   ?sub_1017d450@CUnknown1017d450@@QAEHXZ CUnknown1017d450::sub_1017d450
+0x1017d460 func   ?vfunc74@VHOHeadingLabel@@UAEHH@Z VHOHeadingLabel::vfunc74
 0x1017d510 func   ?sub_1017d510@CUnknown1017d510@@QAEPAXHHH@Z CUnknown1017d510::sub_1017d510
 0x1017d550 func   ??_GVUnderscoreLabel@@UAEPAXI@Z ??_GVUnderscoreLabel@@UAEPAXI@Z
 0x1017d570 func   ??1VUnderscoreLabel@@UAE@XZ VUnderscoreLabel::~VUnderscoreLabel
