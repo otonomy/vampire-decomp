@@ -4615,6 +4615,7 @@
 0x100b4400 func   ?sub_100b4400@@YA_NPAVC_BaseEntity@@VVector@@H11HHHH@Z sub_100b4400
 0x100b44c0 func   ?sub_100b44c0@@YA_NPAVC_BaseEntity@@VVector@@HH11HHHH@Z sub_100b44c0
 0x100b4560 func   ?sub_100b4560@@YAXXZ sub_100b4560
+0x100b45d0 func   ?sub_100b45d0@@YAXXZ sub_100b45d0
 0x100b4750 func   ?sub_100b4750@@YAXXZ sub_100b4750
 0x100b4780 func   ?sub_100b4780@@YAXXZ sub_100b4780
 0x100b47b0 func   ?sub_100b47b0@@YAHPBDHHHHHMMMM@Z sub_100b47b0

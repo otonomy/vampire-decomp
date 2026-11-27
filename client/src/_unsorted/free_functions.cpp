@@ -59373,6 +59373,49 @@ void sub_100b4560()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b45d0 size=0x17e
+#include "engineclient.h"
+#include "C_BaseEntity.h"
+#include "ehandle.h"
+struct V104a1754 { virtual void v0(); virtual bool vfunc1(); int m_unk[10]; int m_2c; };
+struct V104a581c { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual const char *vfunc11(int); };
+extern C_BaseEntity *g_104a1d10[128];
+extern C_BaseEntity *g_104a1f10;
+extern V104a1754 *g_104a1754;
+extern V104a581c *g_104a581c;
+void sub_100b4a60();
+const char *sub_1015ebd0(int);
+#define ENTF(e, type, off) (*(type *)((char *)(e) + (off)))
+// TARGET: sub_100b45d0
+void sub_100b45d0()
+{
+    for (int k = 0; k < 128; k++) {
+        if (g_104a1d10[k] && !ENTF(g_104a1d10[k], int, 0x46c)) {
+            g_104a1d10[k]->sub_100af040();
+            if (g_104a1d10[k])
+                delete g_104a1d10[k];
+            g_104a1d10[k] = 0;
+        }
+    }
+    if (g_104a1f10 && !ENTF(g_104a1f10, int, 0x46c))
+        sub_100b4a60();
+    if (!g_104a1754->vfunc1() && g_104a1754->m_2c) {
+        for (int i = 0; i < 128; i++) {
+            if (g_104a1d10[i]) {
+                const char *n1 = sub_1015ebd0(ENTF(g_104a1d10[i], int, 0x420));
+                const char *n2 = g_104a581c->vfunc11(ENTF(g_104a1d10[i], int, 0x414));
+                const char *parentName;
+                if (ENTF(g_104a1d10[i], CBaseHandle, 0x188).Get())
+                    parentName = ((C_BaseEntity *)ENTF(g_104a1d10[i], CBaseHandle, 0x188).Get())->vfunc114();
+                else
+                    parentName = "No Parent";
+                debugoverlay->vfunc8(0, (float)(i + 1), 0, 255, 255, 255, 255, "%2d:%s (%s)(%s)\n", i, n2, n1, parentName);
+            }
+        }
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b4750 size=0x24
 extern int g_104a1d10[128];
 extern int g_104a1f10;
