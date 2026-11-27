@@ -25659,6 +25659,31 @@ done:
 }
 // END FUNCTION
 
+// FUNCTION: 0x10043c80 size=0x118
+#include "CCollisionProperty.h"
+extern QAngle g_104d5190;
+void sub_101082f0(const Vector *in, const void *m, Vector *out);
+float CCollisionProperty::sub_10043c80(const Vector *dir)
+{
+	Vector local;
+	const QAngle *a = 0;
+	if (!(((unsigned char *)this)[0x44] & 0x80) && m_unk40 != 2 && m_unk40 != 0 &&
+		(a = &vfunc9(0), (g_104d5190.x != a->x || g_104d5190.y != a->y || g_104d5190.z != a->z)))
+	{
+		const void *m = &vfunc10();
+		sub_101082f0(dir, m, &local);
+	}
+	else
+		local = *dir;
+	const Vector &o = vfunc8();
+	float r = o.z * dir->z + o.y * dir->y + o.x * dir->x;
+	r += (local.x >= 0 ? *(float *)((char *)this + 0x10) : m_vecMins.x) * local.x;
+	r += (local.y >= 0 ? *(float *)((char *)this + 0x14) : m_vecMins.y) * local.y;
+	r += (local.z >= 0 ? *(float *)((char *)this + 0x18) : *(float *)((char *)this + 0xc)) * local.z;
+	return r;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10043ef0 size=0x18
 struct CUnknown10095d00 { bool sub_10095d00(int a, int b); };
 #define V8(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7();
