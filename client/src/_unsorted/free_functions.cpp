@@ -87610,6 +87610,32 @@ unsigned short CUtlRBTree16::sub_10111ae0(unsigned short parent, bool leftchild)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10111dd0 size=0x10b
+#include "CUtlRBTree16.h"
+// TARGET: CUtlRBTree16::sub_10111dd0
+void CUtlRBTree16::sub_10111dd0(const void *insert, unsigned short &parent, bool &leftchild)
+{
+	const CUtlRBTree16At<0x104dff2c> *tree = (const CUtlRBTree16At<0x104dff2c> *)this;
+	unsigned short current = m_Root;
+	parent = InvalidIndex();
+	leftchild = false;
+	while (current != InvalidIndex())
+	{
+		parent = current;
+		if (m_LessFunc(insert, &m_pElements[current].m_Data))
+		{
+			leftchild = true;
+			current = tree->Links(current).m_Left;
+		}
+		else
+		{
+			leftchild = false;
+			current = tree->Links(current).m_Right;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10111ee0 size=0x366
 #include "CUtlRBTree16.h"
 
