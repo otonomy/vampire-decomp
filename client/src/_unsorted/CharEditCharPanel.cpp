@@ -1,6 +1,51 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x10176520 size=0x173
+#include "CharEditCharPanel.h"
+
+char *sub_10170f60();
+int sub_100cd100();
+int sub_100cd0f0();
+struct SchemeView { virtual void v0(); virtual void v1(); virtual void v2(); virtual void *v3(const char *); };
+
+#define XRES(x) (int)((x) * (sub_100cd100() * 0.0009765625))
+#define YRESD(y) ((y) * (sub_100cd0f0() * 0.0013020833333333333))
+#define YRES(y) (int)YRESD(y)
+
+struct Ent { int a, b, c, d; };
+
+// TARGET: ??0CharEditCharPanel@@QAE@XZ
+CharEditCharPanel::CharEditCharPanel()
+{
+	char *p = sub_10170f60();
+	sub_101a9ff0((int)(p ? p + 0x10 : 0));
+	CharEditCharPanel::vfunc21(0);
+	PropertyPage::vfunc39(0);
+	int x = XRES(0.0);
+	int y = YRES(90.0);
+	int w = sub_100cd100() - x * 2;
+	int h = (int)((double)(sub_100cd0f0() - y * 2) - YRESD(90.0) * 2);
+	sub_101a9950(x, y, w, h);
+	unsigned char c[4];
+	c[0] = 0; c[1] = 0; c[2] = 0; c[3] = 0xaf;
+	PropertyPage::vfunc50(*(int *)c);
+	PropertyPage::vfunc54(2);
+	sub_101aa0a0(0x3e8);
+	sub_101aafb0(((SchemeView *)sub_101ac830())->v3("ToolTipBorder"));
+	PropertyPage::vfunc62(0);
+	PropertyPage::vfunc63(0);
+	Ent *t = (Ent *)((char *)this + 0x8c);
+	for (int i = 0; i < 3; i++) {
+		t[i].c = 0; t[i].d = 0; t[i].a = 0; t[i].b = 0;
+	}
+	*(int *)((char *)this + 0xc0) = 0;
+	*((char *)this + 0xbc) = 1;
+	sub_101766e0();
+	CharEditCharPanel::vfunc101();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101766a0 size=0x1e
 #include "CharEditCharPanel.h"
 
