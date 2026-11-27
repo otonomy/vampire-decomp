@@ -1066,6 +1066,36 @@ void C_BasePlayer::vfunc169(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a8840 size=0xdc
+#include "C_BasePlayer.h"
+#include "C_BaseCombatWeapon.h"
+#include "ehandle.h"
+void sub_10186e20(C_BasePlayer *, bool);
+struct WpnList_100a8840 { CBaseHandle *m_pMemory; int a; int b; int m_Size; };
+extern WpnList_100a8840 g_1049d8f8;
+extern WpnList_100a8840 g_1049d978;
+// TARGET: C_BasePlayer::vfunc164
+C_BaseCombatWeapon *C_BasePlayer::vfunc164(int slot)
+{
+	WpnList_100a8840 *list = &g_1049d8f8;
+	if (*(int *)((char *)this + 0x1624) != 0)
+		list = &g_1049d978;
+	int val = 7;
+	C_BaseCombatWeapon *best = 0;
+	for (int i = 0; i < list->m_Size; i++)
+	{
+		C_BaseCombatWeapon *w = (C_BaseCombatWeapon *)list->m_pMemory[i].Get();
+		if (w && w->vfunc220() == slot && w->vfunc177() && w->vfunc176() && w->vfunc221() <= val)
+		{
+			val = w->vfunc221();
+			best = w;
+		}
+	}
+	sub_10186e20(this, false);
+	return best;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a8920 size=0x100
 #include "CBaseEntityList.h"
 #include "C_BasePlayer.h"
