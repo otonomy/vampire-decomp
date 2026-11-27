@@ -40916,6 +40916,25 @@ int CUnknown10080b00::sub_10080b00(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10080b60 size=0x58
+namespace lifted {
+struct C10080450 { int sub_10080450(int); };
+struct C10080490 { int sub_10080490(int); };
+struct C10080c70 { int sub_10080c70(); };
+}
+struct CUnknown10080b60 { int sub_10080b60(int, int); };
+int CUnknown10080b60::sub_10080b60(int a0, int a1)
+{
+    *(int *)((char *)this + 0x41c) = 2;
+    *(int *)((char *)this + 0x424) = ((*(int *)((char *)this + 0x424)) & 0xff0) | 5;
+    ((lifted::C10080450 *)this)->sub_10080450(a0);
+    ((lifted::C10080490 *)this)->sub_10080490(a1);
+    *(int *)((char *)this + 0x450) = 0;
+    *(int *)((char *)this + (*(int *)((char *)this + 0x41c)) * 4 + 0x44c) = 0;
+    return ((lifted::C10080c70 *)this)->sub_10080c70();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10080e00 size=0x5
 int __stdcall sub_10080e00(int a0)
 {
