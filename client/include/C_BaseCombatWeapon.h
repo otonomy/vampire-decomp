@@ -10,6 +10,7 @@ public:
 	C_BaseCombatWeapon();
 	void *sub_1007b160();
 	int sub_1007d520(class C_BasePlayer *pPlayer, int a2, bool bSell);
+	int sub_1007d600(class C_BasePlayer *pPlayer, int a2, bool bFlag);
 	struct CWpnOwner *sub_1007bb30();
 	int sub_1007ba10(int n, int m);
 	int sub_1007ccc0();
