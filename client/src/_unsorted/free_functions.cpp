@@ -43225,6 +43225,23 @@ int CUnknown1007f550::sub_1007f550(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007f5b0 size=0x26
+#include "Vector.h"
+
+struct VPrim_1007f5b0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual const Vector &v9();
+};
+
+// TARGET: sub_1007f5b0
+void __fastcall sub_1007f5b0(char *self, int edx, Vector *out)
+{
+	*out = ((VPrim_1007f5b0 *)(self - 0x410))->v9();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007f5e0 size=0x5
 char __stdcall sub_1007f5e0(int a0, int a1, int a2)
 {
