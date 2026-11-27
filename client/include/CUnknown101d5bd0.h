@@ -34,4 +34,6 @@ public:
 	void sub_10149980();	// deletes every entry and the pointer array, then clears the count and the first field and sets the flag byte at +0x18
 	void sub_10157a20();	// loads the "TraitEffects" data files (vdata/system): counts the TraitEffects_*.txt files with the file system, then loads TraitEffects%03d.txt one by one through sub_101f7e90
 	bool sub_101577a0(const char *pszFile);	// loads one trait effect file (called through the stub at 0x100024d7)
+	char sub_10149b90(const char *pszFile);	// provisional, like sub_10140c10 (transplant)
+	struct CLoaderView *sub_10149890();	// provisional, like sub_10140910 (transplant)
 };
