@@ -9334,6 +9334,7 @@
 0x10192780 func   ?vfunc40@CViewRender@@UAE_NPAVVector@@0PAM@Z CViewRender::vfunc40
 0x10192850 func   ?sub_10192850@V2850@@QAEHXZ V2850::sub_10192850
 0x10192870 func   ?vfunc45@CViewRender@@UAEMXZ CViewRender::vfunc45
+0x10192880 func   ?sub_10192880@@YAPAUIMat_10192880@@PAU1@@Z sub_10192880
 0x10192bf0 func   ?sub_10192bf0@@YAPAUMatView@@PAU1@@Z sub_10192bf0
 0x10192cb0 func   ?sub_10192cb0@CUnknown10192cb0@@QAEXXZ CUnknown10192cb0::sub_10192cb0
 0x10192d00 func   ?sub_10192d00@@YA_NPAVC_BaseEntity@@HPAVVector@@@Z sub_10192d00
