@@ -25,5 +25,7 @@ public:
 	static unsigned short InvalidIndex() { return (unsigned short)~0; }
 	CUtlLinkedList240Node &InternalElement(unsigned short i) { return m_pMemory[i]; }
 
-	unsigned short sub_100d8c90(bool multilist);	// "CUtlLinkedList::AllocInternal"
+	unsigned short sub_100d8c90(bool multilist);
+	void sub_100d8b40(unsigned short before, unsigned short elem);	// "CUtlLinkedList::LinkBefore"
+	bool IsInList(unsigned short i) const { return i < m_TotalElements && m_pMemory[i].m_Previous != i; }	// "CUtlLinkedList::AllocInternal"
 };
