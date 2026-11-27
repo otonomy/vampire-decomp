@@ -1,4 +1,4 @@
-# written by pcdecomp standalone from vtmb d26392692221; do not edit by hand
+# written by pcdecomp standalone from vtmb 717ec916f16b; do not edit by hand
 10025e50 0x2a b ?sub_10025e50@@YGXPADIHP8CUnkElem@@AEXXZ@Z 4f6c62a3a157
 10025ed0 0x1a b ?sub_10025ed0@@YAHXZ 38b0de5140fe
 10025f00 0x51 b ?sub_10025f00@CConstantForceController@@QAEXPBVVector@@0@Z 894f4e0356b0
@@ -11663,7 +11663,7 @@
 102ee1e0 0xf b ?sub_102ee1e0@@YGHH@Z ab78224636ed
 102ee200 0xa b ?sub_102ee200@@YAHXZ 0054c13c2bdb
 102ee220 0x1f b ?sub_102ee220@CAI_Navigator@@QAEXPBVVector@@@Z 8940f9ebab66
-102ee250 0xd b ?sub_102ee250@CUnknown102ee120@@QAEXH@Z fad135959d09
+102ee250 0xd b ?sub_102ee250@CUnknown102ee120V@@QAEHH@Z 327840ad3fb7
 102ee270 0x13 b ?sub_102ee270@CUnknown102ee270@@QAEDXZ 7db5c3265961
 102ee2a0 0x8 b ?sub_102ee2a0@CUnknown102ee2a0@@QAEHXZ 21c4ac9dac39
 102ee2c0 0x8 b ?sub_102ee2c0@CUnknown102ee2c0@@QAEHXZ bb4c0b91ec9d
@@ -16585,10 +16585,6 @@
 104304f0 0x22 b ?sub_104304f0@@YAXXZ c1479c698ede
 10430520 0x2e b ?sub_10430520@@YAII@Z 336ebfa1c84f
 104307b2 0x18 b ?sub_104307b2@@YAXXZ 46b68676d6f9
-104340be 0xd b ?vfunc1@exception@@UBEPBDXZ 271e3a292008
-10436900 0xd b ?sub_10436900@@YAHPAPAD@Z 57dac5718020
-10436e0e 0xd b ?sub_10436e0e@@YAXXZ 3fd6d4413ff4
-1043ac71 0xc b ?sub_1043ac71@@YAXPAH@Z 60a7f2728e82
 10025e90 0x5 i - 79369d616a92
 10026060 0x5 i - f4b6a245c6b5
 10027c40 0x5 i - 2a9008413e3a

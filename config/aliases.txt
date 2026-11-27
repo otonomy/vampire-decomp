@@ -1,4 +1,4 @@
-# written by pcdecomp standalone from vtmb d26392692221; do not edit by hand
+# written by pcdecomp standalone from vtmb 717ec916f16b; do not edit by hand
 ??0?$CUtlMemory@UCFireBulletsHit@@@@QAE@HH@Z ?sub_1027f940@UtlMem@@QAEPAV1@HH@Z
 ??0CAI_InterestTarget@@QAE@XZ ?sub_102d9150@CUnknown102d9150@@QAEPAV1@XZ
 ??0CAI_LocalIdSpace@@QAE@_N@Z ?sub_102ea090@CUnknown102ea090@@QAEPAU1@D@Z
@@ -11277,8 +11277,9 @@
 ?sub_102ee200@CAI_Navigator@@QAEXXZ ?sub_102ee200@@YAHXZ
 ?sub_102ee220@CNav102edae0@@QAE_NPBM@Z ?sub_102ee220@CAI_Navigator@@QAEXPBVVector@@@Z
 ?sub_102ee220@RTNav@@QAEXPBVVector@@@Z ?sub_102ee220@CAI_Navigator@@QAEXPBVVector@@@Z
-?sub_102ee250@NavV@@QAEXH@Z ?sub_102ee250@CUnknown102ee120@@QAEXH@Z
-?sub_102ee250@RTNav@@QAEXH@Z ?sub_102ee250@CUnknown102ee120@@QAEXH@Z
+?sub_102ee250@CUnknown102ee120@@QAEXH@Z ?sub_102ee250@CUnknown102ee120V@@QAEHH@Z
+?sub_102ee250@NavV@@QAEXH@Z ?sub_102ee250@CUnknown102ee120V@@QAEHH@Z
+?sub_102ee250@RTNav@@QAEXH@Z ?sub_102ee250@CUnknown102ee120V@@QAEHH@Z
 ?sub_102ee270@@YIXPAX@Z ?sub_102ee270@CUnknown102ee270@@QAEDXZ
 ?sub_102ee270@CWWHelperView@@QAEXXZ ?sub_102ee270@CUnknown102ee270@@QAEDXZ
 ?sub_102ee270@NavV@@QAEDXZ ?sub_102ee270@CUnknown102ee270@@QAEDXZ

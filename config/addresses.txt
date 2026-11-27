@@ -1,4 +1,4 @@
-# written by pcdecomp standalone from vtmb d26392692221; do not edit by hand
+# written by pcdecomp standalone from vtmb 717ec916f16b; do not edit by hand
 089d52a6 ?ResetDbgInfo@?$CUtlVector@HV?$CUtlMemory@H@@@@QAEXXZ
 100019d3 ?s_default@?5??Find@CUnknown101ec4f0Set@@QAEPAVCUnknown101ec4f0@@H@Z@$AV2@A
 1000229d ?ops@?1??Ops_109f0a78@@YAPAVISaveRestoreOps@@XZ@$AV?$CUtlVectorDataOps@V?$CUtlVector@UEXPERIENCE_ENTRY@@V?$CUtlMemory@UEXPERIENCE_ENTRY@@@@@@$08@@A
@@ -24736,6 +24736,7 @@
 102ee220 ?sub_102ee220@CNav102edae0@@QAE_NPBM@Z
 102ee220 ?sub_102ee220@RTNav@@QAEXPBVVector@@@Z
 102ee250 ?sub_102ee250@CUnknown102ee120@@QAEXH@Z
+102ee250 ?sub_102ee250@CUnknown102ee120V@@QAEHH@Z
 102ee250 ?sub_102ee250@NavV@@QAEXH@Z
 102ee250 ?sub_102ee250@RTNav@@QAEXH@Z
 102ee270 ?sub_102ee270@@YIXPAX@Z
@@ -34647,8 +34648,6 @@
 10433913 ?sub_10433913@@YAXXZ
 10433963 ?sub_10433963@@YAHXZ
 10433e92 __exit
-104340be ?vfunc1@exception@@UBEPBDXZ
-10436900 ?sub_10436900@@YAHPAPAD@Z
 10436941 __fFEXP
 10436a71 __rtinfnpop
 10436c44 __rtzeropop
@@ -34658,10 +34657,8 @@
 10436c7f __tosnan2
 10436ca7 __nan2
 10436ce6 __rtindfpop
-10436e0e ?sub_10436e0e@@YAXXZ
 10437587 __adj_fdiv_r
 10439f2d ___crtLCMapStringA
-1043ac71 ?sub_1043ac71@@YAXPAH@Z
 1043b150 __fptrap
 1043b159 ?__CxxUnhandledExceptionFilter@@YGJPAU_EXCEPTION_POINTERS@@@Z
 1043b6ca ___crtGetStringTypeA
@@ -36534,7 +36531,6 @@
 10517228 ??_7CSafeDiscSaveRestoreOps_6@@6B@
 10517244 ??_7CSafeDiscSaveRestoreOps_7@@6B@
 10517260 ??_7type_info@@6B@
-10517394 ??_C@_0BC@OIDF@Unknown?5exception?$AA@
 10517454 $target_10517454
 10517464 $target_10517464
 105174f0 $target_105174f0
