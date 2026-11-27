@@ -11,6 +11,74 @@ vgui2::FocusNavGroup::FocusNavGroup(vgui2::Panel *panel) : m_unk4(-1), m_pPanel(
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c2e40 size=0x14e
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "vgui2__FocusNavGroup.h"
+#include "vgui2__Panel.h"
+
+struct SurfaceView { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); };
+SurfaceView *sub_101ac8d0();
+struct PanelB
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual bool v22();
+};
+
+// TARGET: vgui2::FocusNavGroup::vfunc4
+void vgui2::FocusNavGroup::vfunc4(vgui2::Panel *panel)
+{
+	m_hCurrent.sub_101ac6b0((PanelX *)0);
+	int position = 9999999;
+	if (panel)
+		position = panel->vfunc30();
+	Panel *best = 0;
+	bool first; first = true;
+	int bestPos;
+	for (;;)
+	{
+		int target = position - 1;
+		int i = 0;
+		if (0 < target)
+		{
+			bestPos = i;
+			while (i < m_pPanel->vfunc36()) { Panel *child = m_pPanel->vfunc37(i);
+				if (((PanelB *)child)->v22() && child->vfunc47() && pcd_stage(child->vfunc30()))
+				{
+					int pos = child->vfunc30();
+					if (pos == target)
+					{
+						best = child;
+						break;
+					}
+					if (pos < target && pos > bestPos)
+					{
+						best = child;
+						bestPos = pos;
+					}
+				} i++; }
+			if (!first || (int)best)
+				break;
+		}
+		if (!m_bFlag && m_pPanel->vfunc31())
+		{
+			Panel *parent = (Panel *)m_pPanel->vfunc31();
+			if (parent->vfunc0() != sub_101ac8d0()->v6())
+			{
+				((Panel *)m_pPanel->vfunc31())->vfunc58((int)m_pPanel);
+				break;
+			}
+		}
+		position = 9999999;
+		first = false;
+	}
+	if (!(best)) return; m_hCurrent.sub_101ac6b0((PanelX *)best);
+		best->vfunc15(-1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c3100 size=0xa
 #include "vgui2__FocusNavGroup.h"
 bool vgui2::FocusNavGroup::vfunc8(char a0)
