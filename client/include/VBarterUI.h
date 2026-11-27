@@ -19,6 +19,7 @@ public:
 	vgui2::Panel *m_p448;
 	int m_unk44c[(0x4dc - 0x44c) / 4];
 	IVBarterObj *m_p4dc;
+	VBarterUI(int a);
 	virtual ~VBarterUI();
 	void sub_1016cdc0();
 	void sub_1016b790();
