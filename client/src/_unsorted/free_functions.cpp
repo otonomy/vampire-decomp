@@ -42736,6 +42736,32 @@ void C_Beam::sub_10080990(const Vector &start, const Vector &end)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10080a10 size=0x75
+#include "Vector.h"
+#include "C_Beam.h"
+
+struct CUnknown1009f700
+{
+	void sub_1009f700(const Vector &v);
+};
+
+// TARGET: C_Beam::sub_10080a10
+void C_Beam::sub_10080a10(const Vector &start, const Vector &end)
+{
+	m_nNumBeamEnts = 2;
+	m_nBeamType = (m_nBeamType & 0xff0) | 3;
+	((CUnknown1009f700 *)this)->sub_1009f700(start);
+	vfunc40((char *)&start);
+	float *e = (float *)((char *)this + 0x498);
+	e[0] = end.x;
+	e[1] = end.y;
+	e[2] = end.z;
+	m_nAttach = 0;
+	(&m_nAttach)[m_nNumBeamEnts - 1] = 0;
+	sub_10080c70();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10080a90 size=0x63
 namespace lifted {
 struct C10080490 { int sub_10080490(int); };
