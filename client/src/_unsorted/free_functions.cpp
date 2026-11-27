@@ -107750,6 +107750,53 @@ void CUnknown10136f80::sub_10137020(int frame, int x, int y, int iWidth, int iHe
 }
 // END FUNCTION
 
+// FUNCTION: 0x10137520 size=0x1b4
+extern int g_105e5d70;
+extern int g_105e5d74;
+extern int g_105e5d78;
+extern int g_105e5d7c;
+
+// TARGET: sub_10137520
+bool sub_10137520(int *x, int *y, int *w, int *h, float *s0, float *t0, float *s1, float *t1)
+{
+	int wide = *w;
+	if (!wide)
+		return false;
+	int tall = *h;
+	if (!tall)
+		return false;
+	if (*x + wide <= g_105e5d70 || *x >= g_105e5d78 + g_105e5d70)
+		return false;
+	if (*y + tall <= g_105e5d74 || *y >= g_105e5d7c + g_105e5d74)
+		return false;
+	float dsdx = (*s1 - *s0) / wide;
+	float dtdy = (*t1 - *t0) / tall;
+	if (*x < g_105e5d70)
+	{
+		*s0 += (g_105e5d70 - *x) * dsdx;
+		*w += *x - g_105e5d70;
+		*x = g_105e5d70;
+	}
+	if (*x + *w > g_105e5d78 + g_105e5d70)
+	{
+		*s1 -= (*x + *w - g_105e5d78 - g_105e5d70) * dsdx;
+		*w = g_105e5d78 + g_105e5d70 - *x;
+	}
+	if (*y < g_105e5d74)
+	{
+		*t0 += (g_105e5d74 - *y) * dtdy;
+		*h += *y - g_105e5d74;
+		*y = g_105e5d74;
+	}
+	if (*y + *h > g_105e5d7c + g_105e5d74)
+	{
+		*t1 -= (*y + *h - g_105e5d7c - g_105e5d74) * dtdy;
+		*h = g_105e5d7c + g_105e5d74 - *y;
+	}
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101377b0 size=0x24
 int sub_101377b0(int a0)
 {
