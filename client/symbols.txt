@@ -10136,6 +10136,7 @@
 0x101b1dd0 func   ?InsertMultipleBefore@?$CUtlVector@DV?$CUtlMemory@D@@@@QAEHHHPBD@Z CUtlVector<char,CUtlMemory<char> >::InsertMultipleBefore
 0x101b1e60 func   ?Purge@?$CUtlMemory@D@@QAEXXZ CUtlMemory<char>::Purge
 0x101b1e60 func   ?sub_101b1e60@UtlMem@@QAEXXZ UtlMem::sub_101b1e60
+0x101b1e90 func   ?ShiftElementsRight@?$CUtlVector@DV?$CUtlMemory@D@@@@QAEXHH@Z CUtlVector<char,CUtlMemory<char> >::ShiftElementsRight
 0x101b1e90 func   ?sub_101b1e90@CUnknown101b1e90@@QAEXHH@Z CUnknown101b1e90::sub_101b1e90
 0x101b1ec0 func   ?sub_101b1ec0@@YAHHH@Z sub_101b1ec0
 0x101b1ee0 func   ?Grow@?$CUtlMemory@D@@QAEXH@Z CUtlMemory<char>::Grow
