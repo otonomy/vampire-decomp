@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1016" viewBox="0 0 900 1016" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif"><rect width="900" height="1016" fill="#0d1117"/><text x="14" y="24.0" font-size="14" font-weight="600" fill="#e6edf3">The game&#x27;s 23 modules by code size: vampire.dll done, client.dll 63.0%, the other 21 not started</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1016" viewBox="0 0 900 1016" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif"><rect width="900" height="1016" fill="#0d1117"/><text x="14" y="24.0" font-size="14" font-weight="600" fill="#e6edf3">The game&#x27;s 23 modules by code size: vampire.dll done, client.dll 64.9%, the other 21 not started</text>
 <rect x="14.0" y="32.0" width="330.6" height="150.0" fill="#0d1117" stroke="#30363d"/>
 <rect x="17.8" y="35.5" width="8" height="8" fill="#2ea043"/>
 <rect x="26.8" y="35.5" width="8" height="8" fill="#2ea043"/>
@@ -728,11 +728,11 @@
 <rect x="467.6" y="116.5" width="8" height="8" fill="#2ea043"/>
 <rect x="476.6" y="116.5" width="8" height="8" fill="#2ea043"/>
 <rect x="350.6" y="125.5" width="8" height="8" fill="#2ea043"/>
-<rect x="359.6" y="125.5" width="8" height="8" fill="#6e7681"/>
-<rect x="368.6" y="125.5" width="8" height="8" fill="#6e7681"/>
-<rect x="377.6" y="125.5" width="8" height="8" fill="#6e7681"/>
-<rect x="386.6" y="125.5" width="8" height="8" fill="#6e7681"/>
-<rect x="395.6" y="125.5" width="8" height="8" fill="#6e7681"/>
+<rect x="359.6" y="125.5" width="8" height="8" fill="#2ea043"/>
+<rect x="368.6" y="125.5" width="8" height="8" fill="#2ea043"/>
+<rect x="377.6" y="125.5" width="8" height="8" fill="#2ea043"/>
+<rect x="386.6" y="125.5" width="8" height="8" fill="#2ea043"/>
+<rect x="395.6" y="125.5" width="8" height="8" fill="#2ea043"/>
 <rect x="404.6" y="125.5" width="8" height="8" fill="#6e7681"/>
 <rect x="413.6" y="125.5" width="8" height="8" fill="#6e7681"/>
 <rect x="422.6" y="125.5" width="8" height="8" fill="#6e7681"/>
@@ -1445,7 +1445,7 @@
 <rect x="875.4" y="159.3" width="8" height="8" fill="#6e7681"/>
 <rect x="857.8" y="172.0" width="28.2" height="10.0" fill="#6e7681" stroke="#0d1117"/>
 <rect x="16.0" y="34.0" width="105.2" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="19.0" y="45.0" font-size="11" fill="#e6edf3">vampire.dll 100%</text>
-<rect x="346.6" y="34.0" width="92.8" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="349.6" y="45.0" font-size="11" fill="#e6edf3">client.dll 63%</text>
+<rect x="346.6" y="34.0" width="92.8" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="349.6" y="45.0" font-size="11" fill="#e6edf3">client.dll 65%</text>
 <rect x="492.5" y="34.0" width="68.0" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="495.5" y="45.0" font-size="11" fill="#e6edf3">engine.dll</text>
 <rect x="604.6" y="34.0" width="80.4" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="607.6" y="45.0" font-size="11" fill="#e6edf3">vphysics.dll</text>
 <rect x="604.6" y="130.3" width="92.8" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="607.6" y="141.3" font-size="11" fill="#e6edf3">vampire_pytho…</text>
@@ -3444,7 +3444,7 @@
 <rect x="546.5" y="545.0" width="8" height="8" fill="#2ea043"/>
 <rect x="555.5" y="545.0" width="8" height="8" fill="#2ea043"/>
 <text x="574.0" y="552.0" font-size="11" fill="#8b949e">179 / 179 (100.0%)</text>
-<text x="14" y="588.0" font-size="14" font-weight="600" fill="#e6edf3">client.dll: 63.0% of its code bytes (1,074,995/1,706,947), 14,724 of 16,432 functions, by source folder</text>
+<text x="14" y="588.0" font-size="14" font-weight="600" fill="#e6edf3">client.dll: 64.9% of its code bytes (1,108,507/1,706,948), 14,896 of 16,433 functions, by source folder</text>
 <rect x="14.0" y="596.0" width="552.6" height="190.0" fill="#0d1117" stroke="#30363d"/>
 <rect x="16.3" y="601.5" width="8" height="8" fill="#2ea043"/>
 <rect x="25.3" y="601.5" width="8" height="8" fill="#2ea043"/>
@@ -4216,42 +4216,42 @@
 <rect x="331.3" y="709.5" width="8" height="8" fill="#2ea043"/>
 <rect x="340.3" y="709.5" width="8" height="8" fill="#2ea043"/>
 <rect x="349.3" y="709.5" width="8" height="8" fill="#2ea043"/>
-<rect x="358.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="367.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="376.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="385.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="394.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="403.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="412.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="421.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="430.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="439.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="448.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="457.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="466.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="475.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="484.3" y="709.5" width="8" height="8" fill="#d29922"/>
-<rect x="493.3" y="709.5" width="8" height="8" fill="#6e7681"/>
-<rect x="502.3" y="709.5" width="8" height="8" fill="#6e7681"/>
-<rect x="511.3" y="709.5" width="8" height="8" fill="#6e7681"/>
-<rect x="520.3" y="709.5" width="8" height="8" fill="#6e7681"/>
-<rect x="529.3" y="709.5" width="8" height="8" fill="#6e7681"/>
-<rect x="538.3" y="709.5" width="8" height="8" fill="#6e7681"/>
-<rect x="547.3" y="709.5" width="8" height="8" fill="#6e7681"/>
-<rect x="556.3" y="709.5" width="8" height="8" fill="#6e7681"/>
-<rect x="16.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="25.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="34.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="43.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="52.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="61.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="70.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="79.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="88.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="97.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="106.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="115.3" y="718.5" width="8" height="8" fill="#6e7681"/>
-<rect x="124.3" y="718.5" width="8" height="8" fill="#6e7681"/>
+<rect x="358.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="367.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="376.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="385.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="394.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="403.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="412.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="421.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="430.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="439.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="448.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="457.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="466.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="475.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="484.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="493.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="502.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="511.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="520.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="529.3" y="709.5" width="8" height="8" fill="#2ea043"/>
+<rect x="538.3" y="709.5" width="8" height="8" fill="#d29922"/>
+<rect x="547.3" y="709.5" width="8" height="8" fill="#d29922"/>
+<rect x="556.3" y="709.5" width="8" height="8" fill="#d29922"/>
+<rect x="16.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="25.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="34.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="43.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="52.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="61.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="70.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="79.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="88.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="97.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="106.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="115.3" y="718.5" width="8" height="8" fill="#d29922"/>
+<rect x="124.3" y="718.5" width="8" height="8" fill="#d29922"/>
 <rect x="133.3" y="718.5" width="8" height="8" fill="#6e7681"/>
 <rect x="142.3" y="718.5" width="8" height="8" fill="#6e7681"/>
 <rect x="151.3" y="718.5" width="8" height="8" fill="#6e7681"/>
@@ -4944,32 +4944,32 @@
 <rect x="696.4" y="691.5" width="8" height="8" fill="#2ea043"/>
 <rect x="705.4" y="691.5" width="8" height="8" fill="#2ea043"/>
 <rect x="714.4" y="691.5" width="8" height="8" fill="#2ea043"/>
-<rect x="723.4" y="691.5" width="8" height="8" fill="#d29922"/>
-<rect x="732.4" y="691.5" width="8" height="8" fill="#d29922"/>
-<rect x="741.4" y="691.5" width="8" height="8" fill="#d29922"/>
-<rect x="750.4" y="691.5" width="8" height="8" fill="#d29922"/>
-<rect x="759.4" y="691.5" width="8" height="8" fill="#d29922"/>
-<rect x="768.4" y="691.5" width="8" height="8" fill="#d29922"/>
-<rect x="777.4" y="691.5" width="8" height="8" fill="#d29922"/>
-<rect x="786.4" y="691.5" width="8" height="8" fill="#d29922"/>
-<rect x="795.4" y="691.5" width="8" height="8" fill="#d29922"/>
-<rect x="570.4" y="700.5" width="8" height="8" fill="#d29922"/>
-<rect x="579.4" y="700.5" width="8" height="8" fill="#d29922"/>
-<rect x="588.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="597.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="606.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="615.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="624.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="633.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="642.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="651.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="660.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="669.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="678.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="687.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="696.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="705.4" y="700.5" width="8" height="8" fill="#6e7681"/>
-<rect x="714.4" y="700.5" width="8" height="8" fill="#6e7681"/>
+<rect x="723.4" y="691.5" width="8" height="8" fill="#2ea043"/>
+<rect x="732.4" y="691.5" width="8" height="8" fill="#2ea043"/>
+<rect x="741.4" y="691.5" width="8" height="8" fill="#2ea043"/>
+<rect x="750.4" y="691.5" width="8" height="8" fill="#2ea043"/>
+<rect x="759.4" y="691.5" width="8" height="8" fill="#2ea043"/>
+<rect x="768.4" y="691.5" width="8" height="8" fill="#2ea043"/>
+<rect x="777.4" y="691.5" width="8" height="8" fill="#2ea043"/>
+<rect x="786.4" y="691.5" width="8" height="8" fill="#2ea043"/>
+<rect x="795.4" y="691.5" width="8" height="8" fill="#2ea043"/>
+<rect x="570.4" y="700.5" width="8" height="8" fill="#2ea043"/>
+<rect x="579.4" y="700.5" width="8" height="8" fill="#2ea043"/>
+<rect x="588.4" y="700.5" width="8" height="8" fill="#2ea043"/>
+<rect x="597.4" y="700.5" width="8" height="8" fill="#2ea043"/>
+<rect x="606.4" y="700.5" width="8" height="8" fill="#2ea043"/>
+<rect x="615.4" y="700.5" width="8" height="8" fill="#2ea043"/>
+<rect x="624.4" y="700.5" width="8" height="8" fill="#d29922"/>
+<rect x="633.4" y="700.5" width="8" height="8" fill="#d29922"/>
+<rect x="642.4" y="700.5" width="8" height="8" fill="#d29922"/>
+<rect x="651.4" y="700.5" width="8" height="8" fill="#d29922"/>
+<rect x="660.4" y="700.5" width="8" height="8" fill="#d29922"/>
+<rect x="669.4" y="700.5" width="8" height="8" fill="#d29922"/>
+<rect x="678.4" y="700.5" width="8" height="8" fill="#d29922"/>
+<rect x="687.4" y="700.5" width="8" height="8" fill="#d29922"/>
+<rect x="696.4" y="700.5" width="8" height="8" fill="#d29922"/>
+<rect x="705.4" y="700.5" width="8" height="8" fill="#d29922"/>
+<rect x="714.4" y="700.5" width="8" height="8" fill="#d29922"/>
 <rect x="723.4" y="700.5" width="8" height="8" fill="#6e7681"/>
 <rect x="732.4" y="700.5" width="8" height="8" fill="#6e7681"/>
 <rect x="741.4" y="700.5" width="8" height="8" fill="#6e7681"/>
@@ -5238,8 +5238,8 @@
 <rect x="874.1" y="645.8" width="8" height="8" fill="#2ea043"/>
 <rect x="811.1" y="654.8" width="8" height="8" fill="#2ea043"/>
 <rect x="820.1" y="654.8" width="8" height="8" fill="#2ea043"/>
-<rect x="829.1" y="654.8" width="8" height="8" fill="#6e7681"/>
-<rect x="838.1" y="654.8" width="8" height="8" fill="#6e7681"/>
+<rect x="829.1" y="654.8" width="8" height="8" fill="#2ea043"/>
+<rect x="838.1" y="654.8" width="8" height="8" fill="#2ea043"/>
 <rect x="847.1" y="654.8" width="8" height="8" fill="#6e7681"/>
 <rect x="856.1" y="654.8" width="8" height="8" fill="#6e7681"/>
 <rect x="865.1" y="654.8" width="8" height="8" fill="#6e7681"/>
@@ -5344,8 +5344,8 @@
 <rect x="876.5" y="780.1" width="4.8" height="5.9" fill="#2ea043" stroke="#0d1117"/>
 <rect x="881.3" y="780.1" width="4.7" height="3.7" fill="#2ea043" stroke="#0d1117"/>
 <rect x="881.3" y="783.8" width="4.7" height="2.2" fill="#2ea043" stroke="#0d1117"/>
-<rect x="16.0" y="598.0" width="111.4" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="19.0" y="609.0" font-size="11" fill="#e6edf3">no file yet 64.4%</text>
-<rect x="568.6" y="598.0" width="80.4" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="571.6" y="609.0" font-size="11" fill="#e6edf3">cl_dll 55.4%</text>
+<rect x="16.0" y="598.0" width="111.4" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="19.0" y="609.0" font-size="11" fill="#e6edf3">no file yet 66.0%</text>
+<rect x="568.6" y="598.0" width="80.4" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="571.6" y="609.0" font-size="11" fill="#e6edf3">cl_dll 58.3%</text>
 <rect x="809.3" y="598.0" width="74.2" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="812.3" y="609.0" font-size="11" fill="#e6edf3">game_share…</text>
 <rect x="809.3" y="696.6" width="74.2" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="812.3" y="707.6" font-size="11" fill="#e6edf3">_init 100.…</text>
 <rect x="809.3" y="763.6" width="37.0" height="15" fill="#0d1117" fill-opacity="0.82"/><text x="812.3" y="774.6" font-size="11" fill="#e6edf3">vgui…</text>
@@ -5360,7 +5360,7 @@
 <text x="18" y="841.0" font-size="12" fill="#e6edf3">vampire.dll standalone</text>
 <text x="214" y="841.0" font-size="11" font-family="ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace" fill="#8b949e">an in-game test</text>
 <text x="18" y="864.0" font-size="12" fill="#e6edf3">client.dll</text>
-<text x="214" y="864.0" font-size="11" font-family="ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace" fill="#8b949e">1,708 functions (631,952 bytes) not matched yet</text>
+<text x="214" y="864.0" font-size="11" font-family="ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace" fill="#8b949e">1,537 functions (598,441 bytes) not matched yet</text>
 <text x="18" y="887.0" font-size="12" fill="#e6edf3">Not started</text>
 <text x="214" y="887.0" font-size="11" font-family="ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace" fill="#8b949e">engine.dll, vphysics.dll, vampire_python21.dll, StudioRender.dll, shaderapidx9.dll,</text>
 <text x="214" y="902.0" font-size="11" font-family="ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',monospace" fill="#8b949e">GameUI.dll, MaterialSystem.dll, vguimatsurface.dll, vgui2.dll, stdshader_dx8.dll, tier0.dll,</text>
