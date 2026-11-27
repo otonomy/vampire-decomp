@@ -14,6 +14,8 @@ public:
 	void sub_101c0b10(int);
 	void sub_101c0990(int);
 	void sub_101bfc60();
+	void *sub_101c0050(int);
+	void sub_101c09f0(int);
 	void sub_101bfd10();
 	void sub_101bfe20();
 	virtual ~Menu();
