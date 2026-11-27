@@ -9,7 +9,7 @@ struct CHandleVec
 	int m_allocationCount;
 	int m_growSize;
 	int m_size;
-	CBaseHandle *sub_100445d0(int i);\t// &m_pMemory[i]
+	CBaseHandle *sub_100445d0(int i);	// &m_pMemory[i]
 };
 
 class CCollisionHandleList
