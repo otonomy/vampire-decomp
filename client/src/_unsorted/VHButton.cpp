@@ -11,6 +11,27 @@ VHButton *pcd_emit_1017c950(const VHButton &other) { return new VHButton(other);
 // TARGET: ??_GVHButton@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x1017c980 size=0x5f
+#include "VHButton.h"
+
+struct HBtnColor { unsigned char r, g, b, a; };
+struct HBtnView { char m_pad[0xfc]; bool m_bFC; };
+
+// TARGET: VHButton::vfunc74
+int VHButton::vfunc74(int pScheme)
+{
+	HBtnColor c;
+	Button::vfunc74(pScheme);
+	if (((HBtnView *)this)->m_bFC)
+	{
+		c.r = 0x7d; c.g = 0xa7; c.b = 0xd9; c.a = 0xff;
+		return vfunc51(*(int *)&c);
+	}
+	c.r = 0xff; c.g = 0xff; c.b = 0xff; c.a = 0xff;
+	return vfunc51(*(int *)&c);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017c9e0 size=0x423
 #include "VHButton.h"
 #include "C_BasePlayer.h"
