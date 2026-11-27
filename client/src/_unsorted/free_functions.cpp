@@ -93602,6 +93602,17 @@ int __stdcall sub_10119730(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101197b0 size=0x20
+class C_BaseEntity;
+void sub_1011ba80(C_BaseEntity *, C_BaseEntity *);
+// TARGET: sub_101197b0
+void __stdcall sub_101197b0(C_BaseEntity *a, C_BaseEntity *b)
+{
+	sub_1011ba80(a, b);
+	sub_1011ba80(b, a);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10119d90 size=0x6b
 #include "matrix3x4_t.h"
 #include <math.h>
