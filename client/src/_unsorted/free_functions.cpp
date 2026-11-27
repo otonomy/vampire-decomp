@@ -67097,6 +67097,80 @@ void UtlMem::sub_100d3cc0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d3cf0 size=0x10a
+extern void *(__cdecl *g_101e3100)(unsigned int);
+extern void *(__cdecl *g_101e3104)(void *, unsigned int);
+extern void (__cdecl *g_101e310c)(const char *);
+struct List12Node
+{
+	char m_Data[8];
+	unsigned short m_Previous;
+	unsigned short m_Next;
+};
+class List12
+{
+public:
+	List12Node *m_pMemory;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+	unsigned short m_Head;
+	unsigned short m_Tail;
+	unsigned short m_FirstFree;
+	unsigned short m_ElementCount;
+	unsigned short m_TotalElements;
+	unsigned short m_pad16;
+	List12Node *m_pElements;
+	static unsigned short InvalidIndex() { return (unsigned short)~0; }
+	List12Node &InternalElement(unsigned short i) { return m_pMemory[i]; }
+	unsigned short sub_100d3cf0(bool multilist);
+};
+// TARGET: List12::sub_100d3cf0
+unsigned short List12::sub_100d3cf0(bool multilist)
+{
+	unsigned short elem;
+	if (m_FirstFree == InvalidIndex())
+	{
+		if (m_TotalElements == m_nAllocationCount)
+		{
+			if (m_nGrowSize != -1)
+			{
+				int nAllocationRequested = m_nAllocationCount + 1;
+				while (m_nAllocationCount < nAllocationRequested)
+				{
+					if (m_nAllocationCount != 0)
+					{
+						if (m_nGrowSize)
+							m_nAllocationCount += m_nGrowSize;
+						else
+							m_nAllocationCount += m_nAllocationCount;
+					}
+					else
+						m_nAllocationCount = 3;
+				}
+				if (m_pMemory)
+					m_pMemory = (List12Node *)g_101e3104(m_pMemory, m_nAllocationCount * sizeof(List12Node));
+				else
+					m_pMemory = (List12Node *)g_101e3100(m_nAllocationCount * sizeof(List12Node));
+			}
+		}
+		elem = m_TotalElements;
+		if (m_TotalElements++ == InvalidIndex())
+			g_101e310c("CUtlLinkedList overflow!\n");
+	}
+	else
+	{
+		elem = m_FirstFree;
+		m_FirstFree = InternalElement(m_FirstFree).m_Next;
+	}
+	if (!multilist)
+		InternalElement(elem).m_Next = InternalElement(elem).m_Previous = elem;
+	else
+		InternalElement(elem).m_Next = InternalElement(elem).m_Previous = InvalidIndex();
+	m_pElements = m_pMemory;
+	return elem;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d3e00 size=0x28
 #include "UtlMem.h"
 extern void (__cdecl *g_101e30fc)(void *);

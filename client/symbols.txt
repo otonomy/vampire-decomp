@@ -5278,6 +5278,7 @@
 0x100d3c30 func   ?sub_100d3c30@UtlMem@@QAEPAV1@HH@Z UtlMem::sub_100d3c30
 0x100d3c70 func   ?sub_100d3c70@Mem8@@QAEXH@Z Mem8::sub_100d3c70
 0x100d3cc0 func   ?sub_100d3cc0@UtlMem@@QAEXXZ UtlMem::sub_100d3cc0
+0x100d3cf0 func   ?sub_100d3cf0@List12@@QAEG_N@Z List12::sub_100d3cf0
 0x100d3e00 func   ?sub_100d3e00@UtlMem@@QAEXXZ UtlMem::sub_100d3e00
 0x100d3e30 func   ?sub_100d3e30@CUtlMemory12@@QAEXH@Z CUtlMemory12::sub_100d3e30
 0x100d3ea0 func   ?sub_100d3ea0@Tbl12@@QAEHG@Z Tbl12::sub_100d3ea0
