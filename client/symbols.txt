@@ -4473,6 +4473,7 @@
 0x100a8dc0 func   ?sub_100a8dc0@CUnknown100a8dc0@@QAEDXZ CUnknown100a8dc0::sub_100a8dc0
 0x100a8f90 func   ?sub_100a8f90@CUnknown100a8dc0@@QAEXPAVC_BasePlayer@@@Z CUnknown100a8dc0::sub_100a8f90
 0x100a8fd0 func   ?sub_100a8fd0@CUnknown100a8dc0@@QAEXPAVC_BasePlayer@@@Z CUnknown100a8dc0::sub_100a8fd0
+0x100a9330 func   ?sub_100a9330@C_BasePlayer@@QAEPAXHH@Z C_BasePlayer::sub_100a9330
 0x100a93e0 func   ?sub_100a93e0@C_BasePlayer@@QAEHXZ C_BasePlayer::sub_100a93e0
 0x100a94d0 func   ?sub_100a94d0@C_BasePlayer@@QAEHHPA_N@Z C_BasePlayer::sub_100a94d0
 0x100a96a0 func   ?sub_100a96a0@C_BasePlayer@@QAEHH@Z C_BasePlayer::sub_100a96a0

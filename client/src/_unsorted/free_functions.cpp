@@ -57106,6 +57106,35 @@ void CUnknown100a8dc0::sub_100a8fd0(C_BasePlayer *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a9330 size=0xad
+#include "C_BasePlayer.h"
+struct CUnknown100a5290 { int m_type; int m_val; void sub_100a5290(int); };
+void __cdecl sub_10186e20(C_BasePlayer *, bool);
+#define SLOT(pl) ((CUnknown100a5290 *)((char *)(pl) + *(int *)((char *)(pl) + 0x1624) * 8 + 0x1614))
+// TARGET: C_BasePlayer::sub_100a9330
+void *C_BasePlayer::sub_100a9330(int type, int a2)
+{
+	if (type == 0)
+	{
+		SLOT(this)->sub_100a5290(SLOT(this)->m_val - 1);
+		if (SLOT(this)->m_val < 0)
+		{
+			CUnknown100a5290 *s = SLOT(this);
+			s->sub_100a5290(sub_100a93e0() - 1);
+		}
+	}
+	else if (type == 7)
+	{
+		int v = SLOT(this)->m_val;
+		SLOT(this)->sub_100a5290(v - 1);
+		if (SLOT(this)->m_val < 0)
+			SLOT(this)->sub_100a5290(2);
+	}
+	sub_10186e20(this, false);
+	return SLOT(this);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a93e0 size=0xee
 #include "C_BasePlayer.h"
 #include "CVStatList_t.h"
