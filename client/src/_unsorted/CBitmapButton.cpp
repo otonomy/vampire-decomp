@@ -18,6 +18,19 @@ CBitmapButton *pcd_emit_10164280(const CBitmapButton &other) { return new CBitma
 // TARGET: ??_GCBitmapButton@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101642a0 size=0x2d
+#include "CBitmapButton.h"
+struct CUnknown101b6900 { char m_pad[0x4c]; void sub_101b6900(); };
+CBitmapButton::~CBitmapButton()
+{
+	CUnknown101b6900 *img = (CUnknown101b6900 *)((char *)this + 0x220);
+	for (int i = 4; i != 0; i--) {
+		img--;
+		img->sub_101b6900();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101642e0 size=0x67
 #include "CBitmapButton.h"
 #include "BitmapImage.h"
