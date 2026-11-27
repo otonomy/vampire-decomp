@@ -1,6 +1,38 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101bc4f0 size=0x122
+#include "vgui2__TreeView.h"
+#include "vgui2__TreeViewSubPanel.h"
+struct TVScrollBarV : public vgui2::Panel { TVScrollBarV *sub_101beb90(vgui2::Panel *parent, const char *name, int vertical); };
+vgui2::TreeView::TreeView(vgui2::Panel *parent, const char *name) : vgui2::Panel(parent, name)
+{
+	char *c = (char *)this;
+	*(int *)(c + 0x60) = 0x14;
+	*(int *)(c + 0x6c) = 0;
+	*(int *)(c + 0x9c) = 0;
+	*(int *)(c + 0x68) = 0;
+	*(char *)(c + 0x64) = 0;
+	*(int *)(c + 0x70) = 0;
+	*(int *)(c + 0x74) = 0;
+	void *mem0 = vgui2::Panel::operator new(0x58);
+	vgui2::TreeViewSubPanel *sp = new (mem0) vgui2::TreeViewSubPanel(this);
+	*(vgui2::TreeViewSubPanel **)(c + 0xa0) = sp;
+	sp->vfunc21(1);
+	(*(vgui2::TreeViewSubPanel **)(c + 0xa0))->sub_101a9890(0, 0);
+	void *mem = vgui2::Panel::operator new(0x70);
+	TVScrollBarV *hb = mem ? ((TVScrollBarV *)mem)->sub_101beb90(this, "HorizScrollBar", 0) : 0;
+	*(TVScrollBarV **)(c + 0x58) = hb;
+	hb->vfunc41((int)this);
+	(*(TVScrollBarV **)(c + 0x58))->vfunc21(0);
+	mem = vgui2::Panel::operator new(0x70);
+	TVScrollBarV *vb = mem ? ((TVScrollBarV *)mem)->sub_101beb90(this, "VertScrollBar", 1) : 0;
+	*(TVScrollBarV **)(c + 0x5c) = vb;
+	vb->vfunc21(0);
+	(*(TVScrollBarV **)(c + 0x5c))->vfunc41((int)this);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101bc700 size=0x1e
 #include "vgui2__TreeView.h"
 
