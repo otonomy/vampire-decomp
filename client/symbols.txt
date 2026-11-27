@@ -6846,6 +6846,7 @@
 0x10124c00 func   ?sub_10124c00@@YAHXZ sub_10124c00
 0x10124c30 func   ??_GCPlayerProximityProxy@@UAEPAXI@Z ??_GCPlayerProximityProxy@@UAEPAXI@Z
 0x10124c50 func   ?vfunc0@CPlayerViewProxy@@UAE_NPAX0@Z CPlayerViewProxy::vfunc0
+0x10124c90 func   ?vfunc1@CPlayerViewProxy@@UAEXPAX@Z CPlayerViewProxy::vfunc1
 0x10124d70 func   ?sub_10124d70@@YAHXZ sub_10124d70
 0x10124da0 func   ??_GCPlayerViewProxy@@UAEPAXI@Z ??_GCPlayerViewProxy@@UAEPAXI@Z
 0x10124dc0 func   ?vfunc0@CPlayerSpeedProxy@@UAE_NPAX0@Z CPlayerSpeedProxy::vfunc0
