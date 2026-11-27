@@ -7,6 +7,7 @@
 class CharEditEquipPanel : public vgui2::PropertyPage
 {
 public:
+	CharEditEquipPanel();
 	virtual ~CharEditEquipPanel();
 	void sub_10179850();
 	void sub_10179c40();
