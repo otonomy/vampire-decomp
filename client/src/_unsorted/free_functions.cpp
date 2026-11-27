@@ -143827,6 +143827,28 @@ VMatrix sub_101a1210(const Vector &vOrigin, const VPlane &thePlane)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a1300 size=0x101
+#include "VMatrix.h"
+#include <math.h>
+void sub_101a1300(VMatrix &dst, const Vector &axis, float angleDegrees)
+{
+	float radians = angleDegrees * (3.14159265358979323846 / 180.0);
+	float fSin = (float)sin(radians);
+	float fCos = (float)cos(radians);
+	float om = 1.0f - fCos;
+	float xo = om * axis.x;
+	float yo = om * axis.y;
+	float sx = fSin * axis.x;
+	float sy = fSin * axis.y;
+	float sz = fSin * axis.z;
+	float zo = om * axis.z;
+	dst.Init(xo * axis.x + fCos, xo * axis.y - sz, xo * axis.z + sy, 0.0f,
+		xo * axis.y + sz, yo * axis.y + fCos, yo * axis.z - sx, 0.0f,
+		xo * axis.z - sy, yo * axis.z + sx, zo * axis.z + fCos, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a1410 size=0x2e
 #include "VMatrix.h"
 // TARGET: sub_101a1410
