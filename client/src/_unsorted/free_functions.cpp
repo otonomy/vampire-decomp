@@ -110753,6 +110753,90 @@ void CPartListUnit3::sub_101431a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10143200 size=0x15b
+#include "VKeyValues.h"
+#include "CUnknown10142e50.h"
+
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+class CTraitComboList_10143200
+{
+public:
+	int m_nGrow;
+	int m_nAlloc;
+	int m_nCount;
+	CUnknown10142e50 **m_pData;
+
+	char sub_10143200(VKeyValuesInterface *pKV);
+};
+
+char CTraitComboList_10143200::sub_10143200(VKeyValuesInterface *pKV)
+{
+	VKeyValuesInterface *pCombos = pKV->vfunc2("TraitCombinations");
+	if (!pCombos)
+		return 0;
+	VKeyValuesInterface *pCombo = pCombos->vfunc2("TraitCombination");
+	while (pCombo)
+	{
+		if (m_nAlloc == m_nCount)
+		{
+			m_nAlloc += m_nGrow;
+			if (m_pData)
+			{
+				CUnknown10142e50 **pNew = (CUnknown10142e50 **)operator new(m_nAlloc * 4);
+				int i = 0;
+				if (m_nCount > 0)
+				{
+					do
+					{
+						pNew[i] = m_pData[i];
+						i++;
+					} while (i < m_nCount);
+				}
+				if (i < m_nAlloc)
+				{
+					do
+					{
+						pNew[i] = 0;
+						i++;
+					} while (i < m_nAlloc);
+				}
+				operator delete(m_pData);
+				m_pData = pNew;
+				m_nCount++;
+			}
+			else
+			{
+				m_pData = (CUnknown10142e50 **)operator new(m_nAlloc * 4);
+				int i = 0;
+				if (m_nAlloc > 0)
+				{
+					do
+					{
+						m_pData[i] = 0;
+						i++;
+					} while (i < m_nAlloc);
+				}
+				m_nCount++;
+			}
+		}
+		else
+			m_nCount = m_nCount + 1;
+		if (!m_pData[m_nCount - 1])
+			m_pData[m_nCount - 1] = new CUnknown10142e50(m_nCount - 1);
+		CUnknown10142e50 *pElem = m_pData[m_nCount - 1];
+		if (!pElem)
+		{
+			Msg("Unable to parse data file:  Memory allocation ERROR!\n");
+			return 0;
+		}
+		pElem->sub_10142f10(pCombo);
+		pCombo = pCombo->vfunc3();
+	}
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10143360 size=0x34
 struct XVec { int sub_10143150(int a); };
 struct XOwner {
