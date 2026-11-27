@@ -1,6 +1,49 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101c6780 size=0x137
+#include "vgui2__MessageBox.h"
+#include "vgui2__Label.h"
+#define V2(n) virtual void vf##n(); virtual void vf##n##b();
+struct Button_101b3630 : public vgui2::Panel {
+	Button_101b3630 *sub_101b3630(vgui2::Panel *, const char *, const char *);
+	V2(107) V2(109) V2(111) V2(113) V2(115) V2(117) V2(119) V2(121) V2(123) V2(125) V2(127) V2(129) V2(131) V2(133)
+	V2(135) V2(137) V2(139) V2(141) V2(143) V2(145) V2(147) V2(149) V2(151) V2(153) V2(155) V2(157) V2(159)
+	virtual void vf161();
+	virtual void SetText(const char *);
+};
+struct CUnknown101b5670 { CUnknown101b5670 *sub_101b5670(const char *); };
+struct CUnknown101b9560 { void sub_101b9560(int); };
+void *sub_101b6840(int);
+extern char g_102da9a4[];
+#define m_pButton (*(Button_101b3630 **)((char *)this + 0xe4))
+#define m_pLabel (*(vgui2::Label **)((char *)this + 0xe8))
+#define m_pCmd (*(CUnknown101b5670 **)((char *)this + 0xec))
+// TARGET: vgui2::MessageBox::MessageBox
+vgui2::MessageBox::MessageBox(const char *title, const char *text, vgui2::Panel *parent) : vgui2::Frame(parent, 0, 0)
+{
+	int wide, tall;
+	vfunc118((int)title, 1);
+	((CUnknown101b9560 *)this)->sub_101b9560(0);
+	vfunc126(0);
+	vfunc128(0);
+	vfunc121(0);
+	void *p = vgui2::Panel::operator new(0xb8);
+	m_pLabel = p ? new (p) vgui2::Label(this, 0, text) : 0;
+	m_pLabel->vfunc110(&wide, &tall);
+	wide = 0x1e0;
+	tall = 0xa0;
+	m_pLabel->sub_101a98f0(0x1e0, 0xa0);
+	void *q = vgui2::Panel::operator new(0xf0);
+	m_pButton = q ? ((Button_101b3630 *)q)->sub_101b3630(this, 0, g_102da9a4) : 0;
+	m_pButton->SetText("Close");
+	m_pButton->vfunc41((int)this);
+	void *r = sub_101b6840(0x1c);
+	m_pCmd = r ? ((CUnknown101b5670 *)r)->sub_101b5670("Command") : 0;
+	sub_101a98f0(wide + 0x64, tall + 0x64);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c68c0 size=0x1e
 #include "vgui2__MessageBox.h"
 
