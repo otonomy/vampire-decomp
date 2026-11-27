@@ -3176,6 +3176,7 @@
 0x10059090 func   ?vfunc34@CHudManagerPanel@@UAEXXZ CHudManagerPanel::vfunc34
 0x100590b0 func   ?vfunc35@CHudManagerPanel@@UAEXXZ CHudManagerPanel::vfunc35
 0x100590d0 func   ?vfunc36@CHudManagerPanel@@UAEXXZ CHudManagerPanel::vfunc36
+0x10059100 func   ?vfunc37@CHudManagerPanel@@UAEXXZ CHudManagerPanel::vfunc37
 0x100591b0 func   ?vfunc38@CHudManagerPanel@@UAEXXZ CHudManagerPanel::vfunc38
 0x10059250 func   ??0CHUDSprite@@QAE@PBDHHHHHH@Z CHUDSprite::CHUDSprite
 0x10059330 func   ??_GCHUDSprite@@UAEPAXI@Z ??_GCHUDSprite@@UAEPAXI@Z

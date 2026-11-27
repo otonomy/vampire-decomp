@@ -573,6 +573,37 @@ void CHudManagerPanel::vfunc36()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10059100 size=0xa9
+#include "CHudManagerPanel.h"
+#include "C_BasePlayer.h"
+#include "CHud.h"
+#include "engineclient.h"
+#include <stdlib.h>
+extern "C" __declspec(dllimport) int __cdecl Q_snprintf(char *, unsigned int, const char *, ...);
+struct HudElemX { char m_pad[0x1c]; bool m_bFlag; };
+void sub_1004f810();
+// TARGET: CHudManagerPanel::vfunc37
+void CHudManagerPanel::vfunc37()
+{
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (pPlayer && engine->vfunc63() == 2)
+	{
+		bool bChanged;
+		char szCmd[0x30];
+		int nDiscipline = atoi(engine->Cmd_Argv(1) + 1) - 1;
+		int nValue = pPlayer->sub_100a94d0(nDiscipline, &bChanged);
+		Q_snprintf(szCmd, 0x30, "vdiscipline_int %d", nValue);
+		if (((HudElemX *)gHUD.FindElement("CHudWeaponSelection"))->m_bFlag)
+			pPlayer->vfunc160(false);
+		if (bChanged)
+		{
+			sub_1004f810();
+			engine->vfunc27(szCmd, 1);
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100591b0 size=0x91
 #include "C_BasePlayer.h"
 #include "engineclient.h"
