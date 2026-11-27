@@ -5793,6 +5793,7 @@
 0x100f07a0 func   ?sub_100f07a0@@YAHXZ sub_100f07a0
 0x100f07f0 func   ?sub_100f07f0@CHud@@QAEXXZ CHud::sub_100f07f0
 0x100f0860 func   ?sub_100f0860@CHud@@QAEXXZ CHud::sub_100f0860
+0x100f08d0 func   ?sub_100f08d0@CUnknown100f08d0@@QAEHXZ CUnknown100f08d0::sub_100f08d0
 0x100f0930 func   ?sub_100f0930@@YIXPAUHudVecOwner@@H@Z sub_100f0930
 0x100f0980 func   ?sub_100f0980@CHud@@QAEHPBD@Z CHud::sub_100f0980
 0x100f0cf0 func   ?sub_100f0cf0@CHud@@QAEXXZ CHud::sub_100f0cf0
