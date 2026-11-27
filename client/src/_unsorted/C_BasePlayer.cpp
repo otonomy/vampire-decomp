@@ -722,6 +722,48 @@ void C_BasePlayer::vfunc37()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a7770 size=0xce
+#include "C_BasePlayer.h"
+#include "C_BaseCineCamera.h"
+#include "CViewSetup.h"
+#include "CBaseHandle.h"
+#include "CBaseEntityList.h"
+#include "ehandle.h"
+
+struct IViewTargetX
+{
+	virtual void v0();
+	virtual void v1(C_BasePlayer *pPlayer, bool bFlag, Vector *pOrigin, QAngle *pAngles);
+	virtual void v2(float *pFov);
+};
+inline bool HandleHasEntity(CBaseHandle hh)
+{
+	if (hh.IsValid())
+	{
+		const CBaseEntityListEntry *pInfo = &g_pEntityList->m_EntPtrArray[hh.GetEntryIndex()];
+		if (pInfo->m_SerialNumber == hh.GetSerialNumber() && pInfo->m_pEntity)
+			return true;
+	}
+	return false;
+}
+// TARGET: C_BasePlayer::vfunc187
+void C_BasePlayer::vfunc187(CViewSetup *pView)
+{
+	if (*((char *)this + 0x19c8) && HandleHasEntity(*(CBaseHandle *)((char *)this + 0x19c4)))
+	{
+		IViewTargetX *pTarget = (IViewTargetX *)((C_BaseEntity *)((CBaseHandle *)((int *)this + 0x19c4 / 4))->Get())->vfunc63();
+		if (pTarget)
+		{
+			pTarget->v1(this, *((char *)this + 0x19c9) == 0, &pView->origin, &pView->angles);
+			pTarget->v2(&pView->fov);
+		}
+	}
+	C_BaseCineCamera *pCam = (C_BaseCineCamera *)sub_100a7890();
+	if (pCam && pCam->sub_10001970())
+		pCam->sub_10001b50(pView);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a7ab0 size=0x1a
 #include "C_BasePlayer.h"
 namespace lifted {

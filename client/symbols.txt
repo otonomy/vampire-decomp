@@ -4449,6 +4449,7 @@
 0x100a74d0 func   ?vfunc155@C_BasePlayer@@UAEXXZ C_BasePlayer::vfunc155
 0x100a7640 func   ?vfunc74@C_BasePlayer@@UAE_NXZ C_BasePlayer::vfunc74
 0x100a76a0 func   ?vfunc37@C_BasePlayer@@UAEXXZ C_BasePlayer::vfunc37
+0x100a7770 func   ?vfunc187@C_BasePlayer@@UAEXPAUCViewSetup@@@Z C_BasePlayer::vfunc187
 0x100a7890 func   ?sub_100a7890@C_BasePlayer@@QAEPAVC_BaseEntity@@XZ C_BasePlayer::sub_100a7890
 0x100a7a50 func   ?sub_100a7a50@@YI_NPAX@Z sub_100a7a50
 0x100a7ab0 func   ?vfunc174@C_BasePlayer@@UAE_NXZ C_BasePlayer::vfunc174
