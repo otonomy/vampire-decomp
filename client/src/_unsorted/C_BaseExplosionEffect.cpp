@@ -55,3 +55,31 @@ void C_BaseExplosionEffect::vfunc5()
 	dl->die = (float)(engine->Time(0) + 0.1f);
 }
 // END FUNCTION
+
+// FUNCTION: 0x100e5430 size=0x13c
+#define PCD_LPF_CTOR
+#include "engineclient.h"
+#include "C_RecipientFilter.h"
+#include "C_BaseExplosionEffect.h"
+// TARGET: C_BaseExplosionEffect::vfunc1
+void C_BaseExplosionEffect::vfunc1()
+{
+	if (m_fFlags & 4)
+		return;
+	CLocalPlayerFilter filter;
+	switch (enginerandom->RandomInt(0, 2)) {
+	case 0:
+		enginesound->vfunc0("weapons/explode3.wav", 0);
+		enginesound->EmitSound(filter, 0, 6, "weapons/explode3.wav", 1.0f, 0x3e99999a, 0, 100, (int)&m_vecOrigin, 0, 1, 0);
+		break;
+	case 1:
+		enginesound->vfunc0("weapons/explode4.wav", 0);
+		enginesound->EmitSound(filter, 0, 6, "weapons/explode4.wav", 1.0f, 0x3e99999a, 0, 100, (int)&m_vecOrigin, 0, 1, 0);
+		break;
+	case 2:
+		enginesound->vfunc0("weapons/explode5.wav", 0);
+		enginesound->EmitSound(filter, 0, 6, "weapons/explode5.wav", 1.0f, 0x3e99999a, 0, 100, (int)&m_vecOrigin, 0, 1, 0);
+		break;
+	}
+}
+// END FUNCTION
