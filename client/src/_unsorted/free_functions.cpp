@@ -151539,6 +151539,51 @@ void *vgui2::Slider::sub_101bb6e0(void *parent, const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101bbb20 size=0x11f
+#include "vgui2__Slider.h"
+
+#define V10(n) virtual void n##0(); virtual void n##1(); virtual void n##2(); virtual void n##3(); virtual void n##4(); virtual void n##5(); virtual void n##6(); virtual void n##7(); virtual void n##8(); virtual void n##9();
+struct CCol101bbb20 { unsigned char c[4]; };
+struct ISurf101bbb20
+{
+	virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4();
+	virtual void a5(); virtual void a6(); virtual void a7(); virtual void a8(); virtual void a9();
+	virtual void DrawSetColor(CCol101bbb20 c);
+	virtual void a11();
+	virtual void DrawFilledRect(int x0, int y0, int x1, int y1);
+	virtual void b13(); virtual void b14(); virtual void b15(); virtual void b16(); virtual void b17(); virtual void b18(); virtual void b19();
+	V10(c)
+	virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5(); virtual void d6(); virtual void d7(); virtual void d8();
+	virtual void GetScreenSize(int &w, int &h);
+};
+ISurf101bbb20 *sub_101ac8d0();
+
+void vgui2::Slider::sub_101bbb20()
+{
+	int x, y, wide, tall;
+	vfunc121(x, y, wide, tall);
+	vfunc65(wide, tall);
+	float nob = *(int *)((char *)this + 0x58);
+	float leftpixel = 0.5f * nob;
+	float pixelspertick = ((float)wide - nob) / *(int *)((char *)this + 0x9c);
+	int sw, sh;
+	sub_101ac8d0()->GetScreenSize(sw, sh);
+	float scale = sh * (1.0 / 768.0);
+	y = (int)(8.0 * scale + y);
+	int tickHeight = (int)(5.0 * scale);
+	CCol101bbb20 col;
+	col.c[0] = 0x7f;
+	col.c[1] = 0x8c;
+	col.c[2] = 0x7f;
+	col.c[3] = 0xff;
+	sub_101ac8d0()->DrawSetColor(col);
+	for (int i = 0; i <= *(int *)((char *)this + 0x9c); i++) {
+		int xpos = (int)(i * pixelspertick + leftpixel);
+		sub_101ac8d0()->DrawFilledRect(xpos, y, xpos + 1, y + tickHeight);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101bc860 size=0x42
 #include "utlvector.h"
 
