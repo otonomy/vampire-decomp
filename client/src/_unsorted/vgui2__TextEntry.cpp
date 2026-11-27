@@ -772,6 +772,79 @@ void vgui2::TextEntry::vfunc101()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101ae2f0 size=0x19c
+#include "vgui2__TextEntry.h"
+
+struct TextBuf_101ae2f0
+{
+	int m_len;
+	int m_unk4;
+	const char *m_data;
+	char Get(int i) const { return (i >= 0 && i < m_len) ? m_data[i] : 0; }
+	unsigned char GetU(int i) const { unsigned char c; if (i >= 0 && i < m_len) c = m_data[i]; else c = 0; return c; }
+};
+struct ColorSink_101ae2f0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+	virtual void vfunc18(int color);
+};
+ColorSink_101ae2f0 *sub_101ac8d0();
+
+// TARGET: vgui2::TextEntry::vfunc171
+int vgui2::TextEntry::vfunc171(void *pBuf, int pos, int pOut, int unused)
+{
+	TextBuf_101ae2f0 *buf = (TextBuf_101ae2f0 *)pBuf;
+	char *self = (char *)this;
+	pos++;
+	char type = buf->Get(pos++);
+	switch (type) {
+	case 1: {
+		int arr[4];
+		for (int k = 0; k < 4; k++) {
+			char ch = buf->Get(pos++);
+			int v = ch;
+			arr[k] = v;
+			if (v < 0)
+				arr[k] = v + 256;
+		}
+		unsigned char col[4];
+		col[0] = (unsigned char)arr[0];
+		col[1] = (unsigned char)arr[1];
+		col[2] = (unsigned char)arr[2];
+		col[3] = (unsigned char)arr[3];
+		*(int *)(self + 0xd5) = *(int *)col;
+		sub_101ac8d0()->vfunc18(*(int *)(self + 0xd5));
+		break;
+	}
+	case 2: {
+		char ch = buf->Get(pos++);
+		int c = ch;
+		int *p = (int *)pOut;
+		if (p) {
+			if (*p == *(int *)(self + 0xa4) + 3)
+				*p = c + 3;
+		}
+		*(int *)(self + 0xa4) = c;
+		break;
+	}
+	case 3:
+		*(bool *)(self + 0xd9) = true;
+		break;
+	case 4:
+		*(bool *)(self + 0xd9) = false;
+		break;
+	case 5: {
+		int hi = buf->GetU(pos++) * 256;
+		*(int *)(self + 0x124) = hi;
+		*(int *)(self + 0x124) = hi | buf->GetU(pos++);
+		break;
+	}
+	}
+	return pos - 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ae490 size=0x71
 #include "vgui2__TextEntry.h"
 
