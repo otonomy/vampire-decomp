@@ -129321,6 +129321,60 @@ void CVStatInfo_t::sub_1015b420(CVStatKV *pKV)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015b990 size=0x198
+#include "CVStatInfo_t.h"
+#include "CStatDefaultList.h"
+#include "StatOwner2.h"
+#include "ScopeTrace.h"
+#include "Tier1.h"
+
+extern CStatDefaultList g_105f985c;
+void sub_1015f3e0();
+void sub_1015f420();
+void sub_1015f450();
+void sub_1015f460();
+void sub_1015f490();
+void sub_1015f4a0();
+void sub_1015f520();
+void sub_1015f580();
+void sub_1015f600();
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+
+// TARGET: CVStatInfo_t::sub_1015b990
+void CVStatInfo_t::sub_1015b990(CVStatKV *pKV, int pDefaults)
+{
+	ScopeTrace st("CVStatInfo_t::MidLoad", g_102de300);
+	if (pKV) {
+		g_105f985c.sub_101604b0((CVTraitKV *)pKV, (const CVTraitDependency *)pDefaults);
+		const char *pszMapping = pKV->vfunc13("NameMapping", g_102de300);
+		if (*pszMapping) {
+			m_field0008 = g_105f93c0.sub_1015f160(pszMapping);
+			return;
+		}
+		const char *pszFunc = pKV->vfunc13("NameFunc", g_102de300);
+		if (!*pszFunc) {
+			m_field0000 = (int)sub_1015f3e0;
+		} else if (!_strcmpi(pszFunc, "ClanNameFunc")) {
+			m_field0000 = (int)sub_1015f420;
+			m_field0004 = (int)sub_1015f450;
+		} else if (!_strcmpi(pszFunc, "CharTemplateNameFunc")) {
+			m_field0000 = (int)sub_1015f460;
+			m_field0004 = (int)sub_1015f490;
+		} else if (!_strcmpi(pszFunc, "StartingEquipFunc")) {
+			m_field0000 = (int)sub_1015f4a0;
+			m_field0004 = (int)sub_1015f520;
+		} else if (!_strcmpi(pszFunc, "ExcludedEquipFunc")) {
+			m_field0000 = (int)sub_1015f580;
+			m_field0004 = (int)sub_1015f600;
+		} else {
+			m_field0000 = (int)sub_1015f3e0;
+		}
+	} else {
+		g_101e3108("Unable to load CVStatInfo_t data\n");
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015bb30 size=0x13a
 #include "CVStatInfo_t.h"
 #include "CVStatInfoList_t.h"
