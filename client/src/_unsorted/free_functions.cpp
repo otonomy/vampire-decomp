@@ -130269,6 +130269,32 @@ void sub_10170200()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10170280 size=0x85
+#include "engineclient.h"
+#include "CHud.h"
+#include "VBarterUI.h"
+extern "C" int atoi(const char *);
+bool sub_10170bf0();
+void sub_10170c30(int);
+// TARGET: sub_10170280
+void sub_10170280()
+{
+	if (gHUD.FindElement("VBarterUI"))
+	{
+		int n = atoi(engine->Cmd_Argv(1));
+		if (sub_10170bf0())
+		{
+			if (*(int *)((char *)gHUD.FindElement("VBarterUI") + 0x44c) != n)
+				sub_10170c30(n);
+			else
+				((VBarterUI *)gHUD.FindElement("VBarterUI"))->sub_1016f2c0();
+		}
+		else
+			((VBarterUI *)gHUD.FindElement("VBarterUI"))->sub_1016f1b0(n);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10170360 size=0x2a
 namespace lifted {
 extern char g_1027b3d0;
