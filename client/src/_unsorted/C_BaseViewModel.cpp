@@ -133,6 +133,23 @@ int C_BaseViewModel::vfunc17()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ab250 size=0x59
+#include "C_BaseViewModel.h"
+struct SubObj8 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual bool v8(); };
+extern "C" void sub_100ab050(void *);
+extern "C" void sub_100aaf40(void *);
+// TARGET: C_BaseViewModel::vfunc29
+void C_BaseViewModel::vfunc29(char a)
+{
+	SubObj8 *p = (SubObj8 *)((char *)this + 8);
+	if (!p->v8() && a)
+		sub_100ab050(this);
+	else if (p->v8() && !a)
+		sub_100aaf40(this);
+	C_BaseEntity::vfunc29(a);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ab500 size=0x3
 #include "C_BaseViewModel.h"
 bool C_BaseViewModel::vfunc142()
