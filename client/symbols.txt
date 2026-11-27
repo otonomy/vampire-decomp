@@ -5663,6 +5663,7 @@
 0x100e1d70 func   ?vfunc5@CEffectsClient@@UAEXABVVector@@HHH@Z CEffectsClient::vfunc5
 0x100e1e30 func   ?vfunc6@CEffectsClient@@UAEXABVVector@@H@Z CEffectsClient::vfunc6
 0x100e1ee0 func   ?vfunc7@CEffectsClient@@UAEXABVVector@@HH@Z CEffectsClient::vfunc7
+0x100e1f90 func   ?vfunc8@CEffectsClient@@UAEXABVVector@@H@Z CEffectsClient::vfunc8
 0x100e2060 func   ?sub_100e2060@@YA_NXZ sub_100e2060
 0x100e2070 func   ??0CBaseEntityList@@QAE@XZ CBaseEntityList::CBaseEntityList
 0x100e21f0 func   ??1CBaseEntityList@@QAE@XZ CBaseEntityList::~CBaseEntityList
