@@ -8957,6 +8957,7 @@
 0x10174970 func   ??1VCharWizardUI@@UAE@XZ VCharWizardUI::~VCharWizardUI
 0x101749c0 func   ?sub_101749c0@VCharWizardUI@@QAEXXZ VCharWizardUI::sub_101749c0
 0x10174b20 func   ?sub_10174b20@CUnknown10174b20@@QAEHXZ CUnknown10174b20::sub_10174b20
+0x10174b80 func   ?vfunc2@VCharWizardUI@@UAEXXZ VCharWizardUI::vfunc2
 0x10174c00 func   ?sub_10174c00@CUnknown10174c00@@QAEHH@Z CUnknown10174c00::sub_10174c00
 0x10174c40 func   ?sub_10174c40@@YAXXZ sub_10174c40
 0x10174c50 func   ?sub_10174c50@CView@@QAEXXZ CView::sub_10174c50
