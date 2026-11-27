@@ -6375,6 +6375,7 @@
 0x1010db90 func   ?vfunc2@CEmptyProxy@@UAEXXZ CEmptyProxy::vfunc2
 0x1010dba0 func   ?vfunc3@CEmptyProxy@@QAEPAXD@Z CEmptyProxy::vfunc3
 0x1010dbc0 func   ?vfunc0@CLessOrEqualProxy@@UAE_NPAX0@Z CLessOrEqualProxy::vfunc0
+0x1010dc50 func   ?vfunc1@CLessOrEqualProxy@@UAEXH@Z CLessOrEqualProxy::vfunc1
 0x1010dd70 func   ?sub_1010dd70@@YAHXZ sub_1010dd70
 0x1010dda0 func   ??_GCLessOrEqualProxy@@UAEPAXI@Z ??_GCLessOrEqualProxy@@UAEPAXI@Z
 0x1010de60 func   ??0CMeasureSection@@QAE@H@Z CMeasureSection::CMeasureSection
