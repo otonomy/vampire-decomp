@@ -451,6 +451,58 @@ void CInput::Joystick_Advanced()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10100dc0 size=0x147
+#include "CInput.h"
+#include "engineclient.h"
+
+extern unsigned long g_104d2cfc;
+extern unsigned long g_104d2d04;
+
+// TARGET: CInput::ControllerCommands
+void CInput::ControllerCommands()
+{
+	int i;
+	unsigned long buttonstate, povstate;
+
+	if (!m_joy_avail)
+		return;
+
+	buttonstate = g_104d2cfc;
+	for (i = 0; i < m_joy_numbuttons; i++)
+	{
+		if ((buttonstate & (1 << i)) && !(m_joy_oldbuttonstate & (1 << i)))
+			engine->vfunc53((i >= 4 ? 0xcf : 0xcb) + i, 1);
+		if (!(buttonstate & (1 << i)) && (m_joy_oldbuttonstate & (1 << i)))
+			engine->vfunc53((i >= 4 ? 0xcf : 0xcb) + i, 0);
+	}
+	m_joy_oldbuttonstate = buttonstate;
+
+	if (m_joy_haspov)
+	{
+		povstate = 0;
+		if (g_104d2d04 != 0xffff)
+		{
+			if (g_104d2d04 == 0)
+				povstate |= 0x01;
+			if (g_104d2d04 == 9000)
+				povstate |= 0x02;
+			if (g_104d2d04 == 18000)
+				povstate |= 0x04;
+			if (g_104d2d04 == 27000)
+				povstate |= 0x08;
+		}
+		for (i = 0; i < 4; i++)
+		{
+			if ((povstate & (1 << i)) && !(m_joy_oldpovstate & (1 << i)))
+				engine->vfunc53(0xeb + i, 1);
+			if (!(povstate & (1 << i)) && (m_joy_oldpovstate & (1 << i)))
+				engine->vfunc53(0xeb + i, 0);
+		}
+		m_joy_oldpovstate = povstate;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10101cd0 size=0x34
 #include "CInput.h"
 #include <string.h>
