@@ -145848,6 +145848,37 @@ bool sub_1019ce80()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019cf60 size=0x131
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+#include "ScopeTrace.h"
+bool sub_1019d4c0();
+void sub_1019d0a0(float *color);
+float sub_1019d2e0();
+float sub_1019d3d0();
+void sub_1019cf60()
+{
+	ScopeTrace st("CViewRender::Enable3dSkyboxFog", g_102de300);
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (pPlayer) {
+		if (sub_1019d4c0()) {
+			float fogColor[3];
+			sub_1019d0a0(fogColor);
+			float fogScale = 1.0f;
+			float dist = (float)*(int *)((char *)pPlayer + 0x17a4);
+			if (dist > 0.0f)
+				fogScale = 1.0f / dist;
+			materials->vfunc94(1);
+			materials->vfunc100(fogColor);
+			materials->vfunc95(sub_1019d2e0() * fogScale);
+			materials->vfunc96(sub_1019d3d0() * fogScale);
+		} else {
+			materials->vfunc94(0);
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019d0a0 size=0x23c
 #include "C_BasePlayer.h"
 #include "ConVar.h"
