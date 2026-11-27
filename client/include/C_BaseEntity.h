@@ -151,7 +151,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc20();
 	virtual void vfunc21();
 	virtual bool Init(int entnum, int iSerialNum);
-	virtual void vfunc23();
+	virtual Vector vfunc23();
 	virtual int vfunc24();
 	virtual bool vfunc25(int);
 	virtual int vfunc26();
