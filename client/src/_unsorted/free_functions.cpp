@@ -78838,6 +78838,36 @@ int sub_100fbde0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fc000 size=0x108
+float sub_100fc000(float a1, float a2, float a3, float a4, float a5, float a6, bool a7)
+{
+	a4 *= a6;
+	float diff;
+	if (a7)
+	{
+		a2 = 0.005493164f * ((int)(a2 * 182.04445f) & 0xffff);
+		diff = 0.005493164f * ((int)((a2 - a1 + 180.0f) * 182.04445f) & 0xffff) - 180.0f;
+		a1 = a2 - diff;
+	}
+	else
+		diff = a2 - a1;
+	float step = diff;
+	if (a6 < a5)
+		step = a6 / a5 * diff;
+	if (step > a4)
+		step = a4;
+	else if (step < -a4)
+		step = -a4;
+	a1 += step;
+	step = diff - step;
+	if (step > a3)
+		return a2 - a3;
+	if (step < -a3)
+		return a2 + a3;
+	return a1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fc170 size=0x784
 #include "CInput.h"
 #include "CHud.h"

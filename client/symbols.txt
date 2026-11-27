@@ -6002,6 +6002,7 @@
 0x100fbdd0 func   ?sub_100fbdd0@@YAXXZ sub_100fbdd0
 0x100fbde0 func   ?sub_100fbde0@@YAHXZ sub_100fbde0
 0x100fbf30 func   ?sub_100fbf30@@YG_NPAX0@Z sub_100fbf30
+0x100fc000 func   ?sub_100fc000@@YAMMMMMMM_N@Z sub_100fc000
 0x100fc170 func   ?sub_100fc170@CInput@@QAEXXZ CInput::sub_100fc170
 0x100fc900 func   ?sub_100fc900@CInput@@QAEXXZ CInput::sub_100fc900
 0x100fcca0 func   ?sub_100fcca0@@YGXHH@Z sub_100fcca0
