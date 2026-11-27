@@ -20,6 +20,7 @@ class C_Hairball : public C_BaseEntity
 {
 public:
 	C_Hairball();
+	void sub_1002ca30();
 	char m_pad14[0x410 - 0x14];
 	float m_flRadius;	// 0x410
 	int m_nCount;	// 0x414
