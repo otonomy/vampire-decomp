@@ -125093,6 +125093,45 @@ void CVStatInfo_t::sub_1015b420(CVStatKV *pKV)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015bb30 size=0x13a
+#include "CVStatInfo_t.h"
+#include "CVStatInfoList_t.h"
+#include "ScopeTrace.h"
+#include "Tier1.h"
+struct CParsedValue
+{
+	int m_a, m_b, m_c, m_d, m_e;
+	void sub_101615d0(CVStatKV *pKV, const char *pszName);
+};
+struct CUnknown1015ae00 { void sub_1015ae00(CVStatKV *pKV); };
+struct CUnknown10205f70 { void sub_10161a40(CVStatKV *pKV, const char *pszName); };
+void CVStatInfo_t::sub_1015bb30(CVStatKV *pKV, CVStatInfoList_t *pDefaults)
+{
+	ScopeTrace st("CVStatInfo_t::PostLoad", g_102de300);
+	if (pKV) {
+		CParsedValue *pMin = (CParsedValue *)((char *)this + 0x4c);
+		pMin->sub_101615d0(pKV, "Min");
+		((CParsedValue *)((char *)this + 0x60))->sub_101615d0(pKV, "Max");
+		CParsedValue *pMinSell = (CParsedValue *)((char *)this + 0x74);
+		pMinSell->sub_101615d0(pKV, "MinSell");
+		if (pMinSell->m_a == -1)
+			*pMinSell = *pMin;
+		CParsedValue *pMaxBuy = (CParsedValue *)((char *)this + 0x88);
+		pMaxBuy->sub_101615d0(pKV, "MaxBuy");
+		if (pMaxBuy->m_a == -1)
+			*pMaxBuy = *(CParsedValue *)((char *)this + 0x60);
+		((CParsedValue *)((char *)this + 0x9c))->sub_101615d0(pKV, "Default");
+		((CUnknown1015ae00 *)((char *)this + 0x10c))->sub_1015ae00(pKV);
+		((CUnknown10205f70 *)((char *)this + 0x120))->sub_10161a40(pKV, "IncPredependency");
+		CVStatCost_t *pCost = (CVStatCost_t *)((char *)this + 0xb0);
+		if (!pCost->sub_10159d10(pKV))
+			*pCost = pDefaults->m_cost;
+	} else {
+		g_101e3108("Unable to load CVStatInfo_t data\n");
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015bcc0 size=0x93
 #include "ScopeTrace.h"
 #include "CVStatInfo_t.h"

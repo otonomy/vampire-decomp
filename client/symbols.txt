@@ -8324,6 +8324,7 @@
 0x1015b300 func   ?sub_1015b300@CVStatInfo_t@@QAEHPBD@Z CVStatInfo_t::sub_1015b300
 0x1015b3b0 func   ?sub_1015b3b0@TInfo@@QAE_NXZ TInfo::sub_1015b3b0
 0x1015b420 func   ?sub_1015b420@CVStatInfo_t@@QAEXPAUCVStatKV@@@Z CVStatInfo_t::sub_1015b420
+0x1015bb30 func   ?sub_1015bb30@CVStatInfo_t@@QAEXPAUCVStatKV@@PAVCVStatInfoList_t@@@Z CVStatInfo_t::sub_1015bb30
 0x1015bcc0 func   ?sub_1015bcc0@CVStatInfo_t@@QAE_NXZ CVStatInfo_t::sub_1015bcc0
 0x1015bdb0 func   ?sub_1015bdb0@CVStatInfo_t@@QAE_NXZ CVStatInfo_t::sub_1015bdb0
 0x1015be50 func   ?sub_1015be50@CVStatInfo_t@@QAE_NXZ CVStatInfo_t::sub_1015be50
