@@ -33138,6 +33138,54 @@ bool CVMainMenu::sub_10065d30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10065db0 size=0xfd
+#include "CVMainMenu.h"
+#include "vgui2__Panel.h"
+struct IGameUI_10065db0 {
+	virtual void v0(); virtual void v1(); virtual void v2();
+	virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual void v9(); virtual void v10();
+	virtual void v11(int);
+};
+extern IGameUI_10065db0 *g_104a5828;
+struct CUnknown100662d0 { void sub_100662d0(); };
+// TARGET: CVMainMenu::sub_10065db0
+int CVMainMenu::sub_10065db0(int down, int key, int unused)
+{
+	if (sub_10065c90())
+		return !(char)vfunc22();
+	if (key == 0x20)
+		return 0;
+	if (down) {
+		if (key == 0x1b) {
+			if ((char)vfunc22() && sub_10065d30()) {
+				g_104a5828->v11(1);
+				sub_10066440();
+				return 0;
+			}
+			if (!(char)vfunc22()) {
+				g_104a5828->v3();
+				((CUnknown100662d0 *)this)->sub_100662d0();
+				return 0;
+			}
+		} else {
+			for (int i = 0; i < m_vec170.Count(); i++) {
+				vgui2::Panel *p = (vgui2::Panel *)m_vec170[i];
+				if (p->vfunc72(key)) {
+					sub_10067610(*(int *)((char *)m_vec170[i] + 0xf0));
+					return 0;
+				}
+			}
+			if (key == 0x60)
+				return 1;
+		}
+		return 0;
+	}
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10065eb0 size=0x87
 struct ILoc65eb0 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual const unsigned short *Find(const char *key); virtual void v7(); virtual void ConvertUnicodeToANSI(const unsigned short *w, char *out, int size); };
 ILoc65eb0 *sub_101ac920();
