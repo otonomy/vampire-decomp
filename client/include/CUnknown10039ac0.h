@@ -14,6 +14,7 @@ public:
 	int m_nEntity;	// 0x24
 	int m_nHitbox;	// 0x28
 	int m_nIndex;	// 0x2c
-	bool m_b30;	// 0x30
+	int m_n30;	// 0x30
+	bool m_b34;	// 0x34
 	void sub_10039ac0(int a);
 };
