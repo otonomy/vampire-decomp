@@ -28,6 +28,7 @@ public:
 	const char *sub_1015e190(int stat, char bTimed);
 	char sub_1015d950(int stat, int amount);	// "CVStatList_t::AddBase" (called through the stub at 0x1000e66a)
 	char sub_1015da50(int stat, int amount);	// "CVStatList_t::SubBase": scope trace, returns AddBase(stat, -amount)
+	char sub_1015d770(int stat);	// "CVStatList_t::IncBase"
 	char sub_1015d3e0(int stat);	// "CVStatList_t::IsValidStat": 0 <= stat < m_field04
 	int sub_1015d6e0(int stat);	// "CVStatList_t::GetBase": scope trace, the base value of the stat (first dword array behind m_field08), 0 when the stat is invalid
 	void sub_1015d2c0();	// called by Bind (stub 0x1000f5bf)
