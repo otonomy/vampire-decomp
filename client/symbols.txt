@@ -8276,6 +8276,7 @@
 0x1015d5b0 func   ?sub_1015d5b0@CVStatList_t@@QAEHH@Z CVStatList_t::sub_1015d5b0
 0x1015d650 func   ?sub_1015d650@CVStatList_t@@QAEXHH@Z CVStatList_t::sub_1015d650
 0x1015d6e0 func   ?sub_1015d6e0@CVStatList_t@@QAEHH@Z CVStatList_t::sub_1015d6e0
+0x1015d770 func   ?sub_1015d770@CVStatList_t@@QAEDH@Z CVStatList_t::sub_1015d770
 0x1015d870 func   ?sub_1015d870@CVStatList_t@@QAE_NH@Z CVStatList_t::sub_1015d870
 0x1015d950 func   ?sub_1015d950@CVStatList_t@@QAEDHH@Z CVStatList_t::sub_1015d950
 0x1015da50 func   ?sub_1015da50@CVStatList_t@@QAEDHH@Z CVStatList_t::sub_1015da50
