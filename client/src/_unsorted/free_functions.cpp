@@ -54441,6 +54441,47 @@ int HV100a::sub_100a6b90()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a73a0 size=0x125
+#include "C_BasePlayer.h"
+#include "ConVar.h"
+#include "engineclient.h"
+#include "Vector.h"
+
+struct dlight_t
+{
+	int m_0;
+	Vector origin;
+	float radius;
+	unsigned char r, g, b;
+	signed char exponent;
+	float die;
+	float decay;
+	int m_20;
+	int key;
+};
+
+extern ConVar *g_1049e7f4;
+extern ConVar *g_104a0cec;
+extern ConVar *g_1049fd6c;
+
+#define M_DL (*(dlight_t **)((char *)this + 0x1a04))
+
+void C_BasePlayer::sub_100a73a0()
+{
+	if (!M_DL || M_DL->key != *(int *)((char *)this + 0x44)) {
+		M_DL = (dlight_t *)effects->CL_AllocDlight(*(int *)((char *)this + 0x44));
+		M_DL->r = 0x5a;
+		M_DL->b = M_DL->g = 10;
+	}
+	M_DL->exponent = g_1049e7f4->vfunc1() ? 0 : g_1049e7f4->m_nValue;
+	Vector tmp;
+	M_DL->origin = *(Vector *)vfunc107((int)&tmp);
+	M_DL->origin.z += g_104a0cec->vfunc1() ? 0.0f : g_104a0cec->m_fValue;
+	M_DL->die = engine->Time(0) + 0.2f;
+	M_DL->radius = g_1049fd6c->vfunc1() ? 0 : g_1049fd6c->m_nValue;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a7890 size=0xfb
 #include "CClientEntityList.h"
 #include "C_BasePlayer.h"

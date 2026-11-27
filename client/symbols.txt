@@ -4364,6 +4364,7 @@
 0x100a6b90 func   ?sub_100a6b90@HV100a@@QAEHXZ HV100a::sub_100a6b90
 0x100a6e50 func   ?vfunc154@C_BasePlayer@@UAEXH@Z C_BasePlayer::vfunc154
 0x100a6e60 func   ?vfunc156@C_BasePlayer@@UAEXXZ C_BasePlayer::vfunc156
+0x100a73a0 func   ?sub_100a73a0@C_BasePlayer@@QAEXXZ C_BasePlayer::sub_100a73a0
 0x100a7640 func   ?vfunc74@C_BasePlayer@@UAE_NXZ C_BasePlayer::vfunc74
 0x100a76a0 func   ?vfunc37@C_BasePlayer@@UAEXXZ C_BasePlayer::vfunc37
 0x100a7890 func   ?sub_100a7890@C_BasePlayer@@QAEPAVC_BaseEntity@@XZ C_BasePlayer::sub_100a7890
