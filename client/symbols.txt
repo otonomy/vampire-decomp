@@ -9952,6 +9952,7 @@
 0x101b2c20 func   ?vfunc123@Label@vgui2@@UAEXHHH@Z vgui2::Label::vfunc123
 0x101b2c70 func   ?sub_101b2c70@CView@@QAEHH@Z CView::sub_101b2c70
 0x101b2c80 func   ?vfunc126@Label@vgui2@@UAEHXZ vgui2::Label::vfunc126
+0x101b2c90 func   ?vfunc128@Label@vgui2@@UAEXH@Z vgui2::Label::vfunc128
 0x101b2cd0 func   ?vfunc135@Label@vgui2@@UAEXH@Z vgui2::Label::vfunc135
 0x101b2dc0 func   ?vfunc124@Label@vgui2@@UAEXHH@Z vgui2::Label::vfunc124
 0x101b2e10 func   ?vfunc121@Label@vgui2@@UAEHH@Z vgui2::Label::vfunc121
