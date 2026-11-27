@@ -69607,6 +69607,30 @@ bool CUtlRBTree148::sub_100cf230(unsigned short i) const
 }
 // END FUNCTION
 
+// FUNCTION: 0x100cf300 size=0x1d5
+#include "CUtlRBTree148.h"
+// TARGET: CUtlRBTree148::sub_100cf300
+void CUtlRBTree148::sub_100cf300(unsigned short elem)
+{
+	unsigned short leftchild = LeftChild(elem);
+	SetLeftChild(elem, RightChild(leftchild));
+	if (RightChild(leftchild) != InvalidIndex())
+		SetParent(RightChild(leftchild), elem);
+	if (leftchild != InvalidIndex())
+		SetParent(leftchild, Parent(elem));
+	if (elem != m_Root) {
+		if (Links(sub_100ce920(elem).m_Parent).m_Right == elem)
+			SetRightChild(Links(elem).m_Parent, leftchild);
+		else
+			SetLeftChild(Links(elem).m_Parent, leftchild);
+	} else
+		m_Root = leftchild;
+	SetRightChild(leftchild, elem);
+	if (elem != InvalidIndex())
+		SetParent(elem, leftchild);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100cf4e0 size=0x531
 #include "CUtlRBTree148.h"
 

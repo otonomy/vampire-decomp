@@ -5312,6 +5312,7 @@
 0x100ce560 func   ?sub_100ce560@CClassMapRBTree@@QAEXG@Z CClassMapRBTree::sub_100ce560
 0x100ce920 func   ?sub_100ce920@CClassMap@@QAEPAUClassMapEntry@@G@Z CClassMap::sub_100ce920
 0x100cf230 func   ?sub_100cf230@CUtlRBTree148@@QBE_NG@Z CUtlRBTree148::sub_100cf230
+0x100cf300 func   ?sub_100cf300@CUtlRBTree148@@QAEXG@Z CUtlRBTree148::sub_100cf300
 0x100cf4e0 func   ?sub_100cf4e0@CUtlRBTree148@@QAEXG@Z CUtlRBTree148::sub_100cf4e0
 0x100cfa20 func   ?sub_100cfa20@CClassMapRBTree@@QAEXG@Z CClassMapRBTree::sub_100cfa20
 0x100cfc00 func   ?sub_100cfc00@CUtlRBTree148@@QBE_NG@Z CUtlRBTree148::sub_100cfc00
