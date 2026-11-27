@@ -18752,6 +18752,66 @@ bool sub_1002b990()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1002bc10 size=0x1d0
+#include "engineclient.h"
+struct ICommandLine { virtual void v0(); virtual void v1(); virtual void v2(); virtual int FindParm(const char *name, int def); };
+__declspec(dllimport) ICommandLine *CommandLine();
+extern "C" __declspec(dllimport) void Msg(const char *fmt, ...);
+extern "C" __declspec(dllimport) void Error(const char *fmt, ...);
+struct PackEntry { const char *name; int x; };
+extern bool g_102ead00;
+extern bool g_102eacf9;
+extern unsigned short g_102eacc6;
+extern PackEntry *g_102eacb4;
+void sub_1002b6a0();
+void sub_1002b710();
+bool sub_1002b990();
+void sub_1002bde0();
+// TARGET: sub_1002bc10
+void sub_1002bc10()
+{
+	if (g_102ead00)
+		return;
+	g_102ead00 = true;
+	if (CommandLine()->FindParm("-localizedpack", 0)) {
+		Msg("BUILD COMMAND: %s\n", "packfiles");
+		engine->ClientCmd("packfiles");
+		Msg("BUILD COMMAND: %s\n", "quit");
+		engine->ClientCmd("quit");
+		return;
+	}
+	if (!CommandLine()->FindParm("-buildpackfiles", 0) && !CommandLine()->FindParm("-buildnodegraphs", 0)) {
+		if (!CommandLine()->FindParm("-log_speech_files", 0))
+			return;
+		g_102eacf9 = true;
+		sub_1002b6a0();
+		sub_1002b710();
+		filesystem->vfunc37();
+		if (!sub_1002b990())
+			goto fail;
+		Msg("\n\nLogging speech files for... \n");
+		for (int i = 0; i < g_102eacc6; i++)
+			Msg("%-3d:\t%s\n", i + 1, g_102eacb4[(unsigned short)i].name);
+		sub_1002bde0();
+		return;
+	}
+	g_102eacf9 = true;
+	sub_1002b6a0();
+	sub_1002b710();
+	filesystem->vfunc37();
+	if (sub_1002b990()) {
+		Msg("\n\nBuilding Pack Files for... \n");
+		for (int i = 0; i < g_102eacc6; i++)
+			Msg("%-3d:\t%s\n", i + 1, g_102eacb4[(unsigned short)i].name);
+		filesystem->vfunc36(0);
+		sub_1002bde0();
+		return;
+	}
+fail:
+	Error("No map list. Cannot build pack files");
+}
+// END FUNCTION
+
 // FUNCTION: 0x1002bfb0 size=0x63
 #include "engineclient.h"
 

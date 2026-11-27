@@ -2033,6 +2033,7 @@
 0x1002b710 func   ?sub_1002b710@@YAXXZ sub_1002b710
 0x1002b780 func   ?sub_1002b780@@YAHPBD@Z sub_1002b780
 0x1002b990 func   ?sub_1002b990@@YA_NXZ sub_1002b990
+0x1002bc10 func   ?sub_1002bc10@@YAXXZ sub_1002bc10
 0x1002bfb0 func   ?sub_1002bfb0@@YAXXZ sub_1002bfb0
 0x1002c020 func   ?sub_1002c020@@YAXXZ sub_1002c020
 0x1002c080 func   ?sub_1002c080@CUtlLinkedList8@@QAEXG@Z CUtlLinkedList8::sub_1002c080
