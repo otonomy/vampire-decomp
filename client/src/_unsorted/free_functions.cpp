@@ -104258,6 +104258,65 @@ char *CUnk101b66b0::sub_10130c30(int index)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10130c50 size=0x197
+#include "CUtlRBTree232.h"
+#include "CUnknown101b6250.h"
+#include "CUnknown101b6320.h"
+#include "CUnknown101b90a0.h"
+
+struct SoundEntry_10130c50
+{
+	short m_a;
+	char m_pad2[2];
+	char m_b;
+	char m_c;
+	char m_pad6[2];
+	int m_d;
+	CUnknown101b6320Params m_p;
+};
+
+// TARGET: CUtlRBTree232::sub_10130c50
+int CUtlRBTree232::sub_10130c50(const SoundEntry_10130c50 &insert)
+{
+	const CUtlRBTree232At<0x105e5a20> *tree = (const CUtlRBTree232At<0x105e5a20> *)this;
+	bool leftchild = false;
+	int parent = -1;
+	int i = m_Root;
+	while (i != -1) {
+		parent = i;
+		if (m_LessFunc(&insert, m_pElements[i].m_Data)) {
+			leftchild = true;
+			i = tree->Links(i).m_Left;
+		} else {
+			leftchild = false;
+			i = tree->Links(i).m_Right;
+		}
+	}
+	int idx = m_FirstFree;
+	if (idx == -1) {
+		if (m_nAllocationCount == m_TotalElements)
+			((CUnknown101b90a0 *)&m_pElements)->sub_10132d30(1);
+		idx = m_TotalElements++;
+	} else {
+		m_FirstFree = sub_10131a70(idx).m_Right;
+	}
+	CUnknown101b6250 *rec = (CUnknown101b6250 *)m_pElements[idx].m_Data;
+	if (rec)
+		rec->sub_101308d0();
+	sub_101316c0(idx, parent, leftchild);
+	++m_NumElements;
+	SoundEntry_10130c50 *dst = (SoundEntry_10130c50 *)m_pElements[idx].m_Data;
+	if (dst) {
+		dst->m_a = insert.m_a;
+		dst->m_b = insert.m_b;
+		dst->m_c = insert.m_c;
+		dst->m_d = insert.m_d;
+		dst->m_p.sub_10133340(insert.m_p);
+	}
+	return idx;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10130df0 size=0xf3
 #include "utlrbtree.h"
 #include "CUtlRBTreeOf.h"
