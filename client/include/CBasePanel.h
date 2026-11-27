@@ -11,6 +11,7 @@ public:
 	virtual ~CBasePanel();
 	void sub_101aa230(void *);
 	void sub_10187a90(int);
+	void sub_10186970(int);
 	void sub_101ab3d0(const char *name);
 	void sub_10175da0(const char *name);
 public:	// vtable-slot layer (2026-11-22), from the game's vtables

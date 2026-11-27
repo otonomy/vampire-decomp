@@ -7,9 +7,19 @@
 #include "vgui2__Label.h"
 #include "vgui2__TextEntry.h"
 
+struct VIILabel { char m_data[0xb8]; void sub_101b1fc0(CBasePanel *, const char *, void *); void sub_101aa230(void *); VIILabel(CBasePanel *p, const char *n, void *t) { sub_101b1fc0(p, n, t); } };
+struct VIIEdit { char m_data[0x128]; void sub_101acaa0(CBasePanel *, const char *); void sub_101aa230(void *); VIIEdit(CBasePanel *p, const char *n) { sub_101acaa0(p, n); } };
+
 class VItemInfoUI : public CHudElement, public CBasePanel
 {
 public:
+	VItemInfoUI(int a);
+	bool m_b180;
+	int m_n184;
+	VIILabel m_bkg;
+	VIIEdit m_desc;
+	VIILabel m_help;
+	char m_b420;
 	virtual ~VItemInfoUI();
 	void sub_10184ba0();
 	void sub_10184bc0(int a, char b, int c);
