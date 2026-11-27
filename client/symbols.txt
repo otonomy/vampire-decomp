@@ -8345,6 +8345,7 @@
 0x10159110 func   ?sub_10159110@@YAXH@Z sub_10159110
 0x10159170 func   ?sub_10159170@CVDmg_t@@QAE_NH@Z CVDmg_t::sub_10159170
 0x101591f0 func   ?sub_101591f0@CVDmg_t@@QAEXI@Z CVDmg_t::sub_101591f0
+0x10159400 func   ?sub_10159400@CVDmg_t@@QAEPADXZ CVDmg_t::sub_10159400
 0x101594e0 func   ?sub_101594e0@CVStatSubCost_t@@QAEPAU1@XZ CVStatSubCost_t::sub_101594e0
 0x10159550 func   ?sub_10159550@CVStatSubCost_t@@QAEXXZ CVStatSubCost_t::sub_10159550
 0x101595e0 func   ?sub_101595e0@CVStatSubCost_t@@QAE_NXZ CVStatSubCost_t::sub_101595e0
