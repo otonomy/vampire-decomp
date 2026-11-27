@@ -45,7 +45,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual ~CTempEnts();
 	virtual void vfunc21(const Vector &, const QAngle &, int);
 	virtual int vfunc22(int, int, int);
-	virtual void vfunc23();
+	virtual void vfunc23(const Vector &org, int ang, int unused);
 	virtual int vfunc24(int, int, int);
 	virtual void vfunc25(int, int, int, const char *, const char *, int, int);
 	virtual void vfunc26(int, int, int, const char *, const char *, int, int);
