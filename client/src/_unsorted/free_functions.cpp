@@ -86420,6 +86420,60 @@ int CInput::sub_10102940()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10102df0 size=0x1d1
+#include "CInput.h"
+#include "ConVar.h"
+#include "CUserCmd.h"
+#include "C_BasePlayer.h"
+extern ConVar *g_104df8ac;
+extern ConVar *g_104d308c;
+extern ConVar *g_104d3c1c;
+extern kbutton_t g_104d3590;
+extern kbutton_t g_104d3af0;
+extern kbutton_t g_104d2e4c;
+extern unsigned char g_104d3e0c;
+bool sub_10186d50();
+struct InPlayerView { unsigned int sub_100a2450(); };
+// TARGET: CInput::sub_10102df0
+void CInput::sub_10102df0(CUserCmd *cmd)
+{
+	if (g_104d3e0c & 1)
+		return;
+	if (sub_10186d50())
+		return;
+	if (vfunc26())
+	{
+		float f1 = g_104df8ac->vfunc1() ? 0.0f : g_104df8ac->m_fValue;
+		cmd->forwardmove += KeyState(&g_104d3590) * f1;
+		float f2 = g_104df8ac->vfunc1() ? 0.0f : g_104df8ac->m_fValue;
+		cmd->forwardmove -= KeyState(&g_104d3af0) * f2;
+	}
+	else
+	{
+		C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+		if (pPlayer)
+		{
+			int i = sub_10102940();
+			if (i < 0)
+				return;
+			if (((InPlayerView *)pPlayer)->sub_100a2450() & 2)
+				cmd->forwardmove += *(float *)((char *)pPlayer + i * 4 + 0x1950);
+			else if (KeyState(&g_104d2e4c) != 0.0f)
+				cmd->forwardmove += *(float *)((char *)pPlayer + i * 4 + 0x1910);
+			else
+				cmd->forwardmove += *(float *)((char *)pPlayer + i * 4 + 0x18d0);
+		}
+		else
+		{
+			float f3 = g_104d308c->vfunc1() ? 0.0f : g_104d308c->m_fValue;
+			cmd->forwardmove += KeyState(&g_104d3590) * f3;
+			float f4 = g_104d3c1c->vfunc1() ? 0.0f : g_104d3c1c->m_fValue;
+			cmd->forwardmove -= KeyState(&g_104d3af0) * f4;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10102fd0 size=0x3
 void __stdcall sub_10102fd0(int a0)
 {
