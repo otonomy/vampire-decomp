@@ -34076,6 +34076,57 @@ char * __stdcall sub_10065eb0(int index)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10065f40 size=0x193
+#include "CVMainMenu.h"
+#include "CVMenuButton.h"
+#include "CUtlVector4.h"
+struct SchemeView_10065f40 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int GetFont(const char *name); };
+struct ObjView_10065f40 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void SetColor(int c); };
+struct MenuColor { unsigned char r, g, b, a; };
+extern const char *g_1028831c[];
+const char *sub_1018c870(const char *);
+// TARGET: CVMainMenu::sub_10065f40
+void CVMainMenu::sub_10065f40()
+{
+	int *table;
+	int count;
+	SchemeView_10065f40 *scheme = (SchemeView_10065f40 *)sub_101ac830();
+	int font = scheme->GetFont(sub_1018c870("MainMenu"));
+	table = sub_100678a0(&count);
+	MenuColor c;
+	c.r = 0xa8;
+	c.g = 0;
+	c.b = 0;
+	c.a = 0xc0;
+	for (int i = 0; i < count; i++) {
+		CUtlVector4 *v = (CUtlVector4 *)((char *)this + 0x170);
+		int act = table[i];
+		void *mem = vgui2::Panel::operator new(0xf4);
+		CVMenuButton *b = mem ? new (mem) CVMenuButton((int)this, (int)g_1028831c[act], (int)sub_10065eb0(act)) : 0;
+		b->m_b0ed = 0;
+		b->vfunc118(font);
+		*(int *)&b->m_unk0f0[0] = act;
+		((ObjView_10065f40 *)b->vfunc127())->SetColor(*(int *)&c);
+		b->vfunc51(*(int *)&c);
+		int t1, t2;
+		b->vfunc155(*(unsigned int *)&c, *(unsigned int *)b->vfunc52((int)&t1));
+		b->vfunc154(*(unsigned int *)&c, *(unsigned int *)b->vfunc52((int)&t2));
+		int elem = v->m_size;
+		int num = 1;
+		if (v->m_size + num > v->m_allocationCount)
+			v->sub_10067a50(v->m_size + num - v->m_allocationCount);
+		v->m_size += num;
+		v->m_pElements = v->m_pMemory;
+		int n = v->m_size - elem - num;
+		if (n > 0)
+			memmove(&v->m_pMemory[elem + num], &v->m_pMemory[elem], n * 4);
+		int *p = &v->m_pMemory[elem];
+		if (p)
+			*p = (int)b;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10066250 size=0x77
 #include "CVMainMenu.h"
 #include "utlvector.h"
