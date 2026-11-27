@@ -6800,6 +6800,7 @@
 0x1011bdf0 func   ?sub_1011bdf0@C_BaseEntity@@QAEXPAV1@@Z C_BaseEntity::sub_1011bdf0
 0x1011c140 func   ?sub_1011c140@@YAPAUtrace21@@PAU1@@Z sub_1011c140
 0x1011c1b0 func   ?sub_1011c1b0@C_BaseEntity@@QAEXPAV1@AAUCGameTrace@@@Z C_BaseEntity::sub_1011c1b0
+0x1011c480 func   ?sub_1011c480@C_BaseEntity@@QAEXPAV1@AAUCGameTrace@@@Z C_BaseEntity::sub_1011c480
 0x1011c520 func   ?vfunc102@C_BaseEntity@@UAEHXZ C_BaseEntity::vfunc102
 0x1011c5c0 func   ?sub_1011c5c0@C_BaseEntity@@QAE_NXZ C_BaseEntity::sub_1011c5c0
 0x1011c7f0 func   ?sub_1011c7f0@C_BaseEntity@@QAEXXZ C_BaseEntity::sub_1011c7f0

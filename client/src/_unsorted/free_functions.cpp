@@ -93269,6 +93269,19 @@ void C_BaseEntity::sub_1011c1b0(C_BaseEntity *other, CGameTrace &trace)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011c480 size=0x9c
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+void C_BaseEntity::sub_1011c480(C_BaseEntity *other, CGameTrace &trace)
+{
+	ScopeTrace st("CBaseEntity::PhysicsImpact", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	if (other) {
+		if (!((other->sub_100a2450() | sub_100a2450()) & 0x4000000))
+			sub_1011c1b0(other, trace);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011c5c0 size=0x225
 #include "engineclient.h"
 #include "Vector.h"
