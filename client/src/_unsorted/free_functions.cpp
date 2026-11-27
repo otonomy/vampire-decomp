@@ -52395,6 +52395,60 @@ void UtlMem::sub_1009cf00(int num)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009d0e0 size=0x177
+#include "CPredictableList.h"
+#include "CUtlVector4.h"
+#include "UtlVec8.h"
+#include "CClientEntityList.h"
+#include "C_BaseEntity.h"
+
+extern "C" void __cdecl sub_100a3510(int *dest, const int *src);
+
+static inline int FindX(CUtlVector4 &v, const int &src)
+{
+	for (int i = 0; i < v.m_size; i++)
+	{
+		if (v.m_pMemory[i] == src)
+			return i;
+	}
+	return -1;
+}
+
+// TARGET: CPredictableList::sub_1009d0e0
+void CPredictableList::sub_1009d0e0(CBaseHandle add)
+{
+	if (FindX(m_Predictables, *(int *)&add) != -1)
+		return;
+	CUtlVector4 &vec = m_Predictables;
+	int elem = vec.m_size;
+	vec.sub_100a3440(1);
+	((UtlVec8 *)&vec)->sub_100a34d0(elem, 1);
+	sub_100a3510(&vec.m_pMemory[elem], (const int *)&add);
+	int count = m_Predictables.m_size;
+	if (!(count < 2)) { for (int a = 0; count > a; a++)
+	{
+		for (int b = a + 1; b < count; b++)
+		{
+			CBaseHandle h1 = *(CBaseHandle *)&vec.m_pMemory[a];
+			CBaseHandle h2 = *(CBaseHandle *)&vec.m_pMemory[b];
+			C_BaseEntity *p1 = cl_entitylist->sub_100d0dc0(h1);
+			C_BaseEntity *p2 = cl_entitylist->sub_100d0dc0(h2);
+			if (!p1 || !p2)
+				continue;
+			if (p1->entindex() != -1 && p2->entindex() != -1)
+			{
+				if (p1->entindex() < p2->entindex())
+					continue;
+			}
+			if (p2->entindex() == -1)
+				continue;
+			vec.m_pMemory[a] = *(int *)&h2;
+			vec.m_pMemory[b] = *(int *)&h1;
+		}
+	} }
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009d400 size=0x6
 namespace lifted {
 extern char g_1049d9d8;

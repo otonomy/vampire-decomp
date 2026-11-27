@@ -4065,6 +4065,7 @@
 0x1009cea0 func   ?sub_1009cea0@UtlVec8@@QAEXHH@Z UtlVec8::sub_1009cea0
 0x1009cee0 func   ?sub_1009cee0@@YAHHH@Z sub_1009cee0
 0x1009cf00 func   ?sub_1009cf00@UtlMem@@QAEXH@Z UtlMem::sub_1009cf00
+0x1009d0e0 func   ?sub_1009d0e0@CPredictableList@@QAEXVCBaseHandle@@@Z CPredictableList::sub_1009d0e0
 0x1009d2c0 func   ?vfunc0@CPredictableList@@UAEXH@Z CPredictableList::vfunc0
 0x1009d2f0 func   ?vfunc1@CPredictableList@@UAEPAXXZ CPredictableList::vfunc1
 0x1009d3e0 func   ?vfunc16@C_BaseEntity@@UAEHXZ C_BaseEntity::vfunc16
