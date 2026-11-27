@@ -5417,6 +5417,7 @@
 0x100d59b0 func   ?vfunc15@CClientShadowMgr@@QAEXHHH@Z CClientShadowMgr::vfunc15
 0x100d5bb0 func   ?sub_100d5bb0@V5bb0@@QAEXXZ V5bb0::sub_100d5bb0
 0x100d5bd0 func   ?sub_100d5bd0@CClientShadowMgr@@QAEXG@Z CClientShadowMgr::sub_100d5bd0
+0x100d5ca0 func   ?sub_100d5ca0@CClientShadowMgr@@QAEXG@Z CClientShadowMgr::sub_100d5ca0
 0x100d5ce0 func   ?vfunc14@CClientShadowMgr@@QAEXPBX@Z CClientShadowMgr::vfunc14
 0x100d5d30 func   ?sub_100d5d30@CUnknown100d5d30@@QAEHH@Z CUnknown100d5d30::sub_100d5d30
 0x100d5d40 func   ?sub_100d5d40@Mgr_100d5d40@@QAEHG@Z Mgr_100d5d40::sub_100d5d40

@@ -70114,6 +70114,18 @@ void CClientShadowMgr::sub_100d5bd0(unsigned short h)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d5ca0 size=0x33
+#include "CClientShadowMgr.h"
+#include "CClientLeafSystem.h"
+
+void CClientShadowMgr::sub_100d5ca0(unsigned short h)
+{
+	ClientShadow_t *pShadow = (ClientShadow_t *)&m_Shadows.m_pMemory[h];
+	if (pShadow->m_Flags & 1)
+		((CClientLeafSystem *)((char *)this + 0x48))->sub_100d4f40(*(unsigned short *)((char *)pShadow + 0x84));
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d5d30 size=0xb
 namespace lifted {
 struct C100d5140 { int sub_100d5140(); };
