@@ -26,6 +26,8 @@ public:
 	int sub_1013fef0(const char *name, int start);
 	int sub_10149ec0(const char *name, int start);
 		// same as sub_101d5d20 (another instance)
+	char sub_10140c10(const char *pszFile);
+	struct CLoaderView *sub_10140910();
 	void sub_10140a70();	// purges the list, then loads the "LevelingTemplate" data files (vdata/system) one by one
 	void sub_101499f0();
 		// provisional, like sub_101d6de0 (transplant)
