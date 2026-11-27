@@ -135982,6 +135982,58 @@ const char *sub_1017b000(int key, int idx)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017b090 size=0x91
+#include "CVStatInfo_t.h"
+struct StrRec
+{
+	int m_id;
+	int m_pad4[3];
+	const char **m_pStrings10;
+	int m_pad14[2];
+	int m_nCount;
+	const char **m_pStrings20;
+	StrRec *sub_10150b90(int);
+};
+extern int g_105e85f8;
+extern StrRec **g_105e85fc;
+extern unsigned char g_10680e40;
+extern StrRec g_10680e60;
+void sub_10141060();
+extern "C" int atexit(void (__cdecl *)(void));
+const char *sub_1017ac60(int, int, bool);
+inline StrRec *FindRec(int key)
+{
+	for (int i = 0; i < g_105e85f8; i++)
+	{
+		if (g_105e85fc[i]->m_id == key)
+			return g_105e85fc[i];
+	}
+	if (!(g_10680e40 & 1))
+	{
+		g_10680e40 |= 1;
+		g_10680e60.sub_10150b90(-1);
+		atexit(sub_10141060);
+	}
+	return &g_10680e60;
+}
+const char *sub_1017b090(int key, int idx)
+{
+	if (idx < FindRec(key)->m_nCount)
+	{
+		const char *p = sub_1017ac60(key, idx, true);
+		if (p)
+		{
+			char *q = *(char **)(p + 0x5ebc8);
+			CVStatInfo_t *info = *(CVStatInfo_t **)(q + 0x84);
+			if (info)
+				return info->sub_1005d750();
+			return q;
+		}
+	}
+	return "";
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017b130 size=0x2f
 namespace lifted {
 extern char g_1024c4b4;
