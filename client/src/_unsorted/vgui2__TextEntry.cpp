@@ -248,6 +248,83 @@ void vgui2::TextEntry::vfunc107(const char *text)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101ad360 size=0x192
+#include "vgui2__TextEntry.h"
+
+extern "C" __declspec(noreturn) void exit(int);
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+template <class T>
+struct DarT
+{
+	int m_count;
+	int m_capacity;
+	T *m_data;
+
+	void ensureCapacity(int want)
+	{
+		if (want <= m_capacity)
+			return;
+		int cap = m_capacity;
+		if (cap == 0)
+			cap = 1;
+		while (cap < want)
+			cap += cap;
+		T *newData = new T[cap];
+		if (!newData)
+			exit(0);
+		memset(newData, 0, cap * sizeof(T));
+		m_capacity = cap;
+		for (int i = 0; i < m_count; i++)
+			newData[i] = m_data[i];
+		delete[] m_data;
+		m_data = newData;
+	}
+	void removeAll() { m_count = 0; }
+	void addElement(T e)
+	{
+		ensureCapacity(m_count + 1);
+		m_data[m_count] = e;
+		m_count++;
+	}
+	void setElementAt(T e, int index)
+	{
+		ensureCapacity(index + 1);
+		if (index < m_capacity)
+		{
+			if (index >= m_count)
+			{
+				for (int i = m_count; i < index; i++)
+					m_data[i] = 0;
+				if (index + 1 >= 0 && index + 1 <= m_capacity)
+					m_count = index + 1;
+			}
+			m_data[index] = e;
+		}
+	}
+};
+
+#define F(type, off) (*(type *)((char *)this + (off)))
+
+void vgui2::TextEntry::vfunc156(char ch, int index)
+{
+	if (ch == '\n' || ch == 0)
+	{
+		if (index != F(DarT<char>, 0x58).m_count)
+		{
+			F(int, 0x114) = 0;
+			F(DarT<int>, 0x64).removeAll();
+			F(DarT<int>, 0x64).addElement(999999);
+		}
+	}
+	if (index < 0)
+		return;
+	F(DarT<char>, 0x58).setElementAt(ch, index);
+	F(bool, 0xb0) = true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ad500 size=0x24
 struct IFont { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); };
 IFont *sub_101ac8e0();
