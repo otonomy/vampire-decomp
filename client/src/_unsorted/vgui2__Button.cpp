@@ -11,6 +11,17 @@ vgui2::Button *pcd_emit_101b36f0(const vgui2::Button &other) { return new vgui2:
 // TARGET: ??_GButton@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101b3710 size=0x20
+#include "vgui2__Button.h"
+struct ButtonObj { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); };
+vgui2::Button::~Button()
+{
+	ButtonObj *p = *(ButtonObj **)((char *)this + 0xc4);
+	if (p)
+		p->v21();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b3730 size=0x23
 #include "vgui2__Button.h"
 namespace lifted {
