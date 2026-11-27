@@ -142605,6 +142605,37 @@ int CUnknown1018ca70::sub_1018ca70()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018cac0 size=0x151
+#include "VHLabel.h"
+extern "C" int sprintf(char *, const char *, ...);
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((x) * ((float)sub_100cd100() / 1024.0))
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+struct ColorX { unsigned char c[4]; ColorX() {} };
+struct IS { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual int GetFont(const char *); virtual void v5(); virtual ColorX GetColor(const char *); };
+struct CUnknown1018ca20 { void *sub_1018ca20(int, int, int); };
+
+// TARGET: sub_1018cac0
+void sub_1018cac0(vgui2::Panel *parent, VHLabel **out, const char *name, int x, int y, int w, int h, const char *fontName)
+{
+    char buf[0x30];
+    IS *pScheme = (IS *)parent->sub_101ac830();
+    int font = pScheme->GetFont(sub_1018c870(fontName));
+    sprintf(buf, "%s", name);
+    void *mem = vgui2::Panel::operator new(0xb8);
+    VHLabel *l = mem ? (VHLabel *)((CUnknown1018ca20 *)mem)->sub_1018ca20((int)parent, (int)buf, (int)buf) : 0;
+    *out = l;
+    l->vfunc118(font);
+    l->vfunc108("");
+    l->vfunc62(0);
+    l->vfunc51(*(int *)pScheme->GetColor("VDesHeaderText").c);
+    l->vfunc50(*(int *)pScheme->GetColor("GhostControlBG").c);
+    l->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018cc20 size=0x25
 namespace lifted {
 extern char g_1024f56c;

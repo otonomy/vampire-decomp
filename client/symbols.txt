@@ -9379,6 +9379,7 @@
 0x1018ca50 func   ??_GVHLabel@@UAEPAXI@Z ??_GVHLabel@@UAEPAXI@Z
 0x1018ca70 func   ??1VHLabel@@UAE@XZ VHLabel::~VHLabel
 0x1018ca70 func   ?sub_1018ca70@CUnknown1018ca70@@QAEHXZ CUnknown1018ca70::sub_1018ca70
+0x1018cac0 func   ?sub_1018cac0@@YAXPAVPanel@vgui2@@PAPAVVHLabel@@PBDHHHH2@Z sub_1018cac0
 0x1018cc20 func   ?sub_1018cc20@CUnknown1018cc20@@QAEPAXHHH@Z CUnknown1018cc20::sub_1018cc20
 0x1018cc50 func   ??_GVStatusLabel@@UAEPAXI@Z ??_GVStatusLabel@@UAEPAXI@Z
 0x1018cc70 func   ??1VStatusLabel@@UAE@XZ VStatusLabel::~VStatusLabel
