@@ -93824,6 +93824,84 @@ void CUnknown10116010::sub_10116010(char a0, char a1, int a2, int a3)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101163a0 size=0x1d1
+#include "CParticleEffectBinding.h"
+#include "CUtlLinkedList8.h"
+#include <string.h>
+extern int __cdecl _strcmpi(const char *, const char *);
+extern void (__cdecl *g_101e310c)(const char *, ...);
+void sub_10117b80(void *, void *);
+struct CMem8b_t { void sub_10117d00(int); };
+struct PMat { virtual const char *GetName(); virtual void v1();virtual void v2();virtual void v3();virtual void v4();virtual void v5();virtual void v6();virtual void v7();virtual void v8();virtual void v9();virtual void v10();
+ virtual void *FindVar(const char *, bool *, bool); virtual void v12(int); };
+struct PMatSys { virtual void v0();virtual void v1();virtual void v2();virtual void v3();virtual void v4();virtual void v5();virtual void v6();virtual void v7();virtual void v8();virtual void v9();virtual void v10();virtual void v11();virtual void v12();virtual void v13();virtual void v14();virtual void v15();virtual void v16();virtual void v17();virtual void v18();virtual void v19();virtual void v20();virtual void v21();virtual void v22();virtual void v23();virtual void v24();
+ virtual PMat *FindMaterial(const char *, bool *, bool);
+ virtual void v26();virtual void v27();virtual void v28();virtual void v29();virtual void v30();virtual void v31();virtual void v32();virtual void v33();virtual void v34();virtual void v35();virtual void v36();virtual void v37();virtual void v38();virtual void v39();virtual void v40();virtual void v41();virtual void v42();virtual void v43();virtual void v44();virtual void v45();virtual void v46();virtual void v47();virtual void v48();virtual void v49();virtual void v50();virtual void v51();virtual void v52();
+ virtual void Bind(PMat *, void *); };
+struct PEntry { int a0; PEntry *m_next; PEntry *m_prev; int pad; int pad2; int pad3; PMat *m_pMat; void *m_pFrameVar; };
+struct POwnerView { char pad[0x168]; PMatSys *m_pMatSys; };
+struct PList : public CUtlLinkedList8
+{
+    unsigned short AddToTail(PEntry *const &src)
+    {
+        unsigned short node;
+        if (m_FirstFree == 0xffff) {
+            if (m_NumAlloced == m_allocationCount)
+                ((CMem8b_t *)this)->sub_10117d00(1);
+            node = m_NumAlloced++;
+            if (node == 0xffff)
+                g_101e310c("CUtlLinkedList overflow!\n");
+        } else {
+            node = m_FirstFree;
+            m_FirstFree = m_pMemory[m_FirstFree].m_Next;
+        }
+        m_pMemory[node].m_Previous = node;
+        m_pMemory[node].m_Next = node;
+        m_pElements = m_pMemory;
+        sub_10117c70(node);
+        CUtlLinkedList8Node &n = m_pMemory[node];
+        n.m_Next = 0xffff;
+        n.m_Previous = m_Tail;
+        m_Tail = node;
+        if (n.m_Previous == 0xffff)
+            m_Head = node;
+        else
+            m_pMemory[n.m_Previous].m_Next = node;
+        m_ElementCount++;
+        sub_10117b80(&m_pMemory[node], (void *)&src);
+        return node;
+    }
+};
+#define OWNER ((POwnerView *)m_unk30)
+// TARGET: CParticleEffectBinding::sub_101163a0
+char CParticleEffectBinding::sub_101163a0(const char *name)
+{
+    if (!m_unk30 || !OWNER->m_pMatSys)
+        return -1;
+    unsigned short idx = 0;
+    if (sub_10117260(name, &idx))
+        return (char)idx;
+    PMat *mat = OWNER->m_pMatSys->FindMaterial(name, 0, true);
+    if (_strcmpi(mat->GetName(), name) != 0) {
+        if (sub_10117260(mat->GetName(), &idx))
+            return (char)idx;
+    }
+    PEntry *pNew;
+    idx = ((PList *)&m_List)->AddToTail(pNew = new PEntry);
+    mat->v12(0);
+    PEntry *p = pNew;
+    {
+        bool found;
+        p->m_next = p;
+        p->m_prev = p;
+        p->m_pMat = mat;
+        p->m_pFrameVar = mat->FindVar("$frame", &found, false);
+    }
+    OWNER->m_pMatSys->Bind(mat, m_unk30);
+    return (char)idx;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10116580 size=0x34
 struct Elem { int pad; unsigned short a; unsigned short b; };
 struct CL {

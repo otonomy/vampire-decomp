@@ -6752,6 +6752,7 @@
 0x10115fb0 func   ?sub_10115fb0@CUnknown10115fb0@@QAEXDHH@Z CUnknown10115fb0::sub_10115fb0
 0x10116010 func   ?sub_10116010@CUnknown10116010@@QAEXDDHH@Z CUnknown10116010::sub_10116010
 0x10116070 func   ?DrawModel@CParticleEffectBinding@@UAEHHH@Z CParticleEffectBinding::DrawModel
+0x101163a0 func   ?sub_101163a0@CParticleEffectBinding@@QAEDPBD@Z CParticleEffectBinding::sub_101163a0
 0x10116580 func   ?sub_10116580@CL@@QAEHE@Z CL::sub_10116580
 0x101165c0 func   ?sub_101165c0@CL@@QAEHE@Z CL::sub_101165c0
 0x101165f0 func   ?sub_101165f0@CL_101165f0@@QAEPAUNode_101165f0@@HE@Z CL_101165f0::sub_101165f0
