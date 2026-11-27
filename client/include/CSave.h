@@ -75,6 +75,7 @@ public:
 	void sub_10129830(int a, int bytes, int b);
 	void sub_10129860(const void *p, int a);	// called by vfunc5 through the stub at 0x1000950c
 	bool sub_101299c0(const void *pData, int nBits);	// as in CUnknown100bde40 (transplant)
+	void sub_1012b150(const unsigned short *pToken, void *pData, void *pRootMap, typedescription_t *pField);
 	void sub_1012a350(const unsigned short *pToken, void *pData, void *pRootMap, typedescription_t *pField);	// "CSave::WriteBasicField" (stub 0x1001069a): dispatches on the field type (1..10) to the matching write slot (data, field size, token), embedded structs (9) go to WriteAll(data, td), custom fields (10) to the field's save/restore ops, "Bad field type" warning otherwise
 	bool sub_1012a060(int a, void *pData, void *pBase, typedescription_t *pField);	// "CSave::WriteField": dispatches on the field type (0xb..0x13) to the matching write slot, "Bad field type" warning otherwise
 		// the CSave constructor (the stub at 0x10009bf6)
