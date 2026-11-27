@@ -5417,6 +5417,7 @@
 0x100d88c0 func   ?sub_100d88c0@@YIHPAUM@@HG@Z sub_100d88c0
 0x100d89a0 func   ?sub_100d89a0@LLView@@QAEHG@Z LLView::sub_100d89a0
 0x100d8af0 func   ?sub_100d8af0@CUtlLinkedList10@@QAEXXZ CUtlLinkedList10::sub_100d8af0
+0x100d8b40 func   ?sub_100d8b40@CUtlLinkedList240@@QAEXGG@Z CUtlLinkedList240::sub_100d8b40
 0x100d8c90 func   ?sub_100d8c90@CUtlLinkedList240@@QAEG_N@Z CUtlLinkedList240::sub_100d8c90
 0x100d8dc0 func   ?sub_100d8dc0@CUnknown100d8dc0@@QAEPAXXZ CUnknown100d8dc0::sub_100d8dc0
 0x100d8dd0 func   ?sub_100d8dd0@S100d8dd0@@QAEXG@Z S100d8dd0::sub_100d8dd0

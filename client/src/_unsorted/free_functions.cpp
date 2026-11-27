@@ -70051,6 +70051,47 @@ void CUtlLinkedList10::sub_100d8af0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d8b40 size=0x142
+#include "CUtlLinkedList240.h"
+
+// TARGET: CUtlLinkedList240::sub_100d8b40
+void CUtlLinkedList240::sub_100d8b40(unsigned short before, unsigned short elem)
+{
+	if (IsInList(elem)) {
+		CUtlLinkedList240Node *pBase = m_pMemory;
+		CUtlLinkedList240Node *pOldElem = &pBase[elem];
+		if (pOldElem->m_Previous != InvalidIndex())
+			pBase[pOldElem->m_Previous].m_Next = pOldElem->m_Next;
+		else
+			m_Head = pOldElem->m_Next;
+		if (pOldElem->m_Next != InvalidIndex())
+			pBase[pOldElem->m_Next].m_Previous = pOldElem->m_Previous;
+		else
+			m_Tail = pOldElem->m_Previous;
+		pOldElem->m_Previous = pOldElem->m_Next = elem;
+		--m_ElementCount;
+	}
+	CUtlLinkedList240Node *pNew = &InternalElement(elem);
+	pNew->m_Next = before;
+	if (before == InvalidIndex())
+	{
+		pNew->m_Previous = m_Tail;
+		m_Tail = elem;
+	}
+	else
+	{
+		CUtlLinkedList240Node *pBefore = &InternalElement(before);
+		pNew->m_Previous = pBefore->m_Previous;
+		pBefore->m_Previous = elem;
+	}
+	if (pNew->m_Previous == InvalidIndex())
+		m_Head = elem;
+	else
+		InternalElement(pNew->m_Previous).m_Next = elem;
+	++m_ElementCount;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d8c90 size=0x128
 #include "CUtlLinkedList240.h"
 extern void *(__cdecl *g_101e3100)(unsigned int);
