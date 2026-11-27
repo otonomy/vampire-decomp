@@ -220,6 +220,14 @@ int C_PlayerResource::vfunc131(int i) { if (!vfunc133(i)) return 0; return m_ac5
 int C_PlayerResource::vfunc132(int i) { if (!vfunc133(i)) return 0; return m_acd4[i]; }
 // END FUNCTION
 
+// FUNCTION: 0x100bd6e0 size=0xe
+#include "C_PlayerResource.h"
+bool C_PlayerResource::vfunc133(int a0)
+{
+    return *(bool *)((char *)a0 + (int)this + 0xd58);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100bd6f0 size=0xe
 #include "C_PlayerResource.h"
 // TARGET: C_PlayerResource::vfunc134

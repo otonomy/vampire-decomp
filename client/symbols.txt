@@ -4728,6 +4728,7 @@
 0x100bd650 func   ?vfunc130@C_PlayerResource@@UAEHH@Z C_PlayerResource::vfunc130
 0x100bd680 func   ?vfunc131@C_PlayerResource@@UAEHH@Z C_PlayerResource::vfunc131
 0x100bd6b0 func   ?vfunc132@C_PlayerResource@@UAEHH@Z C_PlayerResource::vfunc132
+0x100bd6e0 func   ?vfunc133@C_PlayerResource@@UAE_NH@Z C_PlayerResource::vfunc133
 0x100bd6f0 func   ?vfunc134@C_PlayerResource@@UAEDH@Z C_PlayerResource::vfunc134
 0x100bd700 func   ?vfunc16@C_DynamicProp@@UAEHXZ C_DynamicProp::vfunc16
 0x100bd710 func   ?vfunc15@C_DynamicProp@@UAEHXZ C_DynamicProp::vfunc15
