@@ -62581,6 +62581,19 @@ int sub_100bc330()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100bc390 size=0x64
+#include "C_HudEntity.h"
+#include "IClientNetworkable.h"
+IClientNetworkable *_C_HudEntity_CreateObject(int entnum, int serialNum)
+{
+	C_HudEntity *p = new C_HudEntity;
+	if (!p)
+		return 0;
+	p->Init(entnum, serialNum);
+	return p;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100bc4b0 size=0x15b
 #include "RecvTable.h"
 extern RecvTable g_104a2e0c;
