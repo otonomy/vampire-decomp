@@ -5130,6 +5130,7 @@
 0x100c93a0 func   ?sub_100c93a0@CUnknown100c93a0@@QAEHXZ CUnknown100c93a0::sub_100c93a0
 0x100c93c0 func   ?ClientThink@C_VGuiScreen@@UAEXXZ C_VGuiScreen::ClientThink
 0x100c9680 func   ?sub_100c9680@C_VGuiScreen@@QAEXAAVVector@@00@Z C_VGuiScreen::sub_100c9680
+0x100c9740 func   ?sub_100c9740@C_VGuiScreen@@QAE_NABURay_t@@PAM11@Z C_VGuiScreen::sub_100c9740
 0x100c9790 func   ?sub_100c9790@CVGuiScreen_100c9790@@QAEHABVVector@@@Z CVGuiScreen_100c9790::sub_100c9790
 0x100c9820 func   ?sub_100c9820@C_VGuiScreen@@QAEXXZ C_VGuiScreen::sub_100c9820
 0x100c9860 func   ?sub_100c9860@C_VGuiScreen@@QAEXXZ C_VGuiScreen::sub_100c9860

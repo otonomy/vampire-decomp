@@ -67031,6 +67031,20 @@ void C_VGuiScreen::sub_100c9680(Vector &v1, Vector &v2, Vector &v3)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c9740 size=0x45
+#include "C_VGuiScreen.h"
+#include "Vector.h"
+struct Ray_t;
+bool sub_100da400(const Ray_t &ray, Vector *a, Vector *b, Vector *c, float *u, float *v, float *t);
+// TARGET: C_VGuiScreen::sub_100c9740
+bool C_VGuiScreen::sub_100c9740(const Ray_t &ray, float *u, float *v, float *t)
+{
+	Vector a, b, c;
+	sub_100c9680(a, b, c);
+	return sub_100da400(ray, &a, &b, &c, u, v, t);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c9790 size=0x83
 #include "C_BaseEntity.h"
 #include "Vector.h"
