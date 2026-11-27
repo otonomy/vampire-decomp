@@ -29499,6 +29499,39 @@ void CHudInfoBar::sub_100565b0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10056700 size=0x151
+#include "CHudInfoBar.h"
+#include "engineclient.h"
+#include <string.h>
+
+// TARGET: CHudInfoBar::sub_10056700
+void CHudInfoBar::sub_10056700()
+{
+	if (m_unk178) {
+		m_unk17c = (float)engine->Time(1);
+		m_unk178 = 0;
+	}
+	if (m_unk17c + 4.0 < engine->Time(1)) {
+		if (m_unk19c == m_unk1a0 && m_unk1a0 == 0.0f) {
+			int n = m_unk1b8.v - 1;
+			if (n > 0)
+				memmove((void *)m_unk1ac.v, (char *)m_unk1ac.v + 0x88, n * 0x88);
+			m_unk1b8.v--;
+			sub_10056860();
+		} else {
+			m_unk1a0 = 0;
+		}
+	}
+	if (m_unk180 < engine->Time(1) && m_unk1cc.v > 0) {
+		int n = m_unk1cc.v - 1;
+		if (n > 0)
+			memmove((void *)m_unk1c0.v, (char *)m_unk1c0.v + 0x88, n * 0x88);
+		m_unk1cc.v--;
+		m_unk180 = (float)(engine->Time(1) + 12.0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10056860 size=0x44
 #include "engineclient.h"
 #include "CHudInfoBar.h"

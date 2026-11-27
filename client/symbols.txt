@@ -3027,6 +3027,7 @@
 0x10056510 func   ?sub_10056510@@YGPBDH@Z sub_10056510
 0x10056550 func   ?sub_10056550@@YGPADH@Z sub_10056550
 0x100565b0 func   ?sub_100565b0@CHudInfoBar@@QAEXXZ CHudInfoBar::sub_100565b0
+0x10056700 func   ?sub_10056700@CHudInfoBar@@QAEXXZ CHudInfoBar::sub_10056700
 0x10056860 func   ?sub_10056860@CHudInfoBar@@QAEXXZ CHudInfoBar::sub_10056860
 0x100568b0 func   ?vfunc107@CHudInfoBar@@UAE_NXZ CHudInfoBar::vfunc107
 0x10056b20 func   ?vfunc116@CHudInfoBar@@UAEHHH@Z CHudInfoBar::vfunc116
