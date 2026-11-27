@@ -134,7 +134,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc184();
 	virtual void vfunc185(int);
 	virtual void vfunc186();
-	virtual void vfunc187();
+	virtual void vfunc187(struct CViewSetup *pView);
 	virtual void vfunc188(int nRole);
 	virtual void vfunc189(int);
 	virtual void vfunc190(class C_BaseCombatWeapon *pWeapon);
