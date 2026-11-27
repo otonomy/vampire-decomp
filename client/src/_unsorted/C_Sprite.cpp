@@ -70,6 +70,20 @@ int C_Sprite::vfunc122()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10136790 size=0x4c
+#include "C_Sprite.h"
+
+void C_Sprite::OnDataChanged(int updateType)
+{
+	C_BaseEntity::OnDataChanged(updateType);
+	vfunc83(-1293.0f);
+	if (updateType == 0) {
+		*(float *)&m_unk44 = *(float *)&m_unk48 = *(float *)&m_unk34;
+		m_unk50 = m_unk54 = m_unk2c;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10136970 size=0x2d5
 #include "C_Sprite.h"
 #include "CSpriteHandle.h"
