@@ -7,6 +7,6 @@ class CClientModeDialog : public ClientModeHLNormal
 {
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the base slots the game's vtable fills with CClientModeDialog's own function
-    virtual void vfunc16();
+    virtual int vfunc16(int, int, const char *);
     virtual void vfunc22(int, int);
 };

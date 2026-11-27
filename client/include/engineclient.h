@@ -57,7 +57,7 @@ public:
 	virtual void vfunc30(int, void *);	// slot 30
 	virtual void vfunc31();
 	virtual void vfunc32();
-	virtual void vfunc33();
+	virtual bool vfunc33();
 	virtual int vfunc34();	// slot 34
 	virtual void vfunc35();
 	virtual void *vfunc36(const char *);	// slot 36; seen as LoadModel 1
