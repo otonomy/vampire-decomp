@@ -7514,6 +7514,7 @@
 0x10135da0 func   ?sub_10135da0@@YAHXZ sub_10135da0
 0x10135e00 func   ?_C_Sprite_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_Sprite_CreateObject
 0x10135ed0 func   ?ClientClassInit@@YAHPAUignored@DT_Sprite@@@Z ClientClassInit
+0x10136040 func   ?vfunc19@C_Sprite@@UAEXXZ C_Sprite::vfunc19
 0x10136350 func   ?sub_10136350@@YAHHHHHD@Z sub_10136350
 0x101363c0 func   ?sub_101363c0@@YIXPAUCSpriteView@@H@Z sub_101363c0
 0x10136400 func   ?sub_10136400@@YIXPAUCSpriteView@@H@Z sub_10136400

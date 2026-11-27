@@ -29,6 +29,57 @@ int C_Sprite::vfunc16()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10136040 size=0x1c5
+#include "C_Sprite.h"
+#include "CCollisionProperty.h"
+#include "engineclient.h"
+#include "QAngle.h"
+extern const float g_102367a8;
+#define SPR_F(off) (*(float *)((char *)this + (off)))
+#define SPR_I(off) (*(int *)((char *)this + (off)))
+// TARGET: C_Sprite::vfunc19
+void C_Sprite::vfunc19()
+{
+	float flScale;
+	((CCollisionProperty *)((char *)this + 0x190))->sub_10043230(0);
+	sub_1009fc60(0, 0);
+	SPR_I(0x434) = 0;
+	vfunc21();
+	{
+		int tmp;
+		const char *psz = *(const char **)vfunc50((int)&tmp);
+		if (!psz)
+			psz = "";
+		vfunc120(psz);
+	}
+	SPR_F(0x450) = (float)modelinfo->GetModelFrameCount(GetModel()) - 1.0f;
+	vfunc83(-1293.0f);
+	sub_101365d0();
+	QAngle *ang = (QAngle *)vfunc45();
+	if (ang->y != 0.0f && ((QAngle *)vfunc45())->z == 0.0f)
+	{
+		QAngle a = *(QAngle *)vfunc45();
+		a.z = a.y;
+		a.y = 0.0f;
+		vfunc46((int)&a);
+	}
+	*(int *)&flScale = SPR_I(0x444);
+	if (flScale < 0.0f || flScale > g_102367a8)
+	{
+		if (SPR_F(0x444) > g_102367a8)
+			flScale = g_102367a8;
+		else if (SPR_F(0x444) < 0.0f)
+			flScale = 0.0f;
+		else
+			flScale = SPR_F(0x444);
+	}
+	sub_10136580(*(unsigned char *)((char *)this + 0x53), 0);
+	sub_101365a0(flScale, 0);
+	SPR_F(0x454) = SPR_F(0x458) = SPR_F(0x444);
+	SPR_I(0x460) = SPR_I(0x464) = SPR_I(0x43c);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10136660 size=0x86
 #include "engineclient.h"
 #include "C_Sprite.h"
