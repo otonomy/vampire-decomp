@@ -24944,6 +24944,39 @@ void * CUnknown10042370::sub_10042370()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100424c0 size=0x100
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "Vector.h"
+void sub_10108fd0(const Vector *, float, const Vector *, Vector *);
+
+// TARGET: sub_100424c0
+bool sub_100424c0(const Vector *a, const Vector *b, Vector *out1, Vector *out2)
+{
+	float t2 = a->z; float d1 = -t2;
+	float d2 = d1 - pcd_stage(b->z);
+	if (d1 <= 0.0f && d2 <= 0.0f)
+		return true;
+	*out1 = *a;
+	*out2 = *b;
+	if (!(d1 <= 0.0f) && !(d2 <= 0.0f))
+		return false;
+	if (d2 - d1 < 0.001)
+		return true;
+	float t0 = d2 - d1; float t1 = d1 / (t0); float t = -(t1);
+	if (d1 <= 0.0f)
+	{
+		sub_10108fd0(a, t, b, out1);
+	}
+	else
+	{
+		out2->x = b->x * t;
+		out2->y = b->y * t;
+		out2->z = b->z * t;
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100428d0 size=0x88
 #include "CMeshBuilder.h"
 static inline unsigned char FastFToC(float c)
