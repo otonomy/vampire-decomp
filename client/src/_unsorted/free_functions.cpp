@@ -57136,6 +57136,40 @@ int C_BasePlayer::sub_100a93e0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a94d0 size=0x1c9
+#include "C_BasePlayer.h"
+#include "CVStatList_t.h"
+extern int g_105f8e70[17];
+// TARGET: C_BasePlayer::sub_100a94d0
+int C_BasePlayer::sub_100a94d0(int n, bool *pOut)
+{
+	CVStatListSet *pSet = (CVStatListSet *)((char *)this + 0x1164);
+	int count = 0;
+	for (int i = 0; i < 17; i++)
+	{
+		int stat = g_105f8e70[i];
+		if (pSet->Find(2)->sub_1015dbd0(stat) >= 0 && pSet->Find(2)->sub_1015dbd0(stat) < 15)
+		{
+			if (count == n)
+			{
+				if (pOut)
+				{
+					if (pSet->Find(2)->sub_1015dbd0(stat) > 0)
+						*pOut = sub_100a9910(stat) != 0;
+					else
+						*pOut = false;
+				}
+				return stat;
+			}
+			count++;
+		}
+	}
+	if (pOut)
+		*pOut = false;
+	return -1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a96a0 size=0x267
 #include "C_BasePlayer.h"
 
