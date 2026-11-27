@@ -2987,6 +2987,7 @@
 0x10054450 func   ?sub_10054450@CHudDialog@@QAEX_N@Z CHudDialog::sub_10054450
 0x100544d0 func   ?sub_100544d0@CHudDialog@@QAEX_N@Z CHudDialog::sub_100544d0
 0x10054550 func   ?SetDrawLastPickEnabled@CHudDialog@@QAEX_N@Z CHudDialog::SetDrawLastPickEnabled
+0x100545d0 func   ?vfunc112@CHudDialog@@UAEXXZ CHudDialog::vfunc112
 0x10054670 func   ?sub_10054670@CUnk_10054670@@QAEXH@Z CUnk_10054670::sub_10054670
 0x100547a0 func   ?sub_100547a0@@YA_NPBD@Z sub_100547a0
 0x10054800 func   ?sub_10054800@@YA_NPBD@Z sub_10054800

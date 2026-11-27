@@ -204,6 +204,26 @@ void CHudDialog::SetDrawLastPickEnabled(bool bEnabled)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100545d0 size=0x99
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+#include <string.h>
+// TARGET: CHudDialog::vfunc112
+void CHudDialog::vfunc112()
+{
+	ScopeTrace st("CHudDialog::Init", g_102de300);
+	sub_10054e20();
+	m_b1b3 = false;
+	m_b1b4 = false;
+	m_b1b0 = false;
+	m_b1b1 = false;
+	m_flAlpha = 0;
+	m_flAlpha1a8 = 0;
+	m_flAlpha1ac = 0;
+	memset(m_pad0a28, 0, sizeof(m_pad0a28));
+}
+// END FUNCTION
+
 // FUNCTION: 0x10054b50 size=0x7
 #include "CHudDialog.h"
 bool CHudDialog::vfunc116()
