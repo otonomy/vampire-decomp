@@ -2688,6 +2688,7 @@
 0x100429c0 func   ?sub_100429c0@TD@@QAEXH@Z TD::sub_100429c0
 0x100429f0 func   ?sub_100429f0@@YAHXZ sub_100429f0
 0x10042a50 func   ?sub_10042a50@VDlg@@QAEPAXI@Z VDlg::sub_10042a50
+0x10042a80 func   ?vfunc16@CClientModeDialog@@UAEHHHPBD@Z CClientModeDialog::vfunc16
 0x10042b50 func   ?vfunc22@CClientModeDialog@@UAEXHH@Z CClientModeDialog::vfunc22
 0x10042c30 func   ?vfunc8@CDirtySpatialPartitionEntityList@@UAEPAVCAutoGameSystem@@I@Z CDirtySpatialPartitionEntityList::vfunc8
 0x10042ca0 func   ?sub_10042ca0@@YI_NPAD@Z sub_10042ca0
