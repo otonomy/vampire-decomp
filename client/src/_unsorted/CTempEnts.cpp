@@ -398,6 +398,64 @@ void CTempEnts::vfunc7(const Vector &pos, const Vector &size, const Vector &dir,
 }
 // END FUNCTION
 
+// FUNCTION: 0x1003c030 size=0x174
+#include "engineclient.h"
+#include "CTempEnts.h"
+extern "C" __declspec(dllimport) void __cdecl Warning(const char *, ...);
+extern float g_101e34f0;
+struct TV14 {
+    char pad0[0x48]; int m_n48; int m_n4c; unsigned char m_r, m_g, m_b, m_a;
+    char pad54[0x7ac - 0x54]; int m_flags; float m_die; float m_flFrameMax; char pad7b8[0x7c0 - 0x7b8]; float m_flFadeSpeed;
+    char pad7c4[0x7ec - 0x7c4]; int m_alpha; float m_scale; int m_pad7f4; float m_frameRate; float m_frame;
+    float m_vx, m_vy, m_vz;
+    void sub_1003a840(float, float, float);
+    void sub_100a2030(const void *);
+};
+void TV14::sub_1003a840(float x, float y, float z)
+{
+    m_vx = x;
+    m_vy = y;
+    m_vz = z;
+}
+// TARGET: CTempEnts::vfunc14
+C_LocalTempEntity *CTempEnts::vfunc14(const Vector &pos, const Vector &dir, float scale, int modelIndex, int rendermode, int renderfx, float a, float life, int flags, int r, int g, int b)
+{
+    if (!modelIndex)
+        return 0;
+    const void *pModel = modelinfo->GetModel(modelIndex);
+    if (!pModel) {
+        Warning("No model %d!\n", modelIndex);
+        return 0;
+    }
+    int frameCount = modelinfo->GetModelFrameCount(pModel);
+    TV14 *t = (TV14 *)sub_1003cdd0(&pos, (void *)pModel);
+    if (!t)
+        return 0;
+    t->m_flFrameMax = (float)frameCount;
+    t->m_frameRate = 30.0f;
+    t->m_n48 = rendermode;
+    t->m_n4c = renderfx;
+    t->m_scale = scale;
+    t->m_alpha = (int)(a * 255.0f);
+    t->m_r = r;
+    t->m_g = g;
+    t->m_b = b;
+    t->m_a = (int)(a * 255.0f);
+    t->m_flags |= flags;
+    t->sub_1003a840(dir.x, dir.y, dir.z);
+    t->sub_100a2030(&pos);
+    if (life != g_101e34f0) {
+        t->m_die = engine->Time(0) + life;
+        t->m_frame = 0;
+        t->m_flFadeSpeed = 1.0f / life;
+    } else {
+        t->m_die = engine->Time(0) + frameCount * 0.1 + 1.0;
+        t->m_frame = 0;
+    }
+    return (C_LocalTempEntity *)t;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1003c3e0 size=0x1e3
 #include "CClientEntityList.h"
 #include "CTempEnts.h"
