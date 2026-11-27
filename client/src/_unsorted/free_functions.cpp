@@ -66236,6 +66236,32 @@ void C_BaseTerminal::sub_100c7f50()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c7fb0 size=0xad
+#include "C_BaseTerminal.h"
+#include "engineclient.h"
+void C_BaseTerminal::sub_100c7fb0(const char *str)
+{
+	m_bE88 = false;
+	engine->vfunc12(this);
+	int width = m_nStride - m_nE84;
+	while (*str)
+	{
+		int n = 0;
+		while (str[n] != '\r' && str[n] != '\n' && str[n] != ' ' && str[n] != 0)
+			n++;
+		if (m_nE78 + n > width && m_nE80 + n < width)
+			sub_100c8060('\n');
+		for (; n; n--)
+			sub_100c8060((unsigned char)*str++);
+		if (!*str)
+			break;
+		if (m_nE78 < width || *str != ' ')
+			sub_100c8060(*str);
+		str++;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c8060 size=0x1a6
 #include "C_BaseTerminal.h"
 void C_BaseTerminal::sub_100c8060(int c)
