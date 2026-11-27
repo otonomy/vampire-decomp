@@ -43225,6 +43225,21 @@ int CUnknown1007f550::sub_1007f550(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007f580 size=0x2d
+#include "CGlobalVarsBase.h"
+
+struct S_1007f580 { char pad[0x78]; float m_fl78; };
+
+// TARGET: sub_1007f580
+void __fastcall sub_1007f580(S_1007f580 *self, int edx, float t)
+{
+	if (t == -1.0f)
+		self->m_fl78 = -1.0f;
+	else
+		self->m_fl78 = gpGlobals->curtime + t;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007f5b0 size=0x26
 #include "Vector.h"
 
