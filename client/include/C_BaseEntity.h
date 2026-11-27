@@ -16,6 +16,7 @@ public:
 	void sub_100a2610(bool flag, int a);
 	void sub_1011d190(float frametime);
 	bool sub_100a0d10();
+	bool sub_100a1b20();
 	void sub_100a2850(Vector *mins, Vector *maxs);
 	void sub_100a2480(const Vector &origin);
 	void sub_1007e180(int a, int b);
