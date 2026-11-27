@@ -42321,6 +42321,78 @@ void CBeamSegDraw::sub_10081850(const Vector &vNormal)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10081b90 size=0x13a
+struct CBeamMeshView {
+	virtual void v0(int, int, void *);
+	virtual void v1(int, int, void *);
+	virtual void v2();
+	virtual void v3();
+	virtual void v4(int, int, int);
+	virtual void v5(int, int, int);
+	virtual void v6(int, int, int);
+	virtual void v7(int, int, int);
+	virtual void v8(int, int, int);
+	virtual void v9();
+	virtual void v10();
+	virtual void v11();
+	virtual void v12(int, int);
+	virtual void v13();
+	virtual void v14();
+	virtual void v15();
+	virtual void v16();
+	virtual void v17(void *);
+};
+struct CBeamSegDraw {
+	int m_unk0[0x3c / 4];
+	int m_i3c;
+	int m_unk40[(0x7c - 0x40) / 4];
+	int m_i7c;
+	CBeamMeshView *m_pMesh;
+	char m_b84[4];
+	int m_i88;
+	int m_i8c;
+	int m_nVerts;
+	int m_nIndices;
+	int m_unk98[2];
+	int m_type;
+	char m_bGen;
+	void sub_10081b90();
+};
+// TARGET: CBeamSegDraw::sub_10081b90
+void CBeamSegDraw::sub_10081b90()
+{
+	if (m_bGen) {
+		int n = m_nVerts;
+		if (m_type == 7)
+			n = n * 6 / 4;
+		else if (m_type == 6)
+			n = n * 3 - 6;
+		else if (m_type == 4)
+			n = n * 2 - 2;
+		else if (m_type == 5)
+			n = n * 2;
+		m_nIndices = n;
+		if (m_type == 7)
+			m_pMesh->v5(m_i7c, n, m_i3c);
+		else if (m_type == 6)
+			m_pMesh->v6(m_i7c, n, m_i3c);
+		else if (m_type == 4)
+			m_pMesh->v7(m_i7c, n, m_i3c);
+		else if (m_type == 5)
+			m_pMesh->v8(m_i7c, n, m_i3c);
+		else if (m_type)
+			m_pMesh->v4(m_i7c, n, m_i3c);
+	}
+	if (m_nVerts > 0)
+		m_pMesh->v17(this);
+	m_pMesh->v1(m_nVerts, m_nIndices, this);
+	m_pMesh->v12(-1, 0);
+	m_pMesh = 0;
+	m_i8c = 0;
+	m_i88 = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10081cd0 size=0x97
 #include "engineclient.h"
 #include "CSpriteHandle.h"
