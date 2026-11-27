@@ -10,11 +10,12 @@ class CViewRender : public IViewRender
 {
 public:
     void sub_1019ac50(bool, int, int);
+    bool sub_1019ef20(int arg);
     char sub_10198e70();
     void sub_101997e0(struct VWInfo *, struct VRList *, bool);
     bool sub_1019f140(int arg);
     bool sub_1019fa30(int arg);
-    void sub_1019e530(int, int, float, float, int, int, int, int);
+    void sub_1019e530(int, int, float, float, float, int, int, int);
     bool sub_1019fea0(int a);
     void sub_1019af80(bool, int);
     void sub_10190850();
