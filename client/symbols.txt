@@ -9095,6 +9095,7 @@
 0x10184660 func   ?sub_10184660@@YAHXZ sub_10184660
 0x10184690 func   ?sub_10184690@@YAHXZ sub_10184690
 0x101846b0 func   ?sub_101846b0@@YAHXZ sub_101846b0
+0x101846d0 func   ??0VItemInfoUI@@QAE@H@Z VItemInfoUI::VItemInfoUI
 0x101847f0 func   ??_GVItemInfoUI@@UAEPAXI@Z ??_GVItemInfoUI@@UAEPAXI@Z
 0x10184810 func   ??1VItemInfoUI@@UAE@XZ VItemInfoUI::~VItemInfoUI
 0x10184860 func   ?sub_10184860@VItemInfoUIScheme@@QAEXXZ VItemInfoUIScheme::sub_10184860
