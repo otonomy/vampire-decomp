@@ -242,6 +242,73 @@ void vgui2::Label::vfunc112(int w, int h)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b24b0 size=0x151
+#include "vgui2__Label.h"
+
+struct IImage131 { virtual void v0(); virtual void v1(); virtual void GetSize(int *, int *); };
+
+struct LabelMem131
+{
+	void *vptr;
+	char m_pad4[0x54];
+	int m_align;	// 0x58
+	int m_5c;
+	IImage131 **m_images;	// 0x60
+	int m_64;
+	int m_68;
+	int m_nImages;	// 0x6c
+	int m_70;
+	short *m_pSpacing;	// 0x74
+};
+
+// TARGET: vgui2::Label::vfunc131
+void vgui2::Label::vfunc131(int *pX, int *pY, int *pW, int *pH)
+{
+	LabelMem131 *p = (LabelMem131 *)this;
+	int wide, tall;
+	vfunc65(wide, tall);
+	*pX = 0;
+	*pY = 0;
+	int x = 0;
+	int y = 0;
+	int align = p->m_align;
+	for (int i = 0; i < p->m_nImages; i++) {
+		IImage131 *img = p->m_images[i];
+		if (img) {
+			int w, h;
+			img->GetSize(&w, &h);
+			if (y <= h)
+				y = h;
+			x += p->m_pSpacing[i] + w;
+		}
+	}
+	switch (align) {
+	case 0: case 3: case 6:
+		*pX = 0;
+		break;
+	case 1: case 4: case 7:
+		*pX = (wide - x) / 2;
+		break;
+	case 2: case 5: case 8:
+		*pX = wide - x;
+		break;
+	}
+	switch (p->m_align) {
+	case 0: case 1: case 2:
+		*pY = 0;
+		break;
+	case 3: case 4: case 5:
+		*pY = (tall - y) / 2;
+		break;
+	case 6: case 7: case 8:
+		*pY = tall - y;
+		break;
+	}
+	*pW = *pX + x;
+	*pH = *pY + y;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b2610 size=0x26e
 #include "vgui2__Label.h"
 
