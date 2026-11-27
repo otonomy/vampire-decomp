@@ -134286,6 +134286,75 @@ void CUnknown102047d0::sub_10160a50(const char *pszName, int *pGender, int *pVal
 }
 // END FUNCTION
 
+// FUNCTION: 0x10160b40 size=0x166
+#include "CVStatList_t.h"
+#include "CUnknown1014ada0.h"
+extern int g_105e8138;
+extern CUnknown1014ada0 **g_105e813c;
+int __cdecl sub_1015eb10(int);
+
+struct CharStatView {
+    char pad[0x1178];
+    int m_nLists;
+    CVStatList_t **m_pLists;
+
+    CVStatList_t *Find(int type) {
+        for (int i = 0; i < m_nLists; i++) {
+            if (m_pLists[i]->m_field10 == type)
+                return m_pLists[i];
+        }
+        static CVStatList_t s_default(-1);
+        return &s_default;
+    }
+};
+
+class CUnk10204c20 {
+public:
+    int m_type;
+    int m_stat;
+    int m_unk08;
+    int m_unk0c;
+    int sub_10160db0(int val);
+    int sub_10160b40(CharStatView *pEnt);
+};
+
+inline CUnknown1014ada0 *FindFeatList(int type)
+{
+	for (int i = 0; i < g_105e8138; i++)
+	{
+		if (g_105e813c[i]->m_unk00 == type)
+			return g_105e813c[i];
+	}
+	static CUnknown1014ada0 s(-1);
+	return &s;
+}
+
+// TARGET: CUnk10204c20::sub_10160b40
+int CUnk10204c20::sub_10160b40(CharStatView *pEnt)
+{
+    int stat = m_stat;
+    if (stat != -1 && pEnt)
+    {
+        switch (m_type)
+        {
+        case 0: case 1: case 2: case 3:
+            return sub_10160db0(pEnt->Find(sub_1015eb10(m_type))->sub_1015dbd0(stat));
+        case 4:
+            return FindFeatList(stat)->sub_1014b3b0((C_BasePlayer *)pEnt);
+        case 5: case 6: case 7: case 8:
+            return 0;
+        case 9:
+            if (stat)
+                return ((int (__cdecl *)(CharStatView *))stat)(pEnt);
+            return 0;
+        default:
+            return 0;
+        }
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10160d50 size=0x3d
 #include "CVStatInfoList_t.h"
 extern CVStatInfoList_t g_105f8c60;
