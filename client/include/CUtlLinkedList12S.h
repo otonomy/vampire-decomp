@@ -3,7 +3,9 @@
 
 struct CUtlLinkedList12SNode
 {
-	char m_Data[8];
+	unsigned short m_a0;
+	unsigned short m_a2;
+	int m_a4;
 	unsigned short m_Previous;
 	unsigned short m_Next;
 };
