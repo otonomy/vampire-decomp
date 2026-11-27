@@ -8660,6 +8660,7 @@
 0x10168cb0 func   ?vfunc74@CNetGraphPanel@@UAEHH@Z CNetGraphPanel::vfunc74
 0x10168ce0 func   ?sub_10168ce0@Net_10168ce0@@QAEXHPAE0@Z Net_10168ce0::sub_10168ce0
 0x10168d20 func   ?sub_10168d20@CNetGraphPanel@@QAEXPAUNGEntry@@PAEPAH1@Z CNetGraphPanel::sub_10168d20
+0x10168da0 func   ?sub_10168da0@CNetGraphPanel@@QAEXXZ CNetGraphPanel::sub_10168da0
 0x10168eb0 func   ?sub_10168eb0@CNetGraphPanel@@QAEXUvrect_10168eb0@@PAUcmdinfo_10168eb0@@HH@Z CNetGraphPanel::sub_10168eb0
 0x10169140 func   ?sub_10169140@CNetGraphPanel@@QAEXPAUpacket_latency_t@@PAUnetbandwidthgraph_t@@PAH22PAM233@Z CNetGraphPanel::sub_10169140
 0x101694c0 func   ?sub_101694c0@@YGXPAUNetEntryV@@@Z sub_101694c0

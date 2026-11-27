@@ -128933,6 +128933,52 @@ void CNetGraphPanel::sub_10168d20(NGEntry *e, unsigned char *a, int *flag, unsig
 }
 // END FUNCTION
 
+// FUNCTION: 0x10168da0 size=0x10a
+#include "CNetGraphPanel.h"
+struct NGColors_10168da0
+{
+	char m_pad[0x58];
+	unsigned char colors[24][3];
+};
+void CNetGraphPanel::sub_10168da0()
+{
+	int i, j;
+	unsigned char mincolor[2][3];
+	unsigned char maxcolor[2][3];
+	float dc[2][3];
+	int hfrac;
+	float f;
+	NGColors_10168da0 *v = (NGColors_10168da0 *)this;
+
+	mincolor[0][0] = 63; mincolor[0][1] = 0; mincolor[0][2] = 100;
+	maxcolor[0][0] = 0; maxcolor[0][1] = 63; maxcolor[0][2] = 255;
+	mincolor[1][0] = 255; mincolor[1][1] = 127; mincolor[1][2] = 0;
+	maxcolor[1][0] = 250; maxcolor[1][1] = 0; maxcolor[1][2] = 0;
+
+	for (i = 0; i < 3; i++)
+	{
+		dc[0][i] = (float)(maxcolor[0][i] - mincolor[0][i]);
+		dc[1][i] = (float)(maxcolor[1][i] - mincolor[1][i]);
+	}
+
+	for (hfrac = 0; hfrac < 24; hfrac++)
+	{
+		if (hfrac < 8)
+		{
+			f = (float)hfrac * 0.125f;
+			for (j = 0; j < 3; j++)
+				v->colors[hfrac][j] = (unsigned char)(mincolor[0][j] + f * dc[0][j]);
+		}
+		else
+		{
+			f = (float)(hfrac - 8) * 0.0625f;
+			for (j = 0; j < 3; j++)
+				v->colors[hfrac][j] = (unsigned char)(mincolor[1][j] + f * dc[1][j]);
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10168eb0 size=0x283
 #include "CNetGraphPanel.h"
 #include "ConVar.h"
