@@ -108490,6 +108490,40 @@ void CUtlRBTree16::sub_10139910(unsigned short elem)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10139ad0 size=0x1b5
+#include "CUtlRBTree16.h"
+
+struct RBSet16
+{
+    static void SetRight(CUtlRBTree16 *t, unsigned short i, unsigned short v) { t->m_pElements[i].m_Links.m_Right = v; }
+    static void SetLeft(CUtlRBTree16 *t, unsigned short i, unsigned short v) { t->m_pElements[i].m_Links.m_Left = v; }
+    static void SetParent(CUtlRBTree16 *t, unsigned short i, unsigned short v) { t->m_pElements[i].m_Links.m_Parent = v; }
+};
+
+void CUtlRBTree16::sub_10139ad0(unsigned short elem)
+{
+    const CUtlRBTree16At<0x105e5d8c> *t = (const CUtlRBTree16At<0x105e5d8c> *)this;
+    unsigned short leftchild = sub_101397f0(elem).m_Left;
+    RBSet16::SetLeft(this, elem, sub_101397f0(leftchild).m_Right);
+    if ( sub_101397f0(leftchild).m_Right != InvalidIndex() )
+        RBSet16::SetParent(this, sub_101397f0(leftchild).m_Right, elem);
+    if ( leftchild != InvalidIndex() )
+        RBSet16::SetParent(this, leftchild, sub_101397f0(elem).m_Parent);
+    if ( elem != m_Root )
+    {
+        if ( t->Links(sub_101397f0(elem).m_Parent).m_Right == elem )
+            RBSet16::SetRight(this, t->Links(elem).m_Parent, leftchild);
+        else
+            RBSet16::SetLeft(this, t->Links(elem).m_Parent, leftchild);
+    }
+    else
+        m_Root = leftchild;
+    RBSet16::SetRight(this, leftchild, elem);
+    if ( elem != InvalidIndex() )
+        RBSet16::SetParent(this, elem, leftchild);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10139cb0 size=0x20
 namespace lifted {
 extern char g_102864a0;
