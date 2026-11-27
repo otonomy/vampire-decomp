@@ -2011,6 +2011,7 @@
 0x1002a530 func   ?ClientClassInit@@YAHPAUignored@DT_BatSwarm@@@Z ClientClassInit
 0x1002a640 func   ??0C_BatSwarm@@QAE@XZ C_BatSwarm::C_BatSwarm
 0x1002a6a0 func   ??_GC_BatSwarm@@UAEPAXI@Z ??_GC_BatSwarm@@UAEPAXI@Z
+0x1002a760 func   ?sub_1002a760@Obj_1002a760@@QAEXM@Z Obj_1002a760::sub_1002a760
 0x1002a8e0 func   ?sub_1002a8e0@C_BatSwarm@@QAEHHH@Z C_BatSwarm::sub_1002a8e0
 0x1002a9c0 func   ?sub_1002a9c0@CUnknown1002a9c0@@QAEDHHHHH@Z CUnknown1002a9c0::sub_1002a9c0
 0x1002b260 func   ?sub_1002b260@Inner_1002b260@@QAEPAUElem_1002b260@@XZ Inner_1002b260::sub_1002b260

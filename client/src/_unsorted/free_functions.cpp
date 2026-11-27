@@ -18106,6 +18106,70 @@ template <> int ClientClassInit<DT_BatSwarm::ignored>(DT_BatSwarm::ignored *)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1002a760 size=0x17a
+#include "CUtlLinkedList776.h"
+#include "engineclient.h"
+extern void (__cdecl *g_101e310c)(const char *, ...);
+struct BigMem { void sub_1002b530(int); };
+struct CUnknown1002b4e0 { void sub_1002b4e0(); };
+struct Prune_1002b0c0 { void sub_1002b0c0(float); };
+struct Blob_1002a760 { int d[0x60]; };
+struct Obj_1002a760
+{
+	char m_pad00[0x68];
+	float m_flTime;
+	char m_pad6c[0x788 - 0x6c];
+	CUtlLinkedList776 m_List;
+	char m_pad7a4[4];
+	Blob_1002a760 m_BlobA;
+	Blob_1002a760 m_BlobB;
+	void sub_1002a760(float t);
+};
+// TARGET: Obj_1002a760::sub_1002a760
+void Obj_1002a760::sub_1002a760(float t)
+{
+	if (m_List.m_ElementCount != 0 && !(m_flTime > *(float *)&m_List.InternalElement(m_List.m_Tail)))
+		return;
+	CUtlLinkedList776 *l = &m_List;
+	unsigned short i;
+	unsigned short f = l->m_FirstFree;
+	if (f == 0xffff)
+	{
+		if (l->m_TotalElements == l->m_Memory.m_nAllocationCount)
+			((BigMem *)l)->sub_1002b530(1);
+		i = l->m_TotalElements++;
+		if (i == 0xffff)
+			g_101e310c("CUtlLinkedList overflow!\n");
+	}
+	else
+	{
+		i = f;
+		l->m_FirstFree = l->InternalElement(i).m_Next;
+	}
+	l->InternalElement(i).m_Previous = i;
+	l->InternalElement(i).m_Next = i;
+	l->m_pElements = l->m_Memory.m_pMemory;
+	l->sub_1002b420(i);
+	CUtlLinkedList776Node &n = l->InternalElement(i);
+	n.m_Next = 0xffff;
+	n.m_Previous = l->m_Tail;
+	l->m_Tail = i;
+	if (n.m_Previous == 0xffff)
+		l->m_Head = i;
+	else
+		l->InternalElement(n.m_Previous).m_Next = i;
+	++l->m_ElementCount;
+	CUnknown1002b4e0 *p = (CUnknown1002b4e0 *)&l->InternalElement(i);
+	if (p)
+		p->sub_1002b4e0();
+	CUtlLinkedList776Node &n2 = l->InternalElement(i);
+	*(float *)&n2 = m_flTime;
+	*(Blob_1002a760 *)(n2.m_Data + 4) = m_BlobA;
+	*(Blob_1002a760 *)(n2.m_Data + 0x184) = m_BlobB;
+	((Prune_1002b0c0 *)((char *)this - 8))->sub_1002b0c0((float)engine->Time(0));
+}
+// END FUNCTION
+
 // FUNCTION: 0x1002a8e0 size=0xd8
 #include "C_BatSwarm.h"
 #include "Vector.h"
