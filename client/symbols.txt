@@ -11035,6 +11035,7 @@
 0x101ca670 func   ?vfunc112@ScrollBarSlider@vgui2@@UAEHH@Z vgui2::ScrollBarSlider::vfunc112
 0x101ca680 func   ?vfunc113@ScrollBarSlider@vgui2@@UAEHXZ vgui2::ScrollBarSlider::vfunc113
 0x101ca690 func   ?vfunc117@ScrollBarSlider@vgui2@@UAEHH@Z vgui2::ScrollBarSlider::vfunc117
+0x101ca6a0 func   ??0PanelListPanel@vgui2@@QAE@PAVPanel@1@PBD@Z vgui2::PanelListPanel::PanelListPanel
 0x101ca820 func   ??_GPanelListPanel@vgui2@@UAEPAXI@Z ??_GPanelListPanel@vgui2@@UAEPAXI@Z
 0x101ca840 func   ??1PanelListPanel@vgui2@@UAE@XZ vgui2::PanelListPanel::~PanelListPanel
 0x101ca910 func   ?vfunc113@PanelListPanel@vgui2@@UAEHH@Z vgui2::PanelListPanel::vfunc113
