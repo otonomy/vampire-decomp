@@ -7,8 +7,8 @@ class CVPopUpInfoMgr
 public:
 	int m_unk00;
 	int m_unk04;
-	int m_nCount;\t// 0x08
-	int *m_pItems;\t// 0x0c: pointers to the CVPopUpInfo records
+	int m_nCount;	// 0x08
+	int *m_pItems;	// 0x0c: pointers to the CVPopUpInfo records
 
-	int sub_10142b50(const char *name, int arg);\t// \"CVPopUpInfoMgr::Lookup\": the index of a random one of the pop-ups with that name that can be displayed, -1 when none
+	int sub_10142b50(const char *name, int arg);	// "CVPopUpInfoMgr::Lookup": the index of a random one of the pop-ups with that name that can be displayed, -1 when none
 };
