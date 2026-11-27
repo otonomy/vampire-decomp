@@ -6927,6 +6927,7 @@
 0x1011fe60 func   ?sub_1011fe60@CUtlMemory20@@QAEXH@Z CUtlMemory20::sub_1011fe60
 0x1011ff40 func   ?vfunc0@CSolidSetDefaults@@UAEXPAXPBD1@Z CSolidSetDefaults::vfunc0
 0x1011ff70 func   ?vfunc1@CSolidSetDefaults@@UAEXPAX@Z CSolidSetDefaults::vfunc1
+0x1011ffa0 func   ?sub_1011ffa0@@YA_NAAUsolid_t_1011ffa0@@PAUEnt_1011ffa0@@PAUvcollide_t_1011ffa0@@H@Z sub_1011ffa0
 0x10120140 func   ?sub_10120140@@YAXPAUCObj@@@Z sub_10120140
 0x10120190 func   ?sub_10120190@@YAHH@Z sub_10120190
 0x101201b0 func   ?sub_101201b0@@YAXXZ sub_101201b0

@@ -96901,6 +96901,95 @@ void CUtlMemory20::sub_1011fe60(int num)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011ffa0 size=0x19b
+#include "engineclient.h"
+#include "Vector.h"
+extern "C" int _strcmpi(const char *, const char *);
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+struct objectparams_t_1011ffa0
+{
+	void *massCenterOverride;
+	float mass, inertia, damping, rotdamping, rotInertiaLimit;
+	const char *pName;
+	void *pGameData;
+	float volume;
+	float dragCoefficient;
+	int m_unk28;
+	bool enableCollisions;
+};
+struct solid_t_1011ffa0
+{
+	int index;
+	char name[512];
+	char parent[512];
+	char surfaceprop[512];
+	Vector massCenterOverride;
+	objectparams_t_1011ffa0 params;
+};
+struct StrHolder_1011ffa0 { const char *m_psz; };
+struct Ent_1011ffa0
+{
+	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7(); virtual void s8(); virtual void s9();
+	virtual void s10(); virtual void s11(); virtual void s12(); virtual void s13(); virtual void s14(); virtual void s15(); virtual void s16(); virtual void s17(); virtual void s18(); virtual void s19();
+	virtual void s20(); virtual void s21(); virtual void s22(); virtual void s23(); virtual void s24(); virtual void s25(); virtual void s26(); virtual void s27(); virtual void s28(); virtual void s29();
+	virtual void s30(); virtual void s31(); virtual void s32(); virtual void s33(); virtual void s34(); virtual void s35(); virtual void s36(); virtual void s37(); virtual void s38(); virtual void s39();
+	virtual void s40(); virtual void s41(); virtual void s42(); virtual void s43(); virtual void s44(); virtual void s45(); virtual void s46(); virtual void s47(); virtual void s48(); virtual void s49();
+	virtual StrHolder_1011ffa0 *GetModelName(StrHolder_1011ffa0 *out);
+};
+struct IKeyParser_1011ffa0
+{
+	virtual void s0();
+	virtual const char *GetCurrentBlockName();
+	virtual bool Finished();
+	virtual void ParseSolid(solid_t_1011ffa0 *, void *);
+	virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7(); virtual void s8();
+	virtual void SkipBlock();
+};
+struct vcollide_t_1011ffa0 { int m_unk0; void *solids; void *pKeyValues; };
+extern objectparams_t_1011ffa0 g_10235b5c;
+extern char g_104e0c30[];
+extern char g_102de300[];
+
+// TARGET: sub_1011ffa0
+bool sub_1011ffa0(solid_t_1011ffa0 &solid, Ent_1011ffa0 *pEntity, vcollide_t_1011ffa0 *pCollide, int solidIndex)
+{
+	bool parsed = false;
+	memset(&solid, 0, sizeof(solid));
+	solid.params = g_10235b5c;
+	IKeyParser_1011ffa0 *pParse = (IKeyParser_1011ffa0 *)physcollision->vfunc26((int)pCollide->pKeyValues);
+	while (!pParse->Finished())
+	{
+		const char *pBlock = pParse->GetCurrentBlockName();
+		if (!_strcmpi(pBlock, "solid"))
+		{
+			solid_t_1011ffa0 tmpSolid;
+			memset(&tmpSolid, 0, sizeof(tmpSolid));
+			tmpSolid.params = g_10235b5c;
+			pParse->ParseSolid(&tmpSolid, g_104e0c30);
+			if (solidIndex < 0 || tmpSolid.index == solidIndex)
+			{
+				parsed = true;
+				solid = tmpSolid;
+				break;
+			}
+		}
+		else
+		{
+			pParse->SkipBlock();
+		}
+	}
+	physcollision->vfunc27(pParse);
+	solid.params.enableCollisions = true;
+	solid.params.pGameData = pEntity;
+	StrHolder_1011ffa0 tmp;
+	const char *name = pEntity->GetModelName(&tmp)->m_psz;
+	solid.params.pName = name ? name : g_102de300;
+	return parsed;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10120140 size=0x46
 #include <string.h>
 struct CBlock { int d[12]; };
