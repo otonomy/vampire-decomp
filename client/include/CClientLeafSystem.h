@@ -34,6 +34,7 @@ public:
     unsigned short vfunc4(class IClientRenderable *, int);
     void vfunc0(class IClientRenderable *pRenderable, bool bRenderWithViewModels);
     void sub_100d2a40(int handle, int group);
+    void sub_100d4f40(unsigned short elem);
     void sub_100d4d20(unsigned short elem);
     unsigned short sub_100d1b60(class IClientRenderable *pRenderable, int group, int flags);
 };
