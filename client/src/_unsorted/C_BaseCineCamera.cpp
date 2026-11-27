@@ -20,6 +20,31 @@ int C_BaseCineCamera::vfunc15()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10001450 size=0x121
+#include "C_BaseCineCamera.h"
+#include "CCameraShotTable.h"
+extern Vector g_104d4970;
+extern Vector g_104d5190;
+extern CCameraShotTable g_102ea298;
+C_BaseCineCamera::C_BaseCineCamera()
+{
+	m_v410 = g_104d4970;
+	m_v41c = g_104d4970;
+	m_v428 = g_104d5190;
+	m_f458 = 75.0f;
+	m_n45c = 0;
+	m_b465 = 0;
+	m_v468.Init(0, 0, 0);
+	m_v474.Init(0, 0, 0);
+	g_102ea298.sub_10029200("vdata/CameraShots/*.txt");
+	m_n490 = 0;
+	m_f480 = 75.0f;
+	m_n460 = 0;
+	m_n498 = 0;
+	m_b4a0 = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10001900 size=0x1e
 #include "C_BaseCineCamera.h"
 
