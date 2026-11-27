@@ -11,6 +11,31 @@ vgui2::ComboBoxButton *pcd_emit_101c7690(const vgui2::ComboBoxButton &other) { r
 // TARGET: ??_GComboBoxButton@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101c76b0 size=0xfb
+#include "vgui2__ComboBoxButton.h"
+#pragma warning(disable: 4716)
+struct SchemeView {
+	virtual void v0(); virtual void v1(); virtual void v2();
+	virtual void *GetBorder(const char *name);
+	virtual int GetFont(const char *name);
+	virtual void v5();
+	virtual int *GetColor(int *out, const char *name);
+};
+int vgui2::ComboBoxButton::vfunc74(int a)
+{
+	Button::vfunc74(a);
+	SchemeView *s = (SchemeView *)a;
+	int c, d;
+	vfunc118(s->GetFont("Marlett"));
+	vfunc111(3);
+	vfunc112(3, 0);
+	vfunc158((int)s->GetBorder("ScrollBarButtonBorder"));
+	vfunc154(*s->GetColor(&d, "MenuButton/ArmedArrowColor"), *s->GetColor(&c, "MenuButton/ButtonBgColor"));
+	vfunc155(*s->GetColor(&d, "MenuButton/ArmedArrowColor"), *s->GetColor(&c, "MenuButton/ButtonBgColor"));
+	vfunc153(*s->GetColor(&d, "MenuButton/ButtonArrowColor"), *s->GetColor(&c, "MenuButton/ButtonBgColor"));
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c77b0 size=0x5
 #include "vgui2__ComboBoxButton.h"
 int vgui2::ComboBoxButton::vfunc164(int a0, int a1, int a2, int a3)
