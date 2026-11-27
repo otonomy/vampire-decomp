@@ -10608,6 +10608,7 @@
 0x101bc3d0 func   ?vfunc156@ToggleButton@vgui2@@UAEHH@Z vgui2::ToggleButton::vfunc156
 0x101bc410 func   ?vfunc147@ToggleButton@vgui2@@UAEHXZ vgui2::ToggleButton::vfunc147
 0x101bc4c0 func   ?vfunc74@ToggleButton@vgui2@@UAEHH@Z vgui2::ToggleButton::vfunc74
+0x101bc4f0 func   ??0TreeView@vgui2@@QAE@PAVPanel@1@PBD@Z vgui2::TreeView::TreeView
 0x101bc620 func   ?vfunc74@TreeViewSubPanel@vgui2@@UAEHH@Z vgui2::TreeViewSubPanel::vfunc74
 0x101bc6e0 func   ??_GTreeViewSubPanel@vgui2@@UAEPAXI@Z ??_GTreeViewSubPanel@vgui2@@UAEPAXI@Z
 0x101bc700 func   ??_GTreeView@vgui2@@UAEPAXI@Z ??_GTreeView@vgui2@@UAEPAXI@Z
