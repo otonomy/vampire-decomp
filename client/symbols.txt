@@ -2128,6 +2128,7 @@
 0x10030ff0 func   ??1C_SteamJet@@UAE@XZ C_SteamJet::~C_SteamJet
 0x10031070 func   ?OnDataChanged@C_SteamJet@@UAEXH@Z C_SteamJet::OnDataChanged
 0x100310b0 func   ?sub_100310b0@@YADXZ sub_100310b0
+0x100310c0 func   ?sub_100310c0@SteamJetStart@@QAEXPAVCParticleMgr@@PAX@Z SteamJetStart::sub_100310c0
 0x10031140 func   ?sub_10031140@CUnknown10031140@@QAEDHH@Z CUnknown10031140::sub_10031140
 0x10031160 func   ?sub_10031160@SteamJetParticleView@@QAEXM@Z SteamJetParticleView::sub_10031160
 0x100319d0 func   ?sub_100319d0@Obj_100319d0@@QAEXHHH@Z Obj_100319d0::sub_100319d0

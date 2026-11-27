@@ -19836,6 +19836,56 @@ char sub_100310b0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100310c0 size=0x7e
+#include "C_SteamJet.h"
+#include "CParticleMgr.h"
+#include "CParticleEffectBinding.h"
+struct SteamJetTimedEvent
+{
+	float m_flRate;
+	float m_flNext;
+	void Init(float rate) { m_flRate = 1.0f / rate; m_flNext = 0.0f; }
+};
+struct SteamJetStart
+{
+	void *m_vptr;		// 0x00
+	int m_unk04;
+	float m_Speed;		// 0x08
+	int m_unk0c; int m_unk10;
+	float m_Rate;		// 0x14
+	float m_JetLength;	// 0x18
+	int m_unk1c;
+	int m_nType;		// 0x20
+	char m_pad24[0x40 - 0x24];
+	float m_Lifetime;	// 0x40
+	char m_pad44[0x80 - 0x44];
+	CParticleMgr *m_pParticleMgr;	// 0x80
+	char m_MaterialHandle;	// 0x84
+	char m_pad85[3];
+	SteamJetTimedEvent m_Spawn;	// 0x88
+
+	void sub_100310c0(CParticleMgr *pParticleMgr, void *pArgs);
+};
+// TARGET: SteamJetStart::sub_100310c0
+void SteamJetStart::sub_100310c0(CParticleMgr *pParticleMgr, void *pArgs)
+{
+	pParticleMgr->sub_101175b0((CParticleEffectBinding *)((char *)this - 0x54), ((char *)this - 0x468) ? (void *)((char *)this - 0x58) : 0);
+	switch (m_nType)
+	{
+	case 1:
+		m_MaterialHandle = ((CParticleEffectBinding *)((char *)this - 0x54))->sub_101163a0("sprites/heatwave");
+		break;
+	default:
+		m_MaterialHandle = ((CParticleEffectBinding *)((char *)this - 0x54))->sub_101163a0("particle/particle_smokegrenade");
+		break;
+	}
+	m_Spawn.Init(m_Rate);
+	m_Lifetime = m_JetLength / m_Speed;
+	m_pParticleMgr = pParticleMgr;
+	((C_SteamJet *)((char *)this - 0x468))->sub_10031d80();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10031140 size=0x1b
 namespace lifted {
 extern char g_102eb550;
