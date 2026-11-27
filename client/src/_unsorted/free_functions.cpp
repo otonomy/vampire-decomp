@@ -138472,6 +138472,68 @@ void __cdecl sub_1017b840(vgui2::Panel *parent, vgui2::Label **out, const char *
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017b9a0 size=0x164
+#include "vgui2__TextEntry.h"
+#include <stdio.h>
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((x) * ((float)sub_100cd100() / 1024.0))
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+
+struct Color_1017b9a0 { unsigned int rgba; Color_1017b9a0() {} };
+
+struct IScheme_1017b9a0
+{
+	virtual void v0() = 0;
+	virtual int GetImage(const char *imageName) = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual int GetFont(const char *fontName) = 0;
+	virtual void v5() = 0;
+	virtual Color_1017b9a0 GetColor(const char *colorName) = 0;
+};
+
+struct EntryColorView_1017b9a0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void SetBgColor(Color_1017b9a0 c);
+	virtual void SetFgColor(Color_1017b9a0 c);
+};
+
+struct CUnknown101a9950 { void sub_101a9950(int, int, int, int); };
+
+// TARGET: sub_1017b9a0
+void __cdecl sub_1017b9a0(vgui2::Panel *parent, vgui2::TextEntry **out, const char *name, int x, int y, int w, int h, const char *fontName)
+{
+	char buf[0x30];
+	IScheme_1017b9a0 *pScheme = (IScheme_1017b9a0 *)parent->sub_101ac830();
+	int font = pScheme->GetFont(sub_1018c870(fontName));
+	sprintf(buf, "%s", name);
+	void *mem = vgui2::Panel::operator new(0x128);
+	vgui2::TextEntry *l = mem ? new (mem) vgui2::TextEntry(parent, buf) : 0;
+	*out = l;
+	l->vfunc132(font);
+	l->vfunc107("");
+	l->vfunc62(0);
+	((EntryColorView_1017b9a0 *)l)->SetFgColor(pScheme->GetColor("TitleText"));
+	((EntryColorView_1017b9a0 *)l)->SetBgColor(pScheme->GetColor("GhostControlBG"));
+	((CUnknown101a9950 *)l)->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
+	l->vfunc134(0);
+	l->vfunc138(1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017bb10 size=0x425
 #include "CharEditInfoPanel.h"
 #include "vgui2__Label.h"
