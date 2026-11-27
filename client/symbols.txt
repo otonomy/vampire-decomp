@@ -7798,6 +7798,7 @@
 0x10148800 func   ?sub_10148800@CUnknown101df2f0@@QAEXXZ CUnknown101df2f0::sub_10148800
 0x10148840 func   ?sub_10148840@CUnknown101dff00@@QAEDHPBD@Z CUnknown101dff00::sub_10148840
 0x10148cb0 func   ?sub_10148cb0@SoundRecX@@QAEPAU1@PBU1@@Z SoundRecX::sub_10148cb0
+0x10148da0 func   ?sub_10148da0@CUnknown101dff00@@QAE_NHPAXPBD@Z CUnknown101dff00::sub_10148da0
 0x10148ed0 func   ?sub_10148ed0@CUnknown101dff00@@QAEXXZ CUnknown101dff00::sub_10148ed0
 0x10148fd0 func   ?sub_10148fd0@CUnknown10148fd0@@QAEPAXXZ CUnknown10148fd0::sub_10148fd0
 0x10148ff0 func   ?sub_10148ff0@CUnknown101e01e0@@QAE_NPAVIKVNodeView@@PBDPAH@Z CUnknown101e01e0::sub_10148ff0

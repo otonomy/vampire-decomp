@@ -113364,6 +113364,39 @@ SoundRecX *SoundRecX::sub_10148cb0(const SoundRecX *o)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10148da0 size=0x12b
+#include "CUnknown101dff00.h"
+string_t sub_1015fc40(const char *psz);
+struct SRange { void sub_10148040(const char *psz); };
+extern CTraitEffectTable g_105f8b98;
+bool CUnknown101dff00::sub_10148da0(int a, void *pKV, const char *pszName)
+{
+	CUnknown101dc5a0Keys *kv = (CUnknown101dc5a0Keys *)pKV;
+	m_pszName = sub_1015fc40(pszName).pszValue;
+	if (kv) {
+		const char *parent = kv->vfunc13("InheritFrom", "");
+		if (!*parent || sub_10148840(a, parent)) {
+			((CUnknown101df000 *)((char *)this + 8))->sub_10148350(kv, 0);
+			((CUnknown101df000 *)((char *)this + 0xb4))->sub_10148350(kv, "OnEnd");
+			((CUnknown101df000 *)((char *)this + 0x160))->sub_10148350(kv, "OnCallback");
+			((CUnknown101df000 *)((char *)this + 0x20c))->sub_10148350(kv, "OnInterrupt");
+			((CUnknown101df000 *)((char *)this + 0x2b8))->sub_10148350(kv, "OnInterruptSchedule");
+			((SRange *)m_RangeStorage)->sub_10148040(kv->vfunc13("Duration", ""));
+			CUnknown101dc5a0Keys *trait = kv->vfunc2("TraitEffect");
+			if (trait) {
+				const char *effect = trait->vfunc13("Effect", "");
+				if (*effect)
+					m_nTraitEffect = g_105f8b98.sub_10157b80(effect);
+			}
+			m_bDoPossession = kv->vfunc12("DoPossession", false);
+			m_bDoFrenzy = kv->vfunc12("DoFrenzy", false);
+			return true;
+		}
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10148ed0 size=0xf7
 #include "CUnknown101dff00.h"
 extern "C" __declspec(dllimport) int __cdecl Q_snprintf(char *, int, const char *, ...);
