@@ -4467,6 +4467,7 @@
 0x100aa4e0 func   ?sub_100aa4e0@@YIXPAX0HH@Z sub_100aa4e0
 0x100aa5d0 func   ?vfunc186@C_BasePlayer@@UAEXXZ C_BasePlayer::vfunc186
 0x100aa6d0 func   ?sub_100aa6d0@@YIMPAVC_BasePlayer@@@Z sub_100aa6d0
+0x100aaab0 func   ?sub_100aaab0@@YAXXZ sub_100aaab0
 0x100aabb0 func   ?sub_100aabb0@@YAXPAUCVDmgEntry@@HPAD@Z sub_100aabb0
 0x100aacb0 func   ?sub_100aacb0@CUnknown101a5290@@QAEXXZ CUnknown101a5290::sub_100aacb0
 0x100aad10 func   ?sub_100aad10@IntVec@@QAEXHH@Z IntVec::sub_100aad10

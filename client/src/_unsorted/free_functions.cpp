@@ -56184,6 +56184,56 @@ float __fastcall sub_100aa6d0(C_BasePlayer *pThis)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100aaab0 size=0xf1
+#include "CGlobalVarsBase.h"
+#include "CVDmg_t.h"
+
+extern "C" __declspec(dllimport) int Q_snprintf(char *, unsigned int, const char *, ...);
+
+#define SV(n) virtual void v##n();
+#define SV10(p) SV(p##0) SV(p##1) SV(p##2) SV(p##3) SV(p##4) SV(p##5) SV(p##6) SV(p##7) SV(p##8) SV(p##9)
+struct DbgHud_100aaab0
+{
+	SV(0) SV(1) SV(2) SV(3) SV(4) SV(5) SV(6) SV(7) SV(8) SV(9)
+	SV10(1) SV10(2) SV10(3) SV10(4) SV10(5) SV10(6) SV10(7) SV10(8) SV10(9)
+	SV10(10)
+	SV(110) SV(111) SV(112) SV(113) SV(114)
+	virtual void vfunc115(int a, const char *text);
+};
+
+DbgHud_100aaab0 *sub_100561f0();
+void sub_100aac90();
+extern float g_104a0d5c;
+extern int g_104a0d60;
+extern int g_104a0bd0[];
+extern int g_1049fdc8[];
+extern char g_1049fb50[][32];
+extern CVDmgBlock16_t g_1049e3f0[];
+
+void sub_100aaab0()
+{
+	if (g_104a0d5c > 0.0 && g_104a0d5c < gpGlobals->curtime)
+	{
+		for (int i = 0; i < g_104a0d60; i++)
+		{
+			char buf[0x200];
+			int v = g_104a0bd0[i];
+			const char *name;
+			if (!g_1049fb50[i][0])
+				name = g_1049e3f0[i].sub_10160740();
+			else
+				name = g_1049fb50[i];
+			if (v >= 0)
+				Q_snprintf(buf, 0x1ff, "%s + %d", name, v);
+			else
+				Q_snprintf(buf, 0x1ff, "%s - %d", name, -v);
+			sub_100561f0()->vfunc115(g_1049fdc8[i], buf);
+		}
+		sub_100aac90();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100aabb0 size=0xdb
 #include "CGlobalVarsBase.h"
 #include "CVDmg_t.h"
