@@ -2191,6 +2191,19 @@ void vgui2::TextEntry::vfunc75(int p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b1650 size=0x59
+#include "vgui2__TextEntry.h"
+#include "vgui2__KeyValues.h"
+void vgui2::TextEntry::sub_101b1650(int a)
+{
+	vgui2::KeyValues *data = (vgui2::KeyValues *)a;
+	Panel::sub_101ab750(a);
+	data->vfunc15((int)"textHidden", *(unsigned char *)((char *)this + 0x89));
+	data->vfunc15((int)"editable", vfunc135());
+	data->vfunc15((int)"maxchars", *(int *)((char *)this + 0xac));
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b16b0 size=0x23
 #include "vgui2__TextEntry.h"
 namespace lifted {
