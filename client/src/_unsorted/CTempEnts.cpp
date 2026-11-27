@@ -295,6 +295,69 @@ void CTempEnts::vfunc8(const Vector &mins, const Vector &maxs, float height, int
 }
 // END FUNCTION
 
+// FUNCTION: 0x1003bac0 size=0x1dd
+#include "CTempEnts.h"
+#include "engineclient.h"
+struct TempEntBT
+{
+	char pad[0x48];
+	int m_nRenderMode;	// 0x48
+	char pad4c[0x50 - 0x4c];
+	unsigned char m_r, m_g, m_b, m_a;	// 0x50
+	char pad54[0x7ac - 0x54];
+	int m_flags;		// 0x7ac
+	float m_die;		// 0x7b0
+	float m_pad7b4;
+	float m_x;		// 0x7b8
+	float m_y;		// 0x7bc
+	char pad7c0[0x7f0 - 0x7c0];
+	float m_flSpriteScale;	// 0x7f0
+	char pad7f4[0x7fc - 0x7f4];
+	float m_flFrame;	// 0x7fc
+	void sub_1003a840(float x, float y, float z);
+};
+extern "C" double sin(double);
+extern "C" double cos(double);
+#pragma intrinsic(sin)
+#pragma intrinsic(cos)
+// TARGET: CTempEnts::vfunc9
+void CTempEnts::vfunc9(const Vector &start, const Vector &end, float flHeight, int modelIndex, int count, float speed)
+{
+	if (!modelIndex)
+		return;
+	void *model = modelinfo->GetModel(modelIndex);
+	if (!model)
+		return;
+	int frameCount = modelinfo->GetModelFrameCount(model);
+	for (int i = 0; i < count; i++)
+	{
+		float dist = enginerandom->RandomFloat(0.0f, 1.0f);
+		Vector org;
+		org.x = (end.x - start.x) * dist + start.x;
+		org.y = (end.y - start.y) * dist + start.y;
+		org.z = (end.z - start.z) * dist + start.z;
+		TempEntBT *pTemp = (TempEntBT *)sub_1003cdd0(&org, model);
+		if (!pTemp)
+			return;
+		pTemp->m_flags |= 1;
+		pTemp->m_x = org.x;
+		pTemp->m_y = org.y;
+		float angle = enginerandom->RandomInt(-3, 3);
+		float vz = enginerandom->RandomInt(80, 140);
+		pTemp->sub_1003a840(speed * cos(angle), speed * sin(angle), vz);
+		float sz = start.z;
+		pTemp->m_die = engine->Time(0) + (flHeight - (org.z - sz)) / vz - 0.1;
+		pTemp->m_flFrame = enginerandom->RandomInt(0, frameCount - 1);
+		pTemp->m_flSpriteScale = 1.0 / enginerandom->RandomFloat(4.0f, 8.0f);
+		pTemp->m_nRenderMode = 4;
+		pTemp->m_b = 0xff;
+		pTemp->m_g = 0xff;
+		pTemp->m_r = 0xff;
+		pTemp->m_a = 0xc0;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1003bca0 size=0x38b
 #include "CTempEnts.h"
 #include "engineclient.h"
