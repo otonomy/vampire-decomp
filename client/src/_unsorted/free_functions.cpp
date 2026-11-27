@@ -98503,6 +98503,67 @@ int CUnknown10127c80::sub_10127c80()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10127c90 size=0x159
+#include "CUnknown10248a50.h"
+#include <string.h>
+#include <stdlib.h>
+struct IFileSys {
+    virtual int Open(const char *name, const char *mode, const char *pathID);
+    virtual void Close(int h);
+    virtual int Read(void *buf, int size, int h);
+    virtual int v3();
+    virtual int v4();
+    virtual int v5();
+    virtual int Size(int h);
+};
+char *sub_10127df0(const char **ppBuffer, int a);
+char *sub_10127e20(const char *pszFile, IFileSys *pFileSys);
+// TARGET: CUnknown10248a50::sub_10127c90
+bool CUnknown10248a50::sub_10127c90(const char *pszFile, IFileSys *pFileSys, const char *pszPathID, bool bRefresh)
+{
+    const char *pszCursor = 0;
+    char *pFree = 0;
+    if (bRefresh) {
+        if (strstr(pszFile, ".txt"))
+            pszCursor = sub_10127e20(pszFile, pFileSys);
+    }
+    if (!bRefresh || pszCursor == 0) {
+        int h = pFileSys->Open(pszFile, "rb", pszPathID);
+        if (h == 0)
+            return false;
+        int size = pFileSys->Size(h);
+        pFree = (char *)malloc(size + 1);
+        pFileSys->Read(pFree, size, h);
+        pFileSys->Close(h);
+        pFree[size] = 0;
+        pszCursor = pFree;
+    }
+    CUnknown10248a50 *pNode = this;
+    CUnknown10248a50 *pPrevious = 0;
+    while (1) {
+        const char *pszToken = sub_10127df0(&pszCursor, 0);
+        if (!pszCursor)
+            break;
+        if (!pNode) {
+            pNode = new CUnknown10248a50(pszToken);
+            if (pPrevious)
+                pPrevious->sub_101283c0((int)pNode);
+        } else {
+            delete *(char **)pNode;
+            pNode->sub_101279a0(pszToken);
+        }
+        const char *pszNext = sub_10127df0(&pszCursor, 0);
+        if (*(int *)pNode && pszNext && *pszNext == '{')
+            pNode->sub_10127fd0(&pszCursor, (int)pFileSys);
+        pPrevious = pNode;
+        pNode = 0;
+    }
+    if (pFree)
+        free(pFree);
+    return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10127df0 size=0x23
 extern int g_104e3438;
 int sub_100e3130(int a, void *b, int c);
