@@ -14,6 +14,7 @@ public:
 	void sub_1007cc30(const char *arg);
 	void *sub_10003060();
 	void *sub_1007bab0();
+	bool sub_1009be00(Vector &origin, QAngle &angles);
 	char *sub_1007b180();
 	bool sub_1007d950();
 	struct WpnSlot_t *sub_1007b5b0();
