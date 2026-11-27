@@ -22850,6 +22850,36 @@ int CUnknown10039a90::sub_10039a90()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10039ac0 size=0x157
+#include "engineclient.h"
+#include "CUnknown10039ac0.h"
+#include "C_BaseEntity.h"
+#include "CClientEntityList.h"
+#include "CGameTrace.h"
+void sub_10108fd0(const float *, float, const float *, float *);
+void sub_10047980(Vector &, Vector &);
+// TARGET: CUnknown10039ac0::sub_10039ac0
+void CUnknown10039ac0::sub_10039ac0(int a)
+{
+    Vector dir = m_vecOrigin - m_vecStart;
+    float len = FastSqrt(dir.x * dir.x + (dir.y * dir.y + dir.z * dir.z));
+    VectorNormalize(dir);
+    Vector end;
+    sub_10108fd0(&m_vecStart.x, len + 1.0f, &dir.x, &end.x);
+    CGameTrace tr;
+    if (m_nEntity == 0 && m_nHitbox != 0) {
+        staticpropmgr->vfunc5(m_vecStart, end, m_nHitbox - 1, effects->Draw_DecalIndex(m_nIndex), true, tr, 1);
+    } else {
+        C_BaseEntity *e = cl_entitylist->sub_100d0cf0(m_nEntity);
+        if (!e || !e->sub_100a1b20())
+            return;
+        e->sub_100a1d60(m_vecStart, end, m_vecOrigin, m_nHitbox, effects->Draw_DecalIndex(m_nIndex), true, tr, 1);
+    }
+    if (tr.m_fraction != 1.0f)
+        sub_10047980(m_vecOrigin, *(Vector *)tr.m_planeNormal);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10039c40 size=0x6
 namespace lifted {
 extern char g_102ee56c;

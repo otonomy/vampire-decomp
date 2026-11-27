@@ -2428,6 +2428,7 @@
 0x10039a90 func   ??1C_TEExplosiveGunshotDecal@@UAE@XZ C_TEExplosiveGunshotDecal::~C_TEExplosiveGunshotDecal
 0x10039a90 func   ?sub_10039a90@CUnknown10039a90@@QAEHXZ CUnknown10039a90::sub_10039a90
 0x10039ab0 func   ?vfunc13@C_TEExplosiveGunshotDecal@@UAEXXZ C_TEExplosiveGunshotDecal::vfunc13
+0x10039ac0 func   ?sub_10039ac0@CUnknown10039ac0@@QAEXH@Z CUnknown10039ac0::sub_10039ac0
 0x10039c20 func   ?vfunc9@C_TEExplosiveGunshotDecal@@UAEHXZ C_TEExplosiveGunshotDecal::vfunc9
 0x10039c30 func   ?vfunc8@C_TEExplosiveGunshotDecal@@UAEHXZ C_TEExplosiveGunshotDecal::vfunc8
 0x10039c40 func   ?sub_10039c40@@YAHXZ sub_10039c40
