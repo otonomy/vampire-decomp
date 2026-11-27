@@ -132219,6 +132219,36 @@ CVStatInfo_t *CVStatInfoList_t::sub_1015cfe0(int idx)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015d050 size=0x189
+#include "CVStatInfoList_t.h"
+#include "ScopeTrace.h"
+extern "C" int sprintf(char *, const char *, ...);
+extern "C" __declspec(dllimport) void DevMsg(int, const char *, ...);
+struct ToStrNames { const char *sub_1015ecd0(); };
+struct ToStrOwner { int sub_1015f160(const char *); ToStrNames *sub_1015f270(int, int); };
+extern ToStrOwner g_105f93c0;
+// TARGET: CVStatInfoList_t::sub_1015d050
+void CVStatInfoList_t::sub_1015d050()
+{
+	char buf[128];
+	ScopeTrace st("CVStatInfoList_t::Debug_Display", g_102de300);
+	sprintf(buf, "\n   %s:\n\n", m_pszName24 ? m_pszName24 : g_102de300);
+	DevMsg(1, buf);
+	int id = g_105f93c0.sub_1015f160("CostStrings");
+	if (id != -1 && !m_cost.sub_10159c80())
+	{
+		sprintf(buf, "[%s]:\n", g_105f93c0.sub_1015f270(id, 0)->sub_1015ecd0());
+		DevMsg(1, buf);
+		sprintf(buf, "\t\t%s:\t%s\n", g_105f93c0.sub_1015f270(id, 1)->sub_1015ecd0(), m_cost.m_first.sub_10159940());
+		DevMsg(1, buf);
+		sprintf(buf, "\t\t%s:\t%s\n", g_105f93c0.sub_1015f270(id, 2)->sub_1015ecd0(), m_cost.m_second.sub_10159940());
+		DevMsg(1, buf);
+	}
+	for (int i = 0; i < m_nStats; i++)
+		m_pStats[i].sub_1015c040(m_field2c, this);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015d2c0 size=0x8a
 #include "CVStatList_t.h"
 #include "CVStatInfoList_t.h"
