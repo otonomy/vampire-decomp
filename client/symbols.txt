@@ -8032,6 +8032,7 @@
 0x1014dae0 func   ?sub_1014dae0@CDiscValues_101e9080@@QAEXPAH000@Z CDiscValues_101e9080::sub_1014dae0
 0x1014db30 func   ?sub_1014db30@CView1014db30@@QAEMH@Z CView1014db30::sub_1014db30
 0x1014db90 func   ?sub_1014db90@C_BaseVCombatCharacter@@QAEHPAV1@HH@Z C_BaseVCombatCharacter::sub_1014db90
+0x1014dc70 func   ?sub_1014dc70@CThing@@QAEHPAUStatOwnerView@@H@Z CThing::sub_1014dc70
 0x1014ddf0 func   ?sub_1014ddf0@@YIHPAXH0@Z sub_1014ddf0
 0x1014de20 func   ?sub_1014de20@@YAHH@Z sub_1014de20
 0x1014de30 func   ?sub_1014de30@@YGXH@Z sub_1014de30

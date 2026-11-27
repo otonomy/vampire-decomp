@@ -118825,6 +118825,32 @@ int C_BaseVCombatCharacter::sub_1014db90(C_BaseVCombatCharacter *pTarget, int a,
 }
 // END FUNCTION
 
+// FUNCTION: 0x1014dc70 size=0x173
+#include "CVStatList_t.h"
+struct StatOwnerView { char pad[0x1178]; int m_nLists; CVStatList_t **m_pLists;
+ CVStatList_t *Find(int type) {
+  for (int i = 0; i < m_nLists; i++) {
+   if (m_pLists[i]->m_field10 == type) return m_pLists[i];
+  }
+  static CVStatList_t s_default(-1);
+  return &s_default;
+ }
+};
+struct CThing { char pad[0x3c0]; char m_c0; int m_c4;
+ int sub_1014dc70(StatOwnerView *ent, int n);
+};
+int CThing::sub_1014dc70(StatOwnerView *ent, int n) {
+ if (!ent || m_c0) return m_c4 * n;
+ int a = ent->Find(0)->sub_1015dbd0(0xd);
+ int b = ent->Find(0)->sub_1015dbd0(0x11);
+ int c = ent->Find(0)->sub_1015dbd0(0xf);
+ int room = b - c;
+ int v = b * n / a;
+ if (v > room) return room;
+ return v;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1014ddf0 size=0x23
 char __fastcall sub_1008eb70(void *pOther);
 
