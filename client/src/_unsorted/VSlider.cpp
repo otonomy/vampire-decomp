@@ -11,6 +11,19 @@ VSlider *pcd_emit_1017b330(const VSlider &other) { return new VSlider(other); }
 // TARGET: ??_GVSlider@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x1017b350 size=0x33
+#include "VSlider.h"
+VSlider::~VSlider()
+{
+	vgui2::Panel *a = *(vgui2::Panel **)((char *)this + 0xa0);
+	if (a)
+		delete a;
+	vgui2::Panel *b = *(vgui2::Panel **)((char *)this + 0xa4);
+	if (b)
+		delete b;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017b390 size=0xb0
 #include "VSlider.h"
 struct SliderDtorView { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual ~SliderDtorView(); };
