@@ -133752,6 +133752,42 @@ int CUnknown1016b1a0::sub_1016b1a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1016cdc0 size=0x165
+#include "VBarterUI.h"
+// TARGET: VBarterUI::sub_1016cdc0
+void VBarterUI::sub_1016cdc0()
+{
+    int i;
+    for (i = 0; i < 0x18; i++) {
+        delete m_Slots1[i].b;
+        m_Slots1[i].b = 0;
+        delete m_Slots1[i].c;
+        m_Slots1[i].c = 0;
+        delete m_Slots1[i].a;
+        m_Slots1[i].a = 0;
+    }
+    for (i = 0; i < 0x20; i++) {
+        delete m_Slots2[i].b;
+        m_Slots2[i].b = 0;
+        delete m_Slots2[i].c;
+        m_Slots2[i].c = 0;
+        delete m_Slots2[i].a;
+        m_Slots2[i].a = 0;
+    }
+    m_p428 = 0;
+    delete m_p430; m_p430 = 0;
+    delete m_p42c; m_p42c = 0;
+    delete m_p440; m_p440 = 0;
+    delete m_p43c; m_p43c = 0;
+    delete m_p438; m_p438 = 0;
+    delete m_p444; m_p444 = 0;
+    delete m_p448; m_p448 = 0;
+    delete m_p434; m_p434 = 0;
+    if (m_p4dc) m_p4dc->vfunc0(1);
+    m_p4dc = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1016cf30 size=0x90
 #include "vgui2__Panel.h"
 // TARGET: sub_1016cf30

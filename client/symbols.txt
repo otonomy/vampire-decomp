@@ -8875,6 +8875,7 @@
 0x1016b740 func   ??1VBarterUI@@UAE@XZ VBarterUI::~VBarterUI
 0x1016cd90 func   ?vfunc164@VBarterButton@@UAEHHHHH@Z VBarterButton::vfunc164
 0x1016cda0 func   ??_GVBarterButton@@UAEPAXI@Z ??_GVBarterButton@@UAEPAXI@Z
+0x1016cdc0 func   ?sub_1016cdc0@VBarterUI@@QAEXXZ VBarterUI::sub_1016cdc0
 0x1016cf30 func   ?sub_1016cf30@CInvSec@@QAEXPBD@Z CInvSec::sub_1016cf30
 0x1016d110 func   ?sub_1016d110@@YGDH@Z sub_1016d110
 0x1016ead0 func   ?sub_1016ead0@@YAXPAUWalletMoney@@PAUWalletEnt@@@Z sub_1016ead0
