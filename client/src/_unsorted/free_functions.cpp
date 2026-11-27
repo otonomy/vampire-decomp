@@ -66591,6 +66591,49 @@ int sub_100ca7f0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ca800 size=0xba
+#include "C_World.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+struct V102ccd98 { virtual void v0(); virtual void vfunc1(int, int); };
+struct V102d5238 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void vfunc4(int, int, void *); };
+extern V102ccd98 *g_102ccd98;
+extern V102d5238 *g_102d5238;
+struct ScreenFadeV {
+    unsigned short duration; unsigned short holdTime; short fadeFlags; unsigned char r, g, b, a;
+};
+struct WorldNet {
+    char pad[0x424];
+    char m_b424;
+    char pad425[0x430 - 0x425];
+    float m_f430;
+    char pad434[0x444 - 0x434];
+    float m_f444;
+    void sub_100ca800(int updateType);
+};
+// TARGET: WorldNet::sub_100ca800
+void WorldNet::sub_100ca800(int updateType)
+{
+    ((C_BaseEntity *)((char *)this - 8))->C_BaseEntity::OnDataChanged(updateType);
+    if (updateType == 0) {
+        g_102ccd98->vfunc1(0, 1);
+        if (m_b424) {
+            ScreenFadeV sf;
+            memset(&sf, 0, sizeof(sf));
+            sf.duration = 0xa00;
+            sf.holdTime = 0x200;
+            sf.r = 0; sf.g = 0; sf.b = 0; sf.a = 0xff;
+            sf.fadeFlags = 0x11;
+            g_102d5238->vfunc4(0, 0, &sf);
+        }
+    }
+    if (m_f430 != m_f444)
+        m_f444 = m_f430;
+    if (m_f430 != m_f444)
+        m_f444 = m_f430;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ca8c0 size=0x5
 namespace lifted {
 int sub_10068330();

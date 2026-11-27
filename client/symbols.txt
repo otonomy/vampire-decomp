@@ -5129,6 +5129,7 @@
 0x100ca650 func   ??1C_World@@UAE@XZ C_World::~C_World
 0x100ca750 func   ?sub_100ca750@C_World@@QAEXXZ C_World::sub_100ca750
 0x100ca7f0 func   ?sub_100ca7f0@@YAHXZ sub_100ca7f0
+0x100ca800 func   ?sub_100ca800@WorldNet@@QAEXH@Z WorldNet::sub_100ca800
 0x100ca8c0 func   ?sub_100ca8c0@@YAHXZ sub_100ca8c0
 0x100ca8d0 func   ?sub_100ca8d0@@YAXXZ sub_100ca8d0
 0x100ca990 func   ?vfunc21@C_World@@UAEXXZ C_World::vfunc21
