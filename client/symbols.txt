@@ -6353,6 +6353,7 @@
 0x1010d1d0 func   ?vfunc1@CEqualsProxy@@UAEXH@Z CEqualsProxy::vfunc1
 0x1010d290 func   ?sub_1010d290@@YAHXZ sub_1010d290
 0x1010d2c0 func   ??_GCEqualsProxy@@UAEPAXI@Z ??_GCEqualsProxy@@UAEPAXI@Z
+0x1010d2e0 func   ?vfunc1@CFracProxy@@UAEXH@Z CFracProxy::vfunc1
 0x1010d410 func   ?sub_1010d410@@YAHXZ sub_1010d410
 0x1010d440 func   ??_GCFracProxy@@UAEPAXI@Z ??_GCFracProxy@@UAEPAXI@Z
 0x1010d4c0 func   ?vfunc1@CLinearRampProxy@@UAEXH@Z CLinearRampProxy::vfunc1
