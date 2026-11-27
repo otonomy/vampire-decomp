@@ -3979,6 +3979,7 @@
 0x1009bd90 func   ?vfunc236@C_BaseCombatWeapon@@UAEXH@Z C_BaseCombatWeapon::vfunc236
 0x1009bda0 func   ?vfunc240@C_BaseCombatWeapon@@UAE_NXZ C_BaseCombatWeapon::vfunc240
 0x1009bdd0 func   ?vfunc241@C_BaseCombatWeapon@@UAE_NXZ C_BaseCombatWeapon::vfunc241
+0x1009be00 func   ?sub_1009be00@C_BaseCombatWeapon@@QAE_NAAVVector@@AAVQAngle@@@Z C_BaseCombatWeapon::sub_1009be00
 0x1009bf10 func   ?vfunc64@C_BaseCombatWeapon@@UAEHHHH@Z C_BaseCombatWeapon::vfunc64
 0x1009bfa0 func   ?sub_1009bfa0@@YI_NPAUCWR@@@Z sub_1009bfa0
 0x1009c060 func   ?vfunc242@C_BaseCombatWeapon@@UAE_NXZ C_BaseCombatWeapon::vfunc242

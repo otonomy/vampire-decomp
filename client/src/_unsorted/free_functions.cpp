@@ -49838,6 +49838,54 @@ int CUnknown1009b2a0::sub_1009b2a0(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009be00 size=0x106
+#include "engineclient.h"
+#include "C_BaseCombatWeapon.h"
+#include "C_BasePlayer.h"
+#include "CInput.h"
+#include "IClientRenderable.h"
+extern void *sub_100ab1e0(int);
+bool C_BaseCombatWeapon::sub_1009be00(Vector &origin, QAngle &angles)
+{
+	char *owner = (char *)sub_1007bab0();
+	C_BaseEntity *pl = 0;
+	if (owner)
+		pl = *(C_BaseEntity **)(owner + 0x3f0);
+	if (pl)
+	{
+		if (pl == (C_BaseEntity *)C_BasePlayer::GetLocalPlayer())
+			engine->GetViewAngles(angles);
+		else
+			angles = ((IClientRenderable *)((char *)pl + 4))->GetRenderAngles();
+	}
+	else
+	{
+		angles.x = 0;
+		angles.y = 0;
+		angles.z = 0;
+	}
+	QAngle junk;
+	if (vfunc241() && !input->vfunc29())
+	{
+		C_BaseAnimating *pVM = (C_BaseAnimating *)sub_100ab1e0(0);
+		if (pVM)
+		{
+			int idx = pVM->sub_10094ec0("muzzle");
+			if (pVM->vfunc57(idx, (int)&origin, (int)&junk))
+				return true;
+		}
+	}
+	else
+	{
+		int idx = sub_10094ec0("muzzle");
+		if (vfunc57(idx, (int)&origin, (int)&junk))
+			return true;
+	}
+	origin = ((IClientRenderable *)((char *)this + 4))->GetRenderOrigin();
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009bfa0 size=0xbd
 #include "C_BaseCombatWeapon.h"
 struct Q { char pad[0x160c]; char m_160c; };
