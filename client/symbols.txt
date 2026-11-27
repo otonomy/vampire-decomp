@@ -9195,6 +9195,7 @@
 0x10180de0 func   ?sub_10180de0@CUnknown10180de0@@QAEHXZ CUnknown10180de0::sub_10180de0
 0x10180e20 func   ?vfunc78@CharEditStatsPanel@@UAEXH@Z CharEditStatsPanel::vfunc78
 0x10181400 func   ?sub_10181400@CharEditStatsPanel@@QAEXPBD@Z CharEditStatsPanel::sub_10181400
+0x10181960 func   ?sub_10181960@CharEditStatsPanel@@QAEXXZ CharEditStatsPanel::sub_10181960
 0x10181a30 func   ?sub_10181a30@Score10181a30@@QAEXXZ Score10181a30::sub_10181a30
 0x10181ad0 func   ?sub_10181ad0@StatsPanelX@@QAEXH@Z StatsPanelX::sub_10181ad0
 0x10181b70 func   ?sub_10181b70@@YAXXZ sub_10181b70

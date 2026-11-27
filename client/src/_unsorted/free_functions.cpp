@@ -139822,6 +139822,40 @@ void CharEditStatsPanel::sub_10181400(const char *pszName)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10181960 size=0xcd
+#include "CharEditStatsPanel.h"
+#include "CVStatInfoList_t.h"
+#include "ScopeTrace.h"
+
+extern CVStatInfoList_t g_105f9220;
+char sub_101713e0();
+
+void CharEditStatsPanel::sub_10181960()
+{
+	const char *const *pp = &g_105f9220.sub_1015cfe0(0x1b)->m_pszTitle;
+	const char *psz = *pp ? *pp : g_102de300;
+	m_p2ac->vfunc108(psz);
+	pp = &g_105f9220.sub_1015cfe0(0x1b)->m_apszHelpText[0];
+	psz = *pp ? *pp : g_102de300;
+	m_p2b0->vfunc107(psz);
+	m_p2a0->vfunc108("");
+	m_p2a8->vfunc107("");
+	if (sub_101713e0())
+	{
+		((vgui2::Label *)m_p2a4)->vfunc108("");
+		m_n1fc = 0;
+		return;
+	}
+	void *p = sub_101808d0("  humanity", 0);
+	if (p)
+	{
+		m_n1fc = (int)p;
+		m_n200 = 0x1b;
+		sub_10181f80();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10181a30 size=0x9a
 #include "CVStatInfoList_t.h"
 #define D8(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); virtual void p##5(); virtual void p##6(); virtual void p##7();
