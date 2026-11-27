@@ -2997,6 +2997,7 @@
 0x10054cb0 func   ?sub_10054cb0@@YAXXZ sub_10054cb0
 0x10054d10 func   ?ScrollDn@CHudDialog@@QAEXXZ CHudDialog::ScrollDn
 0x10054d80 func   ?ScrollUp@CHudDialog@@QAEXXZ CHudDialog::ScrollUp
+0x10055360 func   ?sub_10055360@CHudDialog@@QAEX_N@Z CHudDialog::sub_10055360
 0x100553f0 func   ?vfunc115@CHudDialog@@UAEXHHH@Z CHudDialog::vfunc115
 0x10055650 func   ?sub_10055650@CHudDialog@@QAEHXZ CHudDialog::sub_10055650
 0x100557c0 func   ?sub_100557c0@UtlMem@@QAEPAV1@HH@Z UtlMem::sub_100557c0

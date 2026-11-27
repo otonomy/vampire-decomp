@@ -29067,6 +29067,22 @@ void sub_10054cb0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10055360 size=0x8b
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+// TARGET: CHudDialog::sub_10055360
+void CHudDialog::sub_10055360(bool b)
+{
+	ScopeTrace st("CHudDialog::SetActive", g_102de300);
+	if (b && !m_b1b4) {
+		sub_10054e20();
+		m_b1b3 = false;
+		m_b190 = true;
+	}
+	m_b1b4 = b;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10055650 size=0x77
 #include "CHudDialog.h"
 #include "ScopeTrace.h"
