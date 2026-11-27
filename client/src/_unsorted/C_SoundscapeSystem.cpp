@@ -128,3 +128,13 @@ void *C_SoundscapeSystem::sub_100c0a90(unsigned int flags)
 	return this;
 }
 // END FUNCTION
+
+// FUNCTION: 0x100c1030 size=0x2c
+#include "engineclient.h"
+#include "C_SoundscapeSystem.h"
+void C_SoundscapeSystem::vfunc7(int a)
+{
+    sub_100c0f30(a);
+    sub_100c1dd0((float)engine->Time(0));
+}
+// END FUNCTION

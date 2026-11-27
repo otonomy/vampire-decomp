@@ -4896,6 +4896,7 @@
 0x100c0a90 func   ?sub_100c0a90@C_SoundscapeSystem@@QAEPAXI@Z C_SoundscapeSystem::sub_100c0a90
 0x100c0c80 func   ?sub_100c0c80@@YAHXZ sub_100c0c80
 0x100c0c90 func   ?sub_100c0c90@@YAHH@Z sub_100c0c90
+0x100c1030 func   ?vfunc7@C_SoundscapeSystem@@UAEXH@Z C_SoundscapeSystem::vfunc7
 0x100c1310 func   ?sub_100c1310@SndscapeX@@QAEXPAVCKeyValuesX@@ABUSubSoundscapeParamsX@@@Z SndscapeX::sub_100c1310
 0x100c1520 func   ?sub_100c1520@SndscapeX@@QAEXPAVCKeyValuesX@@ABUSubSoundscapeParamsX@@@Z SndscapeX::sub_100c1520
 0x100c18e0 func   ?sub_100c18e0@CUnknown100c18e0@@QAEHHHH@Z CUnknown100c18e0::sub_100c18e0
