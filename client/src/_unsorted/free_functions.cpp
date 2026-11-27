@@ -120601,6 +120601,82 @@ int S1014b200::sub_1014b200(CharStatView_1014b200 *pChar)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1014b3b0 size=0x1c8
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "CVStatList_t.h"
+#include "Tier1.h"
+
+class CUnk10204c20 {
+public:
+    int m_type;
+    int m_stat;
+    int m_unk08;
+    int m_unk0c;
+    int sub_10160db0(int val);
+};
+
+struct CTraitIdListZ {
+    int sub_101580c0(int, int, int);
+};
+
+struct CharStatView {
+    char pad[0x1178];
+    int m_nLists;
+    CVStatList_t **m_pLists;
+    int m_unk1180;
+    CTraitIdListZ *m_pTraits;
+
+    CVStatList_t *Find(int type) {
+        for (int i = 0; i < m_nLists; i++) {
+            if (m_pLists[i]->m_field10 == type)
+                return m_pLists[i];
+        }
+        static CVStatList_t s_default(-1);
+        return &s_default;
+    }
+};
+
+struct S1014b3b0 {
+    char pad[0x10];
+    int m_n10;
+    int m_unk14;
+    int m_nMax;
+    int m_nCount;
+    CUnk10204c20 *m_pEntries;
+    int sub_1014b3b0(CharStatView *pEnt);
+};
+
+// TARGET: S1014b3b0::sub_1014b3b0
+int S1014b3b0::sub_1014b3b0(CharStatView *pEnt)
+{
+    int nMax = m_nMax;
+    int sum; sum = 0;
+    if (pEnt) {
+        for (int i = 0; i < m_nCount; i++) {
+            int nStat; nStat = pcd_stage(m_pEntries[i].m_stat);
+            switch (pcd_stage(m_pEntries[i].m_type)) {
+            case 0: {
+                int r = m_pEntries[i].sub_10160db0(pEnt->Find(0)->sub_1015dbd0(nStat));
+                if (r <= 0 && nStat < 10)
+                    r = 1;
+                sum = sum + r;
+                break;
+            }
+            case 1:
+                sum += m_pEntries[i].sub_10160db0(pEnt->Find(1)->sub_1015dbd0(nStat));
+                break;
+            }
+        }
+    } else {
+        g_101e311c("Invalid Character pointer for: Feats::FeatValue\n");
+    }
+    int v; v = pcd_stage(pEnt->m_pTraits)->sub_101580c0(4, m_n10, sum);
+    if (v > nMax)
+        return nMax;
+    if (v < 0) return 0; return v;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1014b580 size=0x5
 int __stdcall sub_1014b580(int a0)
 {
