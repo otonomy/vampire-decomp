@@ -107,9 +107,9 @@ public:
 	virtual void vfunc80();
 	virtual void vfunc81();
 	virtual void vfunc82();
-	virtual void vfunc83();
-	virtual void vfunc84();
-	virtual void vfunc85();
+	virtual int vfunc83(int);
+	virtual int vfunc84(int);
+	virtual bool vfunc85(int, void *, int);
 	virtual void vfunc86();
 	virtual void *vfunc87();
 	virtual void vfunc88();

@@ -10,6 +10,7 @@ public:
     CDetailObjectSystem();
     void sub_100e0900(struct Buf_100e0900 &buf);
     void sub_100e0bc0(struct Buf_100e0900 &buf);
+    void sub_100e0a40(struct Buf_100e0900 &buf);
     bool sub_100e0c90(int a1, void *pInfo);
     struct Data {
         int m_unk8, m_unkc, m_unk10, m_unk14, m_unk18, m_unk1c, m_unk20, m_unk24;
@@ -23,6 +24,7 @@ public:
     } m_data;
 public:
     virtual void vfunc1();
+    virtual void vfunc2();
     virtual void vfunc3();
     virtual void vfunc4();
     virtual void vfunc5();

@@ -21,6 +21,7 @@ public:
 			Plat_Free(m_pBuffer);
 	}
 
+	CUtlBuffer() {}
 	void sub_1013c8e0(char *pBuffer, int nSize, bool bText);	// frees an owned buffer, then wraps the external one (grow -1), cursors cleared, text flag set from bText
 	void sub_1013c9f0();	// skips the white space at the read cursor of a text buffer (stub 0x1000c35b)
 	void sub_1013ca40(char *pString);	// reads one string: to the terminating null of a binary buffer, or to the next white space of a text buffer
