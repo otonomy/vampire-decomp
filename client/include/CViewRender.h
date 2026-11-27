@@ -77,7 +77,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual bool vfunc39(class C_BaseEntity *pEnt, bool *pbOut);
     virtual bool vfunc40(Vector *pOut1, Vector *pOut2, float *pOut3);
     virtual void vfunc41();
-    virtual void vfunc42();
+    virtual void vfunc42(struct EntView_1019a3f0 *pEnt);
     virtual bool vfunc43();
     // the slots CViewRender adds to its base's vtable: 44-45, vfuncK at slot K
     virtual void vfunc44();
