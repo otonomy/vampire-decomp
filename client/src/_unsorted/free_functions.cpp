@@ -33230,6 +33230,46 @@ void CSignUI::sub_10061830(CKeyValuesX *pData)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10061aa0 size=0x19b
+#include "CSignUI.h"
+#include "CSignTextBlock.h"
+#include "utlvector.h"
+
+extern "C" unsigned int strlen(const char *);
+#pragma intrinsic(strlen)
+extern "C" __declspec(dllimport) char *Q_strncpy(char *, const char *, int);
+
+struct CSignTextBlockData_10061aa0
+{
+	char pad[0x128];
+	char *m_pszText;	// 0x128
+	char pad2[0x138 - 0x12c];
+	int m_nXPos;	// 0x138
+	int m_nYPos;	// 0x13c
+};
+
+// TARGET: CSignUI::sub_10061aa0
+void CSignUI::sub_10061aa0(int index, const char *text, int n)
+{
+	if (!text || !strlen(text))
+		return;
+
+	CUtlVector<CSignTextBlock *> &blocks = *(CUtlVector<CSignTextBlock *> *)&m_vecB;
+	void *pMem = vgui2::Panel::operator new(0x148);
+	CSignTextBlock *pBlock = pMem ? ((CSignTextBlock *)pMem)->sub_10060420(blocks[index]) : 0;
+	pBlock->vfunc33(blocks[index]->vfunc31());
+	pBlock->sub_101a9810(blocks[index]->vfunc18());
+
+	CSignTextBlockData_10061aa0 *pInfo = (CSignTextBlockData_10061aa0 *)pBlock;
+	pInfo->m_pszText = new char[strlen(text) + 2];
+	Q_strncpy(pInfo->m_pszText, text, strlen(text) + 1);
+	pInfo->m_nXPos += n;
+	pBlock->sub_101a9890(pInfo->m_nXPos, pInfo->m_nYPos);
+
+	blocks.AddToTail(pBlock);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10061c40 size=0x78
 #include "CKeyValuesX.h"
 
