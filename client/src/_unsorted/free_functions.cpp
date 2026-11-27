@@ -86740,6 +86740,25 @@ bool sub_101111f0(const unsigned short *a, const unsigned short *b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10111210 size=0x108
+#include "CUtlRBTree16.h"
+unsigned short CUtlRBTree16::sub_10111210(const void *search)
+{
+	const CUtlRBTree16At<0x104dff2c> *tree = (const CUtlRBTree16At<0x104dff2c> *)this;
+	unsigned short current = m_Root;
+	while (current != InvalidIndex())
+	{
+		if (m_LessFunc(search, m_pElements[current].m_Data))
+			current = tree->Links(current).m_Left;
+		else if (m_LessFunc(m_pElements[current].m_Data, search))
+			current = tree->Links(current).m_Right;
+		else
+			break;
+	}
+	return current;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10111320 size=0x2f
 struct Elem_10111320 { unsigned short m_id; unsigned short m_next; int m_rest[4]; };
 struct List_10111320 {
