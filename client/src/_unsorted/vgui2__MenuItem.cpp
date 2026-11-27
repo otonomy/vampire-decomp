@@ -23,6 +23,20 @@ vgui2::MenuItem *pcd_emit_101c6c50(const vgui2::MenuItem &other) { return new vg
 // TARGET: ??_GMenuItem@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101c6c70 size=0x33
+#include "vgui2__MenuItem.h"
+struct IObjF8 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual ~IObjF8(); };
+vgui2::MenuItem::~MenuItem()
+{
+	vgui2::Panel *a = *(vgui2::Panel **)((char *)this + 0xf0);
+	if (a)
+		delete a;
+	IObjF8 *b = *(IObjF8 **)((char *)this + 0xf8);
+	if (b)
+		delete b;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c6cb0 size=0x122
 #include "vgui2__MenuItem.h"
 #include "MenuItemCheckImage.h"
