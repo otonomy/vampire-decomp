@@ -9812,6 +9812,7 @@
 0x101a3eb0 func   ?sub_101a3eb0@@YA_NPAUSKeyValues@@PADPBD@Z sub_101a3eb0
 0x101a4770 func   ?sub_101a4770@@YAPAXG@Z sub_101a4770
 0x101a48b0 func   ?sub_101a48b0@@YADPAXPBD0@Z sub_101a48b0
+0x101a55c0 func   ?sub_101a55c0@@YAGPBD@Z sub_101a55c0
 0x101a5760 func   ??0S101a5760@@QAE@XZ S101a5760::S101a5760
 0x101a5790 func   ?sub_101a5790@@YAPAXH@Z sub_101a5790
 0x101a58a0 func   ?sub_101a58a0@CUnknown101a58a0@@QAEPAXXZ CUnknown101a58a0::sub_101a58a0

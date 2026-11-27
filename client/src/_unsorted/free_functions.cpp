@@ -155153,6 +155153,70 @@ char sub_101a48b0(void *fs, const char *name, void *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a55c0 size=0x19e
+#include "S101a5760.h"
+#include "CUtlRBTreeBig.h"
+#include "CUnknown1024b370.h"
+#include "CValRecord.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+struct Key_101a55c0
+{
+	unsigned short idx;
+	S101a5760 s;
+	char m_tail[0x5f318 - sizeof(S101a5760)];
+	Key_101a55c0() : idx(0xffff) {}
+	~Key_101a55c0()
+	{
+		E101a5760 *p = &s.m_e[3];
+		int n = 3;
+		do { --p; p->d.sub_10158790(); } while (--n);
+	}
+};
+struct Rec_101a55c0
+{
+	char m_pad[0x23a78];
+	E101a5760 m_e[3];
+	char m_tail[0x5f318 - 0x23a78 - 3 * 0xec84];
+	~Rec_101a55c0()
+	{
+		E101a5760 *p = &m_e[3];
+		int n = 3;
+		do { --p; p->d.sub_10158790(); } while (--n);
+	}
+};
+extern CUtlRBTreeBig g_10619938;
+extern CUnknown1024b370 g_10619950;
+void sub_101a6b10(void *dst, void *src);
+
+// TARGET: sub_101a55c0
+unsigned short sub_101a55c0(const char *key)
+{
+	unsigned short r;
+	{
+		Key_101a55c0 k;
+		k.idx = g_10619950.sub_1013d520(key).m_Id;
+		r = g_10619938.sub_101a6780(&k);
+	}
+	if (r != 0xffff)
+		return r;
+	{
+		Rec_101a55c0 rec;
+		memset(&rec, 0, 0x5f318);
+		rec.m_pad[0] = 0;
+		Key_101a55c0 k2;
+		k2.idx = g_10619950.sub_1013d520(key).m_Id;
+		int parent, leftchild;
+		g_10619938.sub_101a6a00(&k2, (unsigned short &)parent, (bool &)leftchild);
+		unsigned short idx = g_10619938.sub_101a6890(parent, leftchild);
+		sub_101a6b10((char *)g_10619938.m_pElements + (idx * 0x5f324) + 8, &k2);
+		*(CValRecord *)((char *)g_10619938.m_pElements + (idx * 0x5f324) + 0xc) = *(CValRecord *)&rec;
+		return idx;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a5790 size=0x110
 #include "CUtlRBTreeBig.h"
 
