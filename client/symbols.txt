@@ -10232,6 +10232,7 @@
 0x101b6c60 func   ?vfunc25@Image@vgui2@@UAEHXZ vgui2::Image::vfunc25
 0x101b6c70 func   ?sub_101b6c70@@YAXXZ sub_101b6c70
 0x101b6c90 func   ?vfunc8@Image@vgui2@@UAEHH@Z vgui2::Image::vfunc8
+0x101b6ca0 func   ??0PropertyDialog@vgui2@@QAE@PAVPanel@1@PBD@Z vgui2::PropertyDialog::PropertyDialog
 0x101b6e10 func   ??_GPropertyDialog@vgui2@@UAEPAXI@Z ??_GPropertyDialog@vgui2@@UAEPAXI@Z
 0x101b6e30 func   ??1PropertyDialog@vgui2@@UAE@XZ vgui2::PropertyDialog::~PropertyDialog
 0x101b6e30 func   ?sub_101b6e30@CUnknown101b6e30@@QAEHXZ CUnknown101b6e30::sub_101b6e30
