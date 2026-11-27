@@ -7157,6 +7157,7 @@
 0x1012f5c0 func   ?sub_1012f5c0@CSoundEmitterSystemBase@@QAEH_N@Z CSoundEmitterSystemBase::sub_1012f5c0
 0x1012f720 func   ?sub_1012f720@@YGMPBD@Z sub_1012f720
 0x1012f7e0 func   ?sub_1012f7e0@@YAHPBD@Z sub_1012f7e0
+0x1012f880 func   ?sub_1012f880@@YGHH@Z sub_1012f880
 0x1012f8c0 func   ?sub_1012f8c0@@YGPBDM@Z sub_1012f8c0
 0x1012f960 func   ?sub_1012f960@@YGHH@Z sub_1012f960
 0x1012f970 func   ?sub_1012f970@CUnknown1012f970@@QAEPBDH@Z CUnknown1012f970::sub_1012f970

@@ -98480,6 +98480,29 @@ int sub_1012f7e0(const char *pName)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012f880 size=0x3b
+extern "C" __declspec(dllimport) int Q_snprintf(char *pDest, int maxLen, const char *pFormat, ...);
+namespace lifted {
+extern char g_102c22bc;
+extern char g_102c4228;
+extern char g_102c4260;
+extern char g_105e56f0;
+}
+int __stdcall sub_1012f880(int a0)
+{
+    int r0;
+    r0 = (int)&lifted::g_102c4228;
+    do {
+        if ((*(int *)((char *)r0)) == a0) {
+            return *(int *)((char *)r0 + 4);
+        }
+        r0 = r0 + 8;
+    } while (r0 < ((int)&lifted::g_102c4260));
+    Q_snprintf((char *)((int)&lifted::g_105e56f0), 0x20, (const char *)((int)&lifted::g_102c22bc), a0);
+    return (int)&lifted::g_105e56f0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012f8c0 size=0x4a
 struct Entry { float value; const char *text; };
 extern Entry g_102c4260[1];
