@@ -53043,6 +53043,34 @@ void C_BaseEntity_100a1b40::sub_100a1b40(const Ray_t &ray, int hitbox, int decal
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a1d60 size=0x14c
+#include "C_BaseEntity.h"
+#include "Ray_t.h"
+#include "engineclient.h"
+
+// TARGET: C_BaseEntity::sub_100a1d60
+void C_BaseEntity::sub_100a1d60(const Vector &start, const Vector &pos, const Vector &dir, int hitbox, int decal, bool doTrace, CGameTrace &tr, int lod)
+{
+	Ray_t ray;
+	ray.InitInline(start, pos);
+	ray.m_Delta[0] *= 1.1f;
+	ray.m_Delta[1] *= 1.1f;
+	ray.m_Delta[2] *= 1.1f;
+	switch (modelinfo->GetModelType((const void *)(*(int *)((char *)this + 0x40))))
+	{
+	case 1:
+		sub_100a1ce0(ray, dir, decal, doTrace, tr, lod);
+		break;
+	case 3:
+		sub_100a1b40(ray, hitbox, decal, doTrace, tr, lod);
+		break;
+	default:
+		*(float *)((char *)&tr + 0x2c) = 1.0f;
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a1eb0 size=0x10
 namespace lifted {
 int sub_101d270e(int, int);

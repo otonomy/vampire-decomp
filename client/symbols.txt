@@ -4208,6 +4208,7 @@
 0x100a1aa0 func   ?vfunc66@C_BaseEntity@@UAEHXZ C_BaseEntity::vfunc66
 0x100a1b20 func   ?sub_100a1b20@CUnknown100a1b20@@QAE_NXZ CUnknown100a1b20::sub_100a1b20
 0x100a1b40 func   ?sub_100a1b40@C_BaseEntity_100a1b40@@QAEXABURay_t@@HH_NAAUCGameTrace@@H@Z C_BaseEntity_100a1b40::sub_100a1b40
+0x100a1d60 func   ?sub_100a1d60@C_BaseEntity@@QAEXABVVector@@00HH_NAAUCGameTrace@@H@Z C_BaseEntity::sub_100a1d60
 0x100a1eb0 func   ??2C_BaseEntity@@SAPAXI@Z ??2C_BaseEntity@@SAPAXI@Z
 0x100a1eb0 func   ?sub_100a1eb0@@YAHH@Z sub_100a1eb0
 0x100a1ec0 func   ??3C_BaseEntity@@SAXPAX@Z ??3C_BaseEntity@@SAXPAX@Z
