@@ -115491,6 +115491,43 @@ bool BigListV::sub_101428b0(const char *a1, IObjV *root, int idx, const char *na
 }
 // END FUNCTION
 
+// FUNCTION: 0x10142aa0 size=0xaf
+#include "engineclient.h"
+#include <stdio.h>
+struct IObjV { int dummy; };
+struct VBaseV { virtual void f0(); virtual void f1(); };
+struct FileObjV : virtual VBaseV { virtual void g0(); };
+struct NameListV { const char *sub_10141650(int); };
+FileObjV *sub_101545c0(const char *, void *);
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" __declspec(dllimport) void DevMsg(int, const char *, ...);
+extern NameListV g_105e7780;
+
+struct BigListV
+{
+	int m_grow; int m_alloc; int m_size; void **m_data;
+	bool sub_101428b0(const char *a1, IObjV *root, int idx, const char *name);
+	bool sub_10142aa0();
+};
+
+bool BigListV::sub_10142aa0()
+{
+	char buf[260];
+	sprintf(buf, "%s%s.txt", "vdata\\system\\", "CharCreateWizard");
+	FileObjV *f = sub_101545c0(buf, filesystem);
+	if (!f) {
+		Msg("Unable to open data file for: %s\n", buf);
+		return false;
+	}
+	for (int i = 0; i < 10; i++) {
+		if (!sub_101428b0(buf, (IObjV *)f, i, g_105e7780.sub_10141650(i)))
+			DevMsg(1, "ERROR: CharGenWizard: CVPopUpInfoMgr::Load FAILED!\n");
+	}
+	f->f1();
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10142b50 size=0x135
 #include "CVPopUpInfoMgr.h"
 #include "engineclient.h"
