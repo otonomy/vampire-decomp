@@ -155,3 +155,76 @@ bool __fastcall sub_1016a9c0(V_1016a9c0 *self)
 	return self->m_n14060 ? true : false;
 }
 // END FUNCTION
+
+// FUNCTION: 0x1016a9d0 size=0x13b
+#include "CTextMessagePanel.h"
+typedef unsigned short wchar_t_;
+struct IVSurface_1016a9d0 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(int font); virtual void v18(); virtual void v19(int r, int g, int b, int a); virtual void v20(int x, int y); virtual void v21(const wchar_t_ *p, int n); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59(); virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(int font, int ch, int *a, int *b, int *c); };
+struct ILocalize_1016a9d0 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(const char *src, wchar_t_ *dst, int n); };
+IVSurface_1016a9d0 *sub_101ac8d0();
+ILocalize_1016a9d0 *sub_101ac920();
+struct TMItem
+{
+	int m_type;
+	TMItem *m_pNext;
+	int m_x;
+	int m_y;
+	int m_r;
+	int m_g;
+	int m_b;
+	int m_a;
+	char m_text[4];
+	int m_font;
+};
+struct TMView
+{
+	char pad[0x58];
+	int m_font;
+	char pad2[0x14060 - 0x5c];
+	TMItem *m_pItems;
+	void sub_1016a830();
+};
+void CTextMessagePanel::vfunc98()
+{
+	TMView *v = (TMView *)this;
+	TMItem *head = 0;
+	TMItem *p = v->m_pItems;
+	while (p) {
+		TMItem *next = p->m_pNext;
+		p->m_pNext = head;
+		head = p;
+		p = next;
+	}
+	v->m_pItems = head;
+	int x = 0;
+	int y = 0;
+	sub_101ac8d0()->v17(v->m_font);
+	for (TMItem *it = head; it; it = it->m_pNext) {
+		switch (it->m_type) {
+		case 1:
+			x = it->m_x;
+			y = it->m_y;
+			break;
+		case 2:
+			if (v->m_font) {
+				int b, a, c;
+				wchar_t_ wch;
+				sub_101ac8d0()->v64(v->m_font, it->m_text[0], &a, &b, &c);
+				if (it->m_text[0] > 0x20) {
+					sub_101ac8d0()->v19(it->m_r, it->m_g, it->m_b, it->m_a);
+					sub_101ac8d0()->v20(x, y);
+					sub_101ac920()->v7(it->m_text, &wch, 1);
+					sub_101ac8d0()->v21(&wch, 1);
+				}
+				x += a + b + c;
+			}
+			break;
+		case 3:
+			v->m_font = it->m_font;
+			sub_101ac8d0()->v17(v->m_font);
+			break;
+		}
+	}
+	v->sub_1016a830();
+}
+// END FUNCTION

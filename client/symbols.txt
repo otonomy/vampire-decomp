@@ -8757,6 +8757,7 @@
 0x1016a990 func   ?vfunc111@CTextMessagePanel@@UAEHXZ CTextMessagePanel::vfunc111
 0x1016a9a0 func   ?vfunc2@CTextMessagePanel@@UAEXXZ CTextMessagePanel::vfunc2
 0x1016a9c0 func   ?sub_1016a9c0@@YI_NPAUV_1016a9c0@@@Z sub_1016a9c0
+0x1016a9d0 func   ?vfunc98@CTextMessagePanel@@UAEXXZ CTextMessagePanel::vfunc98
 0x1016ab40 func   ?vfunc0@CTextMessage@@UAEHH@Z CTextMessage::vfunc0
 0x1016ab70 func   ?vfunc1@CTextMessage@@UAEXXZ CTextMessage::vfunc1
 0x1016abc0 func   ?vfunc3@CTextMessage@@UAEXHHHHM@Z CTextMessage::vfunc3
