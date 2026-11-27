@@ -2683,6 +2683,7 @@
 0x10041790 func   ?sub_10041790@CUnknown10041790@@QAEHH@Z CUnknown10041790::sub_10041790
 0x100417c0 func   ?DrawCube@C_TestTraceline@@QAEXAAVVector@@PAE@Z C_TestTraceline::DrawCube
 0x100417c0 func   ?sub_100417c0@C_TestTraceline@@QAEXAAVVector@@PAE@Z C_TestTraceline::sub_100417c0
+0x10041b10 func   ?sub_10041b10@CMeshBuilder@@QAEXPAXHH@Z CMeshBuilder::sub_10041b10
 0x10041c90 func   ?sub_10041c90@CMeshBuilder@@QAEX_N0@Z CMeshBuilder::sub_10041c90
 0x10041e00 func   ?sub_10041e00@S10041e00@@QAEXPBM@Z S10041e00::sub_10041e00
 0x10041e30 func   ?DrawModel@C_TestTraceline@@UAEHHH@Z C_TestTraceline::DrawModel

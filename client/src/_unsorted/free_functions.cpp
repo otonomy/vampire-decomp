@@ -25209,6 +25209,97 @@ void C_TestTraceline::sub_100417c0(Vector &center, unsigned char *pColor)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10041b10 size=0x178
+#include "CMeshBuilder.h"
+
+struct IMeshS
+{
+	virtual void LockMesh(int numVerts, int numIndices, void *desc);
+	virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4();
+	virtual void s5(); virtual void s6(); virtual void s7(); virtual void s8(); virtual void s9();
+	virtual void SetPrimitiveType(int type);
+};
+
+struct MBView
+{
+	char m_pad0[0x44];
+	int m44, m48, m4c, m50, m54, m58, m5c, m60, m64, m68;
+	char m_pad1[0x80 - 0x6c];
+	IMeshS *m_pMesh;	// 0x80
+	char m_bGen;	// 0x84
+	char m_pad2[3];
+	int m_nVerts;	// 0x88
+	int m_nIndices;	// 0x8c
+	int m90, m94, m98, m9c, mA0;
+	char mA4;
+	char m_pad3[3];
+	int ma8, mac, mb0, mb4, mb8, mbc, mc0;
+};
+
+// TARGET: CMeshBuilder::sub_10041b10
+void CMeshBuilder::sub_10041b10(void *pMesh, int type, int numPrimitives)
+{
+	MBView *s = (MBView *)this;
+	s->m_pMesh = (IMeshS *)pMesh;
+	s->m_bGen = 0;
+	switch (type)
+	{
+	case 0:
+		s->m_nVerts = numPrimitives;
+		s->m_nIndices = numPrimitives;
+		break;
+	case 1:
+		s->m_nVerts = numPrimitives * 2;
+		s->m_nIndices = numPrimitives * 2;
+		break;
+	case 4:
+		s->m_nVerts = numPrimitives + 1;
+		s->m_nIndices = numPrimitives * 2;
+		break;
+	case 5:
+		s->m_nVerts = numPrimitives;
+		s->m_nIndices = numPrimitives * 2;
+		break;
+	case 2:
+		s->m_nVerts = numPrimitives * 3;
+		s->m_nIndices = numPrimitives * 3;
+		break;
+	case 3:
+		s->m_nVerts = numPrimitives + 2;
+		s->m_nIndices = numPrimitives + 2;
+		break;
+	case 7:
+		s->m_nVerts = numPrimitives * 4;
+		s->m_nIndices = numPrimitives * 6;
+		break;
+	case 6:
+		s->m_nVerts = numPrimitives;
+		s->m_nIndices = numPrimitives * 3 - 6;
+		break;
+	}
+	s->m94 = 0;
+	s->m90 = 0;
+	s->mA4 = 1;
+	s->mA0 = type;
+	if (type == 7 || type == 6)
+		s->m_pMesh->SetPrimitiveType(2);
+	else if (type == 4 || type == 5)
+		s->m_pMesh->SetPrimitiveType(1);
+	else
+		s->m_pMesh->SetPrimitiveType(type);
+	s->m_pMesh->LockMesh(s->m_nVerts, s->m_nIndices, this);
+	s->ma8 = s->m44;
+	s->mac = s->m50;
+	s->mb0 = s->m5c;
+	s->mb4 = s->m60;
+	s->m98 = 0;
+	s->m9c = 0;
+	s->mb8 = s->m64;
+	s->mbc = s->m68;
+	s->mc0 = s->m54;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10041c90 size=0x166
 #include "CMeshBuilder.h"
 
