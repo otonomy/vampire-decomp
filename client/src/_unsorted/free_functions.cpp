@@ -161544,6 +161544,88 @@ void vgui2::KeyValues::sub_101b5ac0(char *buf, int arg)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b5c80 size=0x1db
+extern "C" int isspace(int);
+struct TokFile
+{
+	virtual void v0(); virtual void v1();
+	virtual void Read(void *pOut, int size, int f);
+	virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12();
+	virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+	virtual void v18();
+	virtual bool IsEof(int f);
+};
+extern char g_1067b008[0x200];
+// TARGET: sub_101b5c80
+char *sub_101b5c80(TokFile *fs, int f)
+{
+	char c;
+	unsigned int i = 0;
+	for (;;) {
+		fs->Read(&c, 1, f);
+		if (isspace(c))
+			continue;
+		if (c == '/') {
+			fs->Read(&c, 1, f);
+			if (c == '/') {
+				do {
+					if (c == '\n')
+						break;
+					fs->Read(&c, 1, f);
+				} while (c > 0);
+				continue;
+			}
+			g_1067b008[0] = '/';
+			i = 1;
+		}
+		break;
+	}
+	if (c == '"') {
+		while (1) {
+			fs->Read(&c, 1, f);
+			if (c < 0)
+				break;
+			if (c == '"')
+				goto done;
+			if (c == '\\') {
+				fs->Read(&c, 1, f);
+				switch (c) {
+				case 'n': c = '\n'; break;
+				case '\\': c = '\\'; break;
+				case 't': c = '\t'; break;
+				case '"': c = '"'; break;
+				}
+			}
+			if (i < 0x200)
+				g_1067b008[i++] = c;
+		}
+		goto eof;
+	}
+	if (!fs->IsEof(f)) {
+		do {
+			if (c < 0)
+				goto eof;
+			if (isspace(c))
+				break;
+			if (i < 0x200)
+				g_1067b008[i++] = c;
+			fs->Read(&c, 1, f);
+		} while (!fs->IsEof(f));
+	}
+	if (c < 0) {
+eof:
+		if (i == 0)
+			return 0;
+	}
+done:
+	if (i == 0x200)
+		i = 0x1ff;
+	g_1067b008[i] = 0;
+	return g_1067b008;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b5f60 size=0x2ec
 extern "C" void *__cdecl _alloca(unsigned int);
 extern "C" unsigned int __cdecl strlen(const char *);
