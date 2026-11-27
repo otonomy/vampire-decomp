@@ -7472,6 +7472,7 @@
 0x10140a70 func   ?sub_10140a70@CUnknown101d5bd0@@QAEXXZ CUnknown101d5bd0::sub_10140a70
 0x10140b40 func   ?sub_10140b40@CUnknown101d7380@@QAEXXZ CUnknown101d7380::sub_10140b40
 0x10140cb0 func   ?sub_10140cb0@CUnknown101d7380@@QAE_NPBDPAH@Z CUnknown101d7380::sub_10140cb0
+0x10140d50 func   ?sub_10140d50@CUnknown10140d50@@QAEHH@Z CUnknown10140d50::sub_10140d50
 0x10140db0 func   ?sub_10140db0@CNamedListY@@QAEHPBD@Z CNamedListY::sub_10140db0
 0x10140e00 func   ?sub_10140e00@List@@QAEHPBD@Z List::sub_10140e00
 0x10141210 func   ??0CUnknown10141210@@QAE@H@Z CUnknown10141210::CUnknown10141210

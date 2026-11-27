@@ -105425,6 +105425,31 @@ bool CUnknown101d7380::sub_10140cb0(const char *name, int *pIndex)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10140d50 size=0x4b
+namespace lifted {
+extern char g_10140da0;
+extern char g_105e76d0;
+extern char g_105e7718;
+struct C10140500 { int sub_10140500(int); };
+int sub_101d0df5(int);
+}
+struct CUnknown10140d50 { int sub_10140d50(int); };
+int CUnknown10140d50::sub_10140d50(int a0)
+{
+    if (a0 >= 0) {
+        if (a0 < (*(int *)((char *)this + 4))) {
+            return *(int *)((char *)(*(int *)((char *)this + 8)) + a0 * 4);
+        }
+    }
+    if ((1 & lifted::g_105e76d0) == 0) {
+        lifted::g_105e76d0 = (char)(lifted::g_105e76d0 | 1);
+        ((lifted::C10140500 *)((int)&lifted::g_105e7718))->sub_10140500(-1);
+        lifted::sub_101d0df5((int)&lifted::g_10140da0);
+    }
+    return (int)&lifted::g_105e7718;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10140db0 size=0x4d
 extern "C" int __cdecl _strcmpi(const char *, const char *);
 struct CNamePtr {
