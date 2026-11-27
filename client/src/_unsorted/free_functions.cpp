@@ -55632,6 +55632,36 @@ void sub_100aaf40(HandleOwner *pEnt)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ab050 size=0x13c
+#include "CUtlVector4.h"
+#include "ehandle.h"
+#include "CBaseEntityList.h"
+extern CUtlVector4 g_104a0d64;
+void sub_100aaeb0(IHandleEntity *);
+struct EntV { virtual void v0(); virtual const CBaseHandle &GetRefEHandle(); };
+// TARGET: sub_100ab050
+void sub_100ab050(EntV *pEnt)
+{
+	CBaseHandle h;
+	if (pEnt)
+		h = pEnt->GetRefEHandle();
+	else
+		h = CBaseHandle();
+	while (g_104a0d64.FindEHandle(h) != -1)
+	{
+		int idx = g_104a0d64.FindEHandle(h);
+		if (idx != -1)
+		{
+			int n = g_104a0d64.m_size - idx - 1;
+			if (n > 0)
+				memmove(&g_104a0d64.m_pMemory[idx], &g_104a0d64.m_pMemory[idx + 1], n * 4);
+			g_104a0d64.m_size--;
+		}
+	}
+	sub_100aaeb0((IHandleEntity *)pEnt);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ab190 size=0x46
 #include "ehandle.h"
 extern CBaseHandle *g_104a0d64;

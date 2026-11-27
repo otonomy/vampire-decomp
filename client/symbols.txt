@@ -4440,6 +4440,7 @@
 0x100aaeb0 func   ?sub_100aaeb0@@YAXXZ sub_100aaeb0
 0x100aaf30 func   ?sub_100aaf30@@YAHXZ sub_100aaf30
 0x100aaf40 func   ?sub_100aaf40@@YAXPAUHandleOwner@@@Z sub_100aaf40
+0x100ab050 func   ?sub_100ab050@@YAXPAUEntV@@@Z sub_100ab050
 0x100ab190 func   ?sub_100ab190@@YAPAVIHandleEntity@@H@Z sub_100ab190
 0x100ab1e0 func   ?sub_100ab1e0@@YAPAVCUnknown1007f870@@H@Z sub_100ab1e0
 0x100ab500 func   ?vfunc142@C_BaseViewModel@@UAE_NXZ C_BaseViewModel::vfunc142
