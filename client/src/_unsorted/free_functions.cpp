@@ -83331,6 +83331,23 @@ void CInput::sub_10102800(Vector *v)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101028d0 size=0x6d
+#include "engineclient.h"
+#include "CInput.h"
+float __stdcall sub_101025b0(float);
+// TARGET: CInput::sub_101028d0
+void CInput::sub_101028d0(float frametime)
+{
+    float speed = sub_101025b0(frametime);
+    QAngle viewangles;
+    engine->GetViewAngles(viewangles);
+    sub_101025f0(speed, (Vector &)viewangles);
+    sub_101026b0(speed, viewangles);
+    sub_10102800((Vector *)&viewangles);
+    engine->SetViewAngles(viewangles);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10102940 size=0x10a
 #include "CInput.h"
 struct kbutton_t
