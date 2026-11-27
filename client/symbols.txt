@@ -10932,6 +10932,7 @@
 0x101c77c0 func   ?vfunc86@ComboBoxButton@vgui2@@UAEXXZ vgui2::ComboBoxButton::vfunc86
 0x101c77d0 func   ?vfunc87@ComboBoxButton@vgui2@@UAEXH@Z vgui2::ComboBoxButton::vfunc87
 0x101c7800 func   ?vfunc89@ComboBoxButton@vgui2@@UAEXH@Z vgui2::ComboBoxButton::vfunc89
+0x101c7820 func   ??0ComboBox@vgui2@@QAE@PAVPanel@1@PBDH_N@Z vgui2::ComboBox::ComboBox
 0x101c78f0 func   ??_GComboBox@vgui2@@UAEPAXI@Z ??_GComboBox@vgui2@@UAEPAXI@Z
 0x101c7910 func   ??1ComboBox@vgui2@@UAE@XZ vgui2::ComboBox::~ComboBox
 0x101c7950 func   ?vfunc175@ComboBox@vgui2@@UAEHXZ vgui2::ComboBox::vfunc175
