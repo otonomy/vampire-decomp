@@ -10289,6 +10289,7 @@
 0x101bfa40 func   ?vfunc126@Menu@vgui2@@UAEHH@Z vgui2::Menu::vfunc126
 0x101bfbe0 func   ?sub_101bfbe0@MenuV@@QAEXXZ MenuV::sub_101bfbe0
 0x101bfc60 func   ?sub_101bfc60@Menu@vgui2@@QAEXXZ vgui2::Menu::sub_101bfc60
+0x101bfd10 func   ?sub_101bfd10@Menu@vgui2@@QAEXXZ vgui2::Menu::sub_101bfd10
 0x101bfea0 func   ?vfunc137@Menu@vgui2@@UAEXXZ vgui2::Menu::vfunc137
 0x101bff50 func   ?vfunc136@Menu@vgui2@@UAEXXZ vgui2::Menu::vfunc136
 0x101bff90 func   ?vfunc98@Menu@vgui2@@UAEXXZ vgui2::Menu::vfunc98
