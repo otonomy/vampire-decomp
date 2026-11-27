@@ -9212,6 +9212,7 @@
 0x10189c30 func   ?vfunc12@CGUIClientRenderable@@UAEPADXZ CGUIClientRenderable::vfunc12
 0x10189c40 func   ?vfunc13@CGUIClientRenderable@@UAEPADXZ CGUIClientRenderable::vfunc13
 0x10189f80 func   ?sub_10189f80@@YAXXZ sub_10189f80
+0x1018a020 func   ?sub_1018a020@CUnknown1018a020@@QAE_NPAUCMat3x4@@HHMPAX@Z CUnknown1018a020::sub_1018a020
 0x1018a1f0 func   ?vfunc10@CGUIClientRenderable@@UAEXPAVVector@@PAVQuaternion@@@Z CGUIClientRenderable::vfunc10
 0x1018a6d0 func   ?sub_1018a6d0@@YI_NPAUS_1018a6d0@@HH@Z sub_1018a6d0
 0x1018a6f0 func   ?sub_1018a6f0@CUnknown1018a6f0@@QAEXHD@Z CUnknown1018a6f0::sub_1018a6f0

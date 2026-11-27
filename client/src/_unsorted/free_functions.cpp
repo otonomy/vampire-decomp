@@ -138299,6 +138299,78 @@ void sub_10189f80()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018a020 size=0x10e
+#include <string.h>
+#pragma intrinsic(memcpy)
+
+struct CMat3x4 { float m[12]; };
+struct CBoneHdr { char pad[0xa8]; char sub[0x3c]; int flags; };
+
+struct CObj1018a020
+{
+	virtual void v0();
+	virtual void v1();
+	virtual void v2();
+	virtual void v3();
+	virtual void v4();
+	virtual void v5();
+	virtual void v6();
+	virtual void v7();
+	virtual void v8();
+	virtual bool v9();
+	virtual void v10(void *a, void *b);
+	virtual void v11(void *a, void *b, void *c);
+};
+
+struct CUnknown1018a020
+{
+	virtual void v0();
+	virtual void *v1();
+	virtual int v2();
+	char m_pad0004[0x50 - 4];
+	char *m_p50;
+	int m_p54;
+	int m_n58;
+	int m_nBones;	// 0x5c
+	int m_p60;
+	CBoneHdr *m_p64;
+	bool sub_1018a020(CMat3x4 *pBoneToWorldOut, int nMaxBones, int boneMask, float currentTime, void *arg5);
+};
+
+void sub_101094b0(int, void *, void *);
+void sub_10108430(void *, void *);
+void sub_10107f80(void *, void *, void *);
+extern "C" __declspec(dllimport) void __cdecl Warning(const char *, ...);
+
+bool CUnknown1018a020::sub_1018a020(CMat3x4 *pBoneToWorldOut, int nMaxBones, int boneMask, float currentTime, void *arg5)
+{
+	CObj1018a020 *obj = (CObj1018a020 *)((char *)this - 4);
+	CMat3x4 mat;
+	char b1[0x1068];
+	char b2[0x15e0];
+	if (!obj->v9())
+		return false;
+	sub_101094b0(v2(), v1(), &mat);
+	if (m_p64->flags & 0x10) {
+		sub_10108430(&mat, m_p50);
+	} else {
+		obj->v10(b1, b2);
+		obj->v11(b1, b2, &mat);
+	}
+	if (arg5)
+		sub_10107f80(m_p64->sub, &mat, arg5);
+	if (pBoneToWorldOut) {
+		if (nMaxBones >= m_nBones) {
+			memcpy(pBoneToWorldOut, m_p50, m_nBones * 48);
+		} else {
+			Warning("SetupBones: invalid bone array size (%d - needs %d)\n", nMaxBones, m_nBones);
+			return false;
+		}
+	}
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018a6d0 size=0x15
 struct S_1018a6d0 { char pad[0x18c]; int m_fl; };
 bool __fastcall sub_1018a6d0(S_1018a6d0 *self, int edx, int mask)
