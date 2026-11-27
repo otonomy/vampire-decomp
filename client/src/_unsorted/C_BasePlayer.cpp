@@ -597,6 +597,46 @@ void C_BasePlayer::vfunc156()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a74d0 size=0x166
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+#include "CClientEntityList.h"
+struct VBase1049 { virtual void v0(); virtual bool vfunc1(); int m_unk[10]; int m_2c; };
+extern VBase1049 *g_1049e83c;
+struct CUnknown1009f160 { void sub_1009f160(int, char); };
+C_BaseEntity *sub_100ab1e0(int);
+struct DlightView { int m_flags; float ox, oy, oz; float radius; unsigned char r, g, b, exponent; float die; float decay; float minlight; int key; };
+#define m_pFlashlight (*(DlightView **)((char *)this + 0x1a00))
+// TARGET: C_BasePlayer::vfunc155
+void C_BasePlayer::vfunc155()
+{
+    if (!g_1049e83c->vfunc1() && g_1049e83c->m_2c)
+        sub_100a73a0();
+    if (sub_1009f140(4)) {
+        if (!m_pFlashlight || m_pFlashlight->key != *(int *)((char *)this + 0x44) + 0x20000000) {
+            m_pFlashlight = (DlightView *)effects->CL_AllocDlight(*(int *)((char *)this + 0x44) + 0x20000000);
+            m_pFlashlight->r = m_pFlashlight->g = m_pFlashlight->b = 250;
+            m_pFlashlight->exponent = 8;
+        }
+        Vector &o = *(Vector *)&m_pFlashlight->ox;
+        o = GetAbsOrigin();
+        m_pFlashlight->oz += 16.0f;
+        m_pFlashlight->die = engine->Time(0) + 0.2f;
+    } else if (m_pFlashlight && m_pFlashlight->key == *(int *)((char *)this + 0x44) + 0x20000000) {
+        m_pFlashlight->die = engine->Time(0);
+        m_pFlashlight = 0;
+    }
+    C_BaseEntity *pEnt = cl_entitylist->sub_100d0cf0(render->vfunc39());
+    if (pEnt && pEnt->sub_1009f140(2)) {
+        for (int i = 0; i < 2; i++) {
+            CUnknown1009f160 *p = (CUnknown1009f160 *)sub_100ab1e0(i);
+            if (p)
+                p->sub_1009f160(2, 1);
+        }
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a7640 size=0x60
 #include "C_BasePlayer.h"
 #include "Vector.h"
