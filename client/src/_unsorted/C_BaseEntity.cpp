@@ -784,6 +784,64 @@ int C_BaseEntity::DrawModel(int flags, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a0320 size=0x12a
+#include "engineclient.h"
+#include "C_BaseEntity.h"
+#include "Vector.h"
+#include "QAngle.h"
+extern "C" void *memmove(void *, const void *, unsigned int);
+extern "C" void *memcpy(void *, const void *, unsigned int);
+#pragma intrinsic(memcpy)
+struct HistEntry { float time; Vector origin; QAngle angles; };
+struct Mem1c {
+    HistEntry *m_pMemory;
+    int m_allocationCount;
+    int m_growSize;
+    int m_size;
+    HistEntry *m_pElements;
+    void sub_100a35f0(int num);
+};
+struct VecView : Mem1c {
+    void sub_100a3530(int elem, int num);
+    int AddToHead(const HistEntry &src) {
+        int elem = 0;
+        if (m_size + 1 > m_allocationCount)
+            sub_100a35f0(m_size + 1 - m_allocationCount);
+        m_size++;
+        m_pElements = m_pMemory;
+        sub_100a3530(elem, 1);
+        HistEntry *p = &m_pMemory[elem];
+        if (p)
+            memcpy(p, &src, sizeof(HistEntry));
+        return elem;
+    }
+    void Remove(int elem) {
+        int n = m_size - elem - 1;
+        if (n > 0)
+            memmove(&m_pMemory[elem], &m_pMemory[elem + 1], n * sizeof(HistEntry));
+        m_size--;
+    }
+};
+struct EntView {
+    char pad[0x130];
+    VecView m_hist;
+};
+void C_BaseEntity::vfunc69() {
+    HistEntry e;
+    e.angles = GetAbsAngles();
+    e.origin = GetAbsOrigin();
+    e.time = *(float *)(0x144 + (char *)this);
+    float t0 = engine->Time(0) - render->vfunc42() - 0.10000000149011612f; float cutoff = (float)(t0);
+    EntView *ev = (EntView *)this;
+    ev->m_hist.AddToHead(e);
+    for (int i = ev->m_hist.m_size - 1; i >= 0; i--) {
+        if (ev->m_hist.m_pMemory[i].time > cutoff)
+            break;
+        ev->m_hist.Remove(i);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a06e0 size=0x3
 #include "C_BaseEntity.h"
 bool C_BaseEntity::vfunc67()

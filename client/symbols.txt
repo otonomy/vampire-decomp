@@ -4144,6 +4144,7 @@
 0x100a01e0 func   ?sub_100a01e0@@YAPAUEntityView@@PAUArgView@@@Z sub_100a01e0
 0x100a0240 func   ?PreDataUpdate@C_BaseEntity@@UAEXH@Z C_BaseEntity::PreDataUpdate
 0x100a02e0 func   ?sub_100a02e0@C_BaseEntity@@QAEX_N@Z C_BaseEntity::sub_100a02e0
+0x100a0320 func   ?vfunc69@C_BaseEntity@@UAEXXZ C_BaseEntity::vfunc69
 0x100a0450 func   ?sub_100a0450@C_BaseEntity@@QAEXXZ C_BaseEntity::sub_100a0450
 0x100a0470 func   ?PostDataUpdate@C_BaseEntity@@UAEXH@Z C_BaseEntity::PostDataUpdate
 0x100a06e0 func   ?vfunc67@C_BaseEntity@@UAE_NXZ C_BaseEntity::vfunc67
