@@ -8885,6 +8885,7 @@
 0x10176420 func   ??_GVLabelComboBox@@UAEPAXI@Z ??_GVLabelComboBox@@UAEPAXI@Z
 0x10176440 func   ??1VLabelComboBox@@UAE@XZ VLabelComboBox::~VLabelComboBox
 0x10176440 func   ?sub_10176440@CUnknown10176440@@QAEHXZ CUnknown10176440::sub_10176440
+0x10176450 func   ?vfunc74@VLabelComboBox@@UAEHH@Z VLabelComboBox::vfunc74
 0x101764f0 func   ?sub_101764f0@CUnknown101764f0@@QAEXD@Z CUnknown101764f0::sub_101764f0
 0x101766a0 func   ??_GCharEditCharPanel@@UAEPAXI@Z ??_GCharEditCharPanel@@UAEPAXI@Z
 0x101766c0 func   ??1CharEditCharPanel@@UAE@XZ CharEditCharPanel::~CharEditCharPanel
