@@ -6702,6 +6702,7 @@
 0x10114d80 func   ?sub_10114d80@CUnknown10114d80@@QAEHXZ CUnknown10114d80::sub_10114d80
 0x10114db0 func   ??0CParticleCollision@@QAE@XZ CParticleCollision::CParticleCollision
 0x10114db0 func   ?sub_10114db0@CUnknown10114db0@@QAEPAXXZ CUnknown10114db0::sub_10114db0
+0x10114de0 func   ?vfunc4@CParticleCollision@@UAEXHHHHHHH@Z CParticleCollision::vfunc4
 0x1011527a func   ?sub_1011527a@@YAXXZ sub_1011527a
 0x10115293 func   ?sub_10115293@@YAPAVParticleSphereProxy@@XZ sub_10115293
 0x101152d0 func   ?sub_101152d0@ParticleSphereProxy@@QAEPAV1@XZ ParticleSphereProxy::sub_101152d0
