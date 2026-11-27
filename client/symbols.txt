@@ -10153,6 +10153,7 @@
 0x101af140 func   ?vfunc85@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc85
 0x101af150 func   ?vfunc86@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc86
 0x101af170 func   ?vfunc84@TextEntry@vgui2@@UAEXHH@Z vgui2::TextEntry::vfunc84
+0x101af210 func   ?vfunc87@TextEntry@vgui2@@UAEXH@Z vgui2::TextEntry::vfunc87
 0x101af2f0 func   ?vfunc89@TextEntry@vgui2@@UAEXH@Z vgui2::TextEntry::vfunc89
 0x101af340 func   ?vfunc88@TextEntry@vgui2@@UAEXH@Z vgui2::TextEntry::vfunc88
 0x101af3c0 func   ?vfunc79@TextEntry@vgui2@@UAEXXZ vgui2::TextEntry::vfunc79
