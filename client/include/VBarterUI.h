@@ -16,6 +16,7 @@ public:
 	void sub_1016f4a0();
 	void sub_1016d150();
 	void sub_1016ef40();
+	void sub_1016f1b0(int a);
 	void sub_1016f3a0(const char *pszIcon);
 	void sub_101703e0(int nArg);
 	void sub_10170580();
