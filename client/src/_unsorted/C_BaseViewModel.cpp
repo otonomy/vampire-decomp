@@ -1,6 +1,26 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x1007f600 size=0x9b
+#include "C_BaseViewModel.h"
+void sub_100aaf40(C_BaseViewModel *);
+C_BaseViewModel::C_BaseViewModel()
+{
+	m_unk7f0 = 0;
+	*(int *)((char *)this + 0x400) = (int)this;
+	*(char *)((char *)this + 0x790) = 0;
+	sub_100aaf40(this);
+	*(unsigned char *)((char *)this + 0x53) = 255;
+	*(unsigned char *)((char *)this + 0x52) = 255;
+	*(unsigned char *)((char *)this + 0x51) = 255;
+	*(unsigned char *)((char *)this + 0x50) = 255;
+	m_unk7e8 = 0;
+	m_unk7ec = 0;
+	m_unk7d4 = 0;
+	m_unk7e4 = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007f6a0 size=0x2d
 #include "CBaseEntityList.h"
 #include "C_BaseViewModel.h"
