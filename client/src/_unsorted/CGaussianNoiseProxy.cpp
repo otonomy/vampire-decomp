@@ -1,6 +1,27 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x1010d750 size=0xbb
+#include "CGaussianNoiseProxy.h"
+#include "CClampProxy.h"
+struct CRnd102b8488 { int m_unk; };
+extern CRnd102b8488 *g_102b8488;
+extern float (CRnd102b8488::*g_101e31e4)(float, float);
+void CGaussianNoiseProxy::vfunc1(int)
+{
+	char *s = (char *)this;
+	float mean = ((CClampProxy::CInput *)(s + 0xc))->sub_100e3270();
+	float sigma = ((CClampProxy::CInput *)(s + 0x18))->sub_100e3270();
+	float v = (g_102b8488->*g_101e31e4)(mean, sigma);
+	float hi = ((CClampProxy::CInput *)(s + 0x30))->sub_100e3270();
+	float lo = ((CClampProxy::CInput *)(s + 0x24))->sub_100e3270();
+	if (lo > hi) { float t = lo; lo = hi; hi = t; }
+	if (v < lo) v = lo;
+	else if (v > hi) v = hi;
+	sub_100e33c0(v);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010d870 size=0x1e
 #include "CGaussianNoiseProxy.h"
 
