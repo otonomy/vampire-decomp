@@ -286,6 +286,91 @@ void C_BaseAnimating::vfunc124(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10090d30 size=0x148
+#include "C_BaseAnimating.h"
+#include "CGlobalVarsBase.h"
+#include <string.h>
+extern "C" __declspec(dllimport) void Msg(const char *pMsg, ...);
+#pragma intrinsic(memset)
+
+struct matrix3x4_view { float m[12]; };
+
+void sub_10108450(const matrix3x4_view *pIn, matrix3x4_view *pOut);
+void sub_10108a50(const matrix3x4_view *pIn1, const matrix3x4_view *pIn2, matrix3x4_view *pOut);
+void sub_10107e40(const matrix3x4_view *pMatrix, float *pQuat, float *pPos);
+
+struct BoneAccessor_10090d30
+{
+	int m_unk0;
+	matrix3x4_view *m_pBones;
+};
+
+struct RagdollInfo_10090d30
+{
+	bool m_bActive;
+	float m_flSaveTime;
+	int m_nNumBones;
+	float m_rgBonePos[(0x1074 - 0xc) / 4];
+	float m_rgBoneQuaternion[(0x2654 - 0x1074) / 4];
+};
+
+struct BoneRec_10090d30
+{
+	char m_pad0[4];
+	int m_parent;
+	char m_pad8[0xa0 - 8];
+};
+
+struct StudioHdrView_10090d30
+{
+	char m_pad[0xf4];
+	int m_nBoneIndex;
+	BoneRec_10090d30 *pBone(int i) { return (BoneRec_10090d30 *)((char *)this + m_nBoneIndex) + i; }
+};
+
+#define RAGDOLL (*(RagdollInfo_10090d30 **)((char *)this + 0x6d8))
+
+// TARGET: C_BaseAnimating::vfunc134
+void C_BaseAnimating::vfunc134(int numbones, const matrix3x4_t &cameraTransform, void *pBoneAccessor)
+{
+	BoneAccessor_10090d30 *pBoneToWorld = (BoneAccessor_10090d30 *)pBoneAccessor;
+	StudioHdrView_10090d30 *hdr = (StudioHdrView_10090d30 *)sub_1008f900(-1);
+	if (!hdr)
+		return;
+
+	if (!RAGDOLL)
+	{
+		RAGDOLL = new RagdollInfo_10090d30;
+		if (!RAGDOLL)
+		{
+			Msg("Memory allocation of RagdollInfo_t failed!\n");
+			return;
+		}
+		memset(RAGDOLL, 0, sizeof(*RAGDOLL));
+	}
+
+	BoneRec_10090d30 *pbones = hdr->pBone(0);
+
+	RAGDOLL->m_bActive = true;
+	RAGDOLL->m_flSaveTime = gpGlobals->curtime;
+	RAGDOLL->m_nNumBones = numbones;
+
+	for (int i = 0; i < numbones; i++)
+	{
+		matrix3x4_view inverted;
+		matrix3x4_view output;
+
+		if (pbones[i].m_parent == -1)
+			sub_10108450((const matrix3x4_view *)&cameraTransform, &inverted);
+		else
+			sub_10108450(&pBoneToWorld->m_pBones[pbones[i].m_parent], &inverted);
+
+		sub_10108a50(&inverted, &pBoneToWorld->m_pBones[i], &output);
+		sub_10107e40(&output, &RAGDOLL->m_rgBoneQuaternion[i * 4], &RAGDOLL->m_rgBonePos[i * 3]);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10090f80 size=0x98
 #include "C_BaseAnimating.h"
 struct SPoseHdr { char pad[0x10]; float m10; };

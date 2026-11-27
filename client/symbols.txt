@@ -3874,6 +3874,7 @@
 0x1008fcd0 func   ?sub_1008fcd0@Anim_1008fcd0@@QAEXHPAUS48_10108430@@@Z Anim_1008fcd0::sub_1008fcd0
 0x10090790 func   ?sub_10090790@@YAHPBDPAUNameStruct@@@Z sub_10090790
 0x10090b60 func   ?vfunc124@C_BaseAnimating@@UAEXHH@Z C_BaseAnimating::vfunc124
+0x10090d30 func   ?vfunc134@C_BaseAnimating@@UAEXHABUmatrix3x4_t@@PAX@Z C_BaseAnimating::vfunc134
 0x10090f80 func   ?vfunc129@C_BaseAnimating@@UAEMHMMM@Z C_BaseAnimating::vfunc129
 0x10091020 func   ?sub_10091020@@YGMMMM_N@Z sub_10091020
 0x100910f0 func   ?vfunc66@C_BaseAnimating@@UAEHXZ C_BaseAnimating::vfunc66
