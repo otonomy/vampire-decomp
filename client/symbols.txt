@@ -2939,6 +2939,7 @@
 0x1004f810 func   ?sub_1004f810@@YAHXZ sub_1004f810
 0x1004f830 func   ?sub_1004f830@@YADXZ sub_1004f830
 0x1004f840 func   ?sub_1004f840@@YAXXZ sub_1004f840
+0x1004f890 func   ?sub_1004f890@@YAXH@Z sub_1004f890
 0x1004fe20 func   ?sub_1004fe20@@YAXXZ sub_1004fe20
 0x1004ff90 func   ?sub_1004ff90@Self_1004ff90@@QAEXPBDHH@Z Self_1004ff90::sub_1004ff90
 0x10050100 func   ?Purge@?$CUtlVector@HV?$CUtlMemory@H@@@@QAEXXZ CUtlVector<int,CUtlMemory<int> >::Purge

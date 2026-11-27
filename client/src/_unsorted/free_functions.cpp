@@ -28761,6 +28761,60 @@ void sub_1004f840()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004f890 size=0x1a5
+#include "CVStatList_t.h"
+#include "C_BasePlayer.h"
+extern unsigned char g_103ede7c;
+extern int g_103ede80;
+extern int g_10284b9c;
+void sub_1004f810();
+void sub_1004f760(int);
+struct PlayerStatView_1004f890
+{
+	char m_pad[0x1178];
+	int m_nLists;
+	CVStatList_t **m_pLists;
+};
+inline CVStatList_t *FindStatList_1004f890(PlayerStatView_1004f890 *p, int type)
+{
+	for (int i = 0; i < p->m_nLists; i++)
+	{
+		if (p->m_pLists[i]->m_field10 == type)
+			return p->m_pLists[i];
+	}
+	static CVStatList_t s_default(-1);
+	return &s_default;
+}
+void sub_1004f890(int type)
+{
+	if (g_103ede7c && type != g_10284b9c)
+		sub_1004f810();
+	PlayerStatView_1004f890 *pl = (PlayerStatView_1004f890 *)C_BasePlayer::GetLocalPlayer();
+	if (pl)
+	{
+		if (g_103ede7c)
+		{
+			if (g_103ede80 < 5)
+			{
+				if (g_103ede80 < FindStatList_1004f890(pl, 2)->sub_1015dbd0(type))
+				{
+					int n = FindStatList_1004f890(pl, 0)->sub_1015dbd0(12);
+					if (n > g_103ede80)
+						g_103ede80++;
+				}
+			}
+		}
+		else
+		{
+			if (FindStatList_1004f890(pl, 2)->sub_1015dbd0(type) > 0)
+				sub_1004f760(type);
+		}
+	}
+	else
+		sub_1004f810();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004fe20 size=0x167
 #include "CHUDSprite.h"
 
