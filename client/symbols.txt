@@ -6561,6 +6561,7 @@
 0x10117340 func   ??_GCParticleMgr@@UAEPAXI@Z ??_GCParticleMgr@@UAEPAXI@Z
 0x10117360 func   ??1CParticleMgr@@UAE@XZ CParticleMgr::~CParticleMgr
 0x101175a0 func   ?sub_101175a0@CUnknown101175a0@@QAEHXZ CUnknown101175a0::sub_101175a0
+0x101175b0 func   ?sub_101175b0@CParticleMgr@@QAE_NPAVCParticleEffectBinding@@PAX@Z CParticleMgr::sub_101175b0
 0x101177a0 func   ?sub_101177a0@CParticleMgr@@QAEXXZ CParticleMgr::sub_101177a0
 0x10117850 func   ?sub_10117850@CUnknown10117850@@QAEXH@Z CUnknown10117850::sub_10117850
 0x10117890 func   ?sub_10117890@ShadowMgrV@@QAEXXZ ShadowMgrV::sub_10117890

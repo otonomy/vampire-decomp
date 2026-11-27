@@ -88337,6 +88337,49 @@ int CUnknown101175a0::sub_101175a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101175b0 size=0xff
+#include "CParticleMgr.h"
+#include "CParticleEffectBinding.h"
+extern void (*g_101e310c)(const char *, ...);
+struct ILeafSysV101175b0 { virtual short v0(void *, int); };
+extern ILeafSysV101175b0 *g_102b9060;
+inline void *operator new(unsigned int, void *p) { return p; }
+bool CParticleMgr::sub_101175b0(CParticleEffectBinding *p, void *pSim)
+{
+	p->sub_10116df0(this, pSim);
+	p->m_unk08 = g_102b9060->v0(p ? (char *)p + 4 : 0, 1);
+	CUtlLinkedList8 &l = m_list;
+	unsigned short elem;
+	unsigned short first = l.m_FirstFree;
+	if (first == 0xffff) {
+		if (l.m_NumAlloced == l.m_allocationCount)
+			l.sub_10117d70(1);
+		elem = l.m_NumAlloced++;
+		if (elem == 0xffff)
+			g_101e310c("CUtlLinkedList overflow!\n");
+	} else {
+		elem = first;
+		l.m_FirstFree = l.m_pMemory[first].m_Next;
+	}
+	l.m_pMemory[elem].m_Previous = elem;
+	l.m_pMemory[elem].m_Next = elem;
+	l.m_pElements = l.m_pMemory;
+	l.sub_10117ba0(elem);
+	CUtlLinkedList8Node &n = l.m_pMemory[elem];
+	n.m_Next = 0xffff;
+	n.m_Previous = l.m_Tail;
+	l.m_Tail = elem;
+	if (n.m_Previous == 0xffff)
+		l.m_Head = elem;
+	else
+		l.m_pMemory[n.m_Previous].m_Next = elem;
+	l.m_ElementCount++;
+	new (&l.m_pMemory[elem].m_Data) CParticleEffectBinding *(p);
+	p->m_unk28 = elem;
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101177a0 size=0x49
 #include "CParticleMgr.h"
 
