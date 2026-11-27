@@ -47,5 +47,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	float m_f4c4;
 	float sub_10001c80(int idx, float f, float d);
 	Vector sub_10001fe0(float dt);
-	Vector sub_10001d40(float dt);	// moves m_v468 toward m_v410, returns the new position
+	Vector sub_10001d40(float dt);
+	void sub_10001fa0(float dt);	// moves m_v468 toward m_v410, returns the new position
 };
