@@ -33615,6 +33615,49 @@ void CTargeted::sub_10063a70()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10064700 size=0x1b6
+#include "CHUDSprite.h"
+#include <math.h>
+
+struct TimeObj103eefac
+{
+    virtual void v0();
+    virtual bool v1();
+    int m_pad[9];
+    float m_time;
+};
+extern TimeObj103eefac *g_103eefac;
+extern unsigned int g_1028809c;
+extern unsigned char g_1028809d;
+extern unsigned char g_1028809e;
+extern unsigned char g_1028809f;
+extern const float g_1022b29c;
+int sub_100cd100();
+int sub_100cd0f0();
+
+void __stdcall sub_10064700(CHUDSprite *spr, int a2, float a3)
+{
+    if ( spr )
+    {
+        int wide, tall;
+        spr->getSize(&wide, &tall);
+        wide = (int)(wide * (sub_100cd100() * 0.0009765625));
+        tall = (int)(tall * (sub_100cd0f0() * 0.0013020833333333333));
+        int cx = sub_100cd100() / 2;
+        int cy = sub_100cd0f0() / 2;
+        int radius = (int)(a3 * g_1022b29c);
+        float angle = (g_103eefac->v1() ? 0.0f : g_103eefac->m_time) + ((double)a2 + (double)a2) * 0.7853981633974483;
+        float s, c, r;
+        r = (float)radius;
+        s = sin(angle);
+        c = cos(angle);
+        int x = (int)(cx - (int)(c * 0.0f - r * s) * (sub_100cd100() * 0.0009765625));
+        int y = (int)(cy - (int)(c * r + s * 0.0f) * (sub_100cd0f0() * 0.0013020833333333333));
+        spr->sub_1005b420(x, y, wide, tall, g_1028809c & 0xff, g_1028809d, g_1028809e, g_1028809f, angle);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x100648c0 size=0x99
 #include "CHUDSprite.h"
 int sub_100cd100();
