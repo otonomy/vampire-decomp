@@ -16,6 +16,7 @@ public:
 	int sub_1015dbd0(int a);
 	CVStatInfo_t *sub_1015e030(int stat);
 	int sub_1015d5b0(int stat);
+	int sub_1015dac0(int stat);
 	void sub_1015d4a0(int stat);
 	void sub_1015ded0(int stat);	// "CVStatList_t::SetMax"
 	void sub_1015d400(int stat, int value);
