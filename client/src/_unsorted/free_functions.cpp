@@ -98654,6 +98654,63 @@ CRestoreSaveEnt *CRestore::sub_1012aec0(int index)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012b150 size=0x12c
+#include "CSave.h"
+
+extern "C" __declspec(dllimport) void Warning(const char *, ...);
+
+#define SV(n) virtual void s##n();
+struct SaveSlotsView
+{
+	SV(0) SV(1) SV(2) SV(3) SV(4) SV(5) SV(6) SV(7) SV(8) SV(9)
+	SV(10) SV(11) SV(12) SV(13) SV(14) SV(15) SV(16) SV(17) SV(18) SV(19)
+	virtual void w20(void *, int, int);
+	SV(21) SV(22) SV(23)
+	virtual void w24(void *, int, int);
+	virtual void w25(void *, int, int);
+	SV(26)
+	virtual void w27(void *, void *, int, int);
+	virtual void w28(void *, int, int);
+	virtual void w29(void *, int, int);
+	virtual void w30(void *, int, int);
+};
+
+#define FIELD_TYPE(f) (*(int *)(f))
+#define FIELD_SIZE(f) (*(short *)((char *)(f) + 0x10))
+
+void CSave::sub_1012b150(const unsigned short *pToken, void *pData, void *pRootMap, typedescription_t *pField)
+{
+	SaveSlotsView *s = (SaveSlotsView *)this;
+	switch (FIELD_TYPE(pField)) {
+	case 14:
+		s->w25(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 15:
+		s->w24(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 19:
+		s->w27(pRootMap, pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 16:
+	case 17:
+		s->w20(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 11:
+		s->w28(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 13:
+		s->w29(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 12:
+		s->w30(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	default:
+		Warning("Bad field type\n");
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012b3d0 size=0x1a
 namespace lifted {
 extern int g_102c3508;

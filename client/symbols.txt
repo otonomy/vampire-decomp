@@ -7138,6 +7138,7 @@
 0x1012afa0 func   ?vfunc29@CRestore@@UAEHPAHHH@Z CRestore::vfunc29
 0x1012afb0 func   ?vfunc30@CRestore@@UAEHPAIHH@Z CRestore::vfunc30
 0x1012b060 func   ?vfunc31@CRestore@@UAEHPAHHH@Z CRestore::vfunc31
+0x1012b150 func   ?sub_1012b150@CSave@@QAEXPBGPAX1PAUtypedescription_t@@@Z CSave::sub_1012b150
 0x1012b280 func   ?vfunc24@CRestore@@UAEHPAMHH@Z CRestore::vfunc24
 0x1012b2e0 func   ?vfunc25@CRestore@@UAEHPAVVector@@HH@Z CRestore::vfunc25
 0x1012b360 func   ?vfunc27@CRestore@@UAEHPAXPAHHH@Z CRestore::vfunc27
