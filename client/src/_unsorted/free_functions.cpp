@@ -27479,6 +27479,35 @@ char CUnknown1004bbc0::sub_1004bbc0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004bc40 size=0x155
+#include "CAmmoCounter.h"
+int sub_100cd100();
+int sub_100cd0f0();
+// TARGET: CAmmoCounter::sub_1004bc40
+void CAmmoCounter::sub_1004bc40()
+{
+    double sx, sy;
+    sx = sub_100cd100() * 0.0009765625;
+    m_n180 = (int)(sx * 128.0);
+    sy = sub_100cd0f0() * 0.0013020833333333333;
+    m_n184 = (int)(sy * 94.0);
+    double w = sub_100cd100();
+    sx = sub_100cd100() * 0.0009765625;
+    m_n178 = (int)(w - sx * 129.0);
+    double h = sub_100cd0f0();
+    sy = sub_100cd0f0() * 0.0013020833333333333;
+    m_n17c = (int)(h - sy * 106.0);
+    sx = sub_100cd100() * 0.0009765625;
+    m_n188 = (int)(sx * 86.0);
+    sy = sub_100cd0f0() * 0.0013020833333333333;
+    m_n18c = (int)(sy * 86.0);
+    sx = sub_100cd100() * 0.0009765625;
+    m_n190 = (int)(sx * 128.0);
+    sy = sub_100cd0f0() * 0.0013020833333333333;
+    m_n194 = (int)(sy * 64.0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004bdd0 size=0xb
 struct CUnknown1004bdd0 { void sub_1004bdd0(); };
 void CUnknown1004bdd0::sub_1004bdd0()
