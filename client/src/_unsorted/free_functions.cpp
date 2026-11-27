@@ -154355,6 +154355,59 @@ int sub_1019e2a0(const Vector &point, Vector &screen)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019e360 size=0x1c8
+#include "CViewRender.h"
+#include "CViewSetup.h"
+#include "engineclient.h"
+#include "ConVar.h"
+#include <math.h>
+extern ConVar *g_10618834;
+extern ConVar *g_1061918c;
+extern float (__cdecl *g_101e31a0)(float, float);
+
+static inline void SinCosX(float radians, float *sine, float *cosine)
+{
+	__asm {
+		fld dword ptr [radians]
+		fsincos
+		mov edx, dword ptr [cosine]
+		mov eax, dword ptr [sine]
+		fstp dword ptr [edx]
+		fstp dword ptr [eax]
+	}
+}
+
+// TARGET: CViewRender::sub_1019e360
+void CViewRender::sub_1019e360(CViewSetup *pView, float *pOut)
+{
+	float *pf = (float *)this;
+	float f1 = g_10618834->vfunc1() ? 0.0f : g_10618834->m_fValue;
+	if (engine->Time(1) > 1.0f / f1 + pf[0x414 / 4])
+	{
+		pf[0x414 / 4] = engine->Time(1);
+		pf[0x418 / 4] = g_101e31a0(0.0f, 6.2831855f);
+		pf[0x41c / 4] = g_101e31a0(0.0f, 1.0f);
+		pf[0x420 / 4] = g_101e31a0(0.0f, 1.0f);
+	}
+	float a = pf[0x418 / 4];
+	float x = pf[0x41c / 4];
+	float y = pf[0x420 / 4];
+	float f2 = g_1061918c->vfunc1() ? 0.0f : g_1061918c->m_fValue;
+	float s, c;
+	float scale = (float)sqrt((float)(pView->width * pView->height) * 3.2552084e-6f) * (f2 * 128.0f);
+	SinCosX(a, &s, &c);
+	pOut[0] = x;
+	pOut[1] = y;
+	float inv = 1.0f / scale;
+	pOut[2] = pView->width * inv * c + x;
+	pOut[3] = pView->width * inv * s + y;
+	pOut[4] = pView->width * inv * c + x - pView->height * inv * s;
+	pOut[5] = (pView->width * s + pView->height * c) * inv + y;
+	pOut[6] = x - pView->height * inv * s;
+	pOut[7] = pView->height * inv * c + y;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019ef20 size=0x179
 #include "CViewRender.h"
 #include "ScopeTrace.h"
