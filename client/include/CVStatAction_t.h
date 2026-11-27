@@ -19,5 +19,6 @@ public:
 	void *m_pBuffer;	// +0x3c
 
 	bool sub_1015a750();
+	char *sub_1015a9a0();	// "CVStatAction_t::ToDetailedStr"
 	void sub_1015a1b0();	// the destructor body (scope trace "CVStatAction_t::~CVStatAction_t")
 };
