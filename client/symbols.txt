@@ -1921,6 +1921,7 @@
 0x10027d20 func   ?sub_10027d20@@YAXABVVector@@00HHH_NM@Z sub_10027d20
 0x10027ec0 func   ?sub_10027ec0@Self_10027ec0@@QAEXXZ Self_10027ec0::sub_10027ec0
 0x10028020 func   ?sub_10028020@CUnknown10028020@@QAEXXZ CUnknown10028020::sub_10028020
+0x100280a0 func   ?sub_100280a0@Flame_100280a0@@QAEXXZ Flame_100280a0::sub_100280a0
 0x10028230 func   ?vfunc118@C_WeaponRanged_FlameThrower@@UAEXH@Z C_WeaponRanged_FlameThrower::vfunc118
 0x10028280 func   ?vfunc17@C_WeaponGravityGun@@UAEHXZ C_WeaponGravityGun::vfunc17
 0x100282c0 func   ?sub_100282c0@@YAHXZ sub_100282c0

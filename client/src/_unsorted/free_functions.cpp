@@ -17197,6 +17197,88 @@ void CUnknown10028020::sub_10028020()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100280a0 size=0x189
+#include "C_EnvParticle.h"
+#include "C_BaseViewModel.h"
+
+struct V3 { float x, y, z; };
+struct YYV { void sub_10027c30(V3 *a, V3 *b); };
+int __cdecl sub_100b47b0(const char *name, int pos, int ang, int owner, int a, int attach, float f1, float f2, float f3, float f4);
+
+struct SubObj_100280a0
+{
+	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6();
+	virtual void vfunc7(int);
+};
+struct CUnknown10094ec0 { int sub_10094ec0(const char *name); };
+struct HV { int sub_1007bab0(); };
+struct V5910 { bool sub_100a5910(); int sub_100a9af0(int); };
+struct CUnknown100a2970 { void sub_100a2970(int); };
+struct VM_100ab990 { void sub_100ab990(void *p); };
+
+struct Flame_100280a0
+{
+	void sub_100280a0();
+};
+
+#define F(type, off) (*(type *)((char *)this + (off)))
+
+// TARGET: Flame_100280a0::sub_100280a0
+void Flame_100280a0::sub_100280a0()
+{
+	if (F(char, 0x1579) != F(char, 0x1578))
+	{
+		const char *name = "Flamethrower_Muzzle_Active_emitter";
+		if (!F(char, 0x1578))
+			name = "Flamethrower_Muzzle_Inactive_emitter";
+		char *p;
+		p = F(char *, 0x166c);
+		if (p)
+		{
+			*(int *)(p + 0x418) = 0;
+			((SubObj_100280a0 *)(F(char *, 0x166c) + 8))->vfunc7(1);
+			F(char *, 0x166c) = 0;
+		}
+		p = F(char *, 0x1668);
+		if (p)
+		{
+			*(int *)(p + 0x418) = 0;
+			((SubObj_100280a0 *)(F(char *, 0x1668) + 8))->vfunc7(1);
+			F(char *, 0x1668) = 0;
+		}
+		V3 pos, ang;
+		((YYV *)this)->sub_10027c30(&pos, &ang);
+		int attach = ((CUnknown10094ec0 *)this)->sub_10094ec0("muzzle");
+		C_EnvParticle *e = (C_EnvParticle *)sub_100b47b0(name, (int)&pos, (int)&ang, (int)this, 6, attach, 1.0f, 1.0f, 1.0f, 1.0f);
+		if (e)
+		{
+			e->sub_100af150();
+			if (F(char, 0x1578))
+				F(C_EnvParticle *, 0x1668) = e;
+			else
+				F(C_EnvParticle *, 0x166c) = e;
+			char *owner = (char *)((HV *)this)->sub_1007bab0();
+			V5910 *vm = owner == 0 ? 0 : *(V5910 **)(owner + 0x3f8);
+			bool b = false;
+			if (vm)
+			{
+				char *ent = (char *)vm->sub_100a9af0(F(int, 0x914));
+				b = vm->sub_100a5910();
+				if (b)
+				{
+					((VM_100ab990 *)ent)->sub_100ab990(e);
+					((CUnknown100a2970 *)e)->sub_100a2970((int)this);
+				}
+				else if (ent)
+					((C_BaseViewModel *)ent)->sub_100ab890(e);
+			}
+			F(char, 0x1580) = b;
+		}
+	}
+	F(char, 0x1579) = F(char, 0x1578);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100282c0 size=0x50
 namespace lifted {
 extern char g_10224544;
