@@ -117889,6 +117889,53 @@ void CUnknown101e0f00::sub_10149ac0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10149b90 size=0x9c
+#include "CUnknown101d5bd0.h"
+struct DataNode {
+	virtual void vf0();
+	virtual void vf1();
+	virtual DataNode *FindKey(const char *name);
+	virtual DataNode *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+struct CLoaderView {
+	void sub_10149450(DataNode *node, CUnknown101d5bd0 *list);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+// TARGET: CUnknown101d5bd0::sub_10149b90
+char CUnknown101d5bd0::sub_10149b90(const char *pszFile)
+{
+	DataFile *file = sub_101545c0(pszFile, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", pszFile);
+		return 0;
+	}
+	DataNode *node = file->FindKey("DisciplineTgt");
+	while (node) {
+		CLoaderView *item = sub_10149890();
+		if (!item) {
+			Msg("Unable to parse data file for: %s.  Memory allocation ERROR!\n", pszFile);
+			return 0;
+		}
+		item->sub_10149450(node, this);
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10149c30 size=0xa7
 #include "CUnknown101e0f00.h"
 #include "IFileSystemFind.h"
