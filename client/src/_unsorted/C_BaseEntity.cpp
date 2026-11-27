@@ -947,6 +947,61 @@ void C_BaseEntity::vfunc69() {
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a0470 size=0x1d1
+#include "C_BaseEntity.h"
+#include "C_BasePlayer.h"
+#include "CCollisionProperty.h"
+#include "ehandle.h"
+#include "engineclient.h"
+#define F(T,off) (*(T*)((char*)this+(off)))
+struct EntV1009fbb0 { void sub_100a06f0(int); };
+struct EntV1007dba0 { bool sub_1007dba0(); void sub_1007db80(C_BasePlayer *); void sub_1009e240(); };
+void sub_100ccf00(QAngle *);
+struct NetPair { float a; float b; };
+// TARGET: ?PostDataUpdate@C_BaseEntity@@UAEXH@Z
+void C_BaseEntity::PostDataUpdate(int updateType)
+{
+	vfunc44((int)&F(Vector, 0x2b4));
+	vfunc46((int)&F(Vector, 0x2c0));
+	if (F(int, 0x44) == 0) {
+		F(int, 0x80) = 1;
+		((CCollisionProperty *)((char *)this + 0x190))->sub_10043230(1);
+		F(int, 0x23c) = 0;
+		F(int, 0x240) = 0;
+		F(int, 0x244) = 0;
+	}
+	sub_100a0450();
+	((EntV1009fbb0 *)this)->sub_100a06f0(F(int, 0x80));
+	QAngle ang = *(QAngle *)&GetAbsAngles();
+	sub_100ccf00(&ang);
+	sub_100a2100(ang);
+	if (vfunc67()) {
+		vfunc70();
+		F(int, 0x70) = F(int, 0x144);
+	}
+	sub_100a2030(&F(Vector, 0x2b4));
+	sub_100a2100(F(QAngle, 0x2c0));
+	if (updateType == 0) {
+		F(float, 0x17c) = enginerandom->RandomFloat(0.0f, 1.0f);
+		F(Vector, 0x54) = GetAbsOrigin();
+		F(QAngle, 0x60) = GetAbsAngles();
+		vfunc68(1);
+	} else {
+		NetPair *p = (NetPair *)((char *)this + 0x6c);
+		if (p->a != p->b)
+			vfunc69();
+	}
+	if (!vfunc86())
+		((EntV1007dba0 *)this)->sub_1009e240();
+	sub_100a0650("PostDataUpdate");
+	C_BasePlayer *pl = C_BasePlayer::GetLocalPlayer();
+	if (((EntV1007dba0 *)this)->sub_1007dba0() && pl) {
+		if (pl == (C_BasePlayer *)((CBaseHandle *)((char *)this + 0x3e4))->Get())
+			((EntV1007dba0 *)this)->sub_1007db80(pl);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a06e0 size=0x3
 #include "C_BaseEntity.h"
 bool C_BaseEntity::vfunc67()
