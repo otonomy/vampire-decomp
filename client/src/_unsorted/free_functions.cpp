@@ -25161,6 +25161,23 @@ void HandleList::sub_10042d00(HandleEntV *pEnt)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10042dd0 size=0x45
+#include "CCollisionHandleList.h"
+#include "CClientEntityList.h"
+#include "CCollisionProperty.h"
+void CCollisionHandleList::sub_10042dd0()
+{
+	for (int i = m_list.m_size - 1; i >= 0; i--)
+	{
+		CBaseHandle h = *m_list.sub_100445d0(i);
+		C_BaseEntity *e = cl_entitylist->sub_100d0dc0(h);
+		if (e)
+			((CCollisionProperty *)((char *)e + 0x190))->sub_100444b0();
+	}
+	m_list.m_size = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10042e80 size=0x131
 #include "RecvTable.h"
 extern RecvTable g_103ecc30;

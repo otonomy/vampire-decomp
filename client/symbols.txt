@@ -2691,6 +2691,7 @@
 0x10042cd0 func   ?vfunc1@CDirtySpatialPartitionEntityList@@UAEXXZ CDirtySpatialPartitionEntityList::vfunc1
 0x10042d00 func   ?sub_10042d00@HandleList@@QAEXPAUHandleEntV@@@Z HandleList::sub_10042d00
 0x10042dc0 func   ?vfunc5@CDirtySpatialPartitionEntityList@@UAEXXZ CDirtySpatialPartitionEntityList::vfunc5
+0x10042dd0 func   ?sub_10042dd0@CCollisionHandleList@@QAEXXZ CCollisionHandleList::sub_10042dd0
 0x10042e80 func   ?ClientClassInit@@YAHPAUignored@DT_CollisionProperty@@@Z ClientClassInit
 0x10042fc0 func   ?sub_10042fc0@@YAHHH@Z sub_10042fc0
 0x10042fe0 func   ?sub_10042fe0@@YAHHH@Z sub_10042fe0
