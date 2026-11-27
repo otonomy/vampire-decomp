@@ -135,6 +135,24 @@ void C_Sprite::OnDataChanged(int updateType)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10136890 size=0xe0
+#include "C_Sprite.h"
+#include "ehandle.h"
+#include "engineclient.h"
+#define F(T,off) (*(T*)((char*)this+(off)))
+struct SprView { int sub_100c3480(void *, const void *, const Vector &, const QAngle &, int frame, void *, int, int, int, int, int, int, int, float); };
+// TARGET: C_Sprite::DrawModel
+int C_Sprite::DrawModel(int flags, int a1)
+{
+	if (ShouldDraw() && F(char, 0xe0) && modelinfo->GetModelType((const void *)F(int, 0x40)) == 2) {
+		float scale = vfunc121_slot();
+		void *pAttached = ((CBaseHandle *)&F(int, 0x428))->Get();
+		return ((SprView *)((char *)this + 0x410))->sub_100c3480((void *)this, (const void *)F(int, 0x40), GetAbsOrigin(), GetAbsAngles(), F(int, 0x434), pAttached, F(int, 0x42c), F(int, 0x48), F(int, 0x4c), vfunc122(), F(unsigned char, 0x50), F(unsigned char, 0x51), F(unsigned char, 0x52), scale);
+	}
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10136970 size=0x2d5
 #include "C_Sprite.h"
 #include "CSpriteHandle.h"
