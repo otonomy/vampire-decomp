@@ -125338,6 +125338,27 @@ string_t sub_1015fc40(const char *psz)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015fc70 size=0x10a
+#include "CVStatList_t.h"
+int sub_1015fc70(void *pObj, bool b)
+{
+	int n = 0;
+	int limit = 0;
+	if (!b)
+		limit = 1;
+	CVStatListSet *set = (CVStatListSet *)((char *)pObj + 0x1164);
+	for (int t = 0; t < 17; t++)
+	{
+		if (set->Find(2)->sub_1015dbd0(t) >= limit)
+		{
+			if (set->Find(2)->sub_1015dbd0(t) < 15)
+				n++;
+		}
+	}
+	return n;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015fec0 size=0x5
 int sub_1015fec0(int a0, int a1)
 {
