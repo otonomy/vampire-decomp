@@ -168,6 +168,53 @@ vgui2::BuildModeDialog *pcd_emit_101c3a40(const vgui2::BuildModeDialog &other) {
 // TARGET: ??_GBuildModeDialog@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101c3a60 size=0x142
+#include "vgui2__BuildModeDialog.h"
+#include "utlvector.h"
+#define G(a) virtual void a##0(); virtual void a##1(); virtual void a##2(); virtual void a##3(); virtual void a##4(); virtual void a##5(); virtual void a##6(); virtual void a##7(); virtual void a##8(); virtual void a##9();
+#define H(a) G(a##0) G(a##1) G(a##2) G(a##3) G(a##4) G(a##5) G(a##6) G(a##7) G(a##8) G(a##9)
+struct IV21_101c3a60 {
+	G(a0) G(a1) virtual void v20(); virtual void v21();
+};
+struct IP112_101c3a60 {
+	H(a) virtual void b0(); virtual void b1(); virtual void b2(); virtual void b3(); virtual void b4(); virtual void b5(); virtual void b6(); virtual void b7(); virtual void b8(); virtual void b9(); virtual void b10(); virtual void b11(); virtual void b12();
+};
+struct S_101c3a60 {
+	CUtlVector<int> m_vec;
+	IV21_101c3a60 *m_p14;
+	vgui2::Panel *m_p18;
+};
+#define m_pList (*(S_101c3a60 **)((char *)this + 0xe8))
+#define m_pF0 (*(vgui2::Panel **)((char *)this + 0xf0))
+#define m_pF4 (*(vgui2::Panel **)((char *)this + 0xf4))
+#define m_pF8 (*(vgui2::Panel **)((char *)this + 0xf8))
+#define m_pFC (*(vgui2::Panel **)((char *)this + 0xfc))
+#define m_p10C (*(vgui2::Panel **)((char *)this + 0x10c))
+#define m_p118 (*(vgui2::Panel **)((char *)this + 0x118))
+#define m_p128 (*(vgui2::Panel **)((char *)this + 0x128))
+#define m_p12C (*(IV21_101c3a60 **)((char *)this + 0x12c))
+#define m_p130 (*(IV21_101c3a60 **)((char *)this + 0x130))
+// TARGET: vgui2::BuildModeDialog::~BuildModeDialog
+vgui2::BuildModeDialog::~BuildModeDialog()
+{
+	m_pList->m_p14->v21();
+	((IP112_101c3a60 *)m_pList->m_p18)->b12();
+	if (m_p12C)
+		m_p12C->v21();
+	if (m_p130)
+		m_p130->v21();
+	delete m_p128;
+	delete m_pFC;
+	delete m_p118;
+	delete m_p10C;
+	delete m_pList->m_p18;
+	delete m_pList;
+	delete m_pF8;
+	delete m_pF0;
+	delete m_pF4;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c4a20 size=0x52
 #include "vgui2__BuildModeDialog.h"
 
