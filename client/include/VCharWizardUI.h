@@ -11,6 +11,7 @@ class VCharWizardUI : public CHudElement, public CBasePanel
 {
 public:
 	virtual ~VCharWizardUI();
+	virtual void vfunc2();
 	void sub_10174b20();
 	void sub_101749c0();
 	int sub_10174c60();
