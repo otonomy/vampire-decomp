@@ -9009,6 +9009,7 @@
 0x1017d640 func   ??_GVRAcceptButton@@UAEPAXI@Z ??_GVRAcceptButton@@UAEPAXI@Z
 0x1017d660 func   ??1VRAcceptButton@@UAE@XZ VRAcceptButton::~VRAcceptButton
 0x1017d660 func   ?sub_1017d660@CUnknown1017d660@@QAEHXZ CUnknown1017d660::sub_1017d660
+0x1017d670 func   ?vfunc74@VRAcceptButton@@UAEHH@Z VRAcceptButton::vfunc74
 0x1017d6a0 func   ?vfunc86@VRAcceptButton@@UAEXXZ VRAcceptButton::vfunc86
 0x1017d6e0 func   ??1CharEditStatsPanel@@UAE@XZ CharEditStatsPanel::~CharEditStatsPanel
 0x1017d730 func   ??_GCharEditStatsPanel@@UAEPAXI@Z ??_GCharEditStatsPanel@@UAEPAXI@Z
