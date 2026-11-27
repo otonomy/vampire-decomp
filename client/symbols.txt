@@ -3998,6 +3998,7 @@
 0x1009c2e0 func   ?sub_1009c2e0@Class1009c2e0@@QAEX_N@Z Class1009c2e0::sub_1009c2e0
 0x1009c350 func   ?sub_1009c350@@YAXXZ sub_1009c350
 0x1009c470 func   ?sub_1009c470@@YAXXZ sub_1009c470
+0x1009c500 func   ?sub_1009c500@@YAXXZ sub_1009c500
 0x1009c5b0 func   ?sub_1009c5b0@@YAXPAVIHandleEntity@@@Z sub_1009c5b0
 0x1009c7e0 func   ?sub_1009c7e0@@YAXXZ sub_1009c7e0
 0x1009c7f0 func   ?sub_1009c7f0@@YAPAVC_BaseCombatWeapon@@HH@Z sub_1009c7f0

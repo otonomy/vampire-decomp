@@ -50483,6 +50483,42 @@ void sub_1009c470()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009c500 size=0xaa
+#include "CUtlVector4.h"
+#include "C_BasePlayer.h"
+#include "C_BaseCombatWeapon.h"
+#include "ehandle.h"
+#include "CBaseEntityList.h"
+#include "Tier1.h"
+
+extern CUtlVector4 g_1049d978;
+struct HV { C_BaseEntity *sub_1007bab0(); };
+struct CPlr16d4 { char pad[0x16d4]; int m_i16d4; };
+void sub_1009c350();
+
+void sub_1009c500()
+{
+	CPlr16d4 *pPlayer = (CPlr16d4 *)C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return;
+	sub_1009c350();
+	void (*pMsg)(const char *, ...) = g_101e3108;
+	pMsg("Printing barter list for entity index %d\n", pPlayer->m_i16d4);
+	for (int i = 0; i < g_1049d978.m_size; i++) {
+		CBaseHandle h;
+		*(int *)&h = g_1049d978.m_pMemory[i];
+		C_BaseCombatWeapon *pEnt = (C_BaseCombatWeapon *)h.Get();
+		if (!pEnt)
+			continue;
+		C_BaseEntity *pOwner = ((HV *)pEnt)->sub_1007bab0();
+		int owner = 0;
+		if (pOwner)
+			owner = pOwner->entindex();
+		pMsg("%d: (%d) (%s)  \n", i, owner, (char *)pEnt->sub_1007b160() + 0x88);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009c5b0 size=0xf2
 #include "utlvector.h"
 #include "ehandle.h"
