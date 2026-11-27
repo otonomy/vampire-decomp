@@ -7213,6 +7213,7 @@
 0x1012bcc0 func   ?vfunc4@?$CUtlVectorDataOps@V?$CUtlVector@USaveRestoreBlockHeader_t@@V?$CUtlMemory@USaveRestoreBlockHeader_t@@@@@@$08@@UAE_NPAUSaveRestoreFieldInfo_t@@PBD@Z CUtlVectorDataOps<CUtlVector<SaveRestoreBlockHeader_t,CUtlMemory<SaveRestoreBlockHeader_t> >,9>::vfunc4
 0x1012bcd0 func   ?vfunc4@CSaveRestoreBlockSet@@QAEXXZ CSaveRestoreBlockSet::vfunc4
 0x1012bd30 func   ?vfunc5@CSaveRestoreBlockSet@@QAEXXZ CSaveRestoreBlockSet::vfunc5
+0x1012bd60 func   ?vfunc6@CSaveRestoreBlockSet@@QAEXPAX@Z CSaveRestoreBlockSet::vfunc6
 0x1012bec0 func   ?vfunc7@CSaveRestoreBlockSet@@QAEXPAXHH@Z CSaveRestoreBlockSet::vfunc7
 0x1012bfb0 func   ?vfunc8@CSaveRestoreBlockSet@@QAEXXZ CSaveRestoreBlockSet::vfunc8
 0x1012c010 func   ?vfunc9@CSaveRestoreBlockSet@@QAEXPAX@Z CSaveRestoreBlockSet::vfunc9
