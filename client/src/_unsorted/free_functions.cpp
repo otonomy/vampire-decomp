@@ -110964,6 +110964,57 @@ bool sub_1013b5e0(CUnknown1006bea0 *r, XImgHdr *h)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013b970 size=0xd5
+#include "CUnknown1006c1c0.h"
+
+#pragma pack(push, 1)
+struct S970 {
+	unsigned char a;
+	char p1[4];
+	unsigned short w5;
+	char p2[5];
+	unsigned short wc;
+	unsigned short we;
+};
+#pragma pack(pop)
+
+struct T970 {
+	void *p;
+	int r;
+	int m;
+};
+
+int sub_1013a4b0(CUnknown1006c1c0 *o, S970 *s);
+char sub_1013b5e0(CUnknown1006c1c0 *o, S970 *s);
+char sub_1013b620(CUnknown1006c1c0 *o, S970 *s, T970 *t);
+int sub_100f4440(int a, int b, int c, int d);
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+
+// TARGET: sub_1013b970
+char sub_1013b970(int arg0, CUnknown1006c1c0 *o)
+{
+	S970 s;
+	sub_1013a4b0(o, &s);
+	if (s.a)
+		o->sub_1013cbe0(1, s.a);
+	if (s.w5 && !sub_1013b5e0(o, &s))
+		return 0;
+	T970 t;
+	t.p = (void *)arg0;
+	t.r = sub_100f4440(s.wc, s.we, 0, 0);
+	t.m = -1;
+	char ok = sub_1013b620(o, &s, &t);
+	if (!ok) {
+		if (t.m != -1 && t.p)
+			Plat_Free(t.p);
+		return 0;
+	}
+	if (t.m != -1 && t.p)
+		Plat_Free(t.p);
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013bab0 size=0x26
 namespace lifted {
 extern char g_10247c0c;
