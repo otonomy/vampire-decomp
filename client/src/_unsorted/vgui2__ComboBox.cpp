@@ -1,6 +1,48 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101c7820 size=0xcd
+#include "vgui2__ComboBox.h"
+struct ComboMenuView : public vgui2::Panel
+{
+	ComboMenuView *sub_101bf420(vgui2::Panel *parent, const char *name);
+};
+struct ComboButtonView : public vgui2::Panel
+{
+	ComboButtonView *sub_101c7660(vgui2::Panel *parent, const char *name, const char *text);
+	virtual void p107(); virtual void p108(); virtual void p109(); virtual void p110(); virtual void p111();
+	virtual void p112(); virtual void p113(); virtual void p114(); virtual void p115(); virtual void p116();
+	virtual void p117(); virtual void p118(); virtual void p119(); virtual void p120(); virtual void p121();
+	virtual void p122(); virtual void p123(); virtual void p124(); virtual void p125(); virtual void p126();
+	virtual void p127(); virtual void p128(); virtual void p129(); virtual void p130(); virtual void p131();
+	virtual void p132(); virtual void p133(); virtual void p134(); virtual void p135(); virtual void p136();
+	virtual void p137(); virtual void p138(); virtual void p139(); virtual void p140(); virtual void p141();
+	virtual void p142(); virtual void p143(); virtual void p144(); virtual void p145(); virtual void p146();
+	virtual void p147(); virtual void p148(); virtual void p149(); virtual void p150(); virtual void p151();
+	virtual void p152(); virtual void p153(); virtual void p154(); virtual void p155(); virtual void p156();
+	virtual void p157(); virtual void p158(); virtual void p159(); virtual void p160(); virtual void p161();
+	virtual void vfunc162(const char *);
+};
+// TARGET: ??0ComboBox@vgui2@@QAE@PAVPanel@1@PBDH_N@Z
+vgui2::ComboBox::ComboBox(vgui2::Panel *parent, const char *name, int numLines, bool editable) : vgui2::TextEntry(parent, name)
+{
+	vfunc134(editable);
+	sub_101afed0(0);
+	ComboMenuView *&menu = *(ComboMenuView **)((char *)this + 0x12c);
+	ComboMenuView *m = (ComboMenuView *)vgui2::Panel::operator new(0x90);
+	menu = m ? m->sub_101bf420(this, 0) : 0;
+	menu->vfunc21(0);
+	menu->vfunc41((int)this);
+	ComboButtonView *&btn = *(ComboButtonView **)((char *)this + 0x130);
+	ComboButtonView *b = (ComboButtonView *)vgui2::Panel::operator new(0xf0);
+	btn = b ? b->sub_101c7660(this, 0, "u") : 0;
+	btn->vfunc162("ButtonClicked");
+	btn->vfunc41((int)this);
+	sub_101c7950(numLines);
+	*(char *)((char *)this + 0x134) = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c78f0 size=0x1e
 #include "vgui2__ComboBox.h"
 
