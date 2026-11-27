@@ -24167,6 +24167,67 @@ int CUnknown1003eab0::sub_1003eab0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1003ead0 size=0x120
+#include "C_TEShowLine.h"
+#include "CSmartPtr.h"
+struct StandardParticle_t
+{
+	char pad0[0xc];
+	Vector m_Pos;
+	Vector m_Velocity;
+	float m_Lifetime;
+	unsigned char m_EffectData;
+	unsigned char pad1;
+	unsigned short m_EffectDataWord;
+	unsigned char m_Color[4];
+};
+struct TEParticleRenderer_t
+{
+	StandardParticle_t *sub_1003e020();
+	void sub_10117fe0();
+	void sub_10117fd0();
+};
+extern CSmartPtr<TEParticleRenderer_t> sub_1003dfb0(const char *pDebugName, const Vector &vOrigin);
+// TARGET: C_TEShowLine::sub_1003ead0
+void C_TEShowLine::sub_1003ead0(int updateType)
+{
+	Vector *pOrigin = (Vector *)((char *)this + 0xc);
+	Vector *pEnd = (Vector *)((char *)this + 0x18);
+	Vector vecDir;
+	vecDir.x = pEnd->x - pOrigin->x;
+	vecDir.y = pEnd->y - pOrigin->y;
+	vecDir.z = pEnd->z - pOrigin->z;
+	float flDist = VectorNormalize(vecDir);
+	vecDir.x *= 3.0f;
+	vecDir.y *= 3.0f;
+	vecDir.z *= 3.0f;
+	CSmartPtr<TEParticleRenderer_t> pRen = sub_1003dfb0("TEShowLine", *pOrigin);
+	if (!pRen)
+		return;
+	while (flDist > 0.0f)
+	{
+		flDist -= 3.0f;
+		StandardParticle_t *p = pRen->sub_1003e020();
+		if (p)
+		{
+			p->m_Velocity.x = 0.0f;
+			p->m_Velocity.y = 0.0f;
+			p->m_Velocity.z = 0.0f;
+			p->m_Lifetime = 30.0f;
+			p->m_Color[0] = 0;
+			p->m_Color[1] = 0xff;
+			p->m_Color[2] = 0xff;
+			p->m_Color[3] = 0xff;
+			p->m_EffectData = 0;
+			p->m_Pos = *pOrigin;
+			pOrigin->x = vecDir.x + pOrigin->x;
+			pOrigin->y = vecDir.y + pOrigin->y;
+			pOrigin->z = vecDir.z + pOrigin->z;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1003ec10 size=0x6
 namespace lifted {
 extern char g_103eb120;

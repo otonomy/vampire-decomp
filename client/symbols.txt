@@ -2563,6 +2563,7 @@
 0x1003ea90 func   ??_GC_TEShowLine@@UAEPAXI@Z ??_GC_TEShowLine@@UAEPAXI@Z
 0x1003eab0 func   ??1C_TEShowLine@@UAE@XZ C_TEShowLine::~C_TEShowLine
 0x1003eab0 func   ?sub_1003eab0@CUnknown1003eab0@@QAEHXZ CUnknown1003eab0::sub_1003eab0
+0x1003ead0 func   ?sub_1003ead0@C_TEShowLine@@QAEXH@Z C_TEShowLine::sub_1003ead0
 0x1003ebf0 func   ?vfunc9@C_TEShowLine@@UAEHXZ C_TEShowLine::vfunc9
 0x1003ec00 func   ?vfunc8@C_TEShowLine@@UAEHXZ C_TEShowLine::vfunc8
 0x1003ec10 func   ?sub_1003ec10@@YAHXZ sub_1003ec10
