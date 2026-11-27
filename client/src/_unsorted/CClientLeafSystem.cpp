@@ -79,6 +79,52 @@ unsigned short CClientLeafSystem::vfunc4(IClientRenderable *pRenderable, int gro
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d1cf0 size=0xe3
+#include "CClientLeafSystem.h"
+
+struct LNode52 { char m_pad[0x30]; unsigned short m_Previous; unsigned short m_Next; };
+struct LList52
+{
+	LNode52 *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	unsigned short m_Head;
+	unsigned short m_Tail;
+	unsigned short m_FirstFree;
+	unsigned short m_ElementCount;
+	unsigned short m_NumAlloced;
+};
+
+// TARGET: CClientLeafSystem::vfunc1
+void CClientLeafSystem::vfunc1(unsigned short elem)
+{
+	LList52 &list = *(LList52 *)((char *)this + 0x20);
+	if (elem < list.m_NumAlloced && (list.m_pMemory[elem].m_Previous != elem || list.m_pMemory[elem].m_Next == elem))
+	{
+		sub_100d28a0(elem);
+		if (elem < list.m_NumAlloced && list.m_pMemory[elem].m_Previous != elem)
+		{
+			LNode52 *p = list.m_pMemory;
+			unsigned short prev = p[elem].m_Previous;
+			if (prev != 0xffff)
+				p[prev].m_Next = p[elem].m_Next;
+			else
+				list.m_Head = p[elem].m_Next;
+			unsigned short next = p[elem].m_Next;
+			if (next != 0xffff)
+				p[next].m_Previous = p[elem].m_Previous;
+			else
+				list.m_Tail = p[elem].m_Previous;
+			p[elem].m_Next = elem;
+			p[elem].m_Previous = elem;
+			list.m_ElementCount--;
+		}
+		list.m_pMemory[elem].m_Next = list.m_FirstFree;
+		list.m_FirstFree = elem;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d1de0 size=0x23
 #include "CClientLeafSystem.h"
 struct LeafRec { int a0, a4, a8, ac; unsigned short w10; short w12; int a14, a18, a1c, a20, a24, a28, a2c, a30; };

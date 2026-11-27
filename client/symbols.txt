@@ -5327,6 +5327,7 @@
 0x100d1c10 func   ?vfunc0@CClientLeafSystem@@QAEXPAVIClientRenderable@@_N@Z CClientLeafSystem::vfunc0
 0x100d1c70 func   ?sub_100d1c70@V1c70@@QAEXID@Z V1c70::sub_100d1c70
 0x100d1c90 func   ?vfunc4@CClientLeafSystem@@QAEGPAVIClientRenderable@@H@Z CClientLeafSystem::vfunc4
+0x100d1cf0 func   ?vfunc1@CClientLeafSystem@@QAEXG@Z CClientLeafSystem::vfunc1
 0x100d1de0 func   ?vfunc5@CClientLeafSystem@@UAE_NG@Z CClientLeafSystem::vfunc5
 0x100d1e10 func   ?sub_100d1e10@LS100d1e10@@QAEGG@Z LS100d1e10::sub_100d1e10
 0x100d1eb0 func   ?vfunc6@CClientLeafSystem@@QAEXHGG@Z CClientLeafSystem::vfunc6
