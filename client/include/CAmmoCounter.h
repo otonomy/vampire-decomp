@@ -25,6 +25,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_unk174; int m_n178; int m_n17c; int m_n180; int m_n184;
 	int m_n188; int m_n18c; int m_n190; int m_n194;
 	void sub_1004c2f0(const char *pszName);
+	void sub_1004c3f0(const char *text, int n);
 	union { int m_n198; float m_fl198; }; char m_b19c; char m_b19d; char m_b19e; char m_pad19f;
 	int m_nFont;
 	struct CAmmoCounterChild { virtual ~CAmmoCounterChild(); } *m_pUnk1a4;
