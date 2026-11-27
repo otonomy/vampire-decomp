@@ -65808,6 +65808,45 @@ void CMem8b_t::sub_100c1f50(int num)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c2270 size=0x1da
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "engineclient.h"
+#include "CGameTrace.h"
+#include "Ray_t.h"
+#include "CTraceFilterSimple.h"
+#include "CUnknown1070b254.h"
+#include "C_BasePlayer.h"
+#include "ConVar.h"
+
+extern ConVar *g_103edd9c;
+extern ConVar *g_104a4334;
+const Vector &sub_10198d30();
+void sub_101659b0(const Vector &start, const Vector &end, int r, int g, int b, bool noDepthTest, float duration);
+
+static inline void UTIL_TraceLine(const Vector &vecAbsStart, const Vector &vecAbsEnd, unsigned int mask, const void *ignore, int collisionGroup, CGameTrace *ptr)
+{
+	Ray_t ray;
+	ray.Init(vecAbsStart, vecAbsEnd);
+	CTraceFilterSimple traceFilter;
+	traceFilter.sub_1004b5c0(ignore, collisionGroup);
+	g_104a582c->vfunc4(&ray, mask, (CTraceFilterNoCharacterCollide *)&traceFilter, ptr);
+	if ((g_103edd9c->vfunc1() ? 0 : g_103edd9c->m_nValue) != 0)
+		sub_101659b0(*(const Vector *)ptr->m_startpos, *(const Vector *)ptr->m_endpos, 255, 0, 0, true, -1.0f);
+}
+
+// TARGET: sub_100c2270
+float sub_100c2270(const Vector &vPos)
+{
+	float flDist = (vPos - sub_10198d30()).Length();
+	if (C_BasePlayer::GetLocalPlayer())
+		flDist = flDist * pcd_stage(C_BasePlayer::GetLocalPlayer()->sub_100aa6d0());
+	unsigned int mask = 0x4091 + ((g_104a4334->vfunc1() ? 0 : g_104a4334->m_nValue) ? 0x42000000 : 0);
+	CGameTrace trace;
+	UTIL_TraceLine(sub_10198d30(), vPos, mask, 0, 0, &trace);
+	if (((1.0 - trace.m_fraction) * flDist) > 8.0) return -1.0f; return flDist;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c2450 size=0x1d
 struct CUnknown100c2450 { void * sub_100c2450(); };
 void * CUnknown100c2450::sub_100c2450()
