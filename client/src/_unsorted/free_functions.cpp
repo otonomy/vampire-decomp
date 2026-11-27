@@ -96784,6 +96784,31 @@ void sub_10121920()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101219a0 size=0x51
+#include "C_BaseEntity.h"
+#include "CClientEntityList.h"
+
+struct HighestView_101219a0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual int GetHighestEntityIndex();
+};
+
+// TARGET: sub_101219a0
+void sub_101219a0()
+{
+	int highest = ((HighestView_101219a0 *)((char *)cl_entitylist + 0x1803c))->GetHighestEntityIndex();
+	for (int i = 0; i <= highest; i++) {
+		C_BaseEntity *e = cl_entitylist->sub_100d0cf0(i);
+		if (!e)
+			continue;
+		if (e->sub_100a2600())
+			continue;
+		e->sub_100a0650("ReinitPredictables");
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10121b00 size=0x111
 #include "C_BaseEntity.h"
 #include "ConVar.h"
