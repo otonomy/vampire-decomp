@@ -10135,6 +10135,7 @@
 0x101aeef0 func   ?vfunc46@TextEntry@vgui2@@UAEHH@Z vgui2::TextEntry::vfunc46
 0x101aef10 func   ?vfunc138@TextEntry@vgui2@@UAE_ND@Z vgui2::TextEntry::vfunc138
 0x101aef20 func   ?vfunc141@TextEntry@vgui2@@UAE_ND@Z vgui2::TextEntry::vfunc141
+0x101aef30 func   ?vfunc140@TextEntry@vgui2@@UAEXD@Z vgui2::TextEntry::vfunc140
 0x101aefc0 func   ?vfunc139@TextEntry@vgui2@@UAE_ND@Z vgui2::TextEntry::vfunc139
 0x101aefd0 func   ?vfunc134@TextEntry@vgui2@@UAE_ND@Z vgui2::TextEntry::vfunc134
 0x101af110 func   ?vfunc135@TextEntry@vgui2@@UAE_NXZ vgui2::TextEntry::vfunc135

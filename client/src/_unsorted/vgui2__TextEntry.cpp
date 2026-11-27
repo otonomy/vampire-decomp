@@ -1059,6 +1059,26 @@ bool vgui2::TextEntry::vfunc141(char a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101aef30 size=0x8f
+#include "vgui2__TextEntry.h"
+struct SBPanel : public vgui2::Panel { SBPanel *sub_101beb90(vgui2::Panel *parent, const char *name, int vertical); };
+void vgui2::TextEntry::vfunc140(char a)
+{
+	SBPanel *&sb = *(SBPanel **)((char *)this + 0xb4);
+	*(char *)((char *)this + 0xb2) = a;
+	if (a) {
+		if (!sb) {
+			void *mem = vgui2::Panel::operator new(0x70);
+			sb = mem ? ((SBPanel *)mem)->sub_101beb90(this, "ScrollBar", 1) : 0;
+			sb->vfunc41((int)this);
+		}
+		sb->vfunc21(1);
+	} else if (sb)
+		sb->vfunc21(0);
+	vfunc57(0, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101aefc0 size=0xd
 #include "vgui2__TextEntry.h"
 bool vgui2::TextEntry::vfunc139(char a0)
