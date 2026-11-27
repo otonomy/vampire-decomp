@@ -144728,6 +144728,70 @@ int CUtlVector72::sub_1018be70(int elem, int num, const Elem72 *pToCopy)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018bf50 size=0x179
+#include "vgui2__Label.h"
+#include <stdio.h>
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+extern char g_102de300[];
+#define XRES(x) ((x) * (sub_100cd100() * 0.0009765625))
+#define YRES(y) ((y) * (sub_100cd0f0() * 0.0013020833333333333))
+
+struct Color_1018bf50 { unsigned int rgba; Color_1018bf50() {} };
+
+struct IScheme_1018bf50
+{
+	virtual void v0() = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void *GetBorder(const char *name) = 0;	// slot 3
+	virtual int GetFont(const char *fontName) = 0;	// slot 4
+	virtual void v5() = 0;
+	virtual Color_1018bf50 GetColor(const char *colorName) = 0;	// slot 6
+};
+
+struct LabelColorView_1018bf50
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void SetBgColor(Color_1018bf50 c);	// slot 50
+	virtual void SetFgColor(Color_1018bf50 c);	// slot 51
+};
+
+struct CUnknown101a9950 { void sub_101a9950(int, int, int, int); };
+
+// TARGET: sub_1018bf50
+void __cdecl sub_1018bf50(vgui2::Panel *parent, vgui2::Label **out, const char *name, int x, int y, int w, int h, const char *borderName)
+{
+	char buf[0x30];
+	IScheme_1018bf50 *pScheme = (IScheme_1018bf50 *)parent->sub_101ac830();
+	int font = pScheme->GetFont(sub_1018c870("PercolatorMedium"));
+	sprintf(buf, "%s%s", name, "Border");
+	void *mem = vgui2::Panel::operator new(0xb8);
+	vgui2::Label *l = mem ? new (mem) vgui2::Label(parent, buf, buf) : 0;
+	*out = l;
+	l->vfunc118(font);
+	l->vfunc108(g_102de300);
+	l->vfunc63(0);
+	((LabelColorView_1018bf50 *)l)->SetFgColor(pScheme->GetColor("TitleText"));
+	((LabelColorView_1018bf50 *)l)->SetBgColor(pScheme->GetColor("GhostControlBG"));
+	l->vfunc111(4);
+	((CUnknown101a9950 *)l)->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
+	void *b = pScheme->GetBorder(borderName);
+	l->vfunc60(b);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018c2a0 size=0x13c
 #include "VHLabel.h"
 extern "C" int sprintf(char *, const char *, ...);
