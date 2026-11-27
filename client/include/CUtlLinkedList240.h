@@ -4,6 +4,7 @@
 struct CUtlLinkedList240Node
 {
 	char m_Data[0xec];
+	void sub_100d8dc0();
 	unsigned short m_Previous;
 	unsigned short m_Next;
 };

@@ -41,6 +41,7 @@ public:
 	void sub_100d7180(int a0, unsigned short h, int *a2);	// provisional, like sub_100d7130 (transplant)
 public:
 	void vfunc1();
+	unsigned short vfunc9(class CBaseHandle entity, int flags);
 	void vfunc3();
 	void vfunc4();
 	void vfunc6();

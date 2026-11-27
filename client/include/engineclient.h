@@ -680,7 +680,7 @@ extern IFileSystem *g_104a580c;
 class IShadowMgr
 {
 public:
-	virtual void vfunc0();
+	virtual unsigned short vfunc0(void *, void *, int, int);
 	virtual void vfunc1();
 	virtual void vfunc2(unsigned short, const Vector &, const Vector &, const VMatrix &, void *, float, float);	// slot 2; seen as ProjectShadow 1
 	virtual int vfunc3(unsigned short);	// slot 3
