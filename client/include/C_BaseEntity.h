@@ -36,6 +36,7 @@ public:
 	void sub_100a1110();
 	int sub_100a2450();
 	void sub_1011bd60(C_BaseEntity *other);
+	void sub_1011c480(C_BaseEntity *other, CGameTrace &trace);
 	void sub_1011c1b0(C_BaseEntity *other, CGameTrace &trace);
 	void sub_1011be90(C_BaseEntity *other);
 	void sub_1011bdf0(C_BaseEntity *other);
