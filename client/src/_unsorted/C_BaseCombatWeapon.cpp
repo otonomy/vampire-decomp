@@ -1208,6 +1208,61 @@ void C_BaseCombatWeapon::vfunc195()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007c960 size=0x10c
+#include "C_BaseCombatWeapon.h"
+
+struct AmmoOwnerView
+{
+	int sub_10097f80(int);
+	void sub_10097f10(int, int);
+	char m_pad[0x3f8];
+	int m_n3f8;
+};
+struct GameRulesView
+{
+	virtual void v0();
+	virtual bool vfunc1();
+	char m_pad[0x2c - 4];
+	int m_n2c;
+};
+extern GameRulesView *g_104772ac;
+struct WpnAmmoView
+{
+	char m_pad[0x7a4];
+	int m_nA[2];
+	int m_nB[2];
+};
+
+// TARGET: C_BaseCombatWeapon::vfunc196
+void C_BaseCombatWeapon::vfunc196()
+{
+	AmmoOwnerView *pOwner = (AmmoOwnerView *)sub_1007bab0();
+	if (pOwner)
+	{
+		if (!*((char *)this + 0x94c))
+		{
+			WpnAmmoView *w = (WpnAmmoView *)this;
+			for (int i = 0; i < 2; i++)
+			{
+				if (vfunc150(i))
+				{
+					int n = (vfunc148(i) - w->m_nB[i] < pOwner->sub_10097f80(w->m_nA[i])) ? vfunc148(i) - w->m_nB[i] : pOwner->sub_10097f80(w->m_nA[i]);
+					w->m_nB[i] += n;
+					if (pOwner->m_n3f8)
+					{
+						if (g_104772ac->vfunc1() || g_104772ac->m_n2c < 1)
+							pOwner->sub_10097f10(n, w->m_nA[i]);
+					}
+				}
+			}
+		}
+		*((char *)this + 0x91c) = 0;
+		*((char *)this + 0x91e) = 0;
+		*((char *)this + 0x91d) = 0;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007ca70 size=0x14
 #include "C_BaseCombatWeapon.h"
 namespace lifted {
