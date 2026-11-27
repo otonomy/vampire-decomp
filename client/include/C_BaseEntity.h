@@ -11,6 +11,7 @@ class C_BaseEntity : public IClientEntity
 public:
 	C_BaseEntity();
 	bool sub_1011c5c0();
+	void sub_1011b9a0();
 	struct TouchLink *sub_1011b440(int type);
 	void sub_100a26e0();
 	void sub_100af040();
@@ -241,7 +242,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual bool vfunc94();
 	virtual void vfunc95();
 	virtual void vfunc96(int, int, int, int);
-	virtual void vfunc97();
+	virtual void vfunc97(int);
 	virtual bool vfunc98();
 	virtual void vfunc99(int);
 	virtual void vfunc100(int a);
