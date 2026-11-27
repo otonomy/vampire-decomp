@@ -9,6 +9,8 @@ class C_BaseAnimating : public C_BaseEntity
 public:
 	C_BaseAnimating();
 	void sub_100966e0();
+	void sub_1009f0a0();
+	void sub_100922c0();
 	void sub_100935a0(const Vector &origin, const QAngle &angles, int event, const char *options);
 	void sub_100941d0(const char *, int, int);
 	void sub_10094250(int, int, int);
