@@ -420,6 +420,64 @@ void vgui2::PropertySheet::vfunc129(const char *pszName, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c8e40 size=0x145
+#include "vgui2__PropertySheet.h"
+
+struct PanelVec_101c8e40
+{
+	int m_Size;
+	int m_unk04;
+	vgui2::Panel **m_pData;
+
+	int Find(vgui2::Panel *p) const
+	{
+		for (int i = 0; i < m_Size; i++)
+			if (m_pData[i] == p)
+				return i;
+		return -1;
+	}
+	vgui2::Panel *Get(int i) const
+	{
+		return (i >= 0 && i < m_Size) ? m_pData[i] : 0;
+	}
+	void Remove(int elem)
+	{
+		if (elem >= 0 && elem < m_Size)
+		{
+			for (int i = elem; i < m_Size - 1; ++i)
+				m_pData[i] = m_pData[i + 1];
+			--m_Size;
+		}
+	}
+	void FindAndRemove(vgui2::Panel *p)
+	{
+		Remove(Find(p));
+	}
+};
+
+#define PAGES ((PanelVec_101c8e40 *)((char *)this + 0x58))
+#define TABS ((PanelVec_101c8e40 *)((char *)this + 0x64))
+#define ACTIVE (*(vgui2::Panel **)((char *)this + 0x70))
+
+// TARGET: vgui2::PropertySheet::vfunc117
+void vgui2::PropertySheet::vfunc117(vgui2::Panel *page)
+{
+	if (PAGES->Find(page) < 0)
+		return;
+	int idx = PAGES->Find(page);
+	if (ACTIVE == page)
+		vfunc127(idx - 1);
+	TABS->Get(idx)->vfunc42(this);
+	vgui2::Panel *tab = TABS->Get(idx);
+	TABS->FindAndRemove(TABS->Get(idx));
+	if (tab)
+		delete tab;
+	PAGES->FindAndRemove(page);
+	page->vfunc71();
+	vfunc101();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c90f0 size=0x295
 #include "vgui2__PropertySheet.h"
 #include "vgui2__PageTab.h"
