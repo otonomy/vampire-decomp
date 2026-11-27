@@ -2335,6 +2335,7 @@
 0x10036a60 func   ?sub_10036a60@CUnknown10036a60@@QAEHXZ CUnknown10036a60::sub_10036a60
 0x10036a80 func   ?sub_10036a80@@YIXPAUEntView@@@Z sub_10036a80
 0x10036b00 func   ?PostDataUpdate@C_TEExplosion@@UAEXH@Z C_TEExplosion::PostDataUpdate
+0x10036bb0 func   ?vfunc1@CExplosionOverlay@@UAE_NXZ CExplosionOverlay::vfunc1
 0x10036cf0 func   ??_GCExplosionOverlay@@UAEPAXI@Z ??_GCExplosionOverlay@@UAEPAXI@Z
 0x10036d10 func   ?vfunc16@C_TEExplosion@@UAE_NHHH@Z C_TEExplosion::vfunc16
 0x10036d20 func   ?vfunc9@C_TEExplosion@@UAEHXZ C_TEExplosion::vfunc9

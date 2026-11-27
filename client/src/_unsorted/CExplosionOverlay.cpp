@@ -1,6 +1,29 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x10036bb0 size=0x124
+#include "CExplosionOverlay.h"
+#include "engineclient.h"
+extern float g_1027f220;
+bool CExplosionOverlay::vfunc1()
+{
+    m_flLifetime += engine->vfunc41(0);
+    static Vector s_vec(0.4f, 0.25f, 0.0f);
+    if (m_flLifetime < g_1027f220)
+    {
+        float ratio = 1.0f - m_flLifetime / g_1027f220;
+        for (int i = 0; i < m_nSprites; i++)
+        {
+            m_Sprites[i].m_vColor = m_vBaseColors[i] * ratio;
+            m_Sprites[i].m_flHorzSize += engine->vfunc41(0) * 8.0;
+            m_Sprites[i].m_flVertSize += engine->vfunc41(0) * 8.0;
+        }
+        return true;
+    }
+    return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10036cf0 size=0x1e
 #include "CExplosionOverlay.h"
 
