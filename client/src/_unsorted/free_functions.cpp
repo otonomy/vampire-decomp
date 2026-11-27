@@ -67495,6 +67495,96 @@ void *YSys::sub_100d15e0(unsigned int flags)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d1630 size=0x138
+#include "UtlMem.h"
+#include "CUtlLinkedList8.h"
+#include "IGameSystem.h"
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+extern char vt_1023450c[];
+extern char vt_102344e4[];
+extern char vt_102344dc[];
+struct CUtlLinkedList12u { void sub_100d35b0(); void sub_100d3400(); };
+struct LLView2 { void sub_100d3330(int); };
+struct CUnknown100d3370 { void sub_100d3370(); };
+struct LL52Node { char pad[0x30]; unsigned short m_Previous; unsigned short m_Next; };
+struct LL52 {
+	LL52Node *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	unsigned short m_Head;
+	unsigned short m_Tail;
+	unsigned short m_FirstFree;
+	unsigned short m_ElementCount;
+	unsigned short m_NumAlloced;
+	void RemoveAll()
+	{
+		unsigned short prev = 0xffff;
+		for (int i = (int)m_NumAlloced - 1; i >= 0; --i) {
+			((LLView2 *)this)->sub_100d3330(i);
+			m_pMemory[(unsigned short)i].m_Next = prev;
+			m_pMemory[(unsigned short)i].m_Previous = i;
+			prev = i;
+		}
+		m_FirstFree = 0;
+		m_Head = 0xffff;
+		m_Tail = 0xffff;
+		m_ElementCount = 0;
+	}
+};
+struct PurgeMem {
+	void *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	void Purge()
+	{
+		if (m_growSize != -1) {
+			if (m_pMemory) {
+				Plat_Free(m_pMemory);
+				m_pMemory = 0;
+			}
+			m_allocationCount = 0;
+		}
+	}
+};
+struct ListPair {
+	CUtlLinkedList8 a;
+	char b[0x1c];
+	void Destruct()
+	{
+		((CUtlLinkedList12u *)b)->sub_100d35b0();
+		((UtlMem *)b)->sub_100d3e00();
+		a.sub_100d3500();
+		((UtlMem *)&a)->sub_100d3cc0();
+	}
+};
+struct LeafSysIGS {
+	void sub_100d1630();
+};
+// this = the IGameSystem part of CClientLeafSystem (object + 4)
+void LeafSysIGS::sub_100d1630()
+{
+	char *p = (char *)this;
+	*(char **)(p - 4) = vt_1023450c;
+	*(char **)p = vt_102344e4;
+	*(char **)(p + 4) = vt_102344dc;
+	((ListPair *)(p + 0x94))->Destruct();
+	((ListPair *)(p + 0x54))->Destruct();
+	((CUtlLinkedList12u *)(p + 0x38))->sub_100d3400();
+	((PurgeMem *)(p + 0x38))->Purge();
+	LL52 *l4 = (LL52 *)(p + 0x1c);
+	if (l4->m_NumAlloced)
+		l4->RemoveAll();
+	((UtlMem *)l4)->sub_100d33d0();
+	UtlMem *m5 = (UtlMem *)(p + 8);
+	((CUnknown100d3370 *)m5)->sub_100d3370();
+	m5->sub_100d3380();
+	((int *)m5)[4] = (int)m5->m_pMemory;
+	((PurgeMem *)m5)->Purge();
+	IGameSystem *gs = (p - 4) ? (IGameSystem *)p : 0;
+	gs->IGameSystem::~IGameSystem();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d1960 size=0x1
 void sub_100d1960()
 {

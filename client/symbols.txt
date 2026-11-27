@@ -5266,6 +5266,7 @@
 0x100d15b0 func   ?sub_100d15b0@CUnknown100b7a90@@QAEPAXI@Z CUnknown100b7a90::sub_100d15b0
 0x100d15e0 func   ?sub_100d15e0@YSys@@QAEPAXI@Z YSys::sub_100d15e0
 0x100d1610 func   ?vfunc8@IGameSystem@@QAEPAV1@I@Z IGameSystem::vfunc8
+0x100d1630 func   ?sub_100d1630@LeafSysIGS@@QAEXXZ LeafSysIGS::sub_100d1630
 0x100d1770 func   ?vfunc15@CClientLeafSystem@@QAE_ND@Z CClientLeafSystem::vfunc15
 0x100d1780 func   ?vfunc16@CClientLeafSystem@@QAE_ND@Z CClientLeafSystem::vfunc16
 0x100d1960 func   ?sub_100d1960@@YAXXZ sub_100d1960
