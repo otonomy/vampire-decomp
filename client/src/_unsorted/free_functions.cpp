@@ -157339,6 +157339,58 @@ void C101be7d0::sub_101be7d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101be9f0 size=0x16c
+#include "vgui2__TextEntry.h"
+
+extern "C" double sqrt(double);
+#pragma intrinsic(sqrt)
+
+extern vgui2::TextEntry *g_1067b410;
+
+struct CTextEntryUser
+{
+	char m_pad[0x15];
+	bool m_b15;
+	void sub_101be9f0();
+};
+
+// TARGET: CTextEntryUser::sub_101be9f0
+void CTextEntryUser::sub_101be9f0()
+{
+	if (m_b15)
+	{
+		g_1067b410->vfunc138(0);
+		g_1067b410->sub_101b1790();
+		return;
+	}
+	int wide, tall;
+	g_1067b410->vfunc138(0);
+	g_1067b410->sub_101b1790();
+	g_1067b410->sub_101a9920(&wide, &tall);
+	int area = wide * tall * 2;
+	double d = sqrt((double)area);
+	g_1067b410->vfunc138(1);
+	g_1067b410->sub_101a98f0((int)d, (int)(d * 0.0));
+	g_1067b410->sub_101b16f0();
+	g_1067b410->sub_101a9920(&wide, &tall);
+	if (wide < 100 && g_1067b410->sub_101b16e0() == 2)
+	{
+		g_1067b410->vfunc138(0);
+		g_1067b410->sub_101b1790();
+	}
+	else
+	{
+		while ((float)wide / tall < 2.0f)
+		{
+			g_1067b410->sub_101a98f0(wide + 1, tall);
+			g_1067b410->sub_101b16f0();
+			g_1067b410->sub_101a9920(&wide, &tall);
+		}
+	}
+	g_1067b410->sub_101a9920(&wide, &tall);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101beb60 size=0xa
 struct CUnknown101beb60 { char sub_101beb60(char); };
 char CUnknown101beb60::sub_101beb60(char a0)
