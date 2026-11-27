@@ -76394,6 +76394,64 @@ void CGameMovementUnit::sub_100eb7a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100eb9d0 size=0x17a
+#include "CBaseEntityList.h"
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "CVProfile.h"
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "CUnknown100290c0.h"
+#include "CTraceFilterSimple.h"
+#include "engineclient.h"
+
+extern CVProfile *g_101e3138;
+extern CTouchNotifier *g_104df784;
+
+struct CUnduckSub { virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual unsigned int g7(); };
+struct CUnduckMove
+{
+	char m_pad0000[0xc];
+	CUnduckSub m_sub;
+};
+
+#define PLAYER ((CMovePlayerView *)m_pPlayer)
+
+// TARGET: CGameMovement::sub_100eb9d0
+CMoveTrace_t CGameMovement::sub_100eb9d0(Vector &push)
+{
+	Ray_t ray;
+	CMoveTrace_t trace;
+	{
+		Vector end;
+		end.x = PLAYER->m_vecOrigin.x + push.x;
+		Vector &origin = PLAYER->m_vecOrigin;
+		end.y = origin.y + push.y;
+		end.z = origin.z + push.z;
+		g_101e3138->EnterScope("CGameMovement::TracePlayerBBox", 0, "Unaccounted", false);
+		ray.sub_100e91e0(origin, end, sub_100e6ef0(), (float *)sub_100e6f20(), (char)((((CUnduckMove *)m_pMove)->m_sub.g7() >> 6) & 1), 0);
+	}
+	{
+		CTraceFilterSimple filter;
+		filter.sub_1004b5c0((const void *)((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0(&PLAYER->m_hRef), 6);
+		enginetrace->vfunc4((int)&ray, 0x201400b, &filter, (int)&trace);
+	}
+	{
+		CVProfile *p = g_101e3138;
+		if (!p->m_fAtRoot || p->m_nPause)
+		{
+			if (p->m_pCurNode->ExitScope())
+				p->m_pCurNode = p->m_pCurNode->m_pParent;
+			p->m_fAtRoot = p->m_pCurNode == p->m_pRoot;
+		}
+	}
+	PLAYER->m_vecOrigin = trace.endpos;
+	if (trace.fraction < 1.0 && !trace.allsolid)
+		g_104df784->vfunc2((CGameTrace *)&trace, &PLAYER->m_vecVelocity);
+	return trace;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ebb50 size=0xa5
 #include "CGameMovement.h"
 
