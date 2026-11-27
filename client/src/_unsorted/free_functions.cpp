@@ -74579,6 +74579,52 @@ int CHud::sub_100f0980(const char *pName)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100f09d0 size=0x109
+#include "CHud.h"
+#include "CHUDSprite.h"
+extern const char *sub_100ccea0(const char *fmt, ...);
+extern "C" char *strchr(const char *, int);
+struct ISprLoader_100f09d0
+{
+	virtual void v0();
+	virtual void v1();
+	virtual int vfunc2(const char *name);
+};
+struct IElem_100f09d0
+{
+	virtual void v0();
+	virtual void v1();
+	virtual void vfunc2();
+};
+struct Ent98_100f09d0
+{
+	char m_pad[0x40];
+	char m_name[0x58];
+};
+extern ISprLoader_100f09d0 *g_102bc800;
+void CHud::sub_100f09d0()
+{
+	int i;
+	Ent98_100f09d0 *p = *(Ent98_100f09d0 **)((char *)this + 0x60);
+	for (i = 0; i < *(int *)((char *)this + 0x68); i++, p++)
+	{
+		if (!strchr(p->m_name, '/'))
+		{
+			m_pSubs[i].m_u[32] = g_102bc800->vfunc2(sub_100ccea0("sprites/%s.vmt", p->m_name));
+			m_pSubs[i].m_pObj = 0;
+		}
+		else
+		{
+			CHudSub *pSub = &m_pSubs[i];
+			pSub->m_pObj = (IDel *)new CHUDSprite(p->m_name, pSub->m_t[0], pSub->m_t[2], pSub->m_t[1], pSub->m_t[3], pSub->m_t[1], pSub->m_t[3]);
+			pSub->m_u[32] = 0;
+		}
+	}
+	for (i = 0; i < m_HudListSize; i++)
+		((IElem_100f09d0 *)m_HudListMem[i])->vfunc2();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100f0cf0 size=0x1a2
 // TARGET: ?sub_100f0cf0@CHud@@QAEXXZ
 extern "C" void free(void *);

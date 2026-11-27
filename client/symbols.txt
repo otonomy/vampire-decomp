@@ -5810,6 +5810,7 @@
 0x100f0900 func   ?sub_100f0900@CUnknown100f0900@@QAEHXZ CUnknown100f0900::sub_100f0900
 0x100f0930 func   ?sub_100f0930@@YIXPAUHudVecOwner@@H@Z sub_100f0930
 0x100f0980 func   ?sub_100f0980@CHud@@QAEHPBD@Z CHud::sub_100f0980
+0x100f09d0 func   ?sub_100f09d0@CHud@@QAEXXZ CHud::sub_100f09d0
 0x100f0cf0 func   ?sub_100f0cf0@CHud@@QAEXXZ CHud::sub_100f0cf0
 0x100f0ea0 func   ?sub_100f0ea0@VHud@@QAEXHHH@Z VHud::sub_100f0ea0
 0x100f0ed0 func   ?FindElement@CHud@@QAEPAVCHudElement@@PBD@Z CHud::FindElement
