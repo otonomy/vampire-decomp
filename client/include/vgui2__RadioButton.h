@@ -10,6 +10,7 @@ class RadioButton : public vgui2::ToggleButton
 {
 public:
 	virtual ~RadioButton();
+	RadioButton *sub_101c62f0(int direction);
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with RadioButton's own function
 	virtual int vfunc74(int);
