@@ -1078,6 +1078,55 @@ float C_BaseAnimating::vfunc136(float flInterval)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10095720 size=0x14d
+#include "C_BaseAnimating.h"
+#include "engineclient.h"
+
+struct AnimView6c
+{
+	char m_pad0000[0x6c];
+	float m_flOldAnimTime;	// 0x6c
+	float m_flAnimTime;	// 0x70
+	char m_pad0074[0x63c - 0x74];
+	int m_nSequence;	// 0x63c
+	float m_flPlaybackRate;	// 0x640
+	char m_pad0644[4];
+	float m_flCycle;	// 0x648
+};
+
+// TARGET: C_BaseAnimating::vfunc137
+float C_BaseAnimating::vfunc137(float flInterval)
+{
+	AnimView6c *v = (AnimView6c *)this;
+	if (!vfunc71())
+		return 0.0f;
+	float curtime = engine->Time(0);
+	if (flInterval == 0.0)
+	{
+		flInterval = curtime - v->m_flAnimTime;
+		if (flInterval <= 0.001)
+		{
+			v->m_flAnimTime = curtime;
+			return 0.0f;
+		}
+	}
+	if (v->m_flAnimTime == 0.0f)
+		flInterval = 0.0f;
+	float cycleRate = vfunc138(v->m_nSequence) * v->m_flPlaybackRate;
+	v->m_flOldAnimTime = v->m_flAnimTime;
+	v->m_flAnimTime = curtime;
+	v->m_flCycle += flInterval * cycleRate;
+	if (v->m_flCycle < 0.0 || v->m_flCycle >= 1.0)
+	{
+		if (sub_100958f0(v->m_nSequence) & 1)
+			v->m_flCycle -= (int)v->m_flCycle;
+		else
+			v->m_flCycle = (v->m_flCycle < 0.0) ? 0.0f : 1.0f;
+	}
+	return flInterval;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10095870 size=0x6
 #include "C_BaseAnimating.h"
 namespace lifted {
