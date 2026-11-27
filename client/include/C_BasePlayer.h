@@ -14,6 +14,7 @@ class C_BasePlayer : public C_BaseVCombatCharacter
 public:
 	static C_BasePlayer *GetLocalPlayer();
 	bool sub_100a5910();
+	float sub_10099ac0(int);
 	void sub_100a1ef0(float t, void **ppNext, void **ppPrev);
 	float sub_100a7990();
 	float sub_100aa6d0();	// GetFOVDistanceAdjustFactor-like
