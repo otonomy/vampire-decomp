@@ -4756,6 +4756,7 @@
 0x100ba8f0 func   ?sub_100ba8f0@CUnknown100ba8f0@@QAEPAXXZ CUnknown100ba8f0::sub_100ba8f0
 0x100ba960 func   ??_GC_Func_Dust@@UAEPAXI@Z ??_GC_Func_Dust@@UAEPAXI@Z
 0x100ba980 func   ??1C_Func_Dust@@UAE@XZ C_Func_Dust::~C_Func_Dust
+0x100ba9c0 func   ?PostDataUpdate@C_Func_Dust@@UAEXH@Z C_Func_Dust::PostDataUpdate
 0x100baba0 func   ?sub_100baba0@@YADXZ sub_100baba0
 0x100bb150 func   ?vfunc9@C_TEDust@@UAEHXZ C_TEDust::vfunc9
 0x100bb160 func   ?vfunc8@C_TEDust@@UAEHXZ C_TEDust::vfunc8
