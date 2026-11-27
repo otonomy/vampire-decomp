@@ -4955,6 +4955,7 @@
 0x100c61b0 func   ?vfunc43@C_TempEntsSystem@@QAEXHHHHHH@Z C_TempEntsSystem::vfunc43
 0x100c6270 func   ?vfunc2@C_TempEntsSystem@@QAEXHHHHH@Z C_TempEntsSystem::vfunc2
 0x100c6420 func   ?vfunc0@C_TempEntsSystem@@QAEPAXD@Z C_TempEntsSystem::vfunc0
+0x100c6440 func   ?sub_100c6440@@YAXPBDHPAX@Z sub_100c6440
 0x100c6580 func   ?sub_100c6580@@YAHXZ sub_100c6580
 0x100c65a0 func   ?vfunc16@C_VampireProjectile_MingXiaoSpit@@UAEHXZ C_VampireProjectile_MingXiaoSpit::vfunc16
 0x100c65b0 func   ?vfunc15@C_VampireProjectile_MingXiaoSpit@@UAEHXZ C_VampireProjectile_MingXiaoSpit::vfunc15

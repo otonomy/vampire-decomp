@@ -63354,6 +63354,52 @@ void * CUnknown100c4eb0::sub_100c4eb0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c6440 size=0x133
+#include "engineclient.h"
+#include "CClientEntityList.h"
+#include "C_BaseEntity.h"
+void sub_10114660(void *pbuf, int iSize);
+int sub_10114690();
+int sub_101146a0();
+float sub_101146d0();
+struct TMParams
+{
+	Vector m_vCenter;
+	Vector m_vNormal;
+	int m_Flags;
+	float m_flRadius;
+	float m_flStrength;
+};
+void sub_100c6440(const char *pszName, int iSize, void *pbuf)
+{
+	TMParams params;
+	params.m_Flags = 0;
+	sub_10114660(pbuf, iSize);
+	unsigned char type = sub_10114690();
+	params.m_vCenter.x = sub_101146d0();
+	params.m_vCenter.y = sub_101146d0();
+	params.m_vCenter.z = sub_101146d0();
+	params.m_flRadius = 1.0f + sub_101146a0() * 0.015243763f;
+	params.m_flStrength = sub_101146d0();
+	params.m_Flags = sub_10114690();
+	if (type == 1 && (params.m_Flags & 1))
+	{
+		params.m_vNormal.x = sub_101146d0();
+		params.m_vNormal.y = sub_101146d0();
+		params.m_vNormal.z = sub_101146d0();
+	}
+	Vector vPosition(0, 0, 0);
+	QAngle vAngles(0, 0, 0);
+	int iModel = 0;
+	C_BaseEntity *ent = cl_entitylist->sub_100d0cf0(iModel);
+	if (ent && type == 0)
+	{
+		effects->DecalShoot(effects->Draw_DecalIndexFromName("decals/tscorch"), iModel, *(int *)((char *)ent + 0x40), vPosition, vAngles, params.m_vCenter, 0, 0);
+	}
+	engine->vfunc89(type, &params);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c6580 size=0x16
 namespace lifted {
 extern char g_100c6440;
