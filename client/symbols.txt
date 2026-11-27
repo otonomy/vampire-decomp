@@ -3000,6 +3000,7 @@
 0x10054670 func   ?sub_10054670@CUnk_10054670@@QAEXH@Z CUnk_10054670::sub_10054670
 0x100547a0 func   ?sub_100547a0@@YA_NPBD@Z sub_100547a0
 0x10054800 func   ?sub_10054800@@YA_NPBD@Z sub_10054800
+0x100549f0 func   ?sub_100549f0@CHudDialog@@QAEXH_N@Z CHudDialog::sub_100549f0
 0x10054b50 func   ?vfunc116@CHudDialog@@UAE_NXZ CHudDialog::vfunc116
 0x10054b60 func   ?sub_10054b60@@YAXXZ sub_10054b60
 0x10054bd0 func   ?sub_10054bd0@CHudDialog@@QAEX_N@Z CHudDialog::sub_10054bd0

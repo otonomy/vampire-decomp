@@ -29261,6 +29261,50 @@ bool sub_10054800(const char *pStr)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100549f0 size=0x15d
+#include "engineclient.h"
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+__declspec(dllimport) char *Q_strncpy(char *pDest, const char *pSrc, int maxLen);
+__declspec(dllimport) int Q_snprintf(char *pDest, int maxLen, const char *pFormat, ...);
+void CHudDialog::sub_100544d0(bool bEnabled)
+{
+    ScopeTrace st("CHudDialog::SetResponsesEnabled", g_102de300);
+    if (m_b1b1 != bEnabled) {
+        m_b1b1 = bEnabled;
+        m_b190 = true;
+    }
+}
+// TARGET: CHudDialog::sub_100549f0
+void CHudDialog::sub_100549f0(int a, bool force)
+{
+    ScopeTrace st("CHudDialog::Pick", g_102de300);
+    char cmd[32];
+    cmd[0] = 0;
+    double now = engine->Time(1);
+    if (!force && m_flLastPick + 0.5f > now)
+        return;
+    m_flLastPick = (float)now;
+    int idx = -2;
+    if (!m_b1b3)
+        idx = a;
+    if (m_b1b3 && idx != -2)
+        return;
+    if (idx < m_nItems) {
+        if (idx >= 0 && idx <= 3) {
+            m_n1bc = idx;
+            Q_strncpy(m_szPrompt, m_szItems[idx], 0x800);
+            m_nPromptFlags = m_iItemFlags[idx];
+            m_nPromptType = m_iItemType[idx];
+        }
+        Q_snprintf(cmd, 0x20, "dialogpick %d", idx);
+        engine->ClientCmd(cmd);
+        sub_100544d0(false);
+        SetDrawLastPickEnabled(true);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x10054b60 size=0x70
 #include "CHudDialog.h"
 #include "ScopeTrace.h"
