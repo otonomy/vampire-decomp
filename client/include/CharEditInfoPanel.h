@@ -23,4 +23,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc123();
 	virtual void vfunc124(int);
 	void sub_1017bb10();
+	void sub_1017c580();
+	void sub_1017bf40();
 };
