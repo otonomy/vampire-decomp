@@ -11,6 +11,18 @@ VBarterFrameLabel *pcd_emit_1016b050(const VBarterFrameLabel &other) { return ne
 // TARGET: ??_GVBarterFrameLabel@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x1016b070 size=0x2b
+#include "VBarterFrameLabel.h"
+struct IObjB8 { virtual ~IObjB8(); };
+VBarterFrameLabel::~VBarterFrameLabel()
+{
+	IObjB8 *p = *(IObjB8 **)((char *)this + 0xb8);
+	if (p)
+		delete p;
+	*(int *)((char *)this + 0xb8) = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1016b0b0 size=0x62
 #include "VBarterFrameLabel.h"
 
