@@ -7641,6 +7641,7 @@
 0x1013f8b0 func   ?sub_1013f8b0@@YAHXZ sub_1013f8b0
 0x1013f8c0 func   ?sub_1013f8c0@CStatDefault3List@@QAEPAUStatDefault3@@XZ CStatDefault3List::sub_1013f8c0
 0x1013f9b0 func   ?sub_1013f9b0@S1006cd00@@QAEXXZ S1006cd00::sub_1013f9b0
+0x1013fa20 func   ?sub_1013fa20@CStatDefault3List@@QAEDPBD@Z CStatDefault3List::sub_1013fa20
 0x1013fac0 func   ?sub_1013fac0@CStatDefault3List@@QAEDPBDH@Z CStatDefault3List::sub_1013fac0
 0x1013fb80 func   ?sub_1013fb80@Loader@@QAEXPBD@Z Loader::sub_1013fb80
 0x1013fc80 func   ?sub_1013fc80@CClanDocLoader@@QAEXXZ CClanDocLoader::sub_1013fc80

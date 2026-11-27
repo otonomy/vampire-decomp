@@ -109949,6 +109949,50 @@ void S1006cd00::sub_1013f9b0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013fa20 size=0x9c
+#include "CStatDefault3List.h"
+struct DataNode {
+	virtual void vf0();
+	virtual void vf1();
+	virtual DataNode *FindKey(const char *name);
+	virtual DataNode *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+// TARGET: CStatDefault3List::sub_1013fa20
+char CStatDefault3List::sub_1013fa20(const char *pszFile)
+{
+	DataFile *file = sub_101545c0(pszFile, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", pszFile);
+		return 0;
+	}
+	DataNode *node = file->FindKey("ClanData");
+	while (node) {
+		StatDefault3 *item = sub_1013f8c0();
+		if (!item) {
+			Msg("Unable to parse data file for: %s.  Memory allocation ERROR!\n", pszFile);
+			return 0;
+		}
+		item->sub_1013e790((VKeyValuesInterface *)node, this);
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013fac0 size=0xbd
 #include "CStatDefault3List.h"
 
