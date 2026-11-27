@@ -2936,6 +2936,7 @@
 0x10050160 func   ??0CFeedBar@@QAE@H@Z CFeedBar::CFeedBar
 0x10050200 func   ??_GCFeedBar@@UAEPAXI@Z ??_GCFeedBar@@UAEPAXI@Z
 0x10050220 func   ??1CFeedBar@@UAE@XZ CFeedBar::~CFeedBar
+0x10050270 func   ?sub_10050270@CFeedBar@@QAEXXZ CFeedBar::sub_10050270
 0x10050500 func   ?vfunc107@CFeedBar@@UAE_NXZ CFeedBar::vfunc107
 0x10050530 func   ?sub_10050530@V0530@@QAEXXZ V0530::sub_10050530
 0x10050550 func   ?vfunc113@CFeedBar@@UAEXXZ CFeedBar::vfunc113

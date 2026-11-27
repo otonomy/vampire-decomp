@@ -28490,6 +28490,44 @@ void CUnknown10050140::sub_10050140()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10050270 size=0x159
+#include "CFeedBar.h"
+int sub_100cd100();
+int sub_100cd0f0();
+#define V4(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3();
+#define V16(p) V4(p##a) V4(p##b) V4(p##c) V4(p##d)
+struct FBPanel {
+    V16(a) V16(b) V16(c) V16(d) V16(e) V16(f) V16(g) V4(h)
+    virtual bool vfunc116(int);
+};
+struct FBHud {
+    V4(a) V4(b) virtual FBPanel *vfunc8();
+};
+// TARGET: CFeedBar::sub_10050270
+void CFeedBar::sub_10050270()
+{
+    double sx, sy;
+    int w = sub_100cd100();
+    m_unk180 = 0x200;
+    m_unk184 = 0x40;
+    m_unk18c = (int)(((double)sub_100cd100() * 0.0009765625) * (double)m_unk180);
+    m_unk190 = (int)(((double)sub_100cd0f0() * 0.0013020833333333333) * (double)m_unk184);
+    m_unk178 = (w - m_unk18c) / 2;
+    sy = sub_100cd0f0() * 0.0013020833333333333;
+    m_unk17c = (int)(sy * 47.0);
+    if (((FBHud *)((char *)this + 0x170))->vfunc8()->vfunc116(0x100000)) {
+        sy = sub_100cd0f0() * 0.0013020833333333333;
+        m_unk17c = (int)(sy * 64.0 + m_unk17c);
+    }
+    sx = sub_100cd100() * 0.0009765625;
+    m_unk194 = (int)(sx * 77.0);
+    sx = sub_100cd100() * 0.0009765625;
+    m_unk198 = (int)(sx * 75.0);
+    sx = sub_100cd100() * 0.0009765625;
+    m_unk19c = (int)(sx * 360.0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100509a0 size=0x4
 struct CUnknown100509a0 { char sub_100509a0(); };
 char CUnknown100509a0::sub_100509a0()
