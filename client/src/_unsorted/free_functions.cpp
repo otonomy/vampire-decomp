@@ -31906,6 +31906,47 @@ int sub_10061640(const char *s)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10061690 size=0x113
+#include <string.h>
+#include <stdlib.h>
+
+struct CColor4 { unsigned char c[4]; };
+extern "C" __declspec(dllimport) char *Q_strncpy(char *, const char *, int);
+
+CColor4 *sub_10061690(CColor4 *out, const char *str)
+{
+	CColor4 col;
+	char buf[0x30];
+	col.c[0] = 0;
+	col.c[1] = 0;
+	col.c[2] = 0;
+	col.c[3] = 0;
+	Q_strncpy(buf, str, 0x30);
+	char *p = strstr(buf, "[");
+	if (p) {
+		Q_strncpy(buf, p + 1, 0x30);
+		col.c[0] = atoi(buf);
+	}
+	p = strstr(buf, ",");
+	if (p) {
+		Q_strncpy(buf, p + 1, 0x30);
+		col.c[1] = atoi(buf);
+	}
+	p = strstr(buf, ",");
+	if (p) {
+		Q_strncpy(buf, p + 1, 0x30);
+		col.c[2] = atoi(buf);
+	}
+	p = strstr(buf, ",");
+	if (p) {
+		Q_strncpy(buf, p + 1, 0x30);
+		col.c[3] = atoi(buf);
+	}
+	*out = col;
+	return out;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100617b0 size=0x75
 #include "CSignUI.h"
 #include "CKeyValuesX.h"
