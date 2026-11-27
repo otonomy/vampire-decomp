@@ -30,6 +30,7 @@ public:
 
 	const Links_t &sub_10112840(unsigned short i) const;	// "CUtlRBTree::Links" out of line (with the sentinel static)
 	unsigned short sub_10110fb0(unsigned short i);
+	void sub_10113a20(unsigned short elem);
 };
 
 // the instance's sentinel is the function-local static of Links(), placed at the game's address
