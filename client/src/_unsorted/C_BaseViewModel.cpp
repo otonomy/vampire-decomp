@@ -1,6 +1,26 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x1007f600 size=0x9b
+#include "C_BaseViewModel.h"
+void sub_100aaf40(C_BaseViewModel *);
+C_BaseViewModel::C_BaseViewModel()
+{
+	m_unk7f0 = 0;
+	*(int *)((char *)this + 0x400) = (int)this;
+	*(char *)((char *)this + 0x790) = 0;
+	sub_100aaf40(this);
+	*(unsigned char *)((char *)this + 0x53) = 255;
+	*(unsigned char *)((char *)this + 0x52) = 255;
+	*(unsigned char *)((char *)this + 0x51) = 255;
+	*(unsigned char *)((char *)this + 0x50) = 255;
+	m_unk7e8 = 0;
+	m_unk7ec = 0;
+	m_unk7d4 = 0;
+	m_unk7e4 = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007f6a0 size=0x2d
 #include "CBaseEntityList.h"
 #include "C_BaseViewModel.h"
@@ -147,6 +167,28 @@ void C_BaseViewModel::vfunc29(char a)
 	else if (p->v8() && !a)
 		sub_100aaf40(this);
 	C_BaseEntity::vfunc29(a);
+}
+// END FUNCTION
+
+// FUNCTION: 0x100ab470 size=0x81
+#include "C_BaseViewModel.h"
+#include "Vector.h"
+void sub_100ab2b0(Vector &v, bool b);
+void sub_10108510(int *m, int col, int *out);
+void sub_10108540(int *v, int col, int *m);
+// TARGET: C_BaseViewModel::vfunc141
+void C_BaseViewModel::vfunc141()
+{
+	for (int i = 0; i < *(int *)(*(char **)((char *)this + 0x6ac) + 0x148); i++)
+	{
+		int m[12];
+		Vector v;
+		sub_10091910(i + 1, (int)m);
+		sub_10108510(m, 3, (int *)&v);
+		sub_100ab2b0(v, false);
+		sub_10108540((int *)&v, 3, m);
+		sub_10095ac0(i + 1, (int)m);
+	}
 }
 // END FUNCTION
 

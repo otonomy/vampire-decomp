@@ -495,6 +495,23 @@ bool C_BasePlayer::sub_100a6b10()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a6dd0 size=0x7f
+#include "C_BasePlayer.h"
+#include "engineclient.h"
+extern bool g_104a0d54;
+
+void C_BasePlayer::vfunc152(int a1, CUserCmd *cmd)
+{
+	if ((sub_100a2450() & 0x20) && g_104a0d54) {
+		cmd->viewangles = *(Vector *)((char *)this + 0x19e0);
+		engine->SetViewAngles(*(QAngle *)&cmd->viewangles);
+	}
+	*(Vector *)((char *)this + 0x19e0) = cmd->viewangles;
+	g_104a0d54 = ((unsigned int)sub_100a2450() >> 5) & 1;
+	sub_100a6bd0(cmd);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a6e50 size=0x3
 #include "C_BasePlayer.h"
 void C_BasePlayer::vfunc154(int a0)
@@ -719,6 +736,48 @@ void C_BasePlayer::vfunc37()
 	}
 
 	vfunc76();
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a7770 size=0xce
+#include "C_BasePlayer.h"
+#include "C_BaseCineCamera.h"
+#include "CViewSetup.h"
+#include "CBaseHandle.h"
+#include "CBaseEntityList.h"
+#include "ehandle.h"
+
+struct IViewTargetX
+{
+	virtual void v0();
+	virtual void v1(C_BasePlayer *pPlayer, bool bFlag, Vector *pOrigin, QAngle *pAngles);
+	virtual void v2(float *pFov);
+};
+inline bool HandleHasEntity(CBaseHandle hh)
+{
+	if (hh.IsValid())
+	{
+		const CBaseEntityListEntry *pInfo = &g_pEntityList->m_EntPtrArray[hh.GetEntryIndex()];
+		if (pInfo->m_SerialNumber == hh.GetSerialNumber() && pInfo->m_pEntity)
+			return true;
+	}
+	return false;
+}
+// TARGET: C_BasePlayer::vfunc187
+void C_BasePlayer::vfunc187(CViewSetup *pView)
+{
+	if (*((char *)this + 0x19c8) && HandleHasEntity(*(CBaseHandle *)((char *)this + 0x19c4)))
+	{
+		IViewTargetX *pTarget = (IViewTargetX *)((C_BaseEntity *)((CBaseHandle *)((int *)this + 0x19c4 / 4))->Get())->vfunc63();
+		if (pTarget)
+		{
+			pTarget->v1(this, *((char *)this + 0x19c9) == 0, &pView->origin, &pView->angles);
+			pTarget->v2(&pView->fov);
+		}
+	}
+	C_BaseCineCamera *pCam = (C_BaseCineCamera *)sub_100a7890();
+	if (pCam && pCam->sub_10001970())
+		pCam->sub_10001b50(pView);
 }
 // END FUNCTION
 
@@ -1021,6 +1080,36 @@ void C_BasePlayer::vfunc169(int a0)
         return;
     }
     *(int *)((char *)this + 0x1a0c) = -1;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a8840 size=0xdc
+#include "C_BasePlayer.h"
+#include "C_BaseCombatWeapon.h"
+#include "ehandle.h"
+void sub_10186e20(C_BasePlayer *, bool);
+struct WpnList_100a8840 { CBaseHandle *m_pMemory; int a; int b; int m_Size; };
+extern WpnList_100a8840 g_1049d8f8;
+extern WpnList_100a8840 g_1049d978;
+// TARGET: C_BasePlayer::vfunc164
+C_BaseCombatWeapon *C_BasePlayer::vfunc164(int slot)
+{
+	WpnList_100a8840 *list = &g_1049d8f8;
+	if (*(int *)((char *)this + 0x1624) != 0)
+		list = &g_1049d978;
+	int val = 7;
+	C_BaseCombatWeapon *best = 0;
+	for (int i = 0; i < list->m_Size; i++)
+	{
+		C_BaseCombatWeapon *w = (C_BaseCombatWeapon *)list->m_pMemory[i].Get();
+		if (w && w->vfunc220() == slot && w->vfunc177() && w->vfunc176() && w->vfunc221() <= val)
+		{
+			val = w->vfunc221();
+			best = w;
+		}
+	}
+	sub_10186e20(this, false);
+	return best;
 }
 // END FUNCTION
 

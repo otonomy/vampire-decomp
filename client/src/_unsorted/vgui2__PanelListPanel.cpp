@@ -1,6 +1,45 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101ca6a0 size=0x176
+#include "vgui2__PanelListPanel.h"
+struct SurfaceV
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
+	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38();
+	virtual void GetScreenSize(int &wide, int &tall);
+};
+SurfaceV *sub_101ac8d0();
+struct PLScrollBarV : public vgui2::Panel { PLScrollBarV *sub_101beb90(vgui2::Panel *parent, const char *name, int vertical); };
+vgui2::PanelListPanel::PanelListPanel(vgui2::Panel *parent, const char *name) : vgui2::Panel(parent, name)
+{
+	char *c = (char *)this;
+	int wide, tall;
+	sub_101ac8d0()->GetScreenSize(wide, tall);
+	double fw, ft;
+	fw = wide * 0.0009765625; ft = tall * 0.0013020833333333333;
+	sub_101a9950(0, 0, (int)(fw * 100.0), (int)(ft * 100.0));
+	void *mem = vgui2::Panel::operator new(0x70);
+	PLScrollBarV *vb = mem ? ((PLScrollBarV *)mem)->sub_101beb90(this, "PanelListPanelVScroll", 1) : 0;
+	*(PLScrollBarV **)(c + 0x64) = vb;
+	fw = wide * 0.0009765625; ft = tall * 0.0013020833333333333;
+	vb->sub_101a9950(0, 0, (int)(fw * 20.0), (int)(ft * 20.0));
+	(*(PLScrollBarV **)(c + 0x64))->vfunc21(0);
+	(*(PLScrollBarV **)(c + 0x64))->vfunc41((int)this);
+	void *mem2 = vgui2::Panel::operator new(0x58);
+	vgui2::Panel *ep = new (mem2) vgui2::Panel(this, "PanelListEmbedded");
+	*(vgui2::Panel **)(c + 0x68) = ep;
+	fw = wide * 0.0009765625; ft = tall * 0.0013020833333333333;
+	ep->sub_101a9950(0, 0, (int)(fw * 20.0), (int)(ft * 20.0));
+	(*(vgui2::Panel **)(c + 0x68))->vfunc63(0);
+	(*(vgui2::Panel **)(c + 0x68))->vfunc62(0);
+	*(int *)(c + 0x74) = 100;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ca820 size=0x1e
 #include "vgui2__PanelListPanel.h"
 
@@ -32,6 +71,72 @@ int vgui2::PanelListPanel::vfunc113(int a0)
 			return *p;
 	}
 	return 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x101ca940 size=0x1c2
+#include "vgui2__PanelListPanel.h"
+#include <stdlib.h>
+#include <string.h>
+
+struct PHolder { vgui2::Panel *m_p; };
+
+struct PVec
+{
+	int m_Size;
+	int m_Alloc;
+	PHolder **m_pData;
+
+	int AddUnique(PHolder *h)
+	{
+		int idx = -1;
+		for (int i = 0; i < m_Size; i++)
+		{
+			if (m_pData[i] == h)
+			{
+				idx = i;
+				break;
+			}
+		}
+		if (idx >= 0)
+			return idx;
+		int need = m_Size + 1;
+		if (need > m_Alloc)
+		{
+			int n = m_Alloc;
+			if (n == 0)
+				n = 1;
+			while (n < need)
+				n += n;
+			PHolder **p = (PHolder **)operator new(n * 4);
+			if (!p)
+				exit((int)p);
+			memset(p, 0, n * 4);
+			m_Alloc = n;
+			for (int j = 0; j < m_Size; j++)
+				p[j] = m_pData[j];
+			operator delete(m_pData);
+			m_pData = p;
+		}
+		m_pData[m_Size] = h;
+		m_Size++;
+		return m_Size - 1;
+	}
+};
+
+// TARGET: vgui2::PanelListPanel::vfunc108
+int vgui2::PanelListPanel::vfunc108(vgui2::Panel *a, vgui2::Panel *b)
+{
+	PVec *v = (PVec *)((char *)this + 0x58);
+	vfunc57(0, 0);
+	PHolder *h = new PHolder;
+	h->m_p = a;
+	a->vfunc33(*(int *)((char *)this + 0x68));
+	v->AddUnique(h);
+	h = new PHolder;
+	h->m_p = b;
+	b->vfunc33(*(int *)((char *)this + 0x68));
+	return v->AddUnique(h);
 }
 // END FUNCTION
 

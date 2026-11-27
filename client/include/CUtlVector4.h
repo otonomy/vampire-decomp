@@ -16,6 +16,7 @@ public:
 	int *m_pElements;
 
 	void sub_100d3ed0(int num);
+	void sub_10067a50(int num);
 	void sub_1009cf00(int num);
 	void sub_100ac080(int num);
 	int FindEHandle(const CBaseHandle &src) const

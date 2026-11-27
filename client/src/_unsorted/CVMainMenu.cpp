@@ -25,6 +25,39 @@ CVMainMenu::~CVMainMenu()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10065af0 size=0x147
+#include "CVMainMenu.h"
+#include "engineclient.h"
+struct CVMenuSub { void sub_10059b70(int, int, int, int, int); };
+float sub_100cd9e0(float, float, float, float);
+void sub_1002bc10();
+// TARGET: CVMainMenu::vfunc98
+void CVMainMenu::vfunc98()
+{
+	if (!(char)vfunc22())
+		return;
+	sub_10065950();
+	sub_10065a00();
+	if (m_n314 != engine->vfunc44()) {
+		m_f2d8 = sub_100cd9e0(m_f2d8, m_f2dc, engine->vfunc41(1), 127.5f);
+		if (sub_10065c90())
+			m_f2e0 = sub_100cd9e0(m_f2e0, 0.0f, engine->vfunc41(1), 127.5f);
+		else
+			m_f2e0 = sub_100cd9e0(m_f2e0, m_f2dc, engine->vfunc41(1), 127.5f);
+		if (m_f2d8 == 0.0f) {
+			if (sub_10067750(m_unk2e8))
+				sub_10066440();
+		} else {
+			sub_10066af0();
+			if (m_p300)
+				m_p300->sub_10059b70(m_n30c, m_n310, m_n304, m_n308, (int)m_f2d8);
+		}
+		m_n314 = engine->vfunc44();
+	}
+	sub_1002bc10();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10065c40 size=0x4f
 #include "CVMainMenu.h"
 

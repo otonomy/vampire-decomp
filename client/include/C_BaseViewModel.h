@@ -3,6 +3,7 @@
 // the destructor is slot 8 of its vtable; the virtual functions before it are not declared yet
 #pragma once
 #include "C_BaseAnimating.h"
+#include "CBaseHandle.h"
 class C_BasePlayer;
 
 class C_BaseViewModel : public C_BaseAnimating
@@ -41,5 +42,22 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	char m_pad0658[0x7bc - 0x658];
 	void *m_pMem; int m_allocCount; int m_growSize; int m_size; void *m_pElements;
 	void sub_100ab890(void *p);
-	char m_pad07d0[0x7f8 - 0x7d0];
+	// constructs the members at 0x7bc..0x7cc before the vptr store (stand-in for their own constructor)
+	struct CMemberInit
+	{
+		__forceinline CMemberInit()
+		{
+			C_BaseViewModel *p = (C_BaseViewModel *)((char *)this - 0x7d0);
+			p->m_pMem = 0; p->m_allocCount = 0; p->m_growSize = 0; p->m_size = 0; p->m_pElements = 0;
+		}
+	} m_memberInit;
+	int m_unk7d4;
+	CBaseHandle m_hUnk7d8;
+	int m_unk7dc;
+	int m_unk7e0;
+	int m_unk7e4;
+	int m_unk7e8;
+	int m_unk7ec;
+	int m_unk7f0;
+	int m_unk7f4;
 };

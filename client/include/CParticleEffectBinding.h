@@ -22,6 +22,7 @@ public:
 	CParticleEffectBinding();
 	~CParticleEffectBinding();
 	int sub_10116710();
+	char sub_101163a0(const char *name);
 	bool sub_10117100();
 	void sub_10116df0(CParticleMgr *, void *);
 	void *sub_10117260(const char *name, unsigned short *pIndex);

@@ -18,7 +18,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual int vfunc6(int, int, int, int, char, int, int, int, int);
     virtual void vfunc7(const Vector &pos, const Vector &size, const Vector &dir, float randRange, float life, int count, int modelIndex, char flags);	// BreakModel
     virtual void vfunc8(const Vector &mins, const Vector &maxs, float height, int modelIndex, int count, float speed);	// Bubbles
-    virtual void vfunc9();
+    virtual void vfunc9(const Vector &start, const Vector &end, float flHeight, int modelIndex, int count, float speed);
     virtual void vfunc10();
     virtual void vfunc11(class C_BaseEntity *pent, int modelIndex, int density);	// FizzEffect
     virtual void vfunc12();

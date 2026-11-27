@@ -29,5 +29,6 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	bool sub_101c74f0();
 	void sub_101c7440(void *, vgui2::MenuItem *const &);
 	void sub_101c71b0();
+	bool sub_101c71e0();
 };
 }

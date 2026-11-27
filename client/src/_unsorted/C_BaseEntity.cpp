@@ -300,6 +300,48 @@ int C_BaseEntity::vfunc110(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007dc50 size=0x13c
+#include "C_BaseEntity.h"
+#include "CCollisionProperty.h"
+
+extern "C" void sub_10107f80(const Vector *, const matrix3x4_t *, Vector *);
+extern QAngle g_104d5190;
+
+static inline Vector &AllocTempVector()
+{
+    static Vector s_vecTemp[128];
+    static int s_nIndex = 0;
+    s_nIndex = (s_nIndex + 1) & 0x7f;
+    return s_vecTemp[s_nIndex];
+}
+
+// TARGET: C_BaseEntity::vfunc56
+const Vector &C_BaseEntity::vfunc56()
+{
+    CCollisionProperty *col = (CCollisionProperty *)((char *)this + 0x190);
+    const Vector &maxs = *(const Vector *)&col->m_unk10;
+    Vector &out = AllocTempVector();
+    Vector &center = AllocTempVector();
+    center.x = (maxs.x - col->m_vecMins.x) * 0.5f + col->m_vecMins.x;
+    center.y = (maxs.y - col->m_vecMins.y) * 0.5f + col->m_vecMins.y;
+    center.z = (maxs.z - col->m_vecMins.z) * 0.5f + col->m_vecMins.z;
+    if (!(col->m_unk44 & 0x80) && col->m_unk40 != 2 && col->m_unk40 != 0) {
+        const QAngle &ang = col->vfunc9(0);
+        if (g_104d5190.x != ang.x || g_104d5190.y != ang.y || g_104d5190.z != ang.z) {
+            const matrix3x4_t &m = col->vfunc10();
+            sub_10107f80(&center, &m, &out);
+            return out;
+        }
+    }
+    const Vector &org = col->vfunc8();
+    float ox = org.x;
+    out.x = ox + center.x;
+    out.y = org.y + center.y;
+    out.z = org.z + center.z;
+    return out;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007dd90 size=0xe
 struct V_1007dd90 { int m_unk[0x88 / 4]; int m_n88; };
 // TARGET: sub_1007dd90
@@ -858,6 +900,82 @@ int C_BaseEntity::DrawModel(int flags, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009fff0 size=0x1e3
+#include "C_BaseEntity.h"
+#include "engineclient.h"
+struct NSTLeaf { virtual void v0(); virtual void v1(unsigned short h); };
+extern NSTLeaf *g_102b9060;
+struct NSTColl
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(Vector *pMins, Vector *pMaxs);
+};
+struct NSTPredId { bool sub_10120760(); void sub_101209c0(int); };
+C_BaseEntity *sub_100a01e0(NSTPredId *p);
+// TARGET: C_BaseEntity::NotifyShouldTransmit
+void C_BaseEntity::NotifyShouldTransmit(int state)
+{
+	if (entindex() <= 0)
+		return;
+	char *n = (char *)this + 8;
+	switch (state)
+	{
+	case 2:
+		vfunc29(1);
+		partition->vfunc6(0x8c, *(unsigned short *)(n + 0x1ce));
+		if (*(unsigned short *)(n + 0xe0) != 0xffff)
+		{
+			g_102b9060->v1(*(unsigned short *)(n + 0xe0));
+			*(unsigned short *)(n + 0xe0) = 0xffff;
+		}
+		break;
+	case 1:
+	{
+		partition->vfunc6(0x8c, *(unsigned short *)(n + 0x1ce));
+		int t = vfunc66();
+		int flags = 0x80;
+		if (t == 1)
+			flags = 0x84;
+		else if (t == 2)
+			flags = 0x88;
+		partition->vfunc4(flags, *(unsigned short *)(n + 0x1ce));
+		Vector mins, maxs;
+		((NSTColl *)(n + 0x188))->v15(&mins, &maxs);
+		partition->vfunc7(*(unsigned short *)(n + 0x1ce), mins, maxs);
+		break;
+	}
+	case 0:
+	{
+		vfunc29(0);
+		int t = vfunc66();
+		int flags = 0x80;
+		if (t == 1)
+			flags = 0x84;
+		else if (t == 2)
+			flags = 0x88;
+		partition->vfunc4(flags, *(unsigned short *)(n + 0x1ce));
+		Vector mins, maxs;
+		((NSTColl *)(n + 0x188))->v15(&mins, &maxs);
+		partition->vfunc7(*(unsigned short *)(n + 0x1ce), mins, maxs);
+		NSTPredId *pId = (NSTPredId *)(n + 0xc4);
+		if (pId->sub_10120760())
+		{
+			pId->sub_101209c0(1);
+			C_BaseEntity *pOther = sub_100a01e0(pId);
+			if (pOther)
+			{
+				((NSTPredId *)((char *)pOther + 0xcc))->sub_101209c0(1);
+				if (vfunc113(false, pOther))
+					pOther->Release();
+			}
+		}
+		break;
+	}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a0240 size=0x94
 #include "C_BaseEntity.h"
 char sub_100cc190(void *, int, void *);
@@ -944,6 +1062,61 @@ void C_BaseEntity::vfunc69() {
             break;
         ev->m_hist.Remove(i);
     }
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a0470 size=0x1d1
+#include "C_BaseEntity.h"
+#include "C_BasePlayer.h"
+#include "CCollisionProperty.h"
+#include "ehandle.h"
+#include "engineclient.h"
+#define F(T,off) (*(T*)((char*)this+(off)))
+struct EntV1009fbb0 { void sub_100a06f0(int); };
+struct EntV1007dba0 { bool sub_1007dba0(); void sub_1007db80(C_BasePlayer *); void sub_1009e240(); };
+void sub_100ccf00(QAngle *);
+struct NetPair { float a; float b; };
+// TARGET: ?PostDataUpdate@C_BaseEntity@@UAEXH@Z
+void C_BaseEntity::PostDataUpdate(int updateType)
+{
+	vfunc44((int)&F(Vector, 0x2b4));
+	vfunc46((int)&F(Vector, 0x2c0));
+	if (F(int, 0x44) == 0) {
+		F(int, 0x80) = 1;
+		((CCollisionProperty *)((char *)this + 0x190))->sub_10043230(1);
+		F(int, 0x23c) = 0;
+		F(int, 0x240) = 0;
+		F(int, 0x244) = 0;
+	}
+	sub_100a0450();
+	((EntV1009fbb0 *)this)->sub_100a06f0(F(int, 0x80));
+	QAngle ang = *(QAngle *)&GetAbsAngles();
+	sub_100ccf00(&ang);
+	sub_100a2100(ang);
+	if (vfunc67()) {
+		vfunc70();
+		F(int, 0x70) = F(int, 0x144);
+	}
+	sub_100a2030(&F(Vector, 0x2b4));
+	sub_100a2100(F(QAngle, 0x2c0));
+	if (updateType == 0) {
+		F(float, 0x17c) = enginerandom->RandomFloat(0.0f, 1.0f);
+		F(Vector, 0x54) = GetAbsOrigin();
+		F(QAngle, 0x60) = GetAbsAngles();
+		vfunc68(1);
+	} else {
+		NetPair *p = (NetPair *)((char *)this + 0x6c);
+		if (p->a != p->b)
+			vfunc69();
+	}
+	if (!vfunc86())
+		((EntV1007dba0 *)this)->sub_1009e240();
+	sub_100a0650("PostDataUpdate");
+	C_BasePlayer *pl = C_BasePlayer::GetLocalPlayer();
+	if (((EntV1007dba0 *)this)->sub_1007dba0() && pl) {
+		if (pl == (C_BasePlayer *)((CBaseHandle *)((char *)this + 0x3e4))->Get())
+			((EntV1007dba0 *)this)->sub_1007db80(pl);
+	}
 }
 // END FUNCTION
 
@@ -1842,6 +2015,28 @@ void C_BaseEntity::vfunc111()
 	g_VProfCurrentProfile.EnterScope( "C_BaseEntity::Relink", 0, "Unaccounted" );
 	sub_1009e2d0( 0 );
 	g_VProfCurrentProfile.ExitScope();
+}
+// END FUNCTION
+
+// FUNCTION: 0x1011a850 size=0xe2
+#include "C_BaseEntity.h"
+#include "CGameTrace.h"
+#include "Vector.h"
+// TARGET: C_BaseEntity::vfunc105
+CGameTrace C_BaseEntity::vfunc105(const Vector &move)
+{
+	CGameTrace trace;
+	Vector start = GetAbsOrigin();
+	sub_1011a5f0(start, move, trace);
+	if (trace.m_fraction != 0.0f)
+		sub_100a2030(trace.m_endpos);
+	*(Vector *)((char *)this + 0x2b4) = *(Vector *)vfunc39();
+	*(Vector *)((char *)this + 0x2c0) = *(Vector *)vfunc41();
+	*(int *)((char *)this + 0x184) |= 0x800;
+	vfunc111();
+	if (trace.m_pEnt)
+		sub_1011c480((C_BaseEntity *)trace.m_pEnt, trace);
+	return trace;
 }
 // END FUNCTION
 

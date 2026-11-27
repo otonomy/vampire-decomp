@@ -20,6 +20,15 @@ int C_EntityFlame::vfunc15()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b65a0 size=0x67
+#include "C_EntityFlame.h"
+C_EntityFlame::C_EntityFlame() : m_flA(-1.0f), m_nB(0)
+{
+	m_flSize = 4.0f;
+	m_Effect = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b6610 size=0x1e
 #include "C_EntityFlame.h"
 

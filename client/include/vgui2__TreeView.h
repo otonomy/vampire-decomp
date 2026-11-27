@@ -10,6 +10,18 @@ class TreeView : public vgui2::Panel
 {
 public:
 	virtual ~TreeView();
+	TreeView(vgui2::Panel *parent, const char *name);
+	// constructs the members at 0x78..0x98 before the vptr store (stand-in for their own constructors)
+	struct CMemberInit
+	{
+		__forceinline CMemberInit()
+		{
+			char *p = (char *)this - sizeof(vgui2::Panel);
+			*(int *)(p + 0x78) = 0; *(int *)(p + 0x7c) = 0; *(int *)(p + 0x80) = 0;
+			*(int *)(p + 0x84) = -1; *(int *)(p + 0x88) = -1; *(int *)(p + 0x8c) = -1;
+			*(int *)(p + 0x94) = 0; *(int *)(p + 0x90) = 0; *(int *)(p + 0x98) = 0;
+		}
+	} m_memberInit;
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with TreeView's own function
 	virtual void vfunc11(int, int);

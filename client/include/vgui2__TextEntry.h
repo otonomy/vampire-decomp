@@ -31,7 +31,9 @@ public:
 			Color(p + 0x101);
 		}
 	} m_memberInit;
+	void sub_101aefe0();
 	void sub_101af9e0(int a);
+	void sub_101afed0(int);
 	bool sub_101aff70(int n);
 	int sub_101afbf0();
 	void sub_101ae490(int);
@@ -127,7 +129,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc160(int, int);
 	virtual void vfunc161(int *, int *);
 	virtual int vfunc162();
-	virtual void vfunc163();
+	virtual bool vfunc163(void *pText, int *pIndex);
 	virtual bool vfunc164(int, int, int, int);
 	virtual void vfunc165();
 	virtual void vfunc166(int);

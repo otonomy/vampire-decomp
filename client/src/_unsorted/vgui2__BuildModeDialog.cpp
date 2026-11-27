@@ -215,6 +215,120 @@ vgui2::BuildModeDialog::~BuildModeDialog()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c4600 size=0x1ad
+#include "vgui2__BuildModeDialog.h"
+
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+extern "C" int __cdecl strcmp(const char *, const char *);
+#pragma intrinsic(strcmp)
+
+#define V1(n) virtual void n();
+#define V10(p) V1(p##0) V1(p##1) V1(p##2) V1(p##3) V1(p##4) V1(p##5) V1(p##6) V1(p##7) V1(p##8) V1(p##9)
+struct ClassInfo_101c4600
+{
+	int m_unk0;
+	int m_unk4;
+	const char *m_pszName;
+	ClassInfo_101c4600 *m_pNext;
+};
+struct Target_101c4600
+{
+	V10(a) V10(b) V10(c) V10(d) V10(e) V10(f) V10(g) V10(h) V10(i) V10(j)
+	V1(k0) V1(k1)
+	virtual ClassInfo_101c4600 *vfunc102();
+	V10(l) V10(m)
+	V1(n0) V1(n1) V1(n2) V1(n3) V1(n4) V1(n5)
+	virtual void vfunc129();
+};
+struct Group_101c4600
+{
+	V1(a0) V1(a1)
+	virtual Target_101c4600 *vfunc2();
+	V1(a3)
+	virtual void vfunc4();
+};
+struct Vis_101c4600
+{
+	V10(a) V10(b) V10(c) V10(d)
+	V1(e0) V1(e1) V1(e2) V1(e3) V1(e4) V1(e5)
+	virtual void vfunc46(int);
+};
+struct Self_101c4600
+{
+	V10(a) V10(b) V10(c) V10(d) V10(e) V10(f) V10(g) V10(h) V10(i) V10(j) V10(k) V10(l) V10(m) V10(n)
+	V1(o0) V1(o1) V1(o2) V1(o3) V1(o4) V1(o5)
+	virtual void vfunc146(Target_101c4600 *p);
+};
+
+#define FLD_GROUP (*(Group_101c4600 **)((char *)this + 0x120))
+#define FLD_VIS (*(Vis_101c4600 **)((char *)this + 0xf0))
+
+// TARGET: vgui2::BuildModeDialog::vfunc78
+void vgui2::BuildModeDialog::vfunc78(const char *command)
+{
+	if (!_strcmpi(command, "Save"))
+	{
+		if (sub_101c4810())
+			FLD_GROUP->vfunc4();
+		FLD_VIS->vfunc46(0);
+	}
+	else if (!_strcmpi(command, "Exit"))
+	{
+		sub_101c4dd0();
+	}
+	else if (!_strcmpi(command, "Apply"))
+	{
+		sub_101c4810();
+	}
+	else if (!_strcmpi(command, "SizeToText"))
+	{
+		sub_101c4810();
+		Target_101c4600 *pTarget = FLD_GROUP->vfunc2();
+		ClassInfo_101c4600 *pInfo = pTarget->vfunc102();
+		if (pInfo)
+		{
+			for (; pInfo; pInfo = pInfo->m_pNext)
+			{
+				if (!strcmp(pInfo->m_pszName, "CheckButton"))
+				{
+					pTarget->vfunc129();
+					break;
+				}
+				if (!strcmp(pInfo->m_pszName, "RadioButton"))
+				{
+					pTarget->vfunc129();
+					break;
+				}
+				if (!strcmp(pInfo->m_pszName, "Button"))
+				{
+					pTarget->vfunc129();
+					break;
+				}
+				if (!strcmp(pInfo->m_pszName, "Label"))
+				{
+					pTarget->vfunc129();
+					break;
+				}
+			}
+		}
+		((Self_101c4600 *)this)->vfunc146(pTarget);
+		sub_101c4810();
+	}
+	else if (!_strcmpi(command, "DeletePanel"))
+	{
+		sub_101c47b0();
+	}
+	else if (!_strcmpi(command, "RevertToSaved"))
+	{
+		sub_101c4f50();
+	}
+	else if (!_strcmpi(command, "ShowHelp"))
+	{
+		sub_101c4f80();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c4a20 size=0x52
 #include "vgui2__BuildModeDialog.h"
 

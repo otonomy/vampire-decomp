@@ -50,7 +50,7 @@ public:
 	virtual Vector *vfunc23(Vector *, void *, int);	// slot 23; shapes differ
 	virtual void vfunc24();
 	virtual void vfunc25();
-	virtual void vfunc26();
+	virtual void vfunc26(int *, int *);
 	virtual void vfunc27(const char *, int);	// slot 27; seen as ClientCmd 7, ServerCmd 4; shapes differ
 	virtual void ClientCmd(const char *);	// slot 28
 	virtual void vfunc29(const char *pszName, int (*pfnHook)(const char *, int, void *));	// slot 29: HookUserMsg (CViewEffects::Init hooks "ScreenShake" / "ScreenFade")
@@ -119,7 +119,7 @@ public:
 	virtual float vfunc92(int);	// slot 92; seen as LightStyleValue 1
 	virtual void vfunc93();
 	virtual void vfunc94(const Vector &, const Vector *, Vector &);	// slot 94; seen as ComputeDynamicLighting 1
-	virtual void vfunc95();
+	virtual void vfunc95(float *);
 	virtual int vfunc96();	// slot 96; seen as GetDXSupportLevel 1
 	virtual void vfunc97();
 	virtual void vfunc98();
@@ -424,13 +424,13 @@ public:
 	virtual void vfunc79();
 	virtual void vfunc80();
 	virtual void vfunc81();	// slot 81: LoadIdentity
-	virtual void vfunc82();
+	virtual void vfunc82(double, double, double, double, double, double);
 	virtual void vfunc83();
 	virtual void vfunc84();
 	virtual void vfunc85();
 	virtual void vfunc86(float, float, float, float);	// slot 86: Rotate(angle, x, y, z)
 	virtual void vfunc87();
-	virtual void vfunc88();
+	virtual void vfunc88(float, float, float);
 	virtual void vfunc89(int x, int y, int w, int h);	// slot 89: Viewport
 	virtual void vfunc90(int *x, int *y, int *w, int *h);	// slot 90: GetViewport
 	virtual void vfunc91();
@@ -466,8 +466,8 @@ public:
 	virtual void vfunc121();
 	virtual void vfunc122();
 	virtual void vfunc123();
-	virtual void vfunc124();
-	virtual void vfunc125();
+	virtual void vfunc124(int, int, int);
+	virtual void vfunc125(int, int, int, int);
 	virtual void vfunc126();
 	virtual void vfunc127();
 	virtual void *vfunc128(int, int, int);	// slot 128; shapes differ
@@ -627,9 +627,9 @@ public:
 	virtual void vfunc1();
 	virtual void vfunc2();
 	virtual void vfunc3(unsigned short);	// slot 3
-	virtual void vfunc4();
+	virtual void vfunc4(int, unsigned short);
 	virtual void vfunc5();
-	virtual void vfunc6();
+	virtual void vfunc6(int, unsigned short);
 	virtual void vfunc7(unsigned short, const Vector &, const Vector &);
 	virtual void vfunc8();
 	virtual void vfunc9();
@@ -673,6 +673,18 @@ public:
 	virtual const char *FindNext(int);	// slot 23; shapes differ
 	virtual void vfunc24();
 	virtual void FindClose(int);	// slot 25
+	virtual void vfunc26();
+	virtual void vfunc27();
+	virtual void vfunc28();
+	virtual void vfunc29();
+	virtual void vfunc30();
+	virtual void vfunc31();
+	virtual void vfunc32();
+	virtual void vfunc33();
+	virtual void vfunc34();
+	virtual void vfunc35();
+	virtual void vfunc36(int);
+	virtual void vfunc37();
 };
 extern IFileSystem *g_104a580c;
 

@@ -63,6 +63,11 @@ public:
 	int sub_100a2450();
 	int sub_100a93e0();
 	int sub_100a96a0(int iStat);
+	int sub_100a94d0(int n, bool *pOut);
+	void sub_100aa720();
+	void *sub_100a9190(int type, int a2);
+	void *sub_100a9330(int type, int a2);
+	char sub_100a9910(int);
 	char *sub_100a9af0(int);
 	void sub_100a9c90();
 	bool sub_100a54c0(int, int);
@@ -71,10 +76,12 @@ public:
 	int sub_100a6780(int b, int h);
 	bool sub_100a6b10();
 	void sub_1007ede0(C_BaseEntity *pEntity);
+	void sub_1007ebe0(C_BaseEntity *pEntity);
 	void sub_100a9f40(C_BaseEntity *pEntity);
 	void sub_100a9e30(C_BaseEntity *pEntity);
 	C_BaseEntity *sub_100a7890();
 	void sub_100a5fc0();
+	void *sub_100a9000(int nSlot);
 	void sub_100a6450();	// sound / stat tick: two convar overrides (else +0x17a0 / +0x179c) for engine sound slots 9 / 8 on a static local player filter, slot 13 with +0x16f0, then eases +0x1648 towards 1 - level(stat list 3) * 0.07
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with C_BasePlayer's own function
@@ -98,12 +105,12 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc149(float dt, Vector *pOrigin, QAngle *pAngles);
 	virtual Vector vfunc150(const Vector &v);
 	virtual void vfunc151(int, int, int, int, int, int, int, int, int, int, int);
-	virtual int vfunc152(int, int);
+	virtual void vfunc152(int, CUserCmd *);
 	virtual void vfunc153();
 	virtual void vfunc154(int);
 	virtual void vfunc155();
 	virtual void vfunc156();
-	virtual void vfunc157();
+	virtual void vfunc157(bool bFlag);
 	virtual void vfunc158();
 	virtual void vfunc159(int slot, int, int);	// ret 0xc: weapon selection by slot (0x100a7c40)
 	virtual bool vfunc160(bool);
@@ -134,7 +141,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc184();
 	virtual void vfunc185(int);
 	virtual void vfunc186();
-	virtual void vfunc187();
+	virtual void vfunc187(struct CViewSetup *pView);
 	virtual void vfunc188(int nRole);
 	virtual void vfunc189(int);
 	virtual void vfunc190(class C_BaseCombatWeapon *pWeapon);
@@ -168,6 +175,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	char m_pad1a28[0x1aac - 0x1a28];
 	CUserCmd m_Cmd1aac;
 	void sub_100a73a0();
+	void sub_100a6bd0(CUserCmd *cmd);
 };
 
 // the local player (2004 SDK c_baseplayer.h): read it as C_BasePlayer::GetLocalPlayer()

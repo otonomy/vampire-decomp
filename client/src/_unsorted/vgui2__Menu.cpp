@@ -586,6 +586,124 @@ void vgui2::Menu::vfunc78(int cmd) {
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c0120 size=0x1e4
+#include "vgui2__Menu.h"
+#include "vgui2__MenuItem.h"
+#include "vgui2__KeyValues.h"
+
+int sub_101ac8b0();
+class KeyInputV_101c0120
+{
+public:
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual bool v12(int);
+};
+class PanelKeyV_101c0120
+{
+public:
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54();
+	virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64();
+	virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
+	virtual void v70(); virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74();
+	virtual void v75(); virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79();
+	virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84();
+	virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89();
+	virtual void v90(); virtual void v91();
+	virtual void v92(int);
+};
+#define F(type, off) (*(type *)((char *)this + (off)))
+#define PARENT ((PanelKeyV_101c0120 *)vfunc31())
+
+// TARGET: vgui2::Menu::sub_101c0120
+void vgui2::Menu::sub_101c0120(int code)
+{
+	if ( ((KeyInputV_101c0120 *)sub_101ac8b0())->v12(0x51)
+		|| ((KeyInputV_101c0120 *)sub_101ac8b0())->v12(0x52) )
+	{
+		PARENT->v92(code);
+		vfunc43(new vgui2::KeyValues("MenuClose"));
+	}
+	switch ( code )
+	{
+	case 70:
+		vfunc21(0);
+		return;
+	case 88:
+	{
+		sub_101c0b10(-1);
+		int i = F(int, 0x80);
+		vgui2::MenuItem *item;
+		if ( i < 0 || i >= F(int, 0x64) )
+			item = 0;
+		else
+			item = (*(vgui2::MenuItem ***)((char *)this + 0x6c))[i];
+		item->sub_101c7080();
+		return;
+	}
+	case 90:
+	{
+		sub_101c0b10(1);
+		int i = F(int, 0x80);
+		vgui2::MenuItem *item;
+		if ( i < 0 || i >= F(int, 0x64) )
+			item = 0;
+		else
+			item = (*(vgui2::MenuItem ***)((char *)this + 0x6c))[i];
+		item->sub_101c7080();
+		return;
+	}
+	case 91:
+		if ( F(int, 0x80) > -1 )
+		{
+			int i = F(int, 0x80);
+			vgui2::MenuItem *item;
+			if ( i < 0 || i >= F(int, 0x64) )
+				item = 0;
+			else
+				item = (*(vgui2::MenuItem ***)((char *)this + 0x6c))[i];
+			if ( item->sub_101c71e0() )
+			{
+				vfunc128(F(int, 0x80));
+				return;
+			}
+			PARENT->v92(code);
+			return;
+		}
+		PARENT->v92(code);
+		return;
+	case 89:
+		if ( dynamic_cast<vgui2::MenuItem *>((vgui2::Panel *)vfunc31()) )
+		{
+			vfunc21(0);
+			return;
+		}
+		PARENT->v92(code);
+		return;
+	case 64:
+		if ( F(int, 0x80) > -1 )
+		{
+			vfunc128(F(int, 0x80));
+			return;
+		}
+		PARENT->v92(code);
+		return;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c03e0 size=0x3e
 #include "vgui2__Menu.h"
 struct SbV {

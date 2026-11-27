@@ -4,8 +4,8 @@
 #pragma once
 #include "C_BaseEntity.h"
 
-struct CEntityFlameEffect { void sub_10117fe0(); };
-struct CEntityFlameEffectPtr { CEntityFlameEffect *m_p; ~CEntityFlameEffectPtr() { if (m_p) m_p->sub_10117fe0(); } };
+#include "CSmartPtr.h"
+#include "CParticleEffect.h"
 class C_EntityFlame : public C_BaseEntity
 {
 public:
@@ -16,7 +16,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc15();
 	virtual int vfunc16();
 	virtual void vfunc37();
-	char m_pad0014[0x414 - 0x14];
-	CEntityFlameEffectPtr m_Effect;
-	char m_pad0418[0x428 - 0x418];
+	char m_pad0014[0x410 - 0x14];
+	float m_flSize;
+	CSmartPtr<CParticleEffect> m_Effect;
+	float m_flA;
+	int m_nB;
+	char m_pad0420[0x428 - 0x420];
 };

@@ -27,6 +27,7 @@ public:
 
 	void sub_100d3500();
 	void sub_10117d70(int);
+	void sub_10117c30(int n);
 	unsigned short sub_100d3b10(bool multilist);
 
 	void sub_1002c080(unsigned short elem);	// "CUtlLinkedList::Unlink"

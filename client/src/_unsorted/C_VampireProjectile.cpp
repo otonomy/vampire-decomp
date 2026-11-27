@@ -63,6 +63,16 @@ int C_VampireProjectile::vfunc15()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10151fc0 size=0x4b
+#include "C_VampireProjectile.h"
+#include "CBaseHandle.h"
+C_VampireProjectile::C_VampireProjectile()
+{
+	m_unk798 = 0;
+	m_unk7e4 = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10152010 size=0x1e
 #include "C_VampireProjectile.h"
 

@@ -33,6 +33,7 @@ public:
 	void sub_101316c0(int i, int parent, bool isLeft);	// "CUtlRBTree::LinkToParent" with InsertRebalance inlined (called by InsertAt 0x10130c50)
 
 	Node_t &ElementAt(int i) const { return m_pElements[i]; }
+	int sub_10130c50(const struct SoundEntry_10130c50 &insert);
 
 	void sub_10131140(const void *pInsert, int *pParent, bool *pLeftChild);	// "CUtlRBTree::FindInsertionPosition": walks down from the root with the less function, stores the last visited node in *pParent and whether the new element goes to its left in *pLeftChild
 		// "CUtlRBTree::InsertAt": NewNode (free list head, else grows the node memory to hold one more node; the first allocation is 1 element), constructs the element (first word 0xffff, sound parameter record sub_101b30d0 at +0xc of the data), links it below parent (red, no children; the root when parent is -1), InsertRebalance, ++m_NumElements; returns the node index

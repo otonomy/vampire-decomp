@@ -7,7 +7,7 @@ class C_BaseExplosionEffect
 {
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the slots C_BaseExplosionEffect adds to its base's vtable: 0-5, vfuncK at slot K
-    virtual void vfunc0();
+    virtual void vfunc0(const Vector &origin, float t, float scale, int flags);
     virtual void vfunc1();
     virtual void vfunc2();
     virtual void vfunc3();

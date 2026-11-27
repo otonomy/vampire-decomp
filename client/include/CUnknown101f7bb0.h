@@ -23,5 +23,6 @@ public:
 		// parses one trait effect category of the data file: InternalName picks the id (registered on a miss), every TraitEffectGroup key is handed to a fresh item; false (with a Msg) for no data or when no item could be made
 		// opens the data file and parses every "TraitEffectCategory" key of it with sub_101f7bb0; false (with a Msg) when the file is missing or a category does not parse
 	void sub_10157480();	// resets the loader (stub 0x10009624)
+	void sub_10157850();
 		// loads the General data (vdata\system\traiteffect.txt: InternalName, Name, the 11 ModifierNames), then every vdata\system\TraitEffects*.txt file with sub_101f7db0; Msg for each file that does not open
 };

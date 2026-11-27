@@ -19,8 +19,8 @@ public:
 	virtual void vfunc3(void *pSound, float executeDeltaTime, int command, float commandTime, float value);	// CommandAdd
 	virtual void vfunc4(void *pSound);	// CommandClear
 	virtual void vfunc5(void *pSound);
-	virtual void vfunc6();
-	virtual void vfunc7();
+	virtual struct CSoundPatch *vfunc6(void *filter, int nEntIndex, int channel, const char *pSoundName, int soundlevel);
+	virtual struct CSoundPatch *vfunc7(void *filter, int nEntIndex, int channel, const char *pSoundName, float flAttenuation);
 	virtual void vfunc8();
 	virtual void vfunc9(void *pSound);
 	virtual void vfunc10();

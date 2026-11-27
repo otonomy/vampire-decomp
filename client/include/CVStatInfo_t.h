@@ -57,7 +57,9 @@ public:
 	void **m_field0138;	// 0x0138: the action pointer array
 
 	int DefaultValue() { return m_default09c.sub_10161510(); }
+	void sub_1015c040(int a, CVStatInfoList_t *pList);
 	bool sub_1005d6e0();
+	void sub_1015b990(CVStatKV *pKV, int pDefaults);
 	bool sub_1015be50();
 	const char *sub_1005d750();
 	CVStatInfo_t();	// 0x101fdaf0 (called through the stub at 0x1000dfb2): constructs the five records, the cost and the list, then scope trace and the plain fields

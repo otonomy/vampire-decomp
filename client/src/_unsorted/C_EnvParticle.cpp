@@ -109,3 +109,62 @@ void C_EnvParticle::vfunc123(int p)
 	c = b = a = *v;
 }
 // END FUNCTION
+
+// FUNCTION: 0x100aed50 size=0x149
+#include "C_EnvParticle.h"
+#include "C_BaseViewModel.h"
+#include "ehandle.h"
+extern "C" double fabs(double);
+#pragma intrinsic(fabs)
+struct EnvParticleFx
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6();
+	virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13();
+	virtual void v14(int);
+	virtual void v15();
+	virtual void v16(int);
+};
+extern EnvParticleFx *g_104a581c;
+// TARGET: C_EnvParticle::PostDataUpdate
+void C_EnvParticle::PostDataUpdate(int updateType)
+{
+	C_BaseEntity::PostDataUpdate(updateType);
+	if (m_nState418 == 2 && m_n41c < 0)
+		m_nState418 = 0;
+	int cur = m_nEffect410;
+	if (cur != m_nOld45c || (cur != 0 && m_f414 != m_f460))
+	{
+		m_nOld45c = cur;
+		if (cur)
+		{
+			char *pOwner = (char *)m_hOwner180.Get();
+			bool bAttached = false;
+			if (pOwner)
+			{
+				C_BaseViewModel *pVM = *(C_BaseViewModel **)(pOwner + 0x400);
+				if (pVM)
+				{
+					bAttached = true;
+					pVM->sub_100ab890(this);
+				}
+			}
+			if (m_n464)
+			{
+				g_104a581c->v14(m_n464);
+				m_n464 = 0;
+			}
+			if (!bAttached)
+				vfunc83(-1293.0f);
+		}
+		else if (m_n464)
+			g_104a581c->v16(m_n464);
+	}
+	if (m_f458 != m_f454)
+	{
+		m_f450 = fabs(1.0f / m_f44c);
+		m_f458 = m_f454;
+	}
+	if (!updateType)
+		m_n420 = m_n448;
+}
+// END FUNCTION

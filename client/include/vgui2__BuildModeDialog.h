@@ -17,10 +17,13 @@ public:
 	void sub_101c4a20();
 	void sub_101c45b0(void *, const char *);
 	bool sub_101c4810();
+	void sub_101c47b0();
+	void sub_101c4dd0();
+	void sub_101c4f50();
 	virtual ~BuildModeDialog();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with BuildModeDialog's own function
-	virtual void vfunc78(int);
+	virtual void vfunc78(const char *command);
 	virtual void vfunc92(int);
 	virtual int vfunc102();
 	// the slots BuildModeDialog adds to its base's vtable: 145-148, vfuncK at slot K

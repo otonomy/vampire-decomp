@@ -59,6 +59,7 @@ public:
 	virtual void DoAnimationEvents();	// IClientRenderable slot 17
 	virtual void OnDataChanged(int updateType);
 	void sub_10094930();
+	void sub_10090b70(struct EntView_10090b70 *pEnt);
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with C_BaseAnimating's own function
 	virtual int vfunc15();

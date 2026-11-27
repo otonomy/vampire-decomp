@@ -50,6 +50,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_nF1c;
 	void sub_100c6d50(int key);	// a typed character
 	void sub_100c8060(int c);
+	void sub_100c7fb0(const char *str);
 	void sub_100c75b0();
 	void sub_100c7ec0(int dx, int dy);
 	void sub_100c7f50();

@@ -772,6 +772,79 @@ void vgui2::TextEntry::vfunc101()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101ae2f0 size=0x19c
+#include "vgui2__TextEntry.h"
+
+struct TextBuf_101ae2f0
+{
+	int m_len;
+	int m_unk4;
+	const char *m_data;
+	char Get(int i) const { return (i >= 0 && i < m_len) ? m_data[i] : 0; }
+	unsigned char GetU(int i) const { unsigned char c; if (i >= 0 && i < m_len) c = m_data[i]; else c = 0; return c; }
+};
+struct ColorSink_101ae2f0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+	virtual void vfunc18(int color);
+};
+ColorSink_101ae2f0 *sub_101ac8d0();
+
+// TARGET: vgui2::TextEntry::vfunc171
+int vgui2::TextEntry::vfunc171(void *pBuf, int pos, int pOut, int unused)
+{
+	TextBuf_101ae2f0 *buf = (TextBuf_101ae2f0 *)pBuf;
+	char *self = (char *)this;
+	pos++;
+	char type = buf->Get(pos++);
+	switch (type) {
+	case 1: {
+		int arr[4];
+		for (int k = 0; k < 4; k++) {
+			char ch = buf->Get(pos++);
+			int v = ch;
+			arr[k] = v;
+			if (v < 0)
+				arr[k] = v + 256;
+		}
+		unsigned char col[4];
+		col[0] = (unsigned char)arr[0];
+		col[1] = (unsigned char)arr[1];
+		col[2] = (unsigned char)arr[2];
+		col[3] = (unsigned char)arr[3];
+		*(int *)(self + 0xd5) = *(int *)col;
+		sub_101ac8d0()->vfunc18(*(int *)(self + 0xd5));
+		break;
+	}
+	case 2: {
+		char ch = buf->Get(pos++);
+		int c = ch;
+		int *p = (int *)pOut;
+		if (p) {
+			if (*p == *(int *)(self + 0xa4) + 3)
+				*p = c + 3;
+		}
+		*(int *)(self + 0xa4) = c;
+		break;
+	}
+	case 3:
+		*(bool *)(self + 0xd9) = true;
+		break;
+	case 4:
+		*(bool *)(self + 0xd9) = false;
+		break;
+	case 5: {
+		int hi = buf->GetU(pos++) * 256;
+		*(int *)(self + 0x124) = hi;
+		*(int *)(self + 0x124) = hi | buf->GetU(pos++);
+		break;
+	}
+	}
+	return pos - 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ae490 size=0x71
 #include "vgui2__TextEntry.h"
 
@@ -865,6 +938,96 @@ void vgui2::TextEntry::vfunc161(int *x, int *y)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101aed20 size=0x1cb
+#include "vgui2__TextEntry.h"
+struct SurfV
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62();
+	virtual int vfunc63(int font);
+};
+struct ScrollV
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void vfunc6();
+	virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45();
+	virtual void vfunc46(int);
+	virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56();
+	virtual void vfunc57(int, int);
+	virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
+	virtual void v70(); virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74(); virtual void v75(); virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79();
+	virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84(); virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89();
+	virtual void v90(); virtual void v91(); virtual void v92(); virtual void v93(); virtual void v94(); virtual void v95(); virtual void v96(); virtual void v97(); virtual void v98(); virtual void v99();
+	virtual void v100(); virtual void v101(); virtual void v102(); virtual void v103(); virtual void v104(); virtual void v105(); virtual void v106();
+	virtual void vfunc107(int);
+	virtual int vfunc108();
+	virtual void vfunc109(int, int);
+	virtual void vfunc110(int);
+	virtual void v111(); virtual void v112(); virtual void v113(); virtual void v114(); virtual void v115(); virtual void v116(); virtual void v117();
+	virtual void vfunc118(int);
+	void sub_101a9890(int, int);
+	void sub_101a98f0(int, int);
+};
+SurfV *sub_101ac8d0();
+#define CHILD (*(ScrollV **)((char *)this + 0xb4))
+// TARGET: vgui2::TextEntry::vfunc150
+void vgui2::TextEntry::vfunc150()
+{
+	if (CHILD)
+	{
+		int a, q, b, r, s, p;
+		sub_101a9920(&a, &b);
+		vfunc8((int)&p, (int)&q, (int)&r, (int)&s);
+		a -= q;
+		CHILD->sub_101a9890(a - 0x12, 0);
+		CHILD->sub_101a98f0(0x12, b - r - s);
+		int nLines = b / (sub_101ac8d0()->vfunc63(*(int *)((char *)this + 0x124)) + 1);
+		int top = *(int *)((char *)this + 0x64);
+		if (top <= nLines)
+		{
+			CHILD->vfunc46(0);
+			CHILD->vfunc109(0, top);
+			CHILD->vfunc110(top);
+			CHILD->vfunc107(0);
+		}
+		else
+		{
+			CHILD->vfunc109(0, top);
+			CHILD->vfunc110(nLines);
+			CHILD->vfunc46(1);
+			CHILD->vfunc118(1);
+			int lo = CHILD->vfunc108();
+			int hi = CHILD->vfunc108() + nLines;
+			if (sub_101afbf0() < lo)
+			{
+				while (sub_101afbf0() < lo)
+					lo--;
+			}
+			else if (sub_101afbf0() >= hi)
+			{
+				while (sub_101afbf0() >= hi)
+					hi++;
+				lo = hi - nLines;
+			}
+			CHILD->vfunc107(lo);
+			CHILD->vfunc57(0, 0);
+			CHILD->vfunc6();
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101aeef0 size=0x18
 #include "vgui2__TextEntry.h"
 namespace lifted {
@@ -893,6 +1056,26 @@ bool vgui2::TextEntry::vfunc141(char a0)
 {
     *(char *)((char *)this + 0xf4) = a0;
     return *(bool *)&a0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x101aef30 size=0x8f
+#include "vgui2__TextEntry.h"
+struct SBPanel : public vgui2::Panel { SBPanel *sub_101beb90(vgui2::Panel *parent, const char *name, int vertical); };
+void vgui2::TextEntry::vfunc140(char a)
+{
+	SBPanel *&sb = *(SBPanel **)((char *)this + 0xb4);
+	*(char *)((char *)this + 0xb2) = a;
+	if (a) {
+		if (!sb) {
+			void *mem = vgui2::Panel::operator new(0x70);
+			sb = mem ? ((SBPanel *)mem)->sub_101beb90(this, "ScrollBar", 1) : 0;
+			sb->vfunc41((int)this);
+		}
+		sb->vfunc21(1);
+	} else if (sb)
+		sb->vfunc21(0);
+	vfunc57(0, 0);
 }
 // END FUNCTION
 
@@ -978,6 +1161,41 @@ void vgui2::TextEntry::vfunc84(int, int)
 	if (m_i70 != *(int *)((char *)this + 0xa0)) {
 		*(int *)((char *)this + 0xa0) = m_i70;
 		vfunc6();
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x101af210 size=0xdc
+#include "vgui2__TextEntry.h"
+struct IVInput_101af210 { virtual void v0(); virtual void v1(int); };
+struct IVSurface_101af210 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59(); virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69(); virtual void v70(); virtual void v71(); virtual void v72(int *, int *); };
+IVInput_101af210 *sub_101ac8b0();
+IVSurface_101af210 *sub_101ac8d0();
+struct TEView_101af210 { char pad[0x70]; int m_i70; char m_b74; char m_b75; char pad2[0x8c - 0x76]; char m_b8c; char pad3[0x9c - 0x8d]; int m_i9c; int m_ia0; };
+void vgui2::TextEntry::vfunc87(int a)
+{
+	TEView_101af210 *v = (TEView_101af210 *)this;
+	if (a == 0) {
+		vfunc165();
+		int x, y;
+		sub_101ac8d0()->v72(&x, &y);
+		vfunc27(&x, &y);
+		v->m_b74 = v->m_b75;
+		int p = vfunc160(x, y);
+		v->m_i70 = p;
+		if (!p)
+			v->m_b75 = (char)p;
+		sub_101ac8b0()->v1(vfunc0());
+		v->m_b8c = 1;
+		if (v->m_i9c < 0)
+			v->m_i9c = v->m_i70;
+		v->m_ia0 = v->m_i70;
+		vfunc109();
+		vfunc15(0);
+		vfunc6();
+	} else if (a == 1) {
+		sub_101aefe0();
+		vfunc125();
 	}
 }
 // END FUNCTION
@@ -1871,6 +2089,77 @@ bool vgui2::TextEntry::vfunc158(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b0a10 size=0x196
+#include "vgui2__TextEntry.h"
+#include "vgui2__Menu.h"
+struct Surface_101b0a10
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38();
+	virtual void GetScreenSize(int *wide, int *tall);
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
+	virtual void v70(); virtual void v71();
+	virtual void GetCursorPos(int *x, int *y);
+};
+Surface_101b0a10 *sub_101ac8d0();
+// TARGET: vgui2::TextEntry::vfunc125
+void vgui2::TextEntry::vfunc125()
+{
+	vgui2::Menu *menu = *(vgui2::Menu **)((char *)this + 0xfc);
+	if (!menu)
+		return;
+	int cursorX, cursorY;
+	sub_101ac8d0()->GetCursorPos(&cursorX, &cursorY);
+	vgui2::Panel *top = this;
+	while (top->vfunc31())
+		top = (vgui2::Panel *)top->vfunc31();
+	top->vfunc27(&cursorX, &cursorY);
+	int px, py;
+	top->sub_101a98c0(&px, &py);
+	cursorX += px;
+	cursorY += py;
+	int s0, s1;
+	if (vfunc158((int)&s0, (int)&s1))
+	{
+		(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc124("&Cut", 1);
+		(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc124("C&opy", 1);
+	}
+	else
+	{
+		(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc124("&Cut", 0);
+		(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc124("C&opy", 0);
+	}
+	(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc21(1);
+	(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc15(0);
+	(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc57(1, 0);
+	int menuWide, menuTall;
+	(*(vgui2::Menu **)((char *)this + 0xfc))->sub_101a9920(&menuWide, &menuTall);
+	int wide, tall;
+	sub_101ac8d0()->GetScreenSize(&wide, &tall);
+	int y, x;
+	if (wide - menuWide > cursorX)
+	{
+		x = cursorX;
+		y = cursorY;
+		if (!(tall - menuTall > cursorY))
+			y -= menuTall;
+	}
+	else
+	{
+		y = cursorY;
+		if (!(tall - menuTall > cursorY))
+			y -= menuTall;
+		x = cursorX - menuWide;
+	}
+	(*(vgui2::Menu **)((char *)this + 0xfc))->sub_101a9890(x, y);
+	(*(vgui2::Menu **)((char *)this + 0xfc))->vfunc15(0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b0bb0 size=0x2a
 #include "vgui2__TextEntry.h"
 namespace lifted {
@@ -1883,6 +2172,80 @@ void vgui2::TextEntry::vfunc126()
         ((lifted::V *)this)->f129();
         ((lifted::V *)this)->f15(0);
     }
+}
+// END FUNCTION
+
+// FUNCTION: 0x101b0be0 size=0x1ae
+#include "vgui2__TextEntry.h"
+#include "utlvector.h"
+
+struct Sys_101b0be0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void vfunc6(const char *text, int len);
+};
+extern Sys_101b0be0 *sub_101ac8e0();
+extern void sub_101b1ec0(char *p, const char &src);
+struct GV_101b0be0
+{
+	void sub_101b1ee0(int num);
+	void sub_101b1e90(int elem, int num);
+};
+
+struct Dar_101b0be0
+{
+	int m_nCount;
+	int m_nAlloc;
+	char *m_pData;
+	char GetElement(int i) const
+	{
+		if (i < 0 || i >= m_nCount)
+			return 0;
+		return m_pData[i];
+	}
+};
+struct TEView_101b0be0
+{
+	char m_pad[0x58];
+	Dar_101b0be0 m_TextStream;
+};
+
+// TARGET: vgui2::TextEntry::vfunc127
+void vgui2::TextEntry::vfunc127()
+{
+	if (*((char *)this + 0x89))
+		return;
+	int x0, x1;
+	if (vfunc158((int)&x0, (int)&x1))
+	{
+		CUtlVector<char> buf;
+		for (int i = x0; i < x1; i++)
+		{
+			Dar_101b0be0 *pText = &((TEView_101b0be0 *)this)->m_TextStream;
+			if (!vfunc163(pText, &i))
+			{
+				char c = pText->GetElement(i);
+				int elem = buf.m_Size;
+				if (elem + 1 > buf.m_Memory.m_nAllocationCount)
+					((GV_101b0be0 *)&buf)->sub_101b1ee0(elem + 1 - buf.m_Memory.m_nAllocationCount);
+				buf.m_Size += 1;
+				buf.m_pElements = buf.m_Memory.m_pMemory;
+				((GV_101b0be0 *)&buf)->sub_101b1e90(elem, 1);
+				sub_101b1ec0(buf.m_Memory.m_pMemory + elem, c);
+			}
+		}
+		int elem = buf.m_Size;
+		if (elem + 1 > buf.m_Memory.m_nAllocationCount)
+			((GV_101b0be0 *)&buf)->sub_101b1ee0(elem + 1 - buf.m_Memory.m_nAllocationCount);
+		buf.m_Size += 1;
+		buf.m_pElements = buf.m_Memory.m_pMemory;
+		((GV_101b0be0 *)&buf)->sub_101b1e90(elem, 1);
+		char *p = buf.m_Memory.m_pMemory + elem;
+		if (p)
+			*p = 0;
+		sub_101ac8e0()->vfunc6(buf.Base(), x1 - x0);
+	}
+	vfunc15(0);
 }
 // END FUNCTION
 

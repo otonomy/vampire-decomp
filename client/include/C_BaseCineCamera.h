@@ -4,6 +4,7 @@
 #pragma once
 #include "C_BaseEntity.h"
 #include "Vector.h"
+#include "CBaseHandle.h"
 
 class C_BaseCineCamera : public C_BaseEntity
 {
@@ -19,14 +20,38 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_100019d0(QAngle *pAngles, Vector *pOrigin);	// the camera's angles (+0x474) and origin (+0x468)
 	char m_pad0014[0x410 - 0x14];
 	Vector m_v410;	// the target position
-	char m_pad041c[0x468 - 0x41c];
+	Vector m_v41c;
+	Vector m_v428;
+	CBaseHandle m_h434[4];
+	char m_pad0444[0x458 - 0x444];
+	float m_f458;
+	int m_n45c;
+	int m_n460;
+	char m_b464;
+	char m_b465;
+	char m_pad0466[2];
 	Vector m_v468;	// the camera position
-	char m_pad0474[0x4a4 - 0x474];
+	Vector m_v474;
+	float m_f480;
+	char m_pad0484[0x490 - 0x484];
+	union { int m_n490; float m_f490; };
+	int m_n494;
+	int m_n498;
+	char m_pad049c[4];
+	char m_b4a0;
+	char m_b4a1;
+	char m_c4a2;
+	char m_c4a3;
 	float m_f4a4;
 	float m_af4a8[6];
 	char m_b4c0;
 	char m_ab4c1[3];
 	float m_f4c4;
 	float sub_10001c80(int idx, float f, float d);
-	Vector sub_10001fe0(float dt);	// moves m_v468 toward m_v410, returns the new position
+	Vector sub_10001fe0(float dt);
+	Vector sub_10001d40(float dt);
+	void sub_10001fa0(float dt);
+	void sub_10001b50(struct CViewSetup *pView);
+	void sub_10001a20();
+	void sub_10002200(float dt);	// moves m_v468 toward m_v410, returns the new position
 };

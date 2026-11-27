@@ -18,6 +18,81 @@ void ClientModeShared::vfunc2()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d4040 size=0x196
+#include "ClientModeShared.h"
+#include "C_BasePlayer.h"
+#include "C_BaseCineCamera.h"
+#include "CInput.h"
+
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
+void sub_10108fd0(const Vector &start, float scale, const Vector &direction, Vector &dest);
+
+#define VMV(n) virtual void v##n();
+#define VMV10(p) VMV(p##0) VMV(p##1) VMV(p##2) VMV(p##3) VMV(p##4) VMV(p##5) VMV(p##6) VMV(p##7) VMV(p##8) VMV(p##9)
+struct WeaponView_100d4040
+{
+	VMV(0) VMV(1) VMV(2) VMV(3) VMV(4) VMV(5) VMV(6) VMV(7) VMV(8) VMV(9)
+	VMV10(1) VMV10(2) VMV10(3) VMV10(4) VMV10(5) VMV10(6) VMV10(7) VMV10(8) VMV10(9)
+	VMV10(10) VMV10(11) VMV10(12) VMV10(13) VMV10(14) VMV10(15) VMV10(16) VMV10(17) VMV10(18) VMV10(19)
+	VMV10(20) VMV10(21) VMV10(22) VMV10(23)
+	VMV(240) VMV(241) VMV(242) VMV(243)
+	virtual void vfunc244(void *cmd);
+	VMV(245) VMV(246)
+	virtual bool vfunc247();
+};
+struct VMRecord_100d4040 { char m_pad[8]; Vector m_vecOrigin; Vector m_ang1; Vector m_ang2; };
+struct ViewObj_100d4040
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual VMRecord_100d4040 *vfunc6(int);
+};
+extern ViewObj_100d4040 *g_102d43d8;
+WeaponView_100d4040 *sub_1009b210();
+
+// TARGET: ClientModeShared::vfunc15
+void ClientModeShared::vfunc15(int cmdp)
+{
+	char *cmd = (char *)cmdp;
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	WeaponView_100d4040 *pWeapon = sub_1009b210();
+	if (pWeapon)
+		pWeapon->vfunc244(cmd);
+	C_BaseCineCamera *pCam = 0;
+	if (pPlayer) {
+		pCam = (C_BaseCineCamera *)pPlayer->sub_100a7890();
+		if (pCam && pCam->sub_10001970())
+			input->vfunc33(cmd + 0x38, cmd + 0x50, cmd + 0x28);
+		else
+			input->vfunc31(cmd);
+	}
+	if (input->vfunc48()) {
+		cmd[0x16] = 1;
+		float a, b;
+		input->vfunc49(&a, &b);
+		a *= 0.5f;
+		b *= 0.5f;
+		*(float *)(cmd + 0x18) = -a;
+		*(float *)(cmd + 0x1c) = -b;
+		*(float *)(cmd + 0x20) = a;
+		*(float *)(cmd + 0x24) = b;
+	}
+	if (pCam && pCam->sub_10001970() && pCam->sub_100019a0())
+		return;
+	if (pWeapon && pWeapon->vfunc247()) {
+		for (int i = 0; i < 2; i++) {
+			VMRecord_100d4040 *p = g_102d43d8->vfunc6(i);
+			if (p) {
+				Vector fwd, right, up;
+				sub_101090a0(*(QAngle *)&p->m_ang2, &fwd, &right, &up);
+				sub_10108fd0(p->m_vecOrigin, p->m_ang2.x * -0.035f, fwd, p->m_vecOrigin);
+				sub_10108fd0(p->m_vecOrigin, p->m_ang2.x * -0.03f, right, p->m_vecOrigin);
+				sub_10108fd0(p->m_vecOrigin, p->m_ang2.x * -0.02f, up, p->m_vecOrigin);
+			}
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d41e0 size=0x5
 #include "ClientModeShared.h"
 bool ClientModeShared::vfunc11(int a0)

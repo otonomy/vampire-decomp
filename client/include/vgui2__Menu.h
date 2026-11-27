@@ -14,6 +14,8 @@ public:
 	void sub_101c0b10(int);
 	void sub_101c0990(int);
 	void sub_101bfc60();
+	void *sub_101c0050(int);
+	void sub_101c09f0(int);
 	void sub_101bfd10();
 	void sub_101bfe20();
 	virtual ~Menu();
@@ -54,7 +56,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc125();
 	virtual int vfunc126(int);
 	virtual int vfunc127(int);
-	virtual void vfunc128();
+	virtual void vfunc128(int);
+	void sub_101c0120(int);
 	virtual int vfunc129();
 	virtual int vfunc130(int);
 	virtual int vfunc131();

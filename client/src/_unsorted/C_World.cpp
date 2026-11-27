@@ -20,6 +20,54 @@ int C_World::vfunc15()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ca4c0 size=0x152
+#include "C_World.h"
+#include "CUtlLinkedList12.h"
+struct CUtlMemory12 { void sub_100caa80(int); };
+extern CUtlLinkedList12 g_104a56cc;
+extern void (__cdecl *g_101e310c)(const char *, ...);
+void sub_100ca9e0(void *p, void *src);
+void sub_10067f60();
+C_World::C_World()
+{
+	m_fCur = 0;
+	m_fUp = 5.0f;
+	m_fDown = 5.0f;
+	m_fTarget = 0;
+	C_World *src = this;
+	int elem;
+	if (g_104a56cc.m_FirstFree == -1)
+	{
+		if (g_104a56cc.m_NumAlloced == g_104a56cc.m_allocationCount)
+			((CUtlMemory12 *)&g_104a56cc)->sub_100caa80(1);
+		elem = g_104a56cc.m_NumAlloced++;
+		if (elem == -1)
+			g_101e310c("CUtlLinkedList overflow!\n");
+	}
+	else
+	{
+		elem = g_104a56cc.m_FirstFree;
+		g_104a56cc.m_FirstFree = g_104a56cc.m_pMemory[elem].m_Next;
+	}
+	g_104a56cc.m_pMemory[elem].m_Previous = elem;
+	g_104a56cc.m_pMemory[elem].m_Next = elem;
+	g_104a56cc.m_pElements = g_104a56cc.m_pMemory;
+	g_104a56cc.sub_100caa00(elem);
+	CUtlLinkedList12Node &n = g_104a56cc.m_pMemory[elem];
+	n.m_Next = -1;
+	n.m_Previous = g_104a56cc.m_Tail;
+	g_104a56cc.m_Tail = elem;
+	if (n.m_Previous == -1)
+		g_104a56cc.m_Head = elem;
+	else
+		g_104a56cc.m_pMemory[n.m_Previous].m_Next = elem;
+	g_104a56cc.m_ElementCount++;
+	sub_100ca9e0(&g_104a56cc.m_pMemory[elem], &src);
+	m_n410 = 0;
+	sub_10067f60();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ca620 size=0x3
 #include "C_World.h"
 int C_World::vfunc66()

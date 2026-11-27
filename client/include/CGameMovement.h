@@ -100,6 +100,7 @@ public:
 
 	Vector *sub_100e6f20();
 	void sub_100ed4d0();
+	void sub_100ecfe0(bool bMoveUp);
 	char sub_100ed190();
 	void sub_100ed850(float duckFraction);
 	void sub_100ed720();

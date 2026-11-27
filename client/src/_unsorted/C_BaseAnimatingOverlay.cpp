@@ -1,12 +1,23 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x100971d0 size=0x3f
+#include "C_BaseAnimatingOverlay.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+// TARGET: ??0C_BaseAnimatingOverlay@@QAE@XZ
+C_BaseAnimatingOverlay::C_BaseAnimatingOverlay()
+{
+	memset((char *)this + 0x790, 0, 0x390);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10097210 size=0x1e
 #include "C_BaseAnimatingOverlay.h"
 
 // VC6 writes C_BaseAnimatingOverlay's scalar deleting destructor where it emits the class's vtable; `new` in a function
 // nothing calls makes it emit both here
-C_BaseAnimatingOverlay *pcd_emit_10097210() { return new C_BaseAnimatingOverlay; }
+C_BaseAnimatingOverlay *pcd_emit_10097210(const C_BaseAnimatingOverlay &other) { return new C_BaseAnimatingOverlay(other); }
 
 // TARGET: ??_GC_BaseAnimatingOverlay@@UAEPAXI@Z
 // END FUNCTION

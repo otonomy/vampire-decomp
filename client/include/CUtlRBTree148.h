@@ -35,6 +35,7 @@ public:
 	bool sub_100cf230(unsigned short i) const;	// "CUtlRBTree::IsLeftChild"
 	Links_t &sub_100ce920(unsigned short i);	// "CUtlRBTree::Links" (out of line, with the sentinel static)
 	void sub_100cfa20(unsigned short elem);	// "CUtlRBTree::RotateLeft"
+	void sub_100cf300(unsigned short elem);	// "CUtlRBTree::RotateRight"
 	void sub_100cf4e0(unsigned short elem);	// "CUtlRBTree::InsertRebalance"
 	unsigned short Parent(unsigned short i) { return sub_100ce920(i).m_Parent; }
 	unsigned short LeftChild(unsigned short i) { return sub_100ce920(i).m_Left; }

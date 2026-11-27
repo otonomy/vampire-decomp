@@ -1,6 +1,16 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x10005710 size=0x84
+#include "C_PlasmaBeamNode.h"
+CSmartPtr<CPlasmaSpray> sub_10005480(const char *name);
+C_PlasmaBeamNode::C_PlasmaBeamNode()
+{
+	m_bSprayOn = false;
+	m_pFirePlasmaSpray = (CPlasmaSpray *)sub_10005480("C_PlasmaBeamNode");
+}
+// END FUNCTION
+
 // FUNCTION: 0x100057a0 size=0x1e
 #include "C_PlasmaBeamNode.h"
 

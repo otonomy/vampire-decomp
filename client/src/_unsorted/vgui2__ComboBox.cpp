@@ -1,6 +1,48 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101c7820 size=0xcd
+#include "vgui2__ComboBox.h"
+struct ComboMenuView : public vgui2::Panel
+{
+	ComboMenuView *sub_101bf420(vgui2::Panel *parent, const char *name);
+};
+struct ComboButtonView : public vgui2::Panel
+{
+	ComboButtonView *sub_101c7660(vgui2::Panel *parent, const char *name, const char *text);
+	virtual void p107(); virtual void p108(); virtual void p109(); virtual void p110(); virtual void p111();
+	virtual void p112(); virtual void p113(); virtual void p114(); virtual void p115(); virtual void p116();
+	virtual void p117(); virtual void p118(); virtual void p119(); virtual void p120(); virtual void p121();
+	virtual void p122(); virtual void p123(); virtual void p124(); virtual void p125(); virtual void p126();
+	virtual void p127(); virtual void p128(); virtual void p129(); virtual void p130(); virtual void p131();
+	virtual void p132(); virtual void p133(); virtual void p134(); virtual void p135(); virtual void p136();
+	virtual void p137(); virtual void p138(); virtual void p139(); virtual void p140(); virtual void p141();
+	virtual void p142(); virtual void p143(); virtual void p144(); virtual void p145(); virtual void p146();
+	virtual void p147(); virtual void p148(); virtual void p149(); virtual void p150(); virtual void p151();
+	virtual void p152(); virtual void p153(); virtual void p154(); virtual void p155(); virtual void p156();
+	virtual void p157(); virtual void p158(); virtual void p159(); virtual void p160(); virtual void p161();
+	virtual void vfunc162(const char *);
+};
+// TARGET: ??0ComboBox@vgui2@@QAE@PAVPanel@1@PBDH_N@Z
+vgui2::ComboBox::ComboBox(vgui2::Panel *parent, const char *name, int numLines, bool editable) : vgui2::TextEntry(parent, name)
+{
+	vfunc134(editable);
+	sub_101afed0(0);
+	ComboMenuView *&menu = *(ComboMenuView **)((char *)this + 0x12c);
+	ComboMenuView *m = (ComboMenuView *)vgui2::Panel::operator new(0x90);
+	menu = m ? m->sub_101bf420(this, 0) : 0;
+	menu->vfunc21(0);
+	menu->vfunc41((int)this);
+	ComboButtonView *&btn = *(ComboButtonView **)((char *)this + 0x130);
+	ComboButtonView *b = (ComboButtonView *)vgui2::Panel::operator new(0xf0);
+	btn = b ? b->sub_101c7660(this, 0, "u") : 0;
+	btn->vfunc162("ButtonClicked");
+	btn->vfunc41((int)this);
+	sub_101c7950(numLines);
+	*(char *)((char *)this + 0x134) = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c78f0 size=0x1e
 #include "vgui2__ComboBox.h"
 
@@ -401,6 +443,81 @@ int vgui2::ComboBox::vfunc183()
         return ((lifted::V *)this)->f15(0);
     }
     return ((lifted::V *)(*(int *)((char *)this + 0x130)))->f138(0);
+}
+// END FUNCTION
+
+// FUNCTION: 0x101c7e40 size=0x1c1
+#include "vgui2__ComboBox.h"
+#include "vgui2__Menu.h"
+extern "C" int strcmp(const char *, const char *);
+#pragma intrinsic(strcmp)
+struct SlotV
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
+	virtual void v70(); virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74(); virtual void v75(); virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79();
+	virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84(); virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89();
+	virtual void v90(); virtual void v91(); virtual void v92(); virtual void v93(); virtual void v94(); virtual void v95(); virtual void v96(); virtual void v97(); virtual void v98(); virtual void v99();
+	virtual void v100(); virtual void v101(); virtual void v102(); virtual void v103(); virtual void v104(); virtual void v105(); virtual void v106(); virtual void v107(); virtual void v108();
+	virtual void v109(char *, int);
+	virtual void v110(); virtual void v111(); virtual void v112(); virtual void v113(); virtual void v114(); virtual void v115(); virtual void v116(); virtual void v117(); virtual void v118(); virtual void v119();
+	virtual void v120(); virtual void v121(); virtual void v122(); virtual void v123(); virtual void v124(); virtual void v125(); virtual void v126(); virtual void v127(); virtual void v128(); virtual void v129();
+	virtual void v130(); virtual void v131(); virtual void v132(); virtual void v133(); virtual void v134(); virtual void v135(); virtual void v136(); virtual void v137();
+	virtual void v138(int);
+	virtual void v139(); virtual void v140(); virtual void v141(); virtual void v142(); virtual void v143(); virtual void v144(); virtual void v145(); virtual void v146(); virtual void v147(); virtual void v148(); virtual void v149();
+	virtual void v150(); virtual void v151(); virtual void v152(); virtual void v153(); virtual void v154(); virtual void v155(); virtual void v156(); virtual void v157(); virtual void v158(); virtual void v159();
+	virtual void v160(); virtual void v161(); virtual void v162(); virtual void v163(); virtual void v164(); virtual void v165(); virtual void v166(); virtual void v167(); virtual void v168(); virtual void v169();
+	virtual void v170(); virtual void v171(); virtual void v172();
+	virtual void v173(int);
+	virtual void v174(); virtual void v175(); virtual void v176(); virtual void v177(); virtual void v178(); virtual void v179(); virtual void v180(); virtual void v181();
+	virtual void v182();
+};
+struct CUnknown101b1780 { int sub_101b1780(); };
+#define M (*(vgui2::Menu **)((char *)this + 0x12c))
+// TARGET: vgui2::ComboBox::vfunc184
+void vgui2::ComboBox::vfunc184()
+{
+	if ((char)M->vfunc22())
+	{
+		((SlotV *)this)->v182();
+		return;
+	}
+	if (M->vfunc47())
+	{
+		M->vfunc101();
+		for (int i = 0; i < M->vfunc129(); i++)
+		{
+			char buf[256];
+			char buf2[256];
+			SlotV *item = (SlotV *)M->sub_101c0050(i);
+			item->v109(buf, 0xff);
+			vfunc108(0, buf2, 0xff);
+			if (strcmp(buf, buf2) == 0)
+			{
+				if (i >= 0)
+					M->sub_101c09f0(i);
+				break;
+			}
+		}
+		int x, y;
+		sub_101a9920(&x, &y);
+		x = 0;
+		vfunc26(&x, &y);
+		M->sub_101a9890(x, y + 1);
+		M->vfunc126(sub_101ab130());
+		vfunc49();
+		((SlotV *)this)->v173((int)M);
+		M->vfunc21(1);
+		M->vfunc15(0);
+		((CUnknown101b1780 *)this)->sub_101b1780();
+		((SlotV *)*(void **)((char *)this + 0x130))->v138(1);
+		vfunc5();
+	}
 }
 // END FUNCTION
 

@@ -17,5 +17,6 @@ public:
 		// stub 0x100047ff: whether the projectile description is in use
 	void sub_10147f40();	// prints the description with Msg ("[Projectile]:", speed, model, particle, "ParticleDiesOnHit: True"); nothing when sub_101dd4f0() is false
 	void sub_10147e30();	// the constructor body (stub 0x10008ec7)
+	char sub_10147e90(IKVNodeView *pKV);	// loads the description from the "Projectile" child
 		// loads the description from the "Projectile" child of the node (Speed, Model, Particle, ParticleDiesOnHit, "Syncs" flag at +0xd, the SoundFX list at +0x10 and the interrupt effects at +0x20) and precaches the model; false for a null node
 };

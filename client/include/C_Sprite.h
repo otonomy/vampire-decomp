@@ -18,6 +18,13 @@ public:
 	virtual int vfunc16();
 	virtual int vfunc17();
 	virtual void OnDataChanged(int updateType);
+	virtual int DrawModel(int flags, int a1);
 	float vfunc121();
+	virtual void vfunc120(const char *);
+	virtual float vfunc121_slot();
 	virtual int vfunc122();
+	virtual void vfunc19();
+	void sub_10136580(int, int);
+	void sub_101365a0(float, int);
+	void sub_101365d0();
 };

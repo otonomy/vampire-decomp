@@ -131,6 +131,172 @@ CSoundPatch *CUnknown101349e0::sub_101349e0(void *filter, int nEntIndex, const c
 }
 // END FUNCTION
 
+// FUNCTION: 0x10134ab0 size=0xee
+#include "CSoundControllerImp.h"
+#include "Pool.h"
+#include "CBaseHandle.h"
+#include "CBaseEntityList.h"
+
+extern Pool g_105e5aac;
+
+inline IHandleEntity *CBaseHandle::Get() const
+{
+	if (IsValid())
+	{
+		const CBaseEntityListEntry *pInfo = &g_pEntityList->m_EntPtrArray[GetEntryIndex()];
+		if (pInfo->m_SerialNumber == GetSerialNumber())
+			return (IHandleEntity *)pInfo->m_pEntity;
+	}
+	return 0;
+}
+
+inline CBaseHandle GetNetworkableHandle(int nEntIndex)
+{
+	if (g_pEntityList->m_EntPtrArray[nEntIndex].m_pEntity)
+		return CBaseHandle(nEntIndex, g_pEntityList->m_EntPtrArray[nEntIndex].m_SerialNumber);
+	else
+		return CBaseHandle();
+}
+
+struct CSoundEnvelope
+{
+	float m_current;
+	float m_dest;
+	float m_delta;
+	bool m_active;
+
+	CSoundEnvelope()
+	{
+		m_current = 0.0f;
+		m_dest = 0.0f;
+		m_delta = 0.0f;
+		m_active = false;
+	}
+};
+
+struct CUnknown101bcef0
+{
+	char m_pad[0x28];
+	void sub_101347f0();
+	CUnknown101bcef0() { sub_101347f0(); }
+};
+
+struct CSoundPatch
+{
+	CSoundEnvelope m_pitch;
+	CSoundEnvelope m_volume;
+	int m_pad20[3];
+	const char *m_iszSoundName;
+	CBaseHandle m_hEntity;
+	int m_pad34[4];
+	CUnknown101bcef0 m_filter;
+
+	CSoundPatch()
+	{
+		m_iszSoundName = 0;
+	}
+
+	static void *operator new(unsigned int nSize)
+	{
+		return g_105e5aac.sub_1010e3e0(nSize);
+	}
+
+	void sub_101337a0(void *filter, IHandleEntity *pEnt, int channel, const char *pSoundName, int soundlevel);
+};
+
+// TARGET: CSoundControllerImp::vfunc7
+CSoundPatch *CSoundControllerImp::vfunc7(void *filter, int nEntIndex, int channel, const char *pSoundName, float flAttenuation)
+{
+	CSoundPatch *pSound = new CSoundPatch;
+	CBaseHandle hEnt = nEntIndex != -1 ? GetNetworkableHandle(nEntIndex) : CBaseHandle(0, 0);
+	pSound->sub_101337a0(filter, hEnt.Get(), channel, pSoundName, (int)(flAttenuation != 0.0f ? 20.0f / flAttenuation + 50.0f : 0.0f));
+	return pSound;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10134ba0 size=0xc9
+#include "CSoundControllerImp.h"
+#include "Pool.h"
+#include "CBaseHandle.h"
+#include "CBaseEntityList.h"
+
+extern Pool g_105e5aac;
+
+inline IHandleEntity *CBaseHandle::Get() const
+{
+	if (IsValid())
+	{
+		const CBaseEntityListEntry *pInfo = &g_pEntityList->m_EntPtrArray[GetEntryIndex()];
+		if (pInfo->m_SerialNumber == GetSerialNumber())
+			return (IHandleEntity *)pInfo->m_pEntity;
+	}
+	return 0;
+}
+
+inline CBaseHandle GetNetworkableHandle(int nEntIndex)
+{
+	if (g_pEntityList->m_EntPtrArray[nEntIndex].m_pEntity)
+		return CBaseHandle(nEntIndex, g_pEntityList->m_EntPtrArray[nEntIndex].m_SerialNumber);
+	else
+		return CBaseHandle();
+}
+
+struct CSoundEnvelope
+{
+	float m_current;
+	float m_dest;
+	float m_delta;
+	bool m_active;
+
+	CSoundEnvelope()
+	{
+		m_current = 0.0f;
+		m_dest = 0.0f;
+		m_delta = 0.0f;
+		m_active = false;
+	}
+};
+
+struct CUnknown101bcef0
+{
+	char m_pad[0x28];
+	void sub_101347f0();
+	CUnknown101bcef0() { sub_101347f0(); }
+};
+
+struct CSoundPatch
+{
+	CSoundEnvelope m_pitch;
+	CSoundEnvelope m_volume;
+	int m_pad20[3];
+	const char *m_iszSoundName;
+	CBaseHandle m_hEntity;
+	int m_pad34[4];
+	CUnknown101bcef0 m_filter;
+
+	CSoundPatch()
+	{
+		m_iszSoundName = 0;
+	}
+
+	static void *operator new(unsigned int nSize)
+	{
+		return g_105e5aac.sub_1010e3e0(nSize);
+	}
+
+	void sub_101337a0(void *filter, IHandleEntity *pEnt, int channel, const char *pSoundName, int soundlevel);
+};
+
+// TARGET: CSoundControllerImp::vfunc6
+CSoundPatch *CSoundControllerImp::vfunc6(void *filter, int nEntIndex, int channel, const char *pSoundName, int soundlevel)
+{
+	CSoundPatch *pSound = new CSoundPatch;
+	CBaseHandle hEnt = nEntIndex != -1 ? GetNetworkableHandle(nEntIndex) : CBaseHandle(0, 0);
+	pSound->sub_101337a0(filter, hEnt.Get(), channel, pSoundName, soundlevel);
+	return pSound;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10134c70 size=0x75
 #include "CSoundControllerImp.h"
 

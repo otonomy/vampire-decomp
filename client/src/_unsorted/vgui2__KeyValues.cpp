@@ -40,6 +40,35 @@ int vgui2::KeyValues::vfunc1()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b5810 size=0xda
+#include "vgui2__KeyValues.h"
+#include "engineclient.h"
+struct KVSymTab { virtual void s0(); virtual void s1(); virtual void s2(); virtual int Find(const char *); };
+KVSymTab *sub_101ac930();
+char *sub_101b58f0(char **, int *);
+// TARGET: vgui2::KeyValues::vfunc2
+bool vgui2::KeyValues::vfunc2(void *pfs, const char *filename, const char *pathID)
+{
+    EngineGlobals::IFileSystem *fs = (EngineGlobals::IFileSystem *)pfs;
+    int f = fs->Open(filename, "rb", pathID);
+    if (!f)
+        return false;
+    int size = fs->vfunc6(f);
+    char *buf = new char[size];
+    char *p = buf;
+    fs->vfunc2(buf, size, f);
+    char *tok = sub_101b58f0(&p, &size);
+    if (tok)
+        m_unk4 = sub_101ac930()->Find(tok);
+    tok = sub_101b58f0(&p, &size);
+    if (m_unk4 > -1 && tok && *tok == '{')
+        sub_101b5ac0((char *)&p, (int)&size);
+    fs->Close(f);
+    delete[] buf;
+    return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b6280 size=0xf5
 #include <string.h>
 #include "vgui2__KeyValues.h"

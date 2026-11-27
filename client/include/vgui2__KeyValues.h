@@ -12,6 +12,8 @@ public:
     KeyValues(const char *, const char *, int);
     KeyValues(const char *, const char *, const char *);
     ~KeyValues();
+    void sub_101b5ac0(char *, int);
+    void sub_101b5ba0(char *, int);
     int m_unk4;
     void *m_pName;
     union { int m_unkc; float m_flValue; };
@@ -21,7 +23,7 @@ public:
     // the slots KeyValues adds to its base's vtable: 0-21, vfuncK at slot K
     virtual int vfunc0();
     virtual int vfunc1();
-    virtual void vfunc2();
+    virtual bool vfunc2(void *, const char *, const char *);
     virtual void vfunc3();
     virtual KeyValues *vfunc4(const char *keyName, bool bCreate);
     virtual void vfunc5();

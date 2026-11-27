@@ -24,3 +24,30 @@ CUtlRBTree<char const *, unsigned short>::Links(unsigned short i) const
 	return (i != InvalidIndex()) ? *(Links_t *)&m_Elements[i] : *(Links_t *)&s_Sentinel;
 }
 // END FUNCTION
+
+// FUNCTION: 0x10138830 size=0x1bc
+#include "utlrbtree.h"
+
+// TARGET: ?RotateLeft@?$CUtlRBTree@PBDG@@QAEXG@Z
+void CUtlRBTree<const char *, unsigned short>::RotateLeft(unsigned short elem)
+{
+	unsigned short rightchild = RightChild(elem);
+	SetRightChild(elem, LeftChild(rightchild));
+	if (LeftChild(rightchild) != InvalidIndex())
+		SetParent(LeftChild(rightchild), elem);
+
+	if (rightchild != InvalidIndex())
+		SetParent(rightchild, Parent(elem));
+	if (!IsRoot(elem)) {
+		if (IsLeftChild(elem))
+			SetLeftChild(Parent(elem), rightchild);
+		else
+			SetRightChild(Parent(elem), rightchild);
+	} else
+		m_Root = rightchild;
+
+	SetLeftChild(rightchild, elem);
+	if (elem != InvalidIndex())
+		SetParent(elem, rightchild);
+}
+// END FUNCTION

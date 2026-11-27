@@ -9,6 +9,7 @@ class CParticleEffect : public IParticleEffect
 public:
 	virtual ~CParticleEffect();
 	void sub_10117fd0();
+	void sub_10118080(const class Vector *);
 	void sub_10118060(int);
 	int sub_10117fc0();
 	void vfunc5(int);

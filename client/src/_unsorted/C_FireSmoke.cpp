@@ -71,3 +71,14 @@ C_FireSmoke::~C_FireSmoke()
 	}
 }
 // END FUNCTION
+
+// FUNCTION: 0x100b5590 size=0x1b
+#include "C_FireSmoke.h"
+void C_FireSmoke::vfunc37()
+{
+	if (m_nFlags & 1) {
+		sub_100b5d90();
+		sub_100b55b0();
+	}
+}
+// END FUNCTION
