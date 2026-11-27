@@ -6464,6 +6464,7 @@
 0x1010f220 func   ?vfunc14@IMoveHelper@@QAEPAXD@Z IMoveHelper::vfunc14
 0x1010f250 func   ?sub_1010f250@@YGHH@Z sub_1010f250
 0x1010f260 func   ?vfunc1@CMoveHelperClient@@UAEXXZ CMoveHelperClient::vfunc1
+0x1010f270 func   ?vfunc2@CMoveHelperClient@@UAE_NABUCGameTrace@@ABVVector@@@Z CMoveHelperClient::vfunc2
 0x1010f390 func   ?sub_1010f390@SCopy@@QAEAAU1@ABU1@@Z SCopy::sub_1010f390
 0x1010f3e0 func   ?vfunc3@CMoveHelperClient@@UAEXXZ CMoveHelperClient::vfunc3
 0x1010f3f0 func   ?vfunc22@CMoveHelperClient@@QAEHABVVector@@@Z CMoveHelperClient::vfunc22
