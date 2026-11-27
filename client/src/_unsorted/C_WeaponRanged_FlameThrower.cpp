@@ -31,6 +31,25 @@ int C_WeaponRanged_FlameThrower::vfunc15()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100277b0 size=0x90
+#include "C_WeaponRanged_FlameThrower.h"
+#include "engineclient.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+// TARGET: ??0C_WeaponRanged_FlameThrower@@QAE@XZ
+C_WeaponRanged_FlameThrower::C_WeaponRanged_FlameThrower()
+{
+	m_i156c = -1;
+	m_f157c = (float)engine->Time(0);
+	m_i1574 = 0;
+	m_i1570 = 0;
+	memset(m_a978, 0, sizeof(m_a978));
+	memset(m_iList, 0, sizeof(m_iList));
+	m_i1534 = 0;
+	m_i1530 = 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10027840 size=0x1e
 #include "C_WeaponRanged_FlameThrower.h"
 
