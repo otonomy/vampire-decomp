@@ -124,6 +124,49 @@ void C_TEGunshotDecal::vfunc18(CGameTrace *pTrace)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10039470 size=0x1a9
+#include "C_TEGunshotDecal.h"
+#include "CClientEntityList.h"
+#include "engineclient.h"
+#include "CGameTrace.h"
+#include "ConVar.h"
+
+extern ConVar *g_105fb29c;
+void sub_1002d8f0(CGameTrace *trace, Vector *color);
+void sub_1002dab0(CGameTrace *trace, Vector *color);
+void sub_100b44c0(void *ent, Vector pos, int decal, int hitbox, Vector normal, Vector up, float r, float g, float b, int a);
+void sub_100b42a0(Vector pos, int decal, Vector normal, Vector up, float r, float g, float b, int a);
+
+#define GD_TYPEID (*(int *)&m_v4.x)
+
+// TARGET: C_TEGunshotDecal::vfunc17
+void C_TEGunshotDecal::vfunc17(CGameTrace *pTrace, Vector *pDir, bool bStaticProp)
+{
+	Vector up(0, 0, 1.0f);
+	C_BaseEntity *ent = cl_entitylist->sub_100d0cf0(*(int *)&m_v3.x);
+	if (ent && *(int *)((char *)ent + 0x3f0))
+	{
+		int decal = engine->vfunc1(m_unk38, GD_TYPEID);
+		if (decal)
+		{
+			Vector color;
+			sub_1002d8f0(pTrace, &color);
+			sub_100b44c0(ent, m_v1, decal, *(int *)&m_v3.y, *(Vector *)((char *)pTrace + 0x18), up, color.x, color.y, color.z, m_unk3c);
+		}
+	}
+	else if (!g_105fb29c->vfunc1() && g_105fb29c->m_nValue)
+	{
+		int decal = engine->vfunc1(m_unk38, GD_TYPEID);
+		if (decal)
+		{
+			Vector color;
+			sub_1002dab0(pTrace, &color);
+			sub_100b42a0(m_v1, decal, *(Vector *)((char *)pTrace + 0x18), up, color.x, color.y, color.z, m_unk3c);
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10039620 size=0xba
 #include "engineclient.h"
 #include "C_TEGunshotDecal.h"

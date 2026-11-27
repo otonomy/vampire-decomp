@@ -2423,6 +2423,7 @@
 0x100390a0 func   ?vfunc0@CRagdollBulletEnumerator@@UAEHPAVCBaseEntity@@@Z CRagdollBulletEnumerator::vfunc0
 0x10039190 func   ?PostDataUpdate@C_TEGunshotDecal@@UAEXH@Z C_TEGunshotDecal::PostDataUpdate
 0x10039460 func   ?sub_10039460@@YGXH@Z sub_10039460
+0x10039470 func   ?vfunc17@C_TEGunshotDecal@@UAEXPAUCGameTrace@@PAVVector@@_N@Z C_TEGunshotDecal::vfunc17
 0x10039620 func   ?vfunc16@C_TEGunshotDecal@@UAEXHH@Z C_TEGunshotDecal::vfunc16
 0x100396e0 func   ?vfunc9@C_TEGunshotDecal@@UAEHXZ C_TEGunshotDecal::vfunc9
 0x100396f0 func   ?vfunc8@C_TEGunshotDecal@@UAEHXZ C_TEGunshotDecal::vfunc8
