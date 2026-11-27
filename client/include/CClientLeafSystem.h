@@ -21,6 +21,8 @@ public:
     void sub_100d2560(unsigned int, unsigned short);
     void sub_100d2800(unsigned short, float *, float *);
     void vfunc23();
+    void vfunc18(unsigned short);
+    void sub_100d2220(unsigned short);
 public:
     int vfunc10(int, int, int);
     void vfunc13(void *a1, int leaf, int a3, void *info);
