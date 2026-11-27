@@ -53853,6 +53853,22 @@ void C_BaseEntity::sub_100a2580()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a25b0 size=0x33
+#include "C_BaseEntity.h"
+#include "CPredictableList.h"
+
+extern CPredictableList g_1049e33c;
+
+// TARGET: C_BaseEntity::sub_100a25b0
+void C_BaseEntity::sub_100a25b0()
+{
+	sub_100a25f0(1);
+	sub_100a2ee0();
+	g_1049e33c.sub_1009d0e0(*(CBaseHandle *)((char *)this + 0xe4));
+	sub_100a2760(0, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a25f0 size=0xd
 struct CUnknown100a25f0 { char sub_100a25f0(char); };
 char CUnknown100a25f0::sub_100a25f0(char a0)
