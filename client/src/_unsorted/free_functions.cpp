@@ -42215,6 +42215,49 @@ int C_BaseCombatWeapon::sub_1007d520(C_BasePlayer *pPlayer, int a2, bool bSell)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007d600 size=0x155
+#include "C_BaseCombatWeapon.h"
+#include "CUnknown1014ada0.h"
+#include "C_BasePlayer.h"
+struct VWpnInfoY { char m_pad2558[0x2558]; int m_n2558; char m_pad255c[0x266c - 0x255c]; int m_n266c; char m_pad2670[0x4feb0 - 0x2670]; int m_n4feb0; };
+struct SCurve6caa0 { float sub_101601a0(int level); };
+struct StatOwner { int sub_10160500(const char *name); SCurve6caa0 *sub_10160590(int id); };
+struct PlayerLevelX { int sub_1008ebb0(); };
+extern int g_105e8138;
+extern CUnknown1014ada0 **g_105e813c;
+extern StatOwner g_105f985c;
+
+inline CUnknown1014ada0 *FindFeat(int nType)
+{
+	for (int i = 0; i < g_105e8138; i++)
+	{
+		if (g_105e813c[i]->m_unk00 == nType)
+			return g_105e813c[i];
+	}
+	static CUnknown1014ada0 s_Default(-1);
+	return &s_Default;
+}
+
+// TARGET: C_BaseCombatWeapon::sub_1007d600
+int C_BaseCombatWeapon::sub_1007d600(C_BasePlayer *pPlayer, int a2, bool bFlag)
+{
+	float flPrice;
+	if (bFlag)
+		flPrice = (float)((VWpnInfoY *)sub_1007b160())->m_n266c;
+	else
+		flPrice = (float)((VWpnInfoY *)sub_1007b160())->m_n2558;
+	int nLevel = FindFeat(5)->sub_1014b3b0(pPlayer) - 1;
+	static int s_nBuy = g_105f985c.sub_10160500("Barter_Buy_Adjustment");
+	flPrice *= g_105f985c.sub_10160590(s_nBuy)->sub_101601a0(nLevel);
+	if (((VWpnInfoY *)sub_1007b160())->m_n4feb0)
+	{
+		static int s_nClass = g_105f985c.sub_10160500("Barter_Class_Discount");
+		flPrice *= g_105f985c.sub_10160590(s_nClass)->sub_101601a0(((PlayerLevelX *)pPlayer)->sub_1008ebb0() - 2);
+	}
+	return (int)flPrice;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007d790 size=0x5a
 #include "C_BaseCombatWeapon.h"
 
