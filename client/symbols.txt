@@ -8940,6 +8940,7 @@
 0x1017b160 func   ??_GVRButton@@UAEPAXI@Z ??_GVRButton@@UAEPAXI@Z
 0x1017b180 func   ??1VRButton@@UAE@XZ VRButton::~VRButton
 0x1017b180 func   ?sub_1017b180@CUnknown1017b180@@QAEHXZ CUnknown1017b180::sub_1017b180
+0x1017b190 func   ?vfunc74@VRButton@@UAEHH@Z VRButton::vfunc74
 0x1017b270 func   ?sub_1017b270@CUnknown1017b270@@QAEHH@Z CUnknown1017b270::sub_1017b270
 0x1017b280 func   ?vfunc143@VRButton@@UAEXD@Z VRButton::vfunc143
 0x1017b2d0 func   ?vfunc85@VRButton@@UAEXXZ VRButton::vfunc85

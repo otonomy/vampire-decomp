@@ -11,6 +11,37 @@ VRButton *pcd_emit_1017b160(const VRButton &other) { return new VRButton(other);
 // TARGET: ??_GVRButton@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x1017b190 size=0xdf
+#include "VRButton.h"
+struct SchemeView {
+	virtual void v0(); virtual void v1(); virtual void v2();
+	virtual void *GetBorder(const char *name);
+};
+struct V60 {
+#define D8(n) virtual void n##a(); virtual void n##b(); virtual void n##c(); virtual void n##d(); virtual void n##e(); virtual void n##f(); virtual void n##g(); virtual void n##h();
+	D8(a) D8(b) D8(c) D8(d) D8(e) D8(f) D8(g)
+	virtual void x0(); virtual void x1(); virtual void x2(); virtual void x3();
+	virtual int f60(void *);
+};
+int VRButton::vfunc74(int a)
+{
+	Button::vfunc74(a);
+	SchemeView *s = (SchemeView *)a;
+	struct { unsigned char r, g, b, a; } c;
+	int t;
+	c.a = 0xff;
+	c.r = 0x52;
+	c.g = 0x52;
+	c.b = 0x52;
+	vfunc51(*(int *)&c);
+	vfunc153(*(unsigned int *)vfunc53((int)&t), *(unsigned int *)vfunc52((int)&c));
+	vfunc154(*(unsigned int *)vfunc53((int)&t), *(unsigned int *)vfunc52((int)&c));
+	vfunc155(*(unsigned int *)vfunc53((int)&t), *(unsigned int *)vfunc52((int)&c));
+	void *b = s->GetBorder("CharEditBorder");
+	return ((V60 *)this)->f60(b);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017b280 size=0x4e
 #include "VRButton.h"
 
