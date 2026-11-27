@@ -6384,6 +6384,7 @@
 0x1010cb80 func   ?sub_1010cb80@@YAHXZ sub_1010cb80
 0x1010cbb0 func   ??_GCMultiplyProxy@@UAEPAXI@Z ??_GCMultiplyProxy@@UAEPAXI@Z
 0x1010cbd0 func   ?vfunc0@CDivideProxy@@UAE_NPAX0@Z CDivideProxy::vfunc0
+0x1010cc00 func   ?vfunc1@CDivideProxy@@UAEXH@Z CDivideProxy::vfunc1
 0x1010cd60 func   ?sub_1010cd60@@YAHXZ sub_1010cd60
 0x1010cd90 func   ??_GCDivideProxy@@UAEPAXI@Z ??_GCDivideProxy@@UAEPAXI@Z
 0x1010cdb0 func   ?vfunc0@CClampProxy@@UAE_NPAX0@Z CClampProxy::vfunc0
