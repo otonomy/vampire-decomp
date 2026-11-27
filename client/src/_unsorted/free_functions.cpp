@@ -42258,6 +42258,17 @@ int C_BaseCombatWeapon::sub_1007d600(C_BasePlayer *pPlayer, int a2, bool bFlag)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1007d760 size=0x24
+#include "C_BaseCombatWeapon.h"
+#include "C_BasePlayer.h"
+struct PlayerMoneyX { char m_pad[0x14c8]; int m_nMoney; };
+// TARGET: C_BaseCombatWeapon::sub_1007d760
+char C_BaseCombatWeapon::sub_1007d760(C_BasePlayer *pPlayer, int a2, bool bFlag)
+{
+	return ((PlayerMoneyX *)pPlayer)->m_nMoney >= sub_1007d600(pPlayer, a2, bFlag);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007d790 size=0x5a
 #include "C_BaseCombatWeapon.h"
 
