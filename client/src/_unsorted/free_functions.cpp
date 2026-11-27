@@ -62593,6 +62593,35 @@ int sub_100bd530()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100bd540 size=0x66
+#include "engineclient.h"
+#include "C_PlayerResource.h"
+extern "C" __declspec(dllimport) char *__cdecl Q_strncpy(char *, const char *, int);
+struct PlayerInfoView { int m_unk0; char *m_name; int m_unk8; };
+struct PRNet {
+    char pad[0x720];
+    char m_szNames[32][0x20];
+    char pad2[0xd50 - 0x720 - 0x400];
+    char m_bConnected[32];
+    void sub_100bd540(int updateType);
+};
+// TARGET: PRNet::sub_100bd540
+void PRNet::sub_100bd540(int updateType)
+{
+    ((C_BaseEntity *)((char *)this - 8))->C_BaseEntity::OnDataChanged(updateType);
+    for (int i = 0; i < 32; i++) {
+        if (m_bConnected[i]) {
+            PlayerInfoView info;
+            engine->vfunc30(i, (void *)&info);
+            if (info.m_name)
+                Q_strncpy(m_szNames[i], info.m_name, 0x20);
+            else
+                m_szNames[i][0] = 0;
+        }
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x100bd720 size=0x6
 namespace lifted {
 extern char g_104a3a08;

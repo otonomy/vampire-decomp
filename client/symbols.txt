@@ -4834,6 +4834,7 @@
 0x100bd4c0 func   ?sub_100bd4c0@PRView@@QAEHH@Z PRView::sub_100bd4c0
 0x100bd4f0 func   ?vfunc127@C_PlayerResource@@UAEHH@Z C_PlayerResource::vfunc127
 0x100bd530 func   ?sub_100bd530@@YAHXZ sub_100bd530
+0x100bd540 func   ?sub_100bd540@PRNet@@QAEXH@Z PRNet::sub_100bd540
 0x100bd5b0 func   ?vfunc128@C_PlayerResource@@UAEPBDH@Z C_PlayerResource::vfunc128
 0x100bd620 func   ?vfunc129@C_PlayerResource@@UAEHH@Z C_PlayerResource::vfunc129
 0x100bd650 func   ?vfunc130@C_PlayerResource@@UAEHH@Z C_PlayerResource::vfunc130
