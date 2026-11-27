@@ -32,6 +32,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int sub_10061450(int, int, int);
 	void SetDrawLastPickEnabled(bool bEnabled);
 	void ScrollDn();
+	void sub_10054b60();
 	void ScrollUp();
 	void sub_100544d0(bool bEnabled);
 	void sub_10054bd0(bool bEnabled);
