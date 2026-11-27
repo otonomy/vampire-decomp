@@ -89116,6 +89116,23 @@ CParticleMgr *CParticleMgr::sub_101172d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10117400 size=0x51
+#include "CParticleMgr.h"
+#include "Pool.h"
+void sub_100b4560();
+bool CParticleMgr::sub_10117400(int nItems, void *pMaterialSystem)
+{
+	sub_10117460();
+	m_pMaterialSystem = pMaterialSystem;
+	Pool *p = new Pool;
+	m_pPool = p ? p->sub_1010e290(0x80, nItems, 0) : 0;
+	if (!m_pPool)
+		return false;
+	sub_100b4560();
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101175a0 size=0xb
 namespace lifted {
 struct C1010e440 { int sub_1010e440(); };
