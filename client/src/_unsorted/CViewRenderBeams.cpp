@@ -388,6 +388,50 @@ Beam_t *CViewRenderBeams::vfunc20(InfoView101942b0 *info)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10194370 size=0x11a
+#include "CViewRenderBeams.h"
+#include "vector.h"
+struct BIL
+{
+	int m00, m04, m08, m0c, m10, m14, m18, m1c, m20, m24, m28, m2c, m30, m34, m38, m3c, m40, m44, m48, m4c, m50, m54, m58, m5c, m60, m64, m68, m6c;
+	bool m70;
+	int m74, m78;
+	float m7c, m80, m84;
+	int m88, m8c;
+};
+void CViewRenderBeams::sub_10194370(Vector *center, int startRadius, int endRadius, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18)
+{
+	BIL info;
+	info.m00 = 0;
+	info.m30 = 0;
+	info.m38 = 0;
+	info.m78 = 0;
+	info.m2c = a4;
+	info.m34 = a5;
+	info.m3c = a6;
+	info.m40 = a7;
+	info.m44 = a8;
+	info.m48 = a9;
+	info.m4c = a10;
+	info.m50 = a11;
+	info.m54 = a12;
+	info.m58 = a13;
+	info.m5c = a14;
+	info.m60 = a15;
+	info.m64 = a16;
+	info.m68 = a17;
+	info.m6c = a18;
+	info.m74 = -1;
+	info.m70 = true;
+	info.m7c = center->x;
+	info.m80 = center->y;
+	info.m84 = center->z;
+	info.m88 = startRadius;
+	info.m8c = endRadius;
+	vfunc16((BeamInfoV *)&info);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10194490 size=0xac
 #include "CViewRenderBeams.h"
 struct BeamInfoV { char p0[0x14]; int m14, m18, m1c, m20, m24, m28; char p2c[0x40 - 0x2c]; float m40; char p44[0x7c - 0x44]; int m7c, m80, m84; int m88, m8c; };

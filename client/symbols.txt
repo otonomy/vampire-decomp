@@ -9401,6 +9401,7 @@
 0x10194040 func   ?vfunc17@CViewRenderBeams@@UAEXHAAVVector@@0HHMMMMMMMMHMMMM@Z CViewRenderBeams::vfunc17
 0x10194160 func   ?sub_10194160@CViewRenderBeams@@QAEPAVBeam_t@@PAX@Z CViewRenderBeams::sub_10194160
 0x101942b0 func   ?vfunc20@CViewRenderBeams@@UAEPAVBeam_t@@PAUInfoView101942b0@@@Z CViewRenderBeams::vfunc20
+0x10194370 func   ?sub_10194370@CViewRenderBeams@@QAEXPAVVector@@HHHHHHHHHHHHHHHHH@Z CViewRenderBeams::sub_10194370
 0x10194490 func   ?vfunc16@CViewRenderBeams@@UAEPAVBeam_t@@PAUBeamInfoV@@@Z CViewRenderBeams::vfunc16
 0x101947b0 func   ?sub_101947b0@CViewRenderBeams@@QAEXPAPAX@Z CViewRenderBeams::sub_101947b0
 0x10194830 func   ?sub_10194830@CViewRenderBeams@@QAEXPAVBeam_t@@M@Z CViewRenderBeams::sub_10194830
