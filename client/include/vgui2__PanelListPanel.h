@@ -10,6 +10,15 @@ class PanelListPanel : public vgui2::Panel
 {
 public:
 	virtual ~PanelListPanel();
+	PanelListPanel(vgui2::Panel *parent, const char *name);
+	struct CMemberInit
+	{
+		__forceinline CMemberInit()
+		{
+			char *p = (char *)this - sizeof(vgui2::Panel);
+			*(int *)(p + 0x58) = 0; *(int *)(p + 0x5c) = 0; *(int *)(p + 0x60) = 0;
+		}
+	} m_memberInit;
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with PanelListPanel's own function
 	virtual int vfunc74(int);
