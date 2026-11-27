@@ -34549,6 +34549,29 @@ void CUnknown10067520::sub_10067520()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10067540 size=0x9f
+#include "CVMainMenu.h"
+#include "engineclient.h"
+// TARGET: CVMainMenu::sub_10067540
+void CVMainMenu::sub_10067540(bool force)
+{
+	if (!force && sub_10067850() == m_n190) {
+		int w = m_n184;
+		int h = m_n188;
+		engine->vfunc26(&m_n184, &m_n188);
+		if (m_n184 != w || m_n188 != h)
+			sub_100660e0();
+	} else {
+		engine->vfunc26(&m_n184, &m_n188);
+		sub_10067450();
+		sub_10066250();
+		sub_10065f40();
+		sub_100660e0();
+	}
+	m_n190 = sub_10067850();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100675e0 size=0x2f
 namespace lifted {
 extern char g_102887e0;
