@@ -126430,6 +126430,37 @@ void sub_1015e630()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015e8a0 size=0x13c
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "ScopeTrace.h"
+#include "CVStatInfoList_t.h"
+extern CVStatInfoList_t g_105f9220;
+extern CVStatInfoList_t g_105f90b8;
+extern CVStatInfoList_t g_105f8c60;
+extern CVStatInfoList_t g_105f91c8;
+extern char g_105f8ee4[];
+extern "C" int sprintf(char *, const char *, ...);
+// TARGET: sub_1015e8a0
+const char *sub_1015e8a0(CVDmgBlock16_t *p, int value)
+{
+	ScopeTrace st("vampStats_DepSubValueToStr", g_102de300);
+	if (!p->sub_10160660()) {
+		switch (p->m_a) {
+		case 0:
+			return g_105f9220.sub_1015cfe0(pcd_stage(p->m_b))->sub_1015b270(value);
+		case 1:
+			return g_105f90b8.sub_1015cfe0(pcd_stage(p->m_b))->sub_1015b270(value);
+		case 2:
+			return g_105f8c60.sub_1015cfe0(pcd_stage(p->m_b))->sub_1015b270(value);
+		case 3:
+			return g_105f91c8.sub_1015cfe0(pcd_stage(p->m_b))->sub_1015b270(value);
+		}
+	}
+	sprintf(g_105f8ee4, "%d", value);
+	return g_105f8ee4;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015e9e0 size=0x120
 template <class T> __forceinline T pcd_stage(T x) { return x; }
 #include "CVStatInfoList_t.h"

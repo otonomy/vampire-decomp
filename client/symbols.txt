@@ -8378,6 +8378,7 @@
 0x1015e580 func   ?sub_1015e580@CVStatListManager_t@@QAEDH@Z CVStatListManager_t::sub_1015e580
 0x1015e610 func   ?sub_1015e610@V5e610@@QAEHXZ V5e610::sub_1015e610
 0x1015e630 func   ?sub_1015e630@@YAXXZ sub_1015e630
+0x1015e8a0 func   ?sub_1015e8a0@@YAPBDPAUCVDmgBlock16_t@@H@Z sub_1015e8a0
 0x1015e9e0 func   ?sub_1015e9e0@@YAHPAUCVDmgBlock16_t@@H@Z sub_1015e9e0
 0x1015eb00 func   ?sub_1015eb00@@YAHH@Z sub_1015eb00
 0x1015eb10 func   ?sub_1015eb10@@YAHH@Z sub_1015eb10
