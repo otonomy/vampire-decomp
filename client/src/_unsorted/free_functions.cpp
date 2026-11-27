@@ -90965,6 +90965,68 @@ void PMgr::sub_10116f00(PNode *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10117100 size=0x157
+#include "CParticleEffectBinding.h"
+
+struct PartNode { int m_a; int m_b; PartNode *m_pNext; };
+struct ListEntry { PartNode *m_pHead; short m_s4; unsigned short m_nNext; };
+struct IEffect
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(Vector *);
+	virtual void v7(PartNode *, Vector *);
+};
+struct PEBView
+{
+	char m_pad0000[0xc];
+	Vector m_Min;	// 0xc
+	Vector m_Max;	// 0x18
+	unsigned short m_n24;
+	char m_pad0026[6];
+	IEffect *m_pEffect;	// 0x2c
+	char m_pad0030[8];
+	ListEntry *m_pList;	// 0x38
+	char m_pad003c[8];
+	unsigned short m_nFirst;	// 0x44
+};
+
+// TARGET: CParticleEffectBinding::sub_10117100
+bool CParticleEffectBinding::sub_10117100()
+{
+	PEBView *v = (PEBView *)this;
+	if (v->m_n24 == 0)
+	{
+		v->m_pEffect->v6(&v->m_Min);
+		v->m_Max = v->m_Min;
+		return false;
+	}
+	*(int *)&v->m_Min.x = 0x6e013f39;
+	*(int *)&v->m_Min.y = 0x6e013f39;
+	*(int *)&v->m_Min.z = 0x6e013f39;
+	*(int *)&v->m_Max.x = 0xee013f39;
+	*(int *)&v->m_Max.y = 0xee013f39;
+	*(int *)&v->m_Max.z = 0xee013f39;
+	int idx = v->m_nFirst;
+	while (idx != 0xffff)
+	{
+		PartNode *head = v->m_pList[idx & 0xffff].m_pHead;
+		for (PartNode *p = head->m_pNext; p != head; p = p->m_pNext)
+		{
+			Vector pos;
+			v->m_pEffect->v7(p, &pos);
+			v->m_Min.x = (v->m_Min.x < pos.x) ? v->m_Min.x : pos.x;
+			v->m_Min.y = (v->m_Min.y < pos.y) ? v->m_Min.y : pos.y;
+			v->m_Min.z = (v->m_Min.z < pos.z) ? v->m_Min.z : pos.z;
+			v->m_Max.x = (v->m_Max.x > pos.x) ? v->m_Max.x : pos.x;
+			v->m_Max.y = (v->m_Max.y > pos.y) ? v->m_Max.y : pos.y;
+			v->m_Max.z = (v->m_Max.z > pos.z) ? v->m_Max.z : pos.z;
+		}
+		idx = v->m_pList[idx & 0xffff].m_nNext;
+	}
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10117260 size=0x6d
 #include "CParticleEffectBinding.h"
 

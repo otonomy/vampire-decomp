@@ -6657,6 +6657,7 @@
 0x10116d00 func   ?sub_10116d00@@YGXPAUPNode@@PAMHMM@Z sub_10116d00
 0x10116df0 func   ?sub_10116df0@CUnknown10116df0@@QAEHHH@Z CUnknown10116df0::sub_10116df0
 0x10116f00 func   ?sub_10116f00@PMgr@@QAEXPAUPNode@@@Z PMgr::sub_10116f00
+0x10117100 func   ?sub_10117100@CParticleEffectBinding@@QAE_NXZ CParticleEffectBinding::sub_10117100
 0x10117260 func   ?sub_10117260@CParticleEffectBinding@@QAEPAXPBDPAG@Z CParticleEffectBinding::sub_10117260
 0x101172d0 func   ?sub_101172d0@CParticleMgr@@QAEPAV1@XZ CParticleMgr::sub_101172d0
 0x10117340 func   ??_GCParticleMgr@@UAEPAXI@Z ??_GCParticleMgr@@UAEPAXI@Z
