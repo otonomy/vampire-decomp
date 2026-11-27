@@ -25551,6 +25551,31 @@ void CCollisionProperty::sub_10043860(const Vector &mins, const Vector &maxs, Ve
 }
 // END FUNCTION
 
+// FUNCTION: 0x10043930 size=0x103
+#include "CCollisionProperty.h"
+extern QAngle g_104d5190;
+void sub_10108080(const Vector &, const struct matrix3x4_t &, Vector &);
+
+// TARGET: CCollisionProperty::sub_10043930
+bool CCollisionProperty::sub_10043930(const Vector &pt)
+{
+	Vector ptLocal;
+	const QAngle *pAng;
+	const Vector &maxs = *(const Vector *)&m_unk10;
+	if (!(m_unk44 & 0x80) && m_unk40 != 2 && m_unk40 != 0 &&
+		((pAng = &vfunc9(0)), g_104d5190.x != pAng->x || g_104d5190.y != pAng->y || g_104d5190.z != pAng->z))
+	{
+		const matrix3x4_t &m = vfunc10();
+		sub_10108080(pt, m, ptLocal);
+	}
+	else
+		VectorSubtract(pt, vfunc8(), ptLocal);
+	return ptLocal.x >= m_vecMins.x && ptLocal.x <= maxs.x &&
+		ptLocal.y >= m_vecMins.y && ptLocal.y <= maxs.y &&
+		ptLocal.z >= m_vecMins.z && ptLocal.z <= maxs.z;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10043b90 size=0xef
 #include "CCollisionProperty.h"
 
