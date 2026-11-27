@@ -202,6 +202,7 @@
 0x10005c20 func   ?sub_10005c20@@YAHXZ sub_10005c20
 0x10005c80 func   ?_C_PlasmaBeamNode_CreateObject@@YAPAVIClientNetworkable@@HH@Z _C_PlasmaBeamNode_CreateObject
 0x10005d20 func   ?ClientClassInit@@YAHPAUignored@DT_PlasmaBeamNode@@@Z ClientClassInit
+0x10005de0 func   ?GetInt@ConVar@@QAEHXZ ConVar::GetInt
 0x10005de0 func   ?sub_10005de0@CFoo1005f190@@QAEHXZ CFoo1005f190::sub_10005de0
 0x10005e00 func   ?sub_10005e00@Ray_t@@QAEXPBM0@Z Ray_t::sub_10005e00
 0x10005e90 func   ?vfunc16@C_PointCamera@@UAEHXZ C_PointCamera::vfunc16
