@@ -32683,6 +32683,41 @@ CSignTextBlock_Copy *CSignTextBlock_Copy::sub_10060420(const SignTextBlockRaw *o
 }
 // END FUNCTION
 
+// FUNCTION: 0x10060ab0 size=0x177
+#include "CSignUI.h"
+#include "vgui2__Panel.h"
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+
+// TARGET: CSignUI::sub_10060ab0
+void CSignUI::sub_10060ab0()
+{
+	int i;
+	for (i = 0; i < m_vecB.m_Size; i++)
+		((vgui2::Panel **)m_vecB.m_Memory.m_pMem)[i]->vfunc57(1, 0);
+	for (i = 0; i < m_vecA.m_Size; i++)
+		((vgui2::Panel **)m_vecA.m_Memory.m_pMem)[i]->vfunc57(1, 0);
+	if (m_nXPos + m_nYPos)
+	{
+		((vgui2::Panel *)this)->sub_101a9950(
+			(int)(m_nXPos * (sub_100cd100() * 0.0009765625)),
+			(int)(m_nYPos * (sub_100cd0f0() * 0.0013020833333333333)),
+			(int)(m_nWide * (sub_100cd100() * 0.0009765625)),
+			(int)(m_nTall * (sub_100cd0f0() * 0.0013020833333333333)));
+	}
+	else
+	{
+		int x = sub_100cd100() / 2 - m_nWide / 2;
+		int y = sub_100cd0f0() / 2 - m_nTall / 2;
+		((vgui2::Panel *)this)->sub_101a9950(
+			x, y,
+			(int)(m_nWide * (sub_100cd100() * 0.0009765625)),
+			(int)(m_nTall * (sub_100cd0f0() * 0.0013020833333333333)));
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10060c30 size=0x121
 #include "CSignUI.h"
 #include "vgui2__Panel.h"

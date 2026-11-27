@@ -3268,6 +3268,7 @@
 0x100608d0 func   ??0CSignUI@@QAE@H@Z CSignUI::CSignUI
 0x100609a0 func   ??_GCSignUI@@UAEPAXI@Z ??_GCSignUI@@UAEPAXI@Z
 0x100609c0 func   ??1CSignUI@@UAE@XZ CSignUI::~CSignUI
+0x10060ab0 func   ?sub_10060ab0@CSignUI@@QAEXXZ CSignUI::sub_10060ab0
 0x10060c30 func   ?sub_10060c30@CSignUI@@QAEXXZ CSignUI::sub_10060c30
 0x10060d60 func   ?sub_10060d60@CView@@QAEMXZ CView::sub_10060d60
 0x100612a0 func   ?vfunc114@CSignUI@@UAEXHHH@Z CSignUI::vfunc114
