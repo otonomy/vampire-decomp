@@ -136866,6 +136866,46 @@ void sub_1017c680(const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017c720 size=0x90
+struct Foo_1017f470 {
+	char pad[0x4c];
+	void sub_1017f470(int, int);
+};
+struct Score_1017c720 {
+	char pad0[0xc0];
+	Foo_1017f470 m_a;
+	Foo_1017f470 m_b;
+	Foo_1017f470 m_c;
+};
+extern Score_1017c720 *g_105fb6e4;
+struct Evt_1017c720 {
+	int m_kind;
+	int m_val;
+	void sub_1017c720();
+};
+// TARGET: Evt_1017c720::sub_1017c720
+void Evt_1017c720::sub_1017c720()
+{
+	Score_1017c720 *p = g_105fb6e4;
+	if (!p)
+		return;
+	Foo_1017f470 *f;
+	int idx;
+	switch (m_kind) {
+	case 0: f = &p->m_a; idx = 0; break;
+	case 1: f = &p->m_a; idx = 1; break;
+	case 2: f = &p->m_a; idx = 2; break;
+	case 3: f = &p->m_b; idx = 0; break;
+	case 4: f = &p->m_b; idx = 1; break;
+	case 5: f = &p->m_b; idx = 2; break;
+	case 6: f = &p->m_c; idx = -1; break;
+	default: return;
+	}
+	if (f)
+		f->sub_1017f470(idx, m_val);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017c7b0 size=0xe
 struct E_1017c7b0 { int m_n; int m_unk; };
 struct V_1017c7b0 { E_1017c7b0 m_e[7]; };
