@@ -34,6 +34,7 @@ public:
     unsigned short m_unk46;
     void sub_100430f0(int arg);
     int *sub_100432f0(char a);
+    void sub_10043a40(const Vector &vecWorldPt, Vector *pVecNearestWorldPt);
     void sub_10043da0(Vector *pMins, Vector *pMaxs);
     int vfunc11();
     bool sub_100442d0();
