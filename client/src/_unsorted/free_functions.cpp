@@ -76056,6 +76056,33 @@ float __stdcall sub_100e4100(const Vector &a, const Vector &b, float scale, floa
 }
 // END FUNCTION
 
+// FUNCTION: 0x100e5720 size=0x160
+#include "Vector.h"
+extern Vector g_104d4970;
+struct CExpl_e5720 {
+	float sub_100e5570(const Vector *start, Vector *dir, float t);
+	void sub_100e5720(const Vector *origin, float t, Vector *out, float *outf);
+};
+// TARGET: CExpl_e5720::sub_100e5720
+void CExpl_e5720::sub_100e5720(const Vector *origin, float t, Vector *out, float *outf)
+{
+	Vector dirs[6] = { Vector(1, 0, 0), Vector(-1, 0, 0), Vector(0, 1, 0), Vector(0, -1, 0), Vector(0, 0, 1), Vector(0, 0, -1) };
+	*out = Vector(0, 0, 0);
+	*outf = 1.0f;
+	for (int i = 0; i < 6; i++)
+	{
+		*outf += sub_100e5570(origin, &dirs[i], t);
+		VectorAdd(dirs[i], *out, *out);
+	}
+	if (*out == g_104d4970)
+	{
+		*out = Vector(0, 0, 1);
+		*outf = 2.0f;
+	}
+	VectorNormalize(*out);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100e6ce0 size=0x7f
 #include <stdarg.h>
 struct IFileSys {

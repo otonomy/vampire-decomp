@@ -5806,6 +5806,7 @@
 0x100e53a0 func   ?vfunc4@C_BaseExplosionEffect@@UAEXXZ C_BaseExplosionEffect::vfunc4
 0x100e53b0 func   ?vfunc5@C_BaseExplosionEffect@@UAEXXZ C_BaseExplosionEffect::vfunc5
 0x100e5430 func   ?vfunc1@C_BaseExplosionEffect@@UAEXXZ C_BaseExplosionEffect::vfunc1
+0x100e5720 func   ?sub_100e5720@CExpl_e5720@@QAEXPBVVector@@MPAV2@PAM@Z CExpl_e5720::sub_100e5720
 0x100e5880 func   ?vfunc13@CFleckParticles@@AAEXHHHHHHHH@Z CFleckParticles::vfunc13
 0x100e58b0 func   ?vfunc3@CFleckParticles@@UAE_NPAUFleckParticle@@PAUParticleDraw@@AAM@Z CFleckParticles::vfunc3
 0x100e5d20 func   ??_GCFXQuad@@UAEPAXI@Z ??_GCFXQuad@@UAEPAXI@Z
