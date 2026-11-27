@@ -8222,6 +8222,7 @@
 0x1015ab20 func   ?sub_1015ab20@TList@@QAEPAU1@XZ TList::sub_1015ab20
 0x1015ab90 func   ?sub_1015ab90@CVStatActionList_t@@QAEXXZ CVStatActionList_t::sub_1015ab90
 0x1015abf0 func   ?sub_1015abf0@VList@@QAEXXZ VList::sub_1015abf0
+0x1015ae00 func   ?sub_1015ae00@CUnknown1015ae00@@QAEDH@Z CUnknown1015ae00::sub_1015ae00
 0x1015aeb0 func   ?sub_1015aeb0@@YAXH@Z sub_1015aeb0
 0x1015af10 func   ?sub_1015af10@CVStatActionList_t@@QAEXPAUCVStatActionTarget@@HH@Z CVStatActionList_t::sub_1015af10
 0x1015b050 func   ??0CVStatInfo_t@@QAE@XZ CVStatInfo_t::CVStatInfo_t

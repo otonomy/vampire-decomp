@@ -122237,6 +122237,46 @@ void VList::sub_1015abf0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015ae00 size=0xa7
+namespace lifted {
+extern int g_101e3124;
+extern int g_101e3128;
+extern char g_102c7154;
+extern char g_102cba68;
+extern char g_102de300;
+struct C1015a300 { int sub_1015a300(int); };
+struct C1015acb0 { int sub_1015acb0(); };
+struct V { virtual void u0(); virtual void u1(); virtual int f2(int); virtual int f3(); };
+}
+struct CUnknown1015ae00 { char sub_1015ae00(int); };
+char CUnknown1015ae00::sub_1015ae00(int a0)
+{
+    int r0;
+    int t1;
+    int t2;
+    *(int *)((char *)lifted::g_101e3124 + ((*(int *)((char *)lifted::g_101e3128)) * 3) * 4) = (int)&lifted::g_102cba68;
+    *(int *)((char *)lifted::g_101e3124 + ((*(int *)((char *)lifted::g_101e3128)) * 3) * 4 + 4) = (int)&lifted::g_102de300;
+    *(int *)((char *)lifted::g_101e3124 + ((*(int *)((char *)lifted::g_101e3128)) * 3) * 4 + 8) = (int)&lifted::g_102de300;
+    *(int *)((char *)lifted::g_101e3128) = (*(int *)((char *)lifted::g_101e3128)) + 1;
+    if (a0 != 0) {
+        int t0 = ((lifted::V *)a0)->f2((int)&lifted::g_102c7154);
+        r0 = t0;
+        if (r0 != 0) {
+            do {
+                t1 = ((lifted::C1015acb0 *)this)->sub_1015acb0();
+                ((lifted::C1015a300 *)t1)->sub_1015a300(r0);
+                t2 = ((lifted::V *)r0)->f3();
+                r0 = t2;
+            } while (r0 != 0);
+        }
+        *(int *)((char *)lifted::g_101e3128) = (*(int *)((char *)lifted::g_101e3128)) - 1;
+        return 1;
+    }
+    *(int *)((char *)lifted::g_101e3128) = (*(int *)((char *)lifted::g_101e3128)) - 1;
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015aeb0 size=0x5f
 #include "ScopeTrace.h"
 extern char g_102de300[];
