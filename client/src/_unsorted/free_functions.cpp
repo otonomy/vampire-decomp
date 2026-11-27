@@ -28331,6 +28331,29 @@ void CHudDialog::sub_10053200()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10053b50 size=0x11e
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+extern int sub_100cd0f0();
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+int CHudDialog::sub_10053b50(bool bDraw)
+{
+	ScopeTrace st("CHudDialog::PaintResponses", g_102de300);
+	int y = (int)(YRES(1) * 50.0);
+	if (m_flAlpha1a8 > 1.0f)
+	{
+		if (!m_b1b3)
+		{
+			for (int i = m_nItems - 1; i >= 0; i--)
+				sub_10053c70(bDraw, i, m_szItems[i], m_iItemFlags[i], m_iItemType[i], &y);
+		}
+		else
+			sub_10053c70(bDraw, m_n1bc, m_szPrompt, m_nPromptFlags, m_nPromptType, &y);
+	}
+	return y;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10053c70 size=0x292
 #include "CHudDialog.h"
 #include "ScopeTrace.h"
