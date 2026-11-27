@@ -109211,6 +109211,66 @@ int CVPopUpInfoMgr::sub_10142b50(const char *name, int arg)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10142d00 size=0x127
+#include "CVPopUpInfoMgr.h"
+#include "CUnknown10141210.h"
+extern void (*g_101e3118)(int level, const char *fmt, ...);
+struct CUnknown10143e30 { void sub_10143f80(const char **pOut, bool bFlag); };
+extern CUnknown10143e30 g_105e7754;
+extern int g_105e7788;
+extern CUnknown10141210 **g_105e778c;
+struct PopUpItem { int m_pad[12]; int m_nType; };
+struct RecInit_10141210 { void sub_10141210(int); };
+extern unsigned char g_10680c90;
+extern CUnknown10141210 g_10680ca0;
+void sub_10144c70();
+extern "C" int atexit(void (__cdecl *)(void));
+inline CUnknown10141210 *GetClanRec(int i)
+{
+	if (i >= 0 && i < g_105e7788)
+		return g_105e778c[i];
+	if (!(g_10680c90 & 1)) {
+		g_10680c90 |= 1;
+		((RecInit_10141210 *)&g_10680ca0)->sub_10141210(-1);
+		atexit(sub_10144c70);
+	}
+	return &g_10680ca0;
+}
+int CVPopUpInfoMgr::sub_10142d00(const char *name, int arg)
+{
+	int r = sub_10142b50(name, arg);
+	if (r == -1) {
+		r = sub_10142b50(name, -1);
+		if (r != -1) {
+			if (((PopUpItem *)m_pItems[r])->m_nType == 2) {
+				g_101e3118(3, "[CharGenWiz]: PopUpMgr: Find: ProcessTraitChoices\n");
+				g_105e7754.sub_10143f80(&name, true);
+				r = sub_10142b50(name, arg);
+			}
+		} else {
+			int type = m_nType10;
+			if (type != -1) {
+				do {
+					r = sub_10142b50(GetClanRec(type)->sub_10141340(), -1);
+					if (r != -1)
+						break;
+					if (type == 2) {
+						g_105e7754.sub_10143f80(&name, true);
+						r = sub_10142b50(name, arg);
+						if (r != -1)
+							break;
+					}
+					type++;
+				} while (type < 10 && type != -1);
+			}
+		}
+	}
+	if (r != -1)
+		return m_pItems[r];
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10142e30 size=0x1a
 namespace lifted {
 struct C10142620 { int sub_10142620(); };
