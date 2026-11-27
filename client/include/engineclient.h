@@ -78,7 +78,7 @@ public:
 	virtual int GetMaxClients();	// slot 51
 	virtual void vfunc52();
 	virtual void vfunc53();
-	virtual void vfunc54();
+	virtual const char *vfunc54(const char *);
 	virtual void vfunc55();
 	virtual void vfunc56();
 	virtual int IsInGame();	// slot 57
