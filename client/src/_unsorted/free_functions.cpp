@@ -58502,6 +58502,72 @@ void C_EnvParticle::sub_100af150()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b02c0 size=0x19a
+#include "C_EnvParticle.h"
+#include "engineclient.h"
+
+struct Elem100_100b02c0
+{
+	int m_unk[25];
+};
+void sub_100b4d10(Elem100_100b02c0 *dst, const Elem100_100b02c0 *src);
+struct Vec100_100b02c0
+{
+	Elem100_100b02c0 *m_pMemory;
+	int m_alloc;
+	int m_grow;
+	int m_size;
+	Elem100_100b02c0 *m_pElements;
+	void sub_100b4c20(int);
+	void sub_100b4cc0(int, int);
+	void sub_100b4e30(int);
+};
+struct ViewInfo_100b02c0 { char m_pad[0x38]; Vector m_origin; };
+struct ViewObj_100b02c0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13();
+	virtual ViewInfo_100b02c0 *vfunc14();
+};
+extern ViewObj_100b02c0 *g_102d43d8;
+extern "C" void (*g_101e3120)(int, const char *, ...);
+
+// TARGET: C_EnvParticle::sub_100b02c0
+void C_EnvParticle::sub_100b02c0()
+{
+	ViewInfo_100b02c0 *view = g_102d43d8->vfunc14();
+	Vec100_100b02c0 *vec = (Vec100_100b02c0 *)((char *)this + 0x470);
+	vec->m_size = 0;
+	if (!(view && (*(int *)((char *)this + 0x420) == 10 || *(int *)((char *)this + 0x420) == 11))) {
+		g_101e3120(1, "C_EnvParticle::UpdateFollowedPlayerBox ERROR\n");
+	} else {
+		float *pf = (float *)((char *)this + 0x44c);
+		Vector t(*pf, *pf, *pf);
+		Elem100_100b02c0 e;
+		Vector *mins = (Vector *)&e.m_unk[4];
+		Vector *maxs = (Vector *)&e.m_unk[7];
+		*mins = view->m_origin - t;
+		int n = *(volatile int *)&vec->m_size;
+		*maxs = view->m_origin + t;
+		vec->sub_100b4c20(1);
+		vec->sub_100b4cc0(n, 1);
+		Elem100_100b02c0 *p = &vec->m_pMemory[n];
+		if (p)
+			*p = e;
+		*mins = view->m_origin - t;
+		n = vec->m_size;
+		if ((1 + n) > vec->m_alloc)
+			vec->sub_100b4e30((int)n + 1 - vec->m_alloc);
+		vec->m_size++;
+		vec->m_pElements = vec->m_pMemory;
+		vec->sub_100b4cc0(n, 1);
+		sub_100b4d10(&*(vec->m_pMemory + n), &e);
+		if (*(int *)((char *)this + 0x420) == 11)
+			*(float *)((char *)vec->m_pMemory + 0x18) = view->m_origin.z;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b1230 size=0xfc
 #include "Vector.h"
 #include "ehandle.h"
