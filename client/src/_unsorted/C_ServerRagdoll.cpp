@@ -53,6 +53,28 @@ int C_ServerRagdoll::vfunc125(int flags, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10125870 size=0xa3
+#include "C_ServerRagdoll.h"
+#include "engineclient.h"
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+int sub_10127260(int *pBoneIndex, int hdr, void *pCollide);
+// TARGET: C_ServerRagdoll::vfunc72
+int C_ServerRagdoll::vfunc72()
+{
+	int hdr = C_BaseAnimating::vfunc72();
+	if (!m_elementCount) {
+		void *pCollide = modelinfo->vfunc18(vfunc51());
+		if (!pCollide) {
+			const char *pszName = modelinfo->GetModelName(modelinfo->GetModel(vfunc51()));
+			Msg("*** ERROR: C_ServerRagdoll::InitModel: %s missing vcollide data ***\n", pszName ? pszName : "<null>");
+			m_elementCount = 0;
+		} else
+			m_elementCount = sub_10127260(m_boneIndex, hdr, pCollide);
+	}
+	return hdr;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10125920 size=0xae
 #include "engineclient.h"
 #include "C_ServerRagdoll.h"
