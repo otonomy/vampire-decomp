@@ -27,6 +27,7 @@ public:
 	CKeyValuesX *m_pPeer;	// 0x10: the next key of the same level
 	CKeyValuesX *m_pSub;	// 0x14: the first sub key
 	CKeyValuesX *m_pBase18;	// 0x18: the key searched next when no sub key has the name
+	int sub_10127c80();
 	int sub_101284c0(const char *pszKey, int nDefault);	// "GetInt": the sub key's value as an int (atoi of the string, ftol of the float), nDefault when there is no such key
 	CKeyValuesX *sub_101282e0(const char *pszName, bool bCreate);	// the stub of sub_10248900 (the recursion goes through it)
 	CKeyValuesX *sub_10128270(const char *pszName);	// creates a sub key of that name at the end of the list (stub 0x10004eee)
