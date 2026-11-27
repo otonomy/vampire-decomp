@@ -69752,6 +69752,179 @@ void sub_100d1960()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d1970 size=0x1a5
+#include "UtlMem.h"
+#include "CUtlLinkedList8.h"
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+struct CUtlLinkedList12u { void sub_100d35b0(); };
+struct LLView2 { void sub_100d3330(int); };
+struct LLView { void sub_100d3930(int); };
+struct LL52Node { char pad[0x30]; unsigned short m_Previous; unsigned short m_Next; };
+struct LL52 {
+	LL52Node *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	unsigned short m_Head;
+	unsigned short m_Tail;
+	unsigned short m_FirstFree;
+	unsigned short m_ElementCount;
+	unsigned short m_NumAlloced;
+	short m_pad16;
+	void *m_pElements;
+	__forceinline void RemoveAll()
+	{
+		unsigned short prev = 0xffff;
+		for (int i = (int)m_NumAlloced - 1; i >= 0; --i) {
+			((LLView2 *)this)->sub_100d3330(i);
+			m_pMemory[(unsigned short)i].m_Next = prev;
+			m_pMemory[(unsigned short)i].m_Previous = i;
+			prev = i;
+		}
+		m_FirstFree = 0;
+		m_Head = 0xffff;
+		m_Tail = 0xffff;
+		m_ElementCount = 0;
+	}
+	__forceinline void Purge()
+	{
+		if (m_NumAlloced)
+			RemoveAll();
+		((UtlMem *)this)->sub_100d33d0();
+		m_FirstFree = 0xffff;
+		m_NumAlloced = 0;
+		m_pElements = m_pMemory;
+	}
+};
+struct LL12Node { char pad[8]; unsigned short m_Previous; unsigned short m_Next; };
+struct LL12 {
+	LL12Node *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	unsigned short m_Head;
+	unsigned short m_Tail;
+	unsigned short m_FirstFree;
+	unsigned short m_ElementCount;
+	unsigned short m_NumAlloced;
+	short m_pad16;
+	void *m_pElements;
+	__forceinline void RemoveAll()
+	{
+		unsigned short prev = 0xffff;
+		for (int i = (int)m_NumAlloced - 1; i >= 0; --i) {
+			((LLView *)this)->sub_100d3930(i);
+			m_pMemory[(unsigned short)i].m_Next = prev;
+			m_pMemory[(unsigned short)i].m_Previous = i;
+			prev = i;
+		}
+		m_FirstFree = 0;
+		m_Head = 0xffff;
+		m_Tail = 0xffff;
+		m_ElementCount = 0;
+	}
+	__forceinline void Purge()
+	{
+		if (m_NumAlloced)
+			RemoveAll();
+		((UtlMem *)this)->sub_100d3470();
+		m_FirstFree = 0xffff;
+		m_NumAlloced = 0;
+		m_pElements = m_pMemory;
+	}
+};
+struct PurgeVec {
+	void *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	int m_Size;
+	void *m_pElements;
+	__forceinline void Purge()
+	{
+		m_Size = 0;
+		if (m_growSize != -1) {
+			if (m_pMemory) {
+				Plat_Free(m_pMemory);
+				m_pMemory = 0;
+			}
+			m_allocationCount = 0;
+		}
+		m_pElements = m_pMemory;
+	}
+};
+struct PurgeLL {
+	void *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	unsigned short m_Head, m_Tail, m_FirstFree, m_ElementCount, m_NumAlloced;
+	short m_pad16;
+	void *m_pElements;
+	__forceinline void PurgeB1()
+	{
+		((CUtlLinkedList12u *)this)->sub_100d35b0();
+		if (m_growSize != -1) {
+			if (m_pMemory) {
+				Plat_Free(m_pMemory);
+				m_pMemory = 0;
+			}
+			m_allocationCount = 0;
+		}
+		m_FirstFree = 0xffff;
+		m_NumAlloced = 0;
+		m_pElements = m_pMemory;
+	}
+	__forceinline void PurgeB2()
+	{
+		((CUtlLinkedList12u *)this)->sub_100d35b0();
+		((UtlMem *)this)->sub_100d3e00();
+		m_FirstFree = 0xffff;
+		m_NumAlloced = 0;
+		m_pElements = m_pMemory;
+	}
+};
+struct ListPair {
+	CUtlLinkedList8 a;
+	PurgeLL b;
+	__forceinline void PurgeA()
+	{
+		a.sub_100d3500();
+		((UtlMem *)&a)->sub_100d3cc0();
+		a.m_FirstFree = 0xffff;
+		a.m_NumAlloced = 0;
+		a.m_pElements = a.m_pMemory;
+	}
+	__forceinline void Purge1()
+	{
+		PurgeA();
+		b.PurgeB1();
+	}
+	__forceinline void Purge2()
+	{
+		PurgeA();
+		b.PurgeB2();
+	}
+};
+struct LeafSysIGS
+{
+	char m_pad0[8];
+	PurgeVec m_vec;			// 0x08
+	LL52 m_l4;				// 0x1c
+	LL12 m_l12;				// 0x38
+	ListPair m_p1;			// 0x54
+	char m_pad8c[8];
+	ListPair m_p2;			// 0x94
+	void sub_100d1970();
+};
+
+// TARGET: LeafSysIGS::sub_100d1970
+void LeafSysIGS::sub_100d1970()
+{
+	m_l4.Purge();
+	m_p1.Purge1();
+	m_l12.Purge();
+	m_vec.Purge();
+	m_p2.Purge2();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d1b20 size=0x38
 struct ILeaf100d { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
  virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); };

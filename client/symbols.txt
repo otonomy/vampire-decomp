@@ -5350,6 +5350,7 @@
 0x100d1770 func   ?vfunc15@CClientLeafSystem@@QAE_ND@Z CClientLeafSystem::vfunc15
 0x100d1780 func   ?vfunc16@CClientLeafSystem@@QAE_ND@Z CClientLeafSystem::vfunc16
 0x100d1960 func   ?sub_100d1960@@YAXXZ sub_100d1960
+0x100d1970 func   ?sub_100d1970@LeafSysIGS@@QAEXXZ LeafSysIGS::sub_100d1970
 0x100d1b20 func   ?sub_100d1b20@List100d@@QAEXXZ List100d::sub_100d1b20
 0x100d1c10 func   ?vfunc0@CClientLeafSystem@@QAEXPAVIClientRenderable@@_N@Z CClientLeafSystem::vfunc0
 0x100d1c70 func   ?sub_100d1c70@V1c70@@QAEXID@Z V1c70::sub_100d1c70
