@@ -49808,6 +49808,103 @@ int __cdecl sub_10090790(const char *name, NameStruct *pStruct)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10090b70 size=0x1b6
+#include "C_BaseAnimating.h"
+#include "CGlobalVarsBase.h"
+#include "Tier1.h"
+#include <string.h>
+#pragma intrinsic(memset)
+
+#define V1(n) virtual void n();
+#define V10(p) V1(p##0) V1(p##1) V1(p##2) V1(p##3) V1(p##4) V1(p##5) V1(p##6) V1(p##7) V1(p##8) V1(p##9)
+
+struct matrix3x4_view { float m[12]; };
+void sub_10108450(const matrix3x4_view *pIn, matrix3x4_view *pOut);
+void sub_10108a50(const matrix3x4_view *pIn1, const matrix3x4_view *pIn2, matrix3x4_view *pOut);
+void sub_10107e40(const matrix3x4_view *pMatrix, float *pQuat, float *pPos);
+void sub_101094b0(int angles, int origin, matrix3x4_view *pMatrix);
+
+struct RenderView_10090b70
+{
+	V10(a) V1(b0) V1(b1) V1(b2) V1(b3) V1(b4)
+	virtual void vfunc15(int, int, int, float, int);
+};
+struct EntView_10090b70
+{
+	V1(a0) V1(a1) V1(a2) V1(a3) V1(a4) V1(a5) V1(a6) V1(a7) V1(a8)
+	virtual int vfunc9();
+	virtual int vfunc10();
+	RenderView_10090b70 m_r;
+	char m_pad[0x6e8 - 4 - sizeof(RenderView_10090b70)];
+	matrix3x4_view *m_pBones;
+};
+
+struct RagdollInfo_10090b70
+{
+	bool m_bActive;
+	float m_flSaveTime;
+	int m_nNumBones;
+	float m_rgBonePos[(0x1074 - 0xc) / 4];
+	float m_rgBoneQuaternion[(0x2654 - 0x1074) / 4];
+};
+struct BoneRec_10090b70
+{
+	char m_pad0[4];
+	int m_parent;
+	char m_pad8[0xa0 - 8];
+};
+struct StudioHdrView_10090b70
+{
+	char m_pad[0xf0];
+	int m_nNumBones;
+	int m_nBoneIndex;
+	BoneRec_10090b70 *pBone(int i) { return (BoneRec_10090b70 *)((char *)this + m_nBoneIndex) + i; }
+};
+
+#define RAGDOLL (*(RagdollInfo_10090b70 **)((char *)this + 0x6d8))
+
+// TARGET: C_BaseAnimating::sub_10090b70
+void C_BaseAnimating::sub_10090b70(EntView_10090b70 *pEnt)
+{
+	StudioHdrView_10090b70 *hdr = (StudioHdrView_10090b70 *)sub_1008f900(-1);
+	if (!hdr)
+		return;
+	if (RAGDOLL && RAGDOLL->m_bActive)
+		return;
+	pEnt->m_r.vfunc15(0, -1, 0xfffc, gpGlobals->curtime, 0);
+	pEnt->vfunc10();
+	EntView_10090b70 *self = (EntView_10090b70 *)this;
+	matrix3x4_view cameraTransform;
+	sub_101094b0(self->vfunc10(), self->vfunc9(), &cameraTransform);
+	if (!RAGDOLL)
+	{
+		RAGDOLL = new RagdollInfo_10090b70;
+		if (!RAGDOLL)
+		{
+			g_101e3108("Memory allocation of RagdollInfo_t failed!\n");
+			return;
+		}
+	}
+	memset(RAGDOLL, 0, sizeof(*RAGDOLL));
+	int numbones = hdr->m_nNumBones;
+	BoneRec_10090b70 *pbones = hdr->pBone(0);
+	RAGDOLL->m_bActive = true;
+	RAGDOLL->m_flSaveTime = gpGlobals->curtime;
+	RAGDOLL->m_nNumBones = numbones;
+	for (int i = 0; i < numbones; i++)
+	{
+		matrix3x4_view inverted;
+		matrix3x4_view output;
+		if (pbones[i].m_parent == -1)
+			sub_10108450(&cameraTransform, &inverted);
+		else
+			sub_10108450(&pEnt->m_pBones[pbones[i].m_parent], &inverted);
+		sub_10108a50(&inverted, &pEnt->m_pBones[i], &output);
+		sub_10107e40(&output, &RAGDOLL->m_rgBoneQuaternion[i * 4], &RAGDOLL->m_rgBonePos[i * 3]);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10091020 size=0xc1
 #include <math.h>
 
