@@ -8979,6 +8979,7 @@
 0x1016b2d0 func   ?vfunc86@VBarterLabel@@UAEXXZ VBarterLabel::vfunc86
 0x1016b300 func   ?vfunc89@VBarterLabel@@UAEXH@Z VBarterLabel::vfunc89
 0x1016b550 func   ?vfunc88@VBarterLabel@@UAEXH@Z VBarterLabel::vfunc88
+0x1016b560 func   ??0VBarterUI@@QAE@H@Z VBarterUI::VBarterUI
 0x1016b720 func   ??_GVBarterUI@@UAEPAXI@Z ??_GVBarterUI@@UAEPAXI@Z
 0x1016b740 func   ??1VBarterUI@@UAE@XZ VBarterUI::~VBarterUI
 0x1016cd90 func   ?vfunc164@VBarterButton@@UAEHHHHH@Z VBarterButton::vfunc164
