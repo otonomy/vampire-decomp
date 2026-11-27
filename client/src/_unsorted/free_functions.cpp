@@ -129068,6 +129068,51 @@ char *CVDmg_t::sub_10158c80(int flags)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10158ef0 size=0x12f
+#include "CVDmg_t.h"
+#include "ScopeTrace.h"
+#include "StatOwner2.h"
+#include "CParsedValue.h"
+extern "C" char *strtok(char *, const char *);
+extern "C" int isdigit(int);
+extern "C" int atoi(const char *);
+int sub_10158b00(const char *psz);
+
+// TARGET: CVDmg_t::sub_10158ef0
+void CVDmg_t::sub_10158ef0(const char *pszText)
+{
+	ScopeTrace st("CVDmg_t::Parse", g_102de300);
+	char *buf = sub_1015fb60(pszText);
+	char *tok = strtok(buf, " ");
+	if (tok)
+	{
+		if (!isdigit(*tok))
+		{
+			m_block14.sub_101608a0(tok);
+			tok = strtok(0, " ");
+		}
+		else
+			m_block14.sub_10160670();
+		if (tok)
+		{
+			m_field04 = atoi(tok);
+			tok = strtok(0, " ");
+			if (tok)
+			{
+				int id = g_105f93c0.sub_1015f160("DamageType");
+				m_pad0000 = g_105f93c0.sub_1015f270(id)->sub_1015ed00(tok);
+				m_field10 = sub_10158b00(pszText);
+				tok = strtok(0, " ");
+				if (tok)
+					m_block24.sub_101608a0(tok);
+				return;
+			}
+		}
+	}
+	sub_101588c0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10159020 size=0x5f
 #include "ScopeTrace.h"
 extern char g_102de300[];
