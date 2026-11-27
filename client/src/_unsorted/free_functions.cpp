@@ -110663,6 +110663,86 @@ void CPtrList101d6400::sub_10142000()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10142050 size=0x165
+#include "CUnknown10141e80.h"
+
+class CObjList_10142050
+{
+public:
+	int m_nGrow;
+	int m_nAlloc;
+	int m_nCount;
+	CUnknown10141e80 **m_pData;
+
+	CObjList_10142050 *sub_10142050(const CObjList_10142050 &other);
+};
+
+CObjList_10142050 *CObjList_10142050::sub_10142050(const CObjList_10142050 &other)
+{
+	int n = other.m_nCount;
+	for (int i = 0; i < n; i++)
+	{
+		if (m_nAlloc == m_nCount)
+		{
+			m_nAlloc += m_nGrow;
+			if (m_pData)
+			{
+				CUnknown10141e80 **pNew = (CUnknown10141e80 **)operator new(m_nAlloc * 4);
+				int j = 0;
+				if (m_nCount > 0)
+				{
+					do
+					{
+						pNew[j] = m_pData[j];
+						j++;
+					} while (j < m_nCount);
+				}
+				if (j < m_nAlloc)
+				{
+					do
+					{
+						pNew[j] = 0;
+						j++;
+					} while (j < m_nAlloc);
+				}
+				operator delete(m_pData);
+				m_pData = pNew;
+				m_nCount++;
+			}
+			else
+			{
+				m_pData = (CUnknown10141e80 **)operator new(m_nAlloc * 4);
+				int j = 0;
+				if (m_nAlloc > 0)
+				{
+					do
+					{
+						m_pData[j] = 0;
+						j++;
+					} while (j < m_nAlloc);
+				}
+				m_nCount++;
+			}
+		}
+		else
+			m_nCount = m_nCount + 1;
+		if (!m_pData[m_nCount - 1])
+			m_pData[m_nCount - 1] = new CUnknown10141e80(m_nCount - 1);
+		CUnknown10141e80 *dst = m_pData[m_nCount - 1];
+		CUnknown10141e80 *src;
+		if (i >= 0 && i < other.m_nCount)
+			src = other.m_pData[i];
+		else
+		{
+			static CUnknown10141e80 s_default(-1);
+			src = &s_default;
+		}
+		dst->sub_10141eb0(src);
+	}
+	return this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10142310 size=0x2e
 #include "CUnknown101439f0.h"
 
