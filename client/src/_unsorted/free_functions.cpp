@@ -147079,6 +147079,48 @@ char sub_101a48b0(void *fs, const char *name, void *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a5790 size=0x110
+#include "CUtlRBTreeBig.h"
+
+struct CKeyTable { unsigned short *sub_1013d520(unsigned short *out, int arg); };
+extern CKeyTable g_10619950;
+extern CUtlRBTreeBig g_10619938;
+void __stdcall sub_10001000(void *p, int size, int count, void *ctor);
+void __stdcall sub_10001030(void *p, int size, int count, void *dtor);
+void sub_101a58a0();
+void sub_101a58c0();
+
+struct CBigElem
+{
+	unsigned short m_Key;
+	char m_pad0002[0x238e4 - 2];
+	char m_Arr[3 * 0xec84];
+	char m_pad2[0x5f31c - 0x238e4 - 3 * 0xec84];
+};
+
+void *sub_101a5790(int arg)
+{
+	CBigElem e;
+	unsigned short dummy[2];
+	e.m_Key = 0xffff;
+	sub_10001000(e.m_Arr, 0xec84, 3, sub_101a58a0);
+	e.m_Key = *g_10619950.sub_1013d520(&dummy[1], arg);
+	unsigned short i = g_10619938.m_Root;
+	while (i != 0xffff) {
+		if (g_10619938.m_LessFunc(&e, &g_10619938.m_pElements[i].m_Data[0])) {
+			i = g_10619938.LeftChild(i);
+		} else if (g_10619938.m_LessFunc(&g_10619938.m_pElements[i].m_Data[0], &e)) {
+			i = g_10619938.RightChild(i);
+		} else
+			break;
+	}
+	sub_10001030(e.m_Arr, 0xec84, 3, sub_101a58c0);
+	if (i != 0xffff)
+		return &g_10619938.m_pElements[i].m_Data[4];
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a58a0 size=0x12
 namespace lifted {
 struct C101586f0 { int sub_101586f0(); };
