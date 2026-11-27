@@ -3932,6 +3932,7 @@
 0x10097ee0 func   ??1C_BaseCombatCharacter@@UAE@XZ C_BaseCombatCharacter::~C_BaseCombatCharacter
 0x10097f10 func   ?sub_10097f10@CAmmoOwner97@@QAEXHH@Z CAmmoOwner97::sub_10097f10
 0x10097f40 func   ?sub_10097f40@@YIXPAUS_10097f40@@@Z sub_10097f40
+0x10097f60 func   ?sub_10097f60@CUnknown10097f60@@QAEHHH@Z CUnknown10097f60::sub_10097f60
 0x10097f80 func   ?sub_10097f80@CHost_10097f80@@QAEHH@Z CHost_10097f80::sub_10097f80
 0x10097fa0 func   ?vfunc148@C_BaseCombatCharacter@@UAEPAXXZ C_BaseCombatCharacter::vfunc148
 0x10098120 func   ?vfunc147@C_BaseCombatCharacter@@UAE_NPAVC_BaseCombatWeapon@@H@Z C_BaseCombatCharacter::vfunc147

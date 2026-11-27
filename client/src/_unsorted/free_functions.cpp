@@ -48967,6 +48967,15 @@ void __fastcall sub_10097f40(S_10097f40 *self)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10097f60 size=0x12
+struct CUnknown10097f60 { int sub_10097f60(int, int); };
+int CUnknown10097f60::sub_10097f60(int a0, int a1)
+{
+    *(int *)((char *)this + a1 * 4 + 0xfdc) = a0;
+    return a1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10097f80 size=0x18
 struct CHost_10097f80 { char m_pad[0xfdc]; int m_aVals[1]; int sub_10097f80(int i); };
 int CHost_10097f80::sub_10097f80(int i)
