@@ -7999,6 +7999,7 @@
 0x1014f330 func   ?sub_1014f330@CUnknown101eb1d0@@QAEXXZ CUnknown101eb1d0::sub_1014f330
 0x1014f6c0 func   ??0ItemRec@@QAE@H@Z ItemRec::ItemRec
 0x1014f6c0 func   ?sub_1014f6c0@CUnknown1014f6c0@@QAEPAXH@Z CUnknown1014f6c0::sub_1014f6c0
+0x1014f6f0 func   ??1ItemRec@@QAE@XZ ItemRec::~ItemRec
 0x1014f6f0 func   ?sub_1014f6f0@CUnknown1014f6f0@@QAEHXZ CUnknown1014f6f0::sub_1014f6f0
 0x1014f820 func   ?sub_1014f820@CUnknown101eb820@@QAEXXZ CUnknown101eb820::sub_1014f820
 0x1014f990 func   ?sub_1014f990@BotchLoader@@QAE_NXZ BotchLoader::sub_1014f990
