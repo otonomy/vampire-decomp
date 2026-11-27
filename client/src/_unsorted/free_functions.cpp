@@ -93475,6 +93475,47 @@ void sub_10121920()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10121b00 size=0x111
+#include "C_BaseEntity.h"
+#include "ConVar.h"
+#include <string.h>
+#pragma intrinsic(strcmp)
+
+extern ConVar g_104e16b0;
+extern ConVar g_104e1750;
+
+static inline const char *Str(ConVar &c)
+{
+	if (!c.m_pParent->vfunc1()) {
+		if (c.m_nFlags & 0x1000)
+			return "FCVAR_NEVER_AS_STRING";
+		if (c.m_pParent->m_pszString)
+			return c.m_pParent->m_pszString;
+	}
+	return "";
+}
+
+bool __stdcall sub_10121b00(C_BaseEntity *ent)
+{
+	int idx = g_104e16b0.GetInt();
+	if (idx != -1) {
+		bool eq;
+		if (ent->entindex() == -1)
+			eq = idx == ent->entindex();
+		else
+			eq = ent->entindex() == idx;
+		if (!eq)
+			return false;
+	} else {
+		if (!*Str(g_104e1750))
+			return false;
+		if (strcmp(ent->vfunc114(), Str(g_104e1750)) != 0)
+			return false;
+	}
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10122350 size=0x27
 struct P10122350 { char pad[0x18c8]; int m_v; };
 void sub_10120730();
