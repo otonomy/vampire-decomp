@@ -91261,6 +91261,67 @@ int CParticleMgr::sub_10117920(Vector *p, float t)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10117980 size=0xf3
+#include "CParticleMgr.h"
+#include "CParticleEffectBinding.h"
+
+struct LeafView
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10();
+	virtual void v11(unsigned short, int);
+};
+extern LeafView *g_102b9060;
+struct SimView { virtual void v0(); virtual void v1(float); };
+struct PEBV
+{
+	char m_pad0000[8];
+	unsigned short m_nHandle;	// 0x08
+	char m_pad000a[0x2c - 0xa];
+	SimView *m_pSim;	// 0x2c
+	char m_pad0030[4];
+	unsigned int m_nFlags;	// 0x34
+	void *sub_10117100();
+};
+
+// TARGET: CParticleMgr::sub_10117980
+void CParticleMgr::sub_10117980(float flTimeDelta)
+{
+	*((char *)this + 6) = 1;
+	if (flTimeDelta > 0.1f)
+		flTimeDelta = 0.1f;
+	LeafView *leaf = g_102b9060;
+	int i = m_list.m_Head;
+	while (i != 0xffff)
+	{
+		CParticleEffectBinding *pEffect = (CParticleEffectBinding *)m_list.m_pMemory[i & 0xffff].m_Data;
+		PEBV *pv = (PEBV *)pEffect;
+		if (!(pv->m_nFlags & 1))
+		{
+			if (pv->m_nFlags & 4)
+			{
+				if (pEffect->sub_10117100())
+					pv->m_nFlags &= ~4;
+			}
+			pv->m_nFlags &= ~0x20;
+			leaf->v11(pv->m_nHandle, 2);
+			pv->m_pSim->v1(flTimeDelta);
+		}
+		i = m_list.m_pMemory[i & 0xffff].m_Next;
+	}
+	*((char *)this + 6) = 0;
+	i = m_list.m_Head;
+	while (i != 0xffff)
+	{
+		int next = m_list.m_pMemory[i & 0xffff].m_Next;
+		CParticleEffectBinding *pEffect = (CParticleEffectBinding *)m_list.m_pMemory[i & 0xffff].m_Data;
+		if (((PEBV *)pEffect)->m_nFlags & 1)
+			sub_101176b0(pEffect);
+		i = next;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10117a80 size=0x57
 #include "CParticleMgr.h"
 #include "Vector.h"

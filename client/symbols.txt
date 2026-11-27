@@ -6669,6 +6669,7 @@
 0x10117850 func   ?sub_10117850@CUnknown10117850@@QAEXH@Z CUnknown10117850::sub_10117850
 0x10117890 func   ?sub_10117890@ShadowMgrV@@QAEXXZ ShadowMgrV::sub_10117890
 0x10117920 func   ?sub_10117920@CParticleMgr@@QAEHPAVVector@@M@Z CParticleMgr::sub_10117920
+0x10117980 func   ?sub_10117980@CParticleMgr@@QAEXM@Z CParticleMgr::sub_10117980
 0x10117a80 func   ?sub_10117a80@CParticleMgr@@QAEXXZ CParticleMgr::sub_10117a80
 0x10117ae0 func   ?sub_10117ae0@@YAHXZ sub_10117ae0
 0x10117b00 func   ?sub_10117b00@@YAHHH@Z sub_10117b00
