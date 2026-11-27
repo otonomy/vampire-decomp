@@ -11,6 +11,33 @@ VHOLabel *pcd_emit_1017d220(const VHOLabel &other) { return new VHOLabel(other);
 // TARGET: ??_GVHOLabel@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x1017d250 size=0xbd
+#include "VHOLabel.h"
+struct SchemeView {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual int *GetColor(int *out, const char *name);
+};
+int VHOLabel::vfunc74(int a)
+{
+	Label::vfunc74(a);
+	SchemeView *s = (SchemeView *)a;
+	int c;
+	char *p = (char *)this;
+	if (!p[0xc2]) {
+		if (!p[0xc1]) {
+			if (p[0xc0]) return vfunc51(*s->GetColor(&c, "VReferencedText"));
+			else if (!p[0xc3]) return vfunc51(*s->GetColor(&c, "VUnselectedText"));
+			else return vfunc51(*s->GetColor(&c, "VBonusText"));
+		} else return vfunc51(*s->GetColor(&c, "VUnselectedText"));
+	} else {
+		if (!p[0xc1]) {
+			if (p[0xc0]) return vfunc51(*s->GetColor(&c, "VDisabledRefText"));
+			else return vfunc51(*s->GetColor(&c, "VDisabledText"));
+		} else return vfunc51(*s->GetColor(&c, "VDisabledSelText"));
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017d3d0 size=0x20
 #include "VHOLabel.h"
 namespace lifted {

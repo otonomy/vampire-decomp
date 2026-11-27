@@ -8983,6 +8983,7 @@
 0x1017d220 func   ??_GVHOLabel@@UAEPAXI@Z ??_GVHOLabel@@UAEPAXI@Z
 0x1017d240 func   ??1VHOLabel@@UAE@XZ VHOLabel::~VHOLabel
 0x1017d240 func   ?sub_1017d240@CUnknown1017d240@@QAEHXZ CUnknown1017d240::sub_1017d240
+0x1017d250 func   ?vfunc74@VHOLabel@@UAEHH@Z VHOLabel::vfunc74
 0x1017d310 func   ?sub_1017d310@CUnknown1017d310@@QAEXD@Z CUnknown1017d310::sub_1017d310
 0x1017d340 func   ?sub_1017d340@CUnknown1017d340@@QAEXD@Z CUnknown1017d340::sub_1017d340
 0x1017d370 func   ?sub_1017d370@CUnknown1017d370@@QAEXD@Z CUnknown1017d370::sub_1017d370
