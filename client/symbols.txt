@@ -4459,6 +4459,7 @@
 0x100a6b10 func   ?sub_100a6b10@C_BasePlayer@@QAE_NXZ C_BasePlayer::sub_100a6b10
 0x100a6b90 func   ?sub_100a6b90@HV100a@@QAEHXZ HV100a::sub_100a6b90
 0x100a6bd0 func   ?sub_100a6bd0@C_BasePlayer@@QAEXPAVCUserCmd@@@Z C_BasePlayer::sub_100a6bd0
+0x100a6dd0 func   ?vfunc152@C_BasePlayer@@UAEXHPAVCUserCmd@@@Z C_BasePlayer::vfunc152
 0x100a6e50 func   ?vfunc154@C_BasePlayer@@UAEXH@Z C_BasePlayer::vfunc154
 0x100a6e60 func   ?vfunc156@C_BasePlayer@@UAEXXZ C_BasePlayer::vfunc156
 0x100a73a0 func   ?sub_100a73a0@C_BasePlayer@@QAEXXZ C_BasePlayer::sub_100a73a0

@@ -495,6 +495,23 @@ bool C_BasePlayer::sub_100a6b10()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a6dd0 size=0x7f
+#include "C_BasePlayer.h"
+#include "engineclient.h"
+extern bool g_104a0d54;
+
+void C_BasePlayer::vfunc152(int a1, CUserCmd *cmd)
+{
+	if ((sub_100a2450() & 0x20) && g_104a0d54) {
+		cmd->viewangles = *(Vector *)((char *)this + 0x19e0);
+		engine->SetViewAngles(*(QAngle *)&cmd->viewangles);
+	}
+	*(Vector *)((char *)this + 0x19e0) = cmd->viewangles;
+	g_104a0d54 = ((unsigned int)sub_100a2450() >> 5) & 1;
+	sub_100a6bd0(cmd);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a6e50 size=0x3
 #include "C_BasePlayer.h"
 void C_BasePlayer::vfunc154(int a0)
