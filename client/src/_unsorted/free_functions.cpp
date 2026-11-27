@@ -80684,6 +80684,28 @@ void CHelper_100fccf0::sub_100fccf0( const Vector &origin, const QAngle &angles 
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fd0b0 size=0x12f
+#include "engineclient.h"
+#include "Vector.h"
+extern "C" double sqrt(double);
+#pragma intrinsic(sqrt)
+struct CUnknown100fd0b0 {
+	Vector sub_100fd0b0(Vector prev, Vector cur, Vector target, float tension);
+};
+extern const float g_10235250;
+Vector CUnknown100fd0b0::sub_100fd0b0(Vector prev, Vector cur, Vector target, float tension)
+{
+	float dt = engine->vfunc41(0);
+	float s = g_10235250 * sqrt(tension);
+	float k = s + s;
+	Vector vel = cur - prev;
+	Vector acc = cur - target;
+	prev = k * vel;
+	target = acc * -tension - prev;
+	return cur + (target + vel) * dt;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fdb30 size=0x17
 float sub_100fdb30(float value)
 {

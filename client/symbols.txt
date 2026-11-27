@@ -6046,6 +6046,7 @@
 0x100fc900 func   ?sub_100fc900@CInput@@QAEXXZ CInput::sub_100fc900
 0x100fcca0 func   ?sub_100fcca0@@YGXHH@Z sub_100fcca0
 0x100fccf0 func   ?sub_100fccf0@CHelper_100fccf0@@QAEXABVVector@@ABVQAngle@@@Z CHelper_100fccf0::sub_100fccf0
+0x100fd0b0 func   ?sub_100fd0b0@CUnknown100fd0b0@@QAE?AVVector@@V2@00M@Z CUnknown100fd0b0::sub_100fd0b0
 0x100fdb30 func   ?sub_100fdb30@@YAMM@Z sub_100fdb30
 0x100fdb50 func   ?sub_100fdb50@@YAMPBVVector@@0MPAUCGameTrace@@@Z sub_100fdb50
 0x100fdd80 func   ?sub_100fdd80@@YIXPAUCamV@@HPBVVector@@MMM_N@Z sub_100fdd80
