@@ -111,7 +111,7 @@ public:
 	virtual void vfunc84();
 	virtual void vfunc85();
 	virtual void vfunc86();
-	virtual void vfunc87();
+	virtual void *vfunc87();
 	virtual void vfunc88();
 	virtual void vfunc89(int, void *);
 	virtual void vfunc90();
