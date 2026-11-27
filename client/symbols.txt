@@ -9295,6 +9295,7 @@
 0x1017c550 func   ?sub_1017c550@@YGXH@Z sub_1017c550
 0x1017c560 func   ?vfunc119@CharEditInfoPanel@@UAEXXZ CharEditInfoPanel::vfunc119
 0x1017c570 func   ?sub_1017c570@@YAXXZ sub_1017c570
+0x1017c580 func   ?sub_1017c580@CharEditInfoPanel@@QAEXXZ CharEditInfoPanel::sub_1017c580
 0x1017c5d0 func   ?vfunc123@CharEditInfoPanel@@UAEXXZ CharEditInfoPanel::vfunc123
 0x1017c600 func   ?vfunc21@CharEditInfoPanel@@UAEHH@Z CharEditInfoPanel::vfunc21
 0x1017c640 func   ?vfunc3@CharEditInfoPanel@@UAEXXZ CharEditInfoPanel::vfunc3

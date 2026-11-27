@@ -144940,6 +144940,32 @@ void sub_1017c570()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017c580 size=0x4d
+#include "CharEditInfoPanel.h"
+#include "C_BasePlayer.h"
+
+extern int g_102d1354;
+
+struct CUnknown1017c140 { void sub_1017c140(); };
+
+// TARGET: CharEditInfoPanel::sub_1017c580
+void CharEditInfoPanel::sub_1017c580()
+{
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (pPlayer)
+	{
+		if (g_102d1354 != pPlayer->sub_1008ebb0())
+		{
+			((CUnknown1017c140 *)this)->sub_1017c140();
+			sub_1017bb10();
+			g_102d1354 = pPlayer->sub_1008ebb0();
+		}
+		vfunc101();
+		sub_1017bf40();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017c650 size=0x1
 void sub_1017c650()
 {
