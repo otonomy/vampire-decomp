@@ -142999,6 +142999,39 @@ void CViewRender::sub_1018fb70(int nIndex)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018fe80 size=0x143
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "C_BasePlayer.h"
+struct IEnt9_1018fe80 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual Vector *v9();
+};
+#define m_vecOfs (*(Vector *)((char *)this + 0x48))
+// TARGET: CViewRender::sub_1018fe80
+void CViewRender::sub_1018fe80()
+{
+	ScopeTrace st("CViewRender::BoundOffsets", g_102de300);
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (pPlayer) {
+		Vector origin = *((IEnt9_1018fe80 *)pPlayer)->v9();
+		if (m_vecOfs.x < origin.x - 14.0f)
+			m_vecOfs.x = origin.x - 14.0f;
+		else if (m_vecOfs.x > origin.x + 14.0f)
+			m_vecOfs.x = origin.x + 14.0f;
+		if (m_vecOfs.y < origin.y - 14.0f)
+			m_vecOfs.y = origin.y - 14.0f;
+		else if (m_vecOfs.y > origin.y + 14.0f)
+			m_vecOfs.y = origin.y + 14.0f;
+		if (m_vecOfs.z < origin.z - 22.0f)
+			m_vecOfs.z = origin.z - 22.0f;
+		else if (m_vecOfs.z > origin.z + 30.0f)
+			m_vecOfs.z = origin.z + 30.0f;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018ffd0 size=0x301
 #include "ScopeTrace.h"
 #include "CInput.h"
