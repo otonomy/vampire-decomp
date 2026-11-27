@@ -144907,6 +144907,34 @@ bool CViewRender_1019f940::sub_1019f940(void *view)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019fa30 size=0x113
+#include "CViewRender.h"
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+#include "ScopeTrace.h"
+
+struct CLocalPlr1019fa30 { float sub_100a7990(); };
+void sub_10198640();
+
+bool CViewRender::sub_1019fa30(int arg)
+{
+	ScopeTrace trace("CViewRender::DrawInsightBlur", g_102de300);
+	if (!g_pMaterialSystemHardwareConfig->vfunc10())
+		return false;
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer)
+		return false;
+	float f = ((CLocalPlr1019fa30 *)pPlayer)->sub_100a7990();
+	if (!(f > 0.0f))
+		return false;
+	if (!(f < 0.99f))
+		f = 0.99f;
+	sub_10198640();
+	sub_1019e530(arg, *(int *)((char *)this + 0x42c), f, 0.004f, 0, 255, 255, 255);
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019fb50 size=0x2af
 #include "CViewRender.h"
 #include "ScopeTrace.h"
