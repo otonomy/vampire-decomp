@@ -16899,6 +16899,59 @@ template <> int ClientClassInit<DT_WeaponRanged_FlameThrower::ignored>(DT_Weapon
 }
 // END FUNCTION
 
+// FUNCTION: 0x10027860 size=0x114
+#include "C_BaseEntity.h"
+#include "ConVar.h"
+#include "Vector.h"
+
+extern ConVar g_102ea428;
+extern Vector g_104d5190;
+struct IParticleSys10027860 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(int h); };
+extern IParticleSys10027860 *g_104a581c;
+struct CParticleHolder10027860 { char pad[0x418]; int m_i418; char pad2[0x46c - 0x41c]; int m_i46c; };
+void *sub_100b47b0(const char *, void *, void *, void *, int, int, float, float, float, float);
+int sub_1002a0e0(void *, void *, int);
+
+struct CFlameEnt10027860 { void sub_10027c30(void *p, int a); };
+
+struct CUnknown10027860
+{
+	char m_pad0000[0x970];
+	char m_Sub970[0x1528 - 0x970];
+	char m_Sub1528[8];
+	char m_Org1530[0x1564 - 0x1530];
+	int m_i1564;
+	int m_i1568;
+	int m_i156c;
+	char m_pad1570[0x1598 - 0x1570];
+	CParticleHolder10027860 *m_pList[50];
+	void sub_1009b2c0(int);
+	void sub_10027860(int updateType);
+};
+
+void CUnknown10027860::sub_10027860(int updateType)
+{
+	sub_1009b2c0(updateType);
+	if (m_i1568 != m_i156c) {
+		updateType = m_i1564;
+		((CFlameEnt10027860 *)((char *)this - 8))->sub_10027c30(m_Org1530, 0);
+		m_i1564 = sub_1002a0e0(m_Sub970, m_Sub1528, m_i1564);
+		m_i156c = m_i1568;
+		CParticleHolder10027860 *p = m_pList[m_i1564];
+		if (p) {
+			g_104a581c->v14(p->m_i46c);
+			p->m_i46c = 0;
+			p->m_i418 = 0;
+		}
+		if (g_102ea428.GetInt()) {
+			if (updateType > -1 && updateType < 50)
+				m_pList[updateType] = (CParticleHolder10027860 *)sub_100b47b0("Flamethrower_Chain_emitter", m_Org1530, &g_104d5190, (char *)this - 8, 8, m_i1564, 1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+	((C_BaseEntity *)((char *)this - 8))->vfunc83(-1293.0f);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10027bf0 size=0x39
 struct V5910 { bool sub_100a5910(); int sub_100a9af0(int); };
 struct Owner { char pad[0x3f8]; V5910 *m_p3f8; };

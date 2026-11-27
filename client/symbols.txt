@@ -1908,6 +1908,7 @@
 0x100276b0 func   ?ClientClassInit@@YAHPAUignored@DT_WeaponRanged_FlameThrower@@@Z ClientClassInit
 0x100277b0 func   ??0C_WeaponRanged_FlameThrower@@QAE@XZ C_WeaponRanged_FlameThrower::C_WeaponRanged_FlameThrower
 0x10027840 func   ??_GC_WeaponRanged_FlameThrower@@UAEPAXI@Z ??_GC_WeaponRanged_FlameThrower@@UAEPAXI@Z
+0x10027860 func   ?sub_10027860@CUnknown10027860@@QAEXH@Z CUnknown10027860::sub_10027860
 0x10027980 func   ?vfunc143@C_WeaponRanged_FlameThrower@@UAEXXZ C_WeaponRanged_FlameThrower::vfunc143
 0x10027bf0 func   ?sub_10027bf0@YY@@QAEPAU1@XZ YY::sub_10027bf0
 0x10027c30 func   ?sub_10027c30@@YIXPAUYYV@@HPAUV3@@1@Z sub_10027c30
