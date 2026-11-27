@@ -153289,6 +153289,97 @@ void CUnknown101b1890::sub_101b1890()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b18c0 size=0x152
+#include "vgui2__TextEntry.h"
+#include <stdlib.h>
+#include <string.h>
+
+template <class T> struct DarX
+{
+	int _count;
+	int _capacity;
+	T *_data;
+	void ensureCapacity(int wanted)
+	{
+		if (wanted <= _capacity)
+			return;
+		int newCapacity = _capacity;
+		if (newCapacity == 0)
+			newCapacity = 1;
+		while (newCapacity < wanted)
+			newCapacity += newCapacity;
+		T *newData = new T[newCapacity];
+		if (!newData)
+			exit((int)newData);
+		memset(newData, 0, sizeof(T) * newCapacity);
+		_capacity = newCapacity;
+		for (int i = 0; i < _count; i++)
+			newData[i] = _data[i];
+		delete _data;
+		_data = newData;
+	}
+	void addElement(T elem)
+	{
+		ensureCapacity(_count + 1);
+		_data[_count] = elem;
+		_count++;
+	}
+	int getCount() { return _count; }
+	T getAt(int index)
+	{
+		if (index < 0 || index >= _count)
+			return 0;
+		return _data[index];
+	}
+	void removeFirst(int num)
+	{
+		if (num < 0 || num >= _count)
+			return;
+		for (int j = num; j < _count; j++)
+			_data[j - num] = _data[j];
+		_count -= num;
+	}
+};
+
+struct TextEntryMem
+{
+	char m_pad0[0x58];
+	DarX<char> m_text;	// 0x58
+	DarX<int> m_lines;	// 0x64
+	char m_pad70[0x114 - 0x70];
+	int m_114;
+	char m_pad118[2];
+	char m_11a;
+	char m_pad11b;
+	int m_11c;
+	int m_120;
+};
+
+// TARGET: vgui2::TextEntry::sub_101b18c0
+void vgui2::TextEntry::sub_101b18c0()
+{
+	TextEntryMem *p = (TextEntryMem *)this;
+	if (!p->m_11a)
+		return;
+	int limit = p->m_11c;
+	if (p->m_text.getCount() > limit && p->m_lines.getCount() != 1) {
+		int n = (int)((float)p->m_120 * limit * 0.01f);
+		int cut = 0;
+		int i = 0;
+		if (n > 0) {
+			do {
+				cut = p->m_lines.getAt(i++) + 1;
+			} while (cut < n);
+		}
+		p->m_text.removeFirst(cut);
+		p->m_114 = -1;
+		p->m_lines._count = 0;
+		p->m_lines.addElement(0xf423f);
+		vfunc149();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b1c70 size=0x2a
 #include "vgui2__Panel.h"
 #define P8(n) virtual void n##a(); virtual void n##b(); virtual void n##c(); virtual void n##d(); virtual void n##e(); virtual void n##f(); virtual void n##g(); virtual void n##h();

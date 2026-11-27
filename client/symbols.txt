@@ -9979,6 +9979,7 @@
 0x101b1870 func   ?sub_101b1870@CUnknown101b1870@@QAEHH@Z CUnknown101b1870::sub_101b1870
 0x101b1880 func   ?sub_101b1880@CUnknown101b1880@@QAEHXZ CUnknown101b1880::sub_101b1880
 0x101b1890 func   ?sub_101b1890@CUnknown101b1890@@QAEXXZ CUnknown101b1890::sub_101b1890
+0x101b18c0 func   ?sub_101b18c0@TextEntry@vgui2@@QAEXXZ vgui2::TextEntry::sub_101b18c0
 0x101b1a20 func   ?vfunc151@TextEntry@vgui2@@UAEHHH@Z vgui2::TextEntry::vfunc151
 0x101b1c60 func   ?vfunc102@TextEntry@vgui2@@UAEHXZ vgui2::TextEntry::vfunc102
 0x101b1c70 func   ?sub_101b1c70@PV@@QAEHXZ PV::sub_101b1c70
