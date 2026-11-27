@@ -2813,6 +2813,7 @@
 0x1004a330 func   ?sub_1004a330@@YAXPAUS44_1004a330@@PBU1@@Z sub_1004a330
 0x1004a350 func   ?Grow@?$CUtlMemory@ULightRay_t@@@@QAEXH@Z CUtlMemory<LightRay_t>::Grow
 0x1004a3c0 func   ?vfunc0@CTextureTransformProxy@@UAE_NPAX0@Z CTextureTransformProxy::vfunc0
+0x1004a4a0 func   ?vfunc1@CTextureTransformProxy@@UAEXH@Z CTextureTransformProxy::vfunc1
 0x1004a630 func   ?sub_1004a630@@YAHXZ sub_1004a630
 0x1004a660 func   ?vfunc2@CResultProxy@@UAEXXZ CResultProxy::vfunc2
 0x1004a670 func   ??_GCTextureTransformProxy@@UAEPAXI@Z ??_GCTextureTransformProxy@@UAEPAXI@Z
