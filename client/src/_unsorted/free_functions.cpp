@@ -127304,6 +127304,30 @@ int sub_1015fc70(void *pObj, bool b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015fd80 size=0x137
+#include "CVStatList_t.h"
+
+extern int g_105f8e70[17];
+
+// TARGET: sub_1015fd80
+int sub_1015fd80(void *pChar, int id, bool flag)
+{
+    int count = 0;
+    int minv = 0;
+    if (!flag) minv = 1;
+    CVStatListSet *set = (CVStatListSet *)((char *)pChar + 0x1164);
+    for (int i = 0; i < 17; i++) {
+        int s = g_105f8e70[i];
+        if (s == id) return count;
+        if (set->Find(2)->sub_1015dbd0(s) >= minv) {
+            if (set->Find(2)->sub_1015dbd0(s) < 15)
+                count++;
+        }
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015fec0 size=0x5
 int sub_1015fec0(int a0, int a1)
 {

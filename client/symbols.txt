@@ -8423,6 +8423,7 @@
 0x1015fbf0 func   ?sub_1015fbf0@@YAHH@Z sub_1015fbf0
 0x1015fc40 func   ?sub_1015fc40@@YA?AUstring_t@@PBD@Z sub_1015fc40
 0x1015fc70 func   ?sub_1015fc70@@YAHPAX_N@Z sub_1015fc70
+0x1015fd80 func   ?sub_1015fd80@@YAHPAXH_N@Z sub_1015fd80
 0x1015fec0 func   ?sub_1015fec0@@YAHHH@Z sub_1015fec0
 0x1015ff30 func   ??0StatDefault@@QAE@H@Z StatDefault::StatDefault
 0x1015ff70 func   ?sub_1015ff70@CUnknown1006c7d0@@QAEXXZ CUnknown1006c7d0::sub_1015ff70
