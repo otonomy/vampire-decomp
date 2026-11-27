@@ -148080,6 +148080,42 @@ void XRes::sub_101a8d60(XInfo *info)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a91b0 size=0x112
+#include "ehandle.h"
+#include "CBaseEntityList.h"
+
+struct HandleVec { CBaseHandle *m_pMemory; int m_a; int m_b; int m_Size; };
+extern HandleVec g_1049d8f8;
+
+struct EntView { char *sub_1007b160(); };
+
+inline void *GetEnt(const CBaseHandle &h)
+{
+	if (h.m_Index != 0xffffffff)
+	{
+		CBaseEntityListEntry &e = g_pEntityList->m_EntPtrArray[h.m_Index & 0x1fff];
+		return (e.m_SerialNumber == (int)(h.m_Index >> 13)) ? e.m_pEntity : 0;
+	}
+	return 0;
+}
+
+// TARGET: sub_101a91b0
+int __stdcall sub_101a91b0(int arg)
+{
+	for (int i = 0; i < g_1049d8f8.m_Size; i++)
+	{
+		if (GetEnt(g_1049d8f8.m_pMemory[i]))
+		{
+			if (*(int *)((char *)GetEnt(g_1049d8f8.m_pMemory[i]) + 0x7a4) == arg)
+				return *(int *)(((EntView *)GetEnt(g_1049d8f8.m_pMemory[i]))->sub_1007b160() + 0x5ebd0);
+			if (*(int *)((char *)GetEnt(g_1049d8f8.m_pMemory[i]) + 0x7a8) == arg)
+				return *(int *)(((EntView *)GetEnt(g_1049d8f8.m_pMemory[i]))->sub_1007b160() + 0x5ebd4);
+		}
+	}
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a93d0 size=0x86
 #include "vgui2__Panel.h"
 
