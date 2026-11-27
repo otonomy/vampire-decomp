@@ -274,6 +274,57 @@ float C_BaseCineCamera::sub_10001c80(int idx, float f, float d)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10001d40 size=0x1c3
+#include "C_BaseCineCamera.h"
+#include "Vector.h"
+#include "QAngle.h"
+struct CUnknown10001f20 { int sub_10001f20(); };
+void sub_10109340(const Vector &v, QAngle &a);
+__forceinline Vector SubV(const Vector &a, const Vector &b)
+{
+	Vector res;
+	res.x = a.x - b.x;
+	res.y = a.y - b.y;
+	res.z = a.z - b.z;
+	return res;
+}
+// TARGET: C_BaseCineCamera::sub_10001d40
+Vector C_BaseCineCamera::sub_10001d40(float dt)
+{
+	char *shot = (char *)((CUnknown10001f20 *)this)->sub_10001f20();
+	Vector dir = SubV(m_v41c, m_v468);
+	QAngle ang;
+	sub_10109340(dir, ang);
+	for (int i = 0; i < 3; i++)
+	{
+		float v = m_ab4c1[i] ? *(float *)(shot + 0xf0 + i * 4) : 1.0f;
+		float d = (360.0f / 65536.0f) * ((int)((ang[i] - m_v474[i] + 180.0f) * 182.04445f) & 0xffff) - 180.0f;
+		if (d < -v)
+		{
+			m_af4a8[i] = sub_10001c80(i, d, dt);
+			m_v474[i] -= m_af4a8[i] * dt;
+			if (m_v474[i] < ang[i])
+				m_v474[i] = ang[i];
+			m_ab4c1[i] = 0;
+		}
+		else if (d > v)
+		{
+			m_af4a8[i] = sub_10001c80(i, d, dt);
+			m_v474[i] += m_af4a8[i] * dt;
+			if (m_v474[i] > ang[i])
+				m_v474[i] = ang[i];
+			m_ab4c1[i] = 0;
+		}
+		else
+		{
+			m_ab4c1[i] = 1;
+			m_af4a8[i] = 0;
+		}
+	}
+	return m_v474;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10001f20 size=0x12
 namespace lifted {
 extern char g_102ea298;
