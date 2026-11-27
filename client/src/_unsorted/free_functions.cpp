@@ -137426,6 +137426,66 @@ int CUnknown1017f290::sub_1017f290()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017f470 size=0x13f
+#include "StatOwner2.h"
+#include "vgui2__Label.h"
+extern "C" int sprintf(char *, const char *, ...);
+char sub_101713e0();
+struct Info_1017f470 {
+	char pad[0x24];
+	const char *m_pszName;
+};
+struct Foo_1017f470 {
+	int m_mode;
+	int m_unk4;
+	Info_1017f470 *m_pInfo;
+	char pad0c[0x20 - 0xc];
+	vgui2::Label *m_pLabel;
+	int m_nPanels;
+	vgui2::Label **m_ppPanels;
+	int m_id;
+	char pad30[0x38 - 0x30];
+	int m_n38;
+	int sub_1017f5b0();
+	void sub_1017f470(int a, int b);
+};
+// TARGET: Foo_1017f470::sub_1017f470
+void Foo_1017f470::sub_1017f470(int a, int b)
+{
+	char buf[64];
+	if (!sub_101713e0())
+		return;
+	if (a >= 0 && a < m_nPanels && b >= 0) {
+		vgui2::Label *p = m_ppPanels[a];
+		if (p) {
+			if (b > 0) {
+				sprintf(buf, "%s(%d)", g_105f93c0.sub_1015f270(m_id)->sub_1015ecd0(a), b);
+				p->vfunc108(buf);
+			} else {
+				p->vfunc108(g_105f93c0.sub_1015f270(m_id)->sub_1015ecd0(a));
+			}
+		}
+	}
+	if (m_pInfo && m_pLabel) {
+		int n = sub_1017f5b0();
+		if (n > 0) {
+			const char *name;
+			if (m_mode == 2 && m_n38 >= 5)
+				name = g_105f93c0.sub_1015f2f0("NuminaGroup")->sub_1015ecd0(0);
+			else {
+				const char *const &r = m_pInfo->m_pszName;
+				name = r ? r : "";
+			}
+			sprintf(buf, "%s(%d)", name, n);
+			m_pLabel->vfunc108(buf);
+		} else {
+			const char *const &r = m_pInfo->m_pszName;
+			m_pLabel->vfunc108(r ? r : "");
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017f610 size=0x2d
 struct V1017 { int sub_1017dc00(); };
 struct ScoreV { void sub_1017f1d0(); };
