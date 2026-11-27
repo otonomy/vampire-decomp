@@ -27040,6 +27040,60 @@ void XKey::sub_1004c2b0(char down)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004c2f0 size=0xf4
+#include "CAmmoCounter.h"
+#include "engineclient.h"
+#include <string.h>
+extern "C" __declspec(dllimport) char *Q_strncpy(char *, const char *, int);
+extern int sub_100cd100();
+struct WrapState { char *pRestore; int nLine; };
+// TARGET: CAmmoCounter::sub_1004c2f0
+void CAmmoCounter::sub_1004c2f0(const char *pszName)
+{
+	char buf[128];
+	WrapState s;
+	char *pSplit = 0;
+	s.pRestore = 0;
+	Q_strncpy(buf, pszName, 128);
+	s.nLine = 0;
+	char *pLine = buf;
+	do
+	{
+		int w = g_pMatSystemSurface->vfunc15(m_nFont, pLine);
+		if (w > sub_100cd100() - m_n178)
+		{
+			do
+			{
+				char *pr = s.pRestore;
+				if (pr)
+				{
+					if (!strrchr(pLine, ' '))
+						break;
+					*pr = ' ';
+				}
+				s.pRestore = pSplit;
+				pSplit = strrchr(pLine, ' ');
+				if (!pSplit)
+					break;
+				*pSplit = 0;
+				w = g_pMatSystemSurface->vfunc15(m_nFont, pLine);
+			} while (w > sub_100cd100() - m_n178);
+		}
+		sub_1004c3f0(pLine, s.nLine);
+		s.nLine++;
+		if (pSplit)
+		{
+			pLine = pSplit + 1;
+			pSplit = 0;
+		}
+		else
+			pLine = 0;
+		if (s.pRestore)
+			*s.pRestore = ' ';
+	} while (pLine);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004c3f0 size=0x10b
 #include "engineclient.h"
 #include "CAmmoCounter.h"
