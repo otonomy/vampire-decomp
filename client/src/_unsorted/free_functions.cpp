@@ -125141,6 +125141,30 @@ int CVStatInfoList_t::sub_1015cb90(const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015cde0 size=0x12c
+#include "CVStatInfoList_t.h"
+#include "ScopeTrace.h"
+#include <string.h>
+int CVStatInfoList_t::sub_1015cde0(const char *name, int index)
+{
+    ScopeTrace st("CVStatInfoList_t::LookupNextPartial( const char *name, int index )", "");
+    char lowname[128];
+    strcpy(lowname, name);
+    _strlwr(lowname);
+    for (int i = index + 1; i < m_nStats; i++)
+    {
+        char ename[128];
+        const char *const &pName = m_pStats[i].m_pszName;
+        const char *s = pName ? pName : "";
+        strcpy(ename, s);
+        _strlwr(ename);
+        if (strstr(ename, lowname) == ename)
+            return i;
+    }
+    return -1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015cf10 size=0xb5
 #include "CVStatInfoList_t.h"
 #include "ScopeTrace.h"
