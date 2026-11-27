@@ -8638,6 +8638,7 @@
 0x10166e60 func   ?sub_10166e60@CGrid@vgui2@@QAE_NHHPAH0@Z vgui2::CGrid::sub_10166e60
 0x10166ee0 func   ?sub_10166ee0@@YAHHH@Z sub_10166ee0
 0x10166f00 func   ?sub_10166f00@@YAHHH@Z sub_10166f00
+0x10166f20 func   ?sub_10166f20@@YA_NPAX@Z sub_10166f20
 0x10166f50 func   ?sub_10166f50@@YAXXZ sub_10166f50
 0x10167000 func   ?sub_10167000@@YAXXZ sub_10167000
 0x101670a0 func   ?sub_101670a0@@YAXXZ sub_101670a0

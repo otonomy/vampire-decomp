@@ -129415,6 +129415,20 @@ int sub_10166f00(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10166f20 size=0x24
+bool __cdecl sub_101ac940(void **factoryList, int numFactories);
+void sub_1016a690();
+int sub_1016a6b0();
+// TARGET: sub_10166f20
+bool __cdecl sub_10166f20(void *factory)
+{
+	if (!sub_101ac940(&factory, 1))
+		return false;
+	sub_1016a690();
+	return sub_1016a6b0() ? true : false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10166f50 size=0xa9
 #include "engineclient.h"
 struct IFace_10166f50
