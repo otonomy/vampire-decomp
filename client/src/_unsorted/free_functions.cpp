@@ -93760,6 +93760,70 @@ void C_BaseEntity::sub_1011c1b0(C_BaseEntity *other, CGameTrace &trace)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011c310 size=0x16f
+#include "C_BaseEntity.h"
+#include "CGameTrace.h"
+#include "ScopeTrace.h"
+#include "Vector.h"
+
+struct cplane_x
+{
+	Vector normal;
+	float dist;
+	char type, signbits;
+	char pad[2];
+
+	cplane_x &operator=(const cplane_x &o)
+	{
+		normal.sub_10039080(o.normal);
+		dist = o.dist;
+		type = o.type;
+		signbits = o.signbits;
+		for (unsigned i = 0; i < 2; i++)
+			pad[i] = o.pad[i];
+		return *this;
+	}
+};
+
+struct TraceDst
+{
+	int a0, a1, a2, a3, a4, a5;
+	cplane_x plane;
+	int fr, con;
+	short disp;
+	char as, ss;
+	int f38, p3c, p40, p44;
+	short b48;
+	int p4c, p50;
+
+	void Copy(const TraceDst &s)
+	{
+		a0 = s.a0; a1 = s.a1; a2 = s.a2; a3 = s.a3; a4 = s.a4; a5 = s.a5;
+		plane = s.plane;
+		fr = s.fr; con = s.con;
+		disp = s.disp;
+		as = s.as; ss = s.ss;
+		f38 = s.f38; p3c = s.p3c; p40 = s.p40; p44 = s.p44;
+		b48 = s.b48;
+		p4c = s.p4c; p50 = s.p50;
+	}
+};
+extern TraceDst g_104e0b20;
+
+// TARGET: C_BaseEntity::sub_1011c310
+void C_BaseEntity::sub_1011c310(C_BaseEntity *other, CGameTrace &trace)
+{
+	ScopeTrace st("CBaseEntity::PhysicsMarkEntitiesAsTouchingEventDriven", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	g_104e0b20.Copy(*(TraceDst *)&trace);
+	int *link = sub_1011be90(other);
+	if (link)
+		link[1] = -1;
+	link = other->sub_1011be90(this);
+	if (link)
+		link[1] = -1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011c480 size=0x9c
 #include "C_BaseEntity.h"
 #include "ScopeTrace.h"
