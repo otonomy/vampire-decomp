@@ -28363,6 +28363,41 @@ int sub_1004ea50()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004eb00 size=0x18a
+#include "CDiscipline.h"
+int sub_100cd100();
+int sub_100cd0f0();
+extern int g_10284b38[5];
+extern int g_10284b4c[5];
+extern int g_103ede48[5];
+extern int g_103ede5c[5];
+// TARGET: CDiscipline::sub_1004eb00
+void CDiscipline::sub_1004eb00()
+{
+	int w = sub_100cd100();
+	sub_100cd0f0();
+	double sx, sy;
+	sx = sub_100cd100() * 0.0015625;
+	m_n180 = (int)(sx * 64.0);
+	sy = sub_100cd0f0() * 0.0020833333333333333;
+	m_n184 = (int)(sy * 64.0);
+	sx = sub_100cd100() * 0.0015625;
+	m_n190 = (int)(sx * 8.0);
+	sy = sub_100cd0f0() * 0.0020833333333333333;
+	m_n194 = (int)(sy * 8.0);
+	sx = sub_100cd100() * 0.0015625;
+	m_unk198 = (int)(sx * 8.0);
+	sy = sub_100cd0f0() * 0.0020833333333333333;
+	m_unk19c = (int)(sy * 9.0);
+	for (int i = 0; i < 5; i++) {
+		g_103ede48[i] = (g_10284b38[i] * 10000 / 128 * m_n180) / 10000;
+		g_103ede5c[i] = (g_10284b4c[i] * 10000 / 128 * m_n184) / 10000;
+	}
+	m_unk17c = 0;
+	m_unk178 = w - m_n180 * 4;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004ec90 size=0x1f
 struct SE_1004ec90 { int a, b, c; };
 struct S_1004ec90 { char pad[0x1ac]; SE_1004ec90 e[6]; int sub_1004ec90(int v); };
