@@ -1331,6 +1331,19 @@ int C_BaseEntity::vfunc62()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a1340 size=0x90
+#include "C_BaseEntity.h"
+
+void C_BaseEntity::OnDataChanged(int updateType)
+{
+	float *a = (float *)((char *)this + 0x29c);
+	float *b = (float *)((char *)this + 0x2b4);
+	if (a[0] != b[0] || a[1] != b[1] || a[2] != b[2] || a[3] != b[3] || a[4] != b[4] || a[5] != b[5])
+		sub_1009e2d0(1);
+	sub_100a0650("OnDataChanged");
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a1aa0 size=0x73
 #include "engineclient.h"
 #include "C_BaseEntity.h"
