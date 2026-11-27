@@ -157366,6 +157366,39 @@ void * CUnknown101a7640::sub_101a7640(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101a77c0 size=0xfb
+#include "CUnknown1014ada0.h"
+#include "C_BasePlayer.h"
+struct VWeaponInfoX { char m_pad[0x4fec4]; int m_n4fec4; int m_n4fec8; };
+struct VWeaponX { VWeaponInfoX *sub_1007b160(); };
+extern int g_105e8138;
+extern CUnknown1014ada0 **g_105e813c;
+
+inline CUnknown1014ada0 *FindFeat(int nType)
+{
+	for (int i = 0; i < g_105e8138; i++)
+	{
+		if (g_105e813c[i]->m_unk00 == nType)
+			return g_105e813c[i];
+	}
+	static CUnknown1014ada0 s_Default(-1);
+	return &s_Default;
+}
+
+// TARGET: sub_101a77c0
+bool sub_101a77c0(C_BasePlayer *pPlayer, VWeaponX *pWeapon)
+{
+	bool bOk = true;
+	int a = FindFeat(10)->sub_1014b3b0(pPlayer);
+	int b = FindFeat(11)->sub_1014b3b0(pPlayer);
+	if (a < pWeapon->sub_1007b160()->m_n4fec8 - 1)
+		bOk = false;
+	if (b < pWeapon->sub_1007b160()->m_n4fec4 - 1)
+		bOk = false;
+	return bOk;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a79f0 size=0xc
 namespace lifted {
 struct V { virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9(); virtual void u10(); virtual int f11(int); };

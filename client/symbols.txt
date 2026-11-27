@@ -9895,6 +9895,7 @@
 0x101a7680 func   ?vfunc1@CHudWeaponSelection@@UAEXXZ CHudWeaponSelection::vfunc1
 0x101a76f0 func   ?vfunc7@CHudWeaponSelection@@UAEXXZ CHudWeaponSelection::vfunc7
 0x101a7710 func   ?vfunc2@CHudWeaponSelection@@UAEXXZ CHudWeaponSelection::vfunc2
+0x101a77c0 func   ?sub_101a77c0@@YA_NPAVC_BasePlayer@@PAUVWeaponX@@@Z sub_101a77c0
 0x101a78c0 func   ?vfunc6@CHudWeaponSelection@@UAEXXZ CHudWeaponSelection::vfunc6
 0x101a79f0 func   ?sub_101a79f0@CUnknown101a79f0@@QAEHXZ CUnknown101a79f0::sub_101a79f0
 0x101a7a00 func   ?sub_101a7a00@CHudWeaponSelection@@QAEXXZ CHudWeaponSelection::sub_101a7a00
