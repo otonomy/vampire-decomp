@@ -10595,6 +10595,7 @@
 0x101c2df0 func   ??0FocusNavGroup@vgui2@@QAE@PAVPanel@1@@Z vgui2::FocusNavGroup::FocusNavGroup
 0x101c2e30 func   ?sub_101c2e30@CUnknown101c2e30@@QAEXXZ CUnknown101c2e30::sub_101c2e30
 0x101c2e40 func   ?vfunc4@FocusNavGroup@vgui2@@UAEXPAVPanel@2@@Z vgui2::FocusNavGroup::vfunc4
+0x101c2f90 func   ?vfunc5@FocusNavGroup@vgui2@@UAEXPAVPanel@2@@Z vgui2::FocusNavGroup::vfunc5
 0x101c3100 func   ?vfunc8@FocusNavGroup@vgui2@@UAE_ND@Z vgui2::FocusNavGroup::vfunc8
 0x101c3110 func   ?vfunc1@FocusNavGroup@vgui2@@UAEXPAVPanel@2@@Z vgui2::FocusNavGroup::vfunc1
 0x101c31f0 func   ?vfunc2@FocusNavGroup@vgui2@@UAEHXZ vgui2::FocusNavGroup::vfunc2

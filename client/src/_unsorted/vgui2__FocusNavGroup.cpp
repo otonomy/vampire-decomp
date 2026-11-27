@@ -79,6 +79,78 @@ void vgui2::FocusNavGroup::vfunc4(vgui2::Panel *panel)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c2f90 size=0x162
+#include "vgui2__FocusNavGroup.h"
+#include "vgui2__Panel.h"
+
+extern int g_1067b418;
+
+struct RootView_101c2f90 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); };
+RootView_101c2f90 *sub_101ac8d0();
+
+void vgui2::FocusNavGroup::vfunc5(vgui2::Panel *panel)
+{
+	g_1067b418++;
+	m_hCurrent.sub_101ac6b0(0);
+	int curTab = 0;
+	if (panel)
+		curTab = panel->vfunc30();
+	bool bFirst = true;
+	vgui2::Panel *child = 0;
+	vgui2::Panel *best = 0;
+	for (;;)
+	{
+		int want = curTab + 1;
+		int nextTab; nextTab = 999999;
+		for (int i = 0; i < m_pPanel->vfunc36(); i++)
+		{
+			child = m_pPanel->vfunc37(i);
+			if ((char)child->vfunc22() && child->vfunc47() && child->vfunc30())
+			{
+				int tab = child->vfunc30();
+				if (tab == want)
+				{
+					best = child;
+					break;
+				}
+				if (tab > want && tab < nextTab)
+				{
+					nextTab = tab;
+					best = child;
+					continue;
+				}
+			}
+			child = best;
+		}
+		if (bFirst)
+		{
+			if (child == 0)
+			{
+				if (!m_bFlag && m_pPanel->vfunc31())
+				{
+					vgui2::Panel *parent = (vgui2::Panel *)m_pPanel->vfunc31();
+					if (parent->vfunc0() != sub_101ac8d0()->v6() && g_1067b418 < 15)
+					{
+						((vgui2::Panel *)m_pPanel->vfunc31())->vfunc59((int)m_pPanel);
+						goto done;
+					}
+				}
+				curTab = 0;
+				bFirst = false;
+				continue;
+			}
+		}
+		else if (child == 0)
+			break;
+		m_hCurrent.sub_101ac6b0((PanelX *)child);
+		child->vfunc15(1);
+		break;
+	}
+done:
+	g_1067b418--;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c3100 size=0xa
 #include "vgui2__FocusNavGroup.h"
 bool vgui2::FocusNavGroup::vfunc8(char a0)
