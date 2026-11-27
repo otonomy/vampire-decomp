@@ -627,9 +627,9 @@ public:
 	virtual void vfunc1();
 	virtual void vfunc2();
 	virtual void vfunc3(unsigned short);	// slot 3
-	virtual void vfunc4();
+	virtual void vfunc4(int, unsigned short);
 	virtual void vfunc5();
-	virtual void vfunc6();
+	virtual void vfunc6(int, unsigned short);
 	virtual void vfunc7(unsigned short, const Vector &, const Vector &);
 	virtual void vfunc8();
 	virtual void vfunc9();
