@@ -4698,6 +4698,7 @@
 0x100b5b20 func   ??_GCFireOverlay@@UAEPAXI@Z ??_GCFireOverlay@@UAEPAXI@Z
 0x100b5b40 func   ?sub_100b5b40@@YIXPAUC_FireSmokeView@@H@Z sub_100b5b40
 0x100b5d00 func   ?sub_100b5d00@C_FireSmoke@@QAEXXZ C_FireSmoke::sub_100b5d00
+0x100b5d90 func   ?sub_100b5d90@C_FireSmoke@@QAEXXZ C_FireSmoke::sub_100b5d90
 0x100b6010 func   ?sub_100b6010@C_FireSmoke@@QAEXXZ C_FireSmoke::sub_100b6010
 0x100b63d0 func   ?vfunc16@C_EntityFlame@@UAEHXZ C_EntityFlame::vfunc16
 0x100b63e0 func   ?vfunc15@C_EntityFlame@@UAEHXZ C_EntityFlame::vfunc15

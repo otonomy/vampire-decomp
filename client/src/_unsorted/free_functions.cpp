@@ -61650,6 +61650,34 @@ void C_FireSmoke::sub_100b5d00()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100b5d90 size=0x93
+#include "C_FireSmoke.h"
+float sub_10117b40();
+void C_FireSmoke::sub_100b5d90()
+{
+	if ((m_nFlags & 2) && !m_bClipTested)
+		sub_100b5e30();
+	sub_100b5640();
+	sub_100b5d00();
+	sub_100b5b40();
+	sub_100b5bb0();
+	if (m_nFlags & 2) {
+		float t = sub_10117b40();
+		float &r = *(float *)&m_nUnk27fc;
+		while (1) {
+			if (t >= r) {
+				t -= r;
+				r = m_flChildFlameSpread;
+				sub_100b6010();
+				continue;
+			}
+			r -= t;
+			break;
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100b6010 size=0x3ba
 #include "C_FireSmoke.h"
 #include "engineclient.h"
