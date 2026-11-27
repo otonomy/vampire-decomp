@@ -1,6 +1,40 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x1004c550 size=0x13b
+#include "CBloodBar.h"
+
+extern "C" int sub_100cd100();
+
+// TARGET: ??0CBloodBar@@QAE@H@Z
+CBloodBar::CBloodBar(int parent) : CManagedHudElement(parent, (int)"BloodBar")
+{
+    sub_1004c780();
+    vfunc63(0);
+    sub_101a9890((sub_100cd100() - (m_n178 * 15 + (m_n17c * 7 + m_n188 + m_n180) * 2)) / 2, m_n184);
+    sub_101a98f0(m_n178 * 15 + (m_n17c * 7 + m_n188 + m_n180) * 2, m_n178);
+    m_b1a0 = 1;
+    m_b1a1 = 1;
+    m_b1a2 = 0;
+    m_n19c = 0;
+    vfunc114(0);
+    m_n198 = 0;
+    m_p1a4 = 0;
+    m_p1ac = 0;
+    m_p1b0 = 0;
+    m_p1b4 = 0;
+    m_p1b8 = 0;
+    m_p1bc = 0;
+    m_p1c0 = 0;
+    m_p1c4 = 0;
+    m_p1c8 = 0;
+    m_n1cc = 0;
+    m_n1d0 = 0;
+    m_flTime1d4 = 0;
+    m_n1d8 = -1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004c690 size=0x1e
 #include "CBloodBar.h"
 
