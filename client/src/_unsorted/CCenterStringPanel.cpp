@@ -91,6 +91,63 @@ int CCenterStringPanel::vfunc74(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10164c90 size=0x131
+#include "engineclient.h"
+#include "CCenterStringPanel.h"
+extern "C" __declspec(dllimport) char *Q_strncpy(char *, const char *, int);
+int sub_100cd0f0();
+int sub_100cd100();
+struct V105faacc { virtual void v0(); virtual void v1(); };
+extern V105faacc *g_105faacc;
+struct IFontTall { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49(); virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59(); virtual void v60(); virtual void v61(); virtual void v62(); virtual int v63(int font); };
+IFontTall *sub_101ac8d0();
+struct CenterView {
+	char pad[0x58];
+	int m_font;
+	char m_text[0x408];
+	int m_n464;
+	int m_n468;
+	int m_n46c;
+	int m_r;
+	int m_g;
+	int m_b;
+	int m_a;
+};
+void CCenterStringPanel::vfunc98()
+{
+	CenterView *v = (CenterView *)this;
+	if (render->vfunc37()) {
+		g_105faacc->v1();
+		engine->Time(0);
+	}
+	int n = v->m_n464;
+	v->m_n46c = 0;
+	char *p = v->m_text;
+	int y;
+	if (n <= 4)
+		y = (int)(sub_100cd0f0() * 0.35);
+	else
+		y = 0x30;
+	for (;;) {
+		char line[0x28];
+		Q_strncpy(line, p, 0x28);
+		int i = 0;
+		while (line[i] && line[i] != '\n')
+			i++;
+		line[i] = 0;
+		int w = g_pMatSystemSurface->vfunc15(v->m_font, line);
+		int x = (sub_100cd100() - w) / 2;
+		g_pMatSystemSurface->vfunc12(v->m_font, x, y, v->m_r, v->m_g, v->m_b, v->m_a, line);
+		y += sub_101ac8d0()->v63(v->m_font);
+		while (*p && *p != '\n')
+			p++;
+		if (!*p)
+			break;
+		p++;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10164dd0 size=0x2b
 #include "CCenterStringPanel.h"
 int CCenterStringPanel::vfunc108(int a0, int a1, int a2, int a3)

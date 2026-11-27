@@ -8571,6 +8571,7 @@
 0x10164c50 func   ??1CCenterStringPanel@@UAE@XZ CCenterStringPanel::~CCenterStringPanel
 0x10164c50 func   ?sub_10164c50@CUnknown10164c50@@QAEHXZ CUnknown10164c50::sub_10164c50
 0x10164c60 func   ?vfunc74@CCenterStringPanel@@UAEHH@Z CCenterStringPanel::vfunc74
+0x10164c90 func   ?vfunc98@CCenterStringPanel@@UAEXXZ CCenterStringPanel::vfunc98
 0x10164dd0 func   ?vfunc108@CCenterStringPanel@@UAEHHHHH@Z CCenterStringPanel::vfunc108
 0x10164e00 func   ?vfunc109@CCenterStringPanel@@UAAXPBDZZ CCenterStringPanel::vfunc109
 0x10164eb0 func   ?vfunc110@CCenterStringPanel@@UAAXHHHHPBDZZ CCenterStringPanel::vfunc110
