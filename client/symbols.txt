@@ -8321,6 +8321,7 @@
 0x101581e0 func   ?sub_101581e0@CTraitIdListX@@QAEHHHH@Z CTraitIdListX::sub_101581e0
 0x10158250 func   ?sub_10158250@CTraitIdListY@@QAEHHHH@Z CTraitIdListY::sub_10158250
 0x101586f0 func   ??0CVDmg_t@@QAE@XZ CVDmg_t::CVDmg_t
+0x10158790 func   ??1CVDmg_t@@QAE@XZ CVDmg_t::~CVDmg_t
 0x10158790 func   ?sub_10158790@@YAXXZ sub_10158790
 0x101587f0 func   ?sub_101587f0@CVDmg_t@@QAEXPAV1@@Z CVDmg_t::sub_101587f0
 0x101588c0 func   ?sub_101588c0@CVDmg_t@@QAEXXZ CVDmg_t::sub_101588c0
