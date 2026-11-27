@@ -127801,6 +127801,50 @@ void CVDmg_t::sub_101591f0(unsigned int flags)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10159260 size=0x191
+#include "CVDmg_t.h"
+#include "ScopeTrace.h"
+extern "C" int sprintf(char *, const char *, ...);
+extern "C" unsigned int strlen(const char *);
+extern "C" char *strcat(char *, const char *);
+#pragma intrinsic(strlen)
+#pragma intrinsic(strcat)
+struct ToStrNames { const char *sub_1015ecd0(); };
+struct ToStrOwner { int sub_1015f160(const char *); ToStrNames *sub_1015f270(int, int); };
+struct ToStrBlock { char sub_10160660(); const char *sub_10160740(); };
+extern ToStrOwner g_105f93c0;
+extern char g_105f9194[];
+// TARGET: CVDmg_t::sub_10159260
+char *CVDmg_t::sub_10159260()
+{
+	ScopeTrace st("CVDmg_t::ToStr", g_102de300);
+	if (m_pad0000 != -1) {
+		static int idDamageType = g_105f93c0.sub_1015f160("DamageType");
+		const char *s = "(";
+		int i = 0;
+		char ch;
+		do {
+			ch = s[i];
+			g_105f9194[i] = ch;
+			i++;
+		} while (ch);
+		int len = 1;
+		if (!((ToStrBlock *)&m_block14)->sub_10160660()) {
+			sprintf(g_105f9194 + 1, " %s", ((ToStrBlock *)&m_block14)->sub_10160740());
+			len = strlen(g_105f9194);
+		}
+		sprintf(g_105f9194 + len, " %d %s", m_field04, g_105f93c0.sub_1015f270(idDamageType, m_pad0000)->sub_1015ecd0());
+		len = strlen(g_105f9194);
+		if (!((ToStrBlock *)&m_block24)->sub_10160660())
+			sprintf(g_105f9194 + len, " %s", ((ToStrBlock *)&m_block24)->sub_10160740());
+		strcat(g_105f9194, " )");
+		return g_105f9194;
+	}
+	g_105f9194[0] = 0;
+	return g_105f9194;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10159400 size=0xd8
 #include "CVDmg_t.h"
 #include "ScopeTrace.h"
