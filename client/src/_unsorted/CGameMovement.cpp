@@ -316,6 +316,46 @@ void CGameMovement::vfunc7()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100e9510 size=0x12b
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "ConVar.h"
+
+void sub_101090a0(const QAngle &, Vector *, Vector *, Vector *);
+extern ConVar *g_104dfd74;
+
+#define PLAYER ((CMovePlayerView *)m_pPlayer)
+
+void CGameMovement::vfunc8()
+{
+	Vector wishvel;
+	float fmove, smove;
+	Vector wishdir;
+	float wishspeed;
+	Vector forward, right, up;
+
+	sub_101090a0(*(QAngle *)((char *)m_pPlayer + 0x58), &forward, &right, &up);
+	fmove = PLAYER->m_flForwardMove;
+	smove = PLAYER->m_flSideMove;
+	forward.z = 0.0f;
+	right.z = 0.0f;
+	VectorNormalize(forward);
+	VectorNormalize(right);
+	for (int i = 0; i < 2; i++)
+		wishvel[i] = right[i] * smove + forward[i] * fmove;
+	wishdir.x = wishvel.x;
+	wishdir.y = wishvel.y;
+	wishdir.z = 0.0f;
+	wishspeed = VectorNormalize(wishdir);
+	if (wishspeed > PLAYER->m_flMaxSpeed)
+		wishspeed = PLAYER->m_flMaxSpeed;
+	float accel = g_104dfd74->vfunc1() ? 0.0f : g_104dfd74->m_fValue;
+	sub_100e9430(wishdir, wishspeed, accel);
+	VectorAdd(PLAYER->m_vecVelocity, *(Vector *)((char *)m_pMove + 0x154), PLAYER->m_vecVelocity);
+	slot19(0, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100e9640 size=0x29
 #include "CGameMovement.h"
 struct V100e9640 { char pad[0x1884]; int m_a; char pad2[0x199c - 0x1888]; float m_f; };

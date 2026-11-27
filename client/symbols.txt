@@ -5749,6 +5749,7 @@
 0x100e91e0 func   ?sub_100e91e0@Ray_t@@QAEXABVVector@@PBM11DD@Z Ray_t::sub_100e91e0
 0x100e9390 func   ?sub_100e9390@CGameMovement@@QAEXXZ CGameMovement::sub_100e9390
 0x100e9430 func   ?sub_100e9430@CGameMovement@@QAEXAAVVector@@MM@Z CGameMovement::sub_100e9430
+0x100e9510 func   ?vfunc8@CGameMovement@@UAEXXZ CGameMovement::vfunc8
 0x100e9640 func   ?vfunc9@CGameMovement@@UAEDXZ CGameMovement::vfunc9
 0x100e9670 func   ?vfunc10@CGameMovement@@UAEXAAVVector@@MM@Z CGameMovement::vfunc10
 0x100e9710 func   ?vfunc11@CGameMovement@@UAEXXZ CGameMovement::vfunc11
