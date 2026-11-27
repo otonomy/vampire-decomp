@@ -1,6 +1,24 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x1010d890 size=0x94
+#include "CExponentialProxy.h"
+bool CExponentialProxy::vfunc0(void *pMaterial, void *pKeyValues)
+{
+	if (!CFunctionProxy::vfunc0(pMaterial, pKeyValues))
+		return false;
+	if (!m_flScale.sub_100e3140(pMaterial, pKeyValues, "scale", 1.0f))
+		return false;
+	if (!m_flOffset.sub_100e3140(pMaterial, pKeyValues, "offset", 0.0f))
+		return false;
+	if (!m_flMax.sub_100e3140(pMaterial, pKeyValues, "minVal", -3.402823466e+38f))
+		return false;
+	if (!m_flMin.sub_100e3140(pMaterial, pKeyValues, "maxVal", 3.402823466e+38f))
+		return false;
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010d930 size=0xd0
 #include "CExponentialProxy.h"
 #include "math.h"
