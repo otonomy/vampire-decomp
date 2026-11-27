@@ -111373,6 +111373,47 @@ void CPartListUnit3::sub_101413a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10141400 size=0xa1
+#include "CNamedList10203020.h"
+struct DataNode;
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+struct CUnknown10202fd0 {
+	void sub_1015f120(DataNode *node);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern int g_105f93c0;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" int sprintf(char *, const char *, ...);
+
+// TARGET: sub_10141400
+char sub_10141400()
+{
+	if (((CNamedList10203020 *)&g_105f93c0)->sub_1015f160("CharCreate_Strs") == -1) {
+		char path[260];
+		sprintf(path, "%s%s.txt", "vdata\\system\\", "CharCreateWizard");
+		DataFile *file = sub_101545c0(path, g_104a580c);
+		if (!file) {
+			Msg("Unable to open data file for: %s\n", path);
+			return 1;
+		}
+		DataNode *node = file->FindKey("Strings");
+		if (node)
+			((CUnknown10202fd0 *)&g_105f93c0)->sub_1015f120(node);
+		file->vf1();
+	}
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10141650 size=0x48
 namespace lifted {
 extern char g_102c6f64;
