@@ -139194,6 +139194,43 @@ bool sub_10174370()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101743f0 size=0x57
+#include "engineclient.h"
+#include "vgui2__PropertyDialog.h"
+#include "CHud.h"
+
+struct DERView { void sub_10174ef0(); };
+bool sub_10174ed0();
+struct Col4 { unsigned char r, g, b, a; };
+struct V50 {
+    virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4();
+    virtual void a5(); virtual void a6(); virtual void a7(); virtual void a8(); virtual void a9();
+    virtual void a10(); virtual void a11(); virtual void a12(); virtual void a13(); virtual void a14();
+    virtual void a15(); virtual void a16(); virtual void a17(); virtual void a18(); virtual void a19();
+    virtual void a20(); virtual void a21(); virtual void a22(); virtual void a23(); virtual void a24();
+    virtual void a25(); virtual void a26(); virtual void a27(); virtual void a28(); virtual void a29();
+    virtual void a30(); virtual void a31(); virtual void a32(); virtual void a33(); virtual void a34();
+    virtual void a35(); virtual void a36(); virtual void a37(); virtual void a38(); virtual void a39();
+    virtual void a40(); virtual void a41(); virtual void a42(); virtual void a43(); virtual void a44();
+    virtual void a45(); virtual void a46(); virtual void a47(); virtual void a48(); virtual void a49();
+    virtual void a50(Col4);
+};
+
+void vgui2::PropertyDialog::sub_101743f0()
+{
+    sub_101b6e90();
+    Col4 c;
+    c.a = 255;
+    c.r = 0;
+    c.g = 0;
+    c.b = 0;
+    ((V50 *)this)->a50(c);
+    vfunc6();
+    if ( sub_10174ed0() )
+        ((DERView *)gHUD.FindElement("VCharWizardUI"))->sub_10174ef0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10174450 size=0x1c
 struct CUnk102036e0Target { void sub_10174470(int a); };
 struct CUnk102036e0Table { CUnk102036e0Target *sub_100f0ed0(const char *name); };
