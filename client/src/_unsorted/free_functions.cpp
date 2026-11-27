@@ -107785,6 +107785,26 @@ void sub_1013b3c0(void *a, void *b, void *c)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013b440 size=0x76
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+struct CInitView {
+	char *m_p; int m_a; int m_grow; int m_c; int m_d; unsigned char m_e; unsigned char m_f;
+	CInitView *sub_1013c8a0(int, int, unsigned char);
+	~CInitView() { if (m_grow != -1 && m_p) Plat_Free(m_p); }
+};
+void sub_1013b1d0(void *, void *, void *);
+void sub_1013aff0(CInitView *, void *, void *);
+// TARGET: sub_1013b440
+void sub_1013b440(void *a, void *b, void *c)
+{
+	char buf[0x2000];
+	sub_1013b1d0(a, b, buf);
+	CInitView v;
+	v.sub_1013c8a0((int)buf, 0x2000, 0);
+	sub_1013aff0(&v, b, c);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013b5e0 size=0x31
 #include "CUnknown1006bea0.h"
 #pragma pack(push, 1)
