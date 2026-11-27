@@ -577,6 +577,34 @@ int C_BaseEntity::vfunc86()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009f370 size=0x151
+#include "engineclient.h"
+#include "C_BaseEntity.h"
+#include "CCollisionProperty.h"
+void sub_1010b7e0(void *, Vector &, Vector &, Vector &, Vector &);
+void C_BaseEntity::GetRenderBounds(Vector &mins, Vector &maxs)
+{
+    int t = modelinfo->GetModelType(*(const void **)((char *)this + 0x40));
+    if (t == 3 || t == 1) {
+        modelinfo->vfunc4((void *)GetModel(), 0, &mins, &maxs);
+        return;
+    }
+    CCollisionProperty *col = (CCollisionProperty *)((char *)this + 0x190);
+    const QAngle &a = col->vfunc9(0);
+    const QAngle &b = GetRenderAngles();
+    if (a.x == b.x && a.y == b.y && a.z == b.z) {
+        mins = col->vfunc1();
+        maxs = *(Vector *)col->vfunc2();
+    } else if (*(float *)((char *)this + 0x1d8) == 0.0f) {
+        maxs = mins = col->vfunc8();
+    } else {
+        C_BaseEntity *e = this;
+        e->sub_1009f8a0();
+        sub_1010b7e0((char *)e + 0x26c, col->vfunc1(), *(Vector *)col->vfunc2(), mins, maxs);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009f4d0 size=0xe9
 #include "engineclient.h"
 #include "C_BaseEntity.h"
