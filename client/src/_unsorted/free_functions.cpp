@@ -69735,6 +69735,59 @@ void Class_100d48a0::sub_100d48a0(int j)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d4d20 size=0x167
+#include "CClientLeafSystem.h"
+
+struct MLNode_100d4d20 { unsigned short di; unsigned short pad2; int p4; int p8; unsigned short prev, next; };
+struct MLHead_100d4d20 { unsigned short head, tail, count, pad6, pad8; };
+struct ML_100d4d20
+{
+	MLNode_100d4d20 *nodes; int p4, p8; MLHead_100d4d20 *heads; int p10, p14, p18, p1c, p20, p24; unsigned short *pElem;
+	char sub_100d8740(unsigned short elem);
+};
+struct LeafView_100d4d20
+{
+	char pad[0x20];
+	ML_100d4d20 ml;
+};
+
+void CClientLeafSystem::sub_100d4d20(unsigned short elem)
+{
+	unsigned short di = ((LeafView_100d4d20 *)this)->ml.nodes[elem].di;
+	unsigned short a = *(unsigned short *)((char *)this + 0x6a + di * 2);
+	unsigned short list = *(unsigned short *)((char *)this + 0x58 + a * 2);
+	ML_100d4d20 *ml = &((LeafView_100d4d20 *)this)->ml;
+	if (ml->sub_100d8740(elem))
+	{
+		MLNode_100d4d20 *n = &ml->nodes[elem];
+		if (n->prev != 0xffff)
+			ml->nodes[n->prev].next = n->next;
+		else
+			ml->heads[list].head = n->next;
+		if (n->next != 0xffff)
+			ml->nodes[n->next].prev = n->prev;
+		else
+			ml->heads[list].tail = n->prev;
+		n->next = elem;
+		n->prev = elem;
+		ml->heads[list].count--;
+		if (ml->pElem)
+			ml->pElem[elem] = 0xffff;
+	}
+	MLNode_100d4d20 *n = &ml->nodes[elem];
+	n->prev = 0xffff;
+	n->next = ml->heads[list].head;
+	ml->heads[list].head = elem;
+	if (n->next == 0xffff)
+		ml->heads[list].tail = elem;
+	else
+		ml->nodes[n->next].prev = elem;
+	ml->heads[list].count++;
+	if (ml->pElem)
+		ml->pElem[elem] = list;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d4e90 size=0xac
 #include "CUtlLinkedList10.h"
 
