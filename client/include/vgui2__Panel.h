@@ -17,6 +17,7 @@ public:
 	static void *operator new(unsigned int);
 	static void *operator new(unsigned int, void *p) { return p; }
 	Panel(Panel *parent, const char *name);
+	Panel(Panel *parent);
 	void sub_101ab300(bool, bool);
 	int sub_101aa050(int);
 	void sub_101ab750(int);
