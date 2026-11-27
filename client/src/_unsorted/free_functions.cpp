@@ -122330,6 +122330,69 @@ int CUnknown1014f6f0::sub_1014f6f0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1014f700 size=0xfb
+#include "CVDmg_t.h"
+#include <string.h>
+
+#define SV(n) virtual void s##n();
+struct CInvKV
+{
+	SV(0) SV(1) SV(2) SV(3) SV(4) SV(5) SV(6) SV(7) SV(8) SV(9)
+	virtual int GetInt(const char *pszKey, int nDefault);
+	SV(11) SV(12)
+	virtual const char *GetString(const char *pszKey, const char *pszDefault);
+};
+
+struct CPooledStringX
+{
+	int m_iString;
+	CPooledStringX() {}
+};
+
+CPooledStringX sub_1015f7e0(CInvKV *pKV, const char *pszKey);
+CPooledStringX sub_1015f810(CInvKV *pKV);
+extern char g_102de300[];
+extern "C" int atoi(const char *);
+
+class CWeaponInv_1014f700
+{
+public:
+	void *m_pVtbl;
+	int m_iInternalName;
+	int m_i08;
+	CVDmg_t m_dmg;
+	int m_nAmmoLost;
+	int m_nFlags;
+
+	bool sub_1014f700(CInvKV *pKV);
+};
+
+// TARGET: CWeaponInv_1014f700::sub_1014f700
+bool CWeaponInv_1014f700::sub_1014f700(CInvKV *pKV)
+{
+	if (pKV)
+	{
+		m_iInternalName = sub_1015f7e0(pKV, "InternalName").m_iString;
+		m_i08 = sub_1015f810(pKV).m_iString;
+		m_dmg.sub_10158ef0(pKV->GetString("OwnerDamage", g_102de300));
+		const char *pszAmmo = pKV->GetString("AmmoLost", g_102de300);
+		if (!_strcmpi(pszAmmo, "Clip"))
+			m_nAmmoLost = -1;
+		else
+			m_nAmmoLost = atoi(pszAmmo);
+		if (pKV->GetInt("ForceReload", 0))
+			m_nFlags |= 1;
+		if (pKV->GetInt("ItemBreaks", 0))
+			m_nFlags |= 2;
+		if (pKV->GetInt("FallToGround", 0))
+			m_nFlags |= 4;
+		pKV->GetString("ClientEffect", g_102de300);
+		return true;
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1014f820 size=0x166
 #include <string.h>
 #include <stdio.h>
