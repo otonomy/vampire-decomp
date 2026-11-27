@@ -65760,6 +65760,55 @@ void SndscapeX::sub_100c1520(CKeyValuesX *pPlayRandom, const SubSoundscapeParams
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c1740 size=0x196
+#include "CKeyValuesX.h"
+extern "C" __declspec(dllimport) int __cdecl Q_strcasecmp(const char *, const char *);
+__declspec(dllimport) void DevMsg(const char *, ...);
+struct interval_x { float start; float range; };
+interval_x sub_10107010(const char *pString);
+float sub_101070a0(const interval_x &interval);
+struct SubParamsX { int m_nRecurse; float m_flVolume; int m_nStart; int m_nOverride; int m_nAmbientOverride; bool m_bAllowDSP; };
+struct SndscapeY
+{
+	CKeyValuesX *sub_100c0dd0(const char *pName);
+	void sub_100c11c0(CKeyValuesX *pKeys, SubParamsX *params);
+	void sub_100c1740(CKeyValuesX *pKey, SubParamsX *paramsIn);
+};
+
+void SndscapeY::sub_100c1740(CKeyValuesX *pPlay, SubParamsX *paramsIn)
+{
+	SubParamsX subParams = *paramsIn;
+	subParams.m_bAllowDSP = false;
+	subParams.m_nRecurse++;
+	if (subParams.m_nRecurse > 8) {
+		DevMsg("Error!  Soundscape recursion overrun!\n");
+		return;
+	}
+	CKeyValuesX *pKey = pPlay->sub_101283a0();
+	const char *pName = 0;
+	while (pKey) {
+		if (!Q_strcasecmp(pKey->sub_10127c70(), "volume"))
+			subParams.m_flVolume = sub_101070a0(sub_10107010(pKey->sub_10128590(0, ""))) * paramsIn->m_flVolume;
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "position"))
+			subParams.m_nStart = pKey->sub_101284c0(0, 0) + paramsIn->m_nStart;
+		else if (!Q_strcasecmp(pKey->sub_10127c70(), "positionoverride")) {
+			if (paramsIn->m_nOverride < 0)
+				subParams.m_nOverride = pKey->sub_101284c0(0, 0) + paramsIn->m_nStart;
+		} else if (!Q_strcasecmp(pKey->sub_10127c70(), "ambientpositionoverride")) {
+			if (paramsIn->m_nAmbientOverride < 0)
+				subParams.m_nAmbientOverride = pKey->sub_101284c0(0, 0) + paramsIn->m_nStart;
+		} else if (!Q_strcasecmp(pKey->sub_10127c70(), "name"))
+			pName = pKey->sub_10128590(0, "");
+		pKey = pKey->sub_101283b0();
+	}
+	if (pName) {
+		CKeyValuesX *pFound = sub_100c0dd0(pName);
+		if (pFound)
+			sub_100c11c0(pFound, &subParams);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c18e0 size=0x20
 namespace lifted {
 extern char g_104d4970;
