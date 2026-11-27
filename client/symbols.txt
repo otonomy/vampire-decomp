@@ -51,6 +51,7 @@
 0x10001990 func   ?sub_10001990@CUnknown10001990@@QAEDH@Z CUnknown10001990::sub_10001990
 0x100019a0 func   ?sub_100019a0@C_BaseCineCamera@@QAE_NXZ C_BaseCineCamera::sub_100019a0
 0x100019d0 func   ?sub_100019d0@CUnknown100019d0@@QAEHHH@Z CUnknown100019d0::sub_100019d0
+0x10001a20 func   ?sub_10001a20@C_BaseCineCamera@@QAEXXZ C_BaseCineCamera::sub_10001a20
 0x10001c20 func   ?sub_10001c20@CineV_10001c20@@QAEMH@Z CineV_10001c20::sub_10001c20
 0x10001c80 func   ?sub_10001c80@C_BaseCineCamera@@QAEMHMM@Z C_BaseCineCamera::sub_10001c80
 0x10001d40 func   ?sub_10001d40@C_BaseCineCamera@@QAE?AVVector@@M@Z C_BaseCineCamera::sub_10001d40

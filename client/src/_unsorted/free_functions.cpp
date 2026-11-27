@@ -204,6 +204,37 @@ int CUnknown100019d0::sub_100019d0(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10001a20 size=0x12a
+#include "C_BaseCineCamera.h"
+#include "engineclient.h"
+struct CUnknown10002390 { void sub_10002390(); };
+// TARGET: C_BaseCineCamera::sub_10001a20
+void C_BaseCineCamera::sub_10001a20()
+{
+	if (m_n494 == engine->vfunc44())
+		return;
+	float dt = (float)engine->Time(0) - m_f490;
+	if (dt > 1.0f)
+		dt = 1.0f;
+	else if (dt < 0.01f)
+		dt = 0.01f;
+	m_f490 = (float)engine->Time(0);
+	m_n494 = engine->vfunc44();
+	if (m_b4a1)
+		((CUnknown10002390 *)this)->sub_10002390();
+	if (m_n45c == 4)
+		sub_10002200(dt);
+	else if (m_n45c == 1)
+		sub_10001fa0(dt);
+	else
+	{
+		m_v468 = m_v410;
+		m_f480 = m_f458;
+		m_v474 = m_v428;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10001c20 size=0x60
 struct CamSingletonV_10001c20 {
 	virtual void v0();
