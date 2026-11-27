@@ -135703,6 +135703,63 @@ int CUnknown1017ac40::sub_1017ac40()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017ac60 size=0x134
+#include "engineclient.h"
+struct XRes { void sub_101a8d60(const char *); };
+extern XRes g_10678dd4;
+struct StrRec
+{
+	int m_id;
+	int m_pad4[3];
+	const char **m_pStrings10;
+	int m_pad14[3];
+	const char **m_pStrings20;
+	StrRec *sub_10150b90(int);
+};
+extern int g_105e85f8;
+extern StrRec **g_105e85fc;
+extern unsigned char g_10680e40;
+extern StrRec g_10680e60;
+void sub_10141060();
+extern "C" int atexit(void (__cdecl *)(void));
+const char *sub_101a5790(const char *);
+bool sub_101a48b0(void *, const char *, bool *);
+inline StrRec *FindRec(int key)
+{
+	for (int i = 0; i < g_105e85f8; i++)
+	{
+		if (g_105e85fc[i]->m_id == key)
+			return g_105e85fc[i];
+	}
+	if (!(g_10680e40 & 1))
+	{
+		g_10680e40 |= 1;
+		g_10680e60.sub_10150b90(-1);
+		atexit(sub_10141060);
+	}
+	return &g_10680e60;
+}
+const char *sub_1017ac60(int key, int idx, bool flag)
+{
+	const char **pp;
+	if (!flag)
+		pp = &FindRec(key)->m_pStrings10[idx];
+	else
+		pp = &FindRec(key)->m_pStrings20[idx];
+	const char *name = *pp;
+	if (!name)
+		name = "";
+	const char *r = sub_101a5790(name);
+	if (!r && sub_101a48b0(filesystem, name, &flag))
+	{
+		const char *s = sub_101a5790(name);
+		g_10678dd4.sub_101a8d60(s);
+		return s;
+	}
+	return r;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017b130 size=0x2f
 namespace lifted {
 extern char g_1024c4b4;
