@@ -35,6 +35,72 @@ int vgui2::PanelListPanel::vfunc113(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101ca940 size=0x1c2
+#include "vgui2__PanelListPanel.h"
+#include <stdlib.h>
+#include <string.h>
+
+struct PHolder { vgui2::Panel *m_p; };
+
+struct PVec
+{
+	int m_Size;
+	int m_Alloc;
+	PHolder **m_pData;
+
+	int AddUnique(PHolder *h)
+	{
+		int idx = -1;
+		for (int i = 0; i < m_Size; i++)
+		{
+			if (m_pData[i] == h)
+			{
+				idx = i;
+				break;
+			}
+		}
+		if (idx >= 0)
+			return idx;
+		int need = m_Size + 1;
+		if (need > m_Alloc)
+		{
+			int n = m_Alloc;
+			if (n == 0)
+				n = 1;
+			while (n < need)
+				n += n;
+			PHolder **p = (PHolder **)operator new(n * 4);
+			if (!p)
+				exit((int)p);
+			memset(p, 0, n * 4);
+			m_Alloc = n;
+			for (int j = 0; j < m_Size; j++)
+				p[j] = m_pData[j];
+			operator delete(m_pData);
+			m_pData = p;
+		}
+		m_pData[m_Size] = h;
+		m_Size++;
+		return m_Size - 1;
+	}
+};
+
+// TARGET: vgui2::PanelListPanel::vfunc108
+int vgui2::PanelListPanel::vfunc108(vgui2::Panel *a, vgui2::Panel *b)
+{
+	PVec *v = (PVec *)((char *)this + 0x58);
+	vfunc57(0, 0);
+	PHolder *h = new PHolder;
+	h->m_p = a;
+	a->vfunc33(*(int *)((char *)this + 0x68));
+	v->AddUnique(h);
+	h = new PHolder;
+	h->m_p = b;
+	b->vfunc33(*(int *)((char *)this + 0x68));
+	return v->AddUnique(h);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101cab10 size=0x4
 #include "vgui2__PanelListPanel.h"
 int vgui2::PanelListPanel::vfunc109()
