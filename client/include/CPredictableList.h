@@ -2,6 +2,8 @@
 // declared: its base, slot 1; the vtable has no deleting destructor
 #pragma once
 #include "IPredictableList.h"
+#include "CBaseHandle.h"
+#include "CUtlVector4.h"
 
 class CPredictableList : public IPredictableList
 {
