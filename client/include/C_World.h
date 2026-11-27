@@ -17,7 +17,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc19();
 	virtual void vfunc21();
 	virtual int vfunc66();
-	char m_pad0014[0x430 - 0x14];
+	char m_pad0014[0x414 - 0x14];
+	Vector m_WorldMins;	// 0x414: the world bounds (CViewRender::Render's cl_leveloverview path, 0x10191f10)
+	Vector m_WorldMaxs;	// 0x420
+	int m_unk42c;	// 0x42c
 	float m_unk430; int m_unk434; float m_fTarget; float m_fUp; float m_fDown; float m_fCur; float m_fTime; int m_unk44c;
 	void sub_100ca750();
 };
