@@ -5666,6 +5666,7 @@
 0x100e2fc0 func   ?sub_100e2fc0@@YAHHH@Z sub_100e2fc0
 0x100e2fe0 func   ?sub_100e2fe0@@YAPADPAD00@Z sub_100e2fe0
 0x100e30f0 func   ?sub_100e30f0@@YAXXZ sub_100e30f0
+0x100e3140 func   ?sub_100e3140@CInput@CClampProxy@@QAE_NPAX0PBDM@Z CClampProxy::CInput::sub_100e3140
 0x100e3270 func   ?sub_100e3270@CInput@CClampProxy@@QAEMXZ CClampProxy::CInput::sub_100e3270
 0x100e32d0 func   ??0CResultProxy@@QAE@XZ CResultProxy::CResultProxy
 0x100e32d0 func   ?sub_100e32d0@CUnknown100e32d0@@QAEPAXXZ CUnknown100e32d0::sub_100e32d0

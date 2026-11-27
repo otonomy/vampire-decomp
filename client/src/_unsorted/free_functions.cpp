@@ -72739,6 +72739,60 @@ void sub_100e30f0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100e3140 size=0x121
+#include "CClampProxy.h"
+#include "CKeyValuesX.h"
+
+extern "C" int sscanf(const char *, const char *, ...);
+extern "C" char *strchr(const char *, int);
+extern "C" long strtol(const char *, char **, int);
+extern "C" __declspec(dllimport) char *Q_strncpy(char *, const char *, int);
+
+struct IMatView {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9(); virtual void v10();
+	virtual int FindVar(const char *, bool *, bool);
+};
+
+// TARGET: CClampProxy::CInput::sub_100e3140
+bool CClampProxy::CInput::sub_100e3140(void *pMaterial, void *pKeyValues, const char *pName, float flDefault)
+{
+	m_b = 0;
+	CKeyValuesX *pVal = ((CKeyValuesX *)pKeyValues)->sub_10128350(pName, 0);
+	if (pVal) {
+		if (pVal->sub_10127c80() == 0) {
+			const char *s = pVal->sub_10128590(0, "");
+			float f;
+			if (sscanf(s, "%f", &f) == 1) {
+				m_a = f;
+				return true;
+			}
+			char buf[256];
+			if (strchr(s, '[')) {
+				Q_strncpy(buf, s, 256);
+				char *p = strchr(buf, '[');
+				*p = 0;
+				char *end;
+				m_c = strtol(p + 1, &end, 10);
+				s = buf;
+			} else {
+				m_c = -1;
+			}
+			bool found;
+			m_b = ((IMatView *)pMaterial)->FindVar(s, &found, true);
+			if (!found)
+				return false;
+		} else {
+			m_a = pVal->sub_10128540(0, 0.0f);
+		}
+	} else {
+		m_a = flDefault;
+	}
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100e3270 size=0x54
 #include "CClampProxy.h"
 
