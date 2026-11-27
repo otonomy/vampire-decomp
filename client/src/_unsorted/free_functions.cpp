@@ -161544,6 +161544,39 @@ void vgui2::KeyValues::sub_101b5ac0(char *buf, int arg)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b5ba0 size=0xd5
+#include <string.h>
+#include <stdlib.h>
+#include "vgui2__KeyValues.h"
+#pragma intrinsic(strcmp)
+#pragma intrinsic(strlen)
+#pragma intrinsic(memcpy)
+char *sub_101b5c80(char *, int);
+// TARGET: vgui2::KeyValues::sub_101b5ba0
+void vgui2::KeyValues::sub_101b5ba0(char *buf, int arg)
+{
+    char *tok;
+    while (1) {
+        tok = sub_101b5c80(buf, arg);
+        if (!tok || *tok == 0 || strcmp(tok, "}") == 0)
+            break;
+        KeyValues *sub = (KeyValues *)vfunc4(tok, true);
+        tok = sub_101b5c80(buf, arg);
+        if (!tok)
+            break;
+        if (strcmp(tok, "{") == 0) {
+            sub->sub_101b5ba0(buf, arg);
+        } else {
+            int n = strlen(tok);
+            free(sub->m_pName);
+            sub->m_pName = malloc(n + 1);
+            memcpy(sub->m_pName, tok, n + 1);
+            sub->m_unk10 = 1;
+        }
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b5c80 size=0x1db
 extern "C" int isspace(int);
 struct TokFile
