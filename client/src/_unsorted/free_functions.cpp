@@ -146396,6 +146396,33 @@ void sub_10186e00(int a)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10186e20 size=0x57
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "C_BasePlayer.h"
+void __cdecl sub_10186e00(int);
+void __cdecl sub_10186dd0(C_BaseCombatWeapon *, bool);
+// TARGET: sub_10186e20
+void __cdecl sub_10186e20(C_BasePlayer *pPlayer, bool a2)
+{
+	if (!pPlayer)
+		return;
+	int i = *(int *)((char *)pPlayer + 0x1624);
+	int type = *(int *)((char *)pPlayer + i * 8 + 0x1614);
+	if (type == 0)
+	{
+		bool bOut;
+		sub_10186e00(pPlayer->sub_100a94d0(pcd_stage(*(int *)((char *)pPlayer + i * 8 + 0x1618)), &bOut));
+		return;
+	}
+	if (type == 7)
+		return;
+	C_BaseCombatWeapon *pWeapon = pPlayer->vfunc167();
+	if (!pWeapon)
+		return;
+	sub_10186dd0(pWeapon, a2);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10186f30 size=0x23
 namespace lifted {
 extern char g_1027b3b4;
