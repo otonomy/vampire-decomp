@@ -61,6 +61,7 @@ public:
     class ConVar *m_p1c8;	// 0x1c8: CreateMove clamps its int to 1..255 (30 without it) into CUserCmd +0x47
     class ConVar *m_p1cc;	// 0x1cc: the same into +0x46 (20 without it)
     void sub_101028d0(float frametime);
+    void sub_101026b0(float speed, class QAngle &viewangles);
     void sub_10102a50(class CUserCmd *cmd);
     int sub_10102940();
     void sub_10102d00(class CUserCmd *cmd);
