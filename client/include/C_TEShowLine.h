@@ -15,4 +15,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc9();
 	C_TEShowLine();
 	Vector m_vecEnd;
+	void sub_1003ead0(int updateType);
 };
