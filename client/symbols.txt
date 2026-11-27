@@ -8995,6 +8995,7 @@
 0x1017d550 func   ??_GVUnderscoreLabel@@UAEPAXI@Z ??_GVUnderscoreLabel@@UAEPAXI@Z
 0x1017d570 func   ??1VUnderscoreLabel@@UAE@XZ VUnderscoreLabel::~VUnderscoreLabel
 0x1017d570 func   ?sub_1017d570@CUnknown1017d570@@QAEHXZ CUnknown1017d570::sub_1017d570
+0x1017d580 func   ?vfunc74@VUnderscoreLabel@@UAEHH@Z VUnderscoreLabel::vfunc74
 0x1017d5b0 func   ?vfunc85@VUnderscoreLabel@@UAEXXZ VUnderscoreLabel::vfunc85
 0x1017d600 func   ?vfunc86@VUnderscoreLabel@@UAEXXZ VUnderscoreLabel::vfunc86
 0x1017d610 func   ?sub_1017d610@CUnknown1017d610@@QAEPAXHHH@Z CUnknown1017d610::sub_1017d610
