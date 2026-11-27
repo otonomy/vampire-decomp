@@ -111490,6 +111490,60 @@ bool CUnknown101dce30::sub_10147be0(CUnknown101dc5a0Keys *pKeys, const char *psz
 }
 // END FUNCTION
 
+// FUNCTION: 0x10147c90 size=0x10b
+#include "CUnknown101dce30.h"
+#include "string_t.h"
+#include <string.h>
+struct CObj10203950;
+string_t sub_1015f830(CObj10203950 *kv, const char *name);
+int sub_1015eb20(const char *);
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+struct GObj105e80f4 { int m_n0; int m_n4; int m_n8; int m_nC; };
+extern GObj105e80f4 *g_105e80f4;
+struct ParticleRecView
+{
+	int m_n0;
+	char m_bDetach;
+	char m_bFlag5;
+	short m_pad6;
+	const char *m_pszEntity;
+	float m_flRateMin;
+	float m_flOpacityMin;
+	float m_flSizeMin;
+	const char *m_pszParticleName;
+	int m_nAttachType;
+	const char *m_pszAttachName;
+	int m_n24;
+	int m_n28;
+};
+// TARGET: CUnknown101dce30::sub_10147c90
+bool CUnknown101dce30::sub_10147c90(CUnknown101dc5a0Keys *pKeys, CUnknown101dcc80Record *pRecord)
+{
+	if (pKeys)
+	{
+		ParticleRecView &r = *(ParticleRecView *)pRecord;
+		const char *&pszName = r.m_pszParticleName;
+		pszName = sub_1015f830((CObj10203950 *)pKeys, "ParticleName").pszValue;
+		if (pszName)
+		{
+			r.m_pszEntity = sub_1015f830((CObj10203950 *)pKeys, "Entity").pszValue;
+			r.m_flRateMin = pKeys->vfunc11("RateMin", 1.0f);
+			r.m_flOpacityMin = pKeys->vfunc11("OpacityMin", 1.0f);
+			r.m_flSizeMin = pKeys->vfunc11("SizeMin", 1.0f);
+			r.m_nAttachType = sub_1015eb20(pKeys->vfunc13("AttachType", ""));
+			r.m_pszAttachName = sub_1015f830((CObj10203950 *)pKeys, "AttachName").pszValue;
+			r.m_n24 = g_105e80f4->m_nC;
+			r.m_n28 = 0;
+			r.m_bDetach = pKeys->vfunc12("Detach", false);
+			if (!_strcmpi(r.m_pszEntity ? r.m_pszEntity : "", "env_particle"))
+				r.m_bFlag5 = 0;
+			return true;
+		}
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10147da0 size=0x90
 #include "CUnknown101e0f00.h"
 

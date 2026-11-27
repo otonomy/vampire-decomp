@@ -7734,6 +7734,7 @@
 0x10147a90 func   ?sub_10147a90@CUnknown101dcc80@@QAEPAUCUnknown101dcc80Record@@XZ CUnknown101dcc80::sub_10147a90
 0x10147b80 func   ?sub_10147b80@CUnknown101dcdb0@@QAEXXZ CUnknown101dcdb0::sub_10147b80
 0x10147be0 func   ?sub_10147be0@CUnknown101dce30@@QAE_NPAUCUnknown101dc5a0Keys@@PBD@Z CUnknown101dce30::sub_10147be0
+0x10147c90 func   ?sub_10147c90@CUnknown101dce30@@QAE_NPAUCUnknown101dc5a0Keys@@PAUCUnknown101dcc80Record@@@Z CUnknown101dce30::sub_10147c90
 0x10147da0 func   ?sub_10147da0@CUnknown101e0f00Src@@QAEXPBD@Z CUnknown101e0f00Src::sub_10147da0
 0x10147e30 func   ?sub_10147e30@CUnknown101dd480@@QAEPAV1@XZ CUnknown101dd480::sub_10147e30
 0x10147e60 func   ?sub_10147e60@CUnknown10147e60@@QAEHXZ CUnknown10147e60::sub_10147e60
