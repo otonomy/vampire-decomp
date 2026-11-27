@@ -142871,6 +142871,79 @@ bool CViewRender_1019f940::sub_1019f940(void *view)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019fb50 size=0x2af
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "C_BasePlayer.h"
+#include "CClientEntityList.h"
+#include "IClientRenderable.h"
+#include "engineclient.h"
+
+struct MatRefL
+{
+	void *m_p;
+	void sub_100cd1c0(const char *pName);
+	void sub_100cd1e0();
+	void sub_100cd1f0(const char *pName);
+};
+
+struct LeafSystemL	// g_102b9060
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20();
+	virtual const Vector *vfunc21(unsigned short index);
+};
+extern LeafSystemL *g_102b9060;
+
+void CViewRender::sub_1019fb50(const CViewSetup &view)
+{
+	ScopeTrace trace("CViewRender::DrawInsightModel", g_102de300);
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (!pPlayer || *(int *)((char *)pPlayer + 0x1074) > 0 || !*(int *)((char *)pPlayer + 0x16e4))
+		return;
+	if (pPlayer->sub_100a7990() == 0.0f)
+		return;
+	C_BaseEntity *pEnt = cl_entitylist->sub_100d0cf0(*(int *)((char *)pPlayer + 0x16e4));
+	if (!pEnt)
+		return;
+
+	materials->vfunc70(1);
+	materials->vfunc71();
+	render->vfunc33(view.fov, view.zNear, view.zFar);
+	render->vfunc29(&view, (char *)this + 0x22c);
+
+	char *pModel = *(char **)((char *)pEnt + 0x404);
+	MatRefL mat;
+	mat.sub_100cd1c0(0);
+	mat.sub_100cd1f0("highlights/insight");
+	if (pModel && *(unsigned short *)(pModel + 0xe8) != 0xffff)
+	{
+		materials->vfunc29(0);
+		const Vector *pInfo = g_102b9060->vfunc21(*(unsigned short *)(pModel + 0xe8));
+		IClientRenderable *pRend = (IClientRenderable *)(pModel + 4);
+		int skin = *(int *)(pModel + 0x55c);
+		modelrender->vfunc2(1, pRend, *(unsigned short *)(pModel + 0x164), pRend->GetModel(), pRend->GetRenderOrigin(), pRend->GetRenderAngles(), skin, *(int *)(pModel + 0x560), pInfo);
+		float oldBlend = render->vfunc7();
+		render->vfunc6(pPlayer->sub_100a7990() * 0.25);
+		modelrender->vfunc3(mat.m_p);
+		skin = *(int *)(pModel + 0x55c);
+		modelrender->vfunc2(1, pRend, *(unsigned short *)(pModel + 0x164), pRend->GetModel(), pRend->GetRenderOrigin(), pRend->GetRenderAngles(), skin, *(int *)(pModel + 0x560), pInfo);
+		modelrender->vfunc3(0);
+		render->vfunc6(oldBlend);
+	}
+	else
+	{
+		render->vfunc0(pEnt, pEnt->GetModel(), pEnt->GetAbsOrigin(), pEnt->GetAbsAngles(), 1);
+	}
+	materials->vfunc70(1);
+	materials->vfunc72();
+	mat.sub_100cd1e0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a0e90 size=0x8c
 #include "CUtlVector4.h"
 extern void *(*g_101e3100)(int);
