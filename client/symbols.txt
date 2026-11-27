@@ -10300,6 +10300,7 @@
 0x101bb350 func   ?sub_101bb350@CUnknown101bb350@@QAEHH@Z CUnknown101bb350::sub_101bb350
 0x101bb380 func   ?sub_101bb380@CUnknown101bb380@@QAEPAXHH@Z CUnknown101bb380::sub_101bb380
 0x101bb3b0 func   ??_GPropertyPage@vgui2@@UAEPAXI@Z ??_GPropertyPage@vgui2@@UAEPAXI@Z
+0x101bb3d0 func   ??0PropertyPage@vgui2@@QAE@XZ vgui2::PropertyPage::PropertyPage
 0x101bb3d0 func   ?sub_101bb3d0@CUnknown101bb3d0@@QAEPAXXZ CUnknown101bb3d0::sub_101bb3d0
 0x101bb3f0 func   ??1PropertyPage@vgui2@@UAE@XZ vgui2::PropertyPage::~PropertyPage
 0x101bb3f0 func   ?sub_101bb3f0@CUnknown101bb3f0@@QAEHXZ CUnknown101bb3f0::sub_101bb3f0
