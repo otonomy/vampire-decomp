@@ -1,6 +1,52 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x1004e8b0 size=0x18a
+#include "CDiscipline.h"
+int sub_100cd0f0();
+char *sub_1018c870(const char *);
+extern char g_103ede7c;
+extern int g_103ede80;
+extern int g_10284b9c;
+extern CDiscipline *g_103ede78;
+// TARGET: ??0CDiscipline@@QAE@H@Z
+CDiscipline::CDiscipline(int a)
+	: CManagedHudElement(a, (int)"Discipline")
+{
+	sub_1004eb00();
+	vfunc63(0);
+	sub_101a9890(m_unk178, m_unk17c);
+	sub_101a98f0(m_n180 << 2, sub_100cd0f0());
+	m_n188 = m_n180;
+	m_n18c = m_n184;
+	m_c1a4 = 0;
+	m_b1a6 = false;
+	m_b1a5 = false;
+	m_n1a0 = 0xff;
+	m_nEntries = 0;
+	int i = 0;
+	CDisciplineEntry *e = m_Entries;
+	do {
+		e->m_nId = -1;
+		e->m_unk4 = 0;
+		e++;
+		i++;
+	} while (i < 6);
+	m_p1f4 = 0;
+	m_p1f8 = 0;
+	g_103ede7c = 0;
+	g_103ede80 = 0;
+	g_10284b9c = -1;
+	g_103ede78 = this;
+	IDiscScheme *s = sub_101ac830();
+	m_nFont200 = s->GetFont(sub_1018c870("Copperplate"));
+	m_clr[0] = s->GetColor("DiscUI_Aqua");
+	m_clr[1] = s->GetColor("DiscUI_Orange");
+	m_clr[2] = s->GetColor("DiscUI_Yellow");
+	m_clr[3] = s->GetColor("DiscUI_Gray");
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004ea80 size=0x75
 #include "CDiscipline.h"
 // TARGET: ??1CDiscipline@@UAE@XZ
