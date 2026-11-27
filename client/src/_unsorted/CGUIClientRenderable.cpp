@@ -17,6 +17,57 @@ char * CGUIClientRenderable::vfunc13()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10189c50 size=0x124
+#include "CGUIClientRenderable.h"
+#include "engineclient.h"
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+struct PurgeVec
+{
+	void *m_pMemory; int m_allocationCount; int m_growSize; int m_Size; void *m_pElements;
+	~PurgeVec()
+	{
+		m_Size = 0;
+		if (m_growSize != -1)
+		{
+			if (m_pMemory)
+			{
+				Plat_Free(m_pMemory);
+				m_pMemory = 0;
+			}
+			m_allocationCount = 0;
+		}
+		m_pElements = m_pMemory;
+		if (m_growSize != -1)
+		{
+			if (m_pMemory)
+			{
+				Plat_Free(m_pMemory);
+				m_pMemory = 0;
+			}
+			m_allocationCount = 0;
+		}
+	}
+};
+struct LHoldV { void sub_1018ae50(); };
+struct GuiView { char pad[0x54]; PurgeVec c; char pad2[0x74 - 0x68]; PurgeVec b; char pad3[0x158 - 0x88]; PurgeVec a; };
+// TARGET: ??1CGUIClientRenderable@@QAE@XZ
+CGUIClientRenderable::~CGUIClientRenderable()
+{
+	delete (char *)m_unk08;
+	((LHoldV *)this)->sub_1018ae50();
+	unsigned short h = *(unsigned short *)((char *)this + 0x10);
+	if (h != 0xffff)
+	{
+		modelrender->vfunc15(h);
+		*(unsigned short *)((char *)this + 0x10) = 0xffff;
+	}
+	GuiView *v = (GuiView *)this;
+	v->a.~PurgeVec();
+	v->b.~PurgeVec();
+	v->c.~PurgeVec();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018a1f0 size=0x15b
 #include "engineclient.h"
 #include "CGUIClientRenderable.h"
