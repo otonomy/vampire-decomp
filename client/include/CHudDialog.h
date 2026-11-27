@@ -36,6 +36,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_100544d0(bool bEnabled);
 	void sub_10054bd0(bool bEnabled);
 	void sub_10055360(bool b);
+	void sub_10054e20();
 	void sub_10054670(int n);
 	void sub_10054f70(int type, const char *text);
 	void sub_10054860();
