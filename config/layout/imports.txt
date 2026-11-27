@@ -1,4 +1,4 @@
-# written by pcdecomp standalone from vtmb d26392692221; do not edit by hand
+# written by pcdecomp standalone from vtmb 717ec916f16b; do not edit by hand
 descriptors 109f3000
 iat 109f34a4 0x42c
 dll USER32.dll 109f31bc 109f35e8 109f38fc

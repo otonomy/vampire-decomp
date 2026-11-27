@@ -28,5 +28,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_10056f30(int);
 	void sub_10056fd0(void *, int, int, const char *, int);
 	int sub_10056bc0(int, int, const char *);
+	void sub_10056fd0(struct InfoBarEntry_t *pEntry, int id, int param, const char *pszText, bool bRemove);
+	void sub_10057310(int id);
 	int m_unk174; char m_unk178; char m_unk179; char m_unk17a; char m_unk17b; float m_unk17c; float m_unk180; int m_unk184; int m_unk188; int m_unk18c; int m_unk190; int m_unk194; int m_unk198; int m_unk19c; float m_unk1a0; int m_unk1a4; int m_unk1a8; CZ m_unk1ac; CZ m_unk1b0; CZ m_unk1b4; CZ m_unk1b8; CZ m_unk1bc; CZ m_unk1c0; CZ m_unk1c4; CZ m_unk1c8; CZ m_unk1cc; CZ m_unk1d0;
 };

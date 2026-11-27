@@ -16,6 +16,7 @@ class IRecipientFilter;
 struct Ray_t;
 struct StudioHdr;
 class VMatrix;
+class IClientRenderable;
 
 namespace EngineGlobals {
 
@@ -150,8 +151,8 @@ class IVModelRender
 public:
 	virtual StudioHdr *GetStudiomodel(void *);	// slot 0; shapes differ
 	virtual void vfunc1();
-	virtual void vfunc2();
-	virtual void vfunc3();
+	virtual int vfunc2(int flags, IClientRenderable *pRenderable, unsigned short instance, const void *model, const Vector &origin, const QAngle &angles, int skin, int body, const Vector *pLightingOrigin);	// slot 2: DrawModel (C_BaseAnimating's trail draw 0x10096060)
+	virtual void vfunc3(void *pMaterial);	// slot 3: ForcedMaterialOverride (DrawInsightModel)
 	virtual void vfunc4();
 	virtual int vfunc5(int);	// slot 5; seen as GetModelFrameCount 1
 	virtual void vfunc6();
@@ -266,7 +267,7 @@ public:
 	virtual int vfunc4();	// slot 4
 	virtual int vfunc5();	// slot 5
 	virtual void vfunc6(float);	// slot 6: SetBlend (DrawSpriteModel's render->SetBlend(1.0))
-	virtual int vfunc7();	// slot 7
+	virtual float vfunc7();	// slot 7: GetBlend (0x10096060 saves it and hands it back to SetBlend)
 	virtual int vfunc8();	// slot 8
 	virtual int vfunc9();	// slot 9
 	virtual void vfunc10(int);	// slot 10: CViewRender::RenderView hands it the player's 1.5^n * 5 (or 0)
@@ -301,7 +302,7 @@ public:
 	virtual int vfunc39();	// slot 39
 	virtual float vfunc40();	// slot 40: the view fov (CViewRender::SetUpView)
 	virtual unsigned char **vfunc41();	// slot 41: where the area bits pointer lives (C_BasePlayer::OnDataChanged stores the player's +0x166c)
-	virtual double vfunc42();	// slot 42
+	virtual float vfunc42();	// slot 42: the frame time (CInput::CreateMove scales it by 1000.0f)
 	virtual void vfunc43(int, int);	// slot 43; shapes differ
 	virtual float vfunc44(int);	// slot 44
 	virtual void vfunc45(const void *);	// slot 45
@@ -370,7 +371,7 @@ public:
 	virtual void vfunc26();
 	virtual void *vfunc27(const char *pName, bool *pFound, bool bComplain);	// slot 27: a texture by name ("engine/camerarendertarget")
 	virtual void *FindTexture(const char *, const char *, int);	// slot 28
-	virtual void vfunc29();
+	virtual void vfunc29(bool);	// slot 29 (0x10096060 hands it vfunc26() != 0)
 	virtual void vfunc30();
 	virtual void vfunc31();
 	virtual void vfunc32();

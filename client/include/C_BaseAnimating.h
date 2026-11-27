@@ -37,6 +37,7 @@ public:
 	int sub_100940d0(int index, int *pOut);
 	int LookupBone(const char *pszName);
 	void sub_10096c30();
+	void sub_10096060(int count, float flDistScale, float flTimeScale);
 	int sub_100965d0(int, int);
 	void sub_100bdbd0(Vector &, Vector &);
 	void sub_100947b0(Vector &, Vector &);

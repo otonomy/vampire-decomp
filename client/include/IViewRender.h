@@ -10,8 +10,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual void vfunc1();
     virtual void vfunc2();
     virtual void vfunc3();
-    virtual void vfunc4();
-    virtual void vfunc5();
+    virtual void vfunc4(struct vrect_t *rect);	// Render (CViewRender::vfunc4, "CViewRender::Render")
+    virtual void vfunc5(const struct CViewSetup &view, bool drawViewModel, bool bFlag);	// RenderView-like
     virtual void *vfunc6(int);
     virtual void vfunc7();
     virtual void vfunc8();

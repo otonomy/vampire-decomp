@@ -588,6 +588,191 @@ void CGameMovement::vfunc18()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100eaaf0 size=0x65b
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "IClientCollideable.h"
+#include "CBaseEntityList.h"
+#include "CUnknown100290c0.h"
+#include "CUnknown100353c0.h"
+#include "CGlobalVarsBase.h"
+#include "CVProfile.h"
+#include "Ray_t.h"
+#include "ConVar.h"
+
+extern CVProfile *g_101e3138;
+extern Vector g_104d4970;
+extern char g_102bb1a8;
+extern CTouchNotifier *g_104df784;
+extern ConVar g_104df980;
+void sub_10108fd0(const float *start, float scale, const float *direction, float *dest);
+void sub_100e7380(int pRay, int fMask, int pIgnore, int collisionGroup, int pTrace);
+
+struct VProfScope_100eaaf0
+{
+	VProfScope_100eaaf0(const char *pszName, int detailLevel, const char *pszBudgetGroupName, bool bAssertAccounted)
+	{
+		g_101e3138->EnterScope(pszName, detailLevel, pszBudgetGroupName, bAssertAccounted);
+	}
+	~VProfScope_100eaaf0() { g_101e3138->ExitScope(); }
+};
+
+#define PLAYER ((CMovePlayerView *)m_pPlayer)
+#define MOVEDATA ((CMoveDataView *)m_pMove)
+#define COLL ((IClientCollideable *)((char *)m_pMove + 0xc))
+
+static inline void TracePlayerBBox_100eaaf0(CGameMovement *gm, const Vector &start, const Vector &end, CGameTrace &pm)
+{
+	VProfScope_100eaaf0 vprof("CGameMovement::TracePlayerBBox", 0, "Unaccounted", false);
+	Ray_t ray;
+	ray.sub_100e91e0(start, end, gm->sub_100e6ef0(), &gm->sub_100e6f20()->x, ((unsigned int)((IClientCollideable *)((char *)gm->m_pMove + 0xc))->Collideable_vfunc7() >> 6) & 1, 0);
+	sub_100e7380((int)&ray, 0x201400b, (int)((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0(&((CMovePlayerView *)gm->m_pPlayer)->m_hRef), 6, (int)&pm);
+}
+
+static inline float DotF_100eaaf0(const float *v1, const float *v2)
+{
+	return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
+}
+
+int CGameMovement::vfunc19(Vector *pFirstDest, CGameTrace *pFirstTrace)
+{
+	int bumpcount;
+	Vector dir;
+	float d;
+	int numplanes;
+	Vector planes[5];
+	Vector primal_velocity, original_velocity;
+	Vector new_velocity;
+	int i, j;
+	CGameTrace pm;
+	Vector end;
+	float time_left, allFraction;
+	long blocked = 0;
+	numplanes = 0;
+
+	VectorCopy(PLAYER->m_vecVelocity, original_velocity);
+	allFraction = 0;
+
+	VectorCopy(PLAYER->m_vecVelocity, primal_velocity);
+	time_left = gpGlobals->frametime;
+
+	new_velocity.Init();
+
+	for (bumpcount = 0; bumpcount < 4; bumpcount++)
+	{
+		if (PLAYER->m_vecVelocity.Length() == 0.0)
+			break;
+
+		sub_10108fd0(&PLAYER->m_vecOrigin.x, time_left, &PLAYER->m_vecVelocity.x, &end.x);
+
+		if (g_102bb1a8)
+		{
+			if (pFirstDest && end == *pFirstDest)
+			{
+				((CUnknown100353c0 *)&pm)->sub_100eb150((const CUnknown100353c0 *)pFirstTrace);
+				pm.m_fractionleftsolid = pFirstTrace->m_fractionleftsolid;
+				pm.m_surfaceName = pFirstTrace->m_surfaceName;
+				*(int *)&pm.m_surfaceProps = *(int *)&pFirstTrace->m_surfaceProps;
+				int t0 = pFirstTrace->m_hitgroup; pm.m_hitgroup = t0;
+				pm.m_physicsbone = pFirstTrace->m_physicsbone;
+				pm.m_pEnt = pFirstTrace->m_pEnt;
+				int t1; t1 = pFirstTrace->m_hitbox; pm.m_hitbox = t1;
+			}
+			else
+				TracePlayerBBox_100eaaf0(this, PLAYER->m_vecOrigin, end, pm);
+		}
+		else
+			TracePlayerBBox_100eaaf0(this, PLAYER->m_vecOrigin, end, pm);
+
+		allFraction = allFraction + pm.m_fraction;
+
+		if (pm.m_allsolid)
+		{
+			VectorCopy(g_104d4970, PLAYER->m_vecVelocity);
+			return 4;
+		} else { if (pm.m_fraction > 0)
+		{
+			VectorCopy(*(Vector *)pm.m_endpos, PLAYER->m_vecOrigin);
+			VectorCopy(PLAYER->m_vecVelocity, original_velocity);
+			numplanes = 0;
+		}
+
+		if (pm.m_fraction == 1)
+			break;
+
+		g_104df784->vfunc2(&pm, &PLAYER->m_vecVelocity);
+
+		if (pm.m_planeNormal[2] > 0.7)
+			blocked |= 1;
+		if (!pm.m_planeNormal[2])
+			blocked |= 2;
+
+		time_left = time_left - (time_left * pm.m_fraction);
+
+		if (numplanes >= 5)
+		{
+			VectorCopy(g_104d4970, PLAYER->m_vecVelocity);
+			break;
+		}
+
+		VectorCopy(*(Vector *)pm.m_planeNormal, *(planes + numplanes));
+		numplanes++;
+
+		if (1 == numplanes && COLL->GetSolid() == 3 && 0 == MOVEDATA->g104())
+		{
+			if (planes[0][2] > 0.7)
+				sub_100ebb50(original_velocity, planes[0], new_velocity, 1);
+			else
+				sub_100ebb50(original_velocity, planes[0], new_velocity, 1.0 + (1 - m_fieldA0) * g_104df980.GetFloat());
+
+			VectorCopy(new_velocity, PLAYER->m_vecVelocity);
+			VectorCopy(pcd_stage(new_velocity), original_velocity);
+		}
+		else
+		{
+			i = 0; while (i < numplanes) { sub_100ebb50(original_velocity, planes[i], PLAYER->m_vecVelocity, 1);
+				j = 0; while (j < numplanes) { if (j != i)
+					{
+						if (DotF_100eaaf0(&PLAYER->m_vecVelocity.x, &planes[j].x) < 0.0f)
+							break;
+					} j++; }
+				if (j == numplanes)
+					break; i = i + 1; }
+
+			if (i != numplanes)
+			{
+				;
+			}
+			else
+			{
+				if (2 != numplanes)
+				{
+					VectorCopy(g_104d4970, PLAYER->m_vecVelocity);
+					break;
+				}
+				CrossProduct(planes[0], planes[1], dir);
+				dir.NormalizeInPlace();
+				d = dir.Dot(PLAYER->m_vecVelocity);
+				VectorScale(dir, d, PLAYER->m_vecVelocity);
+			}
+
+			d = PLAYER->m_vecVelocity.Dot(primal_velocity);
+			if (d <= 0.0f)
+			{
+				VectorCopy(g_104d4970, PLAYER->m_vecVelocity);
+				break;
+			}
+		} }
+	}
+
+	if (allFraction == 0)
+		VectorCopy(g_104d4970, PLAYER->m_vecVelocity);
+
+	return blocked;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100eb1f0 size=0x46
 #include "CGameMovement.h"
 struct CSurfProp { char pad[0x72]; char m_bFlag; };

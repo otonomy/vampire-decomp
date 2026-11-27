@@ -921,14 +921,15 @@ void CAI_Navigator::sub_102ee220(const Vector *pPosition)
 
 // FUNCTION: 0x102ee250 size=0xd
 #include "CUnknown102ee120.h"
-__declspec(naked) void CUnknown102ee120::sub_102ee250(int value)
+// CAI_Navigator::SetMovementActivity (2003 SDK ai_navigator.cpp): returns GetPath()->SetMovementActivity(activity),
+// the path's inline `return (m_activity = activity);` (+0x2c). The returned value is why the activity is in eax.
+struct CUnknown102ee120V : CUnknown102ee120
 {
-	__asm {
-		mov ecx, dword ptr [ecx + 0x30]
-		mov eax, dword ptr [esp + 4]
-		mov dword ptr [ecx + 0x2c], eax
-		ret 4
-	}
+	int sub_102ee250(int activity);
+};
+int CUnknown102ee120V::sub_102ee250(int activity)
+{
+	return m_unk30->m_unk2c = activity;
 }
 // END FUNCTION
 

@@ -28,6 +28,7 @@ public:
     void sub_1019a560(int unused);	// "CViewRender::DrawObfuscatedEntities": draws the obfuscated model (+0x404) of each entity in the handle list at +0x464 with the local player's blend, then purges the list
     void CopyViewModelInfoToEntities();
     int sub_1018fab0();
+    void sub_1019fb50(const struct CViewSetup &view);
     int sub_1018fb10();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
     // the base slots the game's vtable fills with CViewRender's own function
@@ -35,8 +36,8 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual void vfunc1();
     virtual void vfunc2();
     virtual void vfunc3();
-    virtual void vfunc4();
-    virtual void vfunc5();
+    virtual void vfunc4(struct vrect_t *rect);	// "CViewRender::Render"
+    virtual void vfunc5(const CViewSetup &view, bool drawViewModel, bool bFlag);	// RenderView-like
     virtual void *vfunc6(int);
     virtual void vfunc7();
     virtual void vfunc8();

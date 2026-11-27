@@ -1,4 +1,4 @@
-# written by pcdecomp standalone from vtmb d26392692221; do not edit by hand
+# written by pcdecomp standalone from vtmb 717ec916f16b; do not edit by hand
 1003c450 ?sub_1003c450@@YIXPAPAX@Z
 1010f4e0 ?sub_1010f4e0@@YIXPAPAX@Z
 101cc790 ?sub_101cc790@@YIXPAPAX@Z
@@ -27,4 +27,3 @@
 1042c7c0 ?sub_1042c7c0@@YIXPAX@Z
 1042c7d0 ?sub_1042c7d0@@YIXPAX@Z
 1042c7e0 ?sub_1042c7e0@@YIXPAX@Z
-104340be ?vfunc1@exception@@UBEPBDXZ

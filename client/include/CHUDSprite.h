@@ -13,6 +13,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_10059620(int, int, int, int);
 	int sub_100593e0(const struct wrect_100593e0 *, const struct wrect_100593e0 *, struct wrect_100593e0 *);
 	void sub_1005aeb0(int, int, int, int, int, int, int, int);
+	void sub_1005cda0(int x, int y, int w, int h, void *clip, int r, int g, int b, int a);	// "CHUDSprite::drawClippedColorTint"
 	void sub_10059b70(int, int, int, int, int);
 	void sub_1005a9e0(int x, int y, int w, int h, int, int r, int g, int b);
 	void sub_1005c3b0(int, int, int, int, int);
@@ -20,6 +21,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_1005d280(int x, int y, int w, int h);
 	void sub_1005a510(int x, int y, int w, int h, unsigned int tint);	// "CHUDSprite::drawAlphaColorTint": tint is 0x00RRGGBB
 	void sub_1005c430(int, int, int, int, int, int);
+	void sub_1005a080(int x, int y, int wide, int tall, int alpha);	// "CHUDSprite::drawAlphaColor": the sprite as a quad, all three colour channels alpha / 255
 	void sub_1005b420(int x, int y, int w, int h, int r, int g, int b, int a, float flAngle);	// draws rotated by flAngle (radians)
 	int m_unk04;
 	int m_unk08;

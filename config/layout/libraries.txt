@@ -1,4 +1,4 @@
-# written by pcdecomp standalone from vtmb d26392692221; do not edit by hand
+# written by pcdecomp standalone from vtmb 717ec916f16b; do not edit by hand
 104307b2 LIBC.LIB 582 ..\build\intel\st_obj\fpinit.obj 3
 104307c9 LIBC.LIB 582 ..\build\intel\st_obj\fpinit.obj 5
 104307ca LIBC.LIB 582 ..\build\intel\st_obj\fpinit.obj 7

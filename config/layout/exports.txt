@@ -1,4 +1,4 @@
-# written by pcdecomp standalone from vtmb d26392692221; do not edit by hand
+# written by pcdecomp standalone from vtmb 717ec916f16b; do not edit by hand
 1 CDAPFN0506_CDAPFN0506_X_SECURE_BASE_0Decode _CDAPFN0506_CDAPFN0506_X_SECURE_BASE_0Decode
 2 CDAPFN0506_CDAPFN0506_X_SECURE_BASE_0Encode _CDAPFN0506_CDAPFN0506_X_SECURE_BASE_0Encode
 3 CDAPFN0506_CDAPFN0506_X_SECURE_BASE_1Decode _CDAPFN0506_CDAPFN0506_X_SECURE_BASE_1Decode
