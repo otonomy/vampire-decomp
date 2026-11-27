@@ -22922,6 +22922,23 @@ template <> int ClientClassInit<DT_TEExplosiveGunshotDecal::ignored>(DT_TEExplos
 }
 // END FUNCTION
 
+// FUNCTION: 0x10039de0 size=0x78
+#include "CUnknown10039ac0.h"
+extern CUnknown10039ac0 g_102ee4c4;
+// TARGET: sub_10039de0
+void sub_10039de0(void *filter, float delay, const Vector *pos, const Vector *start, int entity, int hitbox, int index, int a8, bool b)
+{
+    g_102ee4c4.m_vecOrigin = *pos;
+    g_102ee4c4.m_vecStart = *start;
+    g_102ee4c4.m_nEntity = entity;
+    g_102ee4c4.m_nHitbox = hitbox;
+    g_102ee4c4.m_nIndex = index;
+    g_102ee4c4.m_n30 = a8;
+    g_102ee4c4.m_b34 = b;
+    g_102ee4c4.sub_10039ac0(0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10039e60 size=0x28
 #include "UtlMem.h"
 extern void (__cdecl *g_101e30fc)(void *);
