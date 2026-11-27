@@ -11,6 +11,18 @@ VAnarchyLabel *pcd_emit_10170eb0(const VAnarchyLabel &other) { return new VAnarc
 // TARGET: ??_GVAnarchyLabel@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x10170ed0 size=0x2b
+#include "VAnarchyLabel.h"
+struct IObjC0 { virtual ~IObjC0(); };
+VAnarchyLabel::~VAnarchyLabel()
+{
+	IObjC0 *p = *(IObjC0 **)((char *)this + 0xc0);
+	if (p)
+		delete p;
+	*(int *)((char *)this + 0xc0) = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10170f10 size=0x43
 #include "VAnarchyLabel.h"
 void VAnarchyLabel::vfunc98()
