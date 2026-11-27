@@ -8423,6 +8423,7 @@
 0x1015a840 func   ?sub_1015a840@@YAXH@Z sub_1015a840
 0x1015a8a0 func   ?sub_1015a8a0@VStatActionV@@QAEXHHHH@Z VStatActionV::sub_1015a8a0
 0x1015a920 func   ?sub_1015a920@CVStatAction_t@@QAEXHHH@Z CVStatAction_t::sub_1015a920
+0x1015a9a0 func   ?sub_1015a9a0@CVStatAction_t@@QAEPADXZ CVStatAction_t::sub_1015a9a0
 0x1015ab20 func   ?sub_1015ab20@TList@@QAEPAU1@XZ TList::sub_1015ab20
 0x1015ab90 func   ?sub_1015ab90@CVStatActionList_t@@QAEXXZ CVStatActionList_t::sub_1015ab90
 0x1015abf0 func   ?sub_1015abf0@VList@@QAEXXZ VList::sub_1015abf0

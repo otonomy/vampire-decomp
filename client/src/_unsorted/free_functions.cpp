@@ -127752,6 +127752,54 @@ void CVStatAction_t::sub_1015a920(int a, int b, int c)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015a9a0 size=0x180
+#include "CVStatAction_t.h"
+#include "ScopeTrace.h"
+#include <stdio.h>
+
+struct StatRec_1015a9a0 { int m_a; int m_b; const char *m_pszName; };
+struct CUnknown101f0e50 { StatRec_1015a9a0 *sub_10157c20(int idx); };
+extern CUnknown101f0e50 g_105f8b98;
+extern char g_105f9038[];
+extern char g_102cacfc[];
+const char *sub_1015e8a0(char *a, int b);
+
+char *CVStatAction_t::sub_1015a9a0()
+{
+	ScopeTrace st("CVStatAction_t::ToDetailedStr", g_102de300);
+	char *base = (char *)this;
+	switch (m_nType) {
+	case 1: {
+		const char **pp = &g_105f8b98.sub_10157c20(*(int *)(base + 0x3c))->m_pszName;
+		const char *name = *pp;
+		if (!name)
+			name = g_102de300;
+		sprintf(g_105f9038, "[ %d - %d ]: %s", m_unk08, m_unk0c, name);
+		return g_105f9038;
+	}
+	case 2:
+		sprintf(g_105f9038, "[ %d - %d ]: %s", m_unk08, m_unk0c, sub_1015e8a0(base + 0x40, *(int *)(base + 0x3c)));
+		return g_105f9038;
+	case 4: {
+		char *buf = (char *)m_pBuffer;
+		sprintf(g_105f9038, "[ %d - %d ]: %s @ %s", m_unk08, m_unk0c, buf, buf + 0x84);
+		return g_105f9038;
+	}
+	case 3:
+		sprintf(g_105f9038, "[ %d - %d ]: FUNC", m_unk08, m_unk0c);
+		return g_105f9038;
+	}
+	int i = 0;
+	char c;
+	do {
+		c = g_102cacfc[i];
+		g_105f9038[i] = c;
+		i++;
+	} while (c);
+	return g_105f9038;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015ab20 size=0x69
 #include "ScopeTrace.h"
 extern char g_102cb9e0[];
