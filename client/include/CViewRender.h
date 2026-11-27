@@ -73,7 +73,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual int vfunc36();
     virtual int vfunc37();
     virtual int vfunc38();
-    virtual void vfunc39();
+    virtual bool vfunc39(class C_BaseEntity *pEnt, bool *pbOut);
     virtual bool vfunc40(Vector *pOut1, Vector *pOut2, float *pOut3);
     virtual void vfunc41();
     virtual void vfunc42();
