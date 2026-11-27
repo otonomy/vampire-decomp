@@ -27276,6 +27276,59 @@ char CUnknown1004e210::sub_1004e210()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004e220 size=0x10b
+#include "engineclient.h"
+#include "CCredits.h"
+#include "UtlMem.h"
+extern "C" void *__cdecl memmove(void *, const void *, unsigned int);
+char *sub_1004e3d0(char *);
+
+struct CredLines
+{
+	int *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	int m_size;
+	int *m_pElements;
+	int AddToTail()
+	{
+		int elem = m_size;
+		if (m_size + 1 > m_allocationCount)
+			((UtlMem *)this)->sub_1004e830(m_size + 1 - m_allocationCount);
+		m_size += 1;
+		m_pElements = m_pMemory;
+		int n = m_size - elem - 1;
+		if (n > 0)
+			memmove(&m_pMemory[elem + 1], &m_pMemory[elem], n * 4);
+		return elem;
+	}
+};
+
+// TARGET: CCredits::sub_1004e220
+bool CCredits::sub_1004e220(const char *filename)
+{
+	char buf[0x400];
+	vfunc115();
+	int h = filesystem->Open(filename, "rt", 0);
+	if (h)
+	{
+		while (filesystem->vfunc20(buf, 0x400, h))
+		{
+			if (buf[0] != '#')
+			{
+				CredLines *pLines = (CredLines *)&m_pMem;
+				int elem = pLines->AddToTail();
+				int *base = pLines->m_pMemory;
+				base[elem] = (int)sub_1004e3d0(buf);
+			}
+		}
+		filesystem->Close(h);
+		return true;
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004e330 size=0x6
 int sub_1004e330()
 {
