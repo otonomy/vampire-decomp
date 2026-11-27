@@ -111024,6 +111024,53 @@ void CUnknown101d7380::sub_10140b40()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10140c10 size=0x9c
+#include "CUnknown101d5bd0.h"
+struct DataNode {
+	virtual void vf0();
+	virtual void vf1();
+	virtual DataNode *FindKey(const char *name);
+	virtual DataNode *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+struct CLoaderView {
+	void sub_10140710(DataNode *node, CUnknown101d5bd0 *list);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+// TARGET: CUnknown101d5bd0::sub_10140c10
+char CUnknown101d5bd0::sub_10140c10(const char *pszFile)
+{
+	DataFile *file = sub_101545c0(pszFile, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", pszFile);
+		return 0;
+	}
+	DataNode *node = file->FindKey("LevelingTemplate");
+	while (node) {
+		CLoaderView *item = sub_10140910();
+		if (!item) {
+			Msg("Unable to parse data file for: %s.  Memory allocation ERROR!\n", pszFile);
+			return 0;
+		}
+		item->sub_10140710(node, this);
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10140cb0 size=0x9b
 #include "CUnknown101d7380.h"
 #include "utlrbtree.h"
