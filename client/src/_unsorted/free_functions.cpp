@@ -84924,6 +84924,48 @@ void CHelper_100fccf0::sub_100fccf0( const Vector &origin, const QAngle &angles 
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fcec0 size=0x1ed
+#include "C_BasePlayer.h"
+#include "CGameTrace.h"
+#include "Ray_t.h"
+#include "CTraceFilterSimple.h"
+#include "CUnknown1070b254.h"
+#include "QAngle.h"
+
+struct CV_100fcec0 { int sub_10005de0(); };
+extern CV_100fcec0 g_103edd98;
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
+void sub_101659b0(const Vector &start, const Vector &end, int r, int g, int b, bool noDepthTest, float duration);
+
+// TARGET: sub_100fcec0
+void sub_100fcec0(const Vector &origin, const QAngle &angles, Vector *out2, Vector *out1)
+{
+	Vector forward, right, up;
+	sub_101090a0(angles, &forward, &right, &up);
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	float mins[3];
+	float maxs[3];
+	mins[0] = -5.0f; mins[1] = -5.0f; mins[2] = -5.0f;
+	maxs[0] = 5.0f; maxs[1] = 5.0f; maxs[2] = 5.0f;
+	if (out1)
+	{
+		Vector end = origin + forward * 2000.0f;
+		Ray_t ray;
+		ray.sub_100e91e0(origin, (const float *)&end, mins, maxs, 0, 0);
+		CTraceFilterSimple filter;
+		filter.sub_1004b5c0(pPlayer, 0);
+		CGameTrace tr;
+		g_104a582c->vfunc4(&ray, 0x600408b, (CTraceFilterNoCharacterCollide *)&filter, &tr);
+		if (g_103edd98.sub_10005de0())
+			sub_101659b0(*(const Vector *)tr.m_startpos, *(const Vector *)tr.m_endpos, 255, 255, 0, true, -1.0f);
+		float f = tr.m_fraction * 2000.0f;
+		*out1 = origin + forward * f;
+	}
+	if (out2)
+		*out2 = origin + forward * 2000.0f;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fd0b0 size=0x12f
 #include "engineclient.h"
 #include "Vector.h"
