@@ -22,5 +22,6 @@ public:
 	short m_pad16;
 	CUtlLinkedList12SNode *m_pElements;	// 0x18 (debug pointer)
 
-	unsigned short sub_100d3970(bool multilist);	// "CUtlLinkedList::AllocInternal"
+	unsigned short sub_100d3970(bool multilist);
+	CUtlLinkedList12SNode &InternalElement(unsigned short i) { return m_pMemory[i]; }	// "CUtlLinkedList::AllocInternal"
 };
