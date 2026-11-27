@@ -6336,6 +6336,7 @@
 0x1010c820 func   ?sub_1010c820@@YAHXZ sub_1010c820
 0x1010c850 func   ??_GCAddProxy@@UAEPAXI@Z ??_GCAddProxy@@UAEPAXI@Z
 0x1010c870 func   ?vfunc0@CSubtractProxy@@UAE_NPAX0@Z CSubtractProxy::vfunc0
+0x1010c8a0 func   ?vfunc1@CSubtractProxy@@UAEXH@Z CSubtractProxy::vfunc1
 0x1010c9d0 func   ?sub_1010c9d0@@YAHXZ sub_1010c9d0
 0x1010ca00 func   ??_GCSubtractProxy@@UAEPAXI@Z ??_GCSubtractProxy@@UAEPAXI@Z
 0x1010ca20 func   ?vfunc0@CMultiplyProxy@@UAE_NPAX0@Z CMultiplyProxy::vfunc0

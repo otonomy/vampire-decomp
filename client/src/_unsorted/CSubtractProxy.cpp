@@ -18,6 +18,38 @@ bool CSubtractProxy::vfunc0(void* a0, void* a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1010c8a0 size=0xfb
+#include "CSubtractProxy.h"
+struct IMV { virtual void v0(); virtual void v1(); virtual void SetFloatValue(float f); virtual float GetFloatValue(); virtual void v4(); virtual int GetIntValue(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void SetVecValue(const float *v, int n); virtual void v14(); virtual void v15(); virtual void GetVecValue(float *v, int n); virtual int VectorSize(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(); virtual int GetType(); };
+
+// TARGET: CSubtractProxy::vfunc1
+void CSubtractProxy::vfunc1(int)
+{
+	int type, vecSize;
+	sub_100e3560(&type, &vecSize);
+	switch (type)
+	{
+	case 0:
+		sub_100e33c0(((IMV *)m_unk0c)->GetFloatValue() - ((IMV *)m_unk10)->GetFloatValue());
+		break;
+	case 2:
+	{
+		float a[3], b[3], c[3];
+		((IMV *)m_unk0c)->GetVecValue(a, vecSize);
+		((IMV *)m_unk10)->GetVecValue(b, vecSize);
+		c[0] = a[0] - b[0];
+		c[1] = a[1] - b[1];
+		c[2] = a[2] - b[2];
+		((IMV *)m_unk04)->SetVecValue(c, vecSize);
+		break;
+	}
+	case 4:
+		((IMV *)m_unk04)->SetFloatValue((float)(((IMV *)m_unk0c)->GetIntValue() - ((IMV *)m_unk10)->GetIntValue()));
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010ca00 size=0x1e
 #include "CSubtractProxy.h"
 
