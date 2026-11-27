@@ -121058,6 +121058,85 @@ void CPtrList101d6400::sub_10151890()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101518e0 size=0x171
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" __declspec(dllimport) void DevMsg(int, const char *, ...);
+
+struct TipKV
+{
+	virtual void s0();
+	virtual void s1();
+	virtual TipKV *vfunc2(const char *name);
+	virtual TipKV *vfunc3();
+};
+
+struct TipEntry
+{
+	char m_pad[0x1c];
+	TipEntry *sub_10151600(int index);
+	void sub_10151660(TipKV *kv);
+};
+
+struct TipsMgr
+{
+	int m_delta;
+	int m_max;
+	int m_count;
+	TipEntry **m_pData;
+	bool sub_101518e0(TipKV *kv, const char *name);
+};
+
+// TARGET: TipsMgr::sub_101518e0
+bool TipsMgr::sub_101518e0(TipKV *kv, const char *name)
+{
+	if (kv)
+	{
+		for (TipKV *sub = kv->vfunc2("Tip"); sub; sub = sub->vfunc3())
+		{
+			if (m_max == m_count)
+			{
+				m_max += m_delta;
+				if (m_pData)
+				{
+					TipEntry **pNew = new TipEntry *[m_max];
+					int i;
+					for (i = 0; i < m_count; i++)
+						pNew[i] = m_pData[i];
+					for (; i < m_max; i++)
+						pNew[i] = 0;
+					delete[] m_pData;
+					m_pData = pNew;
+					m_count++;
+				}
+				else
+				{
+					m_pData = new TipEntry *[m_max];
+					for (int i = 0; i < m_max; i++)
+						m_pData[i] = 0;
+					m_count++;
+				}
+			}
+			else
+				m_count = m_count + 1;
+			if (!m_pData[m_count - 1])
+			{
+				TipEntry *p = (TipEntry *)operator new(0x1c);
+				m_pData[m_count - 1] = p ? p->sub_10151600(m_count - 1) : 0;
+			}
+			if (!m_pData[m_count - 1])
+			{
+				Msg("Unable to parse data file for: %s.  Memory allocation ERROR!\n", name);
+				return false;
+			}
+			m_pData[m_count - 1]->sub_10151660(sub);
+		}
+		return true;
+	}
+	DevMsg(1, "ERROR: LoadTips: CVLoadTipsInfoMgr::LoadSection FAILED: %s!\n", name);
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10151b20 size=0x11
 struct CUnknown10151b20 { int m_unk0; int m_unk4; int m_unk8; int *m_pItems; int m_nCur; int sub_10151b20(); };
 int CUnknown10151b20::sub_10151b20()
