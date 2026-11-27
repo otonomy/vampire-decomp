@@ -4,6 +4,45 @@
 #pragma once
 #include "C_BaseVCombatCharacter.h"
 #include "CBaseHandle.h"
+#include "CUserCmd.h"
+
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+extern int vt_1022e8dc;	// CPlayerLocalPredictedData::vftable
+
+// the predicted data block at +0x1658 (0x34 bytes): its destructor only stores the vftable back
+class CPlayerLocalBlock1658
+{
+public:
+	int m_data[0x34 / 4];
+	~CPlayerLocalBlock1658() { *(int **)this = &vt_1022e8dc; }
+};
+
+// the container at +0x1a14: memory (pointer, allocation count, grow size), size, element pointer; its destructor purges
+class CPlayerUtlVec1a14
+{
+public:
+	int *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	int m_Size;
+	int *m_pElements;
+	void sub_100aad50();
+	~CPlayerUtlVec1a14()
+	{
+		m_Size = 0;
+		sub_100aad50();
+		m_pElements = m_pMemory;
+		if (m_growSize != -1)
+		{
+			if (m_pMemory)
+			{
+				Plat_Free(m_pMemory);
+				m_pMemory = 0;
+			}
+			m_allocationCount = 0;
+		}
+	}
+};
 
 class C_BaseCombatWeapon;
 class C_BaseEntity;
@@ -118,8 +157,16 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_unk162c;
 	int m_unk1630;
 	float m_fl1634;
-	char m_pad1638[0x16b0 - 0x1638];
+	char m_pad1638[0x1658 - 0x1638];
+	CPlayerLocalBlock1658 m_Local1658;
+	char m_pad168c[0x16b0 - 0x168c];
 	int m_unk16b0;
+	char m_pad16b4[0x19f4 - 0x16b4];
+	CBaseHandle m_h19f4;
+	char m_pad19f8[0x1a14 - 0x19f8];
+	CPlayerUtlVec1a14 m_Vec1a14;
+	char m_pad1a28[0x1aac - 0x1a28];
+	CUserCmd m_Cmd1aac;
 	void sub_100a73a0();
 };
 
