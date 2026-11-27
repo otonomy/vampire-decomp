@@ -29,6 +29,32 @@ C_VGuiScreen *pcd_emit_100c9110() { return new C_VGuiScreen; }
 // TARGET: ??_GC_VGuiScreen@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x100c9190 size=0x8c
+#include "C_VGuiScreen.h"
+
+extern "C" const char *sub_100cc070(int index);
+
+// TARGET: C_VGuiScreen::OnDataChanged
+void C_VGuiScreen::OnDataChanged(int type)
+{
+	C_BaseEntity::OnDataChanged(type);
+	if (type == 0 || m_nPanelName != m_nOldPanelName)
+	{
+		sub_100c9270(sub_100c93a0());
+		m_unk424 = 0;
+	}
+	if (m_nOldOverlayMaterial != m_nOverlayMaterial)
+	{
+		m_b.sub_100cd260();
+		const char *name = sub_100cc070(m_nOverlayMaterial);
+		if (name)
+			m_b.Init(name);
+		else
+			m_b.Init(m_a);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c9220 size=0x4e
 #include "C_VGuiScreen.h"
 
