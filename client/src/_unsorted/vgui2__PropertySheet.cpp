@@ -478,6 +478,77 @@ void vgui2::PropertySheet::vfunc117(vgui2::Panel *page)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101c8f90 size=0x15d
+#include "vgui2__PropertySheet.h"
+#include "vgui2__KeyValues.h"
+
+struct PanelList_101c8f90
+{
+	int m_unk0;
+	int m_nCount;
+	int m_unk8;
+	vgui2::Panel **m_pData;
+
+	vgui2::Panel *First() { return m_nCount > 0 ? m_pData[0] : 0; }
+
+	int Find(vgui2::Panel *p)
+	{
+		for (int i = 0; i < m_nCount; i++)
+		{
+			if (m_pData[i] == p)
+				return i;
+		}
+		return -1;
+	}
+
+	void Remove(int i)
+	{
+		if (i >= 0 && i < m_nCount)
+		{
+			for (int j = i; j < m_nCount - 1; j++)
+				m_pData[j] = m_pData[j + 1];
+			m_nCount--;
+		}
+	}
+
+	void FindAndRemove(vgui2::Panel *p)
+	{
+		Remove(Find(p));
+	}
+};
+
+struct PanelListB_101c8f90 : public PanelList_101c8f90 {};
+struct PanelListC_101c8f90 : public PanelList_101c8f90 {};
+
+void vgui2::PropertySheet::vfunc118()
+{
+	PanelList_101c8f90 *pages = (PanelList_101c8f90 *)((char *)this + 0x60);
+	PanelListB_101c8f90 *pagesB = (PanelListB_101c8f90 *)((char *)this + 0x60);
+	PanelListC_101c8f90 *pagesC = (PanelListC_101c8f90 *)((char *)this + 0x60);
+	PanelList_101c8f90 *tabs = (PanelList_101c8f90 *)((char *)this + 0x54);
+	PanelListC_101c8f90 *tabsC = (PanelListC_101c8f90 *)((char *)this + 0x54);
+	for (int i = pages->m_nCount; i > 0; i--)
+	{
+		pages->First()->vfunc42(this);
+		vgui2::Panel *a = pages->First();
+		vgui2::Panel *b = pagesB->First();
+		pagesC->FindAndRemove(b);
+		if (a)
+			delete a;
+		vgui2::Panel *c = tabs->First();
+		tabsC->FindAndRemove(c);
+		c->vfunc71();
+	}
+	m_i70 = 0;
+	m_i74 = 0;
+	m_w7c = 0;
+	vfunc43(new vgui2::KeyValues("PageChanged"));
+	vfunc57(0, 0);
+	vfunc101();
+	vfunc6();
+}
+// END FUNCTION
+
 // FUNCTION: 0x101c90f0 size=0x295
 #include "vgui2__PropertySheet.h"
 #include "vgui2__PageTab.h"
