@@ -9064,6 +9064,7 @@
 0x10178820 func   ?sub_10178820@CToggleView10178790@@QAEXXZ CToggleView10178790::sub_10178820
 0x10178830 func   ??1CharEditEquipPanel@@UAE@XZ CharEditEquipPanel::~CharEditEquipPanel
 0x10178850 func   ??_GCharEditEquipPanel@@UAEPAXI@Z ??_GCharEditEquipPanel@@UAEPAXI@Z
+0x101788e0 func   ??0CharEditEquipPanel@@QAE@XZ CharEditEquipPanel::CharEditEquipPanel
 0x10179840 func   ?sub_10179840@@YAXXZ sub_10179840
 0x10179850 func   ?sub_10179850@CharEditEquipPanel@@QAEXXZ CharEditEquipPanel::sub_10179850
 0x10179c40 func   ?sub_10179c40@CharEditEquipPanel@@QAEXXZ CharEditEquipPanel::sub_10179c40
