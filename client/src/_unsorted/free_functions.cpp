@@ -135849,6 +135849,49 @@ const char *sub_1017ada0(int key, int idx)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017ae30 size=0x8b
+struct StrRec
+{
+	int m_id;
+	int m_pad4[2];
+	int m_nCount;
+	const char **m_pStrings10;
+	StrRec *sub_10150b90(int);
+};
+extern int g_105e85f8;
+extern StrRec **g_105e85fc;
+extern unsigned char g_10680e40;
+extern StrRec g_10680e60;
+void sub_10141060();
+extern "C" int atexit(void (__cdecl *)(void));
+const char *sub_1017ac60(int, int, bool);
+inline StrRec *FindRec(int key)
+{
+	for (int i = 0; i < g_105e85f8; i++)
+	{
+		if (g_105e85fc[i]->m_id == key)
+			return g_105e85fc[i];
+	}
+	if (!(g_10680e40 & 1))
+	{
+		g_10680e40 |= 1;
+		g_10680e60.sub_10150b90(-1);
+		atexit(sub_10141060);
+	}
+	return &g_10680e60;
+}
+const char *sub_1017ae30(int key, int idx)
+{
+	if (idx < FindRec(key)->m_nCount)
+	{
+		const char *p = sub_1017ac60(key, idx, false);
+		if (p)
+			return p + 0x108;
+	}
+	return "ERROR";
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017af70 size=0x82
 struct StrRec
 {
