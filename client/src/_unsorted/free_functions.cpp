@@ -27805,6 +27805,43 @@ void CTraceEntList::sub_1004b7e0(int value)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004b890 size=0x1ad
+#include "Vector.h"
+#include "engineclient.h"
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "C_BaseEntity.h"
+
+struct ICollideCheck_1004b890
+{
+	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7(); virtual void s8(); virtual void s9();
+	virtual void t0(); virtual void t1(); virtual void t2(); virtual void t3(); virtual void t4(); virtual void t5(); virtual void t6(); virtual void t7(); virtual void t8(); virtual void t9();
+	virtual void u0(); virtual void u1(); virtual void u2(); virtual void u3(); virtual void u4(); virtual void u5(); virtual void u6(); virtual void u7(); virtual void u8(); virtual void u9();
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void w0(); virtual void w1(); virtual void w2(); virtual void w3(); virtual void w4(); virtual void w5(); virtual void w6(); virtual void w7(); virtual void w8(); virtual void w9();
+	virtual void x0(); virtual void x1(); virtual void x2(); virtual void x3(); virtual void x4(); virtual void x5(); virtual void x6(); virtual void x7(); virtual void x8(); virtual void x9();
+	virtual void y0(); virtual void y1(); virtual void y2(); virtual void y3(); virtual void y4();
+	virtual bool CheckGroup(int group, int mask);	// slot 65
+};
+
+void sub_1004b890(const Vector &start, const Vector &end, const Vector &mins, const Vector &maxs, ICollideCheck_1004b890 *pEntity, int collisionGroup, CGameTrace *ptr)
+{
+	if (pEntity && pEntity->CheckGroup(collisionGroup, -1))
+	{
+		Ray_t ray;
+		ray.Init(start, end, mins, maxs);
+		enginetrace->vfunc2(&ray, -1, pEntity, ptr);
+	}
+	else
+	{
+		int *p = (int *)ptr;
+		for (int i = 0; i < 21; i++)
+			p[i] = 0;
+		ptr->m_fraction = 1.0f;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004ba40 size=0x46
 #include <stdarg.h>
 extern int (__cdecl *g_101e31a8)(char *pDest, int maxLen, const char *pFormat, va_list params);
