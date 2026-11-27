@@ -7738,6 +7738,7 @@
 0x10143740 func   ?sub_10143740@View40@@QAEHH@Z View40::sub_10143740
 0x101437b0 func   ?sub_101437b0@CUnknown101437b0@@QAEPAXXZ CUnknown101437b0::sub_101437b0
 0x101437d0 func   ?sub_101437d0@CPartListUnit3@@QAEXXZ CPartListUnit3::sub_101437d0
+0x10143830 func   ?sub_10143830@CTraitOrderingList_10143830@@QAEDPAUVKeyValuesInterface@@@Z CTraitOrderingList_10143830::sub_10143830
 0x101439a0 func   ?sub_101439a0@@YIHPAUListV@@@Z sub_101439a0
 0x101439d0 func   ?sub_101439d0@@YIHPAUListV@@@Z sub_101439d0
 0x101439f0 func   ??0CUnknown101439f0@@QAE@H@Z CUnknown101439f0::CUnknown101439f0

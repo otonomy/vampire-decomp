@@ -112157,6 +112157,103 @@ void CPartListUnit3::sub_101437d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10143830 size=0x16f
+#include "VKeyValues.h"
+
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+struct S101434d0
+{
+	char m_pad[0x2c];
+	S101434d0 *sub_101434d0(int idx);
+	void sub_10143650(VKeyValuesInterface *pKV);
+};
+
+class CTraitOrderingList_10143830
+{
+public:
+	int m_nGrow;
+	int m_nAlloc;
+	int m_nCount;
+	S101434d0 **m_pData;
+
+	char sub_10143830(VKeyValuesInterface *pKV);
+};
+
+char CTraitOrderingList_10143830::sub_10143830(VKeyValuesInterface *pKV)
+{
+	VKeyValuesInterface *pCombos = pKV->vfunc2("TraitCombinations");
+	if (!pCombos)
+		return 0;
+	VKeyValuesInterface *pOrderings = pCombos->vfunc2("TraitOrderings");
+	if (!pOrderings)
+		return 0;
+	VKeyValuesInterface *pOrdering = pOrderings->vfunc2("TraitOrdering");
+	while (pOrdering)
+	{
+		if (m_nAlloc == m_nCount)
+		{
+			m_nAlloc += m_nGrow;
+			if (m_pData)
+			{
+				S101434d0 **pNew = (S101434d0 **)operator new(m_nAlloc * 4);
+				int i = 0;
+				if (m_nCount > 0)
+				{
+					do
+					{
+						pNew[i] = m_pData[i];
+						i++;
+					} while (i < m_nCount);
+				}
+				if (i < m_nAlloc)
+				{
+					do
+					{
+						pNew[i] = 0;
+						i++;
+					} while (i < m_nAlloc);
+				}
+				operator delete(m_pData);
+				m_pData = pNew;
+				m_nCount++;
+			}
+			else
+			{
+				m_pData = (S101434d0 **)operator new(m_nAlloc * 4);
+				int i = 0;
+				if (m_nAlloc > 0)
+				{
+					do
+					{
+						m_pData[i] = 0;
+						i++;
+					} while (i < m_nAlloc);
+				}
+				m_nCount++;
+			}
+		}
+		else
+			m_nCount = m_nCount + 1;
+		if (!m_pData[m_nCount - 1])
+		{
+			S101434d0 *p = (S101434d0 *)operator new(0x2c);
+			p = p ? p->sub_101434d0(m_nCount - 1) : 0;
+			m_pData[m_nCount - 1] = p;
+		}
+		S101434d0 *pElem = m_pData[m_nCount - 1];
+		if (!pElem)
+		{
+			Msg("Unable to parse data file:  Memory allocation ERROR!\n");
+			return 0;
+		}
+		pElem->sub_10143650(pOrdering);
+		pOrdering = pOrdering->vfunc3();
+	}
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101439a0 size=0x2f
 struct ElemV;
 
