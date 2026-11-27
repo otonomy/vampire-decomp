@@ -1,6 +1,7 @@
 // CHandle<T>: the SDK's typed entity handle (ehandle.h): a CBaseHandle that converts to T * through Get().
+// (the body of CBaseHandle::Get() lives in ehandle.h: include it in the source that uses Get)
 #pragma once
-#include "ehandle.h"
+#include "CBaseHandle.h"
 
 template <class T>
 class CHandle : public CBaseHandle
