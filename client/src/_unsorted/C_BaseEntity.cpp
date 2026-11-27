@@ -1845,6 +1845,28 @@ void C_BaseEntity::vfunc111()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011a850 size=0xe2
+#include "C_BaseEntity.h"
+#include "CGameTrace.h"
+#include "Vector.h"
+// TARGET: C_BaseEntity::vfunc105
+CGameTrace C_BaseEntity::vfunc105(const Vector &move)
+{
+	CGameTrace trace;
+	Vector start = GetAbsOrigin();
+	sub_1011a5f0(start, move, trace);
+	if (trace.m_fraction != 0.0f)
+		sub_100a2030(trace.m_endpos);
+	*(Vector *)((char *)this + 0x2b4) = *(Vector *)vfunc39();
+	*(Vector *)((char *)this + 0x2c0) = *(Vector *)vfunc41();
+	*(int *)((char *)this + 0x184) |= 0x800;
+	vfunc111();
+	if (trace.m_pEnt)
+		sub_1011c480((C_BaseEntity *)trace.m_pEnt, trace);
+	return trace;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011a940 size=0x3
 #include "C_BaseEntity.h"
 void C_BaseEntity::vfunc96(int a0, int a1, int a2, int a3)
