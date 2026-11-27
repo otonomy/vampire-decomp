@@ -199,6 +199,7 @@
 0x100057a0 func   ??_GC_PlasmaBeamNode@@UAEPAXI@Z ??_GC_PlasmaBeamNode@@UAEPAXI@Z
 0x100057c0 func   ??1C_PlasmaBeamNode@@UAE@XZ C_PlasmaBeamNode::~C_PlasmaBeamNode
 0x10005800 func   ?vfunc37@C_PlasmaBeamNode@@UAEXXZ C_PlasmaBeamNode::vfunc37
+0x10005820 func   ?OnDataChanged@C_PlasmaBeamNode@@UAEXH@Z C_PlasmaBeamNode::OnDataChanged
 0x100058e0 func   ?sub_100058e0@@YADXZ sub_100058e0
 0x100058f0 func   ?ClientThink@C_PlasmaBeamNode@@UAEXXZ C_PlasmaBeamNode::ClientThink
 0x10005c00 func   ?vfunc16@C_PlasmaBeamNode@@UAEHXZ C_PlasmaBeamNode::vfunc16
