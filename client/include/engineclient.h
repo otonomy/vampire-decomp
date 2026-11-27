@@ -113,7 +113,7 @@ public:
 	virtual void vfunc86();
 	virtual void vfunc87();
 	virtual void vfunc88();
-	virtual void vfunc89();
+	virtual void vfunc89(int, void *);
 	virtual void vfunc90();
 	virtual void vfunc91(float *, float *);	// slot 91; seen as LinearToGamma 1
 	virtual float vfunc92(int);	// slot 92; seen as LightStyleValue 1
@@ -182,7 +182,7 @@ class IVEfx
 {
 public:
 	virtual int Draw_DecalIndex(int);	// slot 0
-	virtual void vfunc1();
+	virtual int Draw_DecalIndexFromName(const char *);
 	virtual void DecalShoot(int, int, int, const Vector &, const QAngle &, const Vector &, const Vector *, int);	// slot 2
 	virtual void vfunc3(int, int, const void *, const Vector &, const QAngle &, const Vector &, const Vector *, int, const void *);	// slot 3: DecalColorShoot (..., flags, const color32 *)
 	virtual void *CL_AllocDlight(int);	// slot 4
