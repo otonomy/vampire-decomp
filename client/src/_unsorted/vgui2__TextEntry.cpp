@@ -2030,6 +2030,80 @@ void vgui2::TextEntry::vfunc126()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b0be0 size=0x1ae
+#include "vgui2__TextEntry.h"
+#include "utlvector.h"
+
+struct Sys_101b0be0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void vfunc6(const char *text, int len);
+};
+extern Sys_101b0be0 *sub_101ac8e0();
+extern void sub_101b1ec0(char *p, const char &src);
+struct GV_101b0be0
+{
+	void sub_101b1ee0(int num);
+	void sub_101b1e90(int elem, int num);
+};
+
+struct Dar_101b0be0
+{
+	int m_nCount;
+	int m_nAlloc;
+	char *m_pData;
+	char GetElement(int i) const
+	{
+		if (i < 0 || i >= m_nCount)
+			return 0;
+		return m_pData[i];
+	}
+};
+struct TEView_101b0be0
+{
+	char m_pad[0x58];
+	Dar_101b0be0 m_TextStream;
+};
+
+// TARGET: vgui2::TextEntry::vfunc127
+void vgui2::TextEntry::vfunc127()
+{
+	if (*((char *)this + 0x89))
+		return;
+	int x0, x1;
+	if (vfunc158((int)&x0, (int)&x1))
+	{
+		CUtlVector<char> buf;
+		for (int i = x0; i < x1; i++)
+		{
+			Dar_101b0be0 *pText = &((TEView_101b0be0 *)this)->m_TextStream;
+			if (!vfunc163(pText, &i))
+			{
+				char c = pText->GetElement(i);
+				int elem = buf.m_Size;
+				if (elem + 1 > buf.m_Memory.m_nAllocationCount)
+					((GV_101b0be0 *)&buf)->sub_101b1ee0(elem + 1 - buf.m_Memory.m_nAllocationCount);
+				buf.m_Size += 1;
+				buf.m_pElements = buf.m_Memory.m_pMemory;
+				((GV_101b0be0 *)&buf)->sub_101b1e90(elem, 1);
+				sub_101b1ec0(buf.m_Memory.m_pMemory + elem, c);
+			}
+		}
+		int elem = buf.m_Size;
+		if (elem + 1 > buf.m_Memory.m_nAllocationCount)
+			((GV_101b0be0 *)&buf)->sub_101b1ee0(elem + 1 - buf.m_Memory.m_nAllocationCount);
+		buf.m_Size += 1;
+		buf.m_pElements = buf.m_Memory.m_pMemory;
+		((GV_101b0be0 *)&buf)->sub_101b1e90(elem, 1);
+		char *p = buf.m_Memory.m_pMemory + elem;
+		if (p)
+			*p = 0;
+		sub_101ac8e0()->vfunc6(buf.Base(), x1 - x0);
+	}
+	vfunc15(0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b0d90 size=0x12e
 // TARGET: ?vfunc128@TextEntry@vgui2@@UAEXXZ
 #include "vgui2__TextEntry.h"
