@@ -31942,6 +31942,38 @@ CSignTextBlock_Copy *CSignTextBlock_Copy::sub_10060420(const SignTextBlockRaw *o
 }
 // END FUNCTION
 
+// FUNCTION: 0x10060c30 size=0x121
+#include "CSignUI.h"
+#include "vgui2__Panel.h"
+void CSignUI::sub_10060c30()
+{
+	if (!m_b180)
+	{
+		int i;
+		for (i = 0; i < m_vecB.m_Size; i++)
+		{
+			vgui2::Panel *p = ((vgui2::Panel **)m_vecB.m_Memory.m_pMem)[i];
+			if (p)
+				delete p;
+		}
+		m_vecB.Purge();
+		for (i = 0; i < m_vecA.m_Size; i++)
+		{
+			vgui2::Panel *p = ((vgui2::Panel **)m_vecA.m_Memory.m_pMem)[i];
+			if (p)
+				delete p;
+		}
+		m_vecA.Purge();
+		vfunc110();
+		m_b180 = 1;
+		vfunc63(0);
+		vfunc62(0);
+		vfunc64(0);
+		vfunc21(0);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10060d60 size=0xd
 struct CView { char pad[0x18c]; float m18c; float sub_10060d60(); };
 // TARGET: ?sub_10060d60@CView@@QAEMXZ
