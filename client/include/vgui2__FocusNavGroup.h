@@ -26,7 +26,7 @@ public:
     virtual void vfunc1(vgui2::Panel *p);
     virtual int vfunc2();
     virtual int vfunc3(int);
-    virtual void vfunc4();
+    virtual void vfunc4(vgui2::Panel *);
     virtual void vfunc5();
     virtual int vfunc6();
     virtual int vfunc7();
