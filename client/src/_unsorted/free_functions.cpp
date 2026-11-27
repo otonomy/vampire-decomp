@@ -97569,6 +97569,23 @@ void __stdcall sub_10122930(int)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10122ad0 size=0x42
+#include "C_BaseEntity.h"
+struct IPredictables { virtual C_BaseEntity *GetPredictable(int i); virtual int GetPredictableCount(); };
+extern IPredictables *g_102af678;
+struct CUnknown1011ac80 { char sub_1011ac80(); };
+// TARGET: sub_10122ad0
+void sub_10122ad0()
+{
+	int count = g_102af678->GetPredictableCount();
+	for (int i = 0; i < count; i++) {
+		C_BaseEntity *ent = g_102af678->GetPredictable(i);
+		if (ent && ((CUnknown1011ac80 *)ent)->sub_1011ac80())
+			ent->sub_1011b9a0();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10122b20 size=0x98
 struct Ent_10122b20 {
 	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
