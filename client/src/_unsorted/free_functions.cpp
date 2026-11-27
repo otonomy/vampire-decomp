@@ -92503,6 +92503,44 @@ const CUtlRBTree16::Links_t &CUtlRBTree16::sub_10113190(unsigned short i) const
 }
 // END FUNCTION
 
+// FUNCTION: 0x10113a20 size=0x1bc
+#include "CUtlRBTree20.h"
+
+typedef CUtlRBTree20At<0x104dff24> RBT_10113a20;
+
+// TARGET: CUtlRBTree20::sub_10113a20
+void CUtlRBTree20::sub_10113a20(unsigned short elem)
+{
+	RBT_10113a20 *t = (RBT_10113a20 *)this;
+	unsigned short rightchild = sub_10112840(elem).m_Right;
+	unsigned short rcLeft = sub_10112840(rightchild).m_Left;
+	m_pElements[elem].m_Links.m_Right = rcLeft;
+	if (sub_10112840(rightchild).m_Left != InvalidIndex())
+	{
+		unsigned short l = sub_10112840(rightchild).m_Left;
+		m_pElements[l].m_Links.m_Parent = elem;
+	}
+	if (rightchild != InvalidIndex())
+	{
+		unsigned short p = sub_10112840(elem).m_Parent;
+		m_pElements[rightchild].m_Links.m_Parent = p;
+	}
+	if (elem != m_Root)
+	{
+		unsigned short parent = sub_10112840(elem).m_Parent;
+		if (t->Links(parent).m_Left == elem)
+			m_pElements[t->Links(elem).m_Parent].m_Links.m_Left = rightchild;
+		else
+			m_pElements[t->Links(elem).m_Parent].m_Links.m_Right = rightchild;
+	}
+	else
+		m_Root = rightchild;
+	m_pElements[rightchild].m_Links.m_Left = elem;
+	if (elem != InvalidIndex())
+		m_pElements[elem].m_Links.m_Parent = rightchild;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10113da0 size=0x1b2
 #include "CUtlRBTree16.h"
 
