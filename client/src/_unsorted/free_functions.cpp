@@ -54826,6 +54826,33 @@ int sub_100aaf30()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100aaf40 size=0x10d
+#include "CBaseHandle.h"
+#include "ehandle.h"
+#include "CUtlVector4.h"
+
+struct HandleOwner
+{
+	virtual void v0();
+	virtual CBaseHandle *vfunc1();
+};
+extern CUtlVector4 g_104a0d64;
+void sub_100aaeb0();
+
+// TARGET: sub_100aaf40
+void sub_100aaf40(HandleOwner *pEnt)
+{
+	CBaseHandle h;
+	if (pEnt)
+		h = *pEnt->vfunc1();
+	else
+		h.m_Index = 0xffffffff;
+	if (g_104a0d64.FindEHandle(h) == -1)
+		g_104a0d64.AddToTailEHandle(h);
+	sub_100aaeb0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ab190 size=0x46
 #include "ehandle.h"
 extern CBaseHandle *g_104a0d64;
