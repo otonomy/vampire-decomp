@@ -105,7 +105,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc149(float dt, Vector *pOrigin, QAngle *pAngles);
 	virtual Vector vfunc150(const Vector &v);
 	virtual void vfunc151(int, int, int, int, int, int, int, int, int, int, int);
-	virtual int vfunc152(int, int);
+	virtual void vfunc152(int, CUserCmd *);
 	virtual void vfunc153();
 	virtual void vfunc154(int);
 	virtual void vfunc155();
