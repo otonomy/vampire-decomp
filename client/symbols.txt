@@ -8431,6 +8431,7 @@
 0x1015ae00 func   ?sub_1015ae00@CUnknown1015ae00@@QAEDH@Z CUnknown1015ae00::sub_1015ae00
 0x1015aeb0 func   ?sub_1015aeb0@@YAXH@Z sub_1015aeb0
 0x1015af10 func   ?sub_1015af10@CVStatActionList_t@@QAEXPAUCVStatActionTarget@@HH@Z CVStatActionList_t::sub_1015af10
+0x1015afa0 func   ?sub_1015afa0@CVStatActionList_t@@QAEXXZ CVStatActionList_t::sub_1015afa0
 0x1015b050 func   ??0CVStatInfo_t@@QAE@XZ CVStatInfo_t::CVStatInfo_t
 0x1015b050 func   ?sub_1015b050@CVStatInfo_t@@QAEPAV1@XZ CVStatInfo_t::sub_1015b050
 0x1015b150 func   ??1CVStatInfo_t@@QAE@XZ CVStatInfo_t::~CVStatInfo_t

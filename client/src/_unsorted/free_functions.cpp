@@ -127989,6 +127989,25 @@ void CVStatActionList_t::sub_1015af10(CVStatActionTarget *pTarget, int a1, int a
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015afa0 size=0xa9
+#include "CVStatActionList_t.h"
+#include "CVStatAction_t.h"
+#include "ScopeTrace.h"
+#include <stdio.h>
+
+extern "C" __declspec(dllimport) void __cdecl DevMsg(int level, const char *msg);
+
+void CVStatActionList_t::sub_1015afa0()
+{
+	ScopeTrace st("CVStatActionList_t::Debug_Display", g_102de300);
+	char buf[0x80];
+	for (int i = 0; i < m_nActions; i++) {
+		sprintf(buf, "\t\t\t( Action %d )\t%s\n", i, m_pActions[i]->sub_1015a9a0());
+		DevMsg(1, buf);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015b050 size=0xf5
 #include "ScopeTrace.h"
 #include "CVStatInfo_t.h"
