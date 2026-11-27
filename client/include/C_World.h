@@ -3,6 +3,7 @@
 // the destructor is slot 8 of its vtable; the virtual functions before it are not declared yet
 #pragma once
 #include "C_BaseEntity.h"
+#include "Vector.h"
 
 class C_World : public C_BaseEntity
 {
