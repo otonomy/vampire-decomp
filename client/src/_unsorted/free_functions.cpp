@@ -57196,6 +57196,59 @@ void CUnknown100a8dc0::sub_100a8fd0(C_BasePlayer *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a9190 size=0x197
+#include "C_BasePlayer.h"
+#include "C_BaseCombatWeapon.h"
+struct CUnknown100a5290 { int m_type; int m_val; int sub_100a5290(int); };
+int CUnknown100a5290::sub_100a5290(int v) { m_val = v; return v; }
+void __cdecl sub_10186e20(C_BasePlayer *, bool);
+#define SLOT(pl) ((CUnknown100a5290 *)((char *)(pl) + *(int *)((char *)(pl) + 0x1624) * 8 + 0x1614))
+// TARGET: C_BasePlayer::sub_100a9190
+void *C_BasePlayer::sub_100a9190(int type, int a2)
+{
+	if (type == 0)
+	{
+		SLOT(this)->sub_100a5290(SLOT(this)->m_val + 1);
+		int v = SLOT(this)->m_val;
+		if (v >= sub_100a93e0())
+			SLOT(this)->sub_100a5290(0);
+	}
+	else if (type == 7)
+	{
+		SLOT(this)->sub_100a5290(SLOT(this)->m_val + 1);
+		if (SLOT(this)->m_val > 2)
+			SLOT(this)->sub_100a5290(0);
+	}
+	else
+	{
+		if (!vfunc167())
+		{
+			C_BaseCombatWeapon *pActive = (C_BaseCombatWeapon *)vfunc148();
+			if (pActive && pActive->vfunc220() == type - 1)
+				vfunc168((int)pActive);
+			else
+				vfunc168((int)vfunc165(type - 1, 0));
+		}
+		if (vfunc167())
+		{
+			C_BaseCombatWeapon *pNext = vfunc165(--type, vfunc167()->vfunc221() + 1);
+			if (!pNext)
+			{
+				SLOT(this)->sub_100a5290((int)pNext);
+				vfunc168((int)vfunc165(type, (int)pNext));
+			}
+			else
+			{
+				SLOT(this)->sub_100a5290(SLOT(this)->m_val + 1);
+				vfunc168((int)pNext);
+			}
+		}
+	}
+	sub_10186e20(this, false);
+	return SLOT(this);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a9330 size=0xad
 #include "C_BasePlayer.h"
 struct CUnknown100a5290 { int m_type; int m_val; void sub_100a5290(int); };
