@@ -13,6 +13,7 @@ public:
     int m_unk8; int m_unkc; int m_unk10; int m_unk14; int m_unk18; int m_unk1c;
     Data_t *m_pData;
     void *vfunc21(unsigned short);
+    unsigned short vfunc17(unsigned short);
     bool vfunc15(char);
     bool vfunc16(char);
     void vfunc22();
