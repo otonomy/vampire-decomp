@@ -8,4 +8,5 @@ public:
 	int m_collisionGroup;
 
 	void sub_1004b5c0(const void *passentity, int collisionGroup);
+	bool sub_1004b5f0(const void *pHandleEntity, int contentsMask);
 };
