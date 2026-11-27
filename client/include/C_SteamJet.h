@@ -16,6 +16,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with C_SteamJet's own function
 	virtual int vfunc15();
 	virtual int vfunc16();
+	virtual void OnDataChanged(int updateType);
 	void sub_10031d80();	// UpdateLightingRamp
 	char m_pad0018[0x470 - 0x18];
 	float m_Speed;		// 0x470
