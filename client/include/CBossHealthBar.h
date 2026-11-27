@@ -19,7 +19,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc112();
 	virtual void vfunc113();
 	// the slots CBossHealthBar adds to its base's vtable: 114-114, vfuncK at slot K
-	virtual void vfunc114();
+	virtual void vfunc114(int count, const char *flags, const int *ids, bool bShow);
 	CBossHealthBar(int a);
 	struct IFontLike { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int GetFont(const char *); };
 	IFontLike *sub_101ac830();
