@@ -10568,6 +10568,7 @@
 0x101c6680 func   ?sub_101c6680@ProgressBar@vgui2@@QAEXH@Z vgui2::ProgressBar::sub_101c6680
 0x101c6760 func   ?vfunc102@ProgressBar@vgui2@@UAEHXZ vgui2::ProgressBar::vfunc102
 0x101c6770 func   ?sub_101c6770@CUnknown101c6770@@QAEHXZ CUnknown101c6770::sub_101c6770
+0x101c6780 func   ??0MessageBox@vgui2@@QAE@PBD0PAVPanel@1@@Z vgui2::MessageBox::MessageBox
 0x101c68c0 func   ??_GMessageBox@vgui2@@UAEPAXI@Z ??_GMessageBox@vgui2@@UAEPAXI@Z
 0x101c68e0 func   ??1MessageBox@vgui2@@UAE@XZ vgui2::MessageBox::~MessageBox
 0x101c6900 func   ?vfunc145@MessageBox@vgui2@@UAEXXZ vgui2::MessageBox::vfunc145
