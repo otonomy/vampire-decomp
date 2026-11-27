@@ -148576,6 +148576,35 @@ void CViewRender::sub_1019fb50(const CViewSetup &view)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019fea0 size=0x152
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+struct PCvF { virtual void v0(); virtual bool IsZero(); int m_unk04[9]; float m_f28; };
+extern PCvF *g_10618cfc;
+extern PCvF *g_10619784;
+void sub_10198640();
+// TARGET: CViewRender::sub_1019fea0
+bool CViewRender::sub_1019fea0(int a)
+{
+    ScopeTrace st("CViewRender::DrawObfuscateOverlay", g_102de300);
+    if (!g_pMaterialSystemHardwareConfig->vfunc10())
+        return false;
+    C_BasePlayer *pl = C_BasePlayer::GetLocalPlayer();
+    if (!pl)
+        return false;
+    float f = pl->sub_10099ac0(0);
+    if (!(f > 0.0f))
+        return false;
+    f = (g_10618cfc->IsZero() ? 0.0f : g_10618cfc->m_f28) * f;
+    sub_10198640();
+    float g = g_10619784->IsZero() ? 0.0f : g_10619784->m_f28;
+    sub_1019e530(a, *(int *)((char *)this + 0x434), f, g, 0, 255, 255, 255);
+    return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101a0e90 size=0x8c
 #include "CUtlVector4.h"
 extern void *(*g_101e3100)(int);
