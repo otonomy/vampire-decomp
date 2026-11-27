@@ -65976,6 +65976,67 @@ void C_SpriteRenderer::sub_100c31e0(int type, const Vector &origin, const QAngle
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c3480 size=0x1db
+#include "engineclient.h"
+#include "C_SpriteRenderer.h"
+#include "ConVar.h"
+#include "CInput.h"
+
+struct CUnknown10136fc0 { int sub_10136fc0(); };
+extern ConVar *g_104a42ec;
+extern Vector g_105fc4d4;
+extern QAngle g_105fc7a4;
+void sub_10082200(void *entity, void *psprite, const Vector *pOrigin, float scale, float frame, int rendermode, int r, int g, int b, int count, Vector *fwd, Vector *right, Vector *up);
+struct IClientEnt6 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void *GetRend(); };
+struct IRendAttach {
+	virtual void v0();virtual void v1();virtual void v2();virtual void v3();virtual void v4();virtual void v5();virtual void v6();virtual void v7();virtual void v8();virtual void v9();
+	virtual void v10();virtual void v11();virtual void v12();virtual void v13();virtual void v14();virtual void v15();virtual void v16();virtual void v17();virtual void v18();virtual void v19();
+	virtual void v20();virtual void v21();virtual void v22();virtual void v23();virtual void v24();virtual void v25();virtual void v26();virtual void v27();virtual void v28();virtual void v29();
+	virtual void v30();virtual void v31();virtual void v32();virtual void v33();virtual void v34();virtual void v35();virtual void v36();virtual void v37();virtual void v38();virtual void v39();
+	virtual void v40();virtual void v41();virtual void v42();virtual void v43();virtual void v44();virtual void v45();virtual void v46();virtual void v47();virtual void v48();virtual void v49();
+	virtual void v50();virtual void v51();virtual void v52();virtual void v53();virtual void v54();virtual void v55();virtual void v56();
+	virtual void GetAttachment(int, Vector *, QAngle *);
+};
+
+// TARGET: C_SpriteRenderer::sub_100c3480
+int C_SpriteRenderer::sub_100c3480(void *entity, const void *model, const Vector &origin, const QAngle &angles, float frame, void *attachedto, int attachmentindex, int rendermode, int renderfx, int alpha, int r, int g, int b, float scale)
+{
+	if (g_104a42ec->vfunc1() || !g_104a42ec->m_nValue)
+		return 0;
+	if (!model)
+		return 0;
+	if (modelinfo->GetModelType(model) != 2)
+		return 0;
+	CUnknown10136fc0 *psprite = (CUnknown10136fc0 *)modelinfo->vfunc7(model);
+	if (!psprite)
+		return 0;
+	Vector effect_origin, up, right, forward;
+	int type = psprite->sub_10136fc0();
+	sub_100c31e0(type, origin, angles, forward, right, up);
+	g_105fc4d4 = effect_origin = origin;
+	if (attachedto) {
+		IRendAttach *pRend = (IRendAttach *)((IClientEnt6 *)attachedto)->GetRend();
+		if (pRend) {
+			pRend->GetAttachment(attachmentindex, &g_105fc4d4, &g_105fc7a4);
+			effect_origin = g_105fc4d4;
+		}
+	}
+	if (rendermode) {
+		float blend = render->vfunc7();
+		if (rendermode == 3 || rendermode == 9) {
+			blend *= sub_100c24a0(effect_origin, rendermode, renderfx, alpha, &scale);
+			alpha = (int)(alpha * *(float *)this);
+		}
+		render->vfunc6(blend);
+	}
+	int count = (int)((1.0f - input->vfunc50()) * alpha);
+	if (count < 1)
+		return 0;
+	sub_10082200(entity, psprite, &effect_origin, scale, frame, rendermode, r, g, b, count, &forward, &right, &up);
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c3680 size=0x6
 namespace lifted {
 extern char g_104a48dc;
