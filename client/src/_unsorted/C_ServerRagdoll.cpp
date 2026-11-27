@@ -242,6 +242,41 @@ void C_ServerRagdoll::vfunc123(const Vector *pos, const Quaternion *q, const mat
 }
 // END FUNCTION
 
+// FUNCTION: 0x10125dd0 size=0x7d
+#include "C_ServerRagdoll.h"
+#include "ehandle.h"
+
+#define V1(n) virtual void n();
+struct RV_10125dd0
+{
+	V1(a0) V1(a1) V1(a2) V1(a3) V1(a4) V1(a5) V1(a6) V1(a7)
+	virtual int vfunc8();
+};
+struct EntV_10125dd0
+{
+	int m_unk0;
+	RV_10125dd0 m_r;
+};
+extern void sub_100923e0(int a, int b);
+extern void sub_100924e0();
+
+// TARGET: C_ServerRagdoll::vfunc90
+void C_ServerRagdoll::vfunc90()
+{
+	EntV_10125dd0 *pEnt = (EntV_10125dd0 *)(*(CBaseHandle *)((char *)this + 0xadc)).Get();
+	if (pEnt && pEnt->m_r.vfunc8())
+	{
+		if (pEnt->m_r.vfunc8() == ((EntV_10125dd0 *)this)->m_r.vfunc8())
+		{
+			sub_100923e0(1, 0);
+			((C_BaseAnimating *)pEnt)->sub_10090b70((struct EntView_10090b70 *)this);
+			sub_100924e0();
+		}
+	}
+	C_BaseEntity::vfunc90();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10125e50 size=0x6
 #include "C_ServerRagdoll.h"
 namespace lifted {
