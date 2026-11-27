@@ -9,7 +9,7 @@
   {
    "name": "client.dll",
    "code": 1973229,
-   "done": 0.6494087693356798
+   "done": 0.6856618282432932
   },
   {
    "name": "GameUI.dll",
@@ -236,30 +236,30 @@
  "client": [
   {
    "name": "no file yet",
-   "cpp": 700787,
-   "asm": 13425,
-   "open": 367425,
-   "n_cpp": 7345,
-   "n_asm": 43,
-   "n_open": 943
+   "cpp": 734060,
+   "asm": 14123,
+   "open": 333456,
+   "n_cpp": 7464,
+   "n_asm": 45,
+   "n_open": 824
   },
   {
    "name": "cl_dll",
-   "cpp": 264634,
+   "cpp": 289616,
    "asm": 9871,
-   "open": 196689,
-   "n_cpp": 2705,
+   "open": 171718,
+   "n_cpp": 2804,
    "n_asm": 13,
-   "n_open": 499
+   "n_open": 402
   },
   {
    "name": "game_shared",
-   "cpp": 51507,
+   "cpp": 53762,
    "asm": 0,
-   "open": 28496,
-   "n_cpp": 418,
+   "open": 26241,
+   "n_cpp": 426,
    "n_asm": 0,
-   "n_open": 76
+   "n_open": 68
   },
   {
    "name": "_init",
@@ -272,21 +272,21 @@
   },
   {
    "name": "vgui2/controls",
-   "cpp": 6957,
+   "cpp": 7386,
    "asm": 0,
-   "open": 3855,
-   "n_cpp": 32,
+   "open": 3426,
+   "n_cpp": 34,
    "n_asm": 0,
-   "n_open": 6
+   "n_open": 4
   },
   {
    "name": "cl_dll/hl2_hud",
-   "cpp": 2500,
+   "cpp": 2754,
    "asm": 0,
-   "open": 1962,
-   "n_cpp": 46,
+   "open": 1708,
+   "n_cpp": 48,
    "n_asm": 0,
-   "n_open": 12
+   "n_open": 10
   },
   {
    "name": "dlls",
