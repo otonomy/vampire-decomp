@@ -121328,6 +121328,69 @@ void CUnknown101ec6f0::sub_101503a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10150440 size=0xf9
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+};
+struct CUnknown10150240 {
+	void sub_10150240();
+};
+struct ItemView {
+	int m_0;
+	int m_4;
+	int m_8;
+	int m_c;
+	int m_10;
+	int m_count;
+	CUnknown10150240 **m_pItems;
+	bool sub_10150540(DataFile *file);
+	char sub_10150440();
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" int sprintf(char *, const char *, ...);
+
+// TARGET: ItemView::sub_10150440
+char ItemView::sub_10150440()
+{
+	char path[128];
+	bool bOk = true;
+	if (m_pItems) {
+		for (int i = 0; i < m_count; i++) {
+			CUnknown10150240 *p = m_pItems[i];
+			if (p) {
+				p->sub_10150240();
+				::operator delete(p);
+			}
+			m_pItems[i] = 0;
+		}
+		::operator delete(m_pItems);
+		m_pItems = 0;
+	}
+	m_4 = 0;
+	m_count = 0;
+	m_10 = 0;
+	sprintf(path, "%s%s.txt", "vdata\\system\\", "items");
+	DataFile *file = sub_101545c0(path, g_104a580c);
+	if (file) {
+		if (!sub_10150540(file)) {
+			Msg("Unable to open data file for: %s\n", path);
+			bOk = false;
+		}
+		file->vf1();
+	} else {
+		Msg("Unable to load data for: %s\n", path);
+	}
+	return bOk;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10150540 size=0x17f
 struct KVNode {
 	virtual void v0();
