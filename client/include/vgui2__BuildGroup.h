@@ -45,6 +45,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual void vfunc20(int, int);
     virtual void vfunc21();
     virtual int vfunc22(Panel *);
+	~BuildGroup();
 	Panel *sub_101c2900(const char *name);
 	void *sub_101c20d0();
 	void sub_101c2180();
@@ -57,7 +58,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	union { int m_unk24; bool m_bDragging; }; int m_unk28; int m_unk2c; int m_unk30; int m_unk34; int m_unk38; union { int m_unk3c; Panel *m_pCurrentPanel; };
 	CUtlVector<Panel *> m_Panels;
 	int m_unk54; union { int m_unk58; Panel *m_pBuildDialog; }; int m_unk5c; int m_unk60;
-	CUtlVector<PHandle> m_Controls;
+	CUtlVector<Panel *> m_Controls;
 	CUtlVector<int> m_DeltaX;	// 0x78
 	CUtlVector<int> m_DeltaY;	// 0x8c
 	Panel *m_RulerNumber[4];	// 0xa0
