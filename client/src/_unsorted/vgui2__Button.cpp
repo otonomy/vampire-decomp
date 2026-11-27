@@ -603,6 +603,21 @@ bool vgui2::Button::vfunc14(vgui2::KeyValues *data)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b4100 size=0x50
+#include "vgui2__Button.h"
+#include "vgui2__KeyValues.h"
+extern char g_102de300[];
+void vgui2::Button::sub_101b4100(int a)
+{
+	vgui2::KeyValues *kv = (vgui2::KeyValues *)a;
+	Label::sub_101b2f70(a);
+	vgui2::KeyValues *cmd = *(vgui2::KeyValues **)((char *)this + 0xc4);
+	if (cmd)
+		kv->vfunc14("command", cmd->vfunc11("command", g_102de300));
+	kv->vfunc15((int)"default", *(unsigned char *)((char *)this + 0xec));
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b4150 size=0x52
 #include "vgui2__Button.h"
 namespace lifted {

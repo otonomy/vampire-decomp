@@ -9959,6 +9959,7 @@
 0x101b3ff0 func   ?vfunc161@Button@vgui2@@UAEXH@Z vgui2::Button::vfunc161
 0x101b4020 func   ?vfunc150@Button@vgui2@@UAEXXZ vgui2::Button::vfunc150
 0x101b4050 func   ?vfunc14@Button@vgui2@@QAE_NPAVKeyValues@2@@Z vgui2::Button::vfunc14
+0x101b4100 func   ?sub_101b4100@Button@vgui2@@QAEXH@Z vgui2::Button::sub_101b4100
 0x101b4150 func   ?vfunc75@Button@vgui2@@UAEXH@Z vgui2::Button::vfunc75
 0x101b41b0 func   ?vfunc77@Button@vgui2@@UAEHXZ vgui2::Button::vfunc77
 0x101b41e0 func   ?vfunc165@Button@vgui2@@UAEXH@Z vgui2::Button::vfunc165
