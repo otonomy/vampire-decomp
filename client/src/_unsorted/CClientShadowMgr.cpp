@@ -532,6 +532,63 @@ void CClientShadowMgr_100d71d0::sub_100d71d0(unsigned int handle, const Vector &
 // TARGET: CClientShadowMgr_100d71d0::sub_100d71d0
 // END FUNCTION
 
+// FUNCTION: 0x100d7c60 size=0x1f0
+#include "CClientShadowMgr.h"
+#include "engineclient.h"
+
+struct V104cf064_100d7c60 { virtual void v0(); virtual bool v1(); int pad[10]; int m_i2c; };
+extern V104cf064_100d7c60 *g_104cf064;
+struct VSub48_100d7c60 { int m_v; void sub_100d5130(); int sub_100d5140(); };
+struct VLeaf_100d7c60 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(int a, int b, void *c);
+};
+extern VLeaf_100d7c60 *g_102b9060;
+struct VMgr_100d7c60 {
+	char pad[0x48];
+	VSub48_100d7c60 m_sub48;
+};
+
+#pragma auto_inline(off)
+int VSub48_100d7c60::sub_100d5140() { return m_v; }
+#pragma auto_inline(on)
+
+// TARGET: CClientShadowMgr::vfunc12
+void CClientShadowMgr::vfunc12(int a, int b)
+{
+	char *p = (char *)this;
+	if (*(char *)(p + 0xd8) && !g_104cf064->v1() && g_104cf064->m_i2c)
+	{
+		VMgr_100d7c60 *m = (VMgr_100d7c60 *)this;
+		m->m_sub48.sub_100d5130();
+		int x, y, w, h;
+		materials->vfunc90(&x, &y, &w, &h);
+		materials->vfunc125(0, 0, 0, 0);
+		materials->vfunc70(1);
+		materials->vfunc71();
+		materials->vfunc81();
+		materials->vfunc88(1.0f, -1.0f, 1.0f);
+		materials->vfunc82(0.0, 0.0, 1.0, 1.0, -9999.0, 0.0);
+		materials->vfunc70(0);
+		materials->vfunc71();
+		int old = materials->vfunc34();
+		materials->vfunc33(m->m_sub48.sub_100d5140());
+		g_102b9060->v20(a, b, p + 4);
+		materials->vfunc33(old);
+		materials->vfunc70(1);
+		materials->vfunc72();
+		materials->vfunc70(0);
+		materials->vfunc72();
+		materials->vfunc89(x, y, w, h);
+		materials->vfunc124(0, 0, 0);
+		*(char *)(p + 0xd9) = 0;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d7e50 size=0x1c
 #include "CClientShadowMgr.h"
 void *CClientShadowMgr::vfunc16(unsigned short h)

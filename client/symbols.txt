@@ -5512,6 +5512,7 @@
 0x100d7180 func   ?sub_100d7180@CClientShadowMgr@@QAEXHGPAH@Z CClientShadowMgr::sub_100d7180
 0x100d71d0 func   ?sub_100d71d0@CClientShadowMgr_100d71d0@@QAEXIABVVector@@00PBUBounds_100d71d0@@_N@Z CClientShadowMgr_100d71d0::sub_100d71d0
 0x100d7910 func   ?sub_100d7910@@YA_NPAVIClientRenderable@@0ABVVector@@@Z sub_100d7910
+0x100d7c60 func   ?vfunc12@CClientShadowMgr@@QAEXHH@Z CClientShadowMgr::vfunc12
 0x100d7e50 func   ?vfunc16@CClientShadowMgr@@QAEPAXG@Z CClientShadowMgr::vfunc16
 0x100d7ec0 func   ?vfunc6@CClientShadowMgr@@QAEXXZ CClientShadowMgr::vfunc6
 0x100d8230 func   ?vfunc2@CShadowProxy@@UAEXXZ CShadowProxy::vfunc2
