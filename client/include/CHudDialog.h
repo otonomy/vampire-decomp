@@ -42,7 +42,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	void sub_10054f70(int type, const char *text);
 	void sub_10054860();
 	void sub_10053ff0(bool bDraw, const char *pszText, int nFlags, int nType, int *pY);	// "CHudDialog::PaintResponseLine"
-	void sub_100549f0(int a, int b);
+	void sub_100549f0(int a, bool force);
 	void sub_10053c70(bool bDraw, int nIndex, const char *pszText, int nFlags, int nType, int *pY);	// "CHudDialog::PaintResponse"
 	int sub_100556d0(int nFont, const char *pszText);
 	int m_unk174;
@@ -86,5 +86,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_iOptionA[4];	// 0x5a50
 	int m_iOptionB[4];	// 0x5a60
 	DlgColor m_col5a70; DlgColor m_col5a74; DlgColor m_col5a78; DlgColor m_col5a7c;
-	int m_unk5a80;	// sizeof(CHudDialog) == 0x5a84 (CHudManagerPanel::vfunc0's new)
+	float m_flLastPick;	// 0x5a80, sizeof(CHudDialog) == 0x5a84 (CHudManagerPanel::vfunc0's new)
 };
