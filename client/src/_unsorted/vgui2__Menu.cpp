@@ -11,6 +11,19 @@ vgui2::Menu *pcd_emit_101bf4d0(const vgui2::Menu &other) { return new vgui2::Men
 // TARGET: ??_GMenu@vgui2@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x101bf4f0 size=0x2b
+#include "vgui2__Menu.h"
+namespace vgui2 {
+Menu::~Menu()
+{
+	Panel *p = *(Panel **)((char *)this + 0x70);
+	if (p)
+		delete p;
+	::operator delete(*(void **)((char *)this + 0x6c));
+}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101bf660 size=0x5f
 #include "vgui2__Menu.h"
 #include "vgui2__MenuItem.h"
