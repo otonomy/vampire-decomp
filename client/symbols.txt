@@ -10277,6 +10277,7 @@
 0x101bc2d0 func   ?vfunc112@Slider@vgui2@@UAEHHH@Z vgui2::Slider::vfunc112
 0x101bc2f0 func   ?vfunc113@Slider@vgui2@@UAEHH@Z vgui2::Slider::vfunc113
 0x101bc300 func   ?vfunc115@Slider@vgui2@@UAEHH@Z vgui2::Slider::vfunc115
+0x101bc310 func   ??0ToggleButton@vgui2@@QAE@HHH@Z vgui2::ToggleButton::ToggleButton
 0x101bc350 func   ??_GToggleButton@vgui2@@UAEPAXI@Z ??_GToggleButton@vgui2@@UAEPAXI@Z
 0x101bc370 func   ?vfunc87@ToggleButton@vgui2@@UAEXH@Z vgui2::ToggleButton::vfunc87
 0x101bc3b0 func   ?vfunc88@ToggleButton@vgui2@@UAEXH@Z vgui2::ToggleButton::vfunc88
