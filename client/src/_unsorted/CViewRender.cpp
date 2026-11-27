@@ -571,6 +571,60 @@ float CViewRender::vfunc45()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10192aa0 size=0x14c
+#include "CViewRender.h"
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+#include "ehandle.h"
+
+void sub_10192990();
+void sub_10192880();
+
+struct CColl1 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void vfunc15(Vector *, Vector *); };
+
+// TARGET: vfunc39
+bool CViewRender::vfunc39(C_BaseEntity *pEnt, bool *pbOut)
+{
+	*pbOut = false;
+	if (!*((bool *)this + 0x448))
+		return false;
+	if (!*((bool *)this + 0x44a)) {
+		float blend = render->vfunc7();
+		render->vfunc6(blend * *(float *)((char *)this + 0x44c));
+	}
+	if (pEnt) {
+		C_BasePlayer *pLocal = C_BasePlayer::GetLocalPlayer();
+		if (pLocal) {
+			for (;;) {
+				CBaseHandle &h = *(CBaseHandle *)((char *)pEnt + 0x188);
+				C_BaseEntity *pParent = (C_BaseEntity *)h.Get();
+				if (!pParent)
+					break;
+				pEnt = pParent;
+			}
+			int idx = *(int *)((char *)pEnt + 0x44);
+			if (idx != *(int *)((char *)pLocal + 0x44) && idx != *(int *)((char *)pLocal + 0x16cc)) {
+				Vector a, b;
+				Vector c, d;
+				((CColl1 *)((char *)pEnt + 0x190))->vfunc15(&a, &b);
+				((CColl1 *)((char *)pLocal + 0x190))->vfunc15(&c, &d);
+				if (d.z + 10.0f < b.z) {
+					*pbOut = true;
+					return false;
+				}
+			} else {
+				if (*((bool *)this + 0x449))
+					modelrender->vfunc4((void *)sub_10192990);
+				return true;
+			}
+		}
+	}
+	if (*((bool *)this + 0x449))
+		modelrender->vfunc4((void *)sub_10192880);
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101994c0 size=0xc9
 #include "engineclient.h"
 #include "CViewRender.h"
