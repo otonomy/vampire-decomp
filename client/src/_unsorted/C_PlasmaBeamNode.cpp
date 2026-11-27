@@ -24,6 +24,29 @@ void C_PlasmaBeamNode::vfunc37()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10005820 size=0xbc
+#include "C_PlasmaBeamNode.h"
+#include "CGlobalVarsBase.h"
+#include "engineclient.h"
+
+struct CollSetupView_10005820
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void Setup(const Vector &origin, const Vector *dir, float angularSpread, float minSpeed, float maxSpeed, float gravity, float dampen);
+};
+
+void C_PlasmaBeamNode::OnDataChanged(int updateType)
+{
+	if (updateType == 0) {
+		Vector vecDir = m_vecVelocityA8;
+		float speed = VectorNormalize(vecDir);
+		((CollSetupView_10005820 *)&m_pFirePlasmaSpray->m_collision)->Setup(GetAbsOrigin(), &vecDir, 0.3f, speed - 50.0f, speed + 50.0f, 800.0f, 0.5f);
+		vfunc83(engine->Time(0) + 0.01);
+	}
+	C_BaseEntity::OnDataChanged(updateType);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100058f0 size=0x307
 #include "Vector.h"
 #include "C_PlasmaBeamNode.h"

@@ -9,6 +9,7 @@ namespace vgui2
 class PropertyPage : public vgui2::EditablePanel
 {
 public:
+	PropertyPage();
 	virtual ~PropertyPage();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with PropertyPage's own function

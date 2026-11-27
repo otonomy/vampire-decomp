@@ -28,7 +28,8 @@ public:
 	void sub_100f09d0();
 	void sub_100f12b0(bool b);
 	float sub_100f10c0();	// GetSensitivity
-	int m_unk50; struct CHudSub *m_pSubs; int m_unk58; int m_unk5c; int m_unk60; int m_nSubs;
+	void sub_100f0f30(CHudElement *pElem);
+	union { int m_unk50; CHudElement **m_pHudDebug; }; struct CHudSub *m_pSubs; int m_unk58; int m_unk5c; int m_unk60; int m_nSubs;
 };
 
 // the HUD (SDK cl_dll/hud.h): gHUD.FindElement("CHudX"), gHUD.GetIcon("name")

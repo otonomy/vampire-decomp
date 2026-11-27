@@ -1,6 +1,70 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101b6ca0 size=0x164
+#include "vgui2__PropertyDialog.h"
+
+#define SV(n) virtual void v##n();
+#define SV10(p) SV(p##0) SV(p##1) SV(p##2) SV(p##3) SV(p##4) SV(p##5) SV(p##6) SV(p##7) SV(p##8) SV(p##9)
+struct Surface_101b6ca0
+{
+	SV(0) SV(1) SV(2) SV(3) SV(4) SV(5) SV(6) SV(7) SV(8) SV(9)
+	SV10(1) SV10(2)
+	SV(30) SV(31) SV(32) SV(33) SV(34) SV(35) SV(36) SV(37) SV(38)
+	virtual void GetScreenSize(int &wide, int &tall);
+};
+Surface_101b6ca0 *sub_101ac8d0();
+
+struct Child_101b6ca0
+{
+	SV(0) SV(1) SV(2) SV(3) SV(4) SV(5) SV(6) SV(7) SV(8) SV(9)
+	SV10(1)
+	SV(20) SV(21) SV(22) SV(23) SV(24) SV(25) SV(26) SV(27) SV(28)
+	virtual void vfunc29(int n);
+	SV(30) SV(31) SV(32) SV(33) SV(34) SV(35) SV(36) SV(37) SV(38) SV(39)
+	SV(40)
+	virtual void SetParent(void *parent);
+	SV(42) SV(43) SV(44) SV(45) SV(46) SV(47) SV(48) SV(49)
+	SV10(5) SV10(6) SV10(7) SV10(8) SV10(9)
+	SV10(10) SV10(11) SV10(12) SV10(13) SV10(14) SV10(15)
+	SV(160) SV(161)
+	virtual void SetText(const char *text);
+};
+struct Signal_101b6ca0 { virtual void v0(); virtual void AddTarget(void *p); };
+
+struct SheetCtor_101b6ca0 { Child_101b6ca0 *sub_101c8410(void *parent, const char *name); };
+struct ButtonCtor_101b6ca0 { Child_101b6ca0 *sub_101b3630(void *parent, const char *name, const char *text); };
+
+#define MEM(off) (*(Child_101b6ca0 **)((char *)this + off))
+
+vgui2::PropertyDialog::PropertyDialog(vgui2::Panel *parent, const char *name)
+	: Frame(parent, name, true)
+{
+	int wide, tall;
+	sub_101ac8d0()->GetScreenSize(wide, tall);
+	*(int *)((char *)this + 0xf0) = (int)(((float)tall / 768.0) * 32.0);
+
+	void *mem = vgui2::Panel::operator new(0xac);
+	MEM(0xe4) = mem ? ((SheetCtor_101b6ca0 *)mem)->sub_101c8410(this, "Sheet") : 0;
+	MEM(0xe4)->SetParent(this);
+	MEM(0xe4)->vfunc29(1);
+
+	mem = vgui2::Panel::operator new(0xf0);
+	MEM(0xe8) = mem ? ((ButtonCtor_101b6ca0 *)mem)->sub_101b3630(this, "OKButton", "#GameUI_OK") : 0;
+	MEM(0xe8)->SetParent(this);
+	MEM(0xe8)->vfunc29(2);
+	MEM(0xe8)->SetText("OK");
+	((Signal_101b6ca0 *)vfunc116())->AddTarget(MEM(0xe8));
+
+	mem = vgui2::Panel::operator new(0xf0);
+	MEM(0xec) = mem ? ((ButtonCtor_101b6ca0 *)mem)->sub_101b3630(this, "CancelButton", "#GameUI_Cancel") : 0;
+	MEM(0xec)->SetParent(this);
+	MEM(0xec)->vfunc29(3);
+	MEM(0xec)->SetText("Close");
+	vfunc121(0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b6e10 size=0x1e
 #include "vgui2__PropertyDialog.h"
 

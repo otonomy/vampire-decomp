@@ -286,6 +286,91 @@ void C_BaseAnimating::vfunc124(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10090d30 size=0x148
+#include "C_BaseAnimating.h"
+#include "CGlobalVarsBase.h"
+#include <string.h>
+extern "C" __declspec(dllimport) void Msg(const char *pMsg, ...);
+#pragma intrinsic(memset)
+
+struct matrix3x4_view { float m[12]; };
+
+void sub_10108450(const matrix3x4_view *pIn, matrix3x4_view *pOut);
+void sub_10108a50(const matrix3x4_view *pIn1, const matrix3x4_view *pIn2, matrix3x4_view *pOut);
+void sub_10107e40(const matrix3x4_view *pMatrix, float *pQuat, float *pPos);
+
+struct BoneAccessor_10090d30
+{
+	int m_unk0;
+	matrix3x4_view *m_pBones;
+};
+
+struct RagdollInfo_10090d30
+{
+	bool m_bActive;
+	float m_flSaveTime;
+	int m_nNumBones;
+	float m_rgBonePos[(0x1074 - 0xc) / 4];
+	float m_rgBoneQuaternion[(0x2654 - 0x1074) / 4];
+};
+
+struct BoneRec_10090d30
+{
+	char m_pad0[4];
+	int m_parent;
+	char m_pad8[0xa0 - 8];
+};
+
+struct StudioHdrView_10090d30
+{
+	char m_pad[0xf4];
+	int m_nBoneIndex;
+	BoneRec_10090d30 *pBone(int i) { return (BoneRec_10090d30 *)((char *)this + m_nBoneIndex) + i; }
+};
+
+#define RAGDOLL (*(RagdollInfo_10090d30 **)((char *)this + 0x6d8))
+
+// TARGET: C_BaseAnimating::vfunc134
+void C_BaseAnimating::vfunc134(int numbones, const matrix3x4_t &cameraTransform, void *pBoneAccessor)
+{
+	BoneAccessor_10090d30 *pBoneToWorld = (BoneAccessor_10090d30 *)pBoneAccessor;
+	StudioHdrView_10090d30 *hdr = (StudioHdrView_10090d30 *)sub_1008f900(-1);
+	if (!hdr)
+		return;
+
+	if (!RAGDOLL)
+	{
+		RAGDOLL = new RagdollInfo_10090d30;
+		if (!RAGDOLL)
+		{
+			Msg("Memory allocation of RagdollInfo_t failed!\n");
+			return;
+		}
+		memset(RAGDOLL, 0, sizeof(*RAGDOLL));
+	}
+
+	BoneRec_10090d30 *pbones = hdr->pBone(0);
+
+	RAGDOLL->m_bActive = true;
+	RAGDOLL->m_flSaveTime = gpGlobals->curtime;
+	RAGDOLL->m_nNumBones = numbones;
+
+	for (int i = 0; i < numbones; i++)
+	{
+		matrix3x4_view inverted;
+		matrix3x4_view output;
+
+		if (pbones[i].m_parent == -1)
+			sub_10108450((const matrix3x4_view *)&cameraTransform, &inverted);
+		else
+			sub_10108450(&pBoneToWorld->m_pBones[pbones[i].m_parent], &inverted);
+
+		sub_10108a50(&inverted, &pBoneToWorld->m_pBones[i], &output);
+		sub_10107e40(&output, &RAGDOLL->m_rgBoneQuaternion[i * 4], &RAGDOLL->m_rgBonePos[i * 3]);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10090f80 size=0x98
 #include "C_BaseAnimating.h"
 struct SPoseHdr { char pad[0x10]; float m10; };
@@ -327,6 +412,61 @@ int C_BaseAnimating::vfunc66()
 #include "C_BaseAnimating.h"
 void C_BaseAnimating::vfunc131(int a0, int a1, int a2, int a3, int a4, int a5)
 {
+}
+// END FUNCTION
+
+// FUNCTION: 0x10091650 size=0x142
+#include "C_BaseAnimating.h"
+#include "Quaternion.h"
+#include "engineclient.h"
+
+struct SPoseHdr;
+SPoseHdr *sub_1008d930(SPoseHdr *, int);
+void sub_1008a690(char *, void *, void *, int, int);
+void sub_1008a1e0(void *, void *, void *, void *, const CBitVecWords *);
+
+struct AnimView
+{
+	char m_pad0000[0x574];
+	float m_flPoseA[24];
+	float m_flPoseB[24];
+	int m_unk634;
+	int m_unk638;
+	int m_nSequence;
+	float m_flCycle;
+	int m_unk644;
+	int m_n648;
+	int m_unk64c;
+	int m_unk650;
+	float m_fl654;
+	char m_pad0658[0x6ac - 0x658];
+	char *m_p6ac;
+};
+
+// TARGET: C_BaseAnimating::vfunc130
+void C_BaseAnimating::vfunc130(const CBitVecWords *boneMask, Vector *pos, Quaternion *q)
+{
+	AnimView *v = (AnimView *)this;
+	float poseparam[24];
+	float tmp[4];
+	if (!sub_10096830(v->m_nSequence))
+		v->m_nSequence = 0;
+	float f = vfunc122();
+	SPoseHdr *hdr = (SPoseHdr *)sub_1008f900(-1);
+	int i;
+	for (i = 0; i < 24; i++) {
+		if (!sub_1008d930(hdr, i))
+			break;
+		poseparam[i] = vfunc129(i, v->m_flPoseA[i], v->m_flPoseB[i], f);
+	}
+	float t = f * 0.1;
+	float cycle = vfunc121(v->m_n648, v->m_nSequence, poseparam, v->m_flCycle, t);
+	sub_100968a0(pos, q, v->m_nSequence, cycle, poseparam, boneMask);
+	sub_10091110(boneMask, cycle, poseparam, pos, q);
+	sub_1008a690(v->m_p6ac, pos, q, (int)poseparam, (int)boneMask);
+	vfunc120(tmp, f);
+	sub_1008a1e0(v->m_p6ac, pos, q, tmp, boneMask);
+	v->m_fl654 = cycle;
 }
 // END FUNCTION
 
@@ -934,6 +1074,55 @@ float C_BaseAnimating::vfunc136(float flInterval)
 	}
 
 	f->m_flGroundSpeed = f->sub_100955f0(f->m_nSequence);
+	return flInterval;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10095720 size=0x14d
+#include "C_BaseAnimating.h"
+#include "engineclient.h"
+
+struct AnimView6c
+{
+	char m_pad0000[0x6c];
+	float m_flOldAnimTime;	// 0x6c
+	float m_flAnimTime;	// 0x70
+	char m_pad0074[0x63c - 0x74];
+	int m_nSequence;	// 0x63c
+	float m_flPlaybackRate;	// 0x640
+	char m_pad0644[4];
+	float m_flCycle;	// 0x648
+};
+
+// TARGET: C_BaseAnimating::vfunc137
+float C_BaseAnimating::vfunc137(float flInterval)
+{
+	AnimView6c *v = (AnimView6c *)this;
+	if (!vfunc71())
+		return 0.0f;
+	float curtime = engine->Time(0);
+	if (flInterval == 0.0)
+	{
+		flInterval = curtime - v->m_flAnimTime;
+		if (flInterval <= 0.001)
+		{
+			v->m_flAnimTime = curtime;
+			return 0.0f;
+		}
+	}
+	if (v->m_flAnimTime == 0.0f)
+		flInterval = 0.0f;
+	float cycleRate = vfunc138(v->m_nSequence) * v->m_flPlaybackRate;
+	v->m_flOldAnimTime = v->m_flAnimTime;
+	v->m_flAnimTime = curtime;
+	v->m_flCycle += flInterval * cycleRate;
+	if (v->m_flCycle < 0.0 || v->m_flCycle >= 1.0)
+	{
+		if (sub_100958f0(v->m_nSequence) & 1)
+			v->m_flCycle -= (int)v->m_flCycle;
+		else
+			v->m_flCycle = (v->m_flCycle < 0.0) ? 0.0f : 1.0f;
+	}
 	return flInterval;
 }
 // END FUNCTION

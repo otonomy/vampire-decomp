@@ -90,6 +90,52 @@ CHudDialog *pcd_emit_10052eb0(const CHudDialog &other) { return new CHudDialog(o
 // TARGET: ??_GCHudDialog@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x10052f00 size=0x12c
+#include "CHudDialog.h"
+#include "CHUDSprite.h"
+#include "ScopeTrace.h"
+#include "CRestore.h"
+// TARGET: ??1CHudDialog@@UAE@XZ
+CHudDialog::~CHudDialog()
+{
+	void (*pfnFree)(void *);
+	{
+		ScopeTrace st("CHudDialog::~CHudDialog", g_102de300);
+		for (int i = 0; i < 2; i++)
+			for (int j = 0; j < 2; j++)
+			{
+				if (m_pCorners[i][j])
+					delete m_pCorners[i][j];
+				if (m_pEdges[i][j])
+					delete m_pEdges[i][j];
+			}
+		sub_101a9ff0(0);
+		sub_10054e20();
+		pfnFree = g_101e30fc;
+	}
+	m_n184 = 0;
+	if (m_n180 != -1)
+	{
+		if (m_n178)
+		{
+			pfnFree((void *)m_n178);
+			m_n178 = 0;
+		}
+		m_n17c = 0;
+	}
+	m_n188 = m_n178;
+	if (m_n180 != -1)
+	{
+		if (m_n178)
+		{
+			pfnFree((void *)m_n178);
+			m_n178 = 0;
+		}
+		m_n17c = 0;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10053080 size=0x6f
 #include "CHudDialog.h"
 
@@ -204,6 +250,26 @@ void CHudDialog::SetDrawLastPickEnabled(bool bEnabled)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100545d0 size=0x99
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+#include <string.h>
+// TARGET: CHudDialog::vfunc112
+void CHudDialog::vfunc112()
+{
+	ScopeTrace st("CHudDialog::Init", g_102de300);
+	sub_10054e20();
+	m_b1b3 = false;
+	m_b1b4 = false;
+	m_b1b0 = false;
+	m_b1b1 = false;
+	m_flAlpha = 0;
+	m_flAlpha1a8 = 0;
+	m_flAlpha1ac = 0;
+	memset(m_pad0a28, 0, sizeof(m_pad0a28));
+}
+// END FUNCTION
+
 // FUNCTION: 0x10054b50 size=0x7
 #include "CHudDialog.h"
 bool CHudDialog::vfunc116()
@@ -246,6 +312,45 @@ void CHudDialog::ScrollUp()
 	}
 	if (v->m18c < top)
 		v->m18c++;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10055260 size=0xfc
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+// TARGET: CHudDialog::vfunc114
+int CHudDialog::vfunc114(int down, int keynum, int binding)
+{
+    ScopeTrace st("CHudDialog::Key_Event", g_102de300);
+    if (keynum == 0xef) {
+        ScrollDn();
+        return 0;
+    }
+    if (keynum == 0xf0) {
+        ScrollUp();
+        return 0;
+    }
+    if (keynum == 0xf1) {
+        sub_10054b60();
+        return 0;
+    }
+    if (!down) {
+        switch (keynum) {
+        case 0x31:
+            sub_100549f0(0, false);
+            break;
+        case 0x32:
+            sub_100549f0(1, false);
+            break;
+        case 0x33:
+            sub_100549f0(2, false);
+            break;
+        case 0x34:
+            sub_100549f0(3, false);
+            break;
+        }
+    }
+    return 1;
 }
 // END FUNCTION
 

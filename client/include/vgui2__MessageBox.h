@@ -3,12 +3,14 @@
 // the destructor is slot 20 of its vtable; the virtual functions before it are not declared yet
 #pragma once
 #include "vgui2__Frame.h"
+#include "vgui2__Label.h"
 
 namespace vgui2
 {
 class MessageBox : public vgui2::Frame
 {
 public:
+	MessageBox(const char *, const char *, vgui2::Panel *);
 	virtual ~MessageBox();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with MessageBox's own function

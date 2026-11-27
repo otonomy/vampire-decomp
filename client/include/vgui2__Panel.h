@@ -37,6 +37,10 @@ public:
 	void sub_101a9af0();
 	void sub_101aa590();
 	void sub_101a9ff0(int);
+	void sub_101a9980(int *x, int *y, int *wide, int *tall);
+	int sub_101ab460();
+	int sub_101ab480();
+	void sub_101aafb0(void *);
 	void sub_101aa0a0(int);
 	int sub_101a99f0(int);
 	void sub_101aa6f0(int);
@@ -127,7 +131,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual bool vfunc39(char);
 	virtual bool vfunc40();
 	virtual void vfunc41(int);
-	virtual void vfunc42();
+	virtual void vfunc42(Panel *);
 	virtual int vfunc43(void *);
 	virtual bool vfunc44(int, int);
 	virtual void vfunc45();

@@ -79,6 +79,52 @@ unsigned short CClientLeafSystem::vfunc4(IClientRenderable *pRenderable, int gro
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d1cf0 size=0xe3
+#include "CClientLeafSystem.h"
+
+struct LNode52 { char m_pad[0x30]; unsigned short m_Previous; unsigned short m_Next; };
+struct LList52
+{
+	LNode52 *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	unsigned short m_Head;
+	unsigned short m_Tail;
+	unsigned short m_FirstFree;
+	unsigned short m_ElementCount;
+	unsigned short m_NumAlloced;
+};
+
+// TARGET: CClientLeafSystem::vfunc1
+void CClientLeafSystem::vfunc1(unsigned short elem)
+{
+	LList52 &list = *(LList52 *)((char *)this + 0x20);
+	if (elem < list.m_NumAlloced && (list.m_pMemory[elem].m_Previous != elem || list.m_pMemory[elem].m_Next == elem))
+	{
+		sub_100d28a0(elem);
+		if (elem < list.m_NumAlloced && list.m_pMemory[elem].m_Previous != elem)
+		{
+			LNode52 *p = list.m_pMemory;
+			unsigned short prev = p[elem].m_Previous;
+			if (prev != 0xffff)
+				p[prev].m_Next = p[elem].m_Next;
+			else
+				list.m_Head = p[elem].m_Next;
+			unsigned short next = p[elem].m_Next;
+			if (next != 0xffff)
+				p[next].m_Previous = p[elem].m_Previous;
+			else
+				list.m_Tail = p[elem].m_Previous;
+			p[elem].m_Next = elem;
+			p[elem].m_Previous = elem;
+			list.m_ElementCount--;
+		}
+		list.m_pMemory[elem].m_Next = list.m_FirstFree;
+		list.m_FirstFree = elem;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d1de0 size=0x23
 #include "CClientLeafSystem.h"
 struct LeafRec { int a0, a4, a8, ac; unsigned short w10; short w12; int a14, a18, a1c, a20, a24, a28, a2c, a30; };
@@ -107,6 +153,78 @@ void CClientLeafSystem::vfunc7(int idx, unsigned int *a, unsigned int *b)
 	Ent_100d1ee0 *p = ((View_100d1ee0 *)this)->m_pEnts;
 	*a = p[idx].m_w4;
 	*b = ((View_100d1ee0 *)this)->m_pEnts[idx].m_w6;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100d1f60 size=0xaa
+#include "CClientLeafSystem.h"
+#include "CUtlLinkedList12S.h"
+
+// TARGET: CClientLeafSystem::vfunc18
+void CClientLeafSystem::vfunc18(unsigned short elem)
+{
+	sub_100d2220(elem);
+	CUtlLinkedList12S &list = *(CUtlLinkedList12S *)((char *)this + 0x3c);
+	if (elem < list.m_NumAlloced && list.m_pMemory[elem].m_Previous != elem)
+	{
+		CUtlLinkedList12SNode *p = list.m_pMemory;
+		unsigned short prev = p[elem].m_Previous;
+		if (prev != 0xffff)
+			p[prev].m_Next = p[elem].m_Next;
+		else
+			list.m_Head = p[elem].m_Next;
+		unsigned short next = p[elem].m_Next;
+		if (next != 0xffff)
+			p[next].m_Previous = p[elem].m_Previous;
+		else
+			list.m_Tail = p[elem].m_Previous;
+		p[elem].m_Next = elem;
+		p[elem].m_Previous = elem;
+		list.m_ElementCount--;
+	}
+	list.m_pMemory[elem].m_Next = list.m_FirstFree;
+	list.m_FirstFree = elem;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100d2390 size=0xdb
+#include "CClientLeafSystem.h"
+#include "CShadowLeafEnum.h"
+#include "Ray_t.h"
+#include "engineclient.h"
+
+struct ILeafQuery
+{
+	virtual void s0();
+	virtual void s1();
+	virtual void s2();
+	virtual void s3();
+	virtual void EnumerateLeavesAlongRay(Ray_t &ray, ISpatialLeafEnumerator *pEnum, int context);
+};
+
+// TARGET: CClientLeafSystem::vfunc19
+void CClientLeafSystem::vfunc19(unsigned short elem, const Vector &origin, const Vector &dir, const float *size, float scale)
+{
+	sub_100d2220(elem);
+	(*(int *)((char *)this + 0xdc))++;
+	Ray_t ray;
+	ray.m_Extents[0] = 0;
+	ray.m_Extents[1] = 0;
+	ray.m_Start[0] = origin.x;
+	ray.m_Start[1] = origin.y;
+	ray.m_Start[2] = origin.z;
+	ray.m_Extents[2] = 0;
+	ray.m_Delta[0] = scale * dir.x;
+	ray.m_Delta[1] = scale * dir.y;
+	ray.m_Delta[2] = scale * dir.z;
+	float r = (size[1] < size[0] ? size[0] : size[1]) * 0.5f;
+	ray.m_StartOffset[0] = r;
+	ray.m_StartOffset[1] = r;
+	ray.m_StartOffset[2] = r;
+	ray.m_IsRay = false;
+	ray.m_IsSwept = true;
+	CShadowLeafEnum e;
+	((ILeafQuery *)engine->vfunc87())->EnumerateLeavesAlongRay(ray, &e, elem);
 }
 // END FUNCTION
 

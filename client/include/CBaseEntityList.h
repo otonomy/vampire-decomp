@@ -65,6 +65,7 @@ public:
 	CBaseEntityListLL m_Second;	// 0x18020
 
 	CBaseEntityList();	// 0x100f9a60: clears the slot table, sets up both linked lists, fills the second list with the indices 0x800..0x1fff, then clears the slot table again
+	void *sub_1007aca0(unsigned int *h);
 	void sub_100e2590(unsigned int element);	// releases the entity of a live list node (stub 0x1000a362)
 	~CBaseEntityList();
 	void sub_100e21f0();	// destructor body: stores the vtable, releases every live node, then RemoveAll + Purge of both linked lists

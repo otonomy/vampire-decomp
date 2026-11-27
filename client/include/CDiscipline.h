@@ -2,6 +2,9 @@
 #pragma once
 #include "CManagedHudElement.h"
 
+struct DiscColor { unsigned char r, g, b, a; DiscColor() { r = 0; g = 0; b = 0; a = 0; } };
+struct IDiscScheme { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int GetFont(const char *name); virtual int v5(); virtual DiscColor GetColor(const char *name); };
+
 class CDisciplineChild { public: virtual ~CDisciplineChild(); };
 
 struct CDisciplineEntry
@@ -17,6 +20,10 @@ class CDiscipline : public CManagedHudElement
 public:
 	CDiscipline(int a);
 	virtual ~CDiscipline();
+	void sub_1004eb00();
+	IDiscScheme *sub_101ac830();
+	void sub_101a9890(int, int);
+	void sub_101a98f0(int, int);
 	int sub_1004ec90(int id);
 	int sub_1004ecb0(int id);
 	void sub_1004ed00(int id);
@@ -47,8 +54,5 @@ public:
 	CDisciplineChild *m_p1f8;
 	int m_unk1fc;
 	int m_nFont200;	// "Copperplate"
-	int m_clr204;	// scheme color DiscUI_Aqua
-	int m_clr208;	// DiscUI_Orange
-	int m_clr20c;	// DiscUI_Yellow
-	int m_clr210;	// DiscUI_Gray
+	DiscColor m_clr[4];	// 0x204: DiscUI_Aqua, DiscUI_Orange, DiscUI_Yellow, DiscUI_Gray
 };

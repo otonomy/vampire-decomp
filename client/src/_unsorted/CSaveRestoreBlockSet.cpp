@@ -195,6 +195,55 @@ void CSaveRestoreBlockSet::vfunc5()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1012bd60 size=0x15b
+#include "CSaveRestoreBlockSet.h"
+#include "CUtlVectorDataOps.h"
+#pragma intrinsic(strcmp)
+extern "C" int __cdecl strcmp(const char *, const char *);
+struct IRestoreView_1012bd60 {
+	virtual int GetReadPos();
+	virtual void SeekPosition(int);
+	virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6();
+	virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+	virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void ReadInt(int *, int, int);
+};
+struct IHandlerView_1012bd60 {
+	virtual const char *GetBlockName();
+	virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void ReadRestoreHeaders(IRestoreView_1012bd60 *);
+};
+struct FieldInfo_1012bd60 {
+	void *m_pField;
+	void *m_pOwner;
+	void *m_pTypeDesc;
+};
+void CSaveRestoreBlockSet::vfunc6(void *pRestore_)
+{
+	IRestoreView_1012bd60 *pRestore = (IRestoreView_1012bd60 *)pRestore_;
+	int nBytesRead = pRestore->GetReadPos();
+	pRestore->ReadInt((int *)((char *)this + 0x38), 1, 0);
+	pRestore->ReadInt((int *)((char *)this + 0x3c), 1, 0);
+	static CUtlVectorDataOps<CUtlVector<SaveRestoreBlockHeader_t, CUtlMemory<SaveRestoreBlockHeader_t> >, 9> s_ops;
+	FieldInfo_1012bd60 fi = { &m_pEntries, 0, 0 };
+	((ISaveRestoreOps *)&s_ops)->vfunc1((SaveRestoreFieldInfo_t *)&fi, (IRestore *)pRestore);
+	for (int i = 0; i < m_nHandlers; i++) {
+		const char *name = ((IHandlerView_1012bd60 *)m_pHandlers[i])->GetBlockName();
+		for (int j = 0; j < m_nEntries; j++) {
+			if (!strcmp(m_pEntries + j * 0x28, name)) {
+				int loc = *(int *)(m_pEntries + j * 0x28 + 0x20);
+				if (loc != -1) {
+					pRestore->SeekPosition(loc + nBytesRead);
+					((IHandlerView_1012bd60 *)m_pHandlers[i])->ReadRestoreHeaders(pRestore);
+				}
+				break;
+			}
+		}
+	}
+	pRestore->SeekPosition(*(int *)((char *)this + 0x38) + nBytesRead);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1012bec0 size=0xe8
 #include "CSaveRestoreBlockSet.h"
 

@@ -25,9 +25,9 @@ public:
     int m_unk20;
     int m_unk24;
     void *m_unk28;
-    int m_unk2c[(0x40 - 0x2c) / 4];
+    union { int m_unk2c[(0x40 - 0x2c) / 4]; struct { int m_joy_avail; int m_unk30; int m_joy_haspov; int m_joy_numbuttons; int m_unk3c; }; };
     int m_nJoystickFlags;	// 0x40
-    int m_unk44[(0x54 - 0x44) / 4];
+    union { int m_unk44[(0x54 - 0x44) / 4]; struct { unsigned long m_joy_oldbuttonstate; unsigned long m_joy_oldpovstate; int m_unk4c; int m_unk50; }; };
     int sub_10100f10();
     int m_unk54;
     int m_unk58;
@@ -61,6 +61,7 @@ public:
     class ConVar *m_p1c8;	// 0x1c8: CreateMove clamps its int to 1..255 (30 without it) into CUserCmd +0x47
     class ConVar *m_p1cc;	// 0x1cc: the same into +0x46 (20 without it)
     void sub_101028d0(float frametime);
+    void sub_101026b0(float speed, class QAngle &viewangles);
     void sub_10102a50(class CUserCmd *cmd);
     int sub_10102940();
     void sub_10102d00(class CUserCmd *cmd);

@@ -18,7 +18,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc86();
 	virtual void vfunc95();
 	virtual void vfunc96(int, int, int, int);
-	virtual int vfunc113(int, int);
+	virtual bool vfunc113(bool isbeingremoved, C_BaseEntity *predicted);
 	// the slots C_VampireProjectile adds to its base's vtable: 143-147, vfuncK at slot K
 	virtual void vfunc143();
 	virtual bool vfunc144();

@@ -5,9 +5,20 @@
 #include "CHudElement.h"
 #include "CBasePanel.h"
 
+struct VBarterSlot { vgui2::Panel *a; vgui2::Panel *b; vgui2::Panel *c; };
+struct IVBarterObj { virtual void vfunc0(int); };
+
 class VBarterUI : public CHudElement, public CBasePanel
 {
 public:
+	int m_unk180; int m_unk184;
+	VBarterSlot m_Slots1[0x18];
+	VBarterSlot m_Slots2[0x20];
+	vgui2::Panel *m_p428; vgui2::Panel *m_p42c; vgui2::Panel *m_p430; vgui2::Panel *m_p434;
+	vgui2::Panel *m_p438; vgui2::Panel *m_p43c; vgui2::Panel *m_p440; vgui2::Panel *m_p444;
+	vgui2::Panel *m_p448;
+	int m_unk44c[(0x4dc - 0x44c) / 4];
+	IVBarterObj *m_p4dc;
 	virtual ~VBarterUI();
 	void sub_1016cdc0();
 	void sub_1016b790();

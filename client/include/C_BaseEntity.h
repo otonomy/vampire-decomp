@@ -11,11 +11,16 @@ class C_BaseEntity : public IClientEntity
 public:
 	C_BaseEntity();
 	bool sub_1011c5c0();
+	void sub_1009e150();
+	void sub_1011b9a0();
+	struct TouchLink *sub_1011b440(int type);
+	void sub_100a26e0();
 	void sub_100af040();
 	void sub_100a2580();
 	void sub_100a2610(bool flag, int a);
 	void sub_1011d190(float frametime);
 	bool sub_100a0d10();
+	bool sub_100a1b20();
 	void sub_100a2850(Vector *mins, Vector *maxs);
 	void sub_100a2480(const Vector &origin);
 	void sub_1007e180(int a, int b);
@@ -34,11 +39,24 @@ public:
 	void sub_100a1110();
 	int sub_100a2450();
 	void sub_1011bd60(C_BaseEntity *other);
+	void sub_1011c480(C_BaseEntity *other, CGameTrace &trace);
+	void sub_1011c1b0(C_BaseEntity *other, CGameTrace &trace);
+	int *sub_1011be90(C_BaseEntity *other);
+	void sub_1011c310(C_BaseEntity *other, CGameTrace &trace);
 	void sub_1011bdf0(C_BaseEntity *other);
 	bool sub_1011b290(int type);
 	void sub_1011b320(int type);
 	void sub_1011b3b0(int type);
+	void sub_1011b890();
+	void sub_1011b730(int type);
 	void sub_100a2ee0();
+	void sub_100a25b0();
+	void sub_100a2e90(int);
+	void sub_100a0650(const char *context);
+	bool sub_100a29a0();
+	void sub_100a2e40(int);
+	void sub_100a25f0(int);
+	void sub_100a2760(int, int);
 	void sub_100a2f50();
 	int sub_100a31e0(void *pDataMap);
 	void sub_100a0450();
@@ -73,6 +91,8 @@ public:
 	void sub_1011c9a0(Vector &move);
 	int sub_1011cac0(Vector &in, const Vector &normal, Vector &out, float overbounce);
 	void sub_100a23f0(int flag);
+	void sub_100a1ce0(struct Ray_t &ray, const Vector &center, int decal, bool doTrace, CGameTrace &tr, int lod);
+	void sub_100a1b40(struct Ray_t &ray, int hitbox, int decal, bool doTrace, CGameTrace &tr, int lod);
 	void sub_100a1d60(const Vector &start, const Vector &pos, const Vector &dir, int hitbox, int decal, bool, CGameTrace &tr, int);	// AddDecal (TE_Decal)
 	virtual ICollideable *GetClientCollideable();	// IClientUnknown slot 2
 	virtual IClientNetworkable *GetClientNetworkable();	// IClientUnknown slot 3
@@ -149,7 +169,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc20();
 	virtual void vfunc21();
 	virtual bool Init(int entnum, int iSerialNum);
-	virtual void vfunc23();
+	virtual Vector vfunc23();
 	virtual int vfunc24();
 	virtual bool vfunc25(int);
 	virtual int vfunc26();
@@ -194,7 +214,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual bool vfunc65(int, int);
 	virtual int vfunc66();
 	virtual bool vfunc67();
-	virtual void vfunc68(int);
+	virtual void vfunc68(bool);
 	virtual void vfunc69();
 	virtual int vfunc70();
 	virtual bool vfunc71();
@@ -223,7 +243,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual bool vfunc94();
 	virtual void vfunc95();
 	virtual void vfunc96(int, int, int, int);
-	virtual void vfunc97();
+	virtual void vfunc97(int);
 	virtual bool vfunc98();
 	virtual void vfunc99(int);
 	virtual void vfunc100(int a);

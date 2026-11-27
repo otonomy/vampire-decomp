@@ -163,6 +163,28 @@ C_BasePlayer *pcd_emit_100a54a0() { return new C_BasePlayer; }
 // TARGET: ??_GC_BasePlayer@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x100a5540 size=0x168
+#include "C_BasePlayer.h"
+#include "ehandle.h"
+
+struct CUnknown100af100 { void sub_100af100(C_BasePlayer *p); };
+struct CUnknown100aeed0 { void sub_100aeed0(); };
+void sub_100ca040(void *p);
+
+C_BasePlayer::~C_BasePlayer()
+{
+	if (m_h14e8.Get())
+	{
+		((CUnknown100af100 *)m_h14e8.Get())->sub_100af100(this);
+		((CUnknown100aeed0 *)m_h14e8.Get())->sub_100aeed0();
+		m_h14e8 = CBaseHandle();
+	}
+	sub_100ca040(m_h19f4.Get());
+	if (this == g_pLocalPlayer)
+		g_pLocalPlayer = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a58a0 size=0x9
 #include "C_BasePlayer.h"
 void C_BasePlayer::vfunc177() { IsTransparent(); }
@@ -405,6 +427,48 @@ void C_BasePlayer::OnDataChanged(int updateType)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a6970 size=0x147
+#include "C_BasePlayer.h"
+#include "vector.h"
+#include "QAngle.h"
+
+struct KFV { float time; Vector v1; QAngle v2; };
+
+extern "C" void sub_100a6ac0(float *);
+extern "C" void sub_10108fd0(const Vector *, float, const Vector *, Vector *);
+extern "C" void sub_100ccf50(const QAngle *, const QAngle *, QAngle *, float);
+
+// TARGET: C_BasePlayer::vfunc149
+void C_BasePlayer::vfunc149(float t, Vector *pOut1, QAngle *pOut2)
+{
+	float f;
+	KFV *pPrev, *pNext;
+	sub_100a1ef0(t, (void **)&pNext, (void **)&pPrev);
+	if (pNext && pPrev) {
+		float tPrev = pPrev->time;
+		float tNext = pNext->time;
+		if (tNext == 0.0f) {
+			*pOut1 = pPrev->v1;
+			*pOut2 = pPrev->v2;
+			return;
+		}
+		Vector delta;
+		VectorSubtract(pNext->v1, pPrev->v1, delta);
+		if (tNext == tPrev)
+			f = 1.0f;
+		else
+			f = (t - tPrev) / (tNext - tPrev);
+		sub_100a6ac0(&f);
+		Vector r1;
+		sub_10108fd0(&pPrev->v1, f, &delta, &r1);
+		QAngle r2;
+		sub_100ccf50(&pPrev->v2, &pNext->v2, &r2, f);
+		*pOut1 = r1;
+		*pOut2 = r2;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a6b10 size=0x71
 #include "engineclient.h"
 #include "C_BasePlayer.h"
@@ -552,6 +616,46 @@ void C_BasePlayer::vfunc156()
 			m_pFlashlightTarget = 0;
 		}
 	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a74d0 size=0x166
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+#include "CClientEntityList.h"
+struct VBase1049 { virtual void v0(); virtual bool vfunc1(); int m_unk[10]; int m_2c; };
+extern VBase1049 *g_1049e83c;
+struct CUnknown1009f160 { void sub_1009f160(int, char); };
+C_BaseEntity *sub_100ab1e0(int);
+struct DlightView { int m_flags; float ox, oy, oz; float radius; unsigned char r, g, b, exponent; float die; float decay; float minlight; int key; };
+#define m_pFlashlight (*(DlightView **)((char *)this + 0x1a00))
+// TARGET: C_BasePlayer::vfunc155
+void C_BasePlayer::vfunc155()
+{
+    if (!g_1049e83c->vfunc1() && g_1049e83c->m_2c)
+        sub_100a73a0();
+    if (sub_1009f140(4)) {
+        if (!m_pFlashlight || m_pFlashlight->key != *(int *)((char *)this + 0x44) + 0x20000000) {
+            m_pFlashlight = (DlightView *)effects->CL_AllocDlight(*(int *)((char *)this + 0x44) + 0x20000000);
+            m_pFlashlight->r = m_pFlashlight->g = m_pFlashlight->b = 250;
+            m_pFlashlight->exponent = 8;
+        }
+        Vector &o = *(Vector *)&m_pFlashlight->ox;
+        o = GetAbsOrigin();
+        m_pFlashlight->oz += 16.0f;
+        m_pFlashlight->die = engine->Time(0) + 0.2f;
+    } else if (m_pFlashlight && m_pFlashlight->key == *(int *)((char *)this + 0x44) + 0x20000000) {
+        m_pFlashlight->die = engine->Time(0);
+        m_pFlashlight = 0;
+    }
+    C_BaseEntity *pEnt = cl_entitylist->sub_100d0cf0(render->vfunc39());
+    if (pEnt && pEnt->sub_1009f140(2)) {
+        for (int i = 0; i < 2; i++) {
+            CUnknown1009f160 *p = (CUnknown1009f160 *)sub_100ab1e0(i);
+            if (p)
+                p->sub_1009f160(2, 1);
+        }
+    }
 }
 // END FUNCTION
 
@@ -780,6 +884,85 @@ void C_BasePlayer::vfunc159(int slot, int a2, int a3)
 */
 // END FUNCTION
 
+// FUNCTION: 0x100a7ed0 size=0x160
+#define PCD_LPF_CTOR
+#include "C_BasePlayer.h"
+#include "C_RecipientFilter.h"
+#include "CHud.h"
+#include "CHudWeaponSelection.h"
+#include "engineclient.h"
+bool sub_10186d50();
+void sub_10186d30();
+bool sub_10170bf0();
+void sub_10170bc0();
+struct WSlot_100a7ed0 {
+	int m_a;
+	int m_b;
+	void sub_100a8fd0(C_BasePlayer *p);
+};
+struct Wpn_100a7ed0 {
+	virtual void v0();
+	virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54(); virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
+	virtual void v70(); virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74(); virtual void v75(); virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79();
+	virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84(); virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89();
+	virtual void v90(); virtual void v91(); virtual void v92(); virtual void v93(); virtual void v94(); virtual void v95(); virtual void v96(); virtual void v97(); virtual void v98(); virtual void v99();
+	virtual void v100(); virtual void v101(); virtual void v102(); virtual void v103(); virtual void v104(); virtual void v105(); virtual void v106(); virtual void v107(); virtual void v108(); virtual void v109();
+	virtual void v110(); virtual void v111(); virtual void v112(); virtual void v113(); virtual void v114(); virtual void v115(); virtual void v116(); virtual void v117(); virtual void v118(); virtual void v119();
+	virtual void v120(); virtual void v121(); virtual void v122(); virtual void v123(); virtual void v124(); virtual void v125(); virtual void v126(); virtual void v127(); virtual void v128(); virtual void v129();
+	virtual void v130(); virtual void v131(); virtual void v132(); virtual void v133(); virtual void v134(); virtual void v135(); virtual void v136(); virtual void v137(); virtual void v138(); virtual void v139();
+	virtual void v140(); virtual void v141(); virtual void v142(); virtual void v143(); virtual void v144(); virtual void v145(); virtual void v146(); virtual void v147(); virtual Wpn_100a7ed0 *v148();
+	virtual void v149(); virtual void v150(); virtual void v151(); virtual void v152(); virtual void v153(); virtual void v154(); virtual void v155(); virtual void v156(); virtual void v157(); virtual void v158(); virtual void v159();
+	virtual void v160(); virtual void v161(); virtual void v162(); virtual void v163(); virtual void v164(); virtual void v165(); virtual void v166(); virtual void v167(); virtual void v168(); virtual void v169();
+	virtual void v170(); virtual void v171(); virtual void v172(); virtual void v173(); virtual void v174(); virtual void v175(); virtual void v176(); virtual void v177(); virtual void v178(); virtual void v179();
+	virtual void v180(); virtual void v181(); virtual void v182(); virtual void v183(); virtual void v184(); virtual void v185(); virtual void v186(); virtual void v187(); virtual void v188(); virtual void v189();
+	virtual void v190(); virtual void v191(); virtual void v192(); virtual void v193(); virtual void v194(); virtual void v195(); virtual void v196(); virtual void v197(); virtual void v198(); virtual void v199();
+	virtual void v200(); virtual void v201(); virtual void v202(); virtual void v203(); virtual void v204(); virtual void v205(); virtual void v206(); virtual void v207(); virtual void v208(); virtual void v209();
+	virtual void v210(); virtual void v211(); virtual void v212(); virtual void v213(); virtual void v214(); virtual void v215(); virtual void v216(); virtual void v217(); virtual void v218(); virtual void v219();
+	virtual void v220(); virtual void v221(); virtual void v222(); virtual void v223(); virtual void v224(); virtual void v225(); virtual void v226(); virtual void v227(); virtual void v228(); virtual void v229();
+	virtual void v230(); virtual void v231(); virtual void v232(); virtual void v233(); virtual void v234(); virtual void v235(); virtual void v236(); virtual void v237(); virtual void v238(); virtual void v239();
+	virtual void v240(); virtual void v241(); virtual void v242(); virtual void v243(); virtual void v244(); virtual void v245(); virtual int v246(int, int, int);
+};
+bool C_BasePlayer::vfunc160(bool noSound)
+{
+	bool result = false;
+	CHudWeaponSelection *pHud = (CHudWeaponSelection *)gHUD.FindElement("CHudWeaponSelection");
+	if (sub_10186d50()) {
+		sub_10186d30();
+		result = true;
+	}
+	if (*(int *)((char *)this + 0x1624) == 1)
+		sub_100aa490();
+	if (!noSound) {
+		if (sub_10170bf0()) {
+			sub_10170bc0();
+			result = true;
+		}
+	}
+	if (pHud->vfunc9()) {
+		pHud->sub_101a7a00();
+		((WSlot_100a7ed0 *)((char *)this + 0x1614 + *(int *)((char *)this + 0x1624) * 8))->sub_100a8fd0(this);
+		enginesound->vfunc0("player/UI/SelectionFrame.wav", 0);
+		CLocalPlayerFilter filter;
+		enginesound->EmitSound(filter, entindex(), 3, "player/UI/SelectionFrame.wav", 1.0f, 0, 0x2801, 100, 0, 0, 1, 0);
+		result = true;
+	} else {
+		engine->ClientCmd("escape");
+		Wpn_100a7ed0 *w = ((Wpn_100a7ed0 *)this)->v148();
+		if (w) {
+			if (!w->v246(0, 0x98967f, 0))
+				return true;
+		}
+	}
+	return result;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a8030 size=0x8
 #include "C_BasePlayer.h"
 namespace lifted {
@@ -916,6 +1099,38 @@ void C_BasePlayer::vfunc172(C_BaseCombatWeapon *pWeapon)
 		vfunc168(0);
 	if (HandleToEnt(*(unsigned long *)((char *)this + 0x1a0c)) == pWeapon)
 		*(unsigned long *)((char *)this + 0x1a0c) = 0xffffffff;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a8c50 size=0x132
+#include "C_BasePlayer.h"
+#include "C_BaseCombatWeapon.h"
+#include "ehandle.h"
+inline C_BaseCombatWeapon *GetActive(C_BasePlayer *p)
+{
+	return (C_BaseCombatWeapon *)((CBaseHandle *)((char *)p + 0x1a08))->Get();
+}
+inline C_BaseCombatWeapon *GetLast(C_BasePlayer *p)
+{
+	return (C_BaseCombatWeapon *)((CBaseHandle *)((char *)p + 0x1a0c))->Get();
+}
+void C_BasePlayer::vfunc190(C_BaseCombatWeapon *pWeapon)
+{
+	if (!GetActive(this))
+		return;
+	if (GetActive(this) == pWeapon)
+		vfunc168(0);
+	if (GetLast(this) == pWeapon)
+		((CBaseHandle *)((char *)this + 0x1a0c))->m_Index = 0xffffffff;
+	if (GetActive(this))
+		return;
+	if (*(int *)((char *)pWeapon + 0x79c) == 0xff)
+		vfunc159(5, 0, 1);
+	else
+	{
+		int n = pWeapon->vfunc220();
+		vfunc168((int)vfunc164(n));
+	}
 }
 // END FUNCTION
 

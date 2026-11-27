@@ -17133,6 +17133,47 @@ void sub_10027d20(const Vector &origin, const Vector &mins, const Vector &maxs, 
 }
 // END FUNCTION
 
+// FUNCTION: 0x10027ec0 size=0x159
+#include "engineclient.h"
+#include "Vector.h"
+void sub_10027d20(Vector *pos, const Vector &mins, const Vector &maxs, int, int, int, int, float t);
+void sub_100dfc60(Vector *a, Vector *b, int, int, int, int, float t);
+struct Ent_10027ec0 {
+	Vector m_pos;
+	int m_unk0c, m_unk10, m_unk14;
+	int m_idx;
+	int m_unk1c[(0x34 - 0x1c) / 4];
+	int m_state;
+	float m_t;
+};
+struct Self_10027ec0 {
+	char m_pad[0x980];
+	Ent_10027ec0 m_e[50];
+	void sub_10027c30(Vector *out, int);
+	void sub_10027ec0();
+};
+void Self_10027ec0::sub_10027ec0()
+{
+	Ent_10027ec0 *e = m_e;
+	for (int n = 50; n; n--, e++) {
+		int state = *(int *)((char *)e - 8);
+		if (state == 1) {
+			float t = engine->vfunc41(0);
+			sub_10027d20(&e->m_pos, Vector(-2.0f, -2.0f, -2.0f), Vector(2.0f, 2.0f, 2.0f), 0, 0, 255, 0, t);
+			if (e->m_idx == -1) {
+				Vector tmp;
+				sub_10027c30(&tmp, 0);
+				sub_100dfc60(&e->m_pos, &tmp, 50, 50, 255, 0, t);
+			} else if (e->m_idx >= 0 && e->m_idx < 50) {
+				sub_100dfc60(&e->m_pos, &m_e[e->m_idx].m_pos, 50, 50, 255, 0, t);
+			}
+		} else if (state != 0) {
+			sub_10027d20(&e->m_pos, Vector(-2.0f, -2.0f, -2.0f), Vector(2.0f, 2.0f, 2.0f), 255, 100, 255, 0, *(float *)((char *)e - 4));
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10028020 size=0x7d
 namespace lifted {
 extern int g_104a581c;
@@ -17153,6 +17194,88 @@ void CUnknown10028020::sub_10028020()
         *(int *)((char *)(*(int *)((char *)this + 0x166c)) + 0x418) = 0;
         *(int *)((char *)this + 0x166c) = 0;
     }
+}
+// END FUNCTION
+
+// FUNCTION: 0x100280a0 size=0x189
+#include "C_EnvParticle.h"
+#include "C_BaseViewModel.h"
+
+struct V3 { float x, y, z; };
+struct YYV { void sub_10027c30(V3 *a, V3 *b); };
+int __cdecl sub_100b47b0(const char *name, int pos, int ang, int owner, int a, int attach, float f1, float f2, float f3, float f4);
+
+struct SubObj_100280a0
+{
+	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6();
+	virtual void vfunc7(int);
+};
+struct CUnknown10094ec0 { int sub_10094ec0(const char *name); };
+struct HV { int sub_1007bab0(); };
+struct V5910 { bool sub_100a5910(); int sub_100a9af0(int); };
+struct CUnknown100a2970 { void sub_100a2970(int); };
+struct VM_100ab990 { void sub_100ab990(void *p); };
+
+struct Flame_100280a0
+{
+	void sub_100280a0();
+};
+
+#define F(type, off) (*(type *)((char *)this + (off)))
+
+// TARGET: Flame_100280a0::sub_100280a0
+void Flame_100280a0::sub_100280a0()
+{
+	if (F(char, 0x1579) != F(char, 0x1578))
+	{
+		const char *name = "Flamethrower_Muzzle_Active_emitter";
+		if (!F(char, 0x1578))
+			name = "Flamethrower_Muzzle_Inactive_emitter";
+		char *p;
+		p = F(char *, 0x166c);
+		if (p)
+		{
+			*(int *)(p + 0x418) = 0;
+			((SubObj_100280a0 *)(F(char *, 0x166c) + 8))->vfunc7(1);
+			F(char *, 0x166c) = 0;
+		}
+		p = F(char *, 0x1668);
+		if (p)
+		{
+			*(int *)(p + 0x418) = 0;
+			((SubObj_100280a0 *)(F(char *, 0x1668) + 8))->vfunc7(1);
+			F(char *, 0x1668) = 0;
+		}
+		V3 pos, ang;
+		((YYV *)this)->sub_10027c30(&pos, &ang);
+		int attach = ((CUnknown10094ec0 *)this)->sub_10094ec0("muzzle");
+		C_EnvParticle *e = (C_EnvParticle *)sub_100b47b0(name, (int)&pos, (int)&ang, (int)this, 6, attach, 1.0f, 1.0f, 1.0f, 1.0f);
+		if (e)
+		{
+			e->sub_100af150();
+			if (F(char, 0x1578))
+				F(C_EnvParticle *, 0x1668) = e;
+			else
+				F(C_EnvParticle *, 0x166c) = e;
+			char *owner = (char *)((HV *)this)->sub_1007bab0();
+			V5910 *vm = owner == 0 ? 0 : *(V5910 **)(owner + 0x3f8);
+			bool b = false;
+			if (vm)
+			{
+				char *ent = (char *)vm->sub_100a9af0(F(int, 0x914));
+				b = vm->sub_100a5910();
+				if (b)
+				{
+					((VM_100ab990 *)ent)->sub_100ab990(e);
+					((CUnknown100a2970 *)e)->sub_100a2970((int)this);
+				}
+				else if (ent)
+					((C_BaseViewModel *)ent)->sub_100ab890(e);
+			}
+			F(char, 0x1580) = b;
+		}
+	}
+	F(char, 0x1579) = F(char, 0x1578);
 }
 // END FUNCTION
 
@@ -18751,6 +18874,105 @@ struct CUnknown1002c540 { char * sub_1002c540(); };
 char * CUnknown1002c540::sub_1002c540()
 {
     return (char *)this + -4;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1002ca30 size=0x5f
+#include "C_Hairball.h"
+#include "CClientEntityList.h"
+#include "CBaseHandle.h"
+#include "engineclient.h"
+
+struct HbThink_1002ca30 { void sub_100cfea0(CBaseHandle h, float t); };
+HbThink_1002ca30 *sub_1002d700();
+struct HbList_1002ca30 { CBaseHandle sub_100e2360(void *pEnt); };
+struct HbEnt_1002ca30 { CBaseHandle sub_1002d710(); };
+
+void C_Hairball::sub_1002ca30()
+{
+	((HbList_1002ca30 *)cl_entitylist)->sub_100e2360(this);
+	sub_1002d700()->sub_100cfea0(((HbEnt_1002ca30 *)this)->sub_1002d710(), -1293.0f);
+	sub_100a1a70(1);
+	m_Physics.m_a[6] = (int)materials->FindMaterial("cable/cable", 0, 1);
+	m_flNextBurst = 5.0f;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1002d160 size=0x143
+#include "Vector.h"
+struct CBeamSeg_1002d160 {
+	Vector m_vPos;
+	Vector m_vColor;
+	float m_flTexCoord;
+	float m_flWidth;
+	float m_flAlpha;
+};
+struct CBeamSegDraw {
+	int m_unk0[0x80 / 4];
+	int m_p80;
+	int m_u84;
+	int m_i88;
+	int m_i8c;
+	int m_i90;
+	int m_i94;
+	int m_i98;
+	int m_i9c;
+	char m_ba0[4];
+	char m_ba4;
+	int m_ib0[0x54 / 4];
+	CBeamSegDraw()
+	{
+		m_p80 = 0;
+		m_i88 = 0;
+		m_i8c = 0;
+		m_i90 = 0;
+		m_i94 = 0;
+		m_i98 = 0;
+		m_i9c = 0;
+		m_ba4 = 0;
+	}
+	void sub_100813c0(int, void *);
+	void sub_100814e0(CBeamSeg_1002d160 *);
+	void sub_10081b90();
+};
+struct Pt_1002d160 {
+	char pad[0x18];
+	Vector m_vPos;
+};
+extern float g_1027c678;
+struct Rope_1002d160 {
+	char pad0[0x410];
+	int m_nRopes;
+	int m_nPoints;
+	int m_u418;
+	Pt_1002d160 *m_pPts;
+	char pad1[0x47c - 0x420];
+	void *m_pMaterial;
+	int sub_1002d160(int, int);
+};
+// TARGET: Rope_1002d160::sub_1002d160
+int Rope_1002d160::sub_1002d160(int a, int b)
+{
+	if (!m_pMaterial)
+		return 0;
+	for (int i = 0; i < m_nRopes; i++) {
+		Pt_1002d160 *pPts = m_pPts + m_nPoints * i;
+		CBeamSegDraw beamDraw;
+		beamDraw.sub_100813c0(m_nPoints - 1, m_pMaterial);
+		for (int j = 0; j < m_nPoints; j++) {
+			CBeamSeg_1002d160 seg;
+			seg.m_vPos = pPts[j].m_vPos;
+			seg.m_flWidth = g_1027c678;
+			seg.m_vColor.x = 0.0f;
+			seg.m_vColor.y = 0.0f;
+			seg.m_vColor.z = 0.0f;
+			seg.m_flTexCoord = 0.0f;
+			seg.m_flAlpha = 0.0f;
+			beamDraw.sub_100814e0(&seg);
+		}
+		beamDraw.sub_10081b90();
+	}
+	return 1;
 }
 // END FUNCTION
 
@@ -22772,6 +22994,36 @@ int CUnknown10039a90::sub_10039a90()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10039ac0 size=0x157
+#include "engineclient.h"
+#include "CUnknown10039ac0.h"
+#include "C_BaseEntity.h"
+#include "CClientEntityList.h"
+#include "CGameTrace.h"
+void sub_10108fd0(const float *, float, const float *, float *);
+void sub_10047980(Vector &, Vector &);
+// TARGET: CUnknown10039ac0::sub_10039ac0
+void CUnknown10039ac0::sub_10039ac0(int a)
+{
+    Vector dir = m_vecOrigin - m_vecStart;
+    float len = FastSqrt(dir.x * dir.x + (dir.y * dir.y + dir.z * dir.z));
+    VectorNormalize(dir);
+    Vector end;
+    sub_10108fd0(&m_vecStart.x, len + 1.0f, &dir.x, &end.x);
+    CGameTrace tr;
+    if (m_nEntity == 0 && m_nHitbox != 0) {
+        staticpropmgr->vfunc5(m_vecStart, end, m_nHitbox - 1, effects->Draw_DecalIndex(m_nIndex), true, tr, 1);
+    } else {
+        C_BaseEntity *e = cl_entitylist->sub_100d0cf0(m_nEntity);
+        if (!e || !e->sub_100a1b20())
+            return;
+        e->sub_100a1d60(m_vecStart, end, m_vecOrigin, m_nHitbox, effects->Draw_DecalIndex(m_nIndex), true, tr, 1);
+    }
+    if (tr.m_fraction != 1.0f)
+        sub_10047980(m_vecOrigin, *(Vector *)tr.m_planeNormal);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10039c40 size=0x6
 namespace lifted {
 extern char g_102ee56c;
@@ -22811,6 +23063,23 @@ template <> int ClientClassInit<DT_TEExplosiveGunshotDecal::ignored>(DT_TEExplos
 	};
 	RecvTable.Construct(RecvProps+1, sizeof(RecvProps) / sizeof(RecvProp) - 1, pRecvTableName);
 	return 1;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10039de0 size=0x78
+#include "CUnknown10039ac0.h"
+extern CUnknown10039ac0 g_102ee4c4;
+// TARGET: sub_10039de0
+void sub_10039de0(void *filter, float delay, const Vector *pos, const Vector *start, int entity, int hitbox, int index, int a8, bool b)
+{
+    g_102ee4c4.m_vecOrigin = *pos;
+    g_102ee4c4.m_vecStart = *start;
+    g_102ee4c4.m_nEntity = entity;
+    g_102ee4c4.m_nHitbox = hitbox;
+    g_102ee4c4.m_nIndex = index;
+    g_102ee4c4.m_n30 = a8;
+    g_102ee4c4.m_b34 = b;
+    g_102ee4c4.sub_10039ac0(0);
 }
 // END FUNCTION
 
@@ -25022,6 +25291,160 @@ void C_TestTraceline::sub_100417c0(Vector &center, unsigned char *pColor)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10041b10 size=0x178
+#include "CMeshBuilder.h"
+
+struct IMeshS
+{
+	virtual void LockMesh(int numVerts, int numIndices, void *desc);
+	virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4();
+	virtual void s5(); virtual void s6(); virtual void s7(); virtual void s8(); virtual void s9();
+	virtual void SetPrimitiveType(int type);
+};
+
+struct MBView
+{
+	char m_pad0[0x44];
+	int m44, m48, m4c, m50, m54, m58, m5c, m60, m64, m68;
+	char m_pad1[0x80 - 0x6c];
+	IMeshS *m_pMesh;	// 0x80
+	char m_bGen;	// 0x84
+	char m_pad2[3];
+	int m_nVerts;	// 0x88
+	int m_nIndices;	// 0x8c
+	int m90, m94, m98, m9c, mA0;
+	char mA4;
+	char m_pad3[3];
+	int ma8, mac, mb0, mb4, mb8, mbc, mc0;
+};
+
+// TARGET: CMeshBuilder::sub_10041b10
+void CMeshBuilder::sub_10041b10(void *pMesh, int type, int numPrimitives)
+{
+	MBView *s = (MBView *)this;
+	s->m_pMesh = (IMeshS *)pMesh;
+	s->m_bGen = 0;
+	switch (type)
+	{
+	case 0:
+		s->m_nVerts = numPrimitives;
+		s->m_nIndices = numPrimitives;
+		break;
+	case 1:
+		s->m_nVerts = numPrimitives * 2;
+		s->m_nIndices = numPrimitives * 2;
+		break;
+	case 4:
+		s->m_nVerts = numPrimitives + 1;
+		s->m_nIndices = numPrimitives * 2;
+		break;
+	case 5:
+		s->m_nVerts = numPrimitives;
+		s->m_nIndices = numPrimitives * 2;
+		break;
+	case 2:
+		s->m_nVerts = numPrimitives * 3;
+		s->m_nIndices = numPrimitives * 3;
+		break;
+	case 3:
+		s->m_nVerts = numPrimitives + 2;
+		s->m_nIndices = numPrimitives + 2;
+		break;
+	case 7:
+		s->m_nVerts = numPrimitives * 4;
+		s->m_nIndices = numPrimitives * 6;
+		break;
+	case 6:
+		s->m_nVerts = numPrimitives;
+		s->m_nIndices = numPrimitives * 3 - 6;
+		break;
+	}
+	s->m94 = 0;
+	s->m90 = 0;
+	s->mA4 = 1;
+	s->mA0 = type;
+	if (type == 7 || type == 6)
+		s->m_pMesh->SetPrimitiveType(2);
+	else if (type == 4 || type == 5)
+		s->m_pMesh->SetPrimitiveType(1);
+	else
+		s->m_pMesh->SetPrimitiveType(type);
+	s->m_pMesh->LockMesh(s->m_nVerts, s->m_nIndices, this);
+	s->ma8 = s->m44;
+	s->mac = s->m50;
+	s->mb0 = s->m5c;
+	s->mb4 = s->m60;
+	s->m98 = 0;
+	s->m9c = 0;
+	s->mb8 = s->m64;
+	s->mbc = s->m68;
+	s->mc0 = s->m54;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10041c90 size=0x166
+#include "CMeshBuilder.h"
+
+struct MeshView_10041c90
+{
+	virtual void vfunc0();
+	virtual void vfunc1(int a, int b, void *pBuilder);
+	virtual void vfunc2(); virtual void vfunc3();
+	virtual void vfunc4(unsigned short *p, int n, int first);
+	virtual void vfunc5(unsigned short *p, int n, int first);
+	virtual void vfunc6(unsigned short *p, int n, int first);
+	virtual void vfunc7(unsigned short *p, int n, int first);
+	virtual void vfunc8(unsigned short *p, int n, int first);
+	virtual void vfunc9(); virtual void vfunc10(); virtual void vfunc11();
+	virtual void vfunc12(int a, int b);
+	virtual void vfunc13(); virtual void vfunc14();
+	virtual void vfunc15(int a, int b, void *pBuilder);
+	virtual void vfunc16();
+	virtual void vfunc17(void *pBuilder);
+};
+
+#define MESH (*(MeshView_10041c90 **)&m_unk80[0])
+#define TYPE (*(int *)&m_unka0[0])
+#define BEGUN (*((char *)&m_unka0[0] + 4))
+
+void CMeshBuilder::sub_10041c90(bool bSpewData, bool bDraw)
+{
+	if (BEGUN)
+	{
+		int nIndices = m_n90;
+		if (TYPE == 7)
+			nIndices = nIndices * 6 / 4;
+		else if (TYPE == 6)
+			nIndices = nIndices * 3 - 6;
+		else if (TYPE == 4)
+			nIndices = nIndices * 2 - 2;
+		else if (TYPE == 5)
+			nIndices = nIndices * 2;
+		m_nCurrentIndex = nIndices;
+		if (TYPE == 7)
+			MESH->vfunc5(m_pIndices, nIndices, *(int *)&m_wIndexOffset);
+		else if (TYPE == 6)
+			MESH->vfunc6(m_pIndices, nIndices, *(int *)&m_wIndexOffset);
+		else if (TYPE == 4)
+			MESH->vfunc7(m_pIndices, nIndices, *(int *)&m_wIndexOffset);
+		else if (TYPE == 5)
+			MESH->vfunc8(m_pIndices, nIndices, *(int *)&m_wIndexOffset);
+		else if (TYPE != 0)
+			MESH->vfunc4(m_pIndices, nIndices, *(int *)&m_wIndexOffset);
+	}
+	if (m_n90 > 0)
+		MESH->vfunc17(this);
+	if (bSpewData)
+		MESH->vfunc15(m_n90, m_nCurrentIndex, this);
+	MESH->vfunc1(m_n90, m_nCurrentIndex, this);
+	if (bDraw)
+		MESH->vfunc12(-1, 0);
+	MESH = 0;
+	m_unk80[3] = 0;
+	m_unk80[2] = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10041e00 size=0x22
 struct S10041e00 {
 	char pad[0xa8];
@@ -25772,6 +26195,49 @@ bool CCollisionProperty::sub_10043930(const Vector &pt)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10043a40 size=0x14a
+#include "CCollisionProperty.h"
+
+extern QAngle g_104d5190;	// vec3_angle
+void sub_10108080(const Vector &in, const matrix3x4_t &matrix, Vector &out);
+void sub_10107f80(const Vector &in, const matrix3x4_t &matrix, Vector &out);
+void sub_1010ba80(const Vector &mins, const Vector &maxs, const Vector &p, Vector &closest);
+
+// TARGET: CCollisionProperty::sub_10043a40
+void CCollisionProperty::sub_10043a40(const Vector &vecWorldPt, Vector *pVecNearestWorldPt)
+{
+	Vector localPt, localClosestPoint;
+
+	if (!(*((unsigned char *)this + 0x44) & 0x80) && m_unk40 != 2 && m_unk40 != 0 && vfunc9(0) != g_104d5190)
+	{
+		const matrix3x4_t &m = vfunc10();
+		sub_10108080(vecWorldPt, m, localPt);
+	}
+	else
+	{
+		const Vector &origin = vfunc8();
+		localPt.x = vecWorldPt.x - origin.x;
+		localPt.y = vecWorldPt.y - origin.y;
+		localPt.z = vecWorldPt.z - origin.z;
+	}
+
+	sub_1010ba80(m_vecMins, *(Vector *)&m_unk10, localPt, localClosestPoint);
+
+	if (!(*((unsigned char *)this + 0x44) & 0x80) && m_unk40 != 2 && m_unk40 != 0 && vfunc9(0) != g_104d5190)
+	{
+		const matrix3x4_t &m = vfunc10();
+		sub_10107f80(localClosestPoint, m, *pVecNearestWorldPt);
+	}
+	else
+	{
+		const Vector &origin = vfunc8();
+		pVecNearestWorldPt->x = localClosestPoint.x + origin.x;
+		pVecNearestWorldPt->y = localClosestPoint.y + origin.y;
+		pVecNearestWorldPt->z = localClosestPoint.z + origin.z;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10043b90 size=0xef
 #include "CCollisionProperty.h"
 
@@ -25824,6 +26290,47 @@ float CCollisionProperty::sub_10043c80(const Vector *dir)
 	r += (local.y >= 0 ? *(float *)((char *)this + 0x14) : m_vecMins.y) * local.y;
 	r += (local.z >= 0 ? *(float *)((char *)this + 0x18) : *(float *)((char *)this + 0xc)) * local.z;
 	return r;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10043da0 size=0x148
+#include "CCollisionProperty.h"
+#include "engineclient.h"
+
+struct PhysObjView_10043da0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48();
+	virtual const void *vfunc49();
+};
+
+// TARGET: CCollisionProperty::sub_10043da0
+void CCollisionProperty::sub_10043da0(Vector *pMins, Vector *pMaxs)
+{
+	PhysObjView_10043da0 *pObj = *(PhysObjView_10043da0 **)((char *)m_unk3c + 0xec);
+	if (pObj != 0)
+	{
+		physcollision->vfunc18(*pMins, *pMaxs, pObj->vfunc49(), vfunc8(), vfunc9(0));
+	}
+	else
+	{
+		*pMins = vfunc8();
+		*pMaxs = *pMins;
+	}
+	if (*((unsigned char *)this + 0x45) & 1)
+	{
+		Vector localMins, localMaxs;
+		vfunc3(&localMins, &localMaxs);
+		pMins->x = (localMins.x < pMins->x) ? localMins.x : pMins->x;
+		pMins->y = (localMins.y < pMins->y) ? localMins.y : pMins->y;
+		pMins->z = (localMins.z < pMins->z) ? localMins.z : pMins->z;
+		pMaxs->x = (localMaxs.x > pMaxs->x) ? localMaxs.x : pMaxs->x;
+		pMaxs->y = (localMaxs.y > pMaxs->y) ? localMaxs.y : pMaxs->y;
+		pMaxs->z = (localMaxs.z > pMaxs->z) ? localMaxs.z : pMaxs->z;
+	}
 }
 // END FUNCTION
 
@@ -26024,6 +26531,32 @@ void CCollisionProperty::sub_100444b0()
 struct CIdxView100445d0 { int *m_pData; int *sub_100445d0(int i); };
 // TARGET: CIdxView100445d0::sub_100445d0
 int *CIdxView100445d0::sub_100445d0(int i) { return &m_pData[i]; }
+// END FUNCTION
+
+// FUNCTION: 0x10044730 size=0x140
+#define PCD_LPF_CTOR
+#include "C_RecipientFilter.h"
+#include "engineclient.h"
+
+// TARGET: sub_10044730
+void sub_10044730(const Vector *pPos)
+{
+	float flVolume = enginerandom->RandomFloat(0.8f, 1.0f);
+	float flPitch = enginerandom->RandomFloat(90.0f, 110.0f);
+	Vector origin = *pPos;
+	const char *pszSound;
+	switch (enginerandom->RandomInt(0, 4))
+	{
+	case 1: pszSound = "weapons/fx/rics/ric2.wav"; break;
+	case 2: pszSound = "weapons/fx/rics/ric3.wav"; break;
+	case 3: pszSound = "weapons/fx/rics/ric4.wav"; break;
+	case 4: pszSound = "weapons/fx/rics/ric5.wav"; break;
+	default: pszSound = "weapons/fx/rics/ric1.wav"; break;
+	}
+	enginesound->vfunc0(pszSound, 0);
+	CLocalPlayerFilter filter;
+	enginesound->EmitSound(filter, 0, 6, pszSound, flVolume, 0x3fc00000, 0, (int)flPitch, (int)&origin, 0, 1, 0);
+}
 // END FUNCTION
 
 // FUNCTION: 0x10044870 size=0x2f8
@@ -26284,6 +26817,33 @@ void * CUnknown100456d0::sub_100456d0(int a0, int a1, int a2, int a3, int a4, in
     *(int *)((char *)this + 0x44) = *(int *)((char *)a4 + 4);
     *(int *)((char *)this + 0x48) = *(int *)((char *)a4 + 8);
     return this;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10045d60 size=0x14a
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "CTraceFilterSimple.h"
+#include "ConVar.h"
+#include "engineclient.h"
+
+extern ConVar *g_103edd9c;
+const Vector *sub_1018f340();
+void sub_101659b0(const float *start, const float *end, int r, int g, int b, bool noDepthTest, float duration);
+
+// TARGET: sub_10045d60
+bool sub_10045d60(const Vector *pos)
+{
+	Ray_t ray;
+	CTraceFilterSimple filter;
+	CGameTrace tr;
+
+	ray.Init(*pos, *sub_1018f340());
+	filter.sub_1004b5c0(0, 0);
+	enginetrace->vfunc4((int)&ray, 0x4091, &filter, (int)&tr);
+	if (!g_103edd9c->vfunc1() && g_103edd9c->m_nValue)
+		sub_101659b0(tr.m_startpos, tr.m_endpos, 255, 0, 0, true, -1.0f);
+	return tr.m_fraction < 1.0f;
 }
 // END FUNCTION
 
@@ -27264,6 +27824,35 @@ char CUnknown1004bbc0::sub_1004bbc0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004bc40 size=0x155
+#include "CAmmoCounter.h"
+int sub_100cd100();
+int sub_100cd0f0();
+// TARGET: CAmmoCounter::sub_1004bc40
+void CAmmoCounter::sub_1004bc40()
+{
+    double sx, sy;
+    sx = sub_100cd100() * 0.0009765625;
+    m_n180 = (int)(sx * 128.0);
+    sy = sub_100cd0f0() * 0.0013020833333333333;
+    m_n184 = (int)(sy * 94.0);
+    double w = sub_100cd100();
+    sx = sub_100cd100() * 0.0009765625;
+    m_n178 = (int)(w - sx * 129.0);
+    double h = sub_100cd0f0();
+    sy = sub_100cd0f0() * 0.0013020833333333333;
+    m_n17c = (int)(h - sy * 106.0);
+    sx = sub_100cd100() * 0.0009765625;
+    m_n188 = (int)(sx * 86.0);
+    sy = sub_100cd0f0() * 0.0013020833333333333;
+    m_n18c = (int)(sy * 86.0);
+    sx = sub_100cd100() * 0.0009765625;
+    m_n190 = (int)(sx * 128.0);
+    sy = sub_100cd0f0() * 0.0013020833333333333;
+    m_n194 = (int)(sy * 64.0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004bdd0 size=0xb
 struct CUnknown1004bdd0 { void sub_1004bdd0(); };
 void CUnknown1004bdd0::sub_1004bdd0()
@@ -27774,6 +28363,41 @@ int sub_1004ea50()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004eb00 size=0x18a
+#include "CDiscipline.h"
+int sub_100cd100();
+int sub_100cd0f0();
+extern int g_10284b38[5];
+extern int g_10284b4c[5];
+extern int g_103ede48[5];
+extern int g_103ede5c[5];
+// TARGET: CDiscipline::sub_1004eb00
+void CDiscipline::sub_1004eb00()
+{
+	int w = sub_100cd100();
+	sub_100cd0f0();
+	double sx, sy;
+	sx = sub_100cd100() * 0.0015625;
+	m_n180 = (int)(sx * 64.0);
+	sy = sub_100cd0f0() * 0.0020833333333333333;
+	m_n184 = (int)(sy * 64.0);
+	sx = sub_100cd100() * 0.0015625;
+	m_n190 = (int)(sx * 8.0);
+	sy = sub_100cd0f0() * 0.0020833333333333333;
+	m_n194 = (int)(sy * 8.0);
+	sx = sub_100cd100() * 0.0015625;
+	m_unk198 = (int)(sx * 8.0);
+	sy = sub_100cd0f0() * 0.0020833333333333333;
+	m_unk19c = (int)(sy * 9.0);
+	for (int i = 0; i < 5; i++) {
+		g_103ede48[i] = (g_10284b38[i] * 10000 / 128 * m_n180) / 10000;
+		g_103ede5c[i] = (g_10284b4c[i] * 10000 / 128 * m_n184) / 10000;
+	}
+	m_unk17c = 0;
+	m_unk178 = w - m_n180 * 4;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1004ec90 size=0x1f
 struct SE_1004ec90 { int a, b, c; };
 struct S_1004ec90 { char pad[0x1ac]; SE_1004ec90 e[6]; int sub_1004ec90(int v); };
@@ -28172,6 +28796,55 @@ void sub_1004fe20()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1004ff90 size=0x161
+#include "engineclient.h"
+int sub_100cd100();
+int sub_100cd0f0();
+extern char g_103ede84;
+struct Row_1004ff90 {
+	int m_f00;
+	int m_f04;
+	int m_f08, m_f0c, m_f10;
+	int m_f14;
+	int m_f18;
+	int m_f1c;
+	int m_f20, m_f24, m_f28, m_f2c;
+	int m_f30;
+	int m_f34;
+	int m_f38, m_f3c, m_f40, m_f44, m_f48, m_f4c, m_f50, m_f54, m_f58, m_f5c, m_f60, m_f64, m_f68, m_f6c;
+};
+extern Row_1004ff90 g_10284ba0[];
+struct Self_1004ff90 {
+	char m_pad0[0x178];
+	int m_n178;
+	char m_pad17c[0x1a0 - 0x17c];
+	int m_n1a0;
+	char m_pad1a4[0x200 - 0x1a4];
+	int m_font;
+	unsigned char m_colors[4][4];
+	void sub_1004ff90(const char *text, int idx, int colorIdx);
+};
+void Self_1004ff90::sub_1004ff90(const char *text, int idx, int colorIdx)
+{
+	int w = g_pMatSystemSurface->vfunc15(m_font, text);
+	if (w > sub_100cd100() / 4)
+		w = sub_100cd100() / 4;
+	Row_1004ff90 *row = &g_10284ba0[idx];
+	int t = row->m_f00 + 0x98;
+	double a = sub_100cd100();
+	int x = (int)(a - (sub_100cd100() * (1.0 / 1024.0)) * t - m_n178 - w + row->m_f30);
+	if (x < 0) {
+		if (!g_103ede84)
+			g_103ede84 = 1;
+		x = 0;
+	}
+	int h = row->m_f04 - row->m_f34 - row->m_f1c - row->m_f14 + 0x7f;
+	double b = sub_100cd0f0();
+	int y = (int)(b - (sub_100cd0f0() * (1.0 / 768.0)) * h);
+	g_pMatSystemSurface->vfunc12(m_font, x, y, m_colors[colorIdx][0], m_colors[colorIdx][1], m_colors[colorIdx][2], m_n1a0, text);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10050100 size=0x3d
 #include "CUtlVector16.h"
 
@@ -28196,6 +28869,44 @@ struct CUnknown10050140 { void sub_10050140(); };
 void CUnknown10050140::sub_10050140()
 {
     *(int *)((char *)this + 0xc) = 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10050270 size=0x159
+#include "CFeedBar.h"
+int sub_100cd100();
+int sub_100cd0f0();
+#define V4(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3();
+#define V16(p) V4(p##a) V4(p##b) V4(p##c) V4(p##d)
+struct FBPanel {
+    V16(a) V16(b) V16(c) V16(d) V16(e) V16(f) V16(g) V4(h)
+    virtual bool vfunc116(int);
+};
+struct FBHud {
+    V4(a) V4(b) virtual FBPanel *vfunc8();
+};
+// TARGET: CFeedBar::sub_10050270
+void CFeedBar::sub_10050270()
+{
+    double sx, sy;
+    int w = sub_100cd100();
+    m_unk180 = 0x200;
+    m_unk184 = 0x40;
+    m_unk18c = (int)(((double)sub_100cd100() * 0.0009765625) * (double)m_unk180);
+    m_unk190 = (int)(((double)sub_100cd0f0() * 0.0013020833333333333) * (double)m_unk184);
+    m_unk178 = (w - m_unk18c) / 2;
+    sy = sub_100cd0f0() * 0.0013020833333333333;
+    m_unk17c = (int)(sy * 47.0);
+    if (((FBHud *)((char *)this + 0x170))->vfunc8()->vfunc116(0x100000)) {
+        sy = sub_100cd0f0() * 0.0013020833333333333;
+        m_unk17c = (int)(sy * 64.0 + m_unk17c);
+    }
+    sx = sub_100cd100() * 0.0009765625;
+    m_unk194 = (int)(sx * 77.0);
+    sx = sub_100cd100() * 0.0009765625;
+    m_unk198 = (int)(sx * 75.0);
+    sx = sub_100cd100() * 0.0009765625;
+    m_unk19c = (int)(sx * 360.0);
 }
 // END FUNCTION
 
@@ -28891,6 +29602,50 @@ bool sub_10054800(const char *pStr)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100549f0 size=0x15d
+#include "engineclient.h"
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+__declspec(dllimport) char *Q_strncpy(char *pDest, const char *pSrc, int maxLen);
+__declspec(dllimport) int Q_snprintf(char *pDest, int maxLen, const char *pFormat, ...);
+void CHudDialog::sub_100544d0(bool bEnabled)
+{
+    ScopeTrace st("CHudDialog::SetResponsesEnabled", g_102de300);
+    if (m_b1b1 != bEnabled) {
+        m_b1b1 = bEnabled;
+        m_b190 = true;
+    }
+}
+// TARGET: CHudDialog::sub_100549f0
+void CHudDialog::sub_100549f0(int a, bool force)
+{
+    ScopeTrace st("CHudDialog::Pick", g_102de300);
+    char cmd[32];
+    cmd[0] = 0;
+    double now = engine->Time(1);
+    if (!force && m_flLastPick + 0.5f > now)
+        return;
+    m_flLastPick = (float)now;
+    int idx = -2;
+    if (!m_b1b3)
+        idx = a;
+    if (m_b1b3 && idx != -2)
+        return;
+    if (idx < m_nItems) {
+        if (idx >= 0 && idx <= 3) {
+            m_n1bc = idx;
+            Q_strncpy(m_szPrompt, m_szItems[idx], 0x800);
+            m_nPromptFlags = m_iItemFlags[idx];
+            m_nPromptType = m_iItemType[idx];
+        }
+        Q_snprintf(cmd, 0x20, "dialogpick %d", idx);
+        engine->ClientCmd(cmd);
+        sub_100544d0(false);
+        SetDrawLastPickEnabled(true);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x10054b60 size=0x70
 #include "CHudDialog.h"
 #include "ScopeTrace.h"
@@ -28960,6 +29715,22 @@ void sub_10054cb0()
 {
 	ScopeTrace scope("CHudDialog::HistoryScrollDn", g_102de300);
 	((CHudDialog *)sub_10052ef0())->ScrollDn();
+}
+// END FUNCTION
+
+// FUNCTION: 0x10055360 size=0x8b
+#include "CHudDialog.h"
+#include "ScopeTrace.h"
+// TARGET: CHudDialog::sub_10055360
+void CHudDialog::sub_10055360(bool b)
+{
+	ScopeTrace st("CHudDialog::SetActive", g_102de300);
+	if (b && !m_b1b4) {
+		sub_10054e20();
+		m_b1b3 = false;
+		m_b190 = true;
+	}
+	m_b1b4 = b;
 }
 // END FUNCTION
 
@@ -29265,6 +30036,39 @@ void CHudInfoBar::sub_100565b0()
 
 	sub_101a9890(m_unk184, m_unk188);
 	sub_101a98f0(m_unk18c, m_unk190);
+}
+// END FUNCTION
+
+// FUNCTION: 0x10056700 size=0x151
+#include "CHudInfoBar.h"
+#include "engineclient.h"
+#include <string.h>
+
+// TARGET: CHudInfoBar::sub_10056700
+void CHudInfoBar::sub_10056700()
+{
+	if (m_unk178) {
+		m_unk17c = (float)engine->Time(1);
+		m_unk178 = 0;
+	}
+	if (m_unk17c + 4.0 < engine->Time(1)) {
+		if (m_unk19c == m_unk1a0 && m_unk1a0 == 0.0f) {
+			int n = m_unk1b8.v - 1;
+			if (n > 0)
+				memmove((void *)m_unk1ac.v, (char *)m_unk1ac.v + 0x88, n * 0x88);
+			m_unk1b8.v--;
+			sub_10056860();
+		} else {
+			m_unk1a0 = 0;
+		}
+	}
+	if (m_unk180 < engine->Time(1) && m_unk1cc.v > 0) {
+		int n = m_unk1cc.v - 1;
+		if (n > 0)
+			memmove((void *)m_unk1c0.v, (char *)m_unk1c0.v + 0x88, n * 0x88);
+		m_unk1cc.v--;
+		m_unk180 = (float)(engine->Time(1) + 12.0);
+	}
 }
 // END FUNCTION
 
@@ -31859,6 +32663,50 @@ char CUnknown1005fb10::sub_1005fb10()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1005fb40 size=0x13d
+#include "CProgBar.h"
+
+struct IScheme_1005fb40
+{
+	virtual int v0();
+	virtual int v1();
+	virtual int v2();
+	virtual int v3();
+	virtual int GetFont(const char *);
+};
+
+struct PanelHelper_1005fb40
+{
+	IScheme_1005fb40 *sub_101ac830();
+};
+
+extern const char *sub_1018c870(const char *);
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+
+#define XRES(x) ((int)((x) * ((float)sub_100cd100() / 1024.0)))
+#define YRES(y) ((int)((y) * ((float)sub_100cd0f0() / 768.0)))
+
+// TARGET: CProgBar::sub_1005fb40
+void CProgBar::sub_1005fb40()
+{
+	int w = sub_100cd100();
+	int h = sub_100cd0f0();
+	m_n194 = 256;
+	m_n190 = 32;
+	m_n18c = XRES(m_n194);
+	m_n188 = YRES(m_n190);
+	m_n180 = (w - m_n18c) / 2;
+	m_n184 = (int)((double)h - (sub_100cd0f0() / 768.0) * 135.0);
+	m_n1a4 = 256;
+	m_n1a0 = 32;
+	m_n19c = XRES(m_n1a4);
+	m_n198 = YRES(m_n1a0);
+	IScheme_1005fb40 *pScheme = ((PanelHelper_1005fb40 *)this)->sub_101ac830();
+	m_n1c0 = pScheme->GetFont(sub_1018c870("PercolatorSmall"));
+}
+// END FUNCTION
+
 // FUNCTION: 0x1005fcb0 size=0x35
 namespace lifted {
 struct V { virtual int f0(int); };
@@ -32040,6 +32888,41 @@ CSignTextBlock_Copy *CSignTextBlock_Copy::sub_10060420(const SignTextBlockRaw *o
 	raw->m_psz12c = new char[strlen(other->m_psz12c) + 2];
 	Q_strncpy(raw->m_psz12c, other->m_psz12c, strlen(other->m_psz12c) + 1);
 	return this;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10060ab0 size=0x177
+#include "CSignUI.h"
+#include "vgui2__Panel.h"
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+
+// TARGET: CSignUI::sub_10060ab0
+void CSignUI::sub_10060ab0()
+{
+	int i;
+	for (i = 0; i < m_vecB.m_Size; i++)
+		((vgui2::Panel **)m_vecB.m_Memory.m_pMem)[i]->vfunc57(1, 0);
+	for (i = 0; i < m_vecA.m_Size; i++)
+		((vgui2::Panel **)m_vecA.m_Memory.m_pMem)[i]->vfunc57(1, 0);
+	if (m_nXPos + m_nYPos)
+	{
+		((vgui2::Panel *)this)->sub_101a9950(
+			(int)(m_nXPos * (sub_100cd100() * 0.0009765625)),
+			(int)(m_nYPos * (sub_100cd0f0() * 0.0013020833333333333)),
+			(int)(m_nWide * (sub_100cd100() * 0.0009765625)),
+			(int)(m_nTall * (sub_100cd0f0() * 0.0013020833333333333)));
+	}
+	else
+	{
+		int x = sub_100cd100() / 2 - m_nWide / 2;
+		int y = sub_100cd0f0() / 2 - m_nTall / 2;
+		((vgui2::Panel *)this)->sub_101a9950(
+			x, y,
+			(int)(m_nWide * (sub_100cd100() * 0.0009765625)),
+			(int)(m_nTall * (sub_100cd0f0() * 0.0013020833333333333)));
+	}
 }
 // END FUNCTION
 
@@ -32735,6 +33618,27 @@ void __stdcall sub_10064c70(int a0, int a1, int *out)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10064cf0 size=0x55
+#include "engineclient.h"
+extern char g_103eef9c;
+extern float g_103eefa0;
+extern float g_103eef60;
+void *sub_1009b210();
+void sub_100650c0();
+// TARGET: sub_10064cf0
+void sub_10064cf0(bool flag, float t)
+{
+	g_103eef9c = flag;
+	if (flag && sub_1009b210()) {
+		g_103eefa0 = (float)engine->Time(0);
+		g_103eef60 = t - g_103eefa0;
+		if (g_103eef60 <= 0.1)
+			g_103eef9c = 0;
+	}
+	sub_100650c0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10064dd0 size=0x14
 namespace lifted {
 extern char g_103eee59;
@@ -32901,6 +33805,38 @@ int sub_100650b0(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100650c0 size=0x162
+#define PCD_LPF_CTOR
+#include "C_RecipientFilter.h"
+#include "engineclient.h"
+#include "StatOwner2.h"
+extern int g_103eef5c;
+extern char g_103eef9c;
+extern float g_103eefa0;
+extern float g_103eef60;
+extern char g_103eef3c;
+void *sub_1009b210();
+// TARGET: sub_100650c0
+void sub_100650c0()
+{
+	const char *name = (const char *)g_105f93c0.sub_1015f2f0("UI_Discipline_Targeting_ProgBar_Sounds")->sub_1015ecd0(g_103eef5c);
+	enginesound->vfunc0(name, 0);
+	CLocalPlayerFilter filter;
+	if (g_103eef9c) {
+		if (sub_1009b210() && sub_1009b210()) {
+			float f = ((float)engine->Time(0) - g_103eefa0) / g_103eef60;
+			if (f > 1.0f)
+				f = 1.0f;
+			enginesound->EmitSound(filter, -1, 0xba, name, f, 0, 0x2801, 100, 0, 0, 1, 0);
+			g_103eef3c = 1;
+			return;
+		}
+	} else {
+		enginesound->vfunc7(-1, 0xba, name);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10065230 size=0x81
 #include "CClientEntityList.h"
 #include "CClientEntityList.h"
@@ -32977,6 +33913,35 @@ void sub_100656a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10065950 size=0xa7
+#include "CVMainMenu.h"
+extern int g_103ef0bc;
+extern int g_103ef0b8;
+extern int g_103ef0c0;
+// TARGET: CVMainMenu::sub_10065950
+void CVMainMenu::sub_10065950()
+{
+	if (g_103ef0bc > 0 || g_103ef0b8 > 0 || g_103ef0c0 > 0)
+		m_unk2e8 = -1;
+	if (g_103ef0bc == 2)
+		g_103ef0bc = 0;
+	if (g_103ef0b8 == 2)
+		g_103ef0b8 = 0;
+	if (g_103ef0c0 == 2)
+		g_103ef0c0 = 0;
+	if (g_103ef0bc == 1) {
+		sub_10067610(10);
+		g_103ef0bc = 0;
+	} else if (g_103ef0b8 == 1) {
+		sub_10067610(9);
+		g_103ef0b8 = 0;
+	} else if (g_103ef0c0 == 1) {
+		sub_10067610(2);
+		g_103ef0c0 = 0;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10065c90 size=0x9d
 #include "engineclient.h"
 #include "CVMainMenu.h"
@@ -33036,6 +34001,54 @@ bool CVMainMenu::sub_10065d30()
 		return false;
 	int m = *(int *)((char *)this + 0x190);
 	return m == 1 || m == 2 ? 1 : 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10065db0 size=0xfd
+#include "CVMainMenu.h"
+#include "vgui2__Panel.h"
+struct IGameUI_10065db0 {
+	virtual void v0(); virtual void v1(); virtual void v2();
+	virtual void v3();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual void v9(); virtual void v10();
+	virtual void v11(int);
+};
+extern IGameUI_10065db0 *g_104a5828;
+struct CUnknown100662d0 { void sub_100662d0(); };
+// TARGET: CVMainMenu::sub_10065db0
+int CVMainMenu::sub_10065db0(int down, int key, int unused)
+{
+	if (sub_10065c90())
+		return !(char)vfunc22();
+	if (key == 0x20)
+		return 0;
+	if (down) {
+		if (key == 0x1b) {
+			if ((char)vfunc22() && sub_10065d30()) {
+				g_104a5828->v11(1);
+				sub_10066440();
+				return 0;
+			}
+			if (!(char)vfunc22()) {
+				g_104a5828->v3();
+				((CUnknown100662d0 *)this)->sub_100662d0();
+				return 0;
+			}
+		} else {
+			for (int i = 0; i < m_vec170.Count(); i++) {
+				vgui2::Panel *p = (vgui2::Panel *)m_vec170[i];
+				if (p->vfunc72(key)) {
+					sub_10067610(*(int *)((char *)m_vec170[i] + 0xf0));
+					return 0;
+				}
+			}
+			if (key == 0x60)
+				return 1;
+		}
+		return 0;
+	}
+	return 1;
 }
 // END FUNCTION
 
@@ -33501,6 +34514,86 @@ void CUnknown100675e0::sub_100675e0(int a0)
         ((lifted::C100666d0 *)this)->sub_100666d0((int)&lifted::g_102887e0, 0x3f800000, 1);
     }
 }
+// END FUNCTION
+
+// FUNCTION: 0x10067610 size=0x140
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "CVMainMenu.h"
+#include "engineclient.h"
+struct IGameUI_10067610 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15();
+	virtual void v16(); virtual void v17(); virtual void v18();
+	virtual void v19(const char *, int *);
+};
+struct IPSys_10067610 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15();
+	virtual void v16(int);
+};
+extern IGameUI_10067610 *g_104a5828;
+extern IPSys_10067610 *g_104a581c;
+extern int g_103ef0b8;
+extern int g_103ef0c0;
+#define m_pElems (*(char **)((char *)this + 0x2ec))
+#define m_nElems (*(int *)((char *)this + 0x2f8))
+#define m_n2dc (*(int *)((char *)this + 0x2dc))
+// TARGET: CVMainMenu::sub_10067610
+void CVMainMenu::sub_10067610(int action)
+{
+	if (m_unk2e8 != -1)
+		return;
+	if (sub_10065c90())
+		return;
+	switch (action) {
+	case 3:
+		pcd_stage(engine)->ClientCmd("showsavegame");
+		return;
+	case 1:
+		engine->ClientCmd("showloadgame");
+		return;
+	case 4:
+		g_104a5828->v15();
+		return;
+	case 9:
+		if (g_103ef0b8 != 1) {
+			g_104a5828->v19("#GameUI_ConfirmProgress", &g_103ef0b8);
+			return;
+		}
+		break;
+	case 2:
+		if (g_103ef0c0 != 1) {
+			g_104a5828->v19("#GameUI_ConfirmReload", &g_103ef0c0);
+			return;
+		}
+		break;
+	case 11:
+		if (!sub_10065d30())
+			return;
+		if (!(char)vfunc22())
+			return;
+		break;
+	}
+	m_unk2e8 = action;
+	for (int i = 0; i < m_nElems; i++) {
+		int off = i * 0x64;
+		g_104a581c->v16(*(int *)(&m_pElems[off] + 0x44));
+	}
+	m_n2dc = 0;
+}
+/* judged with these header patches (not saved):
+[
+ {
+  "path": "CVMainMenu.h",
+  "old": "\tbool sub_10065c90();",
+  "new": "\tbool sub_10065c90();\n\tvoid sub_10067610(int action);"
+ }
+]
+*/
 // END FUNCTION
 
 // FUNCTION: 0x10067750 size=0xf8
@@ -41741,6 +42834,51 @@ int sub_10080840(int a0, int a1, int a2, int a3, int a4, int a5)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10080990 size=0x74
+#include "C_Beam.h"
+#include "Vector.h"
+
+struct CUnknown1009f700 { void sub_1009f700(const Vector &v); };
+
+void C_Beam::sub_10080990(const Vector &start, const Vector &end)
+{
+	m_nNumBeamEnts = 2;
+	m_nBeamType = m_nBeamType & 0xff0;
+	((CUnknown1009f700 *)this)->sub_1009f700(start);
+	vfunc40((char *)&start);
+	*(Vector *)((char *)this + 0x498) = end;
+	m_nAttach = 0;
+	((int *)((char *)this + 0x44c))[m_nNumBeamEnts] = m_nAttach;
+	sub_10080c70();
+}
+// END FUNCTION
+
+// FUNCTION: 0x10080a10 size=0x75
+#include "Vector.h"
+#include "C_Beam.h"
+
+struct CUnknown1009f700
+{
+	void sub_1009f700(const Vector &v);
+};
+
+// TARGET: C_Beam::sub_10080a10
+void C_Beam::sub_10080a10(const Vector &start, const Vector &end)
+{
+	m_nNumBeamEnts = 2;
+	m_nBeamType = (m_nBeamType & 0xff0) | 3;
+	((CUnknown1009f700 *)this)->sub_1009f700(start);
+	vfunc40((char *)&start);
+	float *e = (float *)((char *)this + 0x498);
+	e[0] = end.x;
+	e[1] = end.y;
+	e[2] = end.z;
+	m_nAttach = 0;
+	(&m_nAttach)[m_nNumBeamEnts - 1] = 0;
+	sub_10080c70();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10080a90 size=0x63
 namespace lifted {
 struct C10080490 { int sub_10080490(int); };
@@ -41797,6 +42935,29 @@ int CUnknown10080b60::sub_10080b60(int a0, int a1)
     *(int *)((char *)this + 0x450) = 0;
     *(int *)((char *)this + (*(int *)((char *)this + 0x41c)) * 4 + 0x44c) = 0;
     return ((lifted::C10080c70 *)this)->sub_10080c70();
+}
+// END FUNCTION
+
+// FUNCTION: 0x10080c70 size=0x183
+#include "C_Beam.h"
+#include "Vector.h"
+
+struct CUnknown10044460 { void sub_100433c0(const Vector &mins, const Vector &maxs); };
+
+void C_Beam::sub_10080c70()
+{
+	const Vector &start = sub_10080650();
+	const Vector &end = *(const Vector *)sub_100806f0();
+	Vector mins, maxs;
+	mins.x = start.x < end.x ? start.x : end.x;
+	mins.y = start.y < end.y ? start.y : end.y;
+	mins.z = start.z < end.z ? start.z : end.z;
+	maxs.x = start.x > end.x ? start.x : end.x;
+	maxs.y = start.y > end.y ? start.y : end.y;
+	maxs.z = start.z > end.z ? start.z : end.z;
+	((CUnknown10044460 *)((char *)this + 0x190))->sub_100433c0(mins - GetAbsOrigin(), maxs - GetAbsOrigin());
+	sub_100a2850(&vfunc52(), &vfunc53());
+	vfunc111();
 }
 // END FUNCTION
 
@@ -42318,6 +43479,78 @@ void CBeamSegDraw::sub_10081850(const Vector &vNormal)
 	((VStore *)this)->sub_100817f0(&vNormal.x);
 	sub_10081820(&vTangentY.x);
 	sub_10005230();
+}
+// END FUNCTION
+
+// FUNCTION: 0x10081b90 size=0x13a
+struct CBeamMeshView {
+	virtual void v0(int, int, void *);
+	virtual void v1(int, int, void *);
+	virtual void v2();
+	virtual void v3();
+	virtual void v4(int, int, int);
+	virtual void v5(int, int, int);
+	virtual void v6(int, int, int);
+	virtual void v7(int, int, int);
+	virtual void v8(int, int, int);
+	virtual void v9();
+	virtual void v10();
+	virtual void v11();
+	virtual void v12(int, int);
+	virtual void v13();
+	virtual void v14();
+	virtual void v15();
+	virtual void v16();
+	virtual void v17(void *);
+};
+struct CBeamSegDraw {
+	int m_unk0[0x3c / 4];
+	int m_i3c;
+	int m_unk40[(0x7c - 0x40) / 4];
+	int m_i7c;
+	CBeamMeshView *m_pMesh;
+	char m_b84[4];
+	int m_i88;
+	int m_i8c;
+	int m_nVerts;
+	int m_nIndices;
+	int m_unk98[2];
+	int m_type;
+	char m_bGen;
+	void sub_10081b90();
+};
+// TARGET: CBeamSegDraw::sub_10081b90
+void CBeamSegDraw::sub_10081b90()
+{
+	if (m_bGen) {
+		int n = m_nVerts;
+		if (m_type == 7)
+			n = n * 6 / 4;
+		else if (m_type == 6)
+			n = n * 3 - 6;
+		else if (m_type == 4)
+			n = n * 2 - 2;
+		else if (m_type == 5)
+			n = n * 2;
+		m_nIndices = n;
+		if (m_type == 7)
+			m_pMesh->v5(m_i7c, n, m_i3c);
+		else if (m_type == 6)
+			m_pMesh->v6(m_i7c, n, m_i3c);
+		else if (m_type == 4)
+			m_pMesh->v7(m_i7c, n, m_i3c);
+		else if (m_type == 5)
+			m_pMesh->v8(m_i7c, n, m_i3c);
+		else if (m_type)
+			m_pMesh->v4(m_i7c, n, m_i3c);
+	}
+	if (m_nVerts > 0)
+		m_pMesh->v17(this);
+	m_pMesh->v1(m_nVerts, m_nIndices, this);
+	m_pMesh->v12(-1, 0);
+	m_pMesh = 0;
+	m_i8c = 0;
+	m_i88 = 0;
 }
 // END FUNCTION
 
@@ -42880,6 +44113,56 @@ void __cdecl sub_100835e0(Vector *a, Vector *b, Vector *out)
 	VectorNormalize(n);
 	CrossProduct(*b, n, *out);
 	VectorNormalize(*out);
+}
+// END FUNCTION
+
+// FUNCTION: 0x10083660 size=0x15f
+#include "vector.h"
+
+extern float g_101e34f0;
+void sub_10108fd0(int a, float b, int c, int d);
+void *sub_1018f380();
+void *sub_1018f370();
+
+struct SinCosHelper_10083660
+{
+	static void Calc(float rad, float *s, float *c)
+	{
+		__asm
+		{
+			fld rad
+			fsincos
+			mov edx, c
+			mov eax, s
+			fstp dword ptr [edx]
+			fstp dword ptr [eax]
+		}
+	}
+};
+
+void sub_10083660(int a0, int a1, int a2, float *a3, int a4, Vector *a5, float a6, int a7, float a8, float a9, float a10, int a11)
+{
+	float len = a5->Length() * 0.01;
+	int fix = (int)(((float)(1.0 / (a7 - 1)) * (a2 - 1)) * 65536.0f);
+	fix *= (a1 + 1);
+	if (0x10 & a11)
+	{
+		fix = 0;
+		len = a7 * 0.1;
+	}
+	sub_10108fd0(a4, a10, (int)a5, a0);
+	if (!(a9 != g_101e34f0)) return; else { float t0 = a9 * a3[fix >> 16];
+		if (a11 & 0x10)
+		{
+			float c, s;
+			SinCosHelper_10083660::Calc((len * a10) * 3.141592653589793 + a8, &s, &c);
+			sub_10108fd0(a0, s * t0, (int)sub_1018f380(), a0);
+			sub_10108fd0(a0, c * t0, (int)sub_1018f370(), a0);
+		}
+		else
+		{
+			sub_10108fd0(a0, t0, *(int *)&a6, a0);
+		} }
 }
 // END FUNCTION
 
@@ -50145,6 +51428,31 @@ int CHost_10097f80::sub_10097f80(int i)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10097fd0 size=0x144
+#include "C_BaseCombatWeapon.h"
+#include "CUtlVector4.h"
+#include "ehandle.h"
+#include <string.h>
+#pragma intrinsic(strcmp)
+
+extern CUtlVector4 g_1049d8f8;
+
+#define H(i) (*(CBaseHandle *)&g_1049d8f8.m_pMemory[i])
+
+// TARGET: sub_10097fd0
+C_BaseCombatWeapon * __stdcall sub_10097fd0(const char *name, int a1)
+{
+	int n = g_1049d8f8.m_size;
+	for (int i = 0; i < n; i++) {
+		if (H(i).Get() &&
+		    !strcmp(((C_BaseCombatWeapon *)H(i).Get())->vfunc114(), name) &&
+		    ((C_BaseCombatWeapon *)H(i).Get())->vfunc169() == a1)
+			return (C_BaseCombatWeapon *)H(i).Get();
+	}
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100981f0 size=0x6
 namespace lifted {
 extern char g_1049d79c;
@@ -51363,6 +52671,60 @@ void UtlMem::sub_1009cf00(int num)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009d0e0 size=0x177
+#include "CPredictableList.h"
+#include "CUtlVector4.h"
+#include "UtlVec8.h"
+#include "CClientEntityList.h"
+#include "C_BaseEntity.h"
+
+extern "C" void __cdecl sub_100a3510(int *dest, const int *src);
+
+static inline int FindX(CUtlVector4 &v, const int &src)
+{
+	for (int i = 0; i < v.m_size; i++)
+	{
+		if (v.m_pMemory[i] == src)
+			return i;
+	}
+	return -1;
+}
+
+// TARGET: CPredictableList::sub_1009d0e0
+void CPredictableList::sub_1009d0e0(CBaseHandle add)
+{
+	if (FindX(m_Predictables, *(int *)&add) != -1)
+		return;
+	CUtlVector4 &vec = m_Predictables;
+	int elem = vec.m_size;
+	vec.sub_100a3440(1);
+	((UtlVec8 *)&vec)->sub_100a34d0(elem, 1);
+	sub_100a3510(&vec.m_pMemory[elem], (const int *)&add);
+	int count = m_Predictables.m_size;
+	if (!(count < 2)) { for (int a = 0; count > a; a++)
+	{
+		for (int b = a + 1; b < count; b++)
+		{
+			CBaseHandle h1 = *(CBaseHandle *)&vec.m_pMemory[a];
+			CBaseHandle h2 = *(CBaseHandle *)&vec.m_pMemory[b];
+			C_BaseEntity *p1 = cl_entitylist->sub_100d0dc0(h1);
+			C_BaseEntity *p2 = cl_entitylist->sub_100d0dc0(h2);
+			if (!p1 || !p2)
+				continue;
+			if (p1->entindex() != -1 && p2->entindex() != -1)
+			{
+				if (p1->entindex() < p2->entindex())
+					continue;
+			}
+			if (p2->entindex() == -1)
+				continue;
+			vec.m_pMemory[a] = *(int *)&h2;
+			vec.m_pMemory[b] = *(int *)&h1;
+		}
+	} }
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009d400 size=0x6
 namespace lifted {
 extern char g_1049d9d8;
@@ -51578,6 +52940,48 @@ bool C_BaseEntity::sub_1009e0f0(int a, int b)
 	*(int *)((char *)this + 0x44) = -1;
 	vfunc20();
 	return true;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1009e150 size=0xd4
+#include "C_BaseEntity.h"
+#include "C_BasePlayer.h"
+#include "CBaseHandle.h"
+struct HandleTarget100d0000 { void sub_100d0000(CBaseHandle h); };
+struct EntList100e2480 { void sub_100e2480(CBaseHandle h); };
+struct PredList1049e33c { void sub_1009d260(CBaseHandle h); };
+struct LeafSys102d5050 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void RemoveEntity(C_BaseEntity *e); };
+struct EntView1009e150 { bool sub_1007dba0(); bool sub_100a2ba0(); void sub_1009f0d0(); void sub_1009e240(); void sub_100a1fc0(); };
+struct CUnk100ddc00 { void sub_10044420(); };
+extern PredList1049e33c g_1049e33c;
+extern LeafSys102d5050 *g_102d5050;
+HandleTarget100d0000 *sub_1002d700();
+EntList100e2480 *sub_1009e230();
+void sub_1011bc30(C_BaseEntity *);
+// TARGET: C_BaseEntity::sub_1009e150
+void C_BaseEntity::sub_1009e150()
+{
+	EntView1009e150 *v = (EntView1009e150 *)this;
+	sub_1011bc30(this);
+	sub_1011b890();
+	CBaseHandle &h = *(CBaseHandle *)((char *)this + 0xe4);
+	if (sub_100a2600() || v->sub_100a2ba0())
+		g_1049e33c.sub_1009d260(h);
+	if (*(int *)&h != -1) {
+		sub_1002d700()->sub_100d0000(h);
+		sub_1009e230()->sub_100e2480(h);
+		if (v->sub_100a2ba0()) {
+			if (v->sub_1007dba0() && g_pLocalPlayer)
+				g_pLocalPlayer->sub_100a9f40(this);
+			*(int *)&h = -1;
+		}
+	}
+	((CUnk100ddc00 *)((char *)this + 0x190))->sub_10044420();
+	if (*(int *)((char *)this + 0x44) != -1)
+		g_102d5050->RemoveEntity(this);
+	v->sub_1009f0d0();
+	v->sub_1009e240();
+	v->sub_100a1fc0();
 }
 // END FUNCTION
 
@@ -52158,6 +53562,51 @@ void C_BaseEntity::sub_100a0450()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a0650 size=0x88
+#include "C_BaseEntity.h"
+#include "engineclient.h"
+
+struct PredCV
+{
+	virtual void s0();
+	virtual char v1();
+	char m_pad[0x28];
+	int m_n2c;
+};
+extern PredCV *g_104e170c;
+
+struct ListObj
+{
+	bool sub_10120760();
+	int sub_10120790();
+};
+
+bool __fastcall sub_100a2ed0(C_BaseEntity *self);
+
+// TARGET: C_BaseEntity::sub_100a0650
+void C_BaseEntity::sub_100a0650(const char *context)
+{
+	if (g_104e170c->v1())
+		return;
+	if (!g_104e170c->m_n2c)
+		return;
+	if (!sub_100a29a0())
+	{
+		ListObj *obj = (ListObj *)((char *)this + 0xcc);
+		if (!obj->sub_10120760())
+			return;
+		if (engine->vfunc34() - 1 != obj->sub_10120790())
+			return;
+		sub_100a2e40(1);
+	}
+	if (!vfunc94())
+		return;
+	if (sub_100a2ed0(this))
+		return;
+	sub_100a25b0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a06f0 size=0x15
 struct CUnknown1009fbb0 { void sub_1009fbb0(int a); void sub_100a06f0(int a); };
 void CUnknown1009fbb0::sub_100a06f0(int a)
@@ -52514,6 +53963,34 @@ void C_BaseEntity_100a1b40::sub_100a1b40(const Ray_t &ray, int hitbox, int decal
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a1d60 size=0x14c
+#include "C_BaseEntity.h"
+#include "Ray_t.h"
+#include "engineclient.h"
+
+// TARGET: C_BaseEntity::sub_100a1d60
+void C_BaseEntity::sub_100a1d60(const Vector &start, const Vector &pos, const Vector &dir, int hitbox, int decal, bool doTrace, CGameTrace &tr, int lod)
+{
+	Ray_t ray;
+	ray.InitInline(start, pos);
+	ray.m_Delta[0] *= 1.1f;
+	ray.m_Delta[1] *= 1.1f;
+	ray.m_Delta[2] *= 1.1f;
+	switch (modelinfo->GetModelType((const void *)(*(int *)((char *)this + 0x40))))
+	{
+	case 1:
+		sub_100a1ce0(ray, dir, decal, doTrace, tr, lod);
+		break;
+	case 3:
+		sub_100a1b40(ray, hitbox, decal, doTrace, tr, lod);
+		break;
+	default:
+		*(float *)((char *)&tr + 0x2c) = 1.0f;
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a1eb0 size=0x10
 namespace lifted {
 int sub_101d270e(int, int);
@@ -52739,6 +54216,22 @@ void C_BaseEntity::sub_100a2580()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a25b0 size=0x33
+#include "C_BaseEntity.h"
+#include "CPredictableList.h"
+
+extern CPredictableList g_1049e33c;
+
+// TARGET: C_BaseEntity::sub_100a25b0
+void C_BaseEntity::sub_100a25b0()
+{
+	sub_100a25f0(1);
+	sub_100a2ee0();
+	g_1049e33c.sub_1009d0e0(*(CBaseHandle *)((char *)this + 0xe4));
+	sub_100a2760(0, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a25f0 size=0xd
 struct CUnknown100a25f0 { char sub_100a25f0(char); };
 char CUnknown100a25f0::sub_100a25f0(char a0)
@@ -52790,6 +54283,36 @@ void C_BaseEntity::sub_100a2610(bool flag, int a)
 		d.sub_10123290(0, ent, 0, f2, 1, 0, 1, 0, 0);
 		int *q = ent->v17();
 		d.sub_10124440(ent->v17(), q[0], ent->v17()[1]);
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a26e0 size=0x76
+#include "C_BaseEntity.h"
+struct Ent_100a26e0 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16();
+	virtual int *v17();
+	int sub_100a2fc0();
+};
+struct Data_100a26e0 {
+	int m[13];
+	Data_100a26e0 *sub_10123290(int, int, int, Ent_100a26e0 *, int, int, int, int, int);
+	void sub_10124440(int *, int, int);
+};
+void sub_100cc190(void *, int, void *);
+void C_BaseEntity::sub_100a26e0()
+{
+	Ent_100a26e0 *ent = (Ent_100a26e0 *)this;
+	sub_100cc190(ent ? (char *)ent + 8 : 0, 1, (char *)ent + 0x3dc);
+	int f = ent->sub_100a2fc0();
+	if (f) {
+		Data_100a26e0 d;
+		d.sub_10123290(2, f, 1, ent, 0, 0, 1, 0, 0);
+		int *a = ent->v17();
+		d.sub_10124440(ent->v17(), a[0], ent->v17()[1]);
 	}
 }
 // END FUNCTION
@@ -52995,6 +54518,90 @@ void sub_100a2b30()
     }
     int size = sub_100cde00()->GetClassSize(g_104a57d4->Cmd_Argv(1));
     g_101e3108("%s is %i bytes\n", g_104a57d4->Cmd_Argv(1), size);
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a2bb0 size=0x137
+#include "CClientEntityList.h"
+#include "CPredictableList.h"
+#include "CBaseHandle.h"
+
+struct PredId_100a2bb0 { int m_raw; };
+struct CUnknown10120720 { void sub_10120720(); };
+struct CUnknown1042d770 { void sub_101207d0(int, int, const char *, const char *, int); };
+struct CUnknown101209f0 { int sub_101209f0(); };
+struct CUnknown10120a00 { void sub_10120a00(int); };
+struct CUnknown100a2e40 { void sub_100a2e40(bool); };
+struct CUnknown10044400 { void sub_10044400(); };
+struct EntListAdd_100a2bb0 { CBaseHandle sub_100e2360(void *ent); };
+
+struct NetView_100a2bb0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+	virtual void vfunc4(int);
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual int entindex();
+};
+struct IPrediction_100a2bb0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13();
+	virtual bool IsFirstTimePredicted();
+};
+struct PredContext_100a2bb0
+{
+	bool m_bActive;
+	int m_nCreationCommandNumber;
+	const char *m_pszCreationModule;
+	int m_nCreationLineNumber;
+	CBaseHandle m_hServerEntity;
+	PredContext_100a2bb0()
+	{
+		m_bActive = false;
+		m_nCreationCommandNumber = -1;
+		m_pszCreationModule = 0;
+		m_nCreationLineNumber = 0;
+		m_hServerEntity.m_Index = 0xffffffff;
+	}
+};
+
+extern IPrediction_100a2bb0 *g_1027bbf4;
+extern CPredictableList g_1049e33c;
+char *sub_1007ddf0();
+char *sub_100a2ab0(const char *name);
+char *sub_100a01e0(PredId_100a2bb0 *id);
+char sub_100cc190(void *a, int b, void *c);
+
+// TARGET: sub_100a2bb0
+char *sub_100a2bb0(const char *classname, const char *module, int line)
+{
+	char *player = sub_1007ddf0();
+	int command_number = *(int *)(*(char **)(player + 0x18c8) + 4);
+	int player_index = ((NetView_100a2bb0 *)(player + 8))->entindex() - 1;
+	PredId_100a2bb0 testId;
+	((CUnknown10120720 *)&testId)->sub_10120720();
+	((CUnknown1042d770 *)&testId)->sub_101207d0(player_index, command_number, classname, module, line);
+	if (!g_1027bbf4->IsFirstTimePredicted())
+		return sub_100a01e0(&testId);
+	char *ent = sub_100a2ab0(classname);
+	if (!ent)
+		return 0;
+	((CUnknown100a2e40 *)ent)->sub_100a2e40(true);
+	((CUnknown10120a00 *)(ent + 0xcc))->sub_10120a00(((CUnknown101209f0 *)&testId)->sub_101209f0());
+	PredContext_100a2bb0 *ctx = new PredContext_100a2bb0;
+	ctx->m_bActive = true;
+	ctx->m_nCreationCommandNumber = command_number;
+	ctx->m_nCreationLineNumber = line;
+	ctx->m_pszCreationModule = module;
+	*(PredContext_100a2bb0 **)(ent + 0xd0) = ctx;
+	((EntListAdd_100a2bb0 *)cl_entitylist)->sub_100e2360(ent);
+	g_1049e33c.sub_1009d0e0(*(CBaseHandle *)(ent + 0xe4));
+	((CUnknown10044400 *)(ent + 0x190))->sub_10044400();
+	*(int *)(ent + 0x44) = -1;
+	if (sub_100cc190(ent + 8, 0, ent + 0x3dc))
+		((NetView_100a2bb0 *)(ent + 8))->vfunc4(0);
+	return ent;
 }
 // END FUNCTION
 
@@ -55344,6 +56951,56 @@ float __fastcall sub_100aa6d0(C_BasePlayer *pThis)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100aaab0 size=0xf1
+#include "CGlobalVarsBase.h"
+#include "CVDmg_t.h"
+
+extern "C" __declspec(dllimport) int Q_snprintf(char *, unsigned int, const char *, ...);
+
+#define SV(n) virtual void v##n();
+#define SV10(p) SV(p##0) SV(p##1) SV(p##2) SV(p##3) SV(p##4) SV(p##5) SV(p##6) SV(p##7) SV(p##8) SV(p##9)
+struct DbgHud_100aaab0
+{
+	SV(0) SV(1) SV(2) SV(3) SV(4) SV(5) SV(6) SV(7) SV(8) SV(9)
+	SV10(1) SV10(2) SV10(3) SV10(4) SV10(5) SV10(6) SV10(7) SV10(8) SV10(9)
+	SV10(10)
+	SV(110) SV(111) SV(112) SV(113) SV(114)
+	virtual void vfunc115(int a, const char *text);
+};
+
+DbgHud_100aaab0 *sub_100561f0();
+void sub_100aac90();
+extern float g_104a0d5c;
+extern int g_104a0d60;
+extern int g_104a0bd0[];
+extern int g_1049fdc8[];
+extern char g_1049fb50[][32];
+extern CVDmgBlock16_t g_1049e3f0[];
+
+void sub_100aaab0()
+{
+	if (g_104a0d5c > 0.0 && g_104a0d5c < gpGlobals->curtime)
+	{
+		for (int i = 0; i < g_104a0d60; i++)
+		{
+			char buf[0x200];
+			int v = g_104a0bd0[i];
+			const char *name;
+			if (!g_1049fb50[i][0])
+				name = g_1049e3f0[i].sub_10160740();
+			else
+				name = g_1049fb50[i];
+			if (v >= 0)
+				Q_snprintf(buf, 0x1ff, "%s + %d", name, v);
+			else
+				Q_snprintf(buf, 0x1ff, "%s - %d", name, -v);
+			sub_100561f0()->vfunc115(g_1049fdc8[i], buf);
+		}
+		sub_100aac90();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100aabb0 size=0xdb
 #include "CGlobalVarsBase.h"
 #include "CVDmg_t.h"
@@ -55557,6 +57214,36 @@ void sub_100aaf40(HandleOwner *pEnt)
 	if (g_104a0d64.FindEHandle(h) == -1)
 		g_104a0d64.AddToTailEHandle(h);
 	sub_100aaeb0();
+}
+// END FUNCTION
+
+// FUNCTION: 0x100ab050 size=0x13c
+#include "CUtlVector4.h"
+#include "ehandle.h"
+#include "CBaseEntityList.h"
+extern CUtlVector4 g_104a0d64;
+void sub_100aaeb0(IHandleEntity *);
+struct EntV { virtual void v0(); virtual const CBaseHandle &GetRefEHandle(); };
+// TARGET: sub_100ab050
+void sub_100ab050(EntV *pEnt)
+{
+	CBaseHandle h;
+	if (pEnt)
+		h = pEnt->GetRefEHandle();
+	else
+		h = CBaseHandle();
+	while (g_104a0d64.FindEHandle(h) != -1)
+	{
+		int idx = g_104a0d64.FindEHandle(h);
+		if (idx != -1)
+		{
+			int n = g_104a0d64.m_size - idx - 1;
+			if (n > 0)
+				memmove(&g_104a0d64.m_pMemory[idx], &g_104a0d64.m_pMemory[idx + 1], n * 4);
+			g_104a0d64.m_size--;
+		}
+	}
+	sub_100aaeb0((IHandleEntity *)pEnt);
 }
 // END FUNCTION
 
@@ -57910,6 +59597,49 @@ void sub_100b4560()
 {
 	memset(g_104a1d10, 0, sizeof(g_104a1d10));
 	g_104a1d08 = 1;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100b45d0 size=0x17e
+#include "engineclient.h"
+#include "C_BaseEntity.h"
+#include "ehandle.h"
+struct V104a1754 { virtual void v0(); virtual bool vfunc1(); int m_unk[10]; int m_2c; };
+struct V104a581c { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual const char *vfunc11(int); };
+extern C_BaseEntity *g_104a1d10[128];
+extern C_BaseEntity *g_104a1f10;
+extern V104a1754 *g_104a1754;
+extern V104a581c *g_104a581c;
+void sub_100b4a60();
+const char *sub_1015ebd0(int);
+#define ENTF(e, type, off) (*(type *)((char *)(e) + (off)))
+// TARGET: sub_100b45d0
+void sub_100b45d0()
+{
+    for (int k = 0; k < 128; k++) {
+        if (g_104a1d10[k] && !ENTF(g_104a1d10[k], int, 0x46c)) {
+            g_104a1d10[k]->sub_100af040();
+            if (g_104a1d10[k])
+                delete g_104a1d10[k];
+            g_104a1d10[k] = 0;
+        }
+    }
+    if (g_104a1f10 && !ENTF(g_104a1f10, int, 0x46c))
+        sub_100b4a60();
+    if (!g_104a1754->vfunc1() && g_104a1754->m_2c) {
+        for (int i = 0; i < 128; i++) {
+            if (g_104a1d10[i]) {
+                const char *n1 = sub_1015ebd0(ENTF(g_104a1d10[i], int, 0x420));
+                const char *n2 = g_104a581c->vfunc11(ENTF(g_104a1d10[i], int, 0x414));
+                const char *parentName;
+                if (ENTF(g_104a1d10[i], CBaseHandle, 0x188).Get())
+                    parentName = ((C_BaseEntity *)ENTF(g_104a1d10[i], CBaseHandle, 0x188).Get())->vfunc114();
+                else
+                    parentName = "No Parent";
+                debugoverlay->vfunc8(0, (float)(i + 1), 0, 255, 255, 255, 255, "%2d:%s (%s)(%s)\n", i, n2, n1, parentName);
+            }
+        }
+    }
 }
 // END FUNCTION
 
@@ -61133,6 +62863,35 @@ int sub_100bd530()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100bd540 size=0x66
+#include "engineclient.h"
+#include "C_PlayerResource.h"
+extern "C" __declspec(dllimport) char *__cdecl Q_strncpy(char *, const char *, int);
+struct PlayerInfoView { int m_unk0; char *m_name; int m_unk8; };
+struct PRNet {
+    char pad[0x720];
+    char m_szNames[32][0x20];
+    char pad2[0xd50 - 0x720 - 0x400];
+    char m_bConnected[32];
+    void sub_100bd540(int updateType);
+};
+// TARGET: PRNet::sub_100bd540
+void PRNet::sub_100bd540(int updateType)
+{
+    ((C_BaseEntity *)((char *)this - 8))->C_BaseEntity::OnDataChanged(updateType);
+    for (int i = 0; i < 32; i++) {
+        if (m_bConnected[i]) {
+            PlayerInfoView info;
+            engine->vfunc30(i, (void *)&info);
+            if (info.m_name)
+                Q_strncpy(m_szNames[i], info.m_name, 0x20);
+            else
+                m_szNames[i][0] = 0;
+        }
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x100bd720 size=0x6
 namespace lifted {
 extern char g_104a3a08;
@@ -62404,6 +64163,32 @@ int sub_100c0c90(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c0ec0 size=0x6d
+#include "C_SoundscapeSystem.h"
+#include "Vector.h"
+
+struct SsParams_100c0ec0 { Vector m_v[4]; Vector m_o; };
+struct SsSys_100c0ec0 { void sub_100c0e10(); void sub_100c0ca0(); };
+extern SsSys_100c0ec0 g_104a4160;
+extern Vector g_104a417c[5];
+int sub_100c0c90(SsParams_100c0ec0 *p);
+
+void sub_100c0ec0()
+{
+	SsParams_100c0ec0 p;
+	int n = 4;
+	int i = 0;
+	do {
+		p.m_v[i] = g_104a417c[i];
+		i++;
+	} while (--n);
+	p.m_o = g_104a417c[4];
+	g_104a4160.sub_100c0e10();
+	g_104a4160.sub_100c0ca0();
+	sub_100c0c90(&p);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c1310 size=0x209
 #include "CKeyValuesX.h"
 extern "C" __declspec(dllimport) int __cdecl Q_strcasecmp(const char *, const char *);
@@ -62603,6 +64388,28 @@ int CSoundList::sub_100c1bc0(const T64 &src)
 	double t = sub_101070a0(&src.m_d[0]) * 0.5;
 	base[idx].m_flTime = engine->Time(0) + t;
 	return idx;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100c1dd0 size=0x9d
+#include "C_SoundscapeSystem.h"
+float sub_101070a0(float *);
+// TARGET: C_SoundscapeSystem::sub_100c1dd0
+void C_SoundscapeSystem::sub_100c1dd0(float t)
+{
+    if (!(t < m_next)) {
+        m_next = t + 3600.0f;
+        for (int i = m_count - 1; i >= 0; i--) {
+            if (t >= m_entries[i].m_time) {
+                sub_100c1c80(&m_entries[i]);
+                SSEntry *f = m_entries;
+                f[i].m_time = sub_101070a0(f[i].m_data) + t;
+            }
+            float *q = &m_entries[i].m_time;
+            if (*q < m_next)
+                m_next = *q;
+        }
+    }
 }
 // END FUNCTION
 
@@ -63351,6 +65158,52 @@ void * CUnknown100c4eb0::sub_100c4eb0()
     *(int *)((char *)this + 0xc) = (int)&lifted::g_10232848;
     *(int *)((char *)this + 0x10) = (int)&lifted::g_10232834;
     return this;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100c6440 size=0x133
+#include "engineclient.h"
+#include "CClientEntityList.h"
+#include "C_BaseEntity.h"
+void sub_10114660(void *pbuf, int iSize);
+int sub_10114690();
+int sub_101146a0();
+float sub_101146d0();
+struct TMParams
+{
+	Vector m_vCenter;
+	Vector m_vNormal;
+	int m_Flags;
+	float m_flRadius;
+	float m_flStrength;
+};
+void sub_100c6440(const char *pszName, int iSize, void *pbuf)
+{
+	TMParams params;
+	params.m_Flags = 0;
+	sub_10114660(pbuf, iSize);
+	unsigned char type = sub_10114690();
+	params.m_vCenter.x = sub_101146d0();
+	params.m_vCenter.y = sub_101146d0();
+	params.m_vCenter.z = sub_101146d0();
+	params.m_flRadius = 1.0f + sub_101146a0() * 0.015243763f;
+	params.m_flStrength = sub_101146d0();
+	params.m_Flags = sub_10114690();
+	if (type == 1 && (params.m_Flags & 1))
+	{
+		params.m_vNormal.x = sub_101146d0();
+		params.m_vNormal.y = sub_101146d0();
+		params.m_vNormal.z = sub_101146d0();
+	}
+	Vector vPosition(0, 0, 0);
+	QAngle vAngles(0, 0, 0);
+	int iModel = 0;
+	C_BaseEntity *ent = cl_entitylist->sub_100d0cf0(iModel);
+	if (ent && type == 0)
+	{
+		effects->DecalShoot(effects->Draw_DecalIndexFromName("decals/tscorch"), iModel, *(int *)((char *)ent + 0x40), vPosition, vAngles, params.m_vCenter, 0, 0);
+	}
+	engine->vfunc89(type, &params);
 }
 // END FUNCTION
 
@@ -65008,6 +66861,49 @@ int sub_100ca7f0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ca800 size=0xba
+#include "C_World.h"
+extern "C" void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+struct V102ccd98 { virtual void v0(); virtual void vfunc1(int, int); };
+struct V102d5238 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void vfunc4(int, int, void *); };
+extern V102ccd98 *g_102ccd98;
+extern V102d5238 *g_102d5238;
+struct ScreenFadeV {
+    unsigned short duration; unsigned short holdTime; short fadeFlags; unsigned char r, g, b, a;
+};
+struct WorldNet {
+    char pad[0x424];
+    char m_b424;
+    char pad425[0x430 - 0x425];
+    float m_f430;
+    char pad434[0x444 - 0x434];
+    float m_f444;
+    void sub_100ca800(int updateType);
+};
+// TARGET: WorldNet::sub_100ca800
+void WorldNet::sub_100ca800(int updateType)
+{
+    ((C_BaseEntity *)((char *)this - 8))->C_BaseEntity::OnDataChanged(updateType);
+    if (updateType == 0) {
+        g_102ccd98->vfunc1(0, 1);
+        if (m_b424) {
+            ScreenFadeV sf;
+            memset(&sf, 0, sizeof(sf));
+            sf.duration = 0xa00;
+            sf.holdTime = 0x200;
+            sf.r = 0; sf.g = 0; sf.b = 0; sf.a = 0xff;
+            sf.fadeFlags = 0x11;
+            g_102d5238->vfunc4(0, 0, &sf);
+        }
+    }
+    if (m_f430 != m_f444)
+        m_f444 = m_f430;
+    if (m_f430 != m_f444)
+        m_f444 = m_f430;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ca8c0 size=0x5
 namespace lifted {
 int sub_10068330();
@@ -65117,6 +67013,70 @@ void CUtlMemory12::sub_100caa80(int num)
 		m_pMemory = Plat_Realloc(m_pMemory, m_nAllocationCount * 12);
 	else
 		m_pMemory = Plat_Alloc(m_nAllocationCount * 12);
+}
+// END FUNCTION
+
+// FUNCTION: 0x100cb0e0 size=0x13e
+struct IImgSrc {
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+    virtual void v4(); virtual void v5(); virtual void v6();
+    virtual const char *f7();
+};
+
+struct CPalImage {
+    int m_unk0;
+    unsigned char *m_pData;
+    int m_unk8;
+    int m_nValid;
+    IImgSrc *m_pSrc;
+    int m_unk14;
+    int m_nColors;
+    unsigned int m_w;
+    unsigned int m_h;
+};
+
+extern "C" bool sub_1013a4f0(const char *, unsigned int *, unsigned int *, int *, float *);
+extern "C" int sub_100f4440(unsigned int, unsigned int, int, int);
+extern "C" bool sub_1013b7d0(unsigned char *, const char *, unsigned int, unsigned int, int, int, int, int, int);
+
+// TARGET: sub_100cb0e0
+void __fastcall sub_100cb0e0(CPalImage *self, int edx_unused)
+{
+    float fl;
+    int fmt;
+    unsigned char used[256];
+    int remap[256];
+
+    if (!sub_1013a4f0(self->m_pSrc->f7(), &self->m_w, &self->m_h, &fmt, &fl)) {
+        self->m_nValid = 0;
+        return;
+    }
+    if (fmt != 5) {
+        self->m_nValid = 0;
+        return;
+    }
+    int size = sub_100f4440(self->m_w, self->m_h, 5, 0);
+    self->m_pData = (unsigned char *)operator new(size);
+    if (!self->m_pData) {
+        self->m_nValid = 0;
+        return;
+    }
+    int flbits = *(int *)&fl;
+    if (!sub_1013b7d0(self->m_pData, self->m_pSrc->f7(), self->m_w, self->m_h, 5, flbits, 0, 0, 0)) {
+        self->m_nValid = 0;
+        return;
+    }
+    int i;
+    for (i = 0; i < 256; i++) used[i] = 0;
+    for (i = 0; i < size; i++) used[self->m_pData[i]] = 1;
+    self->m_nColors = 0;
+    for (i = 0; i < 256; i++) {
+        if (used[i]) {
+            remap[i] = self->m_nColors;
+            self->m_nColors++;
+        }
+    }
+    for (i = 0; i < size; i++) self->m_pData[i] = remap[self->m_pData[i]];
 }
 // END FUNCTION
 
@@ -67449,6 +69409,96 @@ void *YSys::sub_100d15e0(unsigned int flags)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d1630 size=0x138
+#include "UtlMem.h"
+#include "CUtlLinkedList8.h"
+#include "IGameSystem.h"
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+extern char vt_1023450c[];
+extern char vt_102344e4[];
+extern char vt_102344dc[];
+struct CUtlLinkedList12u { void sub_100d35b0(); void sub_100d3400(); };
+struct LLView2 { void sub_100d3330(int); };
+struct CUnknown100d3370 { void sub_100d3370(); };
+struct LL52Node { char pad[0x30]; unsigned short m_Previous; unsigned short m_Next; };
+struct LL52 {
+	LL52Node *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	unsigned short m_Head;
+	unsigned short m_Tail;
+	unsigned short m_FirstFree;
+	unsigned short m_ElementCount;
+	unsigned short m_NumAlloced;
+	void RemoveAll()
+	{
+		unsigned short prev = 0xffff;
+		for (int i = (int)m_NumAlloced - 1; i >= 0; --i) {
+			((LLView2 *)this)->sub_100d3330(i);
+			m_pMemory[(unsigned short)i].m_Next = prev;
+			m_pMemory[(unsigned short)i].m_Previous = i;
+			prev = i;
+		}
+		m_FirstFree = 0;
+		m_Head = 0xffff;
+		m_Tail = 0xffff;
+		m_ElementCount = 0;
+	}
+};
+struct PurgeMem {
+	void *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	void Purge()
+	{
+		if (m_growSize != -1) {
+			if (m_pMemory) {
+				Plat_Free(m_pMemory);
+				m_pMemory = 0;
+			}
+			m_allocationCount = 0;
+		}
+	}
+};
+struct ListPair {
+	CUtlLinkedList8 a;
+	char b[0x1c];
+	void Destruct()
+	{
+		((CUtlLinkedList12u *)b)->sub_100d35b0();
+		((UtlMem *)b)->sub_100d3e00();
+		a.sub_100d3500();
+		((UtlMem *)&a)->sub_100d3cc0();
+	}
+};
+struct LeafSysIGS {
+	void sub_100d1630();
+};
+// this = the IGameSystem part of CClientLeafSystem (object + 4)
+void LeafSysIGS::sub_100d1630()
+{
+	char *p = (char *)this;
+	*(char **)(p - 4) = vt_1023450c;
+	*(char **)p = vt_102344e4;
+	*(char **)(p + 4) = vt_102344dc;
+	((ListPair *)(p + 0x94))->Destruct();
+	((ListPair *)(p + 0x54))->Destruct();
+	((CUtlLinkedList12u *)(p + 0x38))->sub_100d3400();
+	((PurgeMem *)(p + 0x38))->Purge();
+	LL52 *l4 = (LL52 *)(p + 0x1c);
+	if (l4->m_NumAlloced)
+		l4->RemoveAll();
+	((UtlMem *)l4)->sub_100d33d0();
+	UtlMem *m5 = (UtlMem *)(p + 8);
+	((CUnknown100d3370 *)m5)->sub_100d3370();
+	m5->sub_100d3380();
+	((int *)m5)[4] = (int)m5->m_pMemory;
+	((PurgeMem *)m5)->Purge();
+	IGameSystem *gs = (p - 4) ? (IGameSystem *)p : 0;
+	gs->IGameSystem::~IGameSystem();
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d1960 size=0x1
 void sub_100d1960()
 {
@@ -68352,6 +70402,136 @@ void Class_100d48a0::sub_100d48a0(int j)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d4ba0 size=0x17c
+struct MNode_100d4ba0
+{
+	unsigned short m_Type;
+	unsigned short m_u2;
+	unsigned short m_u4;
+	unsigned short m_u6;
+	int m_Data8;
+	unsigned short m_Next;
+	unsigned short m_Prev;
+};
+struct MList_100d4ba0
+{
+	unsigned short m_Tail;
+	unsigned short m_Head;
+	unsigned short m_Count;
+	unsigned short m_u6;
+	unsigned short m_u8;
+};
+struct Pool_100d8740
+{
+	MNode_100d4ba0 *m_pNodes;
+	int m_u4, m_u8;
+	MList_100d4ba0 *m_pLists;
+	int m_u10, m_u14, m_u18, m_u1c, m_u20, m_u24;
+	unsigned short *m_pElemList;
+	unsigned short m_u2c, m_u2e, m_nMax;
+
+	bool sub_100d8740(int i);
+
+	void Unlink(unsigned short list, int elem)
+	{
+		if (sub_100d8740(elem))
+		{
+			MNode_100d4ba0 *n = &m_pNodes[(unsigned short)elem];
+			if (n->m_Next != 0xffff)
+				m_pNodes[n->m_Next].m_Prev = n->m_Prev;
+			else
+				m_pLists[list].m_Tail = n->m_Prev;
+			if (n->m_Prev != 0xffff)
+				m_pNodes[n->m_Prev].m_Next = n->m_Next;
+			else
+				m_pLists[list].m_Head = n->m_Next;
+			n->m_Prev = elem;
+			n->m_Next = elem;
+			--m_pLists[list].m_Count;
+			if (m_pElemList)
+				m_pElemList[(unsigned short)elem] = 0xffff;
+		}
+	}
+
+	void LinkToHead(unsigned short list, int elem)
+	{
+		MNode_100d4ba0 *n = &m_pNodes[(unsigned short)elem];
+		n->m_Prev = 0xffff;
+		n->m_Next = m_pLists[list].m_Head;
+		m_pLists[list].m_Head = elem;
+		if (n->m_Next == 0xffff)
+			m_pLists[list].m_Tail = elem;
+		else
+			m_pNodes[n->m_Next].m_Prev = elem;
+		++m_pLists[list].m_Count;
+		if (m_pElemList)
+			m_pElemList[(unsigned short)elem] = list;
+	}
+};
+
+void __fastcall sub_100d4ba0(char *self, int edx, int idx)
+{
+	Pool_100d8740 *ml = (Pool_100d8740 *)(self + 0x20);
+	unsigned short list = *(unsigned short *)(self + 0x58 + 2 * *(unsigned short *)(self + 0x6a + 2 * ml->m_pNodes[(unsigned short)idx].m_Type));
+	ml->Unlink(list, idx);
+	ml->LinkToHead(list, idx);
+	ml->m_pNodes[(unsigned short)idx].m_Data8 = *(int *)(self + 0x8c);
+}
+// END FUNCTION
+
+// FUNCTION: 0x100d4d20 size=0x167
+#include "CClientLeafSystem.h"
+
+struct MLNode_100d4d20 { unsigned short di; unsigned short pad2; int p4; int p8; unsigned short prev, next; };
+struct MLHead_100d4d20 { unsigned short head, tail, count, pad6, pad8; };
+struct ML_100d4d20
+{
+	MLNode_100d4d20 *nodes; int p4, p8; MLHead_100d4d20 *heads; int p10, p14, p18, p1c, p20, p24; unsigned short *pElem;
+	char sub_100d8740(unsigned short elem);
+};
+struct LeafView_100d4d20
+{
+	char pad[0x20];
+	ML_100d4d20 ml;
+};
+
+void CClientLeafSystem::sub_100d4d20(unsigned short elem)
+{
+	unsigned short di = ((LeafView_100d4d20 *)this)->ml.nodes[elem].di;
+	unsigned short a = *(unsigned short *)((char *)this + 0x6a + di * 2);
+	unsigned short list = *(unsigned short *)((char *)this + 0x58 + a * 2);
+	ML_100d4d20 *ml = &((LeafView_100d4d20 *)this)->ml;
+	if (ml->sub_100d8740(elem))
+	{
+		MLNode_100d4d20 *n = &ml->nodes[elem];
+		if (n->prev != 0xffff)
+			ml->nodes[n->prev].next = n->next;
+		else
+			ml->heads[list].head = n->next;
+		if (n->next != 0xffff)
+			ml->nodes[n->next].prev = n->prev;
+		else
+			ml->heads[list].tail = n->prev;
+		n->next = elem;
+		n->prev = elem;
+		ml->heads[list].count--;
+		if (ml->pElem)
+			ml->pElem[elem] = 0xffff;
+	}
+	MLNode_100d4d20 *n = &ml->nodes[elem];
+	n->prev = 0xffff;
+	n->next = ml->heads[list].head;
+	ml->heads[list].head = elem;
+	if (n->next == 0xffff)
+		ml->heads[list].tail = elem;
+	else
+		ml->nodes[n->next].prev = elem;
+	ml->heads[list].count++;
+	if (ml->pElem)
+		ml->pElem[elem] = list;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d4e90 size=0xac
 #include "CUtlLinkedList10.h"
 
@@ -68378,6 +70558,53 @@ unsigned short TexAlloc_100d4e90::sub_100d4e90(int size, int unused)
 		++shift;
 	m_List.InternalElement(elem).m_Data2 = (unsigned short)shift;
 	return elem;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100d4f40 size=0xc3
+#include "CClientLeafSystem.h"
+
+struct Node_100d4f40 { unsigned short a; unsigned short p2, p4; unsigned short prev, next; };
+struct View_100d4f40
+{
+	int p0;
+	Node_100d4f40 *nodes;
+	int p8, pc;
+	unsigned short head, tail, freeh, count, total;
+	void sub_100d5010(unsigned short a);
+	bool IsInList(unsigned short i) { return i < total && nodes[i].prev != i; }
+	void Unlink(unsigned short elem)
+	{
+		if (IsInList(elem))
+		{
+			Node_100d4f40 *pBase = nodes;
+			Node_100d4f40 *pOld = &pBase[elem];
+			if (pOld->prev != 0xffff)
+				pBase[pOld->prev].next = pOld->next;
+			else
+				head = pOld->next;
+			if (pOld->next != 0xffff)
+				pBase[pOld->next].prev = pOld->prev;
+			else
+				tail = pOld->prev;
+			pOld->next = elem;
+			pOld->prev = elem;
+			count--;
+		}
+	}
+};
+
+void CClientLeafSystem::sub_100d4f40(unsigned short elem)
+{
+	View_100d4f40 *v = (View_100d4f40 *)this;
+	if (v->nodes[elem].a != 0xffff)
+	{
+		sub_100d4d20(v->nodes[elem].a);
+		v->sub_100d5010(v->nodes[elem].a);
+	}
+	v->Unlink(elem);
+	v->nodes[elem].next = v->freeh;
+	v->freeh = elem;
 }
 // END FUNCTION
 
@@ -68631,6 +70858,18 @@ void CClientShadowMgr::sub_100d5bd0(unsigned short h)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d5ca0 size=0x33
+#include "CClientShadowMgr.h"
+#include "CClientLeafSystem.h"
+
+void CClientShadowMgr::sub_100d5ca0(unsigned short h)
+{
+	ClientShadow_t *pShadow = (ClientShadow_t *)&m_Shadows.m_pMemory[h];
+	if (pShadow->m_Flags & 1)
+		((CClientLeafSystem *)((char *)this + 0x48))->sub_100d4f40(*(unsigned short *)((char *)pShadow + 0x84));
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d5d30 size=0xb
 namespace lifted {
 struct C100d5140 { int sub_100d5140(); };
@@ -68771,6 +71010,45 @@ void CClientShadowMgr::sub_100d6540(int index, const Vector *v, float f)
 	s->m_Vecs[s->m_Count] = *v;
 	s->m_Floats[s->m_Count] = f;
 	s->m_Count++;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100d65a0 size=0x12e
+#include "CClientShadowMgr.h"
+#include "IClientEntity.h"
+#include "Vector.h"
+
+void sub_10108fd0(const Vector &start, float scale, const Vector &dir, Vector &dest);
+struct Mgr_100d6510 { void sub_100d6510(unsigned short handle); };
+
+void CClientShadowMgr::sub_100d65a0(IClientEntity *pEnt, unsigned short handle, const Vector *vec, const Vector &mins, const Vector &maxs, const Vector &localShadowDir)
+{
+	Vector corner = pEnt->GetRenderOrigin();
+	float signs[3];
+	int i;
+	for (i = 0; i < 3; i++)
+	{
+		if (localShadowDir[i] < 0.0f)
+		{
+			sub_10108fd0(corner, maxs[i], vec[i], corner);
+			signs[i] = 1.0f;
+		}
+		else
+		{
+			sub_10108fd0(corner, mins[i], vec[i], corner);
+			signs[i] = -1.0f;
+		}
+	}
+	((Mgr_100d6510 *)this)->sub_100d6510(handle);
+	for (i = 0; i < 3; i++)
+	{
+		Vector tmp;
+		float s = signs[i];
+		tmp.x = s * vec[i].x;
+		tmp.y = s * vec[i].y;
+		tmp.z = s * vec[i].z;
+		sub_100d6540(*(int *)&handle, &tmp, corner.z * tmp.z + corner.y * tmp.y + corner.x * tmp.x);
+	}
 }
 // END FUNCTION
 
@@ -69402,6 +71680,47 @@ void CUtlLinkedList10::sub_100d8af0()
 		m_Tail = 0xffff;
 		m_ElementCount = 0;
 	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x100d8b40 size=0x142
+#include "CUtlLinkedList240.h"
+
+// TARGET: CUtlLinkedList240::sub_100d8b40
+void CUtlLinkedList240::sub_100d8b40(unsigned short before, unsigned short elem)
+{
+	if (IsInList(elem)) {
+		CUtlLinkedList240Node *pBase = m_pMemory;
+		CUtlLinkedList240Node *pOldElem = &pBase[elem];
+		if (pOldElem->m_Previous != InvalidIndex())
+			pBase[pOldElem->m_Previous].m_Next = pOldElem->m_Next;
+		else
+			m_Head = pOldElem->m_Next;
+		if (pOldElem->m_Next != InvalidIndex())
+			pBase[pOldElem->m_Next].m_Previous = pOldElem->m_Previous;
+		else
+			m_Tail = pOldElem->m_Previous;
+		pOldElem->m_Previous = pOldElem->m_Next = elem;
+		--m_ElementCount;
+	}
+	CUtlLinkedList240Node *pNew = &InternalElement(elem);
+	pNew->m_Next = before;
+	if (before == InvalidIndex())
+	{
+		pNew->m_Previous = m_Tail;
+		m_Tail = elem;
+	}
+	else
+	{
+		CUtlLinkedList240Node *pBefore = &InternalElement(before);
+		pNew->m_Previous = pBefore->m_Previous;
+		pBefore->m_Previous = elem;
+	}
+	if (pNew->m_Previous == InvalidIndex())
+		m_Head = elem;
+	else
+		InternalElement(pNew->m_Previous).m_Next = elem;
+	++m_ElementCount;
 }
 // END FUNCTION
 
@@ -70372,6 +72691,50 @@ bool sub_100dad40(const Vector &p1, const Vector &p2, const Vector &p3, const Ve
 	}
 	char tmp[20];
 	return sub_100dd5e0(p1, p2, p3, p4, p5, p6, p7, p8, p9, tmp) == 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100dae30 size=0x153
+#include "Vector.h"
+#include <float.h>
+
+static inline float FloatMakePositive(float f)
+{
+	int i = *(int *)&f;
+	i &= 0x7FFFFFFF;
+	return *(float *)&i;
+}
+
+// TARGET: sub_100dae30
+bool sub_100dae30(const Vector &boxMin, const Vector &boxMax, const Vector &origin, const Vector &vecDelta, float flTolerance)
+{
+	float tmin = -FLT_MAX;
+	float tmax = FLT_MAX;
+	for (int i = 0; i < 3; ++i)
+	{
+		if (FloatMakePositive(vecDelta[i]) < 1e-8)
+		{
+			if ((origin[i] < boxMin[i] - flTolerance) || (origin[i] > boxMax[i] + flTolerance))
+				return false;
+			continue;
+		}
+		float invDelta = 1.0f / vecDelta[i];
+		float t1 = (boxMin[i] - flTolerance - origin[i]) * invDelta;
+		float t2 = (boxMax[i] + flTolerance - origin[i]) * invDelta;
+		if (t1 > t2)
+		{
+			float temp = t1;
+			t1 = t2;
+			t2 = temp;
+		}
+		if (t1 > tmin)
+			tmin = t1;
+		if (t2 < tmax)
+			tmax = t2;
+		if ((tmin > tmax) || (tmax < 0.0f) || (tmin > 1.0f))
+			return false;
+	}
+	return true;
 }
 // END FUNCTION
 
@@ -74301,6 +76664,64 @@ void CGameMovementUnit::sub_100eb7a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100eb9d0 size=0x17a
+#include "CBaseEntityList.h"
+#include "CGameMovement.h"
+#include "CGameMovementViews.h"
+#include "CVProfile.h"
+#include "Ray_t.h"
+#include "CGameTrace.h"
+#include "CUnknown100290c0.h"
+#include "CTraceFilterSimple.h"
+#include "engineclient.h"
+
+extern CVProfile *g_101e3138;
+extern CTouchNotifier *g_104df784;
+
+struct CUnduckSub { virtual void g0(); virtual void g1(); virtual void g2(); virtual void g3(); virtual void g4(); virtual void g5(); virtual void g6(); virtual unsigned int g7(); };
+struct CUnduckMove
+{
+	char m_pad0000[0xc];
+	CUnduckSub m_sub;
+};
+
+#define PLAYER ((CMovePlayerView *)m_pPlayer)
+
+// TARGET: CGameMovement::sub_100eb9d0
+CMoveTrace_t CGameMovement::sub_100eb9d0(Vector &push)
+{
+	Ray_t ray;
+	CMoveTrace_t trace;
+	{
+		Vector end;
+		end.x = PLAYER->m_vecOrigin.x + push.x;
+		Vector &origin = PLAYER->m_vecOrigin;
+		end.y = origin.y + push.y;
+		end.z = origin.z + push.z;
+		g_101e3138->EnterScope("CGameMovement::TracePlayerBBox", 0, "Unaccounted", false);
+		ray.sub_100e91e0(origin, end, sub_100e6ef0(), (float *)sub_100e6f20(), (char)((((CUnduckMove *)m_pMove)->m_sub.g7() >> 6) & 1), 0);
+	}
+	{
+		CTraceFilterSimple filter;
+		filter.sub_1004b5c0((const void *)((CUnknown100290c0 *)g_pEntityList)->sub_1007aca0(&PLAYER->m_hRef), 6);
+		enginetrace->vfunc4((int)&ray, 0x201400b, &filter, (int)&trace);
+	}
+	{
+		CVProfile *p = g_101e3138;
+		if (!p->m_fAtRoot || p->m_nPause)
+		{
+			if (p->m_pCurNode->ExitScope())
+				p->m_pCurNode = p->m_pCurNode->m_pParent;
+			p->m_fAtRoot = p->m_pCurNode == p->m_pRoot;
+		}
+	}
+	PLAYER->m_vecOrigin = trace.endpos;
+	if (trace.fraction < 1.0 && !trace.allsolid)
+		g_104df784->vfunc2((CGameTrace *)&trace, &PLAYER->m_vecVelocity);
+	return trace;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ebb50 size=0xa5
 #include "CGameMovement.h"
 
@@ -75984,6 +78405,61 @@ CHudElement *CHud::sub_100f0ed0(const char *pName)
 	}
 	g_101e3120(1, "Could not find Hud Element: %s\n", pName);
 	return 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100f0f30 size=0x12a
+#include "CHud.h"
+#include "CHudElement.h"
+#include "CSaveRestoreBlockSet.h"
+#include <string.h>
+#pragma intrinsic(strcmp)
+struct NamedFlag { const char *name; int flag; };
+extern NamedFlag g_102bbde0[];
+inline void HudGrowVector(CHud *h, int num)
+{
+    if (h->m_HudListSize + num > h->m_HudListAlloc && h->m_HudListGrow != -1)
+    {
+        int alloc = h->m_HudListAlloc;
+        int grow = h->m_HudListGrow;
+        if (alloc < h->m_HudListSize + num)
+        {
+            do
+                alloc = alloc ? (grow ? alloc + grow : alloc + alloc) : 8;
+            while (alloc < h->m_HudListSize + num);
+            h->m_HudListAlloc = alloc;
+        }
+        int &rAlloc = *(int *)((char *)h + 0x44);
+        if (h->m_HudListMem)
+            h->m_HudListMem = (CHudElement **)g_101e3104(h->m_HudListMem, rAlloc * 4);
+        else
+            h->m_HudListMem = (CHudElement **)g_101e3100(rAlloc * 4);
+    }
+    h->m_HudListSize += num;
+    h->m_pHudDebug = h->m_HudListMem;
+}
+inline void HudShiftRight(CHud *h, int elem, int num)
+{
+    int numToMove = h->m_HudListSize - elem - num;
+    if (numToMove > 0)
+        memmove(&h->m_HudListMem[elem + num], &h->m_HudListMem[elem], numToMove * 4);
+}
+void CHud::sub_100f0f30(CHudElement *pElem)
+{
+    int elem = m_HudListSize;
+    HudGrowVector(this, 1);
+    HudShiftRight(this, elem, 1);
+    CHudElement **slot = &m_HudListMem[elem];
+    if (slot)
+        *slot = pElem;
+    for (int i = 0; g_102bbde0[i].name; i++)
+    {
+        if (!strcmp(g_102bbde0[i].name, (const char *)pElem->vfunc8()))
+        {
+            pElem->vfunc12(g_102bbde0[i].flag);
+            break;
+        }
+    }
 }
 // END FUNCTION
 
@@ -80590,6 +83066,28 @@ void CHelper_100fccf0::sub_100fccf0( const Vector &origin, const QAngle &angles 
 }
 // END FUNCTION
 
+// FUNCTION: 0x100fd0b0 size=0x12f
+#include "engineclient.h"
+#include "Vector.h"
+extern "C" double sqrt(double);
+#pragma intrinsic(sqrt)
+struct CUnknown100fd0b0 {
+	Vector sub_100fd0b0(Vector prev, Vector cur, Vector target, float tension);
+};
+extern const float g_10235250;
+Vector CUnknown100fd0b0::sub_100fd0b0(Vector prev, Vector cur, Vector target, float tension)
+{
+	float dt = engine->vfunc41(0);
+	float s = g_10235250 * sqrt(tension);
+	float k = s + s;
+	Vector vel = cur - prev;
+	Vector acc = cur - target;
+	prev = k * vel;
+	target = acc * -tension - prev;
+	return cur + (target + vel) * dt;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100fdb30 size=0x17
 float sub_100fdb30(float value)
 {
@@ -82312,6 +84810,38 @@ void CInput::sub_101025f0(float speed, Vector &viewangles)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101026b0 size=0x14e
+#include "CInput.h"
+struct kbutton_t { int d[4]; };
+struct IView { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void StopPitchDrift(); };
+struct CPitchSpeed { virtual void v0(); virtual bool IsZero(); int m_unk04[9]; float m_f28; };
+extern char g_104d3e0c;
+extern IView *g_102d43d8;
+extern CPitchSpeed *g_104d3d54;
+extern kbutton_t g_104d3590, g_104d3af0, g_104d38ac, g_104d2dd4;
+bool sub_10186d50();
+// TARGET: CInput::sub_101026b0
+void CInput::sub_101026b0(float speed, QAngle &viewangles)
+{
+    float *p = (float *)&viewangles;
+    if (g_104d3e0c & 1) {
+        g_102d43d8->StopPitchDrift();
+        if (!sub_10186d50()) {
+            float ps = g_104d3d54->IsZero() ? 0.0f : g_104d3d54->m_f28;
+            p[0] -= speed * ps * KeyState(&g_104d3590);
+            ps = g_104d3d54->IsZero() ? 0.0f : g_104d3d54->m_f28;
+            p[0] += speed * ps * KeyState(&g_104d3af0);
+        }
+    }
+    float up = KeyState(&g_104d38ac);
+    float down = KeyState(&g_104d2dd4);
+    p[0] -= speed * (g_104d3d54->IsZero() ? 0.0f : g_104d3d54->m_f28) * up;
+    p[0] += speed * (g_104d3d54->IsZero() ? 0.0f : g_104d3d54->m_f28) * down;
+    if (up != 0.0f || down != 0.0f)
+        g_102d43d8->StopPitchDrift();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10102800 size=0xc8
 #include "CInput.h"
 #include "ConVar.h"
@@ -82330,6 +84860,23 @@ void CInput::sub_10102800(Vector *v)
 		v->z = 50.0f;
 	if (v->z < -50.0f)
 		v->z = -50.0f;
+}
+// END FUNCTION
+
+// FUNCTION: 0x101028d0 size=0x6d
+#include "engineclient.h"
+#include "CInput.h"
+float __stdcall sub_101025b0(float);
+// TARGET: CInput::sub_101028d0
+void CInput::sub_101028d0(float frametime)
+{
+    float speed = sub_101025b0(frametime);
+    QAngle viewangles;
+    engine->GetViewAngles(viewangles);
+    sub_101025f0(speed, (Vector &)viewangles);
+    sub_101026b0(speed, viewangles);
+    sub_10102800((Vector *)&viewangles);
+    engine->SetViewAngles(viewangles);
 }
 // END FUNCTION
 
@@ -87573,6 +90120,66 @@ int __stdcall sub_1010e740(float x, int width)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1010e9b0 size=0x169
+#include "CHudMessage.h"
+#include <stdlib.h>
+
+struct client_textmessage_s
+{
+	int effect;
+	unsigned char r1, g1, b1, a1;
+	unsigned char r2, g2, b2, a2;
+	float x;
+	float y;
+	float fadein;
+	float fadeout;
+	float holdtime;
+	float fxtime;
+	const char *pName;
+	const char *pMessage;
+};
+
+void CHudMessage::sub_1010e9b0()
+{
+	client_textmessage_s *pMessage = m_pMessage;
+	if (pMessage->effect < 0)
+		return;
+	if (pMessage->effect > 1)
+	{
+		if (pMessage->effect != 2)
+			return;
+		float fTemp = m_length * pMessage->fadein + pMessage->holdtime;
+		m_unkd0 = fTemp;
+		if (m_time > fTemp && pMessage->fadeout > 0.0f)
+			m_fadeBlend = (int)(((m_time - fTemp) / pMessage->fadeout) * 255.0f);
+		else
+			m_fadeBlend = 0;
+		return;
+	}
+	float fTemp = pMessage->holdtime + pMessage->fadein;
+	m_unkd0 = fTemp;
+	if (m_time < pMessage->fadein)
+	{
+		m_fadeBlend = (int)(((pMessage->fadein - m_time) * (1.0 / pMessage->fadein)) * 255.0);
+	}
+	else if (m_time > fTemp)
+	{
+		if (pMessage->fadeout > 0.0f)
+			m_fadeBlend = (int)(((m_time - fTemp) / pMessage->fadeout) * 255.0f);
+		else
+			m_fadeBlend = 255;
+	}
+	else
+		m_fadeBlend = 0;
+	m_charTime = 0;
+	if (pMessage->effect == 1)
+	{
+		if (rand() % 100 < 10)
+			m_charTime = 1.0f;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010eb20 size=0x1e6
 #include "CHudMessage.h"
 
@@ -89844,6 +92451,68 @@ void PMgr::sub_10116f00(PNode *p)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10117100 size=0x157
+#include "CParticleEffectBinding.h"
+
+struct PartNode { int m_a; int m_b; PartNode *m_pNext; };
+struct ListEntry { PartNode *m_pHead; short m_s4; unsigned short m_nNext; };
+struct IEffect
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(Vector *);
+	virtual void v7(PartNode *, Vector *);
+};
+struct PEBView
+{
+	char m_pad0000[0xc];
+	Vector m_Min;	// 0xc
+	Vector m_Max;	// 0x18
+	unsigned short m_n24;
+	char m_pad0026[6];
+	IEffect *m_pEffect;	// 0x2c
+	char m_pad0030[8];
+	ListEntry *m_pList;	// 0x38
+	char m_pad003c[8];
+	unsigned short m_nFirst;	// 0x44
+};
+
+// TARGET: CParticleEffectBinding::sub_10117100
+bool CParticleEffectBinding::sub_10117100()
+{
+	PEBView *v = (PEBView *)this;
+	if (v->m_n24 == 0)
+	{
+		v->m_pEffect->v6(&v->m_Min);
+		v->m_Max = v->m_Min;
+		return false;
+	}
+	*(int *)&v->m_Min.x = 0x6e013f39;
+	*(int *)&v->m_Min.y = 0x6e013f39;
+	*(int *)&v->m_Min.z = 0x6e013f39;
+	*(int *)&v->m_Max.x = 0xee013f39;
+	*(int *)&v->m_Max.y = 0xee013f39;
+	*(int *)&v->m_Max.z = 0xee013f39;
+	int idx = v->m_nFirst;
+	while (idx != 0xffff)
+	{
+		PartNode *head = v->m_pList[idx & 0xffff].m_pHead;
+		for (PartNode *p = head->m_pNext; p != head; p = p->m_pNext)
+		{
+			Vector pos;
+			v->m_pEffect->v7(p, &pos);
+			v->m_Min.x = (v->m_Min.x < pos.x) ? v->m_Min.x : pos.x;
+			v->m_Min.y = (v->m_Min.y < pos.y) ? v->m_Min.y : pos.y;
+			v->m_Min.z = (v->m_Min.z < pos.z) ? v->m_Min.z : pos.z;
+			v->m_Max.x = (v->m_Max.x > pos.x) ? v->m_Max.x : pos.x;
+			v->m_Max.y = (v->m_Max.y > pos.y) ? v->m_Max.y : pos.y;
+			v->m_Max.z = (v->m_Max.z > pos.z) ? v->m_Max.z : pos.z;
+		}
+		idx = v->m_pList[idx & 0xffff].m_nNext;
+	}
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10117260 size=0x6d
 #include "CParticleEffectBinding.h"
 
@@ -90075,6 +92744,67 @@ int CParticleMgr::sub_10117920(Vector *p, float t)
 	m_entries[m_nCount].m_t = t;
 	m_nCount++;
 	return m_nCount * 2 - 2;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10117980 size=0xf3
+#include "CParticleMgr.h"
+#include "CParticleEffectBinding.h"
+
+struct LeafView
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10();
+	virtual void v11(unsigned short, int);
+};
+extern LeafView *g_102b9060;
+struct SimView { virtual void v0(); virtual void v1(float); };
+struct PEBV
+{
+	char m_pad0000[8];
+	unsigned short m_nHandle;	// 0x08
+	char m_pad000a[0x2c - 0xa];
+	SimView *m_pSim;	// 0x2c
+	char m_pad0030[4];
+	unsigned int m_nFlags;	// 0x34
+	void *sub_10117100();
+};
+
+// TARGET: CParticleMgr::sub_10117980
+void CParticleMgr::sub_10117980(float flTimeDelta)
+{
+	*((char *)this + 6) = 1;
+	if (flTimeDelta > 0.1f)
+		flTimeDelta = 0.1f;
+	LeafView *leaf = g_102b9060;
+	int i = m_list.m_Head;
+	while (i != 0xffff)
+	{
+		CParticleEffectBinding *pEffect = (CParticleEffectBinding *)m_list.m_pMemory[i & 0xffff].m_Data;
+		PEBV *pv = (PEBV *)pEffect;
+		if (!(pv->m_nFlags & 1))
+		{
+			if (pv->m_nFlags & 4)
+			{
+				if (pEffect->sub_10117100())
+					pv->m_nFlags &= ~4;
+			}
+			pv->m_nFlags &= ~0x20;
+			leaf->v11(pv->m_nHandle, 2);
+			pv->m_pSim->v1(flTimeDelta);
+		}
+		i = m_list.m_pMemory[i & 0xffff].m_Next;
+	}
+	*((char *)this + 6) = 0;
+	i = m_list.m_Head;
+	while (i != 0xffff)
+	{
+		int next = m_list.m_pMemory[i & 0xffff].m_Next;
+		CParticleEffectBinding *pEffect = (CParticleEffectBinding *)m_list.m_pMemory[i & 0xffff].m_Data;
+		if (((PEBV *)pEffect)->m_nFlags & 1)
+			sub_101176b0(pEffect);
+		i = next;
+	}
 }
 // END FUNCTION
 
@@ -91031,6 +93761,17 @@ int __stdcall sub_10119730(int a0, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101197b0 size=0x20
+class C_BaseEntity;
+void sub_1011ba80(C_BaseEntity *, C_BaseEntity *);
+// TARGET: sub_101197b0
+void __stdcall sub_101197b0(C_BaseEntity *a, C_BaseEntity *b)
+{
+	sub_1011ba80(a, b);
+	sub_1011ba80(b, a);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10119d90 size=0x6b
 #include "matrix3x4_t.h"
 #include <math.h>
@@ -91554,6 +94295,127 @@ void C_BaseEntity::sub_1011b3b0(int type)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011b730 size=0x160
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+
+struct DataObj_1011b730 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void vfunc3(C_BaseEntity *pEnt); };
+struct DataSys_1011b730
+{
+	void *m_pad[2];
+	DataObj_1011b730 *m_data[32];
+	bool IsValidType(int type)
+	{
+		ScopeTrace st("CDataObjectAccessSystem::IsValidType", g_102de300);
+		if (type < 0 || type >= 32)
+			return false;
+		if (m_data[type])
+			return true;
+		return false;
+	}
+	void DestroyDataObject(int type, C_BaseEntity *pEnt)
+	{
+		ScopeTrace st("CDataObjectAccessSystem::DestroyDataObject", g_102de300);
+		if (!IsValidType(type))
+			return;
+		m_data[type]->vfunc3(pEnt);
+	}
+};
+extern DataSys_1011b730 g_104e0ba0;
+
+void C_BaseEntity::sub_1011b730(int type)
+{
+	ScopeTrace st("CBaseEntity::DestroyDataObject", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	if (sub_1011b290(type))
+	{
+		g_104e0ba0.DestroyDataObject(type, this);
+		sub_1011b3b0(type);
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x1011b890 size=0x85
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+
+void C_BaseEntity::sub_1011b890()
+{
+	ScopeTrace st("CBaseEntity::DestroyAllDataObjects", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	for (int i = 0; i < 4; i++)
+	{
+		if (sub_1011b290(i))
+			sub_1011b730(i);
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x1011b9a0 size=0xd9
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+struct TouchLink {
+	C_BaseEntity *m_pEntity;	// 0x00
+	int m_nKey;	// 0x04
+	TouchLink *m_pNext;	// 0x08
+	TouchLink *m_pPrev;	// 0x0c
+};
+void sub_1011ba80(C_BaseEntity *, C_BaseEntity *);
+void sub_1011bb30(void *, TouchLink *);
+// TARGET: C_BaseEntity::sub_1011b9a0
+void C_BaseEntity::sub_1011b9a0()
+{
+	ScopeTrace st("CBaseEntity::PhysicsCheckForEntityUntouch", this ? "clientside entity" : "NULL CLIENT ENTITY", g_102de300);
+	TouchLink *root = sub_1011b440(1);
+	if (root) {
+		TouchLink *link = root->m_pNext;
+		while (link != root) {
+			TouchLink *next = link->m_pNext;
+			if (link->m_nKey == -1)
+				sub_1011bd60(link->m_pEntity);
+			else if (link->m_nKey != *(int *)((char *)this + 0xd4)) {
+				sub_1011ba80(this, link->m_pEntity);
+				sub_1011bb30(this, link);
+			}
+			link = next;
+		}
+		if (root->m_pNext == root && root->m_pPrev == root)
+			sub_1011b730(1);
+	}
+	vfunc97(0);
+}
+// END FUNCTION
+
+// FUNCTION: 0x1011ba80 size=0xb0
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+struct TouchLink {
+	C_BaseEntity *m_pEntity;	// 0x00
+	int m_unk04;
+	TouchLink *m_pNext;	// 0x08
+	TouchLink *m_pPrev;	// 0x0c
+};
+void sub_1011bb30(void *, TouchLink *);
+// TARGET: sub_1011ba80
+void sub_1011ba80(C_BaseEntity *other, C_BaseEntity *ent)
+{
+	ScopeTrace st("CBaseEntity::PhysicsNotifyOtherOfUntouch", g_102de300);
+	if (ent) {
+		TouchLink *root = ent->sub_1011b440(1);
+		if (root) {
+			TouchLink *link = root->m_pNext;
+			while (link != root) {
+				if (link->m_pEntity == other) {
+					sub_1011bb30(ent, link);
+					if (root->m_pNext == root && root->m_pPrev == root)
+						ent->sub_1011b730(1);
+					return;
+				}
+				link = link->m_pNext;
+			}
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011bb30 size=0xf7
 struct VProfNode
 {
@@ -91639,6 +94501,44 @@ void sub_1011bb30(void *pOther, TouchLink *pTouch)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1011bc30 size=0x125
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+struct TouchLink {
+	C_BaseEntity *m_pEntity;	// 0x00
+	int m_nKey;	// 0x04
+	TouchLink *m_pNext;	// 0x08
+	TouchLink *m_pPrev;	// 0x0c
+};
+struct TouchLinkPool { void sub_1010e440(void *); };
+extern TouchLinkPool g_104e0b74;
+extern int g_104e0c28;
+void sub_1011ba80(C_BaseEntity *, C_BaseEntity *);
+inline void FreeTouchLink(TouchLink *link)
+{
+	ScopeTrace st("FreeTouchLink", g_102de300);
+	g_104e0c28--;
+	g_104e0b74.sub_1010e440(link);
+}
+// TARGET: sub_1011bc30
+void sub_1011bc30(C_BaseEntity *ent)
+{
+	ScopeTrace st("CBaseEntity::PhysicsRemoveTouchedList", g_102de300);
+	TouchLink *root = ent->sub_1011b440(1);
+	if (root) {
+		TouchLink *link = root->m_pNext;
+		while (link && link != root) {
+			TouchLink *next = link->m_pNext;
+			sub_1011ba80(ent, link->m_pEntity);
+			FreeTouchLink(link);
+			link = next;
+		}
+		ent->sub_1011b730(1);
+	}
+	*(int *)((char *)ent + 0xd4) = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1011bd60 size=0x8f
 #include "C_BaseEntity.h"
 #include "ScopeTrace.h"
@@ -91706,6 +94606,152 @@ trace21 *sub_1011c140(trace21 *out)
     *out = g_104e0b20;
     --g_ScopeTraceStackDepth;
     return out;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1011c1b0 size=0x15e
+#include "Vector.h"
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+class CBaseEntity;
+struct csurface_1011c1b0 {
+	const char *name;
+	short surfaceProps;
+	unsigned short flags;
+};
+struct cplane_1011c1b0 {
+	Vector normal;
+	float dist;
+	unsigned char type;
+	unsigned char signbits;
+	unsigned char pad[2];
+	void Copy(const cplane_1011c1b0 &o)
+	{
+		normal.sub_10039080(o.normal);
+		dist = o.dist;
+		type = o.type;
+		signbits = o.signbits;
+		for (unsigned int i = 0; i < 2; i++)
+			pad[i] = o.pad[i];
+	}
+};
+struct trace_1011c1b0 {
+	Vector startpos;
+	Vector endpos;
+	cplane_1011c1b0 plane;
+	float fraction;
+	int contents;
+	unsigned short dispFlags;
+	bool allsolid;
+	bool startsolid;
+	float fractionleftsolid;
+	csurface_1011c1b0 surface;
+	int hitgroup;
+	short physicsbone;
+	CBaseEntity *m_pEnt;
+	int hitbox;
+	void Copy(const trace_1011c1b0 &o)
+	{
+		startpos = o.startpos;
+		endpos = o.endpos;
+		plane.Copy(o.plane);
+		fraction = o.fraction;
+		contents = o.contents;
+		dispFlags = o.dispFlags;
+		allsolid = o.allsolid;
+		startsolid = o.startsolid;
+		fractionleftsolid = o.fractionleftsolid;
+		surface = o.surface;
+		hitgroup = o.hitgroup;
+		physicsbone = o.physicsbone;
+		m_pEnt = o.m_pEnt;
+		hitbox = o.hitbox;
+	}
+};
+extern trace_1011c1b0 g_104e0b20;
+void C_BaseEntity::sub_1011c1b0(C_BaseEntity *other, CGameTrace &trace)
+{
+	ScopeTrace st("CBaseEntity::PhysicsMarkEntitiesAsTouching", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	g_104e0b20.Copy(*(trace_1011c1b0 *)&trace);
+	sub_1011be90(other);
+	other->sub_1011be90(this);
+}
+// END FUNCTION
+
+// FUNCTION: 0x1011c310 size=0x16f
+#include "C_BaseEntity.h"
+#include "CGameTrace.h"
+#include "ScopeTrace.h"
+#include "Vector.h"
+
+struct cplane_x
+{
+	Vector normal;
+	float dist;
+	char type, signbits;
+	char pad[2];
+
+	cplane_x &operator=(const cplane_x &o)
+	{
+		normal.sub_10039080(o.normal);
+		dist = o.dist;
+		type = o.type;
+		signbits = o.signbits;
+		for (unsigned i = 0; i < 2; i++)
+			pad[i] = o.pad[i];
+		return *this;
+	}
+};
+
+struct TraceDst
+{
+	int a0, a1, a2, a3, a4, a5;
+	cplane_x plane;
+	int fr, con;
+	short disp;
+	char as, ss;
+	int f38, p3c, p40, p44;
+	short b48;
+	int p4c, p50;
+
+	void Copy(const TraceDst &s)
+	{
+		a0 = s.a0; a1 = s.a1; a2 = s.a2; a3 = s.a3; a4 = s.a4; a5 = s.a5;
+		plane = s.plane;
+		fr = s.fr; con = s.con;
+		disp = s.disp;
+		as = s.as; ss = s.ss;
+		f38 = s.f38; p3c = s.p3c; p40 = s.p40; p44 = s.p44;
+		b48 = s.b48;
+		p4c = s.p4c; p50 = s.p50;
+	}
+};
+extern TraceDst g_104e0b20;
+
+// TARGET: C_BaseEntity::sub_1011c310
+void C_BaseEntity::sub_1011c310(C_BaseEntity *other, CGameTrace &trace)
+{
+	ScopeTrace st("CBaseEntity::PhysicsMarkEntitiesAsTouchingEventDriven", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	g_104e0b20.Copy(*(TraceDst *)&trace);
+	int *link = sub_1011be90(other);
+	if (link)
+		link[1] = -1;
+	link = other->sub_1011be90(this);
+	if (link)
+		link[1] = -1;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1011c480 size=0x9c
+#include "C_BaseEntity.h"
+#include "ScopeTrace.h"
+void C_BaseEntity::sub_1011c480(C_BaseEntity *other, CGameTrace &trace)
+{
+	ScopeTrace st("CBaseEntity::PhysicsImpact", this ? "clientside entity" : "NULL CLIENT ENTITY");
+	if (other) {
+		if (!((other->sub_100a2450() | sub_100a2450()) & 0x4000000))
+			sub_1011c1b0(other, trace);
+	}
 }
 // END FUNCTION
 
@@ -94422,6 +97468,31 @@ void sub_10121920()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101219a0 size=0x51
+#include "C_BaseEntity.h"
+#include "CClientEntityList.h"
+
+struct HighestView_101219a0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
+	virtual int GetHighestEntityIndex();
+};
+
+// TARGET: sub_101219a0
+void sub_101219a0()
+{
+	int highest = ((HighestView_101219a0 *)((char *)cl_entitylist + 0x1803c))->GetHighestEntityIndex();
+	for (int i = 0; i <= highest; i++) {
+		C_BaseEntity *e = cl_entitylist->sub_100d0cf0(i);
+		if (!e)
+			continue;
+		if (e->sub_100a2600())
+			continue;
+		e->sub_100a0650("ReinitPredictables");
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10121b00 size=0x111
 #include "C_BaseEntity.h"
 #include "ConVar.h"
@@ -94691,6 +97762,23 @@ void __stdcall sub_10122930(int)
 			int *a = ent->v17();
 			d.sub_10124440(ent->v17(), a[0], ent->v17()[1]);
 		}
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x10122ad0 size=0x42
+#include "C_BaseEntity.h"
+struct IPredictables { virtual C_BaseEntity *GetPredictable(int i); virtual int GetPredictableCount(); };
+extern IPredictables *g_102af678;
+struct CUnknown1011ac80 { char sub_1011ac80(); };
+// TARGET: sub_10122ad0
+void sub_10122ad0()
+{
+	int count = g_102af678->GetPredictableCount();
+	for (int i = 0; i < count; i++) {
+		C_BaseEntity *ent = g_102af678->GetPredictable(i);
+		if (ent && ((CUnknown1011ac80 *)ent)->sub_1011ac80())
+			ent->sub_1011b9a0();
 	}
 }
 // END FUNCTION
@@ -97103,6 +100191,67 @@ int CUnknown10127c80::sub_10127c80()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10127c90 size=0x159
+#include "CUnknown10248a50.h"
+#include <string.h>
+#include <stdlib.h>
+struct IFileSys {
+    virtual int Open(const char *name, const char *mode, const char *pathID);
+    virtual void Close(int h);
+    virtual int Read(void *buf, int size, int h);
+    virtual int v3();
+    virtual int v4();
+    virtual int v5();
+    virtual int Size(int h);
+};
+char *sub_10127df0(const char **ppBuffer, int a);
+char *sub_10127e20(const char *pszFile, IFileSys *pFileSys);
+// TARGET: CUnknown10248a50::sub_10127c90
+bool CUnknown10248a50::sub_10127c90(const char *pszFile, IFileSys *pFileSys, const char *pszPathID, bool bRefresh)
+{
+    const char *pszCursor = 0;
+    char *pFree = 0;
+    if (bRefresh) {
+        if (strstr(pszFile, ".txt"))
+            pszCursor = sub_10127e20(pszFile, pFileSys);
+    }
+    if (!bRefresh || pszCursor == 0) {
+        int h = pFileSys->Open(pszFile, "rb", pszPathID);
+        if (h == 0)
+            return false;
+        int size = pFileSys->Size(h);
+        pFree = (char *)malloc(size + 1);
+        pFileSys->Read(pFree, size, h);
+        pFileSys->Close(h);
+        pFree[size] = 0;
+        pszCursor = pFree;
+    }
+    CUnknown10248a50 *pNode = this;
+    CUnknown10248a50 *pPrevious = 0;
+    while (1) {
+        const char *pszToken = sub_10127df0(&pszCursor, 0);
+        if (!pszCursor)
+            break;
+        if (!pNode) {
+            pNode = new CUnknown10248a50(pszToken);
+            if (pPrevious)
+                pPrevious->sub_101283c0((int)pNode);
+        } else {
+            delete *(char **)pNode;
+            pNode->sub_101279a0(pszToken);
+        }
+        const char *pszNext = sub_10127df0(&pszCursor, 0);
+        if (*(int *)pNode && pszNext && *pszNext == '{')
+            pNode->sub_10127fd0(&pszCursor, (int)pFileSys);
+        pPrevious = pNode;
+        pNode = 0;
+    }
+    if (pFree)
+        free(pFree);
+    return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10127df0 size=0x23
 extern int g_104e3438;
 int sub_100e3130(int a, void *b, int c);
@@ -98596,6 +101745,63 @@ CRestoreSaveEnt *CRestore::sub_1012aec0(int index)
 		}
 	}
 	return 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1012b150 size=0x12c
+#include "CSave.h"
+
+extern "C" __declspec(dllimport) void Warning(const char *, ...);
+
+#define SV(n) virtual void s##n();
+struct SaveSlotsView
+{
+	SV(0) SV(1) SV(2) SV(3) SV(4) SV(5) SV(6) SV(7) SV(8) SV(9)
+	SV(10) SV(11) SV(12) SV(13) SV(14) SV(15) SV(16) SV(17) SV(18) SV(19)
+	virtual void w20(void *, int, int);
+	SV(21) SV(22) SV(23)
+	virtual void w24(void *, int, int);
+	virtual void w25(void *, int, int);
+	SV(26)
+	virtual void w27(void *, void *, int, int);
+	virtual void w28(void *, int, int);
+	virtual void w29(void *, int, int);
+	virtual void w30(void *, int, int);
+};
+
+#define FIELD_TYPE(f) (*(int *)(f))
+#define FIELD_SIZE(f) (*(short *)((char *)(f) + 0x10))
+
+void CSave::sub_1012b150(const unsigned short *pToken, void *pData, void *pRootMap, typedescription_t *pField)
+{
+	SaveSlotsView *s = (SaveSlotsView *)this;
+	switch (FIELD_TYPE(pField)) {
+	case 14:
+		s->w25(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 15:
+		s->w24(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 19:
+		s->w27(pRootMap, pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 16:
+	case 17:
+		s->w20(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 11:
+		s->w28(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 13:
+		s->w29(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	case 12:
+		s->w30(pData, FIELD_SIZE(pField), *pToken);
+		break;
+	default:
+		Warning("Bad field type\n");
+		break;
+	}
 }
 // END FUNCTION
 
@@ -101064,6 +104270,70 @@ void UtlMem::sub_10130fd0()
 		}
 		m_allocationCount = 0;
 	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x10131000 size=0x134
+#include "CUtlRBTree232.h"
+#include "CUnknown101b30d0.h"
+extern "C" __declspec(dllimport) void *Plat_Alloc(unsigned int);
+extern "C" __declspec(dllimport) void *Plat_Realloc(void *, unsigned int);
+struct Mem232 {
+	CUtlRBTree232::Node_t *m_pMemory;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+	void Grow(int num)
+	{
+		if (m_nGrowSize == -1)
+			return;
+		int nAllocationRequested = m_nAllocationCount + num;
+		while (m_nAllocationCount < nAllocationRequested) {
+			if (m_nAllocationCount != 0) {
+				if (m_nGrowSize)
+					m_nAllocationCount += m_nGrowSize;
+				else
+					m_nAllocationCount += m_nAllocationCount;
+			} else {
+				m_nAllocationCount = 1;
+			}
+		}
+		if (m_pMemory)
+			m_pMemory = (CUtlRBTree232::Node_t *)Plat_Realloc(m_pMemory, m_nAllocationCount * sizeof(CUtlRBTree232::Node_t));
+		else
+			m_pMemory = (CUtlRBTree232::Node_t *)Plat_Alloc(m_nAllocationCount * sizeof(CUtlRBTree232::Node_t));
+	}
+};
+int CUtlRBTree232::sub_10131000(int parent, bool leftchild)
+{
+	int i = m_FirstFree;
+	if (i == InvalidIndex()) {
+		if (m_nAllocationCount == m_TotalElements)
+			((Mem232 *)&m_pElements)->Grow(1);
+		i = m_TotalElements++;
+	} else {
+		m_FirstFree = sub_10131a70(i).m_Right;
+	}
+	char *p = m_pElements[i].m_Data;
+	if (p) {
+		*(unsigned short *)p = 0xffff;
+		((CUnknown101b30d0 *)(p + 0xc))->sub_101332a0();
+	}
+	Links_t &links = m_pElements[i].m_Links;
+	links.m_Parent = parent;
+	links.m_Right = InvalidIndex();
+	links.m_Left = InvalidIndex();
+	links.m_Tag = 0;
+	if (parent != InvalidIndex()) {
+		if (leftchild)
+			m_pElements[parent].m_Links.m_Left = i;
+		else
+			m_pElements[parent].m_Links.m_Right = i;
+	} else {
+		m_Root = i;
+	}
+	sub_10131f80(i);
+	m_NumElements++;
+	return i;
 }
 // END FUNCTION
 
@@ -104674,6 +107944,47 @@ void sub_1013aee0(CUtlBuffer *buf, HdrX *hdr, Col4 *dst)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013aff0 size=0x164
+#include "CUtlBuffer.h"
+
+struct SImgInfo_1013aff0
+{
+	int m_unk[3];
+	unsigned short m_nCount;
+};
+
+void sub_1013ce00(CUtlBuffer *buf, const char *fmt, void *out);
+
+static inline unsigned char GetUC_1013aff0(CUtlBuffer *buf)
+{
+	unsigned char c;
+	if (!(buf->m_nFlags & 1))
+	{
+		if (buf->sub_1013cbb0(1))
+		{
+			c = buf->m_pBuffer[buf->m_nGet];
+			buf->m_nGet++;
+		}
+		else
+			c = 0;
+	}
+	else
+		sub_1013ce00(buf, "%u", &c);
+	return c;
+}
+
+void sub_1013aff0(CUtlBuffer *buf, SImgInfo_1013aff0 *info, unsigned char *out)
+{
+	for (int i = 0; i < info->m_nCount; i++, out += 4)
+	{
+		out[2] = GetUC_1013aff0(buf);
+		out[1] = GetUC_1013aff0(buf);
+		out[0] = GetUC_1013aff0(buf);
+		out[3] = GetUC_1013aff0(buf);
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013b160 size=0x6f
 extern "C" __declspec(dllimport) void Plat_Free(void *pMem);
 
@@ -104743,6 +108054,46 @@ void sub_1013b350(void *a, void *b, void *c)
 	CUtlBuf_1013b350 utlbuf;
 	utlbuf.sub_1013c8a0(buf, 0x800, 0);
 	sub_1013ae60(&utlbuf, b, c);
+}
+// END FUNCTION
+
+// FUNCTION: 0x1013b3c0 size=0x76
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+struct CInitView {
+	char *m_p; int m_a; int m_grow; int m_c; int m_d; unsigned char m_e; unsigned char m_f;
+	CInitView *sub_1013c8a0(int, int, unsigned char);
+	~CInitView() { if (m_grow != -1 && m_p) Plat_Free(m_p); }
+};
+void sub_1013b1d0(void *, void *, void *);
+void sub_1013aee0(CInitView *, void *, void *);
+// TARGET: sub_1013b3c0
+void sub_1013b3c0(void *a, void *b, void *c)
+{
+	char buf[0x1800];
+	sub_1013b1d0(a, b, buf);
+	CInitView v;
+	v.sub_1013c8a0((int)buf, 0x1800, 0);
+	sub_1013aee0(&v, b, c);
+}
+// END FUNCTION
+
+// FUNCTION: 0x1013b440 size=0x76
+extern "C" __declspec(dllimport) void Plat_Free(void *);
+struct CInitView {
+	char *m_p; int m_a; int m_grow; int m_c; int m_d; unsigned char m_e; unsigned char m_f;
+	CInitView *sub_1013c8a0(int, int, unsigned char);
+	~CInitView() { if (m_grow != -1 && m_p) Plat_Free(m_p); }
+};
+void sub_1013b1d0(void *, void *, void *);
+void sub_1013aff0(CInitView *, void *, void *);
+// TARGET: sub_1013b440
+void sub_1013b440(void *a, void *b, void *c)
+{
+	char buf[0x2000];
+	sub_1013b1d0(a, b, buf);
+	CInitView v;
+	v.sub_1013c8a0((int)buf, 0x2000, 0);
+	sub_1013aff0(&v, b, c);
 }
 // END FUNCTION
 
@@ -106847,6 +110198,50 @@ void S1006cd00::sub_1013f9b0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1013fa20 size=0x9c
+#include "CStatDefault3List.h"
+struct DataNode {
+	virtual void vf0();
+	virtual void vf1();
+	virtual DataNode *FindKey(const char *name);
+	virtual DataNode *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+// TARGET: CStatDefault3List::sub_1013fa20
+char CStatDefault3List::sub_1013fa20(const char *pszFile)
+{
+	DataFile *file = sub_101545c0(pszFile, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", pszFile);
+		return 0;
+	}
+	DataNode *node = file->FindKey("ClanData");
+	while (node) {
+		StatDefault3 *item = sub_1013f8c0();
+		if (!item) {
+			Msg("Unable to parse data file for: %s.  Memory allocation ERROR!\n", pszFile);
+			return 0;
+		}
+		item->sub_1013e790((VKeyValuesInterface *)node, this);
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1013fac0 size=0xbd
 #include "CStatDefault3List.h"
 
@@ -107843,6 +111238,53 @@ void CUnknown101d7380::sub_10140b40()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10140c10 size=0x9c
+#include "CUnknown101d5bd0.h"
+struct DataNode {
+	virtual void vf0();
+	virtual void vf1();
+	virtual DataNode *FindKey(const char *name);
+	virtual DataNode *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+struct CLoaderView {
+	void sub_10140710(DataNode *node, CUnknown101d5bd0 *list);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+// TARGET: CUnknown101d5bd0::sub_10140c10
+char CUnknown101d5bd0::sub_10140c10(const char *pszFile)
+{
+	DataFile *file = sub_101545c0(pszFile, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", pszFile);
+		return 0;
+	}
+	DataNode *node = file->FindKey("LevelingTemplate");
+	while (node) {
+		CLoaderView *item = sub_10140910();
+		if (!item) {
+			Msg("Unable to parse data file for: %s.  Memory allocation ERROR!\n", pszFile);
+			return 0;
+		}
+		item->sub_10140710(node, this);
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10140cb0 size=0x9b
 #include "CUnknown101d7380.h"
 #include "utlrbtree.h"
@@ -108125,6 +111567,47 @@ void CPartListUnit3::sub_101413a0()
     }
     m_nItems = 0;
     m_n4 = 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10141400 size=0xa1
+#include "CNamedList10203020.h"
+struct DataNode;
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+struct CUnknown10202fd0 {
+	void sub_1015f120(DataNode *node);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern int g_105f93c0;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" int sprintf(char *, const char *, ...);
+
+// TARGET: sub_10141400
+char sub_10141400()
+{
+	if (((CNamedList10203020 *)&g_105f93c0)->sub_1015f160("CharCreate_Strs") == -1) {
+		char path[260];
+		sprintf(path, "%s%s.txt", "vdata\\system\\", "CharCreateWizard");
+		DataFile *file = sub_101545c0(path, g_104a580c);
+		if (!file) {
+			Msg("Unable to open data file for: %s\n", path);
+			return 1;
+		}
+		DataNode *node = file->FindKey("Strings");
+		if (node)
+			((CUnknown10202fd0 *)&g_105f93c0)->sub_1015f120(node);
+		file->vf1();
+	}
+	return 1;
 }
 // END FUNCTION
 
@@ -108611,6 +112094,86 @@ void CPtrList101d6400::sub_10142000()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10142050 size=0x165
+#include "CUnknown10141e80.h"
+
+class CObjList_10142050
+{
+public:
+	int m_nGrow;
+	int m_nAlloc;
+	int m_nCount;
+	CUnknown10141e80 **m_pData;
+
+	CObjList_10142050 *sub_10142050(const CObjList_10142050 &other);
+};
+
+CObjList_10142050 *CObjList_10142050::sub_10142050(const CObjList_10142050 &other)
+{
+	int n = other.m_nCount;
+	for (int i = 0; i < n; i++)
+	{
+		if (m_nAlloc == m_nCount)
+		{
+			m_nAlloc += m_nGrow;
+			if (m_pData)
+			{
+				CUnknown10141e80 **pNew = (CUnknown10141e80 **)operator new(m_nAlloc * 4);
+				int j = 0;
+				if (m_nCount > 0)
+				{
+					do
+					{
+						pNew[j] = m_pData[j];
+						j++;
+					} while (j < m_nCount);
+				}
+				if (j < m_nAlloc)
+				{
+					do
+					{
+						pNew[j] = 0;
+						j++;
+					} while (j < m_nAlloc);
+				}
+				operator delete(m_pData);
+				m_pData = pNew;
+				m_nCount++;
+			}
+			else
+			{
+				m_pData = (CUnknown10141e80 **)operator new(m_nAlloc * 4);
+				int j = 0;
+				if (m_nAlloc > 0)
+				{
+					do
+					{
+						m_pData[j] = 0;
+						j++;
+					} while (j < m_nAlloc);
+				}
+				m_nCount++;
+			}
+		}
+		else
+			m_nCount = m_nCount + 1;
+		if (!m_pData[m_nCount - 1])
+			m_pData[m_nCount - 1] = new CUnknown10141e80(m_nCount - 1);
+		CUnknown10141e80 *dst = m_pData[m_nCount - 1];
+		CUnknown10141e80 *src;
+		if (i >= 0 && i < other.m_nCount)
+			src = other.m_pData[i];
+		else
+		{
+			static CUnknown10141e80 s_default(-1);
+			src = &s_default;
+		}
+		dst->sub_10141eb0(src);
+	}
+	return this;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10142310 size=0x2e
 #include "CUnknown101439f0.h"
 
@@ -108698,6 +112261,71 @@ void S101423a0::sub_101423a0()
 		p->sub_10141810();
 	} while (--n);
 	m_l.sub_10142000();
+}
+// END FUNCTION
+
+// FUNCTION: 0x101423d0 size=0xa2
+class CUnknown10141e80;
+
+class CObjList_10142050
+{
+public:
+	int m_nGrow;
+	int m_nAlloc;
+	int m_nCount;
+	CUnknown10141e80 **m_pData;
+
+	CObjList_10142050 *sub_10142050(const CObjList_10142050 &other);
+};
+
+struct S_10141820
+{
+	int m_unk[0x48 / 4];
+	S_10141820 &sub_10141820(const S_10141820 &src);
+};
+
+struct Q_101423d0
+{
+	int a, b, c, d;
+};
+
+class CRec_101423d0
+{
+public:
+	int m_unk0;
+	int m_a4;
+	int m_a8;
+	int m_ac;
+	int m_a10;
+	int m_a14;
+	CObjList_10142050 m_list;
+	char m_c28;
+	char m_c29;
+	char m_pad2a[6];
+	int m_a30;
+	Q_101423d0 m_q34;
+	Q_101423d0 m_q44;
+	S_10141820 m_s[4];
+
+	CRec_101423d0 &sub_101423d0(const CRec_101423d0 &rhs);
+};
+
+CRec_101423d0 &CRec_101423d0::sub_101423d0(const CRec_101423d0 &rhs)
+{
+	m_a4 = rhs.m_a4;
+	m_a8 = rhs.m_a8;
+	m_a10 = rhs.m_a10;
+	m_ac = rhs.m_ac;
+	m_a14 = rhs.m_a14;
+	m_list.sub_10142050(rhs.m_list);
+	m_c28 = rhs.m_c28;
+	m_c29 = rhs.m_c29;
+	m_a30 = rhs.m_a30;
+	m_q34 = rhs.m_q34;
+	m_q44 = rhs.m_q44;
+	for (int i = 0; i < 4; i++)
+		m_s[i].sub_10141820(rhs.m_s[i]);
+	return *this;
 }
 // END FUNCTION
 
@@ -108882,6 +112510,112 @@ void CPartListUnit3::sub_10142850()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10142b50 size=0x135
+#include "CVPopUpInfoMgr.h"
+#include "engineclient.h"
+extern "C" int __cdecl _strcmpi(const char *, const char *);
+extern void (*g_101e3118)(int level, const char *fmt, ...);
+struct CChk { bool sub_10142760(int a); };
+struct PopUpItem { int m_unk0; const char *m_pszName; };
+int CVPopUpInfoMgr::sub_10142b50(const char *name, int arg)
+{
+	int nCount = 0;
+	int found = -1;
+	int i;
+	g_101e3118(3, "[CharGenWiz]: CVPopUpInfoMgr::Lookup: ( %s )\n\n", name);
+	for (i = 0; i < m_nCount; i++) {
+		PopUpItem *p = (PopUpItem *)m_pItems[i];
+		const char *s = p->m_pszName;
+		if (!s)
+			s = "";
+		if (!_strcmpi(s, name) && ((CChk *)p)->sub_10142760(arg)) {
+			const char *n = p->m_pszName;
+			g_101e3118(3, "   PopUp: %s (%d)\n", n ? n : "", i);
+			found = i;
+			nCount++;
+		}
+	}
+	if (nCount <= 0)
+		return -1;
+	if (nCount == 1)
+		return found;
+	int pick = enginerandom->RandomInt(0, nCount - 1);
+	int k = 0;
+	for (i = 0; i < m_nCount; i++) {
+		PopUpItem *p = (PopUpItem *)m_pItems[i];
+		const char *s = p->m_pszName;
+		if (!s)
+			s = "";
+		if (!_strcmpi(s, name) && ((CChk *)p)->sub_10142760(arg)) {
+			if (k == pick)
+				return i;
+			k++;
+		}
+	}
+	return -1;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10142d00 size=0x127
+#include "CVPopUpInfoMgr.h"
+#include "CUnknown10141210.h"
+extern void (*g_101e3118)(int level, const char *fmt, ...);
+struct CUnknown10143e30 { void sub_10143f80(const char **pOut, bool bFlag); };
+extern CUnknown10143e30 g_105e7754;
+extern int g_105e7788;
+extern CUnknown10141210 **g_105e778c;
+struct PopUpItem { int m_pad[12]; int m_nType; };
+struct RecInit_10141210 { void sub_10141210(int); };
+extern unsigned char g_10680c90;
+extern CUnknown10141210 g_10680ca0;
+void sub_10144c70();
+extern "C" int atexit(void (__cdecl *)(void));
+inline CUnknown10141210 *GetClanRec(int i)
+{
+	if (i >= 0 && i < g_105e7788)
+		return g_105e778c[i];
+	if (!(g_10680c90 & 1)) {
+		g_10680c90 |= 1;
+		((RecInit_10141210 *)&g_10680ca0)->sub_10141210(-1);
+		atexit(sub_10144c70);
+	}
+	return &g_10680ca0;
+}
+int CVPopUpInfoMgr::sub_10142d00(const char *name, int arg)
+{
+	int r = sub_10142b50(name, arg);
+	if (r == -1) {
+		r = sub_10142b50(name, -1);
+		if (r != -1) {
+			if (((PopUpItem *)m_pItems[r])->m_nType == 2) {
+				g_101e3118(3, "[CharGenWiz]: PopUpMgr: Find: ProcessTraitChoices\n");
+				g_105e7754.sub_10143f80(&name, true);
+				r = sub_10142b50(name, arg);
+			}
+		} else {
+			int type = m_nType10;
+			if (type != -1) {
+				do {
+					r = sub_10142b50(GetClanRec(type)->sub_10141340(), -1);
+					if (r != -1)
+						break;
+					if (type == 2) {
+						g_105e7754.sub_10143f80(&name, true);
+						r = sub_10142b50(name, arg);
+						if (r != -1)
+							break;
+					}
+					type++;
+				} while (type < 10 && type != -1);
+			}
+		}
+	}
+	if (r != -1)
+		return m_pItems[r];
+	return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10142e30 size=0x1a
 namespace lifted {
 struct C10142620 { int sub_10142620(); };
@@ -109062,6 +112796,90 @@ void CPartListUnit3::sub_101431a0()
     }
     m_nItems = 0;
     m_n4 = 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10143200 size=0x15b
+#include "VKeyValues.h"
+#include "CUnknown10142e50.h"
+
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+class CTraitComboList_10143200
+{
+public:
+	int m_nGrow;
+	int m_nAlloc;
+	int m_nCount;
+	CUnknown10142e50 **m_pData;
+
+	char sub_10143200(VKeyValuesInterface *pKV);
+};
+
+char CTraitComboList_10143200::sub_10143200(VKeyValuesInterface *pKV)
+{
+	VKeyValuesInterface *pCombos = pKV->vfunc2("TraitCombinations");
+	if (!pCombos)
+		return 0;
+	VKeyValuesInterface *pCombo = pCombos->vfunc2("TraitCombination");
+	while (pCombo)
+	{
+		if (m_nAlloc == m_nCount)
+		{
+			m_nAlloc += m_nGrow;
+			if (m_pData)
+			{
+				CUnknown10142e50 **pNew = (CUnknown10142e50 **)operator new(m_nAlloc * 4);
+				int i = 0;
+				if (m_nCount > 0)
+				{
+					do
+					{
+						pNew[i] = m_pData[i];
+						i++;
+					} while (i < m_nCount);
+				}
+				if (i < m_nAlloc)
+				{
+					do
+					{
+						pNew[i] = 0;
+						i++;
+					} while (i < m_nAlloc);
+				}
+				operator delete(m_pData);
+				m_pData = pNew;
+				m_nCount++;
+			}
+			else
+			{
+				m_pData = (CUnknown10142e50 **)operator new(m_nAlloc * 4);
+				int i = 0;
+				if (m_nAlloc > 0)
+				{
+					do
+					{
+						m_pData[i] = 0;
+						i++;
+					} while (i < m_nAlloc);
+				}
+				m_nCount++;
+			}
+		}
+		else
+			m_nCount = m_nCount + 1;
+		if (!m_pData[m_nCount - 1])
+			m_pData[m_nCount - 1] = new CUnknown10142e50(m_nCount - 1);
+		CUnknown10142e50 *pElem = m_pData[m_nCount - 1];
+		if (!pElem)
+		{
+			Msg("Unable to parse data file:  Memory allocation ERROR!\n");
+			return 0;
+		}
+		pElem->sub_10142f10(pCombo);
+		pCombo = pCombo->vfunc3();
+	}
+	return 0;
 }
 // END FUNCTION
 
@@ -109468,6 +113286,103 @@ void CPartListUnit3::sub_101437d0()
     }
     m_nItems = 0;
     m_n4 = 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10143830 size=0x16f
+#include "VKeyValues.h"
+
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+struct S101434d0
+{
+	char m_pad[0x2c];
+	S101434d0 *sub_101434d0(int idx);
+	void sub_10143650(VKeyValuesInterface *pKV);
+};
+
+class CTraitOrderingList_10143830
+{
+public:
+	int m_nGrow;
+	int m_nAlloc;
+	int m_nCount;
+	S101434d0 **m_pData;
+
+	char sub_10143830(VKeyValuesInterface *pKV);
+};
+
+char CTraitOrderingList_10143830::sub_10143830(VKeyValuesInterface *pKV)
+{
+	VKeyValuesInterface *pCombos = pKV->vfunc2("TraitCombinations");
+	if (!pCombos)
+		return 0;
+	VKeyValuesInterface *pOrderings = pCombos->vfunc2("TraitOrderings");
+	if (!pOrderings)
+		return 0;
+	VKeyValuesInterface *pOrdering = pOrderings->vfunc2("TraitOrdering");
+	while (pOrdering)
+	{
+		if (m_nAlloc == m_nCount)
+		{
+			m_nAlloc += m_nGrow;
+			if (m_pData)
+			{
+				S101434d0 **pNew = (S101434d0 **)operator new(m_nAlloc * 4);
+				int i = 0;
+				if (m_nCount > 0)
+				{
+					do
+					{
+						pNew[i] = m_pData[i];
+						i++;
+					} while (i < m_nCount);
+				}
+				if (i < m_nAlloc)
+				{
+					do
+					{
+						pNew[i] = 0;
+						i++;
+					} while (i < m_nAlloc);
+				}
+				operator delete(m_pData);
+				m_pData = pNew;
+				m_nCount++;
+			}
+			else
+			{
+				m_pData = (S101434d0 **)operator new(m_nAlloc * 4);
+				int i = 0;
+				if (m_nAlloc > 0)
+				{
+					do
+					{
+						m_pData[i] = 0;
+						i++;
+					} while (i < m_nAlloc);
+				}
+				m_nCount++;
+			}
+		}
+		else
+			m_nCount = m_nCount + 1;
+		if (!m_pData[m_nCount - 1])
+		{
+			S101434d0 *p = (S101434d0 *)operator new(0x2c);
+			p = p ? p->sub_101434d0(m_nCount - 1) : 0;
+			m_pData[m_nCount - 1] = p;
+		}
+		S101434d0 *pElem = m_pData[m_nCount - 1];
+		if (!pElem)
+		{
+			Msg("Unable to parse data file:  Memory allocation ERROR!\n");
+			return 0;
+		}
+		pElem->sub_10143650(pOrdering);
+		pOrdering = pOrdering->vfunc3();
+	}
+	return 0;
 }
 // END FUNCTION
 
@@ -113364,6 +117279,39 @@ SoundRecX *SoundRecX::sub_10148cb0(const SoundRecX *o)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10148da0 size=0x12b
+#include "CUnknown101dff00.h"
+string_t sub_1015fc40(const char *psz);
+struct SRange { void sub_10148040(const char *psz); };
+extern CTraitEffectTable g_105f8b98;
+bool CUnknown101dff00::sub_10148da0(int a, void *pKV, const char *pszName)
+{
+	CUnknown101dc5a0Keys *kv = (CUnknown101dc5a0Keys *)pKV;
+	m_pszName = sub_1015fc40(pszName).pszValue;
+	if (kv) {
+		const char *parent = kv->vfunc13("InheritFrom", "");
+		if (!*parent || sub_10148840(a, parent)) {
+			((CUnknown101df000 *)((char *)this + 8))->sub_10148350(kv, 0);
+			((CUnknown101df000 *)((char *)this + 0xb4))->sub_10148350(kv, "OnEnd");
+			((CUnknown101df000 *)((char *)this + 0x160))->sub_10148350(kv, "OnCallback");
+			((CUnknown101df000 *)((char *)this + 0x20c))->sub_10148350(kv, "OnInterrupt");
+			((CUnknown101df000 *)((char *)this + 0x2b8))->sub_10148350(kv, "OnInterruptSchedule");
+			((SRange *)m_RangeStorage)->sub_10148040(kv->vfunc13("Duration", ""));
+			CUnknown101dc5a0Keys *trait = kv->vfunc2("TraitEffect");
+			if (trait) {
+				const char *effect = trait->vfunc13("Effect", "");
+				if (*effect)
+					m_nTraitEffect = g_105f8b98.sub_10157b80(effect);
+			}
+			m_bDoPossession = kv->vfunc12("DoPossession", false);
+			m_bDoFrenzy = kv->vfunc12("DoFrenzy", false);
+			return true;
+		}
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10148ed0 size=0xf7
 #include "CUnknown101dff00.h"
 extern "C" __declspec(dllimport) int __cdecl Q_snprintf(char *, int, const char *, ...);
@@ -113938,6 +117886,53 @@ void CUnknown101e0f00::sub_10149ac0()
 				g_101e3108("Unable to open Discipline Tgt data file for: %s\n", szFile);
 		}
 	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x10149b90 size=0x9c
+#include "CUnknown101d5bd0.h"
+struct DataNode {
+	virtual void vf0();
+	virtual void vf1();
+	virtual DataNode *FindKey(const char *name);
+	virtual DataNode *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+struct CLoaderView {
+	void sub_10149450(DataNode *node, CUnknown101d5bd0 *list);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+// TARGET: CUnknown101d5bd0::sub_10149b90
+char CUnknown101d5bd0::sub_10149b90(const char *pszFile)
+{
+	DataFile *file = sub_101545c0(pszFile, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", pszFile);
+		return 0;
+	}
+	DataNode *node = file->FindKey("DisciplineTgt");
+	while (node) {
+		CLoaderView *item = sub_10149890();
+		if (!item) {
+			Msg("Unable to parse data file for: %s.  Memory allocation ERROR!\n", pszFile);
+			return 0;
+		}
+		item->sub_10149450(node, this);
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return 1;
 }
 // END FUNCTION
 
@@ -116009,6 +120004,32 @@ int C_BaseVCombatCharacter::sub_1014db90(C_BaseVCombatCharacter *pTarget, int a,
 }
 // END FUNCTION
 
+// FUNCTION: 0x1014dc70 size=0x173
+#include "CVStatList_t.h"
+struct StatOwnerView { char pad[0x1178]; int m_nLists; CVStatList_t **m_pLists;
+ CVStatList_t *Find(int type) {
+  for (int i = 0; i < m_nLists; i++) {
+   if (m_pLists[i]->m_field10 == type) return m_pLists[i];
+  }
+  static CVStatList_t s_default(-1);
+  return &s_default;
+ }
+};
+struct CThing { char pad[0x3c0]; char m_c0; int m_c4;
+ int sub_1014dc70(StatOwnerView *ent, int n);
+};
+int CThing::sub_1014dc70(StatOwnerView *ent, int n) {
+ if (!ent || m_c0) return m_c4 * n;
+ int a = ent->Find(0)->sub_1015dbd0(0xd);
+ int b = ent->Find(0)->sub_1015dbd0(0x11);
+ int c = ent->Find(0)->sub_1015dbd0(0xf);
+ int room = b - c;
+ int v = b * n / a;
+ if (v > room) return room;
+ return v;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1014ddf0 size=0x23
 char __fastcall sub_1008eb70(void *pOther);
 
@@ -117431,6 +121452,69 @@ void CUnknown101ec6f0::sub_101503a0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10150440 size=0xf9
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+};
+struct CUnknown10150240 {
+	void sub_10150240();
+};
+struct ItemView {
+	int m_0;
+	int m_4;
+	int m_8;
+	int m_c;
+	int m_10;
+	int m_count;
+	CUnknown10150240 **m_pItems;
+	bool sub_10150540(DataFile *file);
+	char sub_10150440();
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" int sprintf(char *, const char *, ...);
+
+// TARGET: ItemView::sub_10150440
+char ItemView::sub_10150440()
+{
+	char path[128];
+	bool bOk = true;
+	if (m_pItems) {
+		for (int i = 0; i < m_count; i++) {
+			CUnknown10150240 *p = m_pItems[i];
+			if (p) {
+				p->sub_10150240();
+				::operator delete(p);
+			}
+			m_pItems[i] = 0;
+		}
+		::operator delete(m_pItems);
+		m_pItems = 0;
+	}
+	m_4 = 0;
+	m_count = 0;
+	m_10 = 0;
+	sprintf(path, "%s%s.txt", "vdata\\system\\", "items");
+	DataFile *file = sub_101545c0(path, g_104a580c);
+	if (file) {
+		if (!sub_10150540(file)) {
+			Msg("Unable to open data file for: %s\n", path);
+			bOk = false;
+		}
+		file->vf1();
+	} else {
+		Msg("Unable to load data for: %s\n", path);
+	}
+	return bOk;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10150540 size=0x17f
 struct KVNode {
 	virtual void v0();
@@ -117740,6 +121824,69 @@ void CUnknown101ed170::sub_10150bc0()
         delete m_p28;
         m_p28 = 0;
     }
+}
+// END FUNCTION
+
+// FUNCTION: 0x10150ff0 size=0xf9
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+};
+struct CUnknown101ed170 {
+	void sub_10150bc0();
+};
+struct ItemView {
+	int m_0;
+	int m_4;
+	int m_8;
+	int m_c;
+	int m_10;
+	int m_count;
+	CUnknown101ed170 **m_pItems;
+	bool sub_101510f0(DataFile *file);
+	char sub_10150ff0();
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" int sprintf(char *, const char *, ...);
+
+// TARGET: ItemView::sub_10150ff0
+char ItemView::sub_10150ff0()
+{
+	char path[128];
+	bool bOk = true;
+	if (m_pItems) {
+		for (int i = 0; i < m_count; i++) {
+			CUnknown101ed170 *p = m_pItems[i];
+			if (p) {
+				p->sub_10150bc0();
+				::operator delete(p);
+			}
+			m_pItems[i] = 0;
+		}
+		::operator delete(m_pItems);
+		m_pItems = 0;
+	}
+	m_4 = 0;
+	m_count = 0;
+	m_10 = 0;
+	sprintf(path, "%s%s.txt", "vdata\\system\\", "items");
+	DataFile *file = sub_101545c0(path, g_104a580c);
+	if (file) {
+		if (!sub_101510f0(file)) {
+			Msg("Unable to open data file for: %s\n", path);
+			bOk = false;
+		}
+		file->vf1();
+	} else {
+		Msg("Unable to load data for: %s\n", path);
+	}
+	return bOk;
 }
 // END FUNCTION
 
@@ -118242,6 +122389,132 @@ void CPtrList101d6400::sub_10151890()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101518e0 size=0x171
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" __declspec(dllimport) void DevMsg(int, const char *, ...);
+
+struct TipKV
+{
+	virtual void s0();
+	virtual void s1();
+	virtual TipKV *vfunc2(const char *name);
+	virtual TipKV *vfunc3();
+};
+
+struct TipEntry
+{
+	char m_pad[0x1c];
+	TipEntry *sub_10151600(int index);
+	void sub_10151660(TipKV *kv);
+};
+
+struct TipsMgr
+{
+	int m_delta;
+	int m_max;
+	int m_count;
+	TipEntry **m_pData;
+	bool sub_101518e0(TipKV *kv, const char *name);
+};
+
+// TARGET: TipsMgr::sub_101518e0
+bool TipsMgr::sub_101518e0(TipKV *kv, const char *name)
+{
+	if (kv)
+	{
+		for (TipKV *sub = kv->vfunc2("Tip"); sub; sub = sub->vfunc3())
+		{
+			if (m_max == m_count)
+			{
+				m_max += m_delta;
+				if (m_pData)
+				{
+					TipEntry **pNew = new TipEntry *[m_max];
+					int i;
+					for (i = 0; i < m_count; i++)
+						pNew[i] = m_pData[i];
+					for (; i < m_max; i++)
+						pNew[i] = 0;
+					delete[] m_pData;
+					m_pData = pNew;
+					m_count++;
+				}
+				else
+				{
+					m_pData = new TipEntry *[m_max];
+					for (int i = 0; i < m_max; i++)
+						m_pData[i] = 0;
+					m_count++;
+				}
+			}
+			else
+				m_count = m_count + 1;
+			if (!m_pData[m_count - 1])
+			{
+				TipEntry *p = (TipEntry *)operator new(0x1c);
+				m_pData[m_count - 1] = p ? p->sub_10151600(m_count - 1) : 0;
+			}
+			if (!m_pData[m_count - 1])
+			{
+				Msg("Unable to parse data file for: %s.  Memory allocation ERROR!\n", name);
+				return false;
+			}
+			m_pData[m_count - 1]->sub_10151660(sub);
+		}
+		return true;
+	}
+	DevMsg(1, "ERROR: LoadTips: CVLoadTipsInfoMgr::LoadSection FAILED: %s!\n", name);
+	return false;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10151a60 size=0xbe
+struct TipKV {
+	virtual void vf0();
+	virtual void vf1();
+	virtual TipKV *FindKey(const char *name);
+	virtual TipKV *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual TipKV *FindKey(const char *name);
+};
+struct TipsMgr {
+	bool sub_101518e0(TipKV *node, const char *path);
+	char sub_10151a60();
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+extern "C" __declspec(dllimport) void DevMsg(int, const char *, ...);
+extern "C" int sprintf(char *, const char *, ...);
+
+// TARGET: TipsMgr::sub_10151a60
+char TipsMgr::sub_10151a60()
+{
+	char path[260];
+	sprintf(path, "%s%s.txt", "vdata\\system\\", "LoadingTips");
+	DataFile *file = sub_101545c0(path, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", path);
+		return 0;
+	}
+	TipKV *node = file->FindKey("Tips_Section");
+	while (node) {
+		if (!sub_101518e0(node, path))
+			DevMsg(1, "ERROR: LoadTips: CVLoadTipsInfoMgr::Load FAILED!\n");
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10151b20 size=0x11
 struct CUnknown10151b20 { int m_unk0; int m_unk4; int m_unk8; int *m_pItems; int m_nCur; int sub_10151b20(); };
 int CUnknown10151b20::sub_10151b20()
@@ -118496,6 +122769,59 @@ int sub_10095f30();
 int sub_101522b0()
 {
     return lifted::sub_10095f30();
+}
+// END FUNCTION
+
+// FUNCTION: 0x101522c0 size=0x13c
+#include "ehandle.h"
+#include "CBaseEntityList.h"
+#include "matrix3x4_t.h"
+#include "QAngle.h"
+#include "C_BaseEntity.h"
+struct IParentRend_101522c0 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void SetupBones(matrix3x4_t *, int, int, float, int);
+};
+struct ParentEnt_101522c0 {
+	char pad[0x3f0];
+	int m_p3f0;
+};
+void sub_10108a50(const matrix3x4_t &, const matrix3x4_t &, matrix3x4_t &);
+void sub_10107eb0(const matrix3x4_t &, QAngle &);
+void sub_10108510(matrix3x4_t *, int, Vector *);
+struct Self_101522c0 {
+	char pad0[0x78c];
+	CBaseHandle m_hParent;
+	int m_iBone;
+	char pad1[0x1c];
+	matrix3x4_t m_local;
+	int m_iState;
+	Vector m_vecOrigin;
+	QAngle m_angAngles;
+	void sub_100919c0(matrix3x4_t *, int, int, float, int);
+	void sub_101522c0(matrix3x4_t *, int, int, float, int);
+};
+// TARGET: Self_101522c0::sub_101522c0
+void Self_101522c0::sub_101522c0(matrix3x4_t *pOut, int nMax, int boneMask, float t, int a5)
+{
+	matrix3x4_t boneToWorld[350];
+	matrix3x4_t result;
+	if (m_iBone >= 0 && m_iState == 1) {
+		ParentEnt_101522c0 *pParent = (ParentEnt_101522c0 *)m_hParent.Get();
+		if (pParent && pParent->m_p3f0) {
+			((IParentRend_101522c0 *)((char *)pParent + 4))->SetupBones(boneToWorld, 350, 0xfffc, t, a5);
+			a5 = 0;
+			sub_10108a50(boneToWorld[m_iBone], m_local, result);
+			sub_10107eb0(result, m_angAngles);
+			sub_10108510(&result, 3, &m_vecOrigin);
+			C_BaseEntity *pEnt = (C_BaseEntity *)((char *)this - 4);
+			pEnt->sub_100a2100(m_angAngles);
+			pEnt->sub_100a2030(&m_vecOrigin);
+		}
+	}
+	sub_100919c0(pOut, nMax, boneMask, t, a5);
 }
 // END FUNCTION
 
@@ -119295,6 +123621,92 @@ bool CUnknown101f0e50::sub_101530c0(void *pData)
 	}
 	Msg("Unable to parse data file for ReactionInfoList.\n");
 	return false;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10153180 size=0xa5
+#include "CUnknown101f10e0.h"
+struct DataNode {
+	virtual void vf0();
+	virtual void vf1();
+	virtual DataNode *FindKey(const char *name);
+	virtual DataNode *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+// TARGET: CUnknown101f10e0::sub_10153180
+bool CUnknown101f10e0::sub_10153180(const char *pszFile)
+{
+	DataFile *file = sub_101545c0(pszFile, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", pszFile);
+		return false;
+	}
+	DataNode *node = file->FindKey("ReactionCategory");
+	while (node) {
+		if (!sub_10152ff0(node)) {
+			Msg("Unable to parse category from data file for: %s.  Memory allocation ERROR!\n", pszFile);
+			file->vf1();
+			return false;
+		}
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return true;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10153230 size=0xa5
+#include "CUnknown101f0e50.h"
+struct DataNode {
+	virtual void vf0();
+	virtual void vf1();
+	virtual DataNode *FindKey(const char *name);
+	virtual DataNode *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+// TARGET: CUnknown101f0e50::sub_10153230
+bool CUnknown101f0e50::sub_10153230(const char *pszFile)
+{
+	DataFile *file = sub_101545c0(pszFile, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", pszFile);
+		return false;
+	}
+	DataNode *node = file->FindKey("ReactionCategory");
+	while (node) {
+		if (!sub_101530c0(node)) {
+			Msg("Unable to parse category from data file for: %s.  Memory allocation ERROR!\n", pszFile);
+			file->vf1();
+			return false;
+		}
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return true;
 }
 // END FUNCTION
 
@@ -122602,6 +127014,92 @@ bool CUnknown101f7cc0::sub_10157630(void *pData)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101576f0 size=0xa5
+#include "CUnknown101f10e0.h"
+struct DataNode {
+	virtual void vf0();
+	virtual void vf1();
+	virtual DataNode *FindKey(const char *name);
+	virtual DataNode *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+// TARGET: CUnknown101f10e0::sub_101576f0
+bool CUnknown101f10e0::sub_101576f0(const char *pszFile)
+{
+	DataFile *file = sub_101545c0(pszFile, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", pszFile);
+		return false;
+	}
+	DataNode *node = file->FindKey("TraitEffectCategory");
+	while (node) {
+		if (!sub_10157560(node)) {
+			Msg("Unable to parse category from data file for: %s.  Memory allocation ERROR!\n", pszFile);
+			file->vf1();
+			return false;
+		}
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return true;
+}
+// END FUNCTION
+
+// FUNCTION: 0x101577a0 size=0xa5
+#include "CUnknown101f7cc0.h"
+struct DataNode {
+	virtual void vf0();
+	virtual void vf1();
+	virtual DataNode *FindKey(const char *name);
+	virtual DataNode *NextSibling();
+};
+struct DataVBase {
+	virtual void vf0();
+	virtual void vf1();
+};
+struct DataFile : virtual DataVBase {
+	virtual void vf0b();
+	virtual void vf1b();
+	virtual DataNode *FindKey(const char *name);
+};
+extern "C" DataFile *sub_101545c0(const char *name, void *fs);
+extern void *g_104a580c;
+extern "C" __declspec(dllimport) void Msg(const char *, ...);
+
+// TARGET: CUnknown101f7cc0::sub_101577a0
+bool CUnknown101f7cc0::sub_101577a0(const char *pszFile)
+{
+	DataFile *file = sub_101545c0(pszFile, g_104a580c);
+	if (!file) {
+		Msg("Unable to open data file for: %s\n", pszFile);
+		return false;
+	}
+	DataNode *node = file->FindKey("TraitEffectCategory");
+	while (node) {
+		if (!sub_10157630(node)) {
+			Msg("Unable to parse category from data file for: %s.  Memory allocation ERROR!\n", pszFile);
+			file->vf1();
+			return false;
+		}
+		node = node->NextSibling();
+	}
+	file->vf1();
+	return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10157a20 size=0x9f
 #include <stdio.h>
 #include "FileSystemViews.h"
@@ -123347,6 +127845,72 @@ void CVDmg_t::sub_101591f0(unsigned int flags)
 	++*g_101e3128;
 	m_nFlags |= flags;
 	--*g_101e3128;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10159260 size=0x191
+#include "CVDmg_t.h"
+#include "ScopeTrace.h"
+extern "C" int sprintf(char *, const char *, ...);
+extern "C" unsigned int strlen(const char *);
+extern "C" char *strcat(char *, const char *);
+#pragma intrinsic(strlen)
+#pragma intrinsic(strcat)
+struct ToStrNames { const char *sub_1015ecd0(); };
+struct ToStrOwner { int sub_1015f160(const char *); ToStrNames *sub_1015f270(int, int); };
+struct ToStrBlock { char sub_10160660(); const char *sub_10160740(); };
+extern ToStrOwner g_105f93c0;
+extern char g_105f9194[];
+// TARGET: CVDmg_t::sub_10159260
+char *CVDmg_t::sub_10159260()
+{
+	ScopeTrace st("CVDmg_t::ToStr", g_102de300);
+	if (m_pad0000 != -1) {
+		static int idDamageType = g_105f93c0.sub_1015f160("DamageType");
+		const char *s = "(";
+		int i = 0;
+		char ch;
+		do {
+			ch = s[i];
+			g_105f9194[i] = ch;
+			i++;
+		} while (ch);
+		int len = 1;
+		if (!((ToStrBlock *)&m_block14)->sub_10160660()) {
+			sprintf(g_105f9194 + 1, " %s", ((ToStrBlock *)&m_block14)->sub_10160740());
+			len = strlen(g_105f9194);
+		}
+		sprintf(g_105f9194 + len, " %d %s", m_field04, g_105f93c0.sub_1015f270(idDamageType, m_pad0000)->sub_1015ecd0());
+		len = strlen(g_105f9194);
+		if (!((ToStrBlock *)&m_block24)->sub_10160660())
+			sprintf(g_105f9194 + len, " %s", ((ToStrBlock *)&m_block24)->sub_10160740());
+		strcat(g_105f9194, " )");
+		return g_105f9194;
+	}
+	g_105f9194[0] = 0;
+	return g_105f9194;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10159400 size=0xd8
+#include "CVDmg_t.h"
+#include "ScopeTrace.h"
+#include <stdio.h>
+
+extern char g_105f8eb4[];
+
+char *CVDmg_t::sub_10159400()
+{
+	ScopeTrace st("CVDmg_t::ToShortStr", g_102de300);
+	if (m_pad0000 != -1) {
+		if (!m_block14.sub_10160660())
+			sprintf(g_105f8eb4, " %s %d", m_block14.sub_10160740(), m_field04);
+		else
+			sprintf(g_105f8eb4, " %d", m_field04);
+	} else {
+		g_105f8eb4[0] = 0;
+	}
+	return g_105f8eb4;
 }
 // END FUNCTION
 
@@ -124156,6 +128720,54 @@ void CVStatAction_t::sub_1015a920(int a, int b, int c)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015a9a0 size=0x180
+#include "CVStatAction_t.h"
+#include "ScopeTrace.h"
+#include <stdio.h>
+
+struct StatRec_1015a9a0 { int m_a; int m_b; const char *m_pszName; };
+struct CUnknown101f0e50 { StatRec_1015a9a0 *sub_10157c20(int idx); };
+extern CUnknown101f0e50 g_105f8b98;
+extern char g_105f9038[];
+extern char g_102cacfc[];
+const char *sub_1015e8a0(char *a, int b);
+
+char *CVStatAction_t::sub_1015a9a0()
+{
+	ScopeTrace st("CVStatAction_t::ToDetailedStr", g_102de300);
+	char *base = (char *)this;
+	switch (m_nType) {
+	case 1: {
+		const char **pp = &g_105f8b98.sub_10157c20(*(int *)(base + 0x3c))->m_pszName;
+		const char *name = *pp;
+		if (!name)
+			name = g_102de300;
+		sprintf(g_105f9038, "[ %d - %d ]: %s", m_unk08, m_unk0c, name);
+		return g_105f9038;
+	}
+	case 2:
+		sprintf(g_105f9038, "[ %d - %d ]: %s", m_unk08, m_unk0c, sub_1015e8a0(base + 0x40, *(int *)(base + 0x3c)));
+		return g_105f9038;
+	case 4: {
+		char *buf = (char *)m_pBuffer;
+		sprintf(g_105f9038, "[ %d - %d ]: %s @ %s", m_unk08, m_unk0c, buf, buf + 0x84);
+		return g_105f9038;
+	}
+	case 3:
+		sprintf(g_105f9038, "[ %d - %d ]: FUNC", m_unk08, m_unk0c);
+		return g_105f9038;
+	}
+	int i = 0;
+	char c;
+	do {
+		c = g_102cacfc[i];
+		g_105f9038[i] = c;
+		i++;
+	} while (c);
+	return g_105f9038;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015ab20 size=0x69
 #include "ScopeTrace.h"
 extern char g_102cb9e0[];
@@ -124227,6 +128839,54 @@ void VList::sub_1015abf0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015acb0 size=0x144
+#include "ScopeTrace.h"
+
+struct StatAction_1015a110 { StatAction_1015a110 *sub_1015a110(int, int); };
+
+struct StatActionList_1015acb0
+{
+	int m_nAlloc;
+	int m_nCount;
+	StatAction_1015a110 **m_ppData;
+	int m_a;
+	int m_b;
+	StatAction_1015a110 *sub_1015acb0();
+};
+
+// TARGET: StatActionList_1015acb0::sub_1015acb0
+StatAction_1015a110 *StatActionList_1015acb0::sub_1015acb0()
+{
+	ScopeTrace st("CVStatActionList_t::Alloc", g_102de300);
+	if (m_nAlloc == m_nCount) {
+		m_nAlloc++;
+		if (m_ppData) {
+			StatAction_1015a110 **p = (StatAction_1015a110 **)operator new(m_nAlloc * 4);
+			int i;
+			for (i = 0; i < m_nCount; i++)
+				p[i] = m_ppData[i];
+			for (; i < m_nAlloc; i++)
+				p[i] = 0;
+			operator delete(m_ppData);
+			m_nCount++;
+			m_ppData = p;
+		} else {
+			m_ppData = (StatAction_1015a110 **)operator new(m_nAlloc * 4);
+			for (int i = 0; i < m_nAlloc; i++)
+				m_ppData[i] = 0;
+			m_nCount++;
+		}
+	} else {
+		m_nCount++;
+	}
+	if (!m_ppData[m_nCount - 1]) {
+		StatAction_1015a110 *p = (StatAction_1015a110 *)operator new(0x58);
+		m_ppData[m_nCount - 1] = p ? p->sub_1015a110(m_a, m_b) : 0;
+	}
+	return m_ppData[m_nCount - 1];
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015ae00 size=0xa7
 namespace lifted {
 extern int g_101e3124;
@@ -124294,6 +128954,25 @@ void CVStatActionList_t::sub_1015af10(CVStatActionTarget *pTarget, int a1, int a
 	ScopeTrace trace("CVStatActionList_t::Update", g_102de300, g_102de300);
 	if (g_105f93a0 && pTarget)
 		g_105f93a0(this, (&pTarget->m_view)->vfunc9(), a1, a2);
+}
+// END FUNCTION
+
+// FUNCTION: 0x1015afa0 size=0xa9
+#include "CVStatActionList_t.h"
+#include "CVStatAction_t.h"
+#include "ScopeTrace.h"
+#include <stdio.h>
+
+extern "C" __declspec(dllimport) void __cdecl DevMsg(int level, const char *msg);
+
+void CVStatActionList_t::sub_1015afa0()
+{
+	ScopeTrace st("CVStatActionList_t::Debug_Display", g_102de300);
+	char buf[0x80];
+	for (int i = 0; i < m_nActions; i++) {
+		sprintf(buf, "\t\t\t( Action %d )\t%s\n", i, m_pActions[i]->sub_1015a9a0());
+		DevMsg(1, buf);
+	}
 }
 // END FUNCTION
 
@@ -124505,6 +129184,45 @@ void CVStatInfo_t::sub_1015b420(CVStatKV *pKV)
 		}
 	} else {
 		Msg("Unable to load CVStatInfo_t data\n");
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x1015bb30 size=0x13a
+#include "CVStatInfo_t.h"
+#include "CVStatInfoList_t.h"
+#include "ScopeTrace.h"
+#include "Tier1.h"
+struct CParsedValue
+{
+	int m_a, m_b, m_c, m_d, m_e;
+	void sub_101615d0(CVStatKV *pKV, const char *pszName);
+};
+struct CUnknown1015ae00 { void sub_1015ae00(CVStatKV *pKV); };
+struct CUnknown10205f70 { void sub_10161a40(CVStatKV *pKV, const char *pszName); };
+void CVStatInfo_t::sub_1015bb30(CVStatKV *pKV, CVStatInfoList_t *pDefaults)
+{
+	ScopeTrace st("CVStatInfo_t::PostLoad", g_102de300);
+	if (pKV) {
+		CParsedValue *pMin = (CParsedValue *)((char *)this + 0x4c);
+		pMin->sub_101615d0(pKV, "Min");
+		((CParsedValue *)((char *)this + 0x60))->sub_101615d0(pKV, "Max");
+		CParsedValue *pMinSell = (CParsedValue *)((char *)this + 0x74);
+		pMinSell->sub_101615d0(pKV, "MinSell");
+		if (pMinSell->m_a == -1)
+			*pMinSell = *pMin;
+		CParsedValue *pMaxBuy = (CParsedValue *)((char *)this + 0x88);
+		pMaxBuy->sub_101615d0(pKV, "MaxBuy");
+		if (pMaxBuy->m_a == -1)
+			*pMaxBuy = *(CParsedValue *)((char *)this + 0x60);
+		((CParsedValue *)((char *)this + 0x9c))->sub_101615d0(pKV, "Default");
+		((CUnknown1015ae00 *)((char *)this + 0x10c))->sub_1015ae00(pKV);
+		((CUnknown10205f70 *)((char *)this + 0x120))->sub_10161a40(pKV, "IncPredependency");
+		CVStatCost_t *pCost = (CVStatCost_t *)((char *)this + 0xb0);
+		if (!pCost->sub_10159d10(pKV))
+			*pCost = pDefaults->m_cost;
+	} else {
+		g_101e3108("Unable to load CVStatInfo_t data\n");
 	}
 }
 // END FUNCTION
@@ -124992,6 +129710,54 @@ int CVStatInfoList_t::sub_1015cb90(const char *name)
         } while (i < m_nStats);
     }
     (g_ScopeTraceStackDepth)--;
+    return -1;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1015ccb0 size=0x12c
+#include "CVStatInfoList_t.h"
+#include "ScopeTrace.h"
+#include <string.h>
+int CVStatInfoList_t::sub_1015ccb0(const char *name, int index)
+{
+    ScopeTrace st("CVStatInfoList_t::LookupNextPartial( char *name, int index )", "");
+    char lowname[128];
+    strcpy(lowname, name);
+    _strlwr(lowname);
+    for (int i = index + 1; i < m_nStats; i++)
+    {
+        char ename[128];
+        const char *const &pName = m_pStats[i].m_pszName;
+        const char *s = pName ? pName : "";
+        strcpy(ename, s);
+        _strlwr(ename);
+        if (strstr(ename, lowname) == ename)
+            return i;
+    }
+    return -1;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1015cde0 size=0x12c
+#include "CVStatInfoList_t.h"
+#include "ScopeTrace.h"
+#include <string.h>
+int CVStatInfoList_t::sub_1015cde0(const char *name, int index)
+{
+    ScopeTrace st("CVStatInfoList_t::LookupNextPartial( const char *name, int index )", "");
+    char lowname[128];
+    strcpy(lowname, name);
+    _strlwr(lowname);
+    for (int i = index + 1; i < m_nStats; i++)
+    {
+        char ename[128];
+        const char *const &pName = m_pStats[i].m_pszName;
+        const char *s = pName ? pName : "";
+        strcpy(ename, s);
+        _strlwr(ename);
+        if (strstr(ename, lowname) == ename)
+            return i;
+    }
     return -1;
 }
 // END FUNCTION
@@ -125697,6 +130463,37 @@ void sub_1015e630()
 				g_105f8e70[out++] = m;
 		}
 	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x1015e8a0 size=0x13c
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "ScopeTrace.h"
+#include "CVStatInfoList_t.h"
+extern CVStatInfoList_t g_105f9220;
+extern CVStatInfoList_t g_105f90b8;
+extern CVStatInfoList_t g_105f8c60;
+extern CVStatInfoList_t g_105f91c8;
+extern char g_105f8ee4[];
+extern "C" int sprintf(char *, const char *, ...);
+// TARGET: sub_1015e8a0
+const char *sub_1015e8a0(CVDmgBlock16_t *p, int value)
+{
+	ScopeTrace st("vampStats_DepSubValueToStr", g_102de300);
+	if (!p->sub_10160660()) {
+		switch (p->m_a) {
+		case 0:
+			return g_105f9220.sub_1015cfe0(pcd_stage(p->m_b))->sub_1015b270(value);
+		case 1:
+			return g_105f90b8.sub_1015cfe0(pcd_stage(p->m_b))->sub_1015b270(value);
+		case 2:
+			return g_105f8c60.sub_1015cfe0(pcd_stage(p->m_b))->sub_1015b270(value);
+		case 3:
+			return g_105f91c8.sub_1015cfe0(pcd_stage(p->m_b))->sub_1015b270(value);
+		}
+	}
+	sprintf(g_105f8ee4, "%d", value);
+	return g_105f8ee4;
 }
 // END FUNCTION
 
@@ -126858,6 +131655,30 @@ int sub_1015fc70(void *pObj, bool b)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1015fd80 size=0x137
+#include "CVStatList_t.h"
+
+extern int g_105f8e70[17];
+
+// TARGET: sub_1015fd80
+int sub_1015fd80(void *pChar, int id, bool flag)
+{
+    int count = 0;
+    int minv = 0;
+    if (!flag) minv = 1;
+    CVStatListSet *set = (CVStatListSet *)((char *)pChar + 0x1164);
+    for (int i = 0; i < 17; i++) {
+        int s = g_105f8e70[i];
+        if (s == id) return count;
+        if (set->Find(2)->sub_1015dbd0(s) >= minv) {
+            if (set->Find(2)->sub_1015dbd0(s) < 15)
+                count++;
+        }
+    }
+    return 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1015fec0 size=0x5
 int sub_1015fec0(int a0, int a1)
 {
@@ -127776,6 +132597,35 @@ CVTraitDependencyValue_t *CVTraitDependencyValue_t::sub_10161820(int a)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101618f0 size=0x7e
+struct SubA { char sub_10160660(); const char *sub_10160740(); };
+struct SubB { int sub_10161760(int); };
+struct SubC { int sub_1015ecd0(); };
+struct Owner { int sub_1015f160(const char *); SubC *sub_1015f270(int, int); };
+extern Owner g_105f93c0;
+extern char g_105f98f0[];
+extern char g_102de300[];
+extern "C" __declspec(dllimport) int __cdecl Q_snprintf(char *, int, const char *, ...);
+struct CUnknownEq {
+    int m_0;
+    SubA m_4;
+    int m_unk8, m_unkc, m_unk10;
+    int m_14;
+    SubB m_18;
+    char *sub_101618f0();
+};
+// TARGET: CUnknownEq::sub_101618f0
+char *CUnknownEq::sub_101618f0()
+{
+    if (!m_4.sub_10160660()) {
+        int a = g_105f93c0.sub_1015f160("Equality");
+        Q_snprintf(g_105f98f0, 0x80, "(%s  %s  %s)\n", m_4.sub_10160740(), g_105f93c0.sub_1015f270(a, m_14)->sub_1015ecd0(), m_18.sub_10161760((int)(this ? &m_4 : 0)));
+        return g_105f98f0;
+    }
+    return g_102de300;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10161a40 size=0x169
 #include "CUnknown10205f70.h"
 
@@ -128689,6 +133539,51 @@ CExperienceAward *CExperienceTable::sub_10163600(int index)
 	g_101e3140("Invalid index for experience table: %d\n", index);
 	(g_ScopeTraceStackDepth)--;
 	return &g_105f9a0c;
+}
+// END FUNCTION
+
+// FUNCTION: 0x101636a0 size=0x14b
+#include "CExperienceTable.h"
+#include "CUtlMemory12.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+extern "C" unsigned int __cdecl strlen(const char *);
+#pragma intrinsic(strlen)
+extern "C" void *__cdecl memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+extern "C" void *__cdecl memmove(void *, const void *, unsigned int);
+extern char g_105f9a18[];
+
+// TARGET: CExperienceTable::sub_101636a0
+void CExperienceTable::sub_101636a0(int file)
+{
+	ScopeTrace st("ExperienceTable::LoadFile", g_102de300);
+	while (1)
+	{
+		CExperienceAward award;
+		memset(&award, 0, sizeof(award));
+		g_105f9a18[0] = 0;
+		char *r = filesystem->vfunc20(g_105f9a18, 0x1000, file);
+		if (g_105f9a18[0] == (char)0xff || !r)
+			break;
+		if (g_105f9a18[0] == '>')
+			continue;
+		if ((int)strlen(g_105f9a18) < 3)
+			continue;
+		if (!sub_101637f0(g_105f9a18, &award))
+			break;
+		int elem = m_Size;
+		if (m_Size + 1 > m_allocationCount)
+			((CUtlMemory12 *)this)->sub_10163a50(m_Size + 1 - m_allocationCount);
+		m_pElements = m_pMemory;
+		m_Size = m_Size + 1;
+		int n = m_Size - elem - 1;
+		if (n > 0)
+			memmove(&m_pMemory[elem + 1], &m_pMemory[elem], n * sizeof(CExperienceAward));
+		CExperienceAward *p = &m_pMemory[elem];
+		if (p)
+			*p = award;
+	}
 }
 // END FUNCTION
 
@@ -131079,6 +135974,42 @@ int CUnknown1016b1a0::sub_1016b1a0()
 {
     *(int *)this = (int)&lifted::g_1024a4ac;
     return lifted::sub_101b20a0();
+}
+// END FUNCTION
+
+// FUNCTION: 0x1016cdc0 size=0x165
+#include "VBarterUI.h"
+// TARGET: VBarterUI::sub_1016cdc0
+void VBarterUI::sub_1016cdc0()
+{
+    int i;
+    for (i = 0; i < 0x18; i++) {
+        delete m_Slots1[i].b;
+        m_Slots1[i].b = 0;
+        delete m_Slots1[i].c;
+        m_Slots1[i].c = 0;
+        delete m_Slots1[i].a;
+        m_Slots1[i].a = 0;
+    }
+    for (i = 0; i < 0x20; i++) {
+        delete m_Slots2[i].b;
+        m_Slots2[i].b = 0;
+        delete m_Slots2[i].c;
+        m_Slots2[i].c = 0;
+        delete m_Slots2[i].a;
+        m_Slots2[i].a = 0;
+    }
+    m_p428 = 0;
+    delete m_p430; m_p430 = 0;
+    delete m_p42c; m_p42c = 0;
+    delete m_p440; m_p440 = 0;
+    delete m_p43c; m_p43c = 0;
+    delete m_p438; m_p438 = 0;
+    delete m_p444; m_p444 = 0;
+    delete m_p448; m_p448 = 0;
+    delete m_p434; m_p434 = 0;
+    if (m_p4dc) m_p4dc->vfunc0(1);
+    m_p4dc = 0;
 }
 // END FUNCTION
 
@@ -133510,6 +138441,73 @@ int sub_101747e0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101749c0 size=0x152
+#include "VCharWizardUI.h"
+#include "ScopeTrace.h"
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((int)((x) * (sub_100cd100() * 0.0009765625)))
+#define YRES(y) ((int)((y) * (sub_100cd0f0() * 0.0013020833333333333)))
+struct ColorX { unsigned int c; ColorX() {} };
+struct IScheme
+{
+	virtual void v0(); virtual int v1(const char *); virtual void v2(); virtual void v3(); virtual int GetFont(const char *);
+	virtual void v5(); virtual ColorX GetColor(const char *);
+};
+#define N10(a) virtual void a##0(); virtual void a##1(); virtual void a##2(); virtual void a##3(); virtual void a##4(); virtual void a##5(); virtual void a##6(); virtual void a##7(); virtual void a##8(); virtual void a##9();
+struct PV
+{
+	N10(a) N10(b) N10(c) N10(d) N10(e)
+	virtual void v50(); virtual void v51(ColorX); N10(f) virtual void v62(int);
+	N10(g) N10(h) N10(i) N10(j) virtual void k0(); virtual void k1(); virtual void k2(); virtual void k3();
+	virtual void v107(const char *);
+	N10(l) N10(m) virtual void n0(); virtual void n1(); virtual void n2(); virtual void n3();
+	virtual void v132(int); virtual void v133(); virtual void v134(int); virtual void v135(); virtual void v136(); virtual void v137();
+	virtual void v138(int); virtual void v139(); virtual void v140(int);
+	void sub_101a9950(int, int, int, int);
+};
+struct PA
+{
+	N10(a) N10(b) N10(c) N10(d) N10(e) N10(f) N10(g) N10(h) N10(i) N10(j) N10(k) N10(l)
+	virtual void m0(); virtual void m1(); virtual void m2();
+	virtual void v123(int, int, int);
+	void sub_101a9950(int, int, int, int);
+};
+struct GV { int a; int b; char c; int d; int e; };
+
+// TARGET: VCharWizardUI::sub_101749c0
+void VCharWizardUI::sub_101749c0()
+{
+	CBasePanel *base = (CBasePanel *)((char *)this + 0x10);
+	IScheme *pScheme = (IScheme *)base->sub_101ac830();
+	PA *pA = (PA *)((char *)this + 0x180);
+	pA->sub_101a9950(0, 0, XRES(1024.0), YRES(768.0));
+	pA->v123(0, pScheme->v1("hud/InfoWindow"), 0);
+	int font = pScheme->GetFont(sub_1018c870("ParagraphText"));
+	PV *pB = (PV *)((char *)this + 0x238);
+	pB->v132(font);
+	pB->v107(g_102de300);
+	pB->v51(pScheme->GetColor("VUnselectedText"));
+	pB->sub_101a9950(0, 0, 0x32, 0x32);
+	pB->v138(1);
+	pB->v140(0);
+	pB->v134(0);
+	pB->v62(0);
+	GV *g = (GV *)&m_groups[0];
+	for (int i = 0; i < 4; i++)
+	{
+		g[i].c = 0;
+		g[i].a = 0;
+		g[i].b = 0;
+		g[i].e = 0;
+		g[i].d = 0;
+	}
+	base->vfunc57(1, 1);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10174b20 size=0x2b
 namespace lifted {
 struct C101a9950 { int sub_101a9950(int, int, int, int); };
@@ -135363,6 +140361,345 @@ int CUnknown1017ac40::sub_1017ac40()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017ac60 size=0x134
+#include "engineclient.h"
+struct XRes { void sub_101a8d60(const char *); };
+extern XRes g_10678dd4;
+struct StrRec
+{
+	int m_id;
+	int m_pad4[3];
+	const char **m_pStrings10;
+	int m_pad14[3];
+	const char **m_pStrings20;
+	StrRec *sub_10150b90(int);
+};
+extern int g_105e85f8;
+extern StrRec **g_105e85fc;
+extern unsigned char g_10680e40;
+extern StrRec g_10680e60;
+void sub_10141060();
+extern "C" int atexit(void (__cdecl *)(void));
+const char *sub_101a5790(const char *);
+bool sub_101a48b0(void *, const char *, bool *);
+inline StrRec *FindRec(int key)
+{
+	for (int i = 0; i < g_105e85f8; i++)
+	{
+		if (g_105e85fc[i]->m_id == key)
+			return g_105e85fc[i];
+	}
+	if (!(g_10680e40 & 1))
+	{
+		g_10680e40 |= 1;
+		g_10680e60.sub_10150b90(-1);
+		atexit(sub_10141060);
+	}
+	return &g_10680e60;
+}
+const char *sub_1017ac60(int key, int idx, bool flag)
+{
+	const char **pp;
+	if (!flag)
+		pp = &FindRec(key)->m_pStrings10[idx];
+	else
+		pp = &FindRec(key)->m_pStrings20[idx];
+	const char *name = *pp;
+	if (!name)
+		name = "";
+	const char *r = sub_101a5790(name);
+	if (!r && sub_101a48b0(filesystem, name, &flag))
+	{
+		const char *s = sub_101a5790(name);
+		g_10678dd4.sub_101a8d60(s);
+		return s;
+	}
+	return r;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1017ada0 size=0x8b
+struct StrRec
+{
+	int m_id;
+	int m_pad4[2];
+	int m_nCount;
+	const char **m_pStrings10;
+	StrRec *sub_10150b90(int);
+};
+extern int g_105e85f8;
+extern StrRec **g_105e85fc;
+extern unsigned char g_10680e40;
+extern StrRec g_10680e60;
+void sub_10141060();
+extern "C" int atexit(void (__cdecl *)(void));
+const char *sub_1017ac60(int, int, bool);
+inline StrRec *FindRec(int key)
+{
+	for (int i = 0; i < g_105e85f8; i++)
+	{
+		if (g_105e85fc[i]->m_id == key)
+			return g_105e85fc[i];
+	}
+	if (!(g_10680e40 & 1))
+	{
+		g_10680e40 |= 1;
+		g_10680e60.sub_10150b90(-1);
+		atexit(sub_10141060);
+	}
+	return &g_10680e60;
+}
+const char *sub_1017ada0(int key, int idx)
+{
+	if (idx < FindRec(key)->m_nCount)
+	{
+		const char *p = sub_1017ac60(key, idx, false);
+		if (p)
+			return p + 0x88;
+	}
+	return "ERROR";
+}
+// END FUNCTION
+
+// FUNCTION: 0x1017ae30 size=0x8b
+struct StrRec
+{
+	int m_id;
+	int m_pad4[2];
+	int m_nCount;
+	const char **m_pStrings10;
+	StrRec *sub_10150b90(int);
+};
+extern int g_105e85f8;
+extern StrRec **g_105e85fc;
+extern unsigned char g_10680e40;
+extern StrRec g_10680e60;
+void sub_10141060();
+extern "C" int atexit(void (__cdecl *)(void));
+const char *sub_1017ac60(int, int, bool);
+inline StrRec *FindRec(int key)
+{
+	for (int i = 0; i < g_105e85f8; i++)
+	{
+		if (g_105e85fc[i]->m_id == key)
+			return g_105e85fc[i];
+	}
+	if (!(g_10680e40 & 1))
+	{
+		g_10680e40 |= 1;
+		g_10680e60.sub_10150b90(-1);
+		atexit(sub_10141060);
+	}
+	return &g_10680e60;
+}
+const char *sub_1017ae30(int key, int idx)
+{
+	if (idx < FindRec(key)->m_nCount)
+	{
+		const char *p = sub_1017ac60(key, idx, false);
+		if (p)
+			return p + 0x108;
+	}
+	return "ERROR";
+}
+// END FUNCTION
+
+// FUNCTION: 0x1017aec0 size=0xa7
+#include "CVStatInfo_t.h"
+struct StrRec
+{
+	int m_id;
+	int m_pad4[2];
+	int m_nCount;
+	const char **m_pStrings10;
+	StrRec *sub_10150b90(int);
+};
+extern int g_105e85f8;
+extern StrRec **g_105e85fc;
+extern unsigned char g_10680e40;
+extern StrRec g_10680e60;
+void sub_10141060();
+extern "C" int atexit(void (__cdecl *)(void));
+const char *sub_1017ac60(int, int, bool);
+inline StrRec *FindRec(int key)
+{
+	for (int i = 0; i < g_105e85f8; i++)
+	{
+		if (g_105e85fc[i]->m_id == key)
+			return g_105e85fc[i];
+	}
+	if (!(g_10680e40 & 1))
+	{
+		g_10680e40 |= 1;
+		g_10680e60.sub_10150b90(-1);
+		atexit(sub_10141060);
+	}
+	return &g_10680e60;
+}
+const char *sub_1017aec0(int key, int idx)
+{
+	if (idx < FindRec(key)->m_nCount)
+	{
+		const char *p = sub_1017ac60(key, idx, false);
+		if (p)
+		{
+			char *o = *(char **)(p + 0x5ebc8);
+			if (o)
+			{
+				CVStatInfo_t *s = *(CVStatInfo_t **)(o + 0x84);
+				if (s)
+					return s->sub_1005d750();
+				return o;
+			}
+			return "ERROR";
+		}
+	}
+	return "";
+}
+// END FUNCTION
+
+// FUNCTION: 0x1017af70 size=0x82
+struct StrRec
+{
+	int m_id;
+	int m_pad4[3];
+	const char **m_pStrings10;
+	int m_pad14[2];
+	int m_nCount;
+	const char **m_pStrings20;
+	StrRec *sub_10150b90(int);
+};
+extern int g_105e85f8;
+extern StrRec **g_105e85fc;
+extern unsigned char g_10680e40;
+extern StrRec g_10680e60;
+void sub_10141060();
+extern "C" int atexit(void (__cdecl *)(void));
+const char *sub_1017ac60(int, int, bool);
+inline StrRec *FindRec(int key)
+{
+	for (int i = 0; i < g_105e85f8; i++)
+	{
+		if (g_105e85fc[i]->m_id == key)
+			return g_105e85fc[i];
+	}
+	if (!(g_10680e40 & 1))
+	{
+		g_10680e40 |= 1;
+		g_10680e60.sub_10150b90(-1);
+		atexit(sub_10141060);
+	}
+	return &g_10680e60;
+}
+const char *sub_1017af70(int key, int idx)
+{
+	if (idx < FindRec(key)->m_nCount)
+	{
+		const char *p = sub_1017ac60(key, idx, true);
+		if (p)
+			return p + 0x88;
+	}
+	return "";
+}
+// END FUNCTION
+
+// FUNCTION: 0x1017b000 size=0x82
+struct StrRec
+{
+	int m_id;
+	int m_pad4[3];
+	const char **m_pStrings10;
+	int m_pad14[2];
+	int m_nCount;
+	const char **m_pStrings20;
+	StrRec *sub_10150b90(int);
+};
+extern int g_105e85f8;
+extern StrRec **g_105e85fc;
+extern unsigned char g_10680e40;
+extern StrRec g_10680e60;
+void sub_10141060();
+extern "C" int atexit(void (__cdecl *)(void));
+const char *sub_1017ac60(int, int, bool);
+inline StrRec *FindRec(int key)
+{
+	for (int i = 0; i < g_105e85f8; i++)
+	{
+		if (g_105e85fc[i]->m_id == key)
+			return g_105e85fc[i];
+	}
+	if (!(g_10680e40 & 1))
+	{
+		g_10680e40 |= 1;
+		g_10680e60.sub_10150b90(-1);
+		atexit(sub_10141060);
+	}
+	return &g_10680e60;
+}
+const char *sub_1017b000(int key, int idx)
+{
+	if (idx < FindRec(key)->m_nCount)
+	{
+		const char *p = sub_1017ac60(key, idx, true);
+		if (p)
+			return p + 0x108;
+	}
+	return "";
+}
+// END FUNCTION
+
+// FUNCTION: 0x1017b090 size=0x91
+#include "CVStatInfo_t.h"
+struct StrRec
+{
+	int m_id;
+	int m_pad4[3];
+	const char **m_pStrings10;
+	int m_pad14[2];
+	int m_nCount;
+	const char **m_pStrings20;
+	StrRec *sub_10150b90(int);
+};
+extern int g_105e85f8;
+extern StrRec **g_105e85fc;
+extern unsigned char g_10680e40;
+extern StrRec g_10680e60;
+void sub_10141060();
+extern "C" int atexit(void (__cdecl *)(void));
+const char *sub_1017ac60(int, int, bool);
+inline StrRec *FindRec(int key)
+{
+	for (int i = 0; i < g_105e85f8; i++)
+	{
+		if (g_105e85fc[i]->m_id == key)
+			return g_105e85fc[i];
+	}
+	if (!(g_10680e40 & 1))
+	{
+		g_10680e40 |= 1;
+		g_10680e60.sub_10150b90(-1);
+		atexit(sub_10141060);
+	}
+	return &g_10680e60;
+}
+const char *sub_1017b090(int key, int idx)
+{
+	if (idx < FindRec(key)->m_nCount)
+	{
+		const char *p = sub_1017ac60(key, idx, true);
+		if (p)
+		{
+			char *q = *(char **)(p + 0x5ebc8);
+			CVStatInfo_t *info = *(CVStatInfo_t **)(q + 0x84);
+			if (info)
+				return info->sub_1005d750();
+			return q;
+		}
+	}
+	return "";
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017b130 size=0x2f
 namespace lifted {
 extern char g_1024c4b4;
@@ -135413,6 +140750,192 @@ void * CUnknown1017b300::sub_1017b300(int a0, int a1)
     *(int *)((char *)this + 0xa0) = 0;
     *(int *)((char *)this + 0xa4) = 0;
     return this;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1017b6c0 size=0x174
+#include "vgui2__Label.h"
+#include <stdio.h>
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+extern char g_102de300[];
+#define XRES(x) ((x) * (sub_100cd100() * 0.0009765625))
+#define YRES(y) ((y) * (sub_100cd0f0() * 0.0013020833333333333))
+
+struct Color_1017b6c0 { unsigned int rgba; Color_1017b6c0() {} };
+
+struct IScheme_1017b6c0
+{
+	virtual void v0() = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void *GetBorder(const char *name) = 0;	// slot 3
+	virtual int GetFont(const char *fontName) = 0;	// slot 4
+	virtual void v5() = 0;
+	virtual Color_1017b6c0 GetColor(const char *colorName) = 0;	// slot 6
+};
+
+struct LabelColorView_1017b6c0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void SetBgColor(Color_1017b6c0 c);	// slot 50
+	virtual void SetFgColor(Color_1017b6c0 c);	// slot 51
+};
+
+struct CUnknown101a9950 { void sub_101a9950(int, int, int, int); };
+
+// TARGET: sub_1017b6c0
+void __cdecl sub_1017b6c0(vgui2::Panel *parent, vgui2::Label **out, const char *name, int x, int y, int w, int h)
+{
+	char buf[0x30];
+	IScheme_1017b6c0 *pScheme = (IScheme_1017b6c0 *)parent->sub_101ac830();
+	int font = pScheme->GetFont(sub_1018c870("PercolatorMedium"));
+	sprintf(buf, "%s", name);
+	void *mem = vgui2::Panel::operator new(0xb8);
+	vgui2::Label *l = mem ? new (mem) vgui2::Label(parent, buf, buf) : 0;
+	*out = l;
+	l->vfunc118(font);
+	l->vfunc108(g_102de300);
+	l->vfunc63(0);
+	((LabelColorView_1017b6c0 *)l)->SetFgColor(pScheme->GetColor("TitleText"));
+	((LabelColorView_1017b6c0 *)l)->SetBgColor(pScheme->GetColor("GhostControlBG"));
+	l->vfunc111(4);
+	((CUnknown101a9950 *)l)->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
+	void *b = pScheme->GetBorder("InfoWinBorder");
+	l->vfunc60(b);
+}
+// END FUNCTION
+
+// FUNCTION: 0x1017b840 size=0x151
+#include "vgui2__Label.h"
+#include <stdio.h>
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((x) * ((float)sub_100cd100() / 1024.0))
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+
+struct Color_1017b840 { unsigned int rgba; Color_1017b840() {} };
+
+struct IScheme_1017b840
+{
+	virtual void v0() = 0;
+	virtual int GetImage(const char *imageName) = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual int GetFont(const char *fontName) = 0;	// slot 4
+	virtual void v5() = 0;
+	virtual Color_1017b840 GetColor(const char *colorName) = 0;	// slot 6
+};
+
+struct LabelColorView_1017b840
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void SetBgColor(Color_1017b840 c);	// slot 50
+	virtual void SetFgColor(Color_1017b840 c);	// slot 51
+};
+
+struct CUnknown101a9950 { void sub_101a9950(int, int, int, int); };
+
+// TARGET: sub_1017b840
+void __cdecl sub_1017b840(vgui2::Panel *parent, vgui2::Label **out, const char *name, int x, int y, int w, int h, const char *fontName)
+{
+	char buf[0x30];
+	IScheme_1017b840 *pScheme = (IScheme_1017b840 *)parent->sub_101ac830();
+	int font = pScheme->GetFont(sub_1018c870(fontName));
+	sprintf(buf, "%s", name);
+	void *mem = vgui2::Panel::operator new(0xb8);
+	vgui2::Label *l = mem ? new (mem) vgui2::Label(parent, buf, buf) : 0;
+	*out = l;
+	l->vfunc118(font);
+	l->vfunc108("");
+	l->vfunc62(0);
+	((LabelColorView_1017b840 *)l)->SetFgColor(pScheme->GetColor("TitleText"));
+	((LabelColorView_1017b840 *)l)->SetBgColor(pScheme->GetColor("GhostControlBG"));
+	((CUnknown101a9950 *)l)->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
+}
+// END FUNCTION
+
+// FUNCTION: 0x1017b9a0 size=0x164
+#include "vgui2__TextEntry.h"
+#include <stdio.h>
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((x) * ((float)sub_100cd100() / 1024.0))
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+
+struct Color_1017b9a0 { unsigned int rgba; Color_1017b9a0() {} };
+
+struct IScheme_1017b9a0
+{
+	virtual void v0() = 0;
+	virtual int GetImage(const char *imageName) = 0;
+	virtual void v2() = 0;
+	virtual void v3() = 0;
+	virtual int GetFont(const char *fontName) = 0;
+	virtual void v5() = 0;
+	virtual Color_1017b9a0 GetColor(const char *colorName) = 0;
+};
+
+struct EntryColorView_1017b9a0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void SetBgColor(Color_1017b9a0 c);
+	virtual void SetFgColor(Color_1017b9a0 c);
+};
+
+struct CUnknown101a9950 { void sub_101a9950(int, int, int, int); };
+
+// TARGET: sub_1017b9a0
+void __cdecl sub_1017b9a0(vgui2::Panel *parent, vgui2::TextEntry **out, const char *name, int x, int y, int w, int h, const char *fontName)
+{
+	char buf[0x30];
+	IScheme_1017b9a0 *pScheme = (IScheme_1017b9a0 *)parent->sub_101ac830();
+	int font = pScheme->GetFont(sub_1018c870(fontName));
+	sprintf(buf, "%s", name);
+	void *mem = vgui2::Panel::operator new(0x128);
+	vgui2::TextEntry *l = mem ? new (mem) vgui2::TextEntry(parent, buf) : 0;
+	*out = l;
+	l->vfunc132(font);
+	l->vfunc107("");
+	l->vfunc62(0);
+	((EntryColorView_1017b9a0 *)l)->SetFgColor(pScheme->GetColor("TitleText"));
+	((EntryColorView_1017b9a0 *)l)->SetBgColor(pScheme->GetColor("GhostControlBG"));
+	((CUnknown101a9950 *)l)->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
+	l->vfunc134(0);
+	l->vfunc138(1);
 }
 // END FUNCTION
 
@@ -135634,6 +141157,46 @@ void sub_1017c680(const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017c720 size=0x90
+struct Foo_1017f470 {
+	char pad[0x4c];
+	void sub_1017f470(int, int);
+};
+struct Score_1017c720 {
+	char pad0[0xc0];
+	Foo_1017f470 m_a;
+	Foo_1017f470 m_b;
+	Foo_1017f470 m_c;
+};
+extern Score_1017c720 *g_105fb6e4;
+struct Evt_1017c720 {
+	int m_kind;
+	int m_val;
+	void sub_1017c720();
+};
+// TARGET: Evt_1017c720::sub_1017c720
+void Evt_1017c720::sub_1017c720()
+{
+	Score_1017c720 *p = g_105fb6e4;
+	if (!p)
+		return;
+	Foo_1017f470 *f;
+	int idx;
+	switch (m_kind) {
+	case 0: f = &p->m_a; idx = 0; break;
+	case 1: f = &p->m_a; idx = 1; break;
+	case 2: f = &p->m_a; idx = 2; break;
+	case 3: f = &p->m_b; idx = 0; break;
+	case 4: f = &p->m_b; idx = 1; break;
+	case 5: f = &p->m_b; idx = 2; break;
+	case 6: f = &p->m_c; idx = -1; break;
+	default: return;
+	}
+	if (f)
+		f->sub_1017f470(idx, m_val);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017c7b0 size=0xe
 struct E_1017c7b0 { int m_n; int m_unk; };
 struct V_1017c7b0 { E_1017c7b0 m_e[7]; };
@@ -135643,6 +141206,34 @@ V_1017c7b0 * __fastcall sub_1017c7b0(V_1017c7b0 *self)
 	for (int i = 0; i < 7; i++)
 		self->m_e[i].m_n = i;
 	return self;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1017c7c0 size=0x137
+#include "VRButton.h"
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((x) * ((float)sub_100cd100() / 1024.0))
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+struct IS { virtual void v0(); virtual void v1(); virtual void v2(); virtual void *GetBorder(const char *); virtual int GetFont(const char *); };
+struct CUnknown1017d610 { void *sub_1017d610(int, int, int); };
+void sub_1017c7c0(vgui2::Panel *parent, VRButton **out, int a3, int a4, int x, int y, int w, int h)
+{
+	IS *pScheme = (IS *)parent->sub_101ac830();
+	int font = pScheme->GetFont(sub_1018c870("Copperplate"));
+	void *mem = vgui2::Panel::operator new(0xf4);
+	VRButton *b = mem ? (VRButton *)((CUnknown1017d610 *)mem)->sub_1017d610((int)parent, a3, a4) : 0;
+	*out = b;
+	b->vfunc118(font);
+	b->vfunc63(0);
+	void *border = pScheme->GetBorder("CharEditBorder");
+	b->vfunc60(border);
+	b->vfunc62(1);
+	b->vfunc41((int)parent);
+	b->vfunc162(a3);
+	b->vfunc111(4);
+	b->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
 }
 // END FUNCTION
 
@@ -136166,6 +141757,66 @@ int CUnknown1017f290::sub_1017f290()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1017f470 size=0x13f
+#include "StatOwner2.h"
+#include "vgui2__Label.h"
+extern "C" int sprintf(char *, const char *, ...);
+char sub_101713e0();
+struct Info_1017f470 {
+	char pad[0x24];
+	const char *m_pszName;
+};
+struct Foo_1017f470 {
+	int m_mode;
+	int m_unk4;
+	Info_1017f470 *m_pInfo;
+	char pad0c[0x20 - 0xc];
+	vgui2::Label *m_pLabel;
+	int m_nPanels;
+	vgui2::Label **m_ppPanels;
+	int m_id;
+	char pad30[0x38 - 0x30];
+	int m_n38;
+	int sub_1017f5b0();
+	void sub_1017f470(int a, int b);
+};
+// TARGET: Foo_1017f470::sub_1017f470
+void Foo_1017f470::sub_1017f470(int a, int b)
+{
+	char buf[64];
+	if (!sub_101713e0())
+		return;
+	if (a >= 0 && a < m_nPanels && b >= 0) {
+		vgui2::Label *p = m_ppPanels[a];
+		if (p) {
+			if (b > 0) {
+				sprintf(buf, "%s(%d)", g_105f93c0.sub_1015f270(m_id)->sub_1015ecd0(a), b);
+				p->vfunc108(buf);
+			} else {
+				p->vfunc108(g_105f93c0.sub_1015f270(m_id)->sub_1015ecd0(a));
+			}
+		}
+	}
+	if (m_pInfo && m_pLabel) {
+		int n = sub_1017f5b0();
+		if (n > 0) {
+			const char *name;
+			if (m_mode == 2 && m_n38 >= 5)
+				name = g_105f93c0.sub_1015f2f0("NuminaGroup")->sub_1015ecd0(0);
+			else {
+				const char *const &r = m_pInfo->m_pszName;
+				name = r ? r : "";
+			}
+			sprintf(buf, "%s(%d)", name, n);
+			m_pLabel->vfunc108(buf);
+		} else {
+			const char *const &r = m_pInfo->m_pszName;
+			m_pLabel->vfunc108(r ? r : "");
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1017f610 size=0x2d
 struct V1017 { int sub_1017dc00(); };
 struct ScoreV { void sub_1017f1d0(); };
@@ -136679,6 +142330,40 @@ void CharEditStatsPanel::sub_10181400(const char *pszName)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10181960 size=0xcd
+#include "CharEditStatsPanel.h"
+#include "CVStatInfoList_t.h"
+#include "ScopeTrace.h"
+
+extern CVStatInfoList_t g_105f9220;
+char sub_101713e0();
+
+void CharEditStatsPanel::sub_10181960()
+{
+	const char *const *pp = &g_105f9220.sub_1015cfe0(0x1b)->m_pszTitle;
+	const char *psz = *pp ? *pp : g_102de300;
+	m_p2ac->vfunc108(psz);
+	pp = &g_105f9220.sub_1015cfe0(0x1b)->m_apszHelpText[0];
+	psz = *pp ? *pp : g_102de300;
+	m_p2b0->vfunc107(psz);
+	m_p2a0->vfunc108("");
+	m_p2a8->vfunc107("");
+	if (sub_101713e0())
+	{
+		((vgui2::Label *)m_p2a4)->vfunc108("");
+		m_n1fc = 0;
+		return;
+	}
+	void *p = sub_101808d0("  humanity", 0);
+	if (p)
+	{
+		m_n1fc = (int)p;
+		m_n200 = 0x1b;
+		sub_10181f80();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10181a30 size=0x9a
 #include "CVStatInfoList_t.h"
 #define D8(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); virtual void p##5(); virtual void p##6(); virtual void p##7();
@@ -136958,12 +142643,142 @@ void CharEditStatsPanel::sub_10181cc0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10181f80 size=0x161
+template <class T> __forceinline T pcd_stage(T x) { return x; }
+#include "CharEditStatsPanel.h"
+#include "StatOwner2.h"
+#include "CVStatInfoList_t.h"
+#include "C_BasePlayer.h"
+#include <stdio.h>
+
+struct StatSel_10181f80 { int m_f0; int m_f4; CVStatInfoList_t *m_pList; int *m_pMin; int *m_pMax; };
+struct DmgBlk_10181f80 { int m_a, m_b, m_c, m_d; void sub_10161380(int a, int b); int sub_10161170(void *pPlayer); };
+char sub_101713e0();
+#define SEL ((StatSel_10181f80 *)m_n1fc)
+
+void CharEditStatsPanel::sub_10181f80()
+{
+	int cost = 0;
+	if (m_n1fc)
+	{
+		char buf[0x50];
+		if (sub_101713e0())
+		{
+			sprintf(buf, "%s: %d", g_105f93c0.sub_1015f2f0("CostStrings")->sub_1015ecd0(5), *(int *)((char *)this + 0x80 + pcd_stage(*(int *)((char *)this + 0xb4)) * 8));
+		}
+		else
+		{
+			int lo = SEL->m_pMin[m_n200];
+			int hi = SEL->m_pMax[m_n200];
+			int cap = hi < lo ? lo : hi;
+			C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+			if (pPlayer)
+			{
+				if (cap < SEL->m_pList->sub_1015cfe0(m_n200)->sub_1015c1d0((int)pPlayer))
+				{
+					DmgBlk_10181f80 blk;
+					blk.sub_10161380(SEL->m_pList->m_field2c, m_n200);
+					cost = blk.sub_10161170(pPlayer);
+					if (cap > 0)
+						sprintf(buf, "%s: %d", g_105f93c0.sub_1015f2f0("CostStrings")->sub_1015ecd0(0), cost);
+					else
+						sprintf(buf, "%s: %d", g_105f93c0.sub_1015f2f0("CostStrings")->sub_1015ecd0(4), cost);
+				}
+				else
+					sprintf(buf, "%s: --", g_105f93c0.sub_1015f2f0("CostStrings")->sub_1015ecd0(0));
+			}
+			else
+				sprintf(buf, "");
+		}
+		((vgui2::Label *)m_p2a4)->vfunc108(buf);
+	}
+	*(int *)((char *)this + 0xb8) = cost;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101820f0 size=0xd
 struct CUnknown101820f0 { int sub_101820f0(int); };
 int CUnknown101820f0::sub_101820f0(int a0)
 {
     *(int *)((char *)this + 0xbc) = a0;
     return a0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10182100 size=0x12c
+struct CUnknown1017d310
+{
+	char m_pad[0xbc];
+	int m_n0bc;
+	void sub_1017d310(char);
+};
+
+struct StatEnt { int m_0; int m_key; int m_pad[6]; int m_val; };
+
+struct SPanelView
+{
+	char m_pad00[0xb4];
+	int m_n0b4;
+	char m_pad0b8[0xe4 - 0xb8];
+	int m_nA;
+	CUnknown1017d310 **m_pA;
+	char m_pad0ec[0xf4 - 0xec];
+	int m_nE1;
+	char m_pad0f8[4];
+	StatEnt *m_pE1;
+	char m_pad100[0x130 - 0x100];
+	int m_nB;
+	CUnknown1017d310 **m_pB;
+	char m_pad138[0x140 - 0x138];
+	int m_nE2;
+	char m_pad144[4];
+	StatEnt *m_pE2;
+	char m_pad14c[0x18c - 0x14c];
+	int m_nE3;
+	char m_pad190[4];
+	StatEnt *m_pE3;
+	char m_pad198[0x1d8 - 0x198];
+	int m_nE4;
+	char m_pad1dc[4];
+	StatEnt *m_pE4;
+};
+
+void __fastcall sub_10182100(SPanelView *self, int edx, int key)
+{
+	int i;
+	if (key)
+		self->m_n0b4 = -1;
+	for (i = 0; i < self->m_nE1; i++) {
+		if (self->m_pE1[i].m_key == key)
+			self->m_n0b4 = self->m_pE1[i].m_val;
+	}
+	for (i = 0; i < self->m_nE2; i++) {
+		if (self->m_pE2[i].m_key == key)
+			self->m_n0b4 = self->m_pE2[i].m_val;
+	}
+	for (i = 0; i < self->m_nE3; i++) {
+		if (self->m_pE3[i].m_key == key)
+			self->m_n0b4 = self->m_pE3[i].m_val;
+	}
+	for (i = 0; i < self->m_nE4; i++) {
+		if (self->m_pE4[i].m_key == key)
+			self->m_n0b4 = self->m_pE4[i].m_val;
+	}
+	int sel = key ? self->m_n0b4 : -2;
+	for (i = 0; i < self->m_nA; i++) {
+		CUnknown1017d310 *p = self->m_pA[i];
+		if (p->m_n0bc == sel)
+			p->sub_1017d310(1);
+		else
+			p->sub_1017d310(0);
+	}
+	for (i = 0; i < self->m_nB; i++) {
+		CUnknown1017d310 *p = self->m_pB[i];
+		if (p->m_n0bc == sel)
+			p->sub_1017d310(1);
+		else
+			p->sub_1017d310(0);
+	}
 }
 // END FUNCTION
 
@@ -140150,6 +145965,101 @@ int CUtlVector72::sub_1018be70(int elem, int num, const Elem72 *pToCopy)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018bf50 size=0x179
+#include "vgui2__Label.h"
+#include <stdio.h>
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+extern char g_102de300[];
+#define XRES(x) ((x) * (sub_100cd100() * 0.0009765625))
+#define YRES(y) ((y) * (sub_100cd0f0() * 0.0013020833333333333))
+
+struct Color_1018bf50 { unsigned int rgba; Color_1018bf50() {} };
+
+struct IScheme_1018bf50
+{
+	virtual void v0() = 0;
+	virtual void v1() = 0;
+	virtual void v2() = 0;
+	virtual void *GetBorder(const char *name) = 0;	// slot 3
+	virtual int GetFont(const char *fontName) = 0;	// slot 4
+	virtual void v5() = 0;
+	virtual Color_1018bf50 GetColor(const char *colorName) = 0;	// slot 6
+};
+
+struct LabelColorView_1018bf50
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void SetBgColor(Color_1018bf50 c);	// slot 50
+	virtual void SetFgColor(Color_1018bf50 c);	// slot 51
+};
+
+struct CUnknown101a9950 { void sub_101a9950(int, int, int, int); };
+
+// TARGET: sub_1018bf50
+void __cdecl sub_1018bf50(vgui2::Panel *parent, vgui2::Label **out, const char *name, int x, int y, int w, int h, const char *borderName)
+{
+	char buf[0x30];
+	IScheme_1018bf50 *pScheme = (IScheme_1018bf50 *)parent->sub_101ac830();
+	int font = pScheme->GetFont(sub_1018c870("PercolatorMedium"));
+	sprintf(buf, "%s%s", name, "Border");
+	void *mem = vgui2::Panel::operator new(0xb8);
+	vgui2::Label *l = mem ? new (mem) vgui2::Label(parent, buf, buf) : 0;
+	*out = l;
+	l->vfunc118(font);
+	l->vfunc108(g_102de300);
+	l->vfunc63(0);
+	((LabelColorView_1018bf50 *)l)->SetFgColor(pScheme->GetColor("TitleText"));
+	((LabelColorView_1018bf50 *)l)->SetBgColor(pScheme->GetColor("GhostControlBG"));
+	l->vfunc111(4);
+	((CUnknown101a9950 *)l)->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
+	void *b = pScheme->GetBorder(borderName);
+	l->vfunc60(b);
+}
+// END FUNCTION
+
+// FUNCTION: 0x1018c2a0 size=0x13c
+#include "VHLabel.h"
+extern "C" int sprintf(char *, const char *, ...);
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((x) * ((float)sub_100cd100() / 1024.0))
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+struct IS { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual int GetFont(const char *); };
+struct CUnknown1018ca20 { void *sub_1018ca20(int, int, int); };
+
+// TARGET: sub_1018c2a0
+void sub_1018c2a0(vgui2::Panel *parent, VHLabel **out, const char *name, int x, int y, int w, int h, const char *fontName)
+{
+    char buf[0x30];
+    IS *pScheme = (IS *)parent->sub_101ac830();
+    int font = pScheme->GetFont(sub_1018c870(fontName));
+    sprintf(buf, "%s%s", name, "Border");
+    void *mem = vgui2::Panel::operator new(0xb8);
+    VHLabel *l = mem ? (VHLabel *)((CUnknown1018ca20 *)mem)->sub_1018ca20((int)parent, (int)buf, (int)buf) : 0;
+    *out = l;
+    l->vfunc118(font);
+    l->vfunc108(name);
+    l->vfunc63(0);
+    l->vfunc62(0);
+    l->vfunc111(4);
+    l->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
+    l->vfunc136(3);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018c560 size=0x1a3
 #include "vgui2__Label.h"
 #include <stdio.h>
@@ -140343,6 +146253,34 @@ char *sub_1018c870(const char *name)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018c8f0 size=0x12b
+#include "VRButton.h"
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((x) * ((float)sub_100cd100() / 1024.0))
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+struct IS { virtual void v0(); virtual void v1(); virtual void v2(); virtual void *GetBorder(const char *); virtual int GetFont(const char *); };
+struct CUnknown1017b130 { void *sub_1017b130(int, int, int); };
+
+void sub_1018c8f0(vgui2::Panel *parent, VRButton **out, int a3, int a4, int x, int y, int w, int h)
+{
+	IS *pScheme = (IS *)parent->sub_101ac830();
+	int font = pScheme->GetFont(sub_1018c870("Copperplate"));
+	void *mem = vgui2::Panel::operator new(0xf4);
+	VRButton *b = mem ? (VRButton *)((CUnknown1017b130 *)mem)->sub_1017b130((int)parent, a3, a4) : 0;
+	*out = b;
+	b->vfunc118(font);
+	b->vfunc63(0);
+	b->vfunc41((int)parent);
+	b->vfunc162(a3);
+	void *border = pScheme->GetBorder("CharEditBorder");
+	b->vfunc60(border);
+	b->vfunc111(4);
+	b->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018ca20 size=0x25
 namespace lifted {
 extern char g_1024f33c;
@@ -140367,6 +146305,37 @@ int CUnknown1018ca70::sub_1018ca70()
 {
     *(int *)this = (int)&lifted::g_1024f33c;
     return lifted::sub_101b20a0();
+}
+// END FUNCTION
+
+// FUNCTION: 0x1018cac0 size=0x151
+#include "VHLabel.h"
+extern "C" int sprintf(char *, const char *, ...);
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern const char *sub_1018c870(const char *name);
+#define XRES(x) ((x) * ((float)sub_100cd100() / 1024.0))
+#define YRES(y) ((y) * ((float)sub_100cd0f0() / 768.0))
+struct ColorX { unsigned char c[4]; ColorX() {} };
+struct IS { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual int GetFont(const char *); virtual void v5(); virtual ColorX GetColor(const char *); };
+struct CUnknown1018ca20 { void *sub_1018ca20(int, int, int); };
+
+// TARGET: sub_1018cac0
+void sub_1018cac0(vgui2::Panel *parent, VHLabel **out, const char *name, int x, int y, int w, int h, const char *fontName)
+{
+    char buf[0x30];
+    IS *pScheme = (IS *)parent->sub_101ac830();
+    int font = pScheme->GetFont(sub_1018c870(fontName));
+    sprintf(buf, "%s", name);
+    void *mem = vgui2::Panel::operator new(0xb8);
+    VHLabel *l = mem ? (VHLabel *)((CUnknown1018ca20 *)mem)->sub_1018ca20((int)parent, (int)buf, (int)buf) : 0;
+    *out = l;
+    l->vfunc118(font);
+    l->vfunc108("");
+    l->vfunc62(0);
+    l->vfunc51(*(int *)pScheme->GetColor("VDesHeaderText").c);
+    l->vfunc50(*(int *)pScheme->GetColor("GhostControlBG").c);
+    l->sub_101a9950((int)XRES(x), (int)YRES(y), (int)XRES(w), (int)YRES(h));
 }
 // END FUNCTION
 
@@ -140591,6 +146560,68 @@ void sub_1018d1f0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018d200 size=0x15b
+#include "CVProfile.h"
+extern CVProfile *g_101e3138;
+extern unsigned char g_105fbcfc;
+__declspec(dllimport) void vtune(bool);
+struct CCycle_1018d200 {
+	unsigned long lo, hi;
+	void Sample()
+	{
+		unsigned long *pSample = &lo;
+		__asm {
+			mov ecx, pSample
+			rdtsc
+			mov [ecx], eax
+			mov [ecx + 4], edx
+		}
+	}
+};
+// TARGET: sub_1018d200
+void sub_1018d200()
+{
+	if (!g_105fbcfc) {
+		CVProfile *g = g_101e3138;
+		if (++g->m_nPause == 1) {
+			CVProfNode *node = g->m_pRoot;
+			node->m_nCurFrameCalls++;
+			if (node->m_nRecursions++ == 0) {
+				((CCycle_1018d200 *)&node->m_CurFrameTime)->Sample();
+				CVProfile *g2 = g_101e3138;
+				int id = node->m_BudgetGroupID;
+				g2->m_Stack[g2->m_nDepth] = id;
+				g2->m_nDepth++;
+				if (g2->m_Stack[g2->m_nDepth - 2] != id && g2->m_bEnabled && id == g2->m_nCurBudget)
+					vtune(true);
+			}
+		}
+		g_105fbcfc = 1;
+	} else {
+		CVProfile *g = g_101e3138;
+		if (--g->m_nPause == 0) {
+			CVProfNode *node = g->m_pRoot;
+			if (--node->m_nRecursions == 0 && node->m_nCurFrameCalls != 0) {
+				CCycle_1018d200 now;
+				now.lo = 0;
+				now.hi = 0;
+				now.Sample();
+				unsigned __int64 n = *(unsigned __int64 *)&now;
+				node->m_CurFrameTime.v = n - node->m_CurFrameTime.v;
+				node->m_TotalTime += node->m_CurFrameTime;
+				CVProfile *g2 = g_101e3138;
+				int d = --g2->m_nDepth;
+				int a = g2->m_Stack[d + 1];
+				int b = g2->m_Stack[d];
+				if (b != a && g2->m_bEnabled && a == g2->m_nCurBudget)
+					vtune(false);
+			}
+		}
+		g_105fbcfc = 0;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018d3b0 size=0xb
 namespace lifted {
 extern char g_1018d3c0;
@@ -140757,6 +146788,34 @@ int CUnknown1018db60::sub_1018db60(int a0)
         return ((lifted::C1018e2e0 *)((char *)this + -16))->sub_1018e2e0();
     }
     return ((lifted::C101ab3d0 *)this)->sub_101ab3d0(a0);
+}
+// END FUNCTION
+
+// FUNCTION: 0x1018dba0 size=0x16f
+#include "CVProfPanel.h"
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+extern CVProfPanel *g_105fbd28;
+
+#define XR(x) ((x) * (sub_100cd100() * 0.0015625))
+#define YR(y) ((y) * (sub_100cd0f0() * 0.0020833333333333333))
+
+// TARGET: CVProfPanel::sub_1018dba0
+void CVProfPanel::sub_1018dba0()
+{
+	vgui2::Panel *base = (vgui2::Panel *)((char *)this + 0x10);
+	base->vfunc57(0, 1);
+	int xb = (int)XR(20.0);
+	int yb = (int)YR(10.0);
+	int wide = sub_100cd100() - xb * 2;
+	int tall = sub_100cd0f0() - yb * 2;
+	vgui2::Panel *tree = (vgui2::Panel *)((char *)this + 0x124);
+	tree->sub_101a9950((int)XR(4.0), (int)YR(22.0), (int)(wide - XR(4.0) * 2), (int)(tall - YR(4.0) * 2 - YR(22.0)));
+	tree->vfunc63(0);
+	tree->vfunc33((int)base);
+	tree->vfunc62(0);
+	g_105fbd28 = this;
 }
 // END FUNCTION
 
@@ -141176,6 +147235,64 @@ int sub_1018f600()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1018fb70 size=0x138
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+void sub_101090a0(const QAngle &angles, Vector *forward, Vector *right, Vector *up);
+void sub_10108fd0(const Vector &start, float scale, const Vector &dir, Vector &dest);
+struct VMView_1018fb70 { char pad[0x8]; Vector m_vOrigin; QAngle m_vAngles; };
+void CViewRender::sub_1018fb70(int nIndex)
+{
+	ScopeTrace st("CViewRender::CalcViewModelLag", g_102de300);
+	VMView_1018fb70 *vm = (VMView_1018fb70 *)vfunc6(nIndex);
+	if (vm) {
+		Vector forward;
+		sub_101090a0(vm->m_vAngles, &forward, 0, 0);
+		Vector &lastFacing = *(Vector *)((char *)this + 0x458);
+		Vector vDifference;
+		vDifference.x = forward.x - lastFacing.x;
+		vDifference.y = forward.y - lastFacing.y;
+		vDifference.z = forward.z - lastFacing.z;
+		sub_10108fd0(lastFacing, 5.0 * engine->vfunc41(0), vDifference, lastFacing);
+		sub_10108fd0(vm->m_vOrigin, 5.0f, vDifference * -1.0f, vm->m_vOrigin);
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x1018fe80 size=0x143
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "C_BasePlayer.h"
+struct IEnt9_1018fe80 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+	virtual Vector *v9();
+};
+#define m_vecOfs (*(Vector *)((char *)this + 0x48))
+// TARGET: CViewRender::sub_1018fe80
+void CViewRender::sub_1018fe80()
+{
+	ScopeTrace st("CViewRender::BoundOffsets", g_102de300);
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (pPlayer) {
+		Vector origin = *((IEnt9_1018fe80 *)pPlayer)->v9();
+		if (m_vecOfs.x < origin.x - 14.0f)
+			m_vecOfs.x = origin.x - 14.0f;
+		else if (m_vecOfs.x > origin.x + 14.0f)
+			m_vecOfs.x = origin.x + 14.0f;
+		if (m_vecOfs.y < origin.y - 14.0f)
+			m_vecOfs.y = origin.y - 14.0f;
+		else if (m_vecOfs.y > origin.y + 14.0f)
+			m_vecOfs.y = origin.y + 14.0f;
+		if (m_vecOfs.z < origin.z - 22.0f)
+			m_vecOfs.z = origin.z - 22.0f;
+		else if (m_vecOfs.z > origin.z + 30.0f)
+			m_vecOfs.z = origin.z + 30.0f;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1018ffd0 size=0x301
 #include "ScopeTrace.h"
 #include "CInput.h"
@@ -141309,6 +147426,31 @@ void CViewRender::sub_10190390()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10190640 size=0x15f
+#include "CViewRender.h"
+#include "ConVar.h"
+#include "engineclient.h"
+#include <math.h>
+
+extern ConVar *g_105fc7fc;
+extern ConVar *g_105fbea4;
+extern ConVar *g_105fbdc4;
+extern ConVar *g_105fc644;
+extern ConVar *g_105fc5fc;
+extern ConVar *g_105fbd7c;
+
+struct VBobView_10190640 { char m_pad[0x28c]; float m_flScale; };
+#define CVF(p) ((p)->vfunc1() ? 0.0f : (p)->m_fValue)
+
+void CViewRender::sub_10190640()
+{
+	VBobView_10190640 *v = (VBobView_10190640 *)this;
+	*(float *)((char *)this + 0x68) += (float)sin(engine->Time(0) * CVF(g_105fc7fc)) * v->m_flScale * CVF(g_105fbea4);
+	*(float *)((char *)this + 0x60) += (float)sin(engine->Time(0) * CVF(g_105fbdc4)) * v->m_flScale * CVF(g_105fc644);
+	*(float *)((char *)this + 0x64) += (float)sin(engine->Time(0) * CVF(g_105fc5fc)) * v->m_flScale * CVF(g_105fbd7c);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101907a0 size=0xaa
 #include "CInput.h"
 #include "Vector.h"
@@ -141370,6 +147512,61 @@ void CViewRender::sub_10190850()
 	if (input->vfunc26())
 		r = 0;
 	*(float *)((char *)this + 0x68) += r;
+}
+// END FUNCTION
+
+// FUNCTION: 0x10190900 size=0x16b
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+
+struct CWaterVar
+{
+	virtual void s0();
+	virtual bool vfunc1();
+	int m_u4, m_u8, m_uc, m_u10, m_u14, m_u18, m_u1c, m_u20, m_u24;
+	float m_f28;
+};
+extern CWaterVar *g_105fc68c;
+
+// TARGET: CViewRender::sub_10190900
+float CViewRender::sub_10190900()
+{
+	ScopeTrace st("CViewRender::GetWaterOffset", g_102de300);
+	C_BasePlayer *pl = C_BasePlayer::GetLocalPlayer();
+	float ret = 0.0f;
+	if (2 <= *(int *)((char *)pl + 0x90))
+	{
+		long dist = (int)(g_105fc68c->vfunc1() ? 0.0f : g_105fc68c->m_f28);
+		float pos[3];
+		pos[0] = *(float *)((char *)this + 0x48);
+		*(1 + pos) = *(float *)((char *)this + 0x4c);
+		float z0 = *(float *)((char *)this + 0x50);
+		if (*(int *)((char *)pl + 0x90) == 2)
+		{
+			*(pos + 2) = z0 - dist;
+			for (int i = 0; i < dist; i++)
+			{
+				if (engine->vfunc19(0, *(Vector *)pos) & 0x4030)
+					break;
+				pos[2] = pos[2] + 1.0f;
+			}
+			float t1 = pos[2] + (float)dist; ret = t1 - *(float *)((char *)this + 0x50);
+		}
+		else
+		{
+			*(pos + 2) = (float)dist + z0;
+			for (int i = 0; (int)i < dist; ++i)
+			{
+				if (!(engine->vfunc19(0, *(Vector *)pos) & 0x4030))
+					break;
+				pos[2] -= 1.0f;
+			}
+			float t0 = pos[2] - (float)dist; ret = t0 - *(float *)(0x50 + (char *)this);
+		}
+	}
+	return ret;
 }
 // END FUNCTION
 
@@ -143939,6 +150136,63 @@ void CViewRender::sub_10199910(void *pInfo, void *pRenderList, bool arg2, bool b
 }
 // END FUNCTION
 
+// FUNCTION: 0x10199b40 size=0x16f
+#include "engineclient.h"
+#include "ScopeTrace.h"
+#include "ConVar.h"
+
+extern ConVar *g_10619654;
+extern const char g_1027a844[];
+
+struct Timer_10199b40
+{
+	virtual double Now();
+};
+
+struct Prof_10199b40
+{
+	char m_pad0[0x110];
+	double m_dAccum;
+	char m_pad1[0x1e8 - 0x118];
+	double m_dStart;
+	char m_pad2[0x308 - 0x1f0];
+	Timer_10199b40 *m_pTimer;
+};
+
+Prof_10199b40 *sub_100ad7a0();
+
+void __stdcall sub_10199b40(int a0, int a1, unsigned int flags)
+{
+	ScopeTrace st("CViewRender::DrawWorld", g_102de300);
+	if (!(!g_10619654->vfunc1() && g_10619654->m_nValue)) return; Prof_10199b40 *p = sub_100ad7a0();
+		if (p->m_pTimer)
+			p->m_dStart = p->m_pTimer->Now();
+		unsigned char bA = (flags >> 4) & 1;
+		unsigned char bB = (flags >> 5) & 1;
+		unsigned char t0 = flags >> 6; unsigned char bC = (t0) & 1;
+		int mask = 0;
+		unsigned char bD = 1 & (flags >> 11);
+		if (bD)
+			mask = 0x10;
+		if (bB)
+		{
+			if (bA)
+				mask |= 7;
+			else
+				mask |= 5;
+		}
+		else if (bA)
+			mask |= 6;
+		static ConVar r_drawwatersurface("r_drawwatersurface", g_1027a844, 0);
+		if (bC && r_drawwatersurface.GetInt())
+			mask |= 8;
+		render->vfunc19(mask);
+		p = sub_100ad7a0();
+		if (p->m_pTimer)
+			p->m_dAccum += p->m_pTimer->Now() - p->m_dStart;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10199cc0 size=0x20d
 #include "ScopeTrace.h"
 #include "engineclient.h"
@@ -145513,6 +151767,37 @@ bool sub_1019ce80()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019cf60 size=0x131
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+#include "ScopeTrace.h"
+bool sub_1019d4c0();
+void sub_1019d0a0(float *color);
+float sub_1019d2e0();
+float sub_1019d3d0();
+void sub_1019cf60()
+{
+	ScopeTrace st("CViewRender::Enable3dSkyboxFog", g_102de300);
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (pPlayer) {
+		if (sub_1019d4c0()) {
+			float fogColor[3];
+			sub_1019d0a0(fogColor);
+			float fogScale = 1.0f;
+			float dist = (float)*(int *)((char *)pPlayer + 0x17a4);
+			if (dist > 0.0f)
+				fogScale = 1.0f / dist;
+			materials->vfunc94(1);
+			materials->vfunc100(fogColor);
+			materials->vfunc95(sub_1019d2e0() * fogScale);
+			materials->vfunc96(sub_1019d3d0() * fogScale);
+		} else {
+			materials->vfunc94(0);
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019d0a0 size=0x23c
 #include "C_BasePlayer.h"
 #include "ConVar.h"
@@ -145877,6 +152162,46 @@ void CViewRender::sub_1019d8f0( const char *view )
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019d990 size=0x150
+#include "C_BasePlayer.h"
+#include "ScopeTrace.h"
+#include "CVStatList_t.h"
+struct PSub { virtual void v0(); virtual bool IsZero(); char pad[0x28]; int m_i2c; };
+struct PCVar { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void SetValue(int); PSub *m_p4; };
+PCVar *sub_100df2c0(const char *);
+extern PCVar *g_10619928;
+extern int g_1061992c, g_10619930;
+// TARGET: sub_1019d990
+void __stdcall sub_1019d990(int a)
+{
+    ScopeTrace st("CViewRender::ProteanRenderSettings", g_102de300);
+    C_BasePlayer *pl = C_BasePlayer::GetLocalPlayer();
+    if (pl) {
+        if (!g_10619928) {
+            g_10619928 = sub_100df2c0("mat_fullbright");
+            if (!g_10619928)
+                return;
+        }
+        int idx = ((CVStatListSet *)((char *)pl + 0x1164))->Find(3)->sub_1015dbd0(0xb);
+        if (idx >= 1) {
+            if (idx != g_1061992c) {
+                PSub *&s = g_10619928->m_p4;
+                int v;
+                if (s->IsZero())
+                    v = 0;
+                else
+                    v = s->m_i2c;
+                g_10619930 = v;
+                g_10619928->SetValue(1);
+            }
+        } else if (idx != g_1061992c) {
+            g_10619928->SetValue(g_10619930);
+        }
+        g_1061992c = idx;
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019e2a0 size=0xbb
 #include "Vector.h"
 struct VMatrix1019e2a0 {
@@ -145915,6 +152240,52 @@ int sub_1019e2a0(const Vector &point, Vector &screen)
         screen.y *= invw;
     }
     return behind;
+}
+// END FUNCTION
+
+// FUNCTION: 0x1019ef20 size=0x179
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "C_BasePlayer.h"
+#include "engineclient.h"
+
+struct ConVarView_1019ef20
+{
+	virtual void v0();
+	virtual bool vfunc1();
+	char m_pad[0x24];
+	float m_fl28;
+};
+extern ConVarView_1019ef20 *g_1061973c;
+extern ConVarView_1019ef20 *g_1061960c;
+void sub_10198640();
+
+bool CViewRender::sub_1019ef20(int arg)
+{
+	ScopeTrace st("CViewRender::DrawMotionBlur", g_102de300);
+	if (g_pMaterialSystemHardwareConfig->vfunc10()) {
+		C_BasePlayer *p = C_BasePlayer::GetLocalPlayer();
+		if (p) {
+			int level = *(int *)((char *)p + 0x1074);
+			if (level >= 1) {
+				level--;
+				int n;
+				if (level > 4)
+					n = 4;
+				else
+					n = level < 0 ? 0 : level;
+				double f = n * 0.125;
+				float a = f * 0.2 + 0.5;
+				float b = f * 0.025 + 0.005f;
+				a = (g_1061973c->vfunc1() ? 0.0f : g_1061973c->m_fl28) * a;
+				float c = g_1061960c->vfunc1() ? 0.0f : g_1061960c->m_fl28;
+				sub_10198640();
+				sub_1019e530(arg, *(int *)((char *)this + 0x428), a, 0.0f, c * b, 0xff, 0xff, 0xff);
+				return true;
+			}
+		}
+	}
+	return false;
 }
 // END FUNCTION
 
@@ -146111,6 +152482,35 @@ void CViewRender::sub_1019fb50(const CViewSetup &view)
 	materials->vfunc70(1);
 	materials->vfunc72();
 	mat.sub_100cd1e0();
+}
+// END FUNCTION
+
+// FUNCTION: 0x1019fea0 size=0x152
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+struct PCvF { virtual void v0(); virtual bool IsZero(); int m_unk04[9]; float m_f28; };
+extern PCvF *g_10618cfc;
+extern PCvF *g_10619784;
+void sub_10198640();
+// TARGET: CViewRender::sub_1019fea0
+bool CViewRender::sub_1019fea0(int a)
+{
+    ScopeTrace st("CViewRender::DrawObfuscateOverlay", g_102de300);
+    if (!g_pMaterialSystemHardwareConfig->vfunc10())
+        return false;
+    C_BasePlayer *pl = C_BasePlayer::GetLocalPlayer();
+    if (!pl)
+        return false;
+    float f = pl->sub_10099ac0(0);
+    if (!(f > 0.0f))
+        return false;
+    f = (g_10618cfc->IsZero() ? 0.0f : g_10618cfc->m_f28) * f;
+    sub_10198640();
+    float g = g_10619784->IsZero() ? 0.0f : g_10619784->m_f28;
+    sub_1019e530(a, *(int *)((char *)this + 0x434), f, g, 0, 255, 255, 255);
+    return true;
 }
 // END FUNCTION
 
@@ -150754,6 +157154,97 @@ void CUnknown101b1890::sub_101b1890()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b18c0 size=0x152
+#include "vgui2__TextEntry.h"
+#include <stdlib.h>
+#include <string.h>
+
+template <class T> struct DarX
+{
+	int _count;
+	int _capacity;
+	T *_data;
+	void ensureCapacity(int wanted)
+	{
+		if (wanted <= _capacity)
+			return;
+		int newCapacity = _capacity;
+		if (newCapacity == 0)
+			newCapacity = 1;
+		while (newCapacity < wanted)
+			newCapacity += newCapacity;
+		T *newData = new T[newCapacity];
+		if (!newData)
+			exit((int)newData);
+		memset(newData, 0, sizeof(T) * newCapacity);
+		_capacity = newCapacity;
+		for (int i = 0; i < _count; i++)
+			newData[i] = _data[i];
+		delete _data;
+		_data = newData;
+	}
+	void addElement(T elem)
+	{
+		ensureCapacity(_count + 1);
+		_data[_count] = elem;
+		_count++;
+	}
+	int getCount() { return _count; }
+	T getAt(int index)
+	{
+		if (index < 0 || index >= _count)
+			return 0;
+		return _data[index];
+	}
+	void removeFirst(int num)
+	{
+		if (num < 0 || num >= _count)
+			return;
+		for (int j = num; j < _count; j++)
+			_data[j - num] = _data[j];
+		_count -= num;
+	}
+};
+
+struct TextEntryMem
+{
+	char m_pad0[0x58];
+	DarX<char> m_text;	// 0x58
+	DarX<int> m_lines;	// 0x64
+	char m_pad70[0x114 - 0x70];
+	int m_114;
+	char m_pad118[2];
+	char m_11a;
+	char m_pad11b;
+	int m_11c;
+	int m_120;
+};
+
+// TARGET: vgui2::TextEntry::sub_101b18c0
+void vgui2::TextEntry::sub_101b18c0()
+{
+	TextEntryMem *p = (TextEntryMem *)this;
+	if (!p->m_11a)
+		return;
+	int limit = p->m_11c;
+	if (p->m_text.getCount() > limit && p->m_lines.getCount() != 1) {
+		int n = (int)((float)p->m_120 * limit * 0.01f);
+		int cut = 0;
+		int i = 0;
+		if (n > 0) {
+			do {
+				cut = p->m_lines.getAt(i++) + 1;
+			} while (cut < n);
+		}
+		p->m_text.removeFirst(cut);
+		p->m_114 = -1;
+		p->m_lines._count = 0;
+		p->m_lines.addElement(0xf423f);
+		vfunc149();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b1c70 size=0x2a
 #include "vgui2__Panel.h"
 #define P8(n) virtual void n##a(); virtual void n##b(); virtual void n##c(); virtual void n##d(); virtual void n##e(); virtual void n##f(); virtual void n##g(); virtual void n##h();
@@ -153032,6 +159523,58 @@ void C101be7d0::sub_101be7d0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101be9f0 size=0x16c
+#include "vgui2__TextEntry.h"
+
+extern "C" double sqrt(double);
+#pragma intrinsic(sqrt)
+
+extern vgui2::TextEntry *g_1067b410;
+
+struct CTextEntryUser
+{
+	char m_pad[0x15];
+	bool m_b15;
+	void sub_101be9f0();
+};
+
+// TARGET: CTextEntryUser::sub_101be9f0
+void CTextEntryUser::sub_101be9f0()
+{
+	if (m_b15)
+	{
+		g_1067b410->vfunc138(0);
+		g_1067b410->sub_101b1790();
+		return;
+	}
+	int wide, tall;
+	g_1067b410->vfunc138(0);
+	g_1067b410->sub_101b1790();
+	g_1067b410->sub_101a9920(&wide, &tall);
+	int area = wide * tall * 2;
+	double d = sqrt((double)area);
+	g_1067b410->vfunc138(1);
+	g_1067b410->sub_101a98f0((int)d, (int)(d * 0.0));
+	g_1067b410->sub_101b16f0();
+	g_1067b410->sub_101a9920(&wide, &tall);
+	if (wide < 100 && g_1067b410->sub_101b16e0() == 2)
+	{
+		g_1067b410->vfunc138(0);
+		g_1067b410->sub_101b1790();
+	}
+	else
+	{
+		while ((float)wide / tall < 2.0f)
+		{
+			g_1067b410->sub_101a98f0(wide + 1, tall);
+			g_1067b410->sub_101b16f0();
+			g_1067b410->sub_101a9920(&wide, &tall);
+		}
+	}
+	g_1067b410->sub_101a9920(&wide, &tall);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101beb60 size=0xa
 struct CUnknown101beb60 { char sub_101beb60(char); };
 char CUnknown101beb60::sub_101beb60(char a0)
@@ -154597,6 +161140,39 @@ int CUnknown101c4f50::sub_101c4f50()
 {
     ((lifted::V *)(lifted::sub_101ac8d0()))->f43(((lifted::V *)this)->f0(0));
     return ((lifted::C101c2500 *)(*(int *)((char *)this + 0x120)))->sub_101c2500();
+}
+// END FUNCTION
+
+// FUNCTION: 0x101c4f80 size=0x6b
+#include "vgui2__BuildModeDialog.h"
+#include "vgui2__MessageBox.h"
+#define m_pHelpDlg (*(vgui2::MessageBox **)((char *)this + 0x108))
+typedef void (__fastcall *PFVoid)(void *);
+// TARGET: vgui2::BuildModeDialog::sub_101c4f80
+void vgui2::BuildModeDialog::sub_101c4f80()
+{
+	char helpText[] = "In the Build Mode Dialog Window:\n"
+		"Delete button - deletes the currently selected panel if it is deletable.\n"
+		"Apply button - applies changes to the Context Panel.\n"
+		"Save button - saves all settings to file. \n"
+		"Revert to saved- reloads the last saved file.\n"
+		"Auto Update - any changes apply instantly.\n"
+		"Typing Enter in any text field applies changes.\n"
+		"New Control menu - creates a new panel in the upper left corner.\n\n"
+		"In the Context Panel:\n"
+		"After selecting and moving a panel Ctrl-z will undo the move.\n"
+		"Shift clicking panels allows multiple panels to be selected into a group.\n"
+		"Ctrl-c copies the settings of the last selected panel.\n"
+		"Ctrl-v creates a new panel with the copied settings at the location of the mouse pointer.\n"
+		"Arrow keys slowly move panels, holding shift + arrow will slowly resize it.\n"
+		"Holding right mouse button down opens a dropdown panel creation menu.\n"
+		"  Panel will be created where the menu was opened.\n"
+		"Delete key deletes the currently selected panel if it is deletable.\n"
+		"  Does nothing to multiple selections.";
+	void *p = vgui2::Panel::operator new(0xf0);
+	m_pHelpDlg = p ? new (p) vgui2::MessageBox("Build Mode Help", helpText, this) : 0;
+	m_pHelpDlg->vfunc41((int)this);
+	((PFVoid)(*(void ***)m_pHelpDlg)[145])(m_pHelpDlg);
 }
 // END FUNCTION
 

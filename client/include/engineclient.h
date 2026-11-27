@@ -57,7 +57,7 @@ public:
 	virtual void vfunc30(int, void *);	// slot 30
 	virtual void vfunc31();
 	virtual void vfunc32();
-	virtual void vfunc33();
+	virtual bool vfunc33();
 	virtual int vfunc34();	// slot 34
 	virtual void vfunc35();
 	virtual void *vfunc36(const char *);	// slot 36; seen as LoadModel 1
@@ -77,7 +77,7 @@ public:
 	virtual void SetViewAngles(QAngle &);	// slot 50
 	virtual int GetMaxClients();	// slot 51
 	virtual void vfunc52();
-	virtual void vfunc53();
+	virtual void vfunc53(int, int);
 	virtual const char *vfunc54(const char *);
 	virtual void vfunc55();
 	virtual void vfunc56();
@@ -107,13 +107,13 @@ public:
 	virtual void vfunc80();
 	virtual void vfunc81();
 	virtual void vfunc82();
-	virtual void vfunc83();
-	virtual void vfunc84();
-	virtual void vfunc85();
+	virtual int vfunc83(int);
+	virtual int vfunc84(int);
+	virtual bool vfunc85(int, void *, int);
 	virtual void vfunc86();
-	virtual void vfunc87();
+	virtual void *vfunc87();
 	virtual void vfunc88();
-	virtual void vfunc89();
+	virtual void vfunc89(int, void *);
 	virtual void vfunc90();
 	virtual void vfunc91(float *, float *);	// slot 91; seen as LinearToGamma 1
 	virtual float vfunc92(int);	// slot 92; seen as LightStyleValue 1
@@ -153,7 +153,7 @@ public:
 	virtual void vfunc1();
 	virtual int vfunc2(int flags, IClientRenderable *pRenderable, unsigned short instance, const void *model, const Vector &origin, const QAngle &angles, int skin, int body, const Vector *pLightingOrigin);	// slot 2: DrawModel (C_BaseAnimating's trail draw 0x10096060)
 	virtual void vfunc3(void *pMaterial);	// slot 3: ForcedMaterialOverride (DrawInsightModel)
-	virtual void vfunc4();
+	virtual void vfunc4(void *);
 	virtual int vfunc5(int);	// slot 5; seen as GetModelFrameCount 1
 	virtual void vfunc6();
 	virtual void vfunc7();
@@ -182,7 +182,7 @@ class IVEfx
 {
 public:
 	virtual int Draw_DecalIndex(int);	// slot 0
-	virtual void vfunc1();
+	virtual int Draw_DecalIndexFromName(const char *);
 	virtual void DecalShoot(int, int, int, const Vector &, const QAngle &, const Vector &, const Vector *, int);	// slot 2
 	virtual void vfunc3(int, int, const void *, const Vector &, const QAngle &, const Vector &, const Vector *, int, const void *);	// slot 3: DecalColorShoot (..., flags, const color32 *)
 	virtual void *CL_AllocDlight(int);	// slot 4
@@ -279,7 +279,7 @@ public:
 	virtual int vfunc16();	// slot 16
 	virtual int vfunc17(void *pWaterInfo, bool *pbWater, const Vector &origin);	// slot 17: the water under the view (CViewRender::ViewDrawScene)
 	virtual int vfunc18();	// slot 18
-	virtual int vfunc19();	// slot 19
+	virtual void vfunc19(int);	// slot 19
 	virtual int vfunc20();	// slot 20
 	virtual int vfunc21();	// slot 21
 	virtual int vfunc22();	// slot 22
@@ -680,7 +680,7 @@ extern IFileSystem *g_104a580c;
 class IShadowMgr
 {
 public:
-	virtual void vfunc0();
+	virtual unsigned short vfunc0(void *, void *, int, int);
 	virtual void vfunc1();
 	virtual void vfunc2(unsigned short, const Vector &, const Vector &, const VMatrix &, void *, float, float);	// slot 2; seen as ProjectShadow 1
 	virtual int vfunc3(unsigned short);	// slot 3

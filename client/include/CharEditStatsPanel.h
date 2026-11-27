@@ -15,6 +15,7 @@ public:
 	void sub_10181cc0();
 	void sub_1017dc20();
 	void sub_10181f80();
+	void sub_10181960();
 	void sub_1017f610();
 	void sub_10182460();
 	int sub_10182450();

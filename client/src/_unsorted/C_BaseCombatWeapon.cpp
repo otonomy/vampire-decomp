@@ -242,6 +242,53 @@ C_BaseCombatWeapon *pcd_emit_1007ab20(const C_BaseCombatWeapon &other) { return 
 // TARGET: ??_GC_BaseCombatWeapon@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x1007ab40 size=0x159
+#include "C_BaseCombatWeapon.h"
+#include "CUtlVector4.h"
+#include "CVDmg_t.h"
+struct HV_1007ab40 {
+	int *m_pMemory;
+	int m_allocationCount;
+	int m_growSize;
+	int m_size;
+	int *m_pElements;
+	void sub_1007db30(int elem, int num);
+	int Find(unsigned int *h)
+	{
+		for (int i = 0; i < m_size; i++) {
+			CBaseHandle *pe = (CBaseHandle *)&m_pMemory[i];
+			void *pSrc = g_pEntityList->sub_1007aca0(h);
+			if (pe->Get() == pSrc)
+				return i;
+		}
+		return -1;
+	}
+	void Remove(int elem)
+	{
+		sub_1007db30(elem, 1);
+		m_size--;
+	}
+};
+extern HV_1007ab40 g_1049d8f8;
+extern HV_1007ab40 g_1049d978;
+C_BaseCombatWeapon::~C_BaseCombatWeapon()
+{
+	unsigned int h = -1;
+	h = *((IHandleEntity *)this)->vfunc1();
+	int i = g_1049d8f8.Find(&h);
+	if (i != -1)
+		g_1049d8f8.Remove(i);
+	i = g_1049d978.Find(&h);
+	if (i != -1)
+		g_1049d978.Remove(i);
+	CVDmg_t *p = (CVDmg_t *)((char *)this + 0x8a8);
+	for (int n = 3; n; n--) {
+		p--;
+		p->sub_10158790();
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x1007acd0 size=0xb7
 #include "C_BaseCombatWeapon.h"
 
@@ -1279,6 +1326,62 @@ int C_BaseCombatWeapon::vfunc197()
 #include "C_BaseCombatWeapon.h"
 void C_BaseCombatWeapon::vfunc200()
 {
+}
+// END FUNCTION
+
+// FUNCTION: 0x1007caa0 size=0x152
+#include "C_BaseCombatWeapon.h"
+#include "CGlobalVarsBase.h"
+#include "Vector.h"
+#define V4(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3();
+#define V16(p) V4(p##a) V4(p##b) V4(p##c) V4(p##d)
+struct CWpnOwner {
+    V16(a) V16(b) V4(c) V4(d) virtual void s0(); virtual void s1(); virtual void s2();
+    virtual int vfunc43();
+    V16(e) V16(f) V16(g) V16(h) V16(i) V16(j) V4(k) V4(l) virtual void t0(); virtual void t1();
+    virtual void vfunc150(Vector *, int);
+    V16(m) V16(n) V4(o) virtual void u0(); virtual void u1();
+    virtual void vfunc189(int);
+    char pad[0x70];
+    int m_flags74;
+    void sub_100a9b50(Vector *, float);
+    int sub_10097f80(int);
+    void sub_100a9be0(const char *, int, int);
+};
+// TARGET: C_BaseCombatWeapon::vfunc199
+void C_BaseCombatWeapon::vfunc199()
+{
+    if (vfunc150(0) && !*(int *)((char *)this + 0x7ac)) {
+        vfunc198();
+        return;
+    }
+    CWpnOwner *o = sub_1007bb30();
+    if (o) {
+        vfunc206(1, 1, 0.0f, 0, 0.0f, 0);
+        o->m_flags74 |= 2;
+        vfunc180(vfunc201());
+        o->vfunc189(5);
+        Vector v;
+        o->vfunc150(&v, o->vfunc43());
+        Vector w;
+        o->sub_100a9b50(&w, 0.087155745f);
+        int n = 0;
+        float f = vfunc205();
+        float &t = *(float *)((char *)this + 0x790);
+        if (t <= gpGlobals->curtime) {
+            do {
+                t += f;
+                n++;
+            } while (f != 0.0f && t <= gpGlobals->curtime);
+        }
+        int &cnt = *(int *)((char *)this + 0x7ac);
+        if (n > cnt)
+            n = cnt;
+        cnt -= n;
+        if (cnt == 0 && o->sub_10097f80(*(int *)((char *)this + 0x7a4)) <= 0)
+            o->sub_100a9be0("!HEV_AMO0", 0, 0);
+        vfunc212();
+    }
 }
 // END FUNCTION
 

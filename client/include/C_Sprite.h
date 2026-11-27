@@ -17,6 +17,7 @@ public:
 	virtual void GetRenderBounds(Vector &vecMins, Vector &vecMaxs);	// IClientRenderable slot 18
 	virtual int vfunc16();
 	virtual int vfunc17();
+	virtual void OnDataChanged(int updateType);
 	float vfunc121();
 	virtual int vfunc122();
 };

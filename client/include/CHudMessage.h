@@ -37,7 +37,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     int m_text;
     int m_fadeBlend;
     float m_charTime;
-    int m_unkd0;
+    float m_unkd0;
     float m_gameTitleTime;
     struct client_textmessage_s *m_pGameTitle;
     bool m_bHaveMessage;

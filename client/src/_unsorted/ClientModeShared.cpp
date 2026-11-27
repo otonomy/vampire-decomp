@@ -127,6 +127,60 @@ void ClientModeShared::vfunc35()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d4310 size=0xe9
+#include "ClientModeShared.h"
+#include "CVMainMenu.h"
+#include "CHudDialog.h"
+#include "C_BasePlayer.h"
+#include "CClientEntityList.h"
+#define G(a) virtual void a##0(); virtual void a##1(); virtual void a##2(); virtual void a##3(); virtual void a##4(); virtual void a##5(); virtual void a##6(); virtual void a##7(); virtual void a##8(); virtual void a##9();
+#define H(a) G(a##0) G(a##1) G(a##2) G(a##3) G(a##4) G(a##5) G(a##6) G(a##7) G(a##8) G(a##9)
+struct IUnk246_100d4310 {
+	H(a) H(b) G(c0) G(c1) G(c2) G(c3) virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5();
+	virtual int v246(int, int, const char *);
+};
+struct IEnt25_100d4310 {
+	G(a0) G(a1) virtual void b0(); virtual void b1(); virtual void b2(); virtual void b3(); virtual void b4();
+	virtual bool v25(int);
+};
+struct WizMgr_100d4310 {
+	char pad0[0x10];
+	struct Sub { virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void a5(); virtual void a6(); virtual void a7(); virtual void a8(); virtual void a9();
+		virtual void b0(); virtual void b1(); virtual void b2(); virtual void b3(); virtual void b4(); virtual void b5(); virtual void b6(); virtual void b7(); virtual void b8(); virtual void b9();
+		virtual void c0(); virtual void c1(); virtual bool v22(); } m_sub;
+	int sub_10175e10(int, int, const char *);
+};
+extern CVMainMenu *g_103ef0b4;
+extern WizMgr_100d4310 *g_105fb1f8;
+extern char g_103eee48;
+extern CHudDialog *g_103eee40;
+bool sub_10052ed0();
+CHudDialog *sub_10052ef0();
+IUnk246_100d4310 *sub_1009b210();
+// TARGET: ClientModeShared::vfunc16
+int ClientModeShared::vfunc16(int down, int key, const char *binding)
+{
+	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+	if (g_103ef0b4 && (char)g_103ef0b4->vfunc22())
+		return g_103ef0b4->sub_10065db0(down, key, (int)binding);
+	if (g_105fb1f8 && g_105fb1f8->m_sub.v22())
+		return g_105fb1f8->sub_10175e10(down, key, binding);
+	if (sub_10052ed0())
+		return sub_10052ef0()->vfunc114(down, key, (int)binding);
+	if (g_103eee48)
+		return g_103eee40->sub_10061450(down, key, (int)binding);
+	if (down && pPlayer && *(int *)((char *)pPlayer + 0x16b8) > 0) {
+		IEnt25_100d4310 *pEnt = (IEnt25_100d4310 *)cl_entitylist->sub_100d0cf0(*(int *)((char *)pPlayer + 0x16b8));
+		if (pEnt && pEnt->v25(key))
+			return 0;
+	}
+	IUnk246_100d4310 *p = sub_1009b210();
+	if (p)
+		return p->v246(down, key, binding);
+	return 1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d4400 size=0x3
 #include "ClientModeShared.h"
 int ClientModeShared::vfunc20()

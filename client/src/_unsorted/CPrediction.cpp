@@ -29,6 +29,41 @@ void CPrediction::vfunc2()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10121a90 size=0x67
+#include "CPrediction.h"
+#include "C_BasePlayer.h"
+struct CV_10121a90 {
+	virtual void v0();
+	virtual bool v1();
+	int m_unk[10];
+	int m_p2c;
+};
+struct Pred_10121a90 {
+	bool sub_100a2600();
+};
+struct IPV_10121a90 {
+	virtual Pred_10121a90 *GetPredictable(int i);
+	virtual int GetPredictableCount();
+};
+extern CV_10121a90 *g_104e170c;
+extern IPV_10121a90 *g_102af678;
+void sub_100a26e0_(void *);
+struct Ent_10121a90 : Pred_10121a90 {
+	void sub_100a26e0();
+};
+void CPrediction::vfunc5()
+{
+	if (!g_104e170c->v1() && g_104e170c->m_p2c && C_BasePlayer::GetLocalPlayer()) {
+		int n = g_102af678->GetPredictableCount();
+		for (int i = 0; i < n; i++) {
+			C_BaseEntity *ent = (C_BaseEntity *)g_102af678->GetPredictable(i);
+			if (ent && ent->sub_100a2600())
+				ent->sub_100a26e0();
+		}
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10121c20 size=0x27b
 #include "CPrediction.h"
 #include "ConVar.h"

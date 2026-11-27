@@ -11,6 +11,31 @@ VBarterLabel *pcd_emit_1016b180(const VBarterLabel &other) { return new VBarterL
 // TARGET: ??_GVBarterLabel@@UAEPAXI@Z
 // END FUNCTION
 
+// FUNCTION: 0x1016b1c0 size=0xdd
+#include "VBarterLabel.h"
+#include "CHud.h"
+
+int sub_100cd100();
+struct CHudBarterUI { void sub_1016cfc0(int, int); };
+
+// TARGET: vfunc98
+void VBarterLabel::vfunc98()
+{
+	int a, b;
+	sub_101a98c0(&a, &b);
+	int n = sub_101ab1a0();
+	if (*(CHUDSprite10059620 **)((char *)this + 0xc0))
+		(*(CHUDSprite10059620 **)((char *)this + 0xc0))->sub_10059620(a, b, (int)((sub_100cd100() * 0.0009765625) * 100.0), n);
+	if (*((char *)this + 0xba)) {
+		int x, y, z, w;
+		sub_101a9980(&x, &y, &z, &w);
+		((CHudBarterUI *)gHUD.sub_100f0ed0("VBarterUI"))->sub_1016cfc0(x, y);
+	}
+	for (int i = 0; i < vfunc36(); i++)
+		vfunc37(i)->vfunc98();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1016b2a0 size=0x26
 #include "VBarterLabel.h"
 namespace lifted {

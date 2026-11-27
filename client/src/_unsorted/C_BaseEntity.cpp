@@ -179,6 +179,52 @@ bool C_BaseEntity::vfunc106()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10001730 size=0x14e
+#include "C_BaseEntity.h"
+#include "CCollisionProperty.h"
+
+extern "C" void sub_10107f80(const Vector *, const matrix3x4_t *, Vector *);
+extern QAngle g_104d5190;
+
+static inline Vector &AllocTempVector()
+{
+    static Vector s_vecTemp[128];
+    static int s_nIndex = 0;
+    s_nIndex = (s_nIndex + 1) & 0x7f;
+    return s_vecTemp[s_nIndex];
+}
+
+static inline const Vector &WorldSpaceCenter(CCollisionProperty *col)
+{
+    const Vector &maxs = *(const Vector *)&col->m_unk10;
+    Vector &out = AllocTempVector();
+    Vector &center = AllocTempVector();
+    center.x = (maxs.x - col->m_vecMins.x) * 0.5f + col->m_vecMins.x;
+    center.y = (maxs.y - col->m_vecMins.y) * 0.5f + col->m_vecMins.y;
+    center.z = (maxs.z - col->m_vecMins.z) * 0.5f + col->m_vecMins.z;
+    if (!(col->m_unk44 & 0x80) && col->m_unk40 != 2 && col->m_unk40 != 0) {
+        const QAngle &ang = col->vfunc9(0);
+        if (g_104d5190.x != ang.x || g_104d5190.y != ang.y || g_104d5190.z != ang.z) {
+            const matrix3x4_t &m = col->vfunc10();
+            sub_10107f80(&center, &m, &out);
+            return out;
+        }
+    }
+    const Vector &org = col->vfunc8();
+    float ox = org.x;
+    out.x = ox + center.x;
+    out.y = org.y + center.y;
+    out.z = org.z + center.z;
+    return out;
+}
+
+// TARGET: C_BaseEntity::vfunc23
+Vector C_BaseEntity::vfunc23()
+{
+    return WorldSpaceCenter((CCollisionProperty *)((char *)this + 0x190));
+}
+// END FUNCTION
+
 // FUNCTION: 0x10001890 size=0x1
 #include "C_BaseEntity.h"
 void C_BaseEntity::vfunc112()
@@ -531,6 +577,34 @@ int C_BaseEntity::vfunc86()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1009f370 size=0x151
+#include "engineclient.h"
+#include "C_BaseEntity.h"
+#include "CCollisionProperty.h"
+void sub_1010b7e0(void *, Vector &, Vector &, Vector &, Vector &);
+void C_BaseEntity::GetRenderBounds(Vector &mins, Vector &maxs)
+{
+    int t = modelinfo->GetModelType(*(const void **)((char *)this + 0x40));
+    if (t == 3 || t == 1) {
+        modelinfo->vfunc4((void *)GetModel(), 0, &mins, &maxs);
+        return;
+    }
+    CCollisionProperty *col = (CCollisionProperty *)((char *)this + 0x190);
+    const QAngle &a = col->vfunc9(0);
+    const QAngle &b = GetRenderAngles();
+    if (a.x == b.x && a.y == b.y && a.z == b.z) {
+        mins = col->vfunc1();
+        maxs = *(Vector *)col->vfunc2();
+    } else if (*(float *)((char *)this + 0x1d8) == 0.0f) {
+        maxs = mins = col->vfunc8();
+    } else {
+        C_BaseEntity *e = this;
+        e->sub_1009f8a0();
+        sub_1010b7e0((char *)e + 0x26c, col->vfunc1(), *(Vector *)col->vfunc2(), mins, maxs);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x1009f4d0 size=0xe9
 #include "engineclient.h"
 #include "C_BaseEntity.h"
@@ -784,11 +858,154 @@ int C_BaseEntity::DrawModel(int flags, int a1)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a0240 size=0x94
+#include "C_BaseEntity.h"
+char sub_100cc190(void *, int, void *);
+struct Ent_100a0240 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18();
+	virtual void v19();
+	bool sub_100a2ba0();
+};
+void C_BaseEntity::PreDataUpdate(int updateType)
+{
+	volatile int *p = (volatile int *)this + 2;
+	p[0x294/4] = p[0x2ac/4];
+	p[0x298/4] = p[0x2b0/4];
+	p[0x29c/4] = p[0x2b4/4];
+	p[0x2a0/4] = p[0x2b8/4];
+	p[0x2a4/4] = p[0x2bc/4];
+	p[0x2a8/4] = p[0x2c0/4];
+	if (sub_100cc190(this ? (char *)this + 8 : 0, updateType, (char *)p + 0x3d4)) {
+		OnPreDataChanged(updateType);
+	}
+	if (updateType == 0) {
+		Ent_100a0240 *e = (Ent_100a0240 *)this;
+		if (!e->sub_100a2ba0())
+			e->v19();
+	}
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a0320 size=0x12a
+#include "engineclient.h"
+#include "C_BaseEntity.h"
+#include "Vector.h"
+#include "QAngle.h"
+extern "C" void *memmove(void *, const void *, unsigned int);
+extern "C" void *memcpy(void *, const void *, unsigned int);
+#pragma intrinsic(memcpy)
+struct HistEntry { float time; Vector origin; QAngle angles; };
+struct Mem1c {
+    HistEntry *m_pMemory;
+    int m_allocationCount;
+    int m_growSize;
+    int m_size;
+    HistEntry *m_pElements;
+    void sub_100a35f0(int num);
+};
+struct VecView : Mem1c {
+    void sub_100a3530(int elem, int num);
+    int AddToHead(const HistEntry &src) {
+        int elem = 0;
+        if (m_size + 1 > m_allocationCount)
+            sub_100a35f0(m_size + 1 - m_allocationCount);
+        m_size++;
+        m_pElements = m_pMemory;
+        sub_100a3530(elem, 1);
+        HistEntry *p = &m_pMemory[elem];
+        if (p)
+            memcpy(p, &src, sizeof(HistEntry));
+        return elem;
+    }
+    void Remove(int elem) {
+        int n = m_size - elem - 1;
+        if (n > 0)
+            memmove(&m_pMemory[elem], &m_pMemory[elem + 1], n * sizeof(HistEntry));
+        m_size--;
+    }
+};
+struct EntView {
+    char pad[0x130];
+    VecView m_hist;
+};
+void C_BaseEntity::vfunc69() {
+    HistEntry e;
+    e.angles = GetAbsAngles();
+    e.origin = GetAbsOrigin();
+    e.time = *(float *)(0x144 + (char *)this);
+    float t0 = engine->Time(0) - render->vfunc42() - 0.10000000149011612f; float cutoff = (float)(t0);
+    EntView *ev = (EntView *)this;
+    ev->m_hist.AddToHead(e);
+    for (int i = ev->m_hist.m_size - 1; i >= 0; i--) {
+        if (ev->m_hist.m_pMemory[i].time > cutoff)
+            break;
+        ev->m_hist.Remove(i);
+    }
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a06e0 size=0x3
 #include "C_BaseEntity.h"
 bool C_BaseEntity::vfunc67()
 {
     return 1;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a0740 size=0x15f
+#include "C_BaseEntity.h"
+#include "Vector.h"
+#include "QAngle.h"
+extern "C" void *__cdecl memmove(void *, const void *, unsigned int);
+extern "C" void *__cdecl memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+inline void *operator new(unsigned int, void *p) { return p; }
+struct Entry_100a0740 {
+	float time;
+	Vector origin;
+	Vector angles;
+};
+struct Vec_100a0740 {
+	Entry_100a0740 *m_pMemory;
+	int m_alloc;
+	int m_grow;
+	int m_size;
+	Entry_100a0740 *m_pElements;
+	void sub_100a35f0(int num);
+	void AddToHead(const Entry_100a0740 &src)
+	{
+		int elem = 0;
+		if (m_size + 1 > m_alloc)
+			sub_100a35f0(m_size + 1 - m_alloc);
+		m_size++;
+		m_pElements = m_pMemory;
+		int n = m_size - elem - 1;
+		if (n > 0)
+			memmove(&m_pMemory[elem + 1], &m_pMemory[elem], n * sizeof(Entry_100a0740));
+		Entry_100a0740 *p = &m_pMemory[elem];
+		if (p)
+			new (p) Entry_100a0740(src);
+	}
+};
+void C_BaseEntity::vfunc68(bool update)
+{
+	Entry_100a0740 e;
+	if (((Vec_100a0740 *)((char *)this + 0x130))->m_size >= 1)
+		e = ((Vec_100a0740 *)((char *)this + 0x130))->m_pMemory[0];
+	else
+		memset(&e, 0, sizeof(e));
+	Vec_100a0740 *v = (Vec_100a0740 *)((char *)this + 0x130);
+	v->m_size = 0;
+	if (update) {
+		e.time = *(float *)((char *)this + 0x70);
+		e.origin = GetAbsOrigin();
+		e.angles = *(const Vector *)&GetAbsAngles();
+	}
+	v->AddToHead(e);
+	v->AddToHead(e);
 }
 // END FUNCTION
 
@@ -1114,6 +1331,19 @@ int C_BaseEntity::vfunc62()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100a1340 size=0x90
+#include "C_BaseEntity.h"
+
+void C_BaseEntity::OnDataChanged(int updateType)
+{
+	float *a = (float *)((char *)this + 0x29c);
+	float *b = (float *)((char *)this + 0x2b4);
+	if (a[0] != b[0] || a[1] != b[1] || a[2] != b[2] || a[3] != b[3] || a[4] != b[4] || a[5] != b[5])
+		sub_1009e2d0(1);
+	sub_100a0650("OnDataChanged");
+}
+// END FUNCTION
+
 // FUNCTION: 0x100a1aa0 size=0x73
 #include "engineclient.h"
 #include "C_BaseEntity.h"
@@ -1135,6 +1365,20 @@ int C_BaseEntity::vfunc66()
         }
     }
     return 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a1ed0 size=0x1b
+#include "C_BaseEntity.h"
+#include "CBaseHandle.h"
+
+struct HbThink_100a1ed0 { void sub_100cfea0(CBaseHandle h, float t); };
+HbThink_100a1ed0 *sub_1002d700();
+struct HbEnt_100a1ed0 { CBaseHandle sub_1002d710(); };
+
+void C_BaseEntity::vfunc83(float t)
+{
+	sub_1002d700()->sub_100cfea0(((HbEnt_100a1ed0 *)this)->sub_1002d710(), t);
 }
 // END FUNCTION
 
@@ -1294,6 +1538,33 @@ char *C_BaseEntity::vfunc114()
 			Q_snprintf(outstring, sizeof(outstring), "%s", p);
 	}
 	return outstring;
+}
+// END FUNCTION
+
+// FUNCTION: 0x100a2cf0 size=0x50
+#include "C_BaseEntity.h"
+
+struct PredCtx
+{
+	char m_pad[0x10];
+	unsigned int m_hServerEntity;
+};
+
+// TARGET: C_BaseEntity::vfunc113
+bool C_BaseEntity::vfunc113(bool isbeingremoved, C_BaseEntity *predicted)
+{
+	PredCtx *ctx = *(PredCtx **)((char *)predicted + 0xd0);
+	if (ctx)
+	{
+		if (this)
+			ctx->m_hServerEntity = *vfunc1();
+		else
+			ctx->m_hServerEntity = 0xffffffff;
+	}
+	sub_100a2e40(1);
+	sub_100a0650("OnPredictedEntityRemove");
+	predicted->sub_100a2e90(1);
+	return true;
 }
 // END FUNCTION
 

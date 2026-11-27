@@ -23,7 +23,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual bool vfunc107();
 	virtual void vfunc112();
 	// the slots CHudDialog adds to its base's vtable: 114-116, vfuncK at slot K
-	virtual void vfunc114();
+	virtual int vfunc114(int, int, int);
 	virtual void vfunc115(int, int, int);
 	virtual bool vfunc116();
 	void sub_10054450(bool);
@@ -32,15 +32,18 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int sub_10061450(int, int, int);
 	void SetDrawLastPickEnabled(bool bEnabled);
 	void ScrollDn();
+	void sub_10054b60();
 	void ScrollUp();
 	void sub_100544d0(bool bEnabled);
 	void sub_10054bd0(bool bEnabled);
 	void sub_10055360(bool b);
+	void sub_10054e20();
+	void sub_101a9ff0(int);
 	void sub_10054670(int n);
 	void sub_10054f70(int type, const char *text);
 	void sub_10054860();
 	void sub_10053ff0(bool bDraw, const char *pszText, int nFlags, int nType, int *pY);	// "CHudDialog::PaintResponseLine"
-	void sub_100549f0(int a, int b);
+	void sub_100549f0(int a, bool force);
 	void sub_10053c70(bool bDraw, int nIndex, const char *pszText, int nFlags, int nType, int *pY);	// "CHudDialog::PaintResponse"
 	int sub_100556d0(int nFont, const char *pszText);
 	int m_unk174;
@@ -84,5 +87,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_iOptionA[4];	// 0x5a50
 	int m_iOptionB[4];	// 0x5a60
 	DlgColor m_col5a70; DlgColor m_col5a74; DlgColor m_col5a78; DlgColor m_col5a7c;
-	int m_unk5a80;	// sizeof(CHudDialog) == 0x5a84 (CHudManagerPanel::vfunc0's new)
+	float m_flLastPick;	// 0x5a80, sizeof(CHudDialog) == 0x5a84 (CHudManagerPanel::vfunc0's new)
 };

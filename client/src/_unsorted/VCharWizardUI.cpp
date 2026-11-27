@@ -26,6 +26,26 @@ VCharWizardUI::~VCharWizardUI()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10174b80 size=0x7a
+#include "VCharWizardUI.h"
+
+extern int sub_100cd0f0();
+extern int sub_100cd100();
+#define XRES(x) ((int)((x) * (sub_100cd100() * 0.0009765625)))
+#define YRES(y) ((int)((y) * (sub_100cd0f0() * 0.0013020833333333333)))
+
+// TARGET: VCharWizardUI::vfunc2
+void VCharWizardUI::vfunc2()
+{
+	sub_10174b20();
+	CBasePanel *p = (CBasePanel *)((char *)this + 0x10);
+	p->sub_101a9950(0, 0, XRES(1024.0), YRES(768.0));
+	p->vfunc54(2);
+	p->sub_101aa0a0(0x4b0);
+	sub_101749c0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10174c60 size=0x1b
 #include "VCharWizardUI.h"
 extern bool g_105fb201;

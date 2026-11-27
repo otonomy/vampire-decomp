@@ -17,6 +17,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc15();
 	virtual int vfunc16();
 	virtual void vfunc37();
+	virtual void OnDataChanged(int updateType);
 	virtual void ClientThink();	// IClientThinkable slot 0 (this = the thinkable part, +0x10)
 	char m_pad0014[0xa8 - 0x14];
 	Vector m_vecVelocityA8;	// 0xa8: read directly as the SDK's GetAbsVelocity()

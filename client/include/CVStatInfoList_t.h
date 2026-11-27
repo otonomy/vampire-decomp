@@ -25,8 +25,10 @@ public:
 	void sub_1015c3a0();	// "CVStatInfoList_t::~CVStatInfoList_t"-like: scope trace, delete[]s the records and zeroes the count
 		// "CVStatInfoList_t::PreCache": scope trace, frees the records, opens "vdata\\system\\stats.txt", finds the block named like the list (+0xc), reads its display text (+0x24) and "InternalName" (+0x28), counts and allocates the records of its "Stat" keys and pre-loads each; DevMsg when the count differs from the one the list was made with (+0)
 	void sub_1015c4b0();	// "CVStatInfoList_t::PreCache"
+	int sub_1015cde0(const char *name, int index);
 	int sub_1015c8f0(const char *name);	// "CVStatInfoList_t::Lookup(char*)": scope trace, index of the stat whose name equals the argument (case-insensitive, null name counts as ""), -1 when none
 	int sub_1015c9b0(const char *name);
+	int sub_1015ccb0(const char *name, int index);	// "CVStatInfoList_t::LookupNextPartial"
 	CVDmgBlock16_t *sub_1015cf10(const char *name);
 		// "CVStatInfoList_t::Lookup( const char *name )": same lookup (name string at +0x18 of each record)
 	int sub_1015ca70(const char *name);	// "CVStatInfoList_t::LookupPartial": scope trace, index of the first stat whose lowercased name starts with the lowercased argument, -1 when none

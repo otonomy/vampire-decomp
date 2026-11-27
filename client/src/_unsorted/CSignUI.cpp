@@ -46,3 +46,48 @@ CSignUI::~CSignUI()
 	g_103eee40 = 0;
 }
 // END FUNCTION
+
+// FUNCTION: 0x100612a0 size=0xca
+#include "CSignUI.h"
+#include "engineclient.h"
+#include "CHud.h"
+
+void sub_10114660(int, int);
+int sub_10114690();
+int sub_101146c0();
+float sub_101146d0();
+int sub_101146e0();
+void sub_1018ccf0(int);
+void sub_101a7ac0(void *);
+extern int g_103eee44;
+struct SignUIView_100612a0
+{
+	void sub_10061370();
+	void sub_100613a0();
+	void sub_10061520(int);
+};
+
+void CSignUI::vfunc114(int a, int b, int c)
+{
+	sub_10114660(c, b);
+	int flag = sub_10114690();
+	m_f18c = sub_101146d0();
+	g_103eee44 = sub_101146c0();
+	if (flag)
+	{
+		sub_101a7ac0(gHUD.FindElement("CHudWeaponSelection"));
+		if (sub_10114690())
+			((SignUIView_100612a0 *)this)->sub_10061370();
+		*((char *)this + 0x182) = m_b181;
+		vfunc5_hud(true);
+		*(float *)&m_unk184 = engine->Time(1);
+		((SignUIView_100612a0 *)this)->sub_10061520(sub_101146e0());
+		sub_1018ccf0(8);
+	}
+	else
+	{
+		((SignUIView_100612a0 *)this)->sub_100613a0();
+		vfunc5_hud(false);
+	}
+}
+// END FUNCTION

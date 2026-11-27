@@ -35,7 +35,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc11(class C_BaseEntity *pent, int modelIndex, int density);	// FizzEffect
 	virtual void vfunc12();
 	virtual void vfunc13(C_LocalTempEntity *, int);
-	virtual void vfunc14();
+	virtual C_LocalTempEntity *vfunc14(const Vector &pos, const Vector &dir, float scale, int modelIndex, int rendermode, int renderfx, float a, float life, int flags, int r, int g, int b);
 	virtual void vfunc15(int, int, float, float);
 	virtual void vfunc16(int);
 	virtual void vfunc17(int, int, int, int, int, int);

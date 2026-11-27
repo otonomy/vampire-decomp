@@ -10,11 +10,13 @@ class CViewRender : public IViewRender
 {
 public:
     void sub_1019ac50(bool, int, int);
+    bool sub_1019ef20(int arg);
     char sub_10198e70();
     void sub_101997e0(struct VWInfo *, struct VRList *, bool);
     bool sub_1019f140(int arg);
     bool sub_1019fa30(int arg);
-    void sub_1019e530(int, int, float, float, int, int, int, int);
+    void sub_1019e530(int, int, float, float, float, int, int, int);
+    bool sub_1019fea0(int a);
     void sub_1019af80(bool, int);
     void sub_10190850();
     float sub_101907a0(const QAngle &, const Vector &, float, float);
@@ -29,6 +31,7 @@ public:
     void sub_1019a560(int unused);	// "CViewRender::DrawObfuscatedEntities": draws the obfuscated model (+0x404) of each entity in the handle list at +0x464 with the local player's blend, then purges the list
     void CopyViewModelInfoToEntities();
     int sub_1018fab0();
+    void sub_1018fe80();
     void sub_1019fb50(const struct CViewSetup &view);
     int sub_1018fb10();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
@@ -72,10 +75,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual int vfunc36();
     virtual int vfunc37();
     virtual int vfunc38();
-    virtual void vfunc39();
+    virtual bool vfunc39(class C_BaseEntity *pEnt, bool *pbOut);
     virtual bool vfunc40(Vector *pOut1, Vector *pOut2, float *pOut3);
     virtual void vfunc41();
-    virtual void vfunc42();
+    virtual void vfunc42(struct EntView_1019a3f0 *pEnt);
     virtual bool vfunc43();
     // the slots CViewRender adds to its base's vtable: 44-45, vfuncK at slot K
     virtual void vfunc44();

@@ -87,6 +87,67 @@ int CMessageCharsPanel::vfunc74(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101682f0 size=0x13f
+#include "CMessageCharsPanel.h"
+#include "engineclient.h"
+#include <stdarg.h>
+#include <stdio.h>
+extern "C" char *strcpy(char *, const char *);
+#pragma intrinsic(strcpy)
+
+struct CMsgRecord
+{
+	int m_unk0;
+	int m_x;
+	int m_a4;
+	char m_c0c, m_c0d, m_c0e, m_c0f;
+	char m_text[0x400];
+	int m_font;
+	float m_endtime;
+	int m_a10;
+};
+
+struct ISurfaceView
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual int __cdecl GetTextWidth(int font, const char *text);
+};
+extern ISurfaceView *g_104a5820;
+
+// TARGET: CMessageCharsPanel::vfunc107
+int CMessageCharsPanel::vfunc107(float lifetime, int font, int x, int a4, char r, char g, char b, char a, const char *fmt, int a10, ...)
+{
+	char buf[0x400];
+	va_list ap;
+	va_start(ap, fmt);
+	_vsnprintf(buf, sizeof(buf), fmt, ap);
+	buf[sizeof(buf) - 1] = 0;
+	CMsgRecord *rec = (CMsgRecord *)sub_101682b0();
+	if (!rec)
+		return x;
+	rec->m_x = x;
+	rec->m_a4 = a4;
+	rec->m_c0c = r;
+	rec->m_c0d = g;
+	rec->m_c0e = b;
+	rec->m_c0f = a;
+	rec->m_a10 = a10;
+	strcpy(rec->m_text, buf);
+	if (lifetime != 0.0f)
+		rec->m_endtime = engine->Time(0) + lifetime;
+	else
+		rec->m_endtime = 0;
+	vfunc21(1);
+	if (font)
+		rec->m_font = font;
+	else
+		rec->m_font = *(int *)((char *)this + 0x58);
+	return g_104a5820->GetTextWidth(rec->m_font, buf) + x;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10168430 size=0x49
 #include "CMessageCharsPanel.h"
 struct GObj;

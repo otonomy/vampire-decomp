@@ -14,10 +14,14 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc97();
 	virtual void vfunc98();
 	void sub_10066250();
+	void sub_100660e0();
 	void sub_10066440();
 	bool sub_10067750(int action);
 	bool sub_10065d30();
 	bool sub_10065c90();
+	void sub_10067610(int action);
+	int sub_10065db0(int, int, int);
+	void sub_10065950();
 	CUtlVector<int> m_vec170;
 	char m_unk184[0x2e8 - 0x184];
 	int m_unk2e8;

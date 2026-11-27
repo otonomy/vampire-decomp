@@ -21,6 +21,11 @@ public:
     void sub_100d2560(unsigned int, unsigned short);
     void sub_100d2800(unsigned short, float *, float *);
     void vfunc23();
+    void vfunc1(unsigned short);
+    void sub_100d28a0(unsigned short);
+    void vfunc19(unsigned short, const class Vector &, const class Vector &, const float *, float);
+    void vfunc18(unsigned short);
+    void sub_100d2220(unsigned short);
 public:
     int vfunc10(int, int, int);
     void vfunc13(void *a1, int leaf, int a3, void *info);
@@ -34,5 +39,7 @@ public:
     unsigned short vfunc4(class IClientRenderable *, int);
     void vfunc0(class IClientRenderable *pRenderable, bool bRenderWithViewModels);
     void sub_100d2a40(int handle, int group);
+    void sub_100d4f40(unsigned short elem);
+    void sub_100d4d20(unsigned short elem);
     unsigned short sub_100d1b60(class IClientRenderable *pRenderable, int group, int flags);
 };

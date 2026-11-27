@@ -19,6 +19,9 @@ public:
 	CCycleCountX m_TotalTime;
 	int m_unk20[10];
 	CVProfNode *m_pParent;
+	int m_unk4c;
+	int m_unk50;
+	int m_BudgetGroupID;
 	__declspec(dllimport) bool ExitScope();
 	__declspec(dllimport) CVProfNode *GetSubNode(const char *pszName, int detailLevel, const char *pBudgetGroupName);
 	__declspec(dllimport) void EnterScope();

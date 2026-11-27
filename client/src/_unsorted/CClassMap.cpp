@@ -134,6 +134,61 @@ void CClassMap::vfunc0(const char *mapname, const char *classname, int size, DIS
 }
 // END FUNCTION
 
+// FUNCTION: 0x100ce160 size=0x140
+#include "CClassMap.h"
+
+struct ClassRec_100ce160
+{
+	char m_name[0x80];
+	int m_a;
+	int m_b;
+	ClassRec_100ce160() { m_name[0] = 0; m_a = 0; m_b = -1; }
+	~ClassRec_100ce160() {}
+};
+
+struct ClassKey_100ce160
+{
+	CUnknown1024b370Symbol m_sym;
+	ClassRec_100ce160 m_rec;
+	ClassKey_100ce160() : m_sym(0xffff) {}
+};
+
+struct ClassTree_100ce160
+{
+	bool (*m_pfnLess)(const void *, const void *);
+	ClassMapEntry *m_pElements;
+	int m_nAlloc;
+	int m_nGrow;
+	unsigned short m_Root;
+	unsigned short m_pad12, m_pad14, m_pad16;
+	CUnknown1024b370 m_Symbols;
+	ClassMapEntry *sub_100ce920(unsigned short i);
+};
+
+// TARGET: CClassMap::vfunc1
+const char *CClassMap::vfunc1(const char *classname)
+{
+	static ClassRec_100ce160 s_rec;
+	ClassTree_100ce160 *t = (ClassTree_100ce160 *)((char *)this + 4);
+	ClassKey_100ce160 key;
+	key.m_sym = ((CUnknown1024b370 *)((char *)t + 0x18))->sub_1013d520(classname);
+	unsigned short i = t->m_Root;
+	while (i != 0xffff)
+	{
+		if (t->m_pfnLess(&key, (char *)t->m_pElements + i * 0x94 + 8))
+			i = t->sub_100ce920(i)->m_iLeft;
+		else if (t->m_pfnLess((char *)t->m_pElements + i * 0x94 + 8, &key))
+			i = t->sub_100ce920(i)->m_iRight;
+		else
+			break;
+	}
+	if (i == 0xffff)
+		return 0;
+	s_rec = *(ClassRec_100ce160 *)((char *)m_Memory.m_pMemory + i * 0x94 + 0xc);
+	return (const char *)&s_rec;
+}
+// END FUNCTION
+
 // FUNCTION: 0x100ce2b0 size=0x8b
 #include "CClassMap.h"
 #include <string.h>
