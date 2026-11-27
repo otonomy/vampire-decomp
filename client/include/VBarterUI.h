@@ -18,5 +18,6 @@ public:
 	void sub_1016ef40();
 	void sub_1016f3a0(const char *pszIcon);
 	void sub_101703e0(int nArg);
+	void sub_10170580();
 	static void operator delete(void *pMem) { CHudElement::operator delete(pMem); }
 };
