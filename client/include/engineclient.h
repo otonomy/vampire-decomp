@@ -630,7 +630,7 @@ public:
 	virtual void vfunc4();
 	virtual void vfunc5();
 	virtual void vfunc6();
-	virtual void vfunc7();
+	virtual void vfunc7(unsigned short, const Vector &, const Vector &);
 	virtual void vfunc8();
 	virtual void vfunc9();
 	virtual void vfunc10();

@@ -41,6 +41,7 @@ public:
     void sub_100432a0(int a);
     void sub_10043860(const Vector &mins, const Vector &maxs, Vector *pWorldMins, Vector *pWorldMaxs);
     float sub_10043b90(const Vector *pPoint);
+    void sub_100444b0();
     float sub_10043c80(const Vector *dir);
     bool sub_10043930(const Vector &pt);
 };
