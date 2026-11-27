@@ -81172,6 +81172,50 @@ void CInput::sub_10102800(Vector *v)
 }
 // END FUNCTION
 
+// FUNCTION: 0x10102940 size=0x10a
+#include "CInput.h"
+struct kbutton_t
+{
+	int down[2];
+	int state;
+};
+extern kbutton_t g_104d3e04;
+extern kbutton_t g_104d3590;
+extern kbutton_t g_104d3af0;
+extern kbutton_t g_104d3970;
+extern kbutton_t g_104d3748;
+extern kbutton_t g_104d3714;
+extern kbutton_t g_104d39a4;
+extern kbutton_t g_104d38a0;
+extern int g_102352c0[];
+int CInput::sub_10102940()
+{
+	int a = 1;
+	if (!(g_104d3e04.state & 1))
+	{
+		if (KeyState(&g_104d3590) != 0)
+			a = 0;
+		if (KeyState(&g_104d3af0) != 0)
+			a++;
+	}
+	int b = 1;
+	if (g_104d3970.state & 1)
+	{
+		if (KeyState(&g_104d3748) != 0)
+			b = 2;
+		if (KeyState(&g_104d3714) != 0)
+			b--;
+	}
+	if (KeyState(&g_104d39a4) != 0)
+		b++;
+	if (KeyState(&g_104d38a0) != 0)
+		b--;
+	int ca = a > 2 ? 2 : (a < 0 ? 0 : a);
+	int cb = b > 2 ? 2 : (b < 0 ? 0 : b);
+	return g_102352c0[ca * 3 + cb];
+}
+// END FUNCTION
+
 // FUNCTION: 0x10102fd0 size=0x3
 void __stdcall sub_10102fd0(int a0)
 {

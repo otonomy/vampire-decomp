@@ -6139,6 +6139,7 @@
 0x101025b0 func   ?sub_101025b0@@YGMM@Z sub_101025b0
 0x101025f0 func   ?sub_101025f0@CInput@@QAEXMAAUVector@@@Z CInput::sub_101025f0
 0x10102800 func   ?sub_10102800@CInput@@QAEXPAUVector@@@Z CInput::sub_10102800
+0x10102940 func   ?sub_10102940@CInput@@QAEHXZ CInput::sub_10102940
 0x10102fd0 func   ?sub_10102fd0@@YGXH@Z sub_10102fd0
 0x10102fe0 func   ?sub_10102fe0@CUnknown10102fe0@@QAEHHH@Z CUnknown10102fe0::sub_10102fe0
 0x101030c0 func   ?sub_101030c0@CInput_101030c0@@QAEXHPAUFrameData_101030c0@@@Z CInput_101030c0::sub_101030c0
