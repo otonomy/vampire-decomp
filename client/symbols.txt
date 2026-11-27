@@ -6519,6 +6519,7 @@
 0x10114710 func   ?sub_10114710@@YAMXZ sub_10114710
 0x10114730 func   ?sub_10114730@@YAMXZ sub_10114730
 0x10114770 func   ?sub_10114770@CUnknown10114770@@QAEPAXXZ CUnknown10114770::sub_10114770
+0x10114790 func   ?vfunc0@CBaseSimpleCollision@@UAEXABVVector@@MM@Z CBaseSimpleCollision::vfunc0
 0x101148a0 func   ?vfunc1@CBaseSimpleCollision@@UAEXABVVector@@0PAUCGameTrace@@_N@Z CBaseSimpleCollision::vfunc1
 0x10114b40 func   ?vfunc2@CBaseSimpleCollision@@UAEXABVVector@@0MM@Z CBaseSimpleCollision::vfunc2
 0x10114d80 func   ?sub_10114d80@CUnknown10114d80@@QAEHXZ CUnknown10114d80::sub_10114d80

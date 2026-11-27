@@ -1,6 +1,19 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x10114790 size=0x109
+#include "CBaseSimpleCollision.h"
+void CBaseSimpleCollision::vfunc0(const Vector &start, float a, float b)
+{
+	vfunc2(start, Vector(1.0f, 0.0f, 0.0f), a, b);
+	vfunc2(start, Vector(-1.0f, 0.0f, 0.0f), a, b);
+	vfunc2(start, Vector(0.0f, 1.0f, 0.0f), a, b);
+	vfunc2(start, Vector(0.0f, -1.0f, 0.0f), a, b);
+	vfunc2(start, Vector(0.0f, 0.0f, 1.0f), a, b);
+	vfunc2(start, Vector(0.0f, 0.0f, -1.0f), a, b);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101148a0 size=0x20f
 #include "CBaseSimpleCollision.h"
 #include "CGameTrace.h"
