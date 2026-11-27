@@ -7,6 +7,18 @@
 #include "CGameTrace.h"
 
 class C_BaseEntity;
+// the SDK's trace_t as the movement code copies it: memberwise, cplane_t's normal through the out-of-line Vector::operator= (sub_10039080), csurface_t bitwise
+struct cplane_t
+{
+	Vector normal;
+	float dist;
+	unsigned char type;
+	unsigned char signbits;
+	unsigned char unused[2];
+	cplane_t &operator=(const cplane_t &o) { normal.sub_10039080(o.normal); dist = o.dist; type = o.type; signbits = o.signbits; for (unsigned int i = 0; i < 2; i++) unused[i] = o.unused[i]; return *this; }
+};
+struct csurface_t { const char *name; short surfaceProps; unsigned short flags; };
+struct CMoveTrace_t { Vector startpos; Vector endpos; cplane_t plane; float fraction; int contents; unsigned short dispFlags; bool allsolid; bool startsolid; float fractionleftsolid; csurface_t surface; int hitgroup; short physicsbone; C_BaseEntity *m_pEnt; int hitbox; };
 class CGameMovement : public IGameMovement
 {
 public:
@@ -61,6 +73,8 @@ public:
 	Vector m_vecObsHullMin;	// 0x44
 	Vector m_vecObsHullMax;	// 0x50
 	float *sub_100e6ef0();
+	void sub_100ee140(CMoveTrace_t &pm, Vector &move);	// "PerformFlyCollisionResolution"
+	CMoveTrace_t sub_100eb9d0(Vector &push);	// "PushEntity": returns the trace
 	void sub_100e73c0();	// "UpdateStepSound": step sound timer (player +0x1994), surface from m_pSurface9c or the ladder / wade / water props, volume from the texture type (m_bA4) and the convar 0x104cf7cc, then slot 16
 	void sub_100ec660(C_BaseEntity *pNew);
 	void sub_100e85b0();
@@ -111,6 +125,10 @@ public:
 		// "CGameMovement::WaterJump": the water jump time at +0x2314 of the object at +8 is capped at 10000, counted down by frame time * 1000 and ends (cleared, flag 4 removed) when it runs out or the object at +8 has no value at +0x3e0; while it runs the velocity x / y (+0x40 / +0x44 of the object at +4) are set from the object at +8 (+0x2318 / +0x231c)
 	int sub_100ec3a0(const Vector &point);	// "CGameMovement::GetPointContentsCached": with the global movement optimisation flag at 0x10572420 set, asks the engine trace object (global 0x1070b254, slot 0) for the contents of the point only when nothing is cached or the point moved more than 1 unit from the cached one, and returns the cached value; without the flag always asks
 	bool sub_100ec450();	// "CGameMovement::CheckWater"
+	void sub_100e8660();	// WaterMove (called by vfunc12)
+	void sub_100e8f10();	// Friction (called by vfunc12)
+	void sub_100ecb40();	// CheckFalling (called by vfunc12)
+	float sub_100ee750();	// the view-offset blend duration (vfunc12 divides the time left by it)
 		// "CGameMovement::AirAccelerate": unless the object at +8 is dead (+0x2068) or in a water jump (+0x2314), adds up to min(frametime * surface friction (+0xa0) * wishspeed * accel, min(wishspeed, 30.0f) - velocity . wishdir) along wishdir to the velocity (+0x40 of the object at +4) and to the wish velocity (+0x80)
 		// "CGameMovement::TracePlayerBBox"-like (profiled as such): traces the player hull from the player's origin (+0x70) by vecOffset, moves the player's origin to where the trace ended, tells the global at 0x1071a278 (slot 2) about a partial hit that did not start solid (with the player's velocity at +0x40), and returns the trace
 		// stub 0x1000991c: the hull maxs for the player's stance (ducked / observer / standing)

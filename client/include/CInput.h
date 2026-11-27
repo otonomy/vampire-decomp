@@ -25,13 +25,19 @@ public:
     int m_unk20;
     int m_unk24;
     void *m_unk28;
-    int m_unk2c[(0x54 - 0x2c) / 4];
+    int m_unk2c[(0x40 - 0x2c) / 4];
+    int m_nJoystickFlags;	// 0x40
+    int m_unk44[(0x54 - 0x44) / 4];
     int sub_10100f10();
     int m_unk54;
     int m_unk58;
     int m_unk5c;
     int m_unk60;
-    int m_unk64[(0xdc - 0x64) / 4];
+    int m_unk64[(0x7c - 0x64) / 4];
+    struct joy_axis_t { int m_unk00; int AxisMap; int ControlMap; unsigned long *pdwRawValue; };
+    joy_axis_t m_rgAxes[6];	// 0x7c
+    unsigned long *RawValuePointer(int axis);	// 0x10100b40; defined in in_joystick.cpp before its callers (VC6 then keeps edx live across the call)
+    void sub_10100f80(float frametime, class CUserCmd *cmd);
     struct CInputKey { char name[0x20]; int value; CInputKey *next; };
     CInputKey *m_pKeys;
     int m_unke0; int m_unke4; int m_unke8; int m_unkec; int m_unkf0; int m_unkf4; int m_unkf8;
@@ -39,6 +45,13 @@ public:
     float m_f100;
     int m_unk104[(0x138 - 0x104) / 4];
     float m_f138;
+    int m_unk13c[(0x19c - 0x13c) / 4];
+    int m_fCameraDistanceMove;	// 0x19c
+    int m_nCameraOldX;	// 0x1a0
+    int m_nCameraOldY;	// 0x1a4
+    int m_nCameraX;	// 0x1a8
+    int m_nCameraY;	// 0x1ac
+    void sub_100fc170();	// CAM_Think-like: mouse / key camera angles and distance into cam_idealpitch/yaw/dist
     char sub_100ff0a0(struct CUnkPlayer *);
     void sub_100fc900();
     // vtable-slot layer (2026-11-22), from the game's vtables

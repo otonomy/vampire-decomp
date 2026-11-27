@@ -23,7 +23,7 @@ public:
     virtual int vfunc12x();
     virtual void vfunc13();
     virtual void vfunc14();
-    virtual void vfunc15();
+    virtual void vfunc15(Vector &mins, Vector &maxs);	// slot 15: the world-space bounds (C_ServerRagdoll's GetRenderBoundsWorldspace forwards to it)
     virtual void vfunc16();
     virtual void vfunc17();
     Vector m_vecMins;	// +0x4

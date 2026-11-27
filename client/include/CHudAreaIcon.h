@@ -22,9 +22,10 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_unk174;
 	CHudAreaIconObj *m_p178;
 	int m_unk17c; int m_unk180; int m_unk184; int m_unk188; int m_unk18c;
-	bool m_b190; char m_unk191; char m_unk192; char m_unk193; int m_unk194; int m_unk198;
+	bool m_b190; char m_unk191; char m_unk192; char m_unk193; float m_unk194; int m_unk198;
 	CHudAreaIconObj *m_p19c;
 	CHudAreaIconObj *m_p1a0;
 	CHudAreaIconObj *m_p1a4;
-	int m_unk1a8; int m_unk1ac; int m_unk1b0;
+	float m_unk1a8; float m_unk1ac; float m_unk1b0;	// floats (CHudAreaIcon::vfunc98 truncates / subtracts them)
+	void sub_10051df0();
 };

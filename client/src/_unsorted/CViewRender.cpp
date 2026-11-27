@@ -672,6 +672,230 @@ char VView384::sub_101995b0()
 }
 // END FUNCTION
 
+// FUNCTION: 0x1019dbd0 size=0x61d
+#include "CViewRender.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+#include "C_BasePlayer.h"
+#include "C_BaseEntity.h"
+#include "CClientEntityList.h"
+#include "ConVar.h"
+extern "C" double pow(double, double);
+#pragma intrinsic(pow)
+extern "C" __declspec(dllimport) void Msg(const char *pMsg, ...);
+
+struct CViewSetupRV
+{
+    int context;	// 0x00
+    int m_n4; int m_n8; int m_nC; int m_n10;
+    bool clearColor;	// 0x14
+    bool clearDepth;	// 0x15
+    bool m_b16; bool m_b17;
+    int m_n18; int m_n1c; int m_n20; int m_n24; int m_n28; int m_n2c; int m_n30; int m_n34;
+    Vector origin;	// 0x38
+    Vector m_vUnreflectedOrigin;	// 0x44
+    Vector angles;	// 0x50
+    float zNear;	// 0x5c
+    float zFar;	// 0x60
+    int m_n64; int m_n68; int m_n6c; int m_n70; int m_n74; int m_n78; int m_n7c;
+    int m_n80; int m_n84; int m_n88; int m_n8c; int m_n90;
+};
+
+#define VS6(p) virtual void p##0(); virtual void p##1(); virtual void p##2(); virtual void p##3(); virtual void p##4(); virtual void p##5();
+struct Obj6View { VS6(a) virtual bool vfunc6(); };
+extern Obj6View *g_10288318;
+struct Panel22View { VS6(a) VS6(b) VS6(c) virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual bool vfunc22(); };
+struct HudThing { int m_n0; int m_n4; int m_n8; int m_nC; Panel22View m_panel; };
+HudThing *sub_10170f60();
+struct ViewEffectsRV {
+    virtual void v0(); virtual void v1();
+    virtual void vfunc2(int context, unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a, bool *blend);
+    virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
+    virtual bool vfunc12();
+    virtual void vfunc13();
+};
+extern ViewEffectsRV *g_102d5238;
+struct ClientModeRV { VS6(a) VS6(b) VS6(c) VS6(d) VS6(e) virtual void vfunc30(); };
+extern ClientModeRV *g_105f99d8;
+struct OverdrawRV { VS6(a) virtual void v6(); virtual void vfunc7(float t, int b); };
+extern OverdrawRV *g_102b849c;
+struct PlayerRV { float sub_10099ac0(int); };
+
+extern ConVar g_10618e18;
+extern ConVar g_10618bd8;
+extern ConVar g_10619140;
+extern ConVar g_10618cb0;
+extern ConVar g_10618c20;
+extern ConVar g_106198a8;
+extern bool g_106198f4;
+extern bool g_106198ec;
+void sub_10198720();
+void sub_1002bfb0();
+
+class CViewRenderRV : public CViewRender
+{
+public:
+    void sub_1019d990(CViewSetupRV *view);
+    bool sub_1019d600(const CViewSetupRV &view);
+    void sub_1019d8f0(CViewSetupRV *view);
+    void sub_1019b370(bool drawSky, CViewSetupRV *view, int a, bool drawViewModel);
+    void sub_1019d590();
+    void sub_10198fa0(const CViewSetupRV &view, bool drawViewModel);
+    void sub_1019f940(const CViewSetupRV &view);
+    bool sub_101a03a0(const CViewSetupRV &view);
+    bool sub_1019ef20(const CViewSetupRV &view);
+    bool sub_1019fea0(const CViewSetupRV &view);
+    bool sub_101a00a0(const CViewSetupRV &view);
+    bool sub_1019fa30(const CViewSetupRV &view);
+    bool sub_1019f140(const CViewSetupRV &view);
+    void sub_1019f480(const CViewSetupRV &view);
+    void sub_1019fb50(const CViewSetupRV &view);
+    void sub_1019dbd0(const CViewSetupRV &view, bool drawViewModel, bool bDraw2D);
+};
+
+// TARGET: CViewRenderRV::sub_1019dbd0
+void CViewRenderRV::sub_1019dbd0(const CViewSetupRV &view, bool drawViewModel, bool bDraw2D)
+{
+    ScopeTrace st("CViewRender::RenderView", g_102de300);
+    if (g_10288318 && g_10288318->vfunc6())
+        return;
+    if (sub_10170f60() && sub_10170f60()->m_panel.vfunc22())
+        return;
+
+    CViewSetupRV tmpView = view;
+    g_106198f4 = true;
+    sub_1019d990(&tmpView);
+
+    C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+    if (pPlayer)
+    {
+        if (((PlayerRV *)pPlayer)->sub_10099ac0(0) > 0.01)
+        {
+            float scale = ((PlayerRV *)pPlayer)->sub_10099ac0(0);
+            float fa = g_10618e18.GetFloat();
+            float fb = g_10618bd8.GetFloat();
+            fa = (*(int *)((char *)pPlayer + 0x1738) + fa) * scale;
+            render->vfunc10((int)((pow(*(int *)((char *)pPlayer + 0x1734), 1.5) * 5.0 + fb) * scale));
+            render->vfunc12((int)fa);
+        }
+        else
+        {
+            render->vfunc10((int)(pow(*(int *)((char *)pPlayer + 0x1734), 1.5) * 5.0));
+            render->vfunc12(*(int *)((char *)pPlayer + 0x1738));
+        }
+    }
+    else
+    {
+        render->vfunc10(0);
+        render->vfunc12(0);
+    }
+
+    render->vfunc15();
+    bool drawSky = true;
+    if (!g_102d5238->vfunc12())
+    {
+        if (render->vfunc48(view.origin))
+        {
+            if (g_10619140.GetInt())
+                Msg("Skybox is visible\n");
+            if (sub_1019d600(view))
+            {
+                tmpView.clearColor = false;
+                tmpView.clearDepth = false;
+                drawSky = false;
+            }
+        }
+        else
+        {
+            drawSky = false;
+            if (g_10619140.GetInt())
+                Msg("Skybox is NOT visible\n");
+        }
+
+        if (!tmpView.clearColor)
+        {
+            if (engine->vfunc19(engine->vfunc18(cl_entitylist->sub_100d0cf0(0)->vfunc51()), tmpView.origin) == 1)
+            {
+                tmpView.clearColor = true;
+                tmpView.clearDepth = true;
+            }
+        }
+
+        sub_1019d8f0(&tmpView);
+        sub_1019b370(drawSky, &tmpView, 1, drawViewModel);
+        g_106198ec = true;
+        engine->vfunc93();
+        sub_1019d590();
+    }
+    else
+    {
+        render->vfunc29(&tmpView, (char *)this + 0x22c);
+        g_102d5238->vfunc13();
+    }
+
+    render->vfunc16();
+    render->vfunc22();
+    if (!g_102d5238->vfunc12())
+        sub_10198fa0(tmpView, drawViewModel);
+    g_105f99d8->vfunc30();
+    if (!bDraw2D)
+        return;
+
+    unsigned char color[4];
+    bool blend;
+    g_102d5238->vfunc2(tmpView.context, &color[0], &color[1], &color[2], &color[3], &blend);
+    void *pMaterial = *(blend ? (void **)((char *)this + 0x38c) : (void **)((char *)this + 0x388));
+    render->vfunc32(color, pMaterial);
+    engine->vfunc76();
+    float flTime = engine->Time(0);
+    tmpView.clearColor = false;
+    tmpView.clearDepth = false;
+    render->vfunc30(&tmpView);
+
+    sub_1019f940(view);
+    bool b = sub_101a03a0(view);
+    if (!b)
+        b = sub_1019ef20(view);
+    if (!b)
+        b = sub_1019fea0(view);
+    if (!b)
+        b = sub_101a00a0(view);
+    if (!b)
+        b = sub_1019fa30(view);
+    if (!b)
+        b = sub_1019f140(view);
+    sub_10198720();
+    sub_1019f480(view);
+    if (b)
+        sub_1019fb50(view);
+    render->vfunc27();
+    bool c = false;
+    if (render->vfunc37())
+        c = true;
+    if (g_10618cb0.GetInt())
+        g_102b849c->vfunc7(flTime, c);
+
+    Vector *hist = (Vector *)((char *)this + 0x310);
+    int &counter = *(int *)((char *)this + 0x370);
+    hist[counter] = tmpView.angles;
+    counter = (counter + 1) & 7;
+
+    float angleMovementDelta = 0;
+    for (int i = 0; i < 8; i++)
+        angleMovementDelta += (hist[(i + 1) & 7] - hist[i]).Length();
+    angleMovementDelta /= 8;
+    if (angleMovementDelta > g_10618c20.GetFloat())
+        g_106198a8.sub_100dfa90(1);
+    else
+        g_106198a8.sub_100dfa90(0);
+
+    g_106198f4 = false;
+    g_106198ec = false;
+    ++*(int *)((char *)this + 0x374);
+    sub_1002bfb0();
+}
+// END FUNCTION
+
 // FUNCTION: 0x1019e1f0 size=0x22
 #include "CViewRender.h"
 struct E1019e1f0 { int d[11]; };

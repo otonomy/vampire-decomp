@@ -14,8 +14,10 @@ class C_BasePlayer : public C_BaseVCombatCharacter
 public:
 	static C_BasePlayer *GetLocalPlayer();
 	bool sub_100a5910();
+	float sub_100aa6d0();	// GetFOVDistanceAdjustFactor-like
 	virtual ~C_BasePlayer();
 	virtual void OnDataChanged(int updateType);
+	virtual void OnPreDataChanged(int updateType);
 	int sub_100a2450();
 	int sub_100a93e0();
 	int sub_100a96a0(int iStat);
@@ -60,12 +62,12 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc156();
 	virtual void vfunc157();
 	virtual void vfunc158();
-	virtual void vfunc159();
+	virtual void vfunc159(int slot, int, int);	// ret 0xc: weapon selection by slot (0x100a7c40)
 	virtual bool vfunc160(int);
 	virtual void vfunc161();
 	virtual void vfunc162();
 	virtual bool vfunc163();
-	virtual void vfunc164();
+	virtual C_BaseCombatWeapon *vfunc164(int);	// the weapon of a slot (0x100a7c40 hands it to vfunc168)
 	virtual C_BaseCombatWeapon * vfunc165(int, int);
 	virtual C_BaseCombatWeapon *vfunc166(int, int, int);
 	virtual C_BaseCombatWeapon * vfunc167();
@@ -89,7 +91,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual void vfunc185(int);
 	virtual void vfunc186();
 	virtual void vfunc187();
-	virtual void vfunc188();
+	virtual void vfunc188(int nRole);
 	virtual void vfunc189(int);
 	virtual void vfunc190(class C_BaseCombatWeapon *pWeapon);
 	virtual void vfunc191();

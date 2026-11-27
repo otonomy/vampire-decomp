@@ -21,6 +21,12 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_unk2c;
 	int m_unk30;
 	int m_unk34;
+	bool m_b38;
+	int m_unk3c;
+	int m_unk40;
+	int m_unk44;
+	int m_unk48;
+	void sub_101646d0(int x, int y, int wide, int tall, float yaw, float flAlphaModulate);
 
 	bool sub_10164520(int arg0, int arg1);
 	bool sub_10164600(int, struct IKV11 *);

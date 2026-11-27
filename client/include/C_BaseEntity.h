@@ -72,6 +72,7 @@ public:
 	void sub_1011c9a0(Vector &move);
 	int sub_1011cac0(Vector &in, const Vector &normal, Vector &out, float overbounce);
 	void sub_100a23f0(int flag);
+	void sub_100a1d60(const Vector &start, const Vector &pos, const Vector &dir, int hitbox, int decal, bool, CGameTrace &tr, int);	// AddDecal (TE_Decal)
 	virtual ICollideable *GetClientCollideable();	// IClientUnknown slot 2
 	virtual IClientNetworkable *GetClientNetworkable();	// IClientUnknown slot 3
 	virtual IClientRenderable *GetClientRenderable();	// IClientUnknown slot 4
@@ -237,7 +238,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc110(int);
 	virtual void vfunc111();
 	virtual void vfunc112();
-	virtual int vfunc113(int, int);
+	virtual bool vfunc113(bool isbeingremoved, C_BaseEntity *predicted);	// OnPredictedEntityRemove
 	virtual char*vfunc114();
 	virtual bool vfunc115();
 	virtual bool vfunc116(int, int);

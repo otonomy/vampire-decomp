@@ -8,7 +8,7 @@ public:
 	void *GetIcon(const char *szIcon);	// 0x100f11d0 (SDK name)
 	struct CHudSub *sub_100f1200(const char *pName, int *pWide, int *pTall);
 	int sub_100f0980(const char *pName);
-	int m_unk0; int m_unk4; int m_unk8; int m_unkc; int m_unk10; int m_unk14; int m_unk18; int m_unk1c;
+	int m_unk0; union { int m_unk4; float m_flTime; }; union { int m_unk8; float m_flOldTime; }; int m_unkc; union { struct { int m_unk10; int m_unk14; }; double m_dFrameTime; }; int m_unk18; int m_unk1c;
 	int m_unk20; int m_unk24; int m_unk28; int m_unk2c; int m_unk30; int m_unk34; int m_unk38; int m_unk3c;
 	CHudElement **m_HudListMem;
 	int m_HudListAlloc;
@@ -24,7 +24,10 @@ public:
 	void sub_100f06d0();
 	void sub_100f07a0();
 	void sub_100f28d0();
+	int sub_100f29d0(float flTime, int intermission);	// Redraw
+	void sub_100f09d0();
 	void sub_100f12b0(bool b);
+	float sub_100f10c0();	// GetSensitivity
 	int m_unk50; struct CHudSub *m_pSubs; int m_unk58; int m_unk5c; int m_unk60; int m_nSubs;
 };
 

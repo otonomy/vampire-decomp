@@ -2,6 +2,7 @@
 // declared: its bases, the game's vtable slots it adds or fills (vtable-slot layer, 2026-11-22) (its vtable has no deleting destructor: no virtual destructor)
 #pragma once
 #include "ITextMessage.h"
+#include "CTextMessagePanel.h"
 
 class CTextMessage : public ITextMessage
 {
@@ -13,7 +14,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
     virtual void vfunc3(int, int, int, int, float);
     virtual void vfunc4(int *, int *, int);
     virtual int vfunc5(int, int);
-    class C_BaseEntity *m_pEnt;
+    class CTextMessagePanel *m_pEnt;	// made by vfunc0 (0x1016a6c0 constructs it)
     virtual void vfunc6();
     virtual void vfunc7();
 };

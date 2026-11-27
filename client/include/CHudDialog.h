@@ -79,5 +79,5 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	int m_iOptionA[4];	// 0x5a50
 	int m_iOptionB[4];	// 0x5a60
 	DlgColor m_col5a70; DlgColor m_col5a74; DlgColor m_col5a78; DlgColor m_col5a7c;
-	char m_pad5a80[0x5bf0 - 0x5a80];
+	int m_unk5a80;	// sizeof(CHudDialog) == 0x5a84 (CHudManagerPanel::vfunc0's new)
 };

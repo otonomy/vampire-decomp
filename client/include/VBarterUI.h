@@ -15,6 +15,8 @@ public:
 	bool sub_10170aa0(void *pItem, bool bSell);
 	void sub_1016f4a0();
 	void sub_1016d150();
+	void sub_1016ef40();
+	void sub_1016f3a0(const char *pszIcon);
 	void sub_101703e0(int nArg);
 	static void operator delete(void *pMem) { CHudElement::operator delete(pMem); }
 };

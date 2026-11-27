@@ -4,8 +4,8 @@
 #include "C_BaseEntity.h"
 #include "VMatrix.h"
 
-struct CVGuiMemA { int m_unk0; void sub_100cd1e0(); ~CVGuiMemA() { sub_100cd1e0(); } };
-struct CVGuiMemB { int m_unk0; void sub_10110440(); void *sub_101104a0(); ~CVGuiMemB() { sub_10110440(); } };
+#include "CMaterialReference.h"
+#include "CPanelWrapper.h"
 class C_VGuiScreen : public C_BaseEntity
 {
 public:
@@ -14,7 +14,7 @@ public:
 	int m_nPixelHeight;	// 0x414
 	float m_flWidth;	// 0x418: the screen's world width
 	float m_flHeight;	// 0x41c: its world height
-	int m_unk420;
+	int m_nPanelName;	// 0x420
 	int m_unk424;
 	int m_nButtonPressed;	// 0x428
 	int m_nButtonReleased;	// 0x42c
@@ -22,11 +22,25 @@ public:
 	int m_nOldPy;	// 0x434
 	int m_unk438;
 	int m_n43c;
-	char m_pad0440[0x450 - 0x440];
-	CVGuiMemA m_a;
-	CVGuiMemA m_b;
+	int m_nOverlayMaterial;	// 0x440
+	int m_unk444;
+	int m_nOldPanelName;	// 0x448
+	int m_nOldOverlayMaterial;	// 0x44c
+	CMaterialReference m_a;	// 0x450: m_WriteZMaterial
+	CMaterialReference m_b;	// 0x454: m_OverlayMaterial
 	VMatrix m_matrix;
-	CVGuiMemB m_c;
+	CPanelWrapper m_c;	// 0x498: m_PanelWrapper
+	// the game's constructor is out of line in c_vguiscreen.cpp; it is written here so the ??_G emitter still emits the vtable
+	C_VGuiScreen()
+	{
+		m_nOldPanelName = m_nPanelName = -1;
+		m_nOldOverlayMaterial = m_nOverlayMaterial = -1;
+		m_nOldPx = m_nOldPy = -1;
+		m_unk424 = 0;
+
+		m_a.Init("engine/writez");
+		m_b.Init(m_a);
+	}
 	virtual int vfunc16();
 	virtual void ClientThink();	// IClientThinkable slot 0
 	void sub_100c9270(int);

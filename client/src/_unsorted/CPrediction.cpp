@@ -29,6 +29,93 @@ void CPrediction::vfunc2()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10121c20 size=0x27b
+#include "CPrediction.h"
+#include "ConVar.h"
+#include "engineclient.h"
+#include "CClientEntityList.h"
+#include "C_BasePlayer.h"
+
+struct NetSub_6 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual int entindex(); };
+struct PEnt_6 {
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+	virtual const char *GetClassname();
+	int m_n4;
+	NetSub_6 m_net;
+	char m_pad[0xe4 - 0xc];
+	unsigned int m_hHandle;
+	bool sub_100a2600();
+	void sub_100a2760(bool a, int b);
+};
+struct IPreds_6 { virtual PEnt_6 *GetPredictable(int i); virtual int GetPredictableCount(); };
+extern IPreds_6 *g_102af678;
+extern ConVar g_104e1708;
+extern ConVar g_104e15c8;
+extern ConVar g_104e16b0;
+extern char g_102de300[];
+extern "C" __declspec(dllimport) int __cdecl Q_snprintf(char *, int, const char *, ...);
+
+// TARGET: CPrediction::vfunc6
+void CPrediction::vfunc6(bool error_check, int commands_acknowledged)
+{
+	bool entityDumped = false;
+	if (!C_BasePlayer::GetLocalPlayer())
+		return;
+	if (g_104e1708.GetInt())
+	{
+		bool showlist = g_104e15c8.GetBool();
+		int c = g_102af678->GetPredictableCount();
+		int i;
+		for (i = 0; i < c; i++)
+		{
+			PEnt_6 *ent = g_102af678->GetPredictable(i);
+			if (!ent)
+				continue;
+			if (ent->sub_100a2600())
+				ent->sub_100a2760(error_check, commands_acknowledged);
+			if (showlist)
+			{
+				char sz[32];
+				if (ent->m_net.entindex() == -1)
+					Q_snprintf(sz, sizeof(sz), "handle %u", ent->m_hHandle);
+				else
+					Q_snprintf(sz, sizeof(sz), "%i", ent->m_net.entindex());
+				engine->vfunc60(i, "%s:  %s (%s)", sz, ent->GetClassname(), ent->sub_100a2600() ? "predicted" : "created");
+			}
+			if (!entityDumped && sub_10121b00(ent))
+			{
+				entityDumped = true;
+				sub_10121150(ent, commands_acknowledged);
+			}
+		}
+		if (showlist)
+		{
+			while (i < 32)
+			{
+				engine->vfunc60(i, g_102de300);
+				i++;
+			}
+		}
+		if (error_check)
+			sub_10120ee0(commands_acknowledged);
+	}
+	int dumpentindex = g_104e16b0.GetInt();
+	if (!entityDumped && dumpentindex != -1)
+	{
+		int last_entity = ClientEntityList().vfunc6();
+		if (dumpentindex >= 0 && dumpentindex <= last_entity)
+		{
+			C_BaseEntity *ent = ClientEntityList().sub_100d0cf0(dumpentindex);
+			if (ent)
+				sub_10121150(ent, commands_acknowledged);
+		}
+	}
+	if (g_104e1708.GetInt() && !m_bOldCLPredictValue)
+		sub_101219a0();
+	m_bOldCLPredictValue = g_104e1708.GetBool();
+}
+// END FUNCTION
+
 // FUNCTION: 0x10121ea0 size=0x399
 #include "Vector.h"
 #include "QAngle.h"

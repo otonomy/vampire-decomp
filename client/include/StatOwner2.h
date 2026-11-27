@@ -13,6 +13,7 @@ public:
 	const char *sub_1015f1c0(int id, int index);	// text index of the record with that id, "" when there is none
 	int sub_1015f060(void *pData, const char *pszName, int d);	// sub_1015f010(pData, pszName, "", d): creates a record, returns its id
 	bool sub_1015f110(int id);	// jmp sub_1015f080: removes the record with that id
+	void sub_1015f390();	// dumps every record under a "Strings" heading
 };
 
 // the client's string tables: g_105f93c0.sub_1015f2f0("MiscStrs")->sub_1015ecd0(i), g_105f93c0.sub_1015f270(id)

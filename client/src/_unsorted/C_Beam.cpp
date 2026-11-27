@@ -144,6 +144,23 @@ int C_Beam::vfunc121()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10080e50 size=0x60
+#include "C_Beam.h"
+bool C_Beam::vfunc113(bool isbeingremoved, C_BaseEntity *predicted)
+{
+    C_BaseEntity::vfunc113(isbeingremoved, predicted);
+    C_Beam *beam = dynamic_cast<C_Beam *>(predicted);
+    if (!beam)
+        return true;
+    if (*(int *)((char *)beam + 0x184) & 1)
+    {
+        *(int *)((char *)this + 0x184) |= 1;
+        return false;
+    }
+    return true;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10081000 size=0x5b
 #include "C_Beam.h"
 #include "CCollisionProperty.h"

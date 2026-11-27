@@ -25,6 +25,7 @@ public:
 
 	CUnknown101f4c80(int id);	// 0x101f4c80
 	~CUnknown101f4c80();	// 0x101f4cb0
+	void sub_10155ac0();	// prints the record and its activities with DevMsg
 	bool sub_10155990(void *pKV, CUnknown101f5d60 *pOwner, int arg3);	// loads the record from its key: the name / folder from the key's name, then the "Activity" sub keys are counted (a failed activity lookup warns "Sound Table Activity Lookup Failed") and the "MaxRange" read (+0x14); with activities the id array (+0x10) is allocated and filled, every id also registered in the global table at 0x1073dd58 with (pOwner, id, arg3); false for no key
 };
 

@@ -7,6 +7,7 @@
 class CMoneyBar : public CManagedHudElement
 {
 public:
+	CMoneyBar(int a);
 	virtual ~CMoneyBar();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with CMoneyBar's own function

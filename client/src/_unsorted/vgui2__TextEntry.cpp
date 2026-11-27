@@ -1,6 +1,89 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x101acaa0 size=0x2eb
+#include "vgui2__TextEntry.h"
+extern "C" void *memset(void *, int, unsigned int);
+extern "C" __declspec(noreturn) void exit(int);
+#pragma intrinsic(memset)
+
+struct IScheme_v { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual int GetFont(const char *name); };
+struct ISchemeManager_v { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual IScheme_v *GetIScheme(int scheme); };
+ISchemeManager_v *sub_101ac8c0();
+struct VTE { void sub_101ad500(); };
+
+struct DarInt
+{
+	int m_count, m_capacity; int *m_data;
+	void AddToTail(int v)
+	{
+		int n = m_count + 1;
+		if (n > m_capacity)
+		{
+			int cap = m_capacity;
+			if (cap == 0) cap = 1;
+			while (cap < n) cap *= 2;
+			int *p = (int *)operator new(cap * sizeof(int));
+			if (!p) exit(0);
+			memset(p, 0, cap * sizeof(int));
+			m_capacity = cap;
+			for (int i = 0; i < m_count; i++) p[i] = m_data[i];
+			operator delete(m_data);
+			m_data = p;
+		}
+		m_data[m_count] = v;
+		m_count++;
+	}
+};
+
+struct SColor { unsigned char c[4]; SColor(int r, int g, int b, int a) { c[0] = r; c[1] = g; c[2] = b; c[3] = a; } };
+
+#define F(T, o) (*(T *)((char *)this + (o)))
+
+vgui2::TextEntry::TextEntry(Panel *parent, const char *name) : Panel(parent, name)
+{
+	F(int, 0x124) = sub_101ac8c0()->GetIScheme(sub_101aa220())->GetFont("Default");
+	F(bool, 0x89) = false;
+	F(bool, 0x8a) = false;
+	F(bool, 0xb2) = false;
+	F(int, 0x70) = 0;
+	F(int, 0xd0) = 0;
+	F(bool, 0xd4) = true;
+	F(bool, 0x74) = false;
+	F(bool, 0x75) = false;
+	F(bool, 0xb1) = false;
+	F(int, 0x98) = 400;
+	F(bool, 0x8b) = false;
+	F(bool, 0x8c) = false;
+	F(bool, 0x8d) = false;
+	F(int, 0xb4) = 0;
+	F(bool, 0x100) = true;
+	F(bool, 0xf4) = false;
+	F(int, 0xac) = -1;
+	F(int, 0xa8) = 0;
+	F(bool, 0xf5) = false;
+	F(bool, 0xf6) = false;
+	F(int, 0xf8) = 0;
+	F(int, 0x9c) = -1;
+	F(int, 0xa0) = -1;
+	F(int, 0xfc) = 0;
+	((VTE *)this)->sub_101ad500();
+	vfunc54(2);
+	vfunc119();
+	SColor fg(0, 0, 0, 0);
+	vfunc51(*(int *)&fg);
+	SColor bg(255, 255, 255, 0);
+	vfunc50(*(int *)&bg);
+	vfunc134(true);
+	F(DarInt, 0x64).AddToTail(999999);
+	F(int, 0x11c) = -1;
+	F(int, 0x114) = 0;
+	F(bool, 0x118) = false;
+	F(bool, 0x11a) = false;
+	F(int, 0x120) = 0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101acd90 size=0x1e
 #include "vgui2__TextEntry.h"
 
@@ -69,6 +152,85 @@ int vgui2::TextEntry::vfunc137(int a0)
 }
 // END FUNCTION
 
+// FUNCTION: 0x101ad120 size=0x23f
+#include "vgui2__TextEntry.h"
+
+extern "C" size_t strlen(const char *);
+#pragma intrinsic(strlen)
+extern "C" void *memset(void *, int, size_t);
+#pragma intrinsic(memset)
+extern "C" __declspec(noreturn) void exit(int);
+
+template <class T>
+struct Dar_101ad120
+{
+	int _count;
+	int _capacity;
+	T *_data;
+
+	void ensureCapacity(int wanted)
+	{
+		if (wanted <= _capacity)
+			return;
+		int newCapacity = _capacity;
+		if (newCapacity == 0)
+			newCapacity = 1;
+		while (newCapacity < wanted)
+			newCapacity *= 2;
+		T *newData = new T[newCapacity];
+		if (!newData)
+			exit(0);
+		memset(newData, 0, sizeof(T) * newCapacity);
+		_capacity = newCapacity;
+		for (int i = 0; i < _count; i++)
+			newData[i] = _data[i];
+		delete _data;
+		_data = newData;
+	}
+	void addElement(T e)
+	{
+		ensureCapacity(_count + 1);
+		_data[_count] = e;
+		_count++;
+	}
+	void removeAll() { _count = 0; }
+};
+
+struct TEFields_101ad120
+{
+	char m_pad00[0x58];
+	Dar_101ad120<char> m_TextStream;	// 0x58
+	Dar_101ad120<int> m_LineBreaks;	// 0x64
+	char m_pad70[0xb0 - 0x70];
+	bool _dataChanged;	// 0xb0
+	char m_padb1[0x114 - 0xb1];
+	int _currentStartLine;	// 0x114
+};
+
+void vgui2::TextEntry::vfunc107(const char *text)
+{
+	TEFields_101ad120 *self = (TEFields_101ad120 *)this;
+	int len = strlen(text);
+	self->m_TextStream.removeAll();
+	if (text)
+	{
+		self->m_TextStream.ensureCapacity(len);
+		for (int i = 0; i < len; i++)
+		{
+			self->m_TextStream.addElement(text[i]);
+			vfunc156(text[i], i);
+		}
+	}
+	vfunc118();
+	vfunc124();
+	self->_dataChanged = false;
+	self->_currentStartLine = 0;
+	self->m_LineBreaks.removeAll();
+	self->m_LineBreaks.addElement(999999);
+	vfunc57(0, 0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x101ad500 size=0x24
 struct IFont { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); };
 IFont *sub_101ac8e0();
@@ -86,6 +248,111 @@ int vgui2::TextEntry::vfunc133(char a0)
 {
     *(char *)((char *)this + 0x89) = a0;
     return ((lifted::V *)this)->f6();
+}
+// END FUNCTION
+
+// FUNCTION: 0x101ad710 size=0x22f
+#include "vgui2__TextEntry.h"
+
+#define F(T, off) (*(T *)((char *)this + (off)))
+
+struct SurfView_101ad710
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void SetCursor(int cursor); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54();
+	virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62();
+	virtual int GetFontTall(int font);
+};
+
+template <class T> struct Dar_101ad710
+{
+	int m_count;
+	int m_capacity;
+	T *m_data;
+	T Get(int i) { return (i >= 0 && i < m_count) ? m_data[i] : 0; }
+};
+
+extern SurfView_101ad710 *sub_101ac8d0();
+int sub_101ad550(int font, char ch);
+
+// TARGET: vgui2::TextEntry::vfunc160
+int vgui2::TextEntry::vfunc160(int cx, int cy)
+{
+	F(char, 0x75) = 0;
+	int fontTall = sub_101ac8d0()->GetFontTall(F(int, 0x124));
+	int yStart = vfunc162();
+	int x, y = yStart;
+	F(int, 0xa4) = 0;
+	int lineBreakIndexIndex = 0;
+	x = 3;
+	int startIndex = vfunc172(&lineBreakIndexIndex);
+	if (F(char, 0x100))
+	{
+		if (F(char, 0x8b))
+			vfunc166(startIndex);
+	}
+	if (F(char, 0x8b))
+	{
+		sub_101ac8d0()->SetCursor(F(int, 0x101));
+		F(int, 0xa4) = F(int, 0x108);
+		F(char, 0xd9) = F(char, 0x10c);
+	}
+	bool onRightLine = false;
+	int i;
+	for (i = startIndex; i < F(int, 0x58); i++)
+	{
+		char ch = F(Dar_101ad710<char>, 0x58).Get(i);
+		if (vfunc164(ch, (int)&i, (int)&x, (int)&y))
+			continue;
+		if (F(char, 0x89))
+			ch = '*';
+		if (F(Dar_101ad710<int>, 0x64).Get(lineBreakIndexIndex) == i)
+		{
+			vfunc161(&x, &y);
+			lineBreakIndexIndex++;
+			if (onRightLine)
+			{
+				F(char, 0x75) = 1;
+				return i;
+			}
+		}
+		if (cy < yStart)
+		{
+			F(char, 0x75) = 1;
+			onRightLine = true;
+		}
+		else if (cy >= y && cy < y + fontTall + 1)
+		{
+			onRightLine = true;
+		}
+		int wide = sub_101ad550(F(int, 0x124), ch);
+		if (onRightLine)
+		{
+			if (cx <= sub_101ab130())
+			{
+				if (cx < F(int, 0xa4) + 3 || cy < yStart)
+					break;
+			}
+			if (cx >= x && cx < x + wide)
+			{
+				if (cx < x + wide * 0.5)
+					return i;
+				return i + 1;
+			}
+		}
+		x += wide;
+	}
+	return i;
 }
 // END FUNCTION
 
@@ -672,6 +939,273 @@ void vgui2::TextEntry::vfunc88(int a)
 void vgui2::TextEntry::vfunc79()
 {
     *(char *)((char *)this + 0x8c) = 0;
+}
+// END FUNCTION
+
+// FUNCTION: 0x101af3d0 size=0x570
+#include "vgui2__TextEntry.h"
+#include "vgui2__KeyValues.h"
+
+#define V4_101af3d0(a, b, c, d) virtual void v##a(); virtual void v##b(); virtual void v##c(); virtual void v##d();
+
+struct IInput_101af3d0
+{
+	V4_101af3d0(0, 1, 2, 3) V4_101af3d0(4, 5, 6, 7) V4_101af3d0(8, 9, 10, 11)
+	virtual bool IsKeyDown(int code);
+};
+IInput_101af3d0 *sub_101ac8b0();	// vgui2::input()
+
+struct ISurface_101af3d0
+{
+	V4_101af3d0(0, 1, 2, 3) V4_101af3d0(4, 5, 6, 7) V4_101af3d0(8, 9, 10, 11) V4_101af3d0(12, 13, 14, 15)
+	V4_101af3d0(16, 17, 18, 19) V4_101af3d0(20, 21, 22, 23) V4_101af3d0(24, 25, 26, 27) V4_101af3d0(28, 29, 30, 31)
+	V4_101af3d0(32, 33, 34, 35) V4_101af3d0(36, 37, 38, 39) V4_101af3d0(40, 41, 42, 43) V4_101af3d0(44, 45, 46, 47)
+	V4_101af3d0(48, 49, 50, 51) V4_101af3d0(52, 53, 54, 55) V4_101af3d0(56, 57, 58, 59)
+	virtual void v60(); virtual void v61(); virtual void v62();
+	virtual int GetFontTall(int font);
+};
+ISurface_101af3d0 *sub_101ac8d0();	// vgui2::surface()
+
+// vgui2::ScrollBar's own slots 107..111 (ScrollBar.h keeps slot 107 as the slider forwarder's `int vfunc107()`)
+struct ScrollBarView_101af3d0
+{
+	V4_101af3d0(0, 1, 2, 3) V4_101af3d0(4, 5, 6, 7) V4_101af3d0(8, 9, 10, 11) V4_101af3d0(12, 13, 14, 15)
+	V4_101af3d0(16, 17, 18, 19) V4_101af3d0(20, 21, 22, 23) V4_101af3d0(24, 25, 26, 27) V4_101af3d0(28, 29, 30, 31)
+	V4_101af3d0(32, 33, 34, 35) V4_101af3d0(36, 37, 38, 39) V4_101af3d0(40, 41, 42, 43) V4_101af3d0(44, 45, 46, 47)
+	V4_101af3d0(48, 49, 50, 51) V4_101af3d0(52, 53, 54, 55) V4_101af3d0(56, 57, 58, 59) V4_101af3d0(60, 61, 62, 63)
+	V4_101af3d0(64, 65, 66, 67) V4_101af3d0(68, 69, 70, 71) V4_101af3d0(72, 73, 74, 75) V4_101af3d0(76, 77, 78, 79)
+	V4_101af3d0(80, 81, 82, 83) V4_101af3d0(84, 85, 86, 87) V4_101af3d0(88, 89, 90, 91) V4_101af3d0(92, 93, 94, 95)
+	V4_101af3d0(96, 97, 98, 99) V4_101af3d0(100, 101, 102, 103)
+	virtual void v104(); virtual void v105(); virtual void v106();
+	virtual void SetValue(int value);	// 107
+	virtual int GetValue();				// 108
+	virtual void v109();
+	virtual void v110();
+	virtual int GetRangeWindow();		// 111
+};
+
+struct TEFields_101af3d0
+{
+	char m_pad00[0x70];
+	int _cursorPos;					// 0x70
+	bool _cursorIsAtEnd;			// 0x74
+	bool _putCursorAtEnd;			// 0x75
+	char m_pad76[0xa0 - 0x76];
+	int m_nA0;						// 0xa0
+	char m_padA4[0xb0 - 0xa4];
+	bool m_bB0;						// 0xb0
+	bool _multiline;				// 0xb1
+	char m_padB2[2];
+	ScrollBarView_101af3d0 *_vertScrollBar;	// 0xb4
+	char m_padB8[0xf4 - 0xb8];
+	bool _catchEnterKey;			// 0xf4
+	char m_cF5;
+	bool _sendNewLines;				// 0xf6
+	char m_padF7[0x124 - 0xf7];
+	int _font;						// 0x124
+};
+
+void vgui2::TextEntry::sub_101af3d0(int code)
+{
+	TEFields_101af3d0 *self = (TEFields_101af3d0 *)this;
+
+	self->_cursorIsAtEnd = self->_putCursorAtEnd;
+	self->_putCursorAtEnd = false;
+
+	bool shift = (sub_101ac8b0()->IsKeyDown(0x4f) || sub_101ac8b0()->IsKeyDown(0x50));
+	bool ctrl = (sub_101ac8b0()->IsKeyDown(0x53) || sub_101ac8b0()->IsKeyDown(0x54));
+	bool alt = (sub_101ac8b0()->IsKeyDown(0x51) || sub_101ac8b0()->IsKeyDown(0x52));
+	bool fallThrough = false;
+
+	if (ctrl)
+	{
+		switch (code)
+		{
+		case 72:
+		case 13:
+			vfunc127();
+			break;
+		case 32:
+			vfunc129();
+			vfunc128();
+			break;
+		case 34:
+			vfunc127();
+			vfunc129();
+			break;
+		case 36:
+			vfunc130();
+			break;
+		case 91:
+			vfunc114();
+			break;
+		case 89:
+			vfunc115();
+			break;
+		case 64:
+			if (self->_multiline)
+			{
+				vfunc129();
+				vfunc131();
+				vfunc120('\n');
+			}
+			if (self->_sendNewLines)
+			{
+				vfunc43(new vgui2::KeyValues("TextNewLine"));
+			}
+			break;
+		case 74:
+			vfunc118();
+			break;
+		case 75:
+			vfunc119();
+			break;
+		default:
+			fallThrough = true;
+			break;
+		}
+	}
+	else if (alt)
+	{
+		fallThrough = true;
+	}
+	else
+	{
+		switch (code)
+		{
+		case 72:
+			if (shift)
+			{
+				vfunc129();
+				vfunc128();
+			}
+			else
+			{
+				fallThrough = true;
+			}
+			break;
+		case 73:
+			if (shift)
+			{
+				vfunc127();
+				vfunc129();
+			}
+			else
+			{
+				vfunc123();
+			}
+			break;
+		case 89:
+			vfunc110();
+			break;
+		case 91:
+			vfunc111();
+			break;
+		case 88:
+			if (self->_multiline)
+				vfunc112();
+			else
+				fallThrough = true;
+			break;
+		case 90:
+			if (self->_multiline)
+				vfunc113();
+			else
+				fallThrough = true;
+			break;
+		case 74:
+			vfunc116();
+			break;
+		case 75:
+			vfunc117();
+			break;
+		case 66:
+			{
+				int x0, x1;
+				if (vfunc158((int)&x0, (int)&x1))
+					vfunc129();
+				else
+					vfunc122();
+			}
+			break;
+		case 64:
+			if (self->_multiline && self->_catchEnterKey)
+			{
+				vfunc129();
+				vfunc131();
+				vfunc120('\n');
+			}
+			else
+			{
+				fallThrough = true;
+			}
+			if (self->_sendNewLines)
+			{
+				vfunc43(new vgui2::KeyValues("TextNewLine"));
+			}
+			break;
+		case 76:
+			{
+				int val;
+				if (self->_vertScrollBar)
+					val = self->_vertScrollBar->GetValue();
+				if (self->_multiline)
+				{
+					int displayLines = sub_101ab1a0() / (sub_101ac8d0()->GetFontTall(self->_font) + 1);
+					for (int i = 0; i < displayLines; i++)
+						vfunc112();
+				}
+				if (self->_vertScrollBar)
+				{
+					int window = self->_vertScrollBar->GetRangeWindow();
+					int newval = self->_vertScrollBar->GetValue();
+					int linesToMove = window - (val - newval);
+					self->_vertScrollBar->SetValue(val - linesToMove - 1);
+				}
+			}
+			break;
+		case 77:
+			{
+				int val;
+				if (self->_vertScrollBar)
+					val = self->_vertScrollBar->GetValue();
+				if (self->_multiline)
+				{
+					int displayLines = sub_101ab1a0() / (sub_101ac8d0()->GetFontTall(self->_font) + 1);
+					for (int i = 0; i < displayLines; i++)
+						vfunc113();
+				}
+				if (self->_vertScrollBar)
+				{
+					int window = self->_vertScrollBar->GetRangeWindow();
+					int newval = self->_vertScrollBar->GetValue();
+					int linesToMove = window - (newval - val);
+					self->_vertScrollBar->SetValue(val + linesToMove + 1);
+				}
+			}
+			break;
+		case 67:
+		case 79:
+		case 80:
+		case 70:
+		case 92: case 93: case 94: case 95: case 96: case 97:
+		case 98: case 99: case 100: case 101: case 102: case 103:
+			fallThrough = true;
+			break;
+		default:
+			return;
+		}
+	}
+
+	self->m_nA0 = self->_cursorPos;
+	if (self->m_bB0)
+		vfunc157();
+
+	if (fallThrough)
+	{
+		self->_putCursorAtEnd = self->_cursorIsAtEnd;
+		this->Panel::sub_101aa6f0(code);
+	}
 }
 // END FUNCTION
 
@@ -1321,6 +1855,162 @@ bool vgui2::TextEntry::vfunc164(int a1, int a2, int a3, int a4)
 		return true;
 	}
 	return false;
+}
+// END FUNCTION
+
+// FUNCTION: 0x101b10e0 size=0x215
+#include "vgui2__TextEntry.h"
+
+#define F(T, off) (*(T *)((char *)this + (off)))
+
+struct SurfView_101b10e0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54();
+	virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62();
+	virtual int GetFontTall(int font);
+};
+
+struct ScrollView_101b10e0
+{
+	virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+	virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+	virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+	virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+	virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+	virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+	virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+	virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+	virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54();
+	virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58(); virtual void v59();
+	virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64();
+	virtual void v65(); virtual void v66(); virtual void v67(); virtual void v68(); virtual void v69();
+	virtual void v70(); virtual void v71(); virtual void v72(); virtual void v73(); virtual void v74();
+	virtual void v75(); virtual void v76(); virtual void v77(); virtual void v78(); virtual void v79();
+	virtual void v80(); virtual void v81(); virtual void v82(); virtual void v83(); virtual void v84();
+	virtual void v85(); virtual void v86(); virtual void v87(); virtual void v88(); virtual void v89();
+	virtual void v90(); virtual void v91(); virtual void v92(); virtual void v93(); virtual void v94();
+	virtual void v95(); virtual void v96(); virtual void v97(); virtual void v98(); virtual void v99();
+	virtual void v100(); virtual void v101(); virtual void v102(); virtual void v103(); virtual void v104();
+	virtual void v105(); virtual void v106(); virtual void v107();
+	virtual int GetValue();
+};
+
+// vgui's Dar<T> (count, capacity, data): operator[] gives 0 for an index out of range
+template <class T> struct Dar_101b10e0
+{
+	int m_iCount;
+	int m_iCapacity;
+	T *m_pData;
+	int GetCount() const { return m_iCount; }
+	bool IsValidIndex(int i) const { return i >= 0 && i < m_iCount; }
+	T operator[](int i) const { return IsValidIndex(i) ? m_pData[i] : 0; }
+};
+
+extern SurfView_101b10e0 *sub_101ac8d0();
+extern int sub_101ad550(int font, char ch);
+
+#define m_TextStream_101b10e0 (*(Dar_101b10e0<char> *)((char *)this + 0x58))
+#define m_LineBreaks_101b10e0 (*(Dar_101b10e0<int> *)((char *)this + 0x64))
+
+int vgui2::TextEntry::sub_101afbf0()
+{
+	int lineCount = m_LineBreaks_101b10e0.GetCount();
+	int cursor = F(int, 0x70);
+	int i;
+	for (i = 0; i < lineCount; i++)
+	{
+		if (cursor < m_LineBreaks_101b10e0[i])
+			break;
+	}
+	if (F(char, 0x75) && F(int, 0x70) != m_TextStream_101b10e0.GetCount())
+		i--;
+	return i;
+}
+
+// TARGET: ?vfunc172@TextEntry@vgui2@@UAEHPAH@Z
+int vgui2::TextEntry::vfunc172(int *pLineIdx)
+{
+	int numLines = m_LineBreaks_101b10e0.GetCount();
+	int startIndex = 0;
+	int lineStart = 0;
+	if (F(ScrollView_101b10e0 *, 0xb4) && !F(char, 0x8d))
+	{
+		startIndex = F(ScrollView_101b10e0 *, 0xb4)->GetValue();
+	}
+	else
+	{
+		int font = F(int, 0x124);
+		int maxLines = sub_101ab1a0() / (sub_101ac8d0()->GetFontTall(font) + 1);
+		if (numLines > maxLines)
+		{
+			int cur = sub_101afbf0();
+			startIndex = F(int, 0xcc);
+			if (cur < startIndex)
+			{
+				startIndex = cur;
+				if (F(ScrollView_101b10e0 *, 0xb4))
+				{
+					sub_101af9e0(1);
+					startIndex = F(ScrollView_101b10e0 *, 0xb4)->GetValue();
+				}
+			}
+			else if (cur > startIndex + maxLines - 1)
+			{
+				startIndex = cur - maxLines + 1;
+				if (F(ScrollView_101b10e0 *, 0xb4))
+				{
+					sub_101af9e0(-1);
+					startIndex = F(ScrollView_101b10e0 *, 0xb4)->GetValue();
+				}
+			}
+		}
+		else if (!F(char, 0xb1))
+		{
+			int width = 3;
+			int flag = 1;
+			for (int i = F(int, 0xd0); i < m_TextStream_101b10e0.GetCount(); i++)
+			{
+				char c = m_TextStream_101b10e0[i];
+				if (!vfunc164(c, (int)&i, (int)&width, (int)&flag))
+				{
+					if (F(char, 0x89))
+						c = '*';
+					if (F(int, 0x70) == i)
+						break;
+					width += sub_101ad550(font, c);
+				}
+			}
+			if (width >= sub_101ab130())
+				F(int, 0xd0)++;
+			else if (width <= 0 && F(int, 0xd0) > 0)
+				F(int, 0xd0)--;
+		}
+	}
+	if (startIndex)
+	{
+		*pLineIdx = startIndex;
+		if (startIndex < m_LineBreaks_101b10e0.GetCount())
+			lineStart = m_LineBreaks_101b10e0[startIndex - 1];
+	}
+	if (!F(char, 0xd4))
+		return 0;
+	F(int, 0xcc) = startIndex;
+	if (F(char, 0xb1))
+		return lineStart;
+	return F(int, 0xd0);
 }
 // END FUNCTION
 

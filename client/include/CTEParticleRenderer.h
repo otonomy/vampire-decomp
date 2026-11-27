@@ -8,5 +8,8 @@ class CTEParticleRenderer : public CParticleEffect
 {
 public:
 	virtual ~CTEParticleRenderer();
-	char m_pad0004[0x7c - 0x4];
+	bool vfunc3(struct StandardParticle_t *pParticle, struct ParticleDraw *pDraw, float &sortKey);
+	int m_unk70;
+	float m_flParticleSize;	// 0x74
+	char m_pad0078[0xe8 - 0x78];
 };

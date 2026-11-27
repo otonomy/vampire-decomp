@@ -1,6 +1,22 @@
 // Matched functions only. Written by pcdecomp; change it through pcdecomp.
 #include "client.h"
 
+// FUNCTION: 0x10196300 size=0x80
+#include "CViewEffects.h"
+#include "ScopeTrace.h"
+#include "engineclient.h"
+
+int sub_10196380(const char *pszName, int iSize, void *pbuf);	// __MsgFunc_ScreenShake
+int sub_101963a0(const char *pszName, int iSize, void *pbuf);	// __MsgFunc_ScreenFade
+
+void CViewEffects::vfunc0()
+{
+	ScopeTrace st("CViewEffects::Init", g_102de300);
+	engine->vfunc29("ScreenShake", sub_10196380);
+	engine->vfunc29("ScreenFade", sub_101963a0);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10196530 size=0x460
 #include "CViewEffects.h"
 #include "ScopeTrace.h"

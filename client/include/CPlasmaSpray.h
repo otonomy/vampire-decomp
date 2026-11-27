@@ -6,9 +6,9 @@
 
 class CPlasmaSpray : public CSimpleEmitter
 {
-	char m_pad0070[0x08];
-	int m_78;
 public:
+	char m_pad0070[0x08];
+	int m_78;	// the owner's handle (SDK: m_pFirePlasmaSpray->m_pOwner = this)
 	CParticleCollision m_collision;
 	CPlasmaSpray(const char *name) : CSimpleEmitter(name), m_78(-1) {}
 	void vfunc11(void *pVec, int arg1);

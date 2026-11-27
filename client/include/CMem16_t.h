@@ -8,5 +8,6 @@ struct CMem16_t
 	int m_nAllocationCount;
 	int m_nGrowSize;
 
-	void sub_10127830(int num);	// "CUtlMemory::Grow": grows the allocation by at least num elements
+	void sub_10127830(int num);
+	void sub_100d87c0(int num);	// another instance's Grow (the block multi-list of 0x100d48a0)	// "CUtlMemory::Grow": grows the allocation by at least num elements
 };

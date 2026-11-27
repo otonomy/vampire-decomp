@@ -9,6 +9,11 @@ class C_EnvParticle : public C_BaseEntity
 public:
 	C_EnvParticle();
 	int sub_100aeea0(int, int);
+	void sub_100af150();
+	bool sub_100af0b0();
+	void sub_100b0460();
+	void sub_100b02c0();
+	void sub_100af810();
 	virtual ~C_EnvParticle();
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with C_EnvParticle's own function

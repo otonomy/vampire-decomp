@@ -3,6 +3,9 @@
 // the destructor is slot 8 of its vtable; the virtual functions before it are not declared yet
 #pragma once
 #include "C_BaseEntity.h"
+#include "Vector.h"
+#include "CSmartPtr.h"
+#include "CPlasmaSpray.h"
 
 class C_PlasmaBeamNode : public C_BaseEntity
 {
@@ -14,5 +17,11 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual int vfunc15();
 	virtual int vfunc16();
 	virtual void vfunc37();
-	char m_pad0014[0x418 - 0x14];
+	virtual void ClientThink();	// IClientThinkable slot 0 (this = the thinkable part, +0x10)
+	char m_pad0014[0xa8 - 0x14];
+	Vector m_vecVelocityA8;	// 0xa8: read directly as the SDK's GetAbsVelocity()
+	char m_pad00b4[0x410 - 0xb4];
+	bool m_bSprayOn;	// 0x410
+	char m_c411; char m_c412; char m_c413;
+	CSmartPtr<CPlasmaSpray> m_pFirePlasmaSpray;	// 0x414
 };

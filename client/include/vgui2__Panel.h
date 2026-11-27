@@ -20,6 +20,7 @@ public:
 	void sub_101ab300(bool, bool);
 	void sub_101ac570(void *);
 	void sub_101aab60(int);
+	void sub_101aaaf0(int wide, int tall);	// SetMinimumSize
 	void sub_101aab90(int);
 	void sub_101ab2d0();
 	void sub_101aa260(int a, int b);
@@ -109,7 +110,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	virtual bool vfunc25(int, int);
 	virtual void vfunc26();
 	virtual void vfunc27(int *, int *);
-	virtual int vfunc28(int);
+	virtual int vfunc28(bool);
 	virtual int vfunc29(int);
 	virtual int vfunc30();
 	virtual int vfunc31();

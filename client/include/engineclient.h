@@ -52,7 +52,7 @@ public:
 	virtual void vfunc26();
 	virtual void vfunc27(const char *, int);	// slot 27; seen as ClientCmd 7, ServerCmd 4; shapes differ
 	virtual void ClientCmd(const char *);	// slot 28
-	virtual void vfunc29();
+	virtual void vfunc29(const char *pszName, int (*pfnHook)(const char *, int, void *));	// slot 29: HookUserMsg (CViewEffects::Init hooks "ScreenShake" / "ScreenFade")
 	virtual void vfunc30(int, void *);	// slot 30
 	virtual void vfunc31();
 	virtual void vfunc32();
@@ -63,7 +63,7 @@ public:
 	virtual void vfunc37();
 	virtual float vfunc38();	// slot 38; seen as Time 1
 	virtual double Time(int);	// slot 39
-	virtual void vfunc40();
+	virtual double vfunc40();	// slot 40: compared with Time(0) by C_BaseAnimating::DoAnimationEvents
 	virtual float vfunc41(int);	// slot 41; seen as GetFrameTime 1, Time 1
 	virtual float vfunc42();	// slot 42
 	virtual void vfunc43(float);	// slot 43: C_BasePlayer::OnDataChanged hands it 1 / +0x1078 (0.2f when dead)
@@ -122,13 +122,13 @@ public:
 	virtual int vfunc96();	// slot 96; seen as GetDXSupportLevel 1
 	virtual void vfunc97();
 	virtual void vfunc98();
-	virtual void vfunc99();
+	virtual void vfunc99(Vector &origin, QAngle &angles);	// slot 99: (view origin, view angles) (CViewRender::SetUpView)
 	virtual void vfunc100();
 	virtual void vfunc101();
 	virtual void vfunc102();
 	virtual int vfunc103(const char *);	// slot 103; seen as GetParticleIndex 1
 	virtual void vfunc104();
-	virtual void vfunc105();
+	virtual void *vfunc105(int);	// slot 105: a model for a model index (C_EnvParticle)
 	virtual const char *vfunc106();	// slot 106
 	virtual void vfunc107();
 	virtual void vfunc108();
@@ -183,7 +183,7 @@ public:
 	virtual int Draw_DecalIndex(int);	// slot 0
 	virtual void vfunc1();
 	virtual void DecalShoot(int, int, int, const Vector &, const QAngle &, const Vector &, const Vector *, int);	// slot 2
-	virtual void vfunc3();
+	virtual void vfunc3(int, int, const void *, const Vector &, const QAngle &, const Vector &, const Vector *, int, const void *);	// slot 3: DecalColorShoot (..., flags, const color32 *)
 	virtual void *CL_AllocDlight(int);	// slot 4
 };
 extern IVEfx *g_104a57dc;
@@ -203,7 +203,7 @@ class IEngineTrace
 {
 public:
 	virtual int GetPointContents(const Vector &, void *);	// slot 0
-	virtual void vfunc1();
+	virtual int vfunc1(const void *pCollide, const Vector &pos);	// slot 1: GetPointContents_Collideable (C_Func_Dust::sub_100babb0)
 	virtual void vfunc2(Ray_t *, unsigned int, const void *, CGameTrace *);	// slot 2
 	virtual void vfunc3();
 	virtual void vfunc4(int, int, const void *, int);	// slot 4; seen as Slot4 1; shapes differ
@@ -269,14 +269,14 @@ public:
 	virtual int vfunc7();	// slot 7
 	virtual int vfunc8();	// slot 8
 	virtual int vfunc9();	// slot 9
-	virtual int vfunc10();	// slot 10
+	virtual void vfunc10(int);	// slot 10: CViewRender::RenderView hands it the player's 1.5^n * 5 (or 0)
 	virtual int vfunc11();	// slot 11
-	virtual int vfunc12();	// slot 12
+	virtual void vfunc12(int);	// slot 12: CViewRender::RenderView hands it the player's +0x1738 (or 0)
 	virtual int vfunc13();	// slot 13
 	virtual void vfunc14(const Vector &, float);	// slot 14; seen as GetSetup 1; shapes differ
 	virtual int vfunc15();	// slot 15
 	virtual int vfunc16();	// slot 16
-	virtual int vfunc17();	// slot 17
+	virtual int vfunc17(void *pWaterInfo, bool *pbWater, const Vector &origin);	// slot 17: the water under the view (CViewRender::ViewDrawScene)
 	virtual int vfunc18();	// slot 18
 	virtual int vfunc19();	// slot 19
 	virtual int vfunc20();	// slot 20
@@ -288,18 +288,18 @@ public:
 	virtual int vfunc26();	// slot 26
 	virtual int vfunc27();	// slot 27
 	virtual void vfunc28(int, int, const Vector &);	// slot 28; seen as ViewSetupVis 1; shapes differ
-	virtual int vfunc29();	// slot 29
-	virtual int vfunc30();	// slot 30
+	virtual int vfunc29(const void *pView, void *p);	// slot 29: (view setup, CViewRender + 0x22c)
+	virtual int vfunc30(const void *pView);	// slot 30: the view setup
 	virtual int vfunc31();	// slot 31
 	virtual void vfunc32(unsigned char *, void *);	// slot 32; shapes differ
-	virtual int vfunc33();	// slot 33
+	virtual void vfunc33(float, float, float);	// slot 33: SetProjectionMatrix(fov, zNear, zFar) (CViewRender::DrawViewModels)
 	virtual int vfunc34();	// slot 34
 	virtual bool vfunc35();	// slot 35; shapes differ
 	virtual int vfunc36();	// slot 36
 	virtual int vfunc37();	// slot 37
-	virtual int vfunc38();	// slot 38
+	virtual bool vfunc38();	// slot 38
 	virtual int vfunc39();	// slot 39
-	virtual void vfunc40();
+	virtual float vfunc40();	// slot 40: the view fov (CViewRender::SetUpView)
 	virtual unsigned char **vfunc41();	// slot 41: where the area bits pointer lives (C_BasePlayer::OnDataChanged stores the player's +0x166c)
 	virtual double vfunc42();	// slot 42
 	virtual void vfunc43(int, int);	// slot 43; shapes differ
@@ -307,10 +307,17 @@ public:
 	virtual void vfunc45(const void *);	// slot 45
 	virtual void vfunc46();
 	virtual void vfunc47(const char *, float, float, float);	// slot 47
+	virtual bool vfunc48(const Vector &);	// slot 48: IsSkyboxVisibleFromPoint (CViewRender::RenderView)
 };
 extern IVRenderView *g_104a57e4;
 
 // debugoverlay = g_104a57e8, asked for as "VDebugOverlay002"
+// slot 8 as sub_100dfd20 forwards it (eight dwords), the same slot as IVDebugOverlay::vfunc8 below
+struct IVDebugOverlaySlot8Ints
+{
+	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7();
+	virtual void __cdecl vfunc8(int, int, int, int, int, int, int, int);
+};
 class IVDebugOverlay
 {
 public:
@@ -322,9 +329,10 @@ public:
 	virtual void vfunc5(const Vector &, const Vector &, int, int, int, int, int);	// slot 5; seen as AddLineOverlay 1
 	virtual int __cdecl vfunc6(int, int, int, int);	// slot 6
 	virtual int __cdecl vfunc7(int, int, int);	// slot 7
-	virtual void __cdecl vfunc8(int, int, int, int, int, int, int, int);	// slot 8
+	virtual void __cdecl vfunc8(int, float, int, int, int, int, int, const char *, ...);	// slot 8: a text overlay (C_BaseFlex::RunFlexRules: 0, (float)line, 0, r, g, b, a, fmt, ...)
+	void vfunc8(int a, int b, int c, int d, int e, int f, int g, int h) { ((IVDebugOverlaySlot8Ints *)this)->vfunc8(a, b, c, d, e, f, g, h); }	// the all-dword form sub_100dfd20 forwards
 	virtual void vfunc9();
-	virtual void vfunc10();
+	virtual int vfunc10(const Vector &point, Vector &screen);	// slot 10: ScreenPosition (DrawBeamFollow)
 	virtual int vfunc11();	// slot 11
 };
 extern IVDebugOverlay *g_104a57e8;
@@ -360,15 +368,15 @@ public:
 	virtual void vfunc24();
 	virtual void *FindMaterial(const char *, bool *, bool);	// slot 25; shapes differ
 	virtual void vfunc26();
-	virtual void vfunc27();
+	virtual void *vfunc27(const char *pName, bool *pFound, bool bComplain);	// slot 27: a texture by name ("engine/camerarendertarget")
 	virtual void *FindTexture(const char *, const char *, int);	// slot 28
 	virtual void vfunc29();
 	virtual void vfunc30();
 	virtual void vfunc31();
 	virtual void vfunc32();
-	virtual void vfunc33();
-	virtual void vfunc34();
-	virtual void vfunc35();
+	virtual void vfunc33(int);	// slot 33: takes back what slot 34 gave (CViewRender::ViewDrawScene)
+	virtual int vfunc34();	// slot 34
+	virtual void vfunc35(int *pWidth, int *pHeight);	// slot 35: the render target's size (CViewRender::DrawHighEndMonitors)
 	virtual void vfunc36(int *, int *);	// slot 36
 	virtual void vfunc37();
 	virtual void vfunc38();
@@ -388,7 +396,7 @@ public:
 	virtual void vfunc52();
 	virtual void Bind(const void *, void *);	// slot 53; shapes differ
 	virtual void vfunc54();
-	virtual void vfunc55();
+	virtual void vfunc55(float, float);	// slot 55: DepthRange
 	virtual void vfunc56();
 	virtual void vfunc57();
 	virtual void vfunc58();
@@ -396,7 +404,7 @@ public:
 	virtual void vfunc60();
 	virtual void vfunc61(int);	// slot 61
 	virtual void vfunc62(int, int);	// slot 62; shapes differ
-	virtual void vfunc63();
+	virtual int vfunc63(int);	// slot 63: GetFrameBufferCopyTexture (CViewRender::DrawHelper saves it, then hands it back to slot 62)
 	virtual int vfunc64(int);	// slot 64; shapes differ
 	virtual void vfunc65(int);	// slot 65; shapes differ
 	virtual void vfunc66();
@@ -414,18 +422,18 @@ public:
 	virtual void vfunc78();
 	virtual void vfunc79();
 	virtual void vfunc80();
-	virtual void vfunc81();
+	virtual void vfunc81();	// slot 81: LoadIdentity
 	virtual void vfunc82();
 	virtual void vfunc83();
 	virtual void vfunc84();
 	virtual void vfunc85();
-	virtual void vfunc86();
+	virtual void vfunc86(float, float, float, float);	// slot 86: Rotate(angle, x, y, z)
 	virtual void vfunc87();
 	virtual void vfunc88();
-	virtual void vfunc89();
-	virtual void vfunc90();
+	virtual void vfunc89(int x, int y, int w, int h);	// slot 89: Viewport
+	virtual void vfunc90(int *x, int *y, int *w, int *h);	// slot 90: GetViewport
 	virtual void vfunc91();
-	virtual void vfunc92();
+	virtual void vfunc92(int);	// slot 92: SetHeightClipMode (CViewRender::DrawHelper)
 	virtual void vfunc93();
 	virtual void vfunc94(int);	// slot 94; seen as FogMode 1
 	virtual void vfunc95(float);	// slot 95; seen as FogStart 1
@@ -470,6 +478,12 @@ public:
 	virtual void vfunc134();
 	virtual void vfunc135();
 	virtual void vfunc136(void *);	// slot 136
+	virtual void vfunc137();
+	virtual void vfunc138();
+	virtual void vfunc139();
+	virtual void vfunc140();
+	virtual void vfunc141();
+	virtual void vfunc142();	// slot 142: the last call of CViewRender::ViewDrawScene
 };
 extern IMaterialSystem *g_104a57ec;
 
@@ -488,6 +502,32 @@ public:
 	virtual void vfunc8();
 	virtual void vfunc9();
 	virtual bool vfunc10();	// slot 10
+	virtual void vfunc11();
+	virtual void vfunc12();
+	virtual void vfunc13();
+	virtual void vfunc14();
+	virtual void vfunc15();
+	virtual void vfunc16();
+	virtual void vfunc17();
+	virtual void vfunc18();
+	virtual void vfunc19();
+	virtual void vfunc20();
+	virtual void vfunc21();
+	virtual void vfunc22();
+	virtual void vfunc23();
+	virtual void vfunc24();
+	virtual void vfunc25();
+	virtual void vfunc26();
+	virtual void vfunc27();
+	virtual void vfunc28();
+	virtual void vfunc29();
+	virtual void vfunc30();
+	virtual void vfunc31();
+	virtual void vfunc32();
+	virtual void vfunc33();
+	virtual void vfunc34();
+	virtual void vfunc35();
+	virtual int GetDXSupportLevel();	// slot 36 (0x100d7fc0, CClientShadowMgr's shadow type clamp: >= 80, >= 81)
 };
 extern IMaterialSystemHardwareConfig *g_104a57f0;
 
@@ -662,6 +702,8 @@ public:
 	virtual bool vfunc1();	// slot 1; seen as IsX 1
 	virtual void vfunc2();
 	virtual bool vfunc3(void *);	// slot 3
+	virtual void vfunc4();
+	virtual void vfunc5(const Vector &start, const Vector &pos, int hitbox, int decal, bool, CGameTrace &tr, int);	// slot 5: AddDecalToStaticProp (TE_Decal 0x10035d30)
 };
 extern IStaticPropMgrClient *g_104a5814;
 

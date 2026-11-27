@@ -15,6 +15,7 @@ struct CDisciplineEntry
 class CDiscipline : public CManagedHudElement
 {
 public:
+	CDiscipline(int a);
 	virtual ~CDiscipline();
 	int sub_1004ec90(int id);
 	int sub_1004ecb0(int id);
@@ -44,4 +45,10 @@ public:
 	CDisciplineEntry m_Entries[6];
 	CDisciplineChild *m_p1f4;
 	CDisciplineChild *m_p1f8;
+	int m_unk1fc;
+	int m_nFont200;	// "Copperplate"
+	int m_clr204;	// scheme color DiscUI_Aqua
+	int m_clr208;	// DiscUI_Orange
+	int m_clr20c;	// DiscUI_Yellow
+	int m_clr210;	// DiscUI_Gray
 };

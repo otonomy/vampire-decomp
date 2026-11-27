@@ -429,6 +429,131 @@ void CViewRenderBeams::vfunc3()
 }
 // END FUNCTION
 
+// FUNCTION: 0x101957f0 size=0x49d
+#include "CViewRenderBeams.h"
+#include "CGlobalVarsBase.h"
+#include "engineclient.h"
+
+extern "C" __declspec(dllimport) void DevWarning(int level, const char *fmt, ...);
+
+void sub_100845e0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode, const Vector &source, const Vector &delta, float width, float scale, float freq, float speed, int segments, float *color);
+void sub_10084ae0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode, const Vector &source, const Vector &delta, float width, float scale, float freq, float speed, int segments, float *color);
+void sub_10082fd0(int noise_divisions, float *prgNoise, const char *spritemodel, float frame, int rendermode, const Vector &source, const Vector &delta, float startWidth, float endWidth, float scale, float freq, float speed, int segments, int flags, float *color, float fadeLength, Vector *pOut);
+void sub_10085000(int noise_divisions, float *prgNoise, void (*pfnNoise)(float *noise, int divs, float scale), const char *spritemodel, float frame, int rendermode, const Vector &source, const Vector &delta, float width, float amplitude, float freq, float speed, int segments, float *color);
+void sub_10083d60(int noise_divisions, float *prgNoise, const char *spritemodel, const char *halosprite, float haloScale, float frame, int rendermode, int numAttachments, Vector *attachment, float startWidth, float endWidth, float amplitude, float freq, float speed, int segments, int flags, float *color, float fadeLength);
+void sub_10194cb0(float *noise, int divs, float scale);
+
+// mathlib.h's float-array forms
+inline void VectorScale(const float *in, vec_t scale, float *out)
+{
+	out[0] = in[0] * scale;
+	out[1] = in[1] * scale;
+	out[2] = in[2] * scale;
+}
+
+inline void VectorCopy(const float *in, float *out)
+{
+	out[0] = in[0];
+	out[1] = in[1];
+	out[2] = in[2];
+}
+
+void CViewRenderBeams::vfunc4(Beam_t *pbeam)
+{
+	if (pbeam->delta.Length() < 0.1)
+		return;
+
+	const char *sprite;
+	const char *halosprite;
+
+	if (pbeam->modelIndex < 0) {
+		pbeam->die = gpGlobals->curtime;
+		return;
+	}
+
+	sprite = (const char *)modelinfo->GetModel(pbeam->modelIndex);
+	if (!sprite)
+		return;
+
+	halosprite = (const char *)modelinfo->GetModel(pbeam->haloIndex);
+
+	int frame = ((int)(pbeam->frame + gpGlobals->curtime * pbeam->frameRate) % pbeam->frameCount);
+	int rendermode = (pbeam->flags & 0x20) ? 0 : 5;
+
+	float srcColor[3];
+	float color[3];
+
+	srcColor[0] = pbeam->r;
+	srcColor[1] = pbeam->g;
+	srcColor[2] = pbeam->b;
+	if (pbeam->flags & 4) {
+		VectorScale(srcColor, pbeam->t, color);
+	} else if (pbeam->flags & 8) {
+		VectorScale(srcColor, (1.0f - pbeam->t), color);
+	} else {
+		VectorCopy(srcColor, color);
+	}
+
+	VectorScale(color, ((float)pbeam->brightness / 255.0), color);
+	VectorScale(color, (1 / 255.0), color);
+
+	switch (pbeam->type) {
+	case 20:
+		sub_100845e0(128, pbeam->rgNoise, sprite, frame, rendermode,
+			pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->amplitude,
+			pbeam->freq, pbeam->speed, pbeam->segments, color);
+		break;
+
+	case 21:
+		sub_10084ae0(128, pbeam->rgNoise, sprite, frame, rendermode,
+			pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->amplitude,
+			pbeam->freq, pbeam->speed, pbeam->segments, color);
+		break;
+
+	case 0:
+		if (halosprite) {
+			sub_10195070(pbeam, frame, rendermode, color, sprite, halosprite);
+		} else {
+			sub_10082fd0(128, pbeam->rgNoise, sprite, frame, rendermode,
+				pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->endWidth,
+				pbeam->amplitude, pbeam->freq, pbeam->speed, pbeam->segments,
+				pbeam->flags, color, pbeam->fadeLength, (Vector *)&pbeam->m_unkb8);
+		}
+		break;
+
+	case 22:
+		sub_10194e20(sprite, pbeam, frame, rendermode, gpGlobals->frametime, color);
+		break;
+
+	case 24:
+	case 26:
+		sub_10085000(128, pbeam->rgNoise, sub_10194cb0, sprite, frame, rendermode,
+			pbeam->attachment[0], pbeam->delta, pbeam->width, pbeam->amplitude,
+			pbeam->freq, pbeam->speed, pbeam->segments, color);
+		break;
+
+	case 25:
+		sub_10083d60(128, pbeam->rgNoise, sprite, halosprite,
+			pbeam->haloScale, frame, rendermode, pbeam->numAttachments,
+			pbeam->attachment, pbeam->width, pbeam->endWidth, pbeam->amplitude,
+			pbeam->freq, pbeam->speed, pbeam->segments, pbeam->flags, color, pbeam->fadeLength);
+		break;
+
+	case 27:
+		sub_10195520(pbeam, frame, rendermode, color, sprite, (int)halosprite);
+		break;
+
+	case 28:
+		sub_10195770(pbeam, frame, rendermode, color, sprite);
+		break;
+
+	default:
+		DevWarning(1, "CViewRenderBeams::DrawBeam:  Unknown beam type %i\n", pbeam->type);
+		break;
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x10195c90 size=0x6f
 #include "CViewRenderBeams.h"
 #include "Vector.h"

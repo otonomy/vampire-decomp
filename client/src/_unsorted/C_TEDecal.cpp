@@ -39,6 +39,19 @@ void C_TEDecal::vfunc13()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10035dd0 size=0x98
+#include "C_TEDecal.h"
+#include "C_RecipientFilter.h"
+
+void TE_Decal(IRecipientFilter &filter, float delay, const Vector *pos, const Vector *start, int entity, int hitbox, int index, bool b);
+
+void C_TEDecal::PostDataUpdate(int updateType)
+{
+	CBroadcastRecipientFilter filter;
+	TE_Decal(filter, 0.0f, &m_vecOrigin, &m_vecStart, m_unk28, m_unk2c, m_unk30, m_b34);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10035e70 size=0x6
 #include "C_TEDecal.h"
 namespace lifted {

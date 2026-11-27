@@ -15,7 +15,9 @@ struct SimpleParticleAux_t
 
 struct SimpleParticleC_t
 {
-	char m_unk00[0x30];
+	int m_unk00; int m_unk04; int m_unk08; int m_unk0c; int m_unk10; int m_unk14; int m_unk18; int m_unk1c; int m_unk20; int m_unk24;
+	float m_flDieTime;	// 0x28
+	float m_flLifetime;	// 0x2c
 	unsigned char m_uchColor[3];
 };
 

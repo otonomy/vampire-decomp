@@ -11,7 +11,24 @@ public:
 	CClientEntityList();
 	void sub_100d0b40();
 	~CClientEntityList();
-	void sub_100d0dc0(CBaseHandle h);
+	class C_BaseEntity *sub_100d0dc0(CBaseHandle h);	// GetBaseEntityFromHandle
+
+	// the SDK's CBaseEntityList::FirstHandle / NextHandle (inline): the live list's handles in order
+	CBaseHandle FirstHandle() const
+	{
+		if (m_Live.m_Head == 0xffff)
+			return CBaseHandle();
+		int index = m_Live.m_pMemory[m_Live.m_Head].m_Element;
+		return CBaseHandle(index, m_EntPtrArray[index].m_SerialNumber);
+	}
+	CBaseHandle NextHandle(CBaseHandle hEnt) const
+	{
+		int next = m_Live.m_pMemory[m_EntPtrArray[hEnt.m_Index & 0x1fff].m_ListIndex].m_Next;
+		if (next == CBaseEntityListLL::InvalidIndex())
+			return CBaseHandle();
+		int index = m_Live.m_pMemory[(unsigned short)next].m_Element;
+		return CBaseHandle(index, m_EntPtrArray[index].m_SerialNumber);
+	}
 	int sub_100d0d90(CBaseHandle h);
 	class C_BaseEntity *sub_100d0cf0(int entnum);
 	int m_i18040; int m_i18044; int m_i18048;

@@ -52,6 +52,94 @@ C_BaseFlex::~C_BaseFlex()
 }
 // END FUNCTION
 
+// FUNCTION: 0x100c3cd0 size=0x234
+#include "C_BaseFlex.h"
+#include "ConVar.h"
+#include "engineclient.h"
+
+struct mstudioflexcontroller_100c3cd0 { int sztypeindex; int sznameindex; int link; float min; float max; };
+struct mstudioflexop_100c3cd0 { int op; union { int index; float value; } d; };
+struct mstudioflexrule_100c3cd0
+{
+	int flex; int numops; int opindex;
+	mstudioflexop_100c3cd0 *iFlexOp(int i) const { return (mstudioflexop_100c3cd0 *)(((char *)this) + opindex) + i; }
+};
+struct studiohdr_100c3cd0
+{
+	int m_unk[0x158 / 4];
+	int numflexdesc;	// 0x158
+	int m_unk15c; int m_unk160;
+	int flexcontrollerindex;	// 0x164
+	int numflexrules;	// 0x168
+	int flexruleindex;	// 0x16c
+	mstudioflexcontroller_100c3cd0 *pFlexcontroller(int i) const { return (mstudioflexcontroller_100c3cd0 *)(((char *)this) + flexcontrollerindex) + i; }
+	mstudioflexrule_100c3cd0 *pFlexRule(int i) const { return (mstudioflexrule_100c3cd0 *)(((char *)this) + flexruleindex) + i; }
+};
+
+extern ConVar g_104a4d28;	// flex_rules-like
+extern ConVar g_104a4450;	// flex debug
+extern float g_104a4a90[];	// g_flexweight
+
+#define pstudiohdr (*(studiohdr_100c3cd0 **)((char *)this + 0x6ac))
+
+void C_BaseFlex::vfunc144(float *dest)
+{
+	int i, j;
+
+	if (!g_104a4d28.GetInt())
+		return;
+
+	for (i = 0; i < pstudiohdr->numflexdesc; i++)
+	{
+		dest[i] = 0;
+	}
+
+	for (i = 0; i < pstudiohdr->numflexrules; i++)
+	{
+		float stack[32];
+		int k = 0;
+		mstudioflexrule_100c3cd0 *prule = pstudiohdr->pFlexRule(i);
+
+		mstudioflexop_100c3cd0 *pops = prule->iFlexOp(0);
+
+		if (g_104a4450.GetInt())
+			debugoverlay->vfunc8(0, (float)(i + 1), 0, 255, 255, 255, 255, "%2d:%d\n", i, prule->flex);
+
+		for (j = 0; j < prule->numops; j++)
+		{
+			switch (pops->op)
+			{
+			case 4: { float a = stack[k - 2]; stack[k - 2] = a + stack[k - 1]; k--; break; }
+			case 5: stack[k - 2] = stack[k - 2] - stack[k - 1]; k--; break;
+			case 6: { float a = stack[k - 2]; stack[k - 2] = a * stack[k - 1]; k--; break; }
+			case 7:
+				if (stack[k - 1] > 0.0001)
+				{
+					stack[k - 2] = stack[k - 2] / stack[k - 1];
+				}
+				else
+				{
+					stack[k - 2] = 0;
+				}
+				k--;
+				break;
+			case 1: stack[k] = pops->d.value; k++; break;
+			case 2:
+				{
+				int m = pstudiohdr->pFlexcontroller(pops->d.index)->link;
+				stack[k] = g_104a4a90[m];
+				k++; break;
+				}
+			case 3: stack[k] = dest[pops->d.index]; k++; break;
+			}
+
+			pops++;
+		}
+		dest[prule->flex] = stack[0];
+	}
+}
+// END FUNCTION
+
 // FUNCTION: 0x100c4110 size=0xe4
 #include "engineclient.h"
 #include "C_BaseFlex.h"

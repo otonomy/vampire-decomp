@@ -75,6 +75,15 @@ int C_ServerRagdoll::vfunc126()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10125a60 size=0xf
+#include "C_ServerRagdoll.h"
+#include "CCollisionProperty.h"
+void C_ServerRagdoll::GetRenderBoundsWorldspace(Vector &mins, Vector &maxs)
+{
+    ((CCollisionProperty *)((char *)this + 0x190))->vfunc15(mins, maxs);
+}
+// END FUNCTION
+
 // FUNCTION: 0x10125a70 size=0x38
 #include "CGlobalVarsBase.h"
 #include "C_ServerRagdoll.h"

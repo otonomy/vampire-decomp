@@ -28,6 +28,6 @@ struct typedescription_t
 	ISaveRestoreOps *pSaveRestoreOps;	// +0x18
 	void *inputFunc;	// +0x1c
 	datamap_t *td;	// +0x20 (embedded fields)
-	int fieldSizeInBytes;	// +0x24
-	int unk;	// +0x28
+	union { int fieldSizeInBytes; typedescription_t *override_field; };	// +0x24 (prediction copy: the field this one overrides)
+	union { int unk; int override_count; };	// +0x28 (prediction copy: the chain count that skips this field)
 };
