@@ -90859,6 +90859,86 @@ int __stdcall sub_1010e740(float x, int width)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1010e7f0 size=0x1b4
+#include "CHudMessage.h"
+struct client_textmessage_s
+{
+	int effect;
+	unsigned char r1, g1, b1, a1;
+	unsigned char r2, g2, b2, a2;
+	float x, y;
+	float fadein, fadeout, holdtime, fxtime;
+};
+struct TextObjV_1010e7f0
+{
+	virtual void v0(); virtual void v1(); virtual void v2();
+	virtual void vfunc3(int, int, int, int, unsigned char);
+};
+extern TextObjV_1010e7f0 *g_102cf598;
+
+// TARGET: CHudMessage::sub_1010e7f0
+void CHudMessage::sub_1010e7f0()
+{
+	int srcRed, srcGreen, srcBlue, destRed, destGreen, destBlue;
+	int blend;
+
+	srcRed = m_pMessage->r1;
+	srcGreen = m_pMessage->g1;
+	srcBlue = m_pMessage->b1;
+	blend = 0;
+	destRed = destGreen = destBlue = 0;
+
+	switch (m_pMessage->effect)
+	{
+	case 0:
+	case 1:
+		destRed = destGreen = destBlue = 0;
+		blend = m_fadeBlend;
+		break;
+	case 2:
+		m_charTime += m_pMessage->fadein;
+		if (m_charTime > m_time)
+		{
+			srcRed = srcGreen = srcBlue = 0;
+			blend = 0;
+		}
+		else
+		{
+			float deltaTime = m_time - m_charTime;
+			destRed = destGreen = destBlue = 0;
+			if (m_time > m_unkd0)
+			{
+				blend = m_fadeBlend;
+			}
+			else if (deltaTime > m_pMessage->fxtime)
+			{
+				blend = 0;
+			}
+			else
+			{
+				destRed = m_pMessage->r2;
+				destGreen = m_pMessage->g2;
+				destBlue = m_pMessage->b2;
+				blend = (int)(255.0 - (deltaTime * (1.0 / m_pMessage->fxtime) * 255.0 + 0.5));
+			}
+		}
+		break;
+	}
+
+	if (blend > 255)
+		blend = 255;
+	else if (blend < 0)
+		blend = 0;
+
+	m_r = ((srcRed * (255 - blend)) + (destRed * blend)) >> 8;
+	m_g = ((srcGreen * (255 - blend)) + (destGreen * blend)) >> 8;
+	m_b = ((srcBlue * (255 - blend)) + (destBlue * blend)) >> 8;
+
+	if (m_pMessage->effect == 1 && m_charTime != 0.0f)
+		g_102cf598->vfunc3(m_pMessage->r2, m_pMessage->g2, m_pMessage->b2, 255, *(unsigned char *)&m_text);
+}
+// END FUNCTION
+
 // FUNCTION: 0x1010e9b0 size=0x169
 #include "CHudMessage.h"
 #include <stdlib.h>

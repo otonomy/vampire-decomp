@@ -6593,6 +6593,7 @@
 0x1010e600 func   ?sub_1010e600@CHudMessage@@QAEMMMMM@Z CHudMessage::sub_1010e600
 0x1010e6a0 func   ?sub_1010e6a0@@YGHMHH@Z sub_1010e6a0
 0x1010e740 func   ?sub_1010e740@@YGHMH@Z sub_1010e740
+0x1010e7f0 func   ?sub_1010e7f0@CHudMessage@@QAEXXZ CHudMessage::sub_1010e7f0
 0x1010e9b0 func   ?sub_1010e9b0@CHudMessage@@QAEXXZ CHudMessage::sub_1010e9b0
 0x1010eb20 func   ?sub_1010eb20@CHudMessage@@QAEXPAUclient_textmessage_s@@M@Z CHudMessage::sub_1010eb20
 0x1010ed40 func   ?vfunc5@CHudMessage@@UAEXM@Z CHudMessage::vfunc5
