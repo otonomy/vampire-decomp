@@ -38,7 +38,7 @@ public:
 	bool sub_101a71c0(unsigned short i) const;	// "CUtlRBTree::IsRightChild"
 	unsigned short sub_101a6780(const void *search);	// "CUtlRBTree::Find": index of the node equal to search, or InvalidIndex()
 	void sub_101a6a00(const void *insert, unsigned short &parent, bool &leftchild);	// "CUtlRBTree::FindInsertionPoint": walks down from the root with the less function, remembering the last node and the side
-	unsigned short sub_101a6890(unsigned short parent, bool leftchild);	// "CUtlRBTree::InsertAt": NewNode (free list head, else the memory grows by one node and the next unused index is taken), constructs the element, links it below parent (the root when parent is InvalidIndex()), InsertRebalance, ++m_NumElements; returns the node index
+	unsigned short sub_101a6890(int parent, int leftchild);	// "CUtlRBTree::InsertAt": NewNode (free list head, else the memory grows by one node and the next unused index is taken), constructs the element, links it below parent (the root when parent is InvalidIndex()), InsertRebalance, ++m_NumElements; returns the node index
 	Links_t &sub_101a6b40(unsigned short i);	// "CUtlRBTree::Links" (out of line, with the sentinel static; stub 0x10007fdb)
 	void sub_101a7290(unsigned short elem);	// "CUtlRBTree::RotateLeft"
 	unsigned short Parent(unsigned short i) { return sub_101a6b40(i).m_Parent; }
