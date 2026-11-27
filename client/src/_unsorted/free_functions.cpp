@@ -49272,6 +49272,30 @@ int sub_1008cbc0(char *pHdr, const char *pszName)
 }
 // END FUNCTION
 
+// FUNCTION: 0x1008cc70 size=0x148
+#include "utlvector.h"
+extern "C" __declspec(dllimport) int RandomInt(int, int);
+extern "C" char *strstr(const char *, const char *);
+
+struct SeqDescV { int m_nameIdx; char pad[0x3c - 4]; };
+struct ModelV { char pad[0x148]; int m_numSeq; int m_seqIdx; };
+
+int sub_1008cc70(ModelV *model, const char *name)
+{
+	if (model) {
+		CUtlVector<int> matches;
+		for (int i = 0; i < model->m_numSeq; i++) {
+			char *p = (char *)model + model->m_seqIdx + i * 0x3c;
+			if (strstr(p + *(int *)p, name))
+				matches.AddToTail(i);
+		}
+		if (matches.Count() > 0)
+			return matches[RandomInt(0, matches.Count() - 1)];
+	}
+	return -1;
+}
+// END FUNCTION
+
 // FUNCTION: 0x1008ce20 size=0x7
 namespace lifted {
 extern float g_101e34f0;

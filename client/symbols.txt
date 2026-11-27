@@ -3877,6 +3877,7 @@
 0x1008c770 func   ?sub_1008c770@@YA_NPAXHMMPBMAAVVector@@2@Z sub_1008c770
 0x1008c8e0 func   ?sub_1008c8e0@@YA_NPBXHMPBMAAVVector@@@Z sub_1008c8e0
 0x1008cbc0 func   ?sub_1008cbc0@@YAHPADPBD@Z sub_1008cbc0
+0x1008cc70 func   ?sub_1008cc70@@YAHPAUModelV@@PBD@Z sub_1008cc70
 0x1008ce10 func   ?sub_1008ce10@@YAPAXPAX@Z sub_1008ce10
 0x1008ce20 func   ?sub_1008ce20@@YAMXZ sub_1008ce20
 0x1008ce30 func   ?sub_1008ce30@@YAHXZ sub_1008ce30
