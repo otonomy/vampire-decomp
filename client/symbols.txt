@@ -9050,6 +9050,7 @@
 0x10176440 func   ?sub_10176440@CUnknown10176440@@QAEHXZ CUnknown10176440::sub_10176440
 0x10176450 func   ?vfunc74@VLabelComboBox@@UAEHH@Z VLabelComboBox::vfunc74
 0x101764f0 func   ?sub_101764f0@CUnknown101764f0@@QAEXD@Z CUnknown101764f0::sub_101764f0
+0x10176520 func   ??0CharEditCharPanel@@QAE@XZ CharEditCharPanel::CharEditCharPanel
 0x101766a0 func   ??_GCharEditCharPanel@@UAEPAXI@Z ??_GCharEditCharPanel@@UAEPAXI@Z
 0x101766c0 func   ??1CharEditCharPanel@@UAE@XZ CharEditCharPanel::~CharEditCharPanel
 0x10176e90 func   ?sub_10176e90@@YA_NH@Z sub_10176e90
