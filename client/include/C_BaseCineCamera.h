@@ -34,12 +34,14 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	Vector m_v474;
 	float m_f480;
 	char m_pad0484[0x490 - 0x484];
-	int m_n490;
-	char m_pad0494[4];
+	union { int m_n490; float m_f490; };
+	int m_n494;
 	int m_n498;
 	char m_pad049c[4];
 	char m_b4a0;
-	char m_pad04a1[3];
+	char m_b4a1;
+	char m_c4a2;
+	char m_c4a3;
 	float m_f4a4;
 	float m_af4a8[6];
 	char m_b4c0;
@@ -48,5 +50,7 @@ public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	float sub_10001c80(int idx, float f, float d);
 	Vector sub_10001fe0(float dt);
 	Vector sub_10001d40(float dt);
-	void sub_10001fa0(float dt);	// moves m_v468 toward m_v410, returns the new position
+	void sub_10001fa0(float dt);
+	void sub_10001a20();
+	void sub_10002200(float dt);	// moves m_v468 toward m_v410, returns the new position
 };
