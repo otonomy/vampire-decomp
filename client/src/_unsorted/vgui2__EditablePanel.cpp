@@ -50,6 +50,38 @@ void vgui2::EditablePanel::vfunc10(int a) {
 }
 // END FUNCTION
 
+// FUNCTION: 0x101b47d0 size=0x151
+#include "vgui2__EditablePanel.h"
+
+// TARGET: vgui2::EditablePanel::vfunc11
+void vgui2::EditablePanel::vfunc11(int newWide, int newTall)
+{
+	Panel::vfunc11(newWide, newTall);
+	vfunc57(0, 0);
+	int dx = newWide - m_i70;
+	int dy = newTall - m_i74;
+	for (int i = 0; i < vfunc36(); i++)
+	{
+		Panel *child = vfunc37(i);
+		int x, y, wide, tall;
+		child->sub_101a9980(&x, &y, &wide, &tall);
+		if (child->sub_101ab460() == 1 || child->sub_101ab460() == 3)
+			x += dx;
+		if (child->sub_101ab460() == 2 || child->sub_101ab460() == 3)
+			y += dy;
+		if (child->sub_101ab480() == 1 || child->sub_101ab480() == 3)
+			wide += dx;
+		if (child->sub_101ab480() == 2 || child->sub_101ab480() == 3)
+			tall += dy;
+		child->sub_101a9950(x, y, wide, tall);
+		child->vfunc57(0, 0);
+	}
+	vfunc5();
+	m_i74 = newTall;
+	m_i70 = newWide;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101b4930 size=0x61
 #include "vgui2__KeyValues.h"
 
