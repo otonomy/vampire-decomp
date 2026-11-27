@@ -13,6 +13,7 @@ public:
 	Button(int, int, int);
 	virtual ~Button();
 	void sub_101b3580();
+	void sub_101b4100(int);
 public:	// vtable-slot layer (2026-11-22), from the game's vtables
 	// the base slots the game's vtable fills with Button's own function
 	virtual void vfunc14();
