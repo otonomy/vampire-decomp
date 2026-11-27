@@ -70132,6 +70132,83 @@ void Class_100d48a0::sub_100d48a0(int j)
 }
 // END FUNCTION
 
+// FUNCTION: 0x100d4ba0 size=0x17c
+struct MNode_100d4ba0
+{
+	unsigned short m_Type;
+	unsigned short m_u2;
+	unsigned short m_u4;
+	unsigned short m_u6;
+	int m_Data8;
+	unsigned short m_Next;
+	unsigned short m_Prev;
+};
+struct MList_100d4ba0
+{
+	unsigned short m_Tail;
+	unsigned short m_Head;
+	unsigned short m_Count;
+	unsigned short m_u6;
+	unsigned short m_u8;
+};
+struct Pool_100d8740
+{
+	MNode_100d4ba0 *m_pNodes;
+	int m_u4, m_u8;
+	MList_100d4ba0 *m_pLists;
+	int m_u10, m_u14, m_u18, m_u1c, m_u20, m_u24;
+	unsigned short *m_pElemList;
+	unsigned short m_u2c, m_u2e, m_nMax;
+
+	bool sub_100d8740(int i);
+
+	void Unlink(unsigned short list, int elem)
+	{
+		if (sub_100d8740(elem))
+		{
+			MNode_100d4ba0 *n = &m_pNodes[(unsigned short)elem];
+			if (n->m_Next != 0xffff)
+				m_pNodes[n->m_Next].m_Prev = n->m_Prev;
+			else
+				m_pLists[list].m_Tail = n->m_Prev;
+			if (n->m_Prev != 0xffff)
+				m_pNodes[n->m_Prev].m_Next = n->m_Next;
+			else
+				m_pLists[list].m_Head = n->m_Next;
+			n->m_Prev = elem;
+			n->m_Next = elem;
+			--m_pLists[list].m_Count;
+			if (m_pElemList)
+				m_pElemList[(unsigned short)elem] = 0xffff;
+		}
+	}
+
+	void LinkToHead(unsigned short list, int elem)
+	{
+		MNode_100d4ba0 *n = &m_pNodes[(unsigned short)elem];
+		n->m_Prev = 0xffff;
+		n->m_Next = m_pLists[list].m_Head;
+		m_pLists[list].m_Head = elem;
+		if (n->m_Next == 0xffff)
+			m_pLists[list].m_Tail = elem;
+		else
+			m_pNodes[n->m_Next].m_Prev = elem;
+		++m_pLists[list].m_Count;
+		if (m_pElemList)
+			m_pElemList[(unsigned short)elem] = list;
+	}
+};
+
+void __fastcall sub_100d4ba0(char *self, int edx, int idx)
+{
+	Pool_100d8740 *ml = (Pool_100d8740 *)(self + 0x20);
+	unsigned short list = *(unsigned short *)(self + 0x58 + 2 * *(unsigned short *)(self + 0x6a + 2 * ml->m_pNodes[(unsigned short)idx].m_Type));
+	ml->Unlink(list, idx);
+	ml->LinkToHead(list, idx);
+	ml->m_pNodes[(unsigned short)idx].m_Data8 = *(int *)(self + 0x8c);
+}
+// END FUNCTION
+
 // FUNCTION: 0x100d4d20 size=0x167
 #include "CClientLeafSystem.h"
 
