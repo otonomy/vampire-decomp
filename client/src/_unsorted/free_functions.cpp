@@ -114073,6 +114073,48 @@ int CUnknown10141240::sub_10141240()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10141250 size=0x90
+struct IObjV
+{
+	virtual void v0(); virtual void v1();
+	virtual IObjV *vFirstChild(const char *name);
+	virtual IObjV *vNext();
+	virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+	virtual void v8(); virtual void v9();
+	virtual int vKeyLookup(const char *name, int def);
+};
+struct PageV { bool sub_10142480(IObjV *); };
+struct StrT { int v; StrT(); };
+StrT sub_1015f7e0(IObjV *, const char *);
+
+struct SectionV
+{
+	int m_unk0; int m_next; int m_minCount; int m_maxCount; int m_unk10;
+	char m_page[0x30];
+	int m_unk44;
+	bool sub_10141250(IObjV *obj);
+};
+
+bool SectionV::sub_10141250(IObjV *obj)
+{
+	if (obj) {
+		m_unk10 = 0;
+		IObjV *s = obj->vFirstChild("NextSection");
+		if (s) {
+			m_next = sub_1015f7e0(s, "Next").v;
+			m_minCount = s->vKeyLookup("MinCount", 0);
+			m_maxCount = s->vKeyLookup("MaxCount", 99999);
+			IObjV *d = obj->vFirstChild("Defaults");
+			if (d)
+				((PageV *)m_page)->sub_10142480(d);
+			m_unk44 = m_unk0;
+		}
+		return true;
+	}
+	return false;
+}
+// END FUNCTION
+
 // FUNCTION: 0x101412e0 size=0x12
 #include "CUnknown10141350.h"
 char CUnknown10141350::sub_101412e0()
