@@ -7582,6 +7582,7 @@
 0x10144770 func   ?sub_10144770@CPtrList101d6400@@QAEXXZ CPtrList101d6400::sub_10144770
 0x101447c0 func   ?sub_101447c0@TraitListV@@QAEXXZ TraitListV::sub_101447c0
 0x10144840 func   ?sub_10144840@CUnknown10144840@@QAE_NXZ CUnknown10144840::sub_10144840
+0x10144ac0 func   ?sub_10144ac0@CUnknown10144ac0@@QAEHH@Z CUnknown10144ac0::sub_10144ac0
 0x10144af0 func   ?sub_10144af0@FList@@QAEPAUFItem@@H@Z FList::sub_10144af0
 0x10144b30 func   ?sub_10144b30@CUnknown10144b30@@QAEHHH@Z CUnknown10144b30::sub_10144b30
 0x10144b50 func   ?sub_10144b50@@YGXH@Z sub_10144b50

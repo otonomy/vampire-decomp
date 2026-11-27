@@ -108189,6 +108189,29 @@ bool CUnknown10144840::sub_10144840()
 }
 // END FUNCTION
 
+// FUNCTION: 0x10144ac0 size=0x29
+struct CUnknown10144ac0 { int sub_10144ac0(int); };
+int CUnknown10144ac0::sub_10144ac0(int a0)
+{
+    int r0;
+    int r1;
+    r0 = 0;
+    if ((*(int *)((char *)this + 8)) > 0) {
+        r1 = *(int *)((char *)this + 0xc);
+        int t0 = *(int *)((char *)this + 8);
+        do {
+            if ((*(int *)((char *)(*(int *)((char *)r1)) + 4)) == a0) {
+                return r0;
+            }
+            r0 = r0 + 1;
+            r1 = r1 + 4;
+        } while (r0 < t0);
+    }
+    r0 = -1;
+    return r0;
+}
+// END FUNCTION
+
 // FUNCTION: 0x10144af0 size=0x35
 struct FItem { int m_0; int m_key; };
 struct FList {
